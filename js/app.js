@@ -37,7 +37,11 @@ class LingoApp {
       phrasesBadges: JSON.parse(localStorage.getItem('ll_pbadges')) || [],
       phraseCombo: 0,
       phraseStreak: parseInt(localStorage.getItem('ll_pstreak')) || 0,
-      phraseLastDate: localStorage.getItem('ll_plastdate') || ''
+      phraseLastDate: localStorage.getItem('ll_plastdate') || '',
+      // Spaced Repetition & Analytics
+      srData: JSON.parse(localStorage.getItem('ll_sr_data')) || {},
+      history: JSON.parse(localStorage.getItem('ll_history')) || {}, // { date: xp }
+      voiceAccent: localStorage.getItem('ll_accent') || 'en-US'
     };
 
     this.synth = window.speechSynthesis;
@@ -439,7 +443,21 @@ class LingoApp {
     } catch(e) {}
   }
 
-  speakWord(text) { if (!this.synth) return; this.synth.cancel(); const utterance = new SpeechSynthesisUtterance(text); utterance.lang = 'en-US'; utterance.rate = 0.9; this.synth.speak(utterance); this.playSFX('click'); }
+  speakWord(text) { 
+    if (!this.synth) return; 
+    this.synth.cancel(); 
+    const utterance = new SpeechSynthesisUtterance(text); 
+    utterance.lang = this.state.voiceAccent; 
+    utterance.rate = 0.9; 
+    this.synth.speak(utterance); 
+    this.playSFX('click'); 
+  }
+
+  setVoiceAccent(accent) {
+    this.state.voiceAccent = accent;
+    localStorage.setItem('ll_accent', accent);
+    this.showToast(`🗣️ Aksan değiştirildi: ${accent === 'en-US' ? 'Amerikan' : 'İngiliz'}`);
+  }
 
   initCanvas() {
     this.canvas = document.getElementById('bg-canvas'); if(!this.canvas) return;
@@ -500,6 +518,12 @@ class LingoApp {
 
   addXP(amount) {
     this.state.xp += amount; const nextLvlXp = this.state.level * 500;
+    
+    // Track history for analytics
+    const today = new Date().toISOString().split('T')[0];
+    this.state.history[today] = (this.state.history[today] || 0) + amount;
+    localStorage.setItem('ll_history', JSON.stringify(this.state.history));
+
     if (this.state.xp >= nextLvlXp) { 
       this.state.level++; 
       this.state.xp -= nextLvlXp; 
@@ -539,6 +563,8 @@ class LingoApp {
         if (viewName === 'learn') this.setupLearnView();
         if (viewName === 'phrases') this.setupPhrasesView();
         if (viewName === 'speak') this.setupSpeakView();
+        if (viewName === 'analytics') this.setupAnalyticsView();
+        if (viewName === 'league') this.setupLeagueView();
     
   }
 
@@ -672,8 +698,24 @@ class LingoApp {
 
   startLearnSession(mode) {
     this.state.gameMode = mode; this.state.currentCardIdx = 0; this.state.correctCount = 0; this.state.wrongCount = 0; this.state.failedWords = [];
-    this.state.learnPool = this.state.selectedCategory === 'all' ? [...WORDS] : WORDS.filter(w => w.cat === this.state.selectedCategory);
-    this.state.learnPool.sort(() => Math.random() - 0.5); this.preloadImages(this.state.learnPool);
+    
+    let pool = this.state.selectedCategory === 'all' ? [...WORDS] : WORDS.filter(w => w.cat === this.state.selectedCategory);
+    
+    // Spaced Repetition Prioritization
+    const now = Date.now();
+    const dueWords = pool.filter(w => {
+      const sr = this.state.srData[w.en];
+      return sr && sr.nextReview <= now;
+    });
+    
+    if (dueWords.length >= 5) {
+      this.showToast(`🔔 Unutmaya başladığın ${dueWords.length} kelimeye öncelik verildi!`);
+      this.state.learnPool = dueWords.sort(() => Math.random() - 0.5);
+    } else {
+      this.state.learnPool = pool.sort(() => Math.random() - 0.5);
+    }
+
+    this.preloadImages(this.state.learnPool);
     document.getElementById('learn-setup').style.display = 'none'; document.getElementById('learn-game').style.display = 'block'; document.getElementById('learn-finish').style.display = 'none';
     document.getElementById('flashcard-area').style.display = 'block'; document.getElementById('visual-match-area').style.display = 'none';
     if (mode === 'timed') { this.state.timeLeft = 45; document.getElementById('timer-display').style.display = 'block'; this.startTimer(); } else { document.getElementById('timer-display').style.display = 'none'; }
@@ -761,9 +803,28 @@ class LingoApp {
 
   updateMastery(wordEn, isSuccess) {
     let score = this.state.mastery[wordEn] || 0;
-    if (isSuccess) score = Math.min(score + 1, 5); else score = Math.max(score - 1, 0);
+    let sr = this.state.srData[wordEn] || { interval: 0, ease: 2.5, lastReview: Date.now() };
+
+    if (isSuccess) {
+      score = Math.min(score + 1, 5);
+      // SM-2 Spaced Repetition algorithm
+      if (sr.interval === 0) sr.interval = 1;
+      else if (sr.interval === 1) sr.interval = 6;
+      else sr.interval = Math.round(sr.interval * sr.ease);
+      sr.ease = Math.max(1.3, sr.ease + 0.1);
+    } else {
+      score = Math.max(score - 1, 0);
+      sr.interval = 0;
+      sr.ease = Math.max(1.3, sr.ease - 0.2);
+    }
+
+    sr.lastReview = Date.now();
+    sr.nextReview = Date.now() + (sr.interval * 24 * 60 * 60 * 1000);
+
     this.state.mastery[wordEn] = score;
+    this.state.srData[wordEn] = sr;
     localStorage.setItem('ll_mastery', JSON.stringify(this.state.mastery));
+    localStorage.setItem('ll_sr_data', JSON.stringify(this.state.srData));
   }
 
   flipCard() { const card = document.getElementById('flashcard'); if(!card) return; card.classList.toggle('flipped'); this.playSFX('pop'); }
@@ -799,8 +860,92 @@ class LingoApp {
     this.playSFX('success'); this.renderNav();
   }
 
-  // --- PHRASES GAMIFICATION HELPERS ---
-  getPhraseMastery(en) { return this.state.phrasesMastery[en] || 0; }
+  // --- ANALYTICS ---
+  setupAnalyticsView() {
+    this.renderHeatmap();
+    this.renderCategoryChart();
+  }
+
+  renderHeatmap() {
+    const container = document.getElementById('learning-heatmap');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    // Last 28 days
+    const now = new Date();
+    for (let i = 27; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+      const xp = this.state.history[dateStr] || 0;
+      
+      const cell = document.createElement('div');
+      cell.className = 'heatmap-cell';
+      if (xp > 500) cell.classList.add('level-3');
+      else if (xp > 200) cell.classList.add('level-2');
+      else if (xp > 0) cell.classList.add('level-1');
+      
+      cell.title = `${dateStr}: ${xp} XP`;
+      container.appendChild(cell);
+    }
+  }
+
+  renderCategoryChart() {
+    const ctx = document.getElementById('category-chart');
+    if (!ctx) return;
+    
+    const cats = [...new Set(WORDS.map(w => w.cat))];
+    const data = cats.map(cat => {
+      const pool = WORDS.filter(w => w.cat === cat);
+      const learned = pool.filter(w => (this.state.mastery[w.en] || 0) >= 3).length;
+      return Math.round((learned / pool.length) * 100);
+    });
+
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: cats,
+        datasets: [{
+          label: 'Ustalık %',
+          data: data,
+          backgroundColor: 'rgba(0, 243, 255, 0.2)',
+          borderColor: '#00f3ff',
+          pointBackgroundColor: '#00f3ff'
+        }]
+      },
+      options: {
+        scales: { r: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.1)' }, angleLines: { color: 'rgba(255,255,255,0.1)' } } },
+        plugins: { legend: { display: false } }
+      }
+    });
+  }
+
+  // --- LEAGUE ---
+  setupLeagueView() {
+    const container = document.getElementById('league-list-container');
+    if (!container) return;
+    
+    const users = [
+      { name: 'Siz', xp: this.state.xp + (this.state.level * 500), current: true, avatar: '👤' },
+      { name: 'Alex', xp: 12450, avatar: '🦊' },
+      { name: 'Sarah', xp: 10200, avatar: '🐱' },
+      { name: 'Mehmet', xp: 9800, avatar: '🦁' },
+      { name: 'Elena', xp: 8500, avatar: '🐼' },
+      { name: 'John', xp: 7200, avatar: '🐶' }
+    ].sort((a, b) => b.xp - a.xp);
+
+    container.innerHTML = users.map((u, i) => `
+      <div class="league-item ${u.current ? 'current-user' : ''}">
+        <span class="rank-num">${i + 1}</span>
+        <div class="user-avatar">${u.avatar}</div>
+        <div class="user-info">
+          <span class="user-name">${u.name}</span>
+          <span class="user-xp">${u.xp.toLocaleString()} Toplam XP</span>
+        </div>
+        ${i < 3 ? '<span>⭐</span>' : ''}
+      </div>
+    `).join('');
+  }
 
   setPhraseMastery(en, level) {
     this.state.phrasesMastery[en] = Math.max(0, Math.min(2, level));

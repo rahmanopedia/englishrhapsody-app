@@ -52,8 +52,10 @@
     <div class="nav-links desktop-only">
       <button class="nav-btn active ripple" data-target="home">🚀 Ana Merkez</button>
       <button class="nav-btn ripple" data-target="learn">🃏 Akıllı Kartlar</button>
-      <button class="nav-btn ripple" data-target="phrases">🗣️ Günlük Kalıplar</button>
-      <button class="nav-btn ripple" data-target="speak">🎙️ AI Konuşma</button>
+      <button class="nav-btn ripple" data-target="analytics">📊 Gelişim</button>
+      <button class="nav-btn ripple" data-target="league">🏆 Lig</button>
+      <button class="nav-btn ripple" data-target="phrases">🗣️ Kalıplar</button>
+      <button class="nav-btn ripple" data-target="speak">🎙️ Konuşma</button>
     </div>
     <div class="stats">
       <div class="stat-badge streak">🔥 <span id="streak-val">1</span></div>
@@ -72,9 +74,13 @@
       <span class="m-icon">🃏</span>
       <span class="m-label">Kartlar</span>
     </button>
-    <button class="m-nav-btn ripple" data-target="phrases">
-      <span class="m-icon">🗣️</span>
-      <span class="m-label">Kalıplar</span>
+    <button class="m-nav-btn ripple" data-target="analytics">
+      <span class="m-icon">📊</span>
+      <span class="m-label">Analiz</span>
+    </button>
+    <button class="m-nav-btn ripple" data-target="league">
+      <span class="m-icon">🏆</span>
+      <span class="m-label">Lig</span>
     </button>
     <button class="m-nav-btn ripple" data-target="speak">
       <span class="m-icon">🎙️</span>
@@ -89,8 +95,47 @@
 
   <!-- External Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Templates -->
+  <template id="tpl-analytics">
+    <div class="view-analytics animate-in">
+      <div class="analytics-header">
+        <h1>📊 Gelişim Analizi</h1>
+        <p>Öğrenme istatistiklerin ve hedef takibi</p>
+      </div>
+      
+      <div class="analytics-grid">
+        <div class="ana-card glass">
+          <h3>Öğrenme Isı Haritası</h3>
+          <div id="learning-heatmap" class="heatmap-container"></div>
+        </div>
+        <div class="ana-card glass">
+          <h3>Kategori Başarısı</h3>
+          <canvas id="category-chart"></canvas>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-league">
+    <div class="view-league animate-in">
+      <div class="league-header">
+        <h1>🏆 Haftalık Lig</h1>
+        <div class="league-badge-container">
+          <div class="league-badge" id="current-league-icon">💎</div>
+          <div>
+            <h2 id="current-league-name">Elmas Ligi</h2>
+            <p>Bitime: <span id="league-timer">2g 4s</span></p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="league-list glass" id="league-list-container">
+        <!-- JS dynamic render -->
+      </div>
+    </div>
+  </template>
   <template id="tpl-home">
     <div class="view-home animate-in">
 
@@ -103,6 +148,10 @@
         <div class="home-rank-badge" id="home-rank-badge">
           <span class="rank-icon" id="rank-icon">🌱</span>
           <span class="rank-name" id="rank-name">Çırak</span>
+        </div>
+        <div class="accent-selector">
+          <button class="accent-btn" onclick="app.setVoiceAccent('en-US')">🇺🇸 US</button>
+          <button class="accent-btn" onclick="app.setVoiceAccent('en-GB')">🇬🇧 UK</button>
         </div>
       </div>
 
