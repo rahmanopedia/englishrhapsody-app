@@ -1,0 +1,23 @@
+{
+  "name": "English Rhapsody",
+  "short_name": "Rhapsody",
+  "description": "İnteraktif Dil Akademisi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0c10",
+  "theme_color": "#00f3ff",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/nolan/512/globe.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://img.icons8.com/nolan/192/globe.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
