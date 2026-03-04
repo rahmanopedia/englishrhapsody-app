@@ -45,6 +45,7 @@ class LingoApp {
     this.setupSpeechSystems();
     
     this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    this.updateAppTheme();
     this.initCanvas();
     this.bindEvents();
     this.renderNav();
@@ -450,8 +451,23 @@ class LingoApp {
   resizeCanvas() { if(this.canvas) { this.canvas.width = window.innerWidth; this.canvas.height = window.innerHeight; } }
   animateCanvas() {
     if(!this.ctx) return;
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); this.ctx.fillStyle = '#ffffff';
-    this.stars.forEach(star => { star.y -= star.v; if (star.y < 0) { star.y = this.canvas.height; star.x = Math.random() * this.canvas.width; } this.ctx.globalAlpha = Math.random() * 0.5 + 0.3; this.ctx.beginPath(); this.ctx.arc(star.x, star.y, star.s, 0, Math.PI * 2); this.ctx.fill(); });
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
+    
+    const colors = ['#ffffff', '#00f3ff', '#2ecc71', '#f1c40f', '#bc13fe', '#ff007f', '#ff5722'];
+    const rankTier = Math.min(Math.floor((this.state.level - 1) / 5) + 1, 6);
+    this.ctx.fillStyle = colors[rankTier] || '#00f3ff';
+    
+    // Level 1: speed multiplier 1.0; Level 20: multiplier ~2.0
+    const speedMult = 1 + (this.state.level * 0.04);
+
+    this.stars.forEach(star => { 
+      star.y -= star.v * speedMult; 
+      if (star.y < 0) { star.y = this.canvas.height; star.x = Math.random() * this.canvas.width; } 
+      this.ctx.globalAlpha = Math.random() * 0.5 + 0.3; 
+      this.ctx.beginPath(); 
+      this.ctx.arc(star.x, star.y, star.s, 0, Math.PI * 2); 
+      this.ctx.fill(); 
+    });
     requestAnimationFrame(() => this.animateCanvas());
   }
 
@@ -484,10 +500,22 @@ class LingoApp {
 
   addXP(amount) {
     this.state.xp += amount; const nextLvlXp = this.state.level * 500;
-    if (this.state.xp >= nextLvlXp) { this.state.level++; this.state.xp -= nextLvlXp; this.showToast(`🎉 Seviye atladın! Level ${this.state.level}`); this.playSFX('success'); }
+    if (this.state.xp >= nextLvlXp) { 
+      this.state.level++; 
+      this.state.xp -= nextLvlXp; 
+      this.showToast(`🎉 Seviye atladın! Level ${this.state.level}`); 
+      this.playSFX('success'); 
+    }
     localStorage.setItem('ll_xp', this.state.xp); localStorage.setItem('ll_lvl', this.state.level);
+    this.updateAppTheme();
     this.renderNav(); if(this.state.view === 'home') this.updateHomeProgress();
   }
+
+  updateAppTheme() {
+    const rankTier = Math.min(Math.floor((this.state.level - 1) / 5) + 1, 6);
+    document.body.className = `rank-${rankTier}`;
+  }
+
   renderNav() { 
     const xpEl = document.getElementById('xp-val'); if(xpEl) xpEl.innerText = this.state.xp;
     const lvlEl = document.getElementById('lvl-val'); if(lvlEl) lvlEl.innerText = this.state.level;
@@ -512,6 +540,23 @@ class LingoApp {
   }
 
   updateHomeProgress() {
+    // Rank & Theme calculation
+    const rankTier = Math.min(Math.floor((this.state.level - 1) / 5) + 1, 6);
+    const ranks = [
+      { icon: '🌱', name: 'Çırak' },
+      { icon: '🧭', name: 'Gezgin' },
+      { icon: '📚', name: 'Bilgin' },
+      { icon: '🧙‍♂️', name: 'Usta' },
+      { icon: '👑', name: 'Efsane' },
+      { icon: '⚡', name: 'İlah' }
+    ];
+    const rank = ranks[rankTier - 1];
+    
+    const rankIconEl = document.getElementById('rank-icon');
+    const rankNameEl = document.getElementById('rank-name');
+    if (rankIconEl) rankIconEl.innerText = rank.icon;
+    if (rankNameEl) rankNameEl.innerText = rank.name;
+
     // XP bar
     const nextLvlXp = this.state.level * 500;
     const pct = (this.state.xp / nextLvlXp) * 100;
@@ -648,7 +693,23 @@ class LingoApp {
     this.renderVisualMatch();
   }
 
-  startTimer() { if (this.state.timer) clearInterval(this.state.timer); this.state.timer = setInterval(() => { this.state.timeLeft--; const el = document.getElementById('time-val'); if(el) el.innerText = this.state.timeLeft; if (this.state.timeLeft <= 0) { clearInterval(this.state.timer); this.showFinishScreen("Süre Bitti!"); } }, 1000); }
+  startTimer() { 
+    if (this.state.timer) clearInterval(this.state.timer); 
+    // Süre seviye arttıkça azalır, minimum 10 saniye kalır
+    const dynamicTime = Math.max(10, 30 - Math.floor(this.state.level / 2));
+    this.state.timeLeft = dynamicTime;
+    const el = document.getElementById('time-val'); 
+    if(el) el.innerText = this.state.timeLeft;
+    
+    this.state.timer = setInterval(() => { 
+      this.state.timeLeft--; 
+      if(el) el.innerText = this.state.timeLeft; 
+      if (this.state.timeLeft <= 0) { 
+        clearInterval(this.state.timer); 
+        this.showFinishScreen("Süre Bitti!"); 
+      } 
+    }, 1000); 
+  }
 
   renderFlashcard() {
     const word = this.state.learnPool[this.state.currentCardIdx]; if(!word) return;
