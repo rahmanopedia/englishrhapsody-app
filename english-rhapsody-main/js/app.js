@@ -58,12 +58,6 @@ class LingoApp {
     this.bindEvents();
     this.renderNav();
     
-    // Global Error Handler
-    window.onerror = (msg, url, line) => {
-      this.showToast(`Hata: ${msg} (Satır: ${line})`);
-      return false;
-    };
-    
     try {
       this.navigate('home');
       setTimeout(() => {
@@ -569,17 +563,13 @@ class LingoApp {
     
     const content = document.getElementById('app-content'); const template = document.getElementById(`tpl-${viewName}`);
     if (template) { content.innerHTML = ''; content.appendChild(template.content.cloneNode(true)); }
-    
-    // Defer initialization to ensure DOM is ready
-    setTimeout(() => {
-      if (viewName === 'home') this.updateHomeProgress();
-      if (viewName === 'learn') this.setupLearnView();
-      if (viewName === 'reading') this.setupReadingView();
-      if (viewName === 'phrases') this.setupPhrasesView();
-      if (viewName === 'speak') this.setupSpeakView();
-      if (viewName === 'analytics') this.setupAnalyticsView();
-      if (viewName === 'league') this.setupLeagueView();
-    }, 0);
+        if (viewName === 'home') this.updateHomeProgress();
+        if (viewName === 'learn') this.setupLearnView();
+        if (viewName === 'reading') this.setupReadingView();
+        if (viewName === 'phrases') this.setupPhrasesView();
+        if (viewName === 'speak') this.setupSpeakView();
+        if (viewName === 'analytics') this.setupAnalyticsView();
+        if (viewName === 'league') this.setupLeagueView();
     
   }
 
@@ -629,14 +619,14 @@ class LingoApp {
     // Word of the day (deterministic per day)
     const day = new Date().toDateString();
     let h = 0; for (const c of day) h = (h * 31 + c.charCodeAt(0)) & 0xffffffff;
-    const wod = window.WORDS[Math.abs(h) % window.WORDS.length];
+    const wod = WORDS[Math.abs(h) % WORDS.length];
     setEl('wod-en', wod.en);
     setEl('wod-ipa', wod.ipa);
     setEl('wod-tr', wod.tr);
 
     // Dashboard card progress bars
-    const wordsPct = Math.round((mastered / window.WORDS.length) * 100);
-    const phrasesPct = Math.round((phraseMastered / window.PHRASES.length) * 100);
+    const wordsPct = Math.round((mastered / WORDS.length) * 100);
+    const phrasesPct = Math.round((phraseMastered / PHRASES.length) * 100);
     const wBar = document.getElementById('dc-words-bar');
     const pBar = document.getElementById('dc-phrases-bar');
     if (wBar) setTimeout(() => wBar.style.width = `${wordsPct}%`, 200);
@@ -655,9 +645,9 @@ class LingoApp {
     // Category progress bars
     const catBarsEl = document.getElementById('home-cat-bars');
     if (catBarsEl) {
-      const cats = [...new Set(window.WORDS.map(w => w.cat))];
+      const cats = [...new Set(WORDS.map(w => w.cat))];
       catBarsEl.innerHTML = cats.map(cat => {
-        const pool = window.WORDS.filter(w => w.cat === cat);
+        const pool = WORDS.filter(w => w.cat === cat);
         const learned = pool.filter(w => (this.state.mastery[w.en] || 0) >= 3).length;
         const catPct = Math.round((learned / pool.length) * 100);
         return `<div class="hc-row">
@@ -691,9 +681,9 @@ class LingoApp {
     const catContainer = document.getElementById('learn-categories'); if(!catContainer) return;
     document.getElementById('learn-setup').style.display = 'block'; document.getElementById('learn-game').style.display = 'none'; document.getElementById('learn-finish').style.display = 'none';
 
-    const categories = ['all', ...new Set(window.WORDS.map(w => w.cat))];
+    const categories = ['all', ...new Set(WORDS.map(w => w.cat))];
     catContainer.innerHTML = categories.map(c => {
-      const pool = c === 'all' ? window.WORDS : window.WORDS.filter(w => w.cat === c);
+      const pool = c === 'all' ? WORDS : WORDS.filter(w => w.cat === c);
       const learned = pool.filter(w => this.state.mastery[w.en] >= 3).length;
       const masteryPct = (learned / pool.length) * 100;
       return `
@@ -719,7 +709,7 @@ class LingoApp {
   startLearnSession(mode) {
     this.state.gameMode = mode; this.state.currentCardIdx = 0; this.state.correctCount = 0; this.state.wrongCount = 0; this.state.failedWords = [];
     
-    let pool = this.state.selectedCategory === 'all' ? [...window.WORDS] : window.WORDS.filter(w => w.cat === this.state.selectedCategory);
+    let pool = this.state.selectedCategory === 'all' ? [...WORDS] : WORDS.filter(w => w.cat === this.state.selectedCategory);
     
     // Spaced Repetition Prioritization
     const now = Date.now();
@@ -749,7 +739,7 @@ class LingoApp {
 
   startVisualMatch() {
     this.state.gameMode = 'visual-match'; this.state.currentCardIdx = 0; this.state.correctCount = 0; this.state.wrongCount = 0; this.state.failedWords = [];
-    this.state.learnPool = this.state.selectedCategory === 'all' ? [...window.WORDS] : window.WORDS.filter(w => w.cat === this.state.selectedCategory);
+    this.state.learnPool = this.state.selectedCategory === 'all' ? [...WORDS] : WORDS.filter(w => w.cat === this.state.selectedCategory);
     if (this.state.learnPool.length < 4) { this.showToast("Bu kategoride yeterli kelime yok (En az 4 gerekli)."); return; }
     this.state.learnPool.sort(() => Math.random() - 0.5); this.preloadImages(this.state.learnPool);
     document.getElementById('learn-setup').style.display = 'none'; document.getElementById('learn-game').style.display = 'block'; document.getElementById('learn-finish').style.display = 'none';
@@ -789,7 +779,7 @@ class LingoApp {
     const correctWord = this.state.learnPool[this.state.currentCardIdx];
     const wordEl = document.getElementById('vm-word'); if(wordEl) wordEl.innerText = correctWord.en;
     const countEl = document.getElementById('card-counter'); if(countEl) countEl.innerText = `${this.state.currentCardIdx + 1} / ${this.state.learnPool.length}`;
-    const distractors = window.WORDS.filter(w => w.en !== correctWord.en).sort(() => Math.random() - 0.5).slice(0, 3);
+    const distractors = WORDS.filter(w => w.en !== correctWord.en).sort(() => Math.random() - 0.5).slice(0, 3);
     const choices = [correctWord, ...distractors].sort(() => Math.random() - 0.5);
     const grid = document.getElementById('vm-grid'); 
     if(grid) { 
@@ -914,9 +904,9 @@ class LingoApp {
     const ctx = document.getElementById('category-chart');
     if (!ctx) return;
     
-    const cats = [...new Set(window.WORDS.map(w => w.cat))];
+    const cats = [...new Set(WORDS.map(w => w.cat))];
     const data = cats.map(cat => {
-      const pool = window.WORDS.filter(w => w.cat === cat);
+      const pool = WORDS.filter(w => w.cat === cat);
       const learned = pool.filter(w => (this.state.mastery[w.en] || 0) >= 3).length;
       return Math.round((learned / pool.length) * 100);
     });
@@ -989,7 +979,7 @@ class LingoApp {
     const container = document.getElementById('reading-game-area');
     if (!container) return;
 
-    const levelStories = window.STORIES.filter(s => s.level === this.state.readingLevel);
+    const levelStories = STORIES.filter(s => s.level === this.state.readingLevel);
     if (!levelStories.length) {
       container.innerHTML = '<p>Bu seviyede içerik bulunamadı.</p>';
       return;
@@ -1073,16 +1063,14 @@ class LingoApp {
   }
 
   getDailyPhraseIdx() {
-    const PH_DATA = window.PHRASES || [];
-    if (!PH_DATA || !PH_DATA.length) return 0;
     const day = new Date().toDateString();
     let h = 0;
     for (let c of day) h = (h * 31 + c.charCodeAt(0)) & 0xffffffff;
-    return Math.abs(h) % PH_DATA.length;
+    return Math.abs(h) % PHRASES.length;
   }
 
   checkCategoryBadge(cat) {
-    const catPs = window.PHRASES.filter(p => p.cat === cat);
+    const catPs = PHRASES.filter(p => p.cat === cat);
     const allDone = catPs.every(p => (this.state.phrasesMastery[p.en] || 0) >= 2);
     if (allDone && !this.state.phrasesBadges.includes(cat)) {
       this.state.phrasesBadges.push(cat);
@@ -1102,171 +1090,305 @@ class LingoApp {
     }
   }
 
-  // =============================================
-  //   DAILY PHRASES — EXPERT MODULE
-  // =============================================
+  refreshPhraseStats() {
+    const el = document.getElementById('phrase-stats-row');
+    if (el) el.innerHTML = this.buildPhraseStatsHTML();
+  }
 
+  buildPhraseStatsHTML() {
+    const cats = [...new Set(PHRASES.map(p => p.cat))];
+    const mastered = Object.values(this.state.phrasesMastery).filter(v => v >= 2).length;
+    return `
+      <div class="ps-chip ps-streak">🔥 ${this.state.phraseStreak} günlük seri</div>
+      <div class="ps-chip ps-combo ${this.state.phraseCombo >= 3 ? 'ps-combo-hot' : ''}">🎯 ${this.state.phraseCombo} combo</div>
+      <div class="ps-chip ps-mastered">⭐ ${mastered} ustalaşıldı</div>
+      <div class="ps-chip ps-badges">🏆 ${this.state.phrasesBadges.length}/${cats.length} rozet</div>`;
+  }
+
+  // --- PHRASES ---
   setupPhrasesView() {
-    const PH_DATA = window.PHRASES || [];
-    if (!PH_DATA.length) {
-      const list = document.getElementById('phrases-list');
-      if (list) list.innerHTML = '<div class="phrases-empty">⚠️ Veriler yükleniyor, lütfen bekleyin...</div>';
-      return;
+    const list = document.getElementById('phrases-list');
+    if (!list) return;
+
+    // Inject stats row
+    const hero = document.querySelector('.phrases-hero');
+    if (hero && !document.getElementById('phrase-stats-row')) {
+      const row = document.createElement('div');
+      row.id = 'phrase-stats-row';
+      row.className = 'phrase-stats-row';
+      row.innerHTML = this.buildPhraseStatsHTML();
+      hero.after(row);
     }
 
-    // Initialize Category Filter
+    // Daily challenge banner
+    const dailyP = (typeof PHRASES !== 'undefined' && PHRASES.length) ? PHRASES[this.getDailyPhraseIdx()] : null;
+    const searchWrap = document.querySelector('.phrases-search-wrap');
+    if (searchWrap && dailyP && !document.getElementById('daily-banner')) {
+      const banner = document.createElement('div');
+      banner.id = 'daily-banner';
+      banner.className = 'daily-banner glass';
+      banner.innerHTML = `
+        <span class="daily-label">⭐ Günün Kalıbı</span>
+        <span class="daily-phrase">"${dailyP.en}"</span>
+        <button class="daily-go-btn" onclick="app.goToDailyChallenge()">Git →</button>`;
+      searchWrap.before(banner);
+    }
+
     const catContainer = document.getElementById('phrase-categories');
-    if (catContainer) {
-      const categories = ['all', ...new Set(PH_DATA.map(p => p.cat))];
-      catContainer.innerHTML = categories.map(c => `
-        <button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''}" 
-                onclick="app.setPhraseCategory('${c}', this)">
-          ${c === 'all' ? '✦ Hepsi' : c}
-        </button>`).join('');
+    if (catContainer && typeof PHRASES !== 'undefined') {
+      const categories = ['all', ...new Set(PHRASES.map(p => p.cat))];
+      catContainer.innerHTML = categories.map(c => {
+        if (c === 'all') {
+          const totalMastered = Object.values(this.state.phrasesMastery).filter(v => v >= 2).length;
+          return `<button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''}" onclick="app.setPhraseCategory('${c}', this)">✦ Hepsi <span class="cat-pct">${totalMastered}/${PHRASES.length}</span></button>`;
+        }
+        const catPs = PHRASES.filter(p => p.cat === c);
+        const masteredN = catPs.filter(p => (this.state.phrasesMastery[p.en] || 0) >= 2).length;
+        const hasBadge = this.state.phrasesBadges.includes(c);
+        return `<button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''} ${hasBadge ? 'pcat-gold' : ''}" onclick="app.setPhraseCategory('${c}', this)">${hasBadge ? '🏆' : ''} ${c} <span class="cat-pct">${masteredN}/${catPs.length}</span></button>`;
+      }).join('');
     }
 
-    // Initialize Search and Stats
-    const searchInput = document.getElementById('phrase-search');
-    if (searchInput) searchInput.value = this.state.phraseSearch;
-    
-    this.refreshPhraseStats();
     this.renderPhrases();
   }
 
-  refreshPhraseStats() {
-    const el = document.getElementById('phrase-stats-row');
-    if (!el) {
-      const hero = document.querySelector('.phrases-hero');
-      if (hero) {
-        const row = document.createElement('div');
-        row.id = 'phrase-stats-row';
-        row.className = 'phrase-stats-row';
-        hero.after(row);
-        this.refreshPhraseStats();
+  ratePhrase(isEasy) {
+    const p = this.state.phrasePool[this.state.phraseIdx];
+    if (!p) return;
+    const cur = this.getPhraseMastery(p.en);
+
+    if (isEasy) {
+      this.setPhraseMastery(p.en, cur + 1);
+      this.playSFX('success');
+      // Rozet kontrolü
+      if (this.checkCategoryBadge(p.cat)) {
+        this.showToast(`🏆 "${p.cat}" rozetini kazandın!`);
+        this.setupPhrasesView(); // kategori chiplerini güncelle
+        return;
       }
-      return;
+      setTimeout(() => this.nextPhrase(), 350);
+    } else {
+      this.setPhraseMastery(p.en, Math.max(0, cur - 1));
+      this.playSFX('click');
+      // Spaced repetition: 3 kart sonra tekrar göster
+      const pool = this.state.phrasePool;
+      const [removed] = pool.splice(this.state.phraseIdx, 1);
+      pool.splice(Math.min(this.state.phraseIdx + 3, pool.length), 0, removed);
+      this.renderPhraseCard();
     }
-    const mastered = Object.values(this.state.phrasesMastery).filter(v => v >= 2).length;
-    el.innerHTML = `
-      <div class="ps-chip">🔥 ${this.state.phraseStreak} Günlük Seri</div>
-      <div class="ps-chip">🎯 ${this.state.phraseCombo} Kombo</div>
-      <div class="ps-chip">⭐ ${mastered} Kalıp Ustası</div>
-    `;
+    this.refreshPhraseStats();
+  }
+
+  goToDailyChallenge() {
+    const dailyP = PHRASES[this.getDailyPhraseIdx()];
+    if (!dailyP) return;
+    // Find in current pool or reset to all
+    this.state.phraseCategory = 'all';
+    this.state.phraseSearch = '';
+    this.renderPhrases();
+    const idx = this.state.phrasePool.findIndex(p => p.en === dailyP.en);
+    if (idx >= 0) { this.state.phraseIdx = idx; this.renderPhraseCard(); }
+    this.playSFX('pop');
   }
 
   setPhraseCategory(cat, btn) {
     this.state.phraseCategory = cat;
     this.state.phraseIdx = 0;
-    this.state.phraseFlipped = false;
     document.querySelectorAll('.pcat-btn').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
+    btn.classList.add('active');
     this.playSFX('click');
     this.renderPhrases();
   }
 
   filterPhrases() {
-    const input = document.getElementById('phrase-search');
-    this.state.phraseSearch = input ? input.value.toLowerCase() : '';
+    this.state.phraseSearch = document.getElementById('phrase-search').value.toLowerCase();
     this.state.phraseIdx = 0;
     this.renderPhrases();
   }
 
+  flipPhraseCard() {
+    this.state.phraseFlipped = !this.state.phraseFlipped;
+    const card = document.getElementById('pc-flip-card');
+    if (card) {
+      card.classList.toggle('is-flipped', this.state.phraseFlipped);
+      this.playSFX('pop');
+    }
+  }
+
+  shufflePhrases() {
+    const pool = this.state.phrasePool;
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    this.state.phraseIdx = 0;
+    this.state.phraseFlipped = false;
+    if (this._phraseRec) { try { this._phraseRec.stop(); } catch(e){} this._phraseRec = null; }
+    this.renderPhraseCard();
+    this.playSFX('success');
+    this.showToast('🔀 Kartlar karıştırıldı!');
+  }
+
+  initPhraseSwipe() {
+    const scene = document.getElementById('pc-scene');
+    if (!scene) return;
+    let startX = 0, startY = 0, hasSwiped = false, mouseDown = false;
+    const reset = () => { scene.classList.remove('show-swl', 'show-swr'); };
+    const onStart = (x, y) => { startX = x; startY = y; hasSwiped = false; };
+    const onMove = (x) => {
+      const d = x - startX;
+      scene.classList.toggle('show-swl', d < -30);
+      scene.classList.toggle('show-swr', d > 30);
+    };
+    const onEnd = (x, y) => {
+      reset();
+      const dx = x - startX, dy = y - startY;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+        hasSwiped = true;
+        if (dx < 0) this.nextPhrase(); else this.prevPhrase();
+      }
+    };
+    scene.addEventListener('touchstart', e => onStart(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+    scene.addEventListener('touchmove', e => onMove(e.touches[0].clientX), { passive: true });
+    scene.addEventListener('touchend', e => onEnd(e.changedTouches[0].clientX, e.changedTouches[0].clientY));
+    scene.addEventListener('mousedown', e => { mouseDown = true; onStart(e.clientX, e.clientY); });
+    scene.addEventListener('mousemove', e => { if (mouseDown) onMove(e.clientX); });
+    scene.addEventListener('mouseup', e => { if (!mouseDown) return; mouseDown = false; onEnd(e.clientX, e.clientY); });
+    scene.addEventListener('mouseleave', () => { mouseDown = false; reset(); });
+    scene.addEventListener('click', () => {
+      if (hasSwiped) { hasSwiped = false; return; }
+      this.flipPhraseCard();
+    });
+  }
+
+  nextPhrase() {
+    if (this.state.phraseIdx < this.state.phrasePool.length - 1) {
+      this.state.phraseIdx++;
+      this.state.phraseFlipped = false;
+      if (this._phraseRec) { try { this._phraseRec.stop(); } catch(e){} this._phraseRec = null; }
+      this.renderPhraseCard();
+      this.playSFX('pop');
+    }
+  }
+
+  prevPhrase() {
+    if (this.state.phraseIdx > 0) {
+      this.state.phraseIdx--;
+      this.state.phraseFlipped = false;
+      if (this._phraseRec) { try { this._phraseRec.stop(); } catch(e){} this._phraseRec = null; }
+      this.renderPhraseCard();
+      this.playSFX('click');
+    }
+  }
+
   renderPhrases() {
-    const PH_DATA = window.PHRASES || [];
-    const filtered = PH_DATA.filter(p => {
+    const filtered = PHRASES.filter(p => {
       const matchCat = this.state.phraseCategory === 'all' || p.cat === this.state.phraseCategory;
-      const matchSearch = p.en.toLowerCase().includes(this.state.phraseSearch) || 
+      const matchSearch = p.en.toLowerCase().includes(this.state.phraseSearch) ||
                           p.tr.toLowerCase().includes(this.state.phraseSearch);
       return matchCat && matchSearch;
     });
-    
     this.state.phrasePool = filtered;
+    
+    // Safety check: ensure index is within bounds of the new pool
+    if (this.state.phraseIdx >= filtered.length) {
+      this.state.phraseIdx = 0;
+    }
+
     const badge = document.getElementById('phrase-count-badge');
     if (badge) badge.textContent = `${filtered.length} kalıp`;
-    
     this.renderPhraseCard();
   }
 
   renderPhraseCard() {
     const list = document.getElementById('phrases-list');
     if (!list) return;
-    
     const pool = this.state.phrasePool;
-    if (!pool || pool.length === 0) {
-      list.innerHTML = '<div class="phrases-empty">🔍 Sonuç bulunamadı</div>';
+    const idx = this.state.phraseIdx;
+    this.state.phraseFlipped = false;
+
+    if (pool.length === 0) {
+      list.innerHTML = `<div class="phrases-empty">🔍 Sonuç bulunamadı</div>`;
       return;
     }
 
-    const idx = Math.min(this.state.phraseIdx, pool.length - 1);
+    const CAT_ICON = {
+      'Selamlaşma':'👋','Sosyal':'🤝','Seyahat':'✈️',
+      'Alışveriş':'🛍️','Restoran':'🍽️','Acil':'🚨',
+      'Günlük':'🌅','Tartışma':'💬','İş':'💼',
+      'Deyim':'📝','Duygular':'😊'
+    };
+
     const p = pool[idx];
+    const safe = p.en.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    const icon = CAT_ICON[p.cat] || '🗣️';
+    const isFirst = idx === 0;
+    const isLast = idx === pool.length - 1;
     const pct = ((idx + 1) / pool.length) * 100;
-    const mastery = this.state.phrasesMastery[p.en] || 0;
+    const mastery = this.getPhraseMastery(p.en);
+    const isDaily = PHRASES[this.getDailyPhraseIdx()]?.en === p.en;
+
+    // Simple Grammar Engine for Tooltips
+    let tooltipAttr = "";
+    let displayEn = p.en;
+    if (p.en.toLowerCase().includes("how much")) { tooltipAttr = `data-grammar="'How much' sayılamayan isimler veya fiyat sorarken kullanılır."`; displayEn = displayEn.replace(/how much/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+    else if (p.en.toLowerCase().includes("would you like")) { tooltipAttr = `data-grammar="'Would you like' kibar bir teklif veya davet ifadesidir."`; displayEn = displayEn.replace(/would you like/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+    else if (p.en.toLowerCase().includes("could you")) { tooltipAttr = `data-grammar="'Could you' (Yapabilir miydiniz?) resmi bir rica kipi."`; displayEn = displayEn.replace(/could you/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+    else if (p.en.toLowerCase().includes("i'm looking for")) { tooltipAttr = `data-grammar="Present Continuous: Şu an devam eden bir arayışı belirtir."`; displayEn = displayEn.replace(/i'm looking for/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
 
     list.innerHTML = `
       <div class="pc-flashcard-wrap">
         <div class="pc-topbar">
-          <button class="pc-nav-btn" onclick="app.changePhrase(-1)" ${idx === 0 ? 'disabled' : ''}>← Önceki</button>
-          <span class="pc-progress">${idx + 1} / ${pool.length}</span>
-          <button class="pc-nav-btn" onclick="app.changePhrase(1)" ${idx === pool.length - 1 ? 'disabled' : ''}>Sonraki →</button>
+          <button class="pc-nav-btn" onclick="app.prevPhrase()" ${isFirst ? 'disabled' : ''}>← Önceki</button>
+          <div class="pc-topbar-center">
+            <span class="pc-progress">${idx + 1} / ${pool.length}</span>
+            <button class="pc-shuffle-btn" onclick="app.shufflePhrases()" title="Karıştır">🔀</button>
+          </div>
+          <button class="pc-nav-btn" onclick="app.nextPhrase()" ${isLast ? 'disabled' : ''}>Sonraki →</button>
         </div>
         <div class="pc-progress-bar"><div class="pc-progress-fill" style="width:${pct}%"></div></div>
 
-        <div class="pc-scene animate-in" onclick="app.flipPhraseCard()">
-          <div class="pc-flip-card ${this.state.phraseFlipped ? 'is-flipped' : ''}">
-            <div class="pc-face pc-front glass">
-              <span class="pc-cat-badge">🔖 ${p.cat}</span>
-              <div class="pc-mastery-stars">${'⭐'.repeat(mastery)}${'☆'.repeat(2-mastery)}</div>
-              <div class="pc-phrase-en">${p.en}</div>
-              <div class="pc-flip-hint">👆 Türkçesi için tıkla</div>
-              <div class="pc-actions">
-                <button class="btn outline" onclick="event.stopPropagation(); app.speakWord('${p.en.replace(/'/g, "\\'")}')">🔊 Dinle</button>
+        <div class="pc-scene animate-in" id="pc-scene">
+          <div class="pc-swi-l">← Önceki</div>
+          <div class="pc-swi-r">Sonraki →</div>
+          <div class="pc-flip-card" id="pc-flip-card" data-cat="${p.cat}">
+            <div class="pc-face pc-front">
+              <div class="pc-front-top">
+                <span class="pc-cat-badge">${icon} ${p.cat}</span>
+                ${isDaily ? '<span class="pc-daily-badge">⭐ Günün Kalıbı</span>' : ''}
+                <span class="pc-mastery-stars">${'⭐'.repeat(mastery)}${'☆'.repeat(2 - mastery)}</span>
+              </div>
+              <div class="pc-phrase-en">${displayEn}</div>
+              <div class="pc-flip-hint">👆 Türkçeyi görmek için tıkla</div>
+              <div class="pc-back-actions">
+                <button class="pc-btn-listen" onclick="event.stopPropagation(); app.speakWord('${safe}')">🔊 Dinle</button>
+                <button class="pc-btn-mic" onclick="event.stopPropagation(); app.togglePhraseRecord(this, '${safe}')">🎤 Telaffuz Et</button>
+              </div>
+              <div class="pc-result" style="display:none">
+                <div class="pc-transcript">🎙️ Dinliyorum...</div>
+                <div class="pc-score-bar"><div class="pc-score-fill"></div></div>
+                <div class="pc-score-label"></div>
+                <div class="pc-rate-btns" style="display:none">
+                  <button class="pc-rate-hard" onclick="event.stopPropagation(); app.ratePhrase(false)">😓 Zor</button>
+                  <button class="pc-rate-easy" onclick="event.stopPropagation(); app.ratePhrase(true)">😎 Kolay</button>
+                </div>
               </div>
             </div>
-            <div class="pc-face pc-back glass">
+            <div class="pc-face pc-back">
+              <span class="pc-cat-badge">${icon} ${p.cat}</span>
               <div class="pc-phrase-tr">${p.tr}</div>
-              <div class="pc-rate-btns">
-                <button class="pc-rate-hard" onclick="event.stopPropagation(); app.ratePhrase(false)">😓 Zor</button>
-                <button class="pc-rate-easy" onclick="event.stopPropagation(); app.ratePhrase(true)">😎 Kolay</button>
-              </div>
+              <div class="pc-phrase-en-small">${p.en}</div>
+              <button class="pc-btn-listen" onclick="event.stopPropagation(); app.speakWord('${safe}')">🔊 Dinle</button>
             </div>
           </div>
         </div>
-      </div>
-    `;
-  }
 
-  changePhrase(delta) {
-    this.state.phraseIdx += delta;
-    this.state.phraseFlipped = false;
-    this.playSFX('pop');
-    this.renderPhraseCard();
-  }
+        <div class="pc-kb-hint desktop-only">⌨️ <b>Boşluk</b> (Çevir) &nbsp;•&nbsp; <b>←/→</b> (Önceki/Sonraki)</div>
+        <div class="pc-swipe-hint mobile-only">← Kaydır: Önceki &nbsp;&nbsp;|&nbsp;&nbsp; Sonraki: Sağa →</div>
+        ${isLast ? '<div class="pc-done-hint">✅ Tüm kalıpları tamamladın!</div>' : ''}
+      </div>`;
 
-  flipPhraseCard() {
-    this.state.phraseFlipped = !this.state.phraseFlipped;
-    this.playSFX('pop');
-    this.renderPhraseCard();
-  }
-
-  ratePhrase(isEasy) {
-    const p = this.state.phrasePool[this.state.phraseIdx];
-    if (!p) return;
-
-    const cur = this.state.phrasesMastery[p.en] || 0;
-    this.state.phrasesMastery[p.en] = isEasy ? Math.min(2, cur + 1) : Math.max(0, cur - 1);
-    localStorage.setItem('ll_pmast', JSON.stringify(this.state.phrasesMastery));
-    
-    this.state.phraseCombo = isEasy ? this.state.phraseCombo + 1 : 0;
-    this.addXP(isEasy ? 20 : 5);
-    this.playSFX(isEasy ? 'success' : 'click');
-    
-    if (isEasy && this.state.phraseIdx < this.state.phrasePool.length - 1) {
-      this.changePhrase(1);
-    } else {
-      this.state.phraseFlipped = false;
-      this.renderPhraseCard();
-    }
-    this.refreshPhraseStats();
+    setTimeout(() => this.initPhraseSwipe(), 0);
   }
 
   // --- SPEAK ---
@@ -1296,14 +1418,14 @@ class LingoApp {
   }
 
   getCurrentSentenceText() {
-    const pool = window.SPEAK_CHALLENGES[this.state.speakDifficulty];
+    const pool = SPEAK_CHALLENGES[this.state.speakDifficulty];
     return pool[this.state.speakIdx % pool.length];
   }
 
   speakCurrentSentence() { this.speakWord(this.getCurrentSentenceText()); }
 
   renderSpeakChallenge() {
-    const pool = window.SPEAK_CHALLENGES[this.state.speakDifficulty];
+    const pool = SPEAK_CHALLENGES[this.state.speakDifficulty];
     const idx = this.state.speakIdx % pool.length;
     const text = pool[idx];
 
@@ -1454,7 +1576,7 @@ class LingoApp {
   }
 
   nextSpeakChallenge() {
-    const pool = window.SPEAK_CHALLENGES[this.state.speakDifficulty];
+    const pool = SPEAK_CHALLENGES[this.state.speakDifficulty];
     if (this.state.isRecording) { this.recognizer.stop(); this.stopRecording(); }
     this.state.speakIdx = (this.state.speakIdx + 1) % pool.length;
     this.renderSpeakChallenge();
@@ -1547,7 +1669,7 @@ class LingoApp {
       }
 
       // Günlük kalıp bonusu
-      const dailyP = window.PHRASES[this.getDailyPhraseIdx()];
+      const dailyP = PHRASES[this.getDailyPhraseIdx()];
       const isDaily = dailyP?.en === text;
       let xp = score > 70 ? 20 : score > 40 ? 10 : 3;
       if (isDaily && score > 80) { xp *= 2; this.showToast('⭐ Günün Kalıbı tamamlandı! 2× XP!'); }
@@ -1585,7 +1707,7 @@ class LingoApp {
     this.state.wrongCount = 0;
     this.state.failedWords = [];
     this.state.learnPool = this.state.selectedCategory === 'all'
-      ? [...window.WORDS] : window.WORDS.filter(w => w.cat === this.state.selectedCategory);
+      ? [...WORDS] : WORDS.filter(w => w.cat === this.state.selectedCategory);
     this.state.learnPool.sort(() => Math.random() - 0.5);
 
     document.getElementById('learn-setup').style.display = 'none';
