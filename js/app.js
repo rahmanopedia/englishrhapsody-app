@@ -58,6 +58,12 @@ class LingoApp {
     this.bindEvents();
     this.renderNav();
     
+    // Global Error Handler
+    window.onerror = (msg, url, line) => {
+      this.showToast(`Hata: ${msg} (Satır: ${line})`);
+      return false;
+    };
+    
     try {
       this.navigate('home');
       setTimeout(() => {
@@ -563,13 +569,17 @@ class LingoApp {
     
     const content = document.getElementById('app-content'); const template = document.getElementById(`tpl-${viewName}`);
     if (template) { content.innerHTML = ''; content.appendChild(template.content.cloneNode(true)); }
-        if (viewName === 'home') this.updateHomeProgress();
-        if (viewName === 'learn') this.setupLearnView();
-        if (viewName === 'reading') this.setupReadingView();
-        if (viewName === 'phrases') this.setupPhrasesView();
-        if (viewName === 'speak') this.setupSpeakView();
-        if (viewName === 'analytics') this.setupAnalyticsView();
-        if (viewName === 'league') this.setupLeagueView();
+    
+    // Defer initialization to ensure DOM is ready
+    setTimeout(() => {
+      if (viewName === 'home') this.updateHomeProgress();
+      if (viewName === 'learn') this.setupLearnView();
+      if (viewName === 'reading') this.setupReadingView();
+      if (viewName === 'phrases') this.setupPhrasesView();
+      if (viewName === 'speak') this.setupSpeakView();
+      if (viewName === 'analytics') this.setupAnalyticsView();
+      if (viewName === 'league') this.setupLeagueView();
+    }, 0);
     
   }
 
@@ -1107,49 +1117,60 @@ class LingoApp {
 
   // --- PHRASES ---
   setupPhrasesView() {
-    const list = document.getElementById('phrases-list');
-    if (!list) return;
+    try {
+      const list = document.getElementById('phrases-list');
+      if (!list) return;
 
-    // Inject stats row
-    const hero = document.querySelector('.phrases-hero');
-    if (hero && !document.getElementById('phrase-stats-row')) {
-      const row = document.createElement('div');
-      row.id = 'phrase-stats-row';
-      row.className = 'phrase-stats-row';
-      row.innerHTML = this.buildPhraseStatsHTML();
-      hero.after(row);
+      const PH_DATA = window.PHRASES || (typeof PHRASES !== 'undefined' ? PHRASES : []);
+      if (!PH_DATA || !PH_DATA.length) {
+        list.innerHTML = '<div class="phrases-empty">⚠️ Veriler yüklenemedi. Lütfen sayfayı yenileyin.</div>';
+        return;
+      }
+
+      // Inject stats row
+      const hero = document.querySelector('.phrases-hero');
+      if (hero && !document.getElementById('phrase-stats-row')) {
+        const row = document.createElement('div');
+        row.id = 'phrase-stats-row';
+        row.className = 'phrase-stats-row';
+        row.innerHTML = this.buildPhraseStatsHTML();
+        hero.after(row);
+      }
+
+      // Daily challenge banner
+      const dailyP = PH_DATA[this.getDailyPhraseIdx()];
+      const searchWrap = document.querySelector('.phrases-search-wrap');
+      if (searchWrap && dailyP && !document.getElementById('daily-banner')) {
+        const banner = document.createElement('div');
+        banner.id = 'daily-banner';
+        banner.className = 'daily-banner glass';
+        banner.innerHTML = `
+          <span class="daily-label">⭐ Günün Kalıbı</span>
+          <span class="daily-phrase">"${dailyP.en}"</span>
+          <button class="daily-go-btn" onclick="app.goToDailyChallenge()">Git →</button>`;
+        searchWrap.before(banner);
+      }
+
+      const catContainer = document.getElementById('phrase-categories');
+      if (catContainer) {
+        const categories = ['all', ...new Set(PH_DATA.map(p => p.cat))];
+        catContainer.innerHTML = categories.map(c => {
+          if (c === 'all') {
+            const totalMastered = Object.values(this.state.phrasesMastery).filter(v => v >= 2).length;
+            return `<button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''}" onclick="app.setPhraseCategory('${c}', this)">✦ Hepsi <span class="cat-pct">${totalMastered}/${PH_DATA.length}</span></button>`;
+          }
+          const catPs = PH_DATA.filter(p => p.cat === c);
+          const masteredN = catPs.filter(p => (this.state.phrasesMastery[p.en] || 0) >= 2).length;
+          const hasBadge = this.state.phrasesBadges.includes(c);
+          return `<button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''} ${hasBadge ? 'pcat-gold' : ''}" onclick="app.setPhraseCategory('${c}', this)">${hasBadge ? '🏆' : ''} ${c} <span class="cat-pct">${masteredN}/${catPs.length}</span></button>`;
+        }).join('');
+      }
+
+      this.renderPhrases();
+    } catch (e) {
+      console.error(e);
+      this.showToast("Kalıplar yüklenirken bir hata oluştu.");
     }
-
-    // Daily challenge banner
-    const dailyP = (typeof PHRASES !== 'undefined' && PHRASES.length) ? PHRASES[this.getDailyPhraseIdx()] : null;
-    const searchWrap = document.querySelector('.phrases-search-wrap');
-    if (searchWrap && dailyP && !document.getElementById('daily-banner')) {
-      const banner = document.createElement('div');
-      banner.id = 'daily-banner';
-      banner.className = 'daily-banner glass';
-      banner.innerHTML = `
-        <span class="daily-label">⭐ Günün Kalıbı</span>
-        <span class="daily-phrase">"${dailyP.en}"</span>
-        <button class="daily-go-btn" onclick="app.goToDailyChallenge()">Git →</button>`;
-      searchWrap.before(banner);
-    }
-
-    const catContainer = document.getElementById('phrase-categories');
-    if (catContainer && typeof PHRASES !== 'undefined') {
-      const categories = ['all', ...new Set(PHRASES.map(p => p.cat))];
-      catContainer.innerHTML = categories.map(c => {
-        if (c === 'all') {
-          const totalMastered = Object.values(this.state.phrasesMastery).filter(v => v >= 2).length;
-          return `<button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''}" onclick="app.setPhraseCategory('${c}', this)">✦ Hepsi <span class="cat-pct">${totalMastered}/${PHRASES.length}</span></button>`;
-        }
-        const catPs = PHRASES.filter(p => p.cat === c);
-        const masteredN = catPs.filter(p => (this.state.phrasesMastery[p.en] || 0) >= 2).length;
-        const hasBadge = this.state.phrasesBadges.includes(c);
-        return `<button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''} ${hasBadge ? 'pcat-gold' : ''}" onclick="app.setPhraseCategory('${c}', this)">${hasBadge ? '🏆' : ''} ${c} <span class="cat-pct">${masteredN}/${catPs.length}</span></button>`;
-      }).join('');
-    }
-
-    this.renderPhrases();
   }
 
   ratePhrase(isEasy) {
@@ -1282,7 +1303,8 @@ class LingoApp {
   }
 
   renderPhrases() {
-    const filtered = PHRASES.filter(p => {
+    const PH_DATA = window.PHRASES || (typeof PHRASES !== 'undefined' ? PHRASES : []);
+    const filtered = PH_DATA.filter(p => {
       const matchCat = this.state.phraseCategory === 'all' || p.cat === this.state.phraseCategory;
       const matchSearch = p.en.toLowerCase().includes(this.state.phraseSearch) ||
                           p.tr.toLowerCase().includes(this.state.phraseSearch);
@@ -1290,7 +1312,6 @@ class LingoApp {
     });
     this.state.phrasePool = filtered;
     
-    // Safety check: ensure index is within bounds of the new pool
     if (this.state.phraseIdx >= filtered.length) {
       this.state.phraseIdx = 0;
     }
@@ -1301,94 +1322,103 @@ class LingoApp {
   }
 
   renderPhraseCard() {
-    const list = document.getElementById('phrases-list');
-    if (!list) return;
-    const pool = this.state.phrasePool;
-    const idx = this.state.phraseIdx;
-    this.state.phraseFlipped = false;
+    try {
+      const list = document.getElementById('phrases-list');
+      if (!list) return;
+      const pool = this.state.phrasePool;
+      const idx = this.state.phraseIdx;
+      this.state.phraseFlipped = false;
 
-    if (pool.length === 0) {
-      list.innerHTML = `<div class="phrases-empty">🔍 Sonuç bulunamadı</div>`;
-      return;
-    }
+      if (pool.length === 0) {
+        list.innerHTML = `<div class="phrases-empty">🔍 Sonuç bulunamadı</div>`;
+        return;
+      }
 
-    const CAT_ICON = {
-      'Selamlaşma':'👋','Sosyal':'🤝','Seyahat':'✈️',
-      'Alışveriş':'🛍️','Restoran':'🍽️','Acil':'🚨',
-      'Günlük':'🌅','Tartışma':'💬','İş':'💼',
-      'Deyim':'📝','Duygular':'😊'
-    };
+      const CAT_ICON = {
+        'Selamlaşma':'👋','Sosyal':'🤝','Seyahat':'✈️',
+        'Alışveriş':'🛍️','Restoran':'🍽️','Acil':'🚨',
+        'Günlük':'🌅','Tartışma':'💬','İş':'💼',
+        'Deyim':'📝','Duygular':'😊'
+      };
 
-    const p = pool[idx];
-    const safe = p.en.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-    const icon = CAT_ICON[p.cat] || '🗣️';
-    const isFirst = idx === 0;
-    const isLast = idx === pool.length - 1;
-    const pct = ((idx + 1) / pool.length) * 100;
-    const mastery = this.getPhraseMastery(p.en);
-    const isDaily = PHRASES[this.getDailyPhraseIdx()]?.en === p.en;
+      const p = pool[idx];
+      if (!p) return;
 
-    // Simple Grammar Engine for Tooltips
-    let tooltipAttr = "";
-    let displayEn = p.en;
-    if (p.en.toLowerCase().includes("how much")) { tooltipAttr = `data-grammar="'How much' sayılamayan isimler veya fiyat sorarken kullanılır."`; displayEn = displayEn.replace(/how much/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
-    else if (p.en.toLowerCase().includes("would you like")) { tooltipAttr = `data-grammar="'Would you like' kibar bir teklif veya davet ifadesidir."`; displayEn = displayEn.replace(/would you like/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
-    else if (p.en.toLowerCase().includes("could you")) { tooltipAttr = `data-grammar="'Could you' (Yapabilir miydiniz?) resmi bir rica kipi."`; displayEn = displayEn.replace(/could you/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
-    else if (p.en.toLowerCase().includes("i'm looking for")) { tooltipAttr = `data-grammar="Present Continuous: Şu an devam eden bir arayışı belirtir."`; displayEn = displayEn.replace(/i'm looking for/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+      const safe = p.en.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      const icon = CAT_ICON[p.cat] || '🗣️';
+      const isFirst = idx === 0;
+      const isLast = idx === pool.length - 1;
+      const pct = ((idx + 1) / pool.length) * 100;
+      const mastery = this.getPhraseMastery(p.en);
+      
+      const PH_DATA = window.PHRASES || (typeof PHRASES !== 'undefined' ? PHRASES : []);
+      const isDaily = PH_DATA.length ? PH_DATA[this.getDailyPhraseIdx()]?.en === p.en : false;
 
-    list.innerHTML = `
-      <div class="pc-flashcard-wrap">
-        <div class="pc-topbar">
-          <button class="pc-nav-btn" onclick="app.prevPhrase()" ${isFirst ? 'disabled' : ''}>← Önceki</button>
-          <div class="pc-topbar-center">
-            <span class="pc-progress">${idx + 1} / ${pool.length}</span>
-            <button class="pc-shuffle-btn" onclick="app.shufflePhrases()" title="Karıştır">🔀</button>
+      // Simple Grammar Engine for Tooltips
+      let tooltipAttr = "";
+      let displayEn = p.en;
+      if (p.en.toLowerCase().includes("how much")) { tooltipAttr = `data-grammar="'How much' sayılamayan isimler veya fiyat sorarken kullanılır."`; displayEn = displayEn.replace(/how much/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+      else if (p.en.toLowerCase().includes("would you like")) { tooltipAttr = `data-grammar="'Would you like' kibar bir teklif veya davet ifadesidir."`; displayEn = displayEn.replace(/would you like/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+      else if (p.en.toLowerCase().includes("could you")) { tooltipAttr = `data-grammar="'Could you' (Yapabilir miydiniz?) resmi bir rica kipi."`; displayEn = displayEn.replace(/could you/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+      else if (p.en.toLowerCase().includes("i'm looking for")) { tooltipAttr = `data-grammar="Present Continuous: Şu an devam eden bir arayışı belirtir."`; displayEn = displayEn.replace(/i'm looking for/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+
+      list.innerHTML = `
+        <div class="pc-flashcard-wrap">
+          <div class="pc-topbar">
+            <button class="pc-nav-btn" onclick="app.prevPhrase()" ${isFirst ? 'disabled' : ''}>← Önceki</button>
+            <div class="pc-topbar-center">
+              <span class="pc-progress">${idx + 1} / ${pool.length}</span>
+              <button class="pc-shuffle-btn" onclick="app.shufflePhrases()" title="Karıştır">🔀</button>
+            </div>
+            <button class="pc-nav-btn" onclick="app.nextPhrase()" ${isLast ? 'disabled' : ''}>Sonraki →</button>
           </div>
-          <button class="pc-nav-btn" onclick="app.nextPhrase()" ${isLast ? 'disabled' : ''}>Sonraki →</button>
-        </div>
-        <div class="pc-progress-bar"><div class="pc-progress-fill" style="width:${pct}%"></div></div>
+          <div class="pc-progress-bar"><div class="pc-progress-fill" style="width:${pct}%"></div></div>
 
-        <div class="pc-scene animate-in" id="pc-scene">
-          <div class="pc-swi-l">← Önceki</div>
-          <div class="pc-swi-r">Sonraki →</div>
-          <div class="pc-flip-card" id="pc-flip-card" data-cat="${p.cat}">
-            <div class="pc-face pc-front">
-              <div class="pc-front-top">
-                <span class="pc-cat-badge">${icon} ${p.cat}</span>
-                ${isDaily ? '<span class="pc-daily-badge">⭐ Günün Kalıbı</span>' : ''}
-                <span class="pc-mastery-stars">${'⭐'.repeat(mastery)}${'☆'.repeat(2 - mastery)}</span>
-              </div>
-              <div class="pc-phrase-en">${displayEn}</div>
-              <div class="pc-flip-hint">👆 Türkçeyi görmek için tıkla</div>
-              <div class="pc-back-actions">
-                <button class="pc-btn-listen" onclick="event.stopPropagation(); app.speakWord('${safe}')">🔊 Dinle</button>
-                <button class="pc-btn-mic" onclick="event.stopPropagation(); app.togglePhraseRecord(this, '${safe}')">🎤 Telaffuz Et</button>
-              </div>
-              <div class="pc-result" style="display:none">
-                <div class="pc-transcript">🎙️ Dinliyorum...</div>
-                <div class="pc-score-bar"><div class="pc-score-fill"></div></div>
-                <div class="pc-score-label"></div>
-                <div class="pc-rate-btns" style="display:none">
-                  <button class="pc-rate-hard" onclick="event.stopPropagation(); app.ratePhrase(false)">😓 Zor</button>
-                  <button class="pc-rate-easy" onclick="event.stopPropagation(); app.ratePhrase(true)">😎 Kolay</button>
+          <div class="pc-scene animate-in" id="pc-scene">
+            <div class="pc-swi-l">← Önceki</div>
+            <div class="pc-swi-r">Sonraki →</div>
+            <div class="pc-flip-card" id="pc-flip-card" data-cat="${p.cat}">
+              <div class="pc-face pc-front">
+                <div class="pc-front-top">
+                  <span class="pc-cat-badge">${icon} ${p.cat}</span>
+                  ${isDaily ? '<span class="pc-daily-badge">⭐ Günün Kalıbı</span>' : ''}
+                  <span class="pc-mastery-stars">${'⭐'.repeat(mastery)}${'☆'.repeat(2 - mastery)}</span>
+                </div>
+                <div class="pc-phrase-en">${displayEn}</div>
+                <div class="pc-flip-hint">👆 Türkçeyi görmek için tıkla</div>
+                <div class="pc-back-actions">
+                  <button class="pc-btn-listen" onclick="event.stopPropagation(); app.speakWord('${safe}')">🔊 Dinle</button>
+                  <button class="pc-btn-mic" onclick="event.stopPropagation(); app.togglePhraseRecord(this, '${safe}')">🎤 Telaffuz Et</button>
+                </div>
+                <div class="pc-result" style="display:none">
+                  <div class="pc-transcript">🎙️ Dinliyorum...</div>
+                  <div class="pc-score-bar"><div class="pc-score-fill"></div></div>
+                  <div class="pc-score-label"></div>
+                  <div class="pc-rate-btns" style="display:none">
+                    <button class="pc-rate-hard" onclick="event.stopPropagation(); app.ratePhrase(false)">😓 Zor</button>
+                    <button class="pc-rate-easy" onclick="event.stopPropagation(); app.ratePhrase(true)">😎 Kolay</button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="pc-face pc-back">
-              <span class="pc-cat-badge">${icon} ${p.cat}</span>
-              <div class="pc-phrase-tr">${p.tr}</div>
-              <div class="pc-phrase-en-small">${p.en}</div>
-              <button class="pc-btn-listen" onclick="event.stopPropagation(); app.speakWord('${safe}')">🔊 Dinle</button>
+              <div class="pc-face pc-back">
+                <span class="pc-cat-badge">${icon} ${p.cat}</span>
+                <div class="pc-phrase-tr">${p.tr}</div>
+                <div class="pc-phrase-en-small">${p.en}</div>
+                <button class="pc-btn-listen" onclick="event.stopPropagation(); app.speakWord('${safe}')">🔊 Dinle</button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="pc-kb-hint desktop-only">⌨️ <b>Boşluk</b> (Çevir) &nbsp;•&nbsp; <b>←/→</b> (Önceki/Sonraki)</div>
-        <div class="pc-swipe-hint mobile-only">← Kaydır: Önceki &nbsp;&nbsp;|&nbsp;&nbsp; Sonraki: Sağa →</div>
-        ${isLast ? '<div class="pc-done-hint">✅ Tüm kalıpları tamamladın!</div>' : ''}
-      </div>`;
+          <div class="pc-kb-hint desktop-only">⌨️ <b>Boşluk</b> (Çevir) &nbsp;•&nbsp; <b>←/→</b> (Önceki/Sonraki)</div>
+          <div class="pc-swipe-hint mobile-only">← Kaydır: Önceki &nbsp;&nbsp;|&nbsp;&nbsp; Sonraki: Sağa →</div>
+          ${isLast ? '<div class="pc-done-hint">✅ Tüm kalıpları tamamladın!</div>' : ''}
+        </div>`;
 
-    setTimeout(() => this.initPhraseSwipe(), 0);
+      setTimeout(() => this.initPhraseSwipe(), 0);
+    } catch (e) {
+      console.error(e);
+      document.getElementById('phrases-list').innerHTML = '<div class="phrases-empty">⚠️ Kart oluşturulamadı.</div>';
+    }
   }
 
   // --- SPEAK ---
