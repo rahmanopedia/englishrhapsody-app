@@ -911,23 +911,27 @@ class LingoApp {
       return Math.round((learned / pool.length) * 100);
     });
 
-    new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: cats,
-        datasets: [{
-          label: 'Ustalık %',
-          data: data,
-          backgroundColor: 'rgba(0, 243, 255, 0.2)',
-          borderColor: '#00f3ff',
-          pointBackgroundColor: '#00f3ff'
-        }]
-      },
-      options: {
-        scales: { r: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.1)' }, angleLines: { color: 'rgba(255,255,255,0.1)' } } },
-        plugins: { legend: { display: false } }
-      }
-    });
+    try {
+      new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: cats,
+          datasets: [{
+            label: 'Ustalık %',
+            data: data,
+            backgroundColor: 'rgba(0, 243, 255, 0.2)',
+            borderColor: '#00f3ff',
+            pointBackgroundColor: '#00f3ff'
+          }]
+        },
+        options: {
+          scales: { r: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.1)' }, angleLines: { color: 'rgba(255,255,255,0.1)' } } },
+          plugins: { legend: { display: false } }
+        }
+      });
+    } catch(e) {
+      ctx.parentElement.innerHTML += '<p style="color:var(--text-muted);font-size:0.8rem;margin-top:10px;">Grafik yüklenemedi (Chart.js hatası).</p>';
+    }
   }
 
   // --- LEAGUE ---
@@ -1103,6 +1107,9 @@ class LingoApp {
 
   // --- PHRASES ---
   setupPhrasesView() {
+    const list = document.getElementById('phrases-list');
+    if (!list) return;
+
     // Inject stats row
     const hero = document.querySelector('.phrases-hero');
     if (hero && !document.getElementById('phrase-stats-row')) {
@@ -1114,7 +1121,7 @@ class LingoApp {
     }
 
     // Daily challenge banner
-    const dailyP = PHRASES[this.getDailyPhraseIdx()];
+    const dailyP = (typeof PHRASES !== 'undefined' && PHRASES.length) ? PHRASES[this.getDailyPhraseIdx()] : null;
     const searchWrap = document.querySelector('.phrases-search-wrap');
     if (searchWrap && dailyP && !document.getElementById('daily-banner')) {
       const banner = document.createElement('div');
@@ -1128,18 +1135,19 @@ class LingoApp {
     }
 
     const catContainer = document.getElementById('phrase-categories');
-    if (!catContainer) return;
-    const categories = ['all', ...new Set(PHRASES.map(p => p.cat))];
-    catContainer.innerHTML = categories.map(c => {
-      if (c === 'all') {
-        const totalMastered = Object.values(this.state.phrasesMastery).filter(v => v >= 2).length;
-        return `<button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''}" onclick="app.setPhraseCategory('${c}', this)">✦ Hepsi <span class="cat-pct">${totalMastered}/${PHRASES.length}</span></button>`;
-      }
-      const catPs = PHRASES.filter(p => p.cat === c);
-      const masteredN = catPs.filter(p => (this.state.phrasesMastery[p.en] || 0) >= 2).length;
-      const hasBadge = this.state.phrasesBadges.includes(c);
-      return `<button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''} ${hasBadge ? 'pcat-gold' : ''}" onclick="app.setPhraseCategory('${c}', this)">${hasBadge ? '🏆' : ''} ${c} <span class="cat-pct">${masteredN}/${catPs.length}</span></button>`;
-    }).join('');
+    if (catContainer && typeof PHRASES !== 'undefined') {
+      const categories = ['all', ...new Set(PHRASES.map(p => p.cat))];
+      catContainer.innerHTML = categories.map(c => {
+        if (c === 'all') {
+          const totalMastered = Object.values(this.state.phrasesMastery).filter(v => v >= 2).length;
+          return `<button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''}" onclick="app.setPhraseCategory('${c}', this)">✦ Hepsi <span class="cat-pct">${totalMastered}/${PHRASES.length}</span></button>`;
+        }
+        const catPs = PHRASES.filter(p => p.cat === c);
+        const masteredN = catPs.filter(p => (this.state.phrasesMastery[p.en] || 0) >= 2).length;
+        const hasBadge = this.state.phrasesBadges.includes(c);
+        return `<button class="pcat-btn ${this.state.phraseCategory === c ? 'active' : ''} ${hasBadge ? 'pcat-gold' : ''}" onclick="app.setPhraseCategory('${c}', this)">${hasBadge ? '🏆' : ''} ${c} <span class="cat-pct">${masteredN}/${catPs.length}</span></button>`;
+      }).join('');
+    }
 
     this.renderPhrases();
   }
@@ -1281,6 +1289,12 @@ class LingoApp {
       return matchCat && matchSearch;
     });
     this.state.phrasePool = filtered;
+    
+    // Safety check: ensure index is within bounds of the new pool
+    if (this.state.phraseIdx >= filtered.length) {
+      this.state.phraseIdx = 0;
+    }
+
     const badge = document.getElementById('phrase-count-badge');
     if (badge) badge.textContent = `${filtered.length} kalıp`;
     this.renderPhraseCard();
