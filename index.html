@@ -50,10 +50,10 @@
   <nav class="glass-nav">
     <div class="logo">English<span class="neon-text"> Rhapsody</span></div>
     <div class="nav-links desktop-only">
-      <button class="nav-btn active" data-target="home">🚀 Ana Merkez</button>
-      <button class="nav-btn" data-target="learn">🃏 Akıllı Kartlar</button>
-      <button class="nav-btn" data-target="phrases">🗣️ Günlük Kalıplar</button>
-      <button class="nav-btn" data-target="speak">🎙️ AI Konuşma</button>
+      <button class="nav-btn active ripple" data-target="home">🚀 Ana Merkez</button>
+      <button class="nav-btn ripple" data-target="learn">🃏 Akıllı Kartlar</button>
+      <button class="nav-btn ripple" data-target="phrases">🗣️ Günlük Kalıplar</button>
+      <button class="nav-btn ripple" data-target="speak">🎙️ AI Konuşma</button>
     </div>
     <div class="stats">
       <div class="stat-badge streak">🔥 <span id="streak-val">1</span></div>
@@ -64,19 +64,19 @@
 
   <!-- Mobile Bottom Nav -->
   <div class="mobile-nav">
-    <button class="m-nav-btn active" data-target="home">
+    <button class="m-nav-btn active ripple" data-target="home">
       <span class="m-icon">🏠</span>
       <span class="m-label">Ana Sayfa</span>
     </button>
-    <button class="m-nav-btn" data-target="learn">
+    <button class="m-nav-btn ripple" data-target="learn">
       <span class="m-icon">🃏</span>
       <span class="m-label">Kartlar</span>
     </button>
-    <button class="m-nav-btn" data-target="phrases">
+    <button class="m-nav-btn ripple" data-target="phrases">
       <span class="m-icon">🗣️</span>
       <span class="m-label">Kalıplar</span>
     </button>
-    <button class="m-nav-btn" data-target="speak">
+    <button class="m-nav-btn ripple" data-target="speak">
       <span class="m-icon">🎙️</span>
       <span class="m-label">Konuşma</span>
     </button>
@@ -85,6 +85,10 @@
   <main id="app-content"></main>
 
   <div id="toast-container"></div>
+  <div id="confetti-canvas-container" style="position:fixed; inset:0; pointer-events:none; z-index:10001;"></div>
+
+  <!-- External Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Templates -->
   <template id="tpl-home">

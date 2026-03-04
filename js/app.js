@@ -505,6 +505,9 @@ class LingoApp {
       this.state.xp -= nextLvlXp; 
       this.showToast(`🎉 Seviye atladın! Level ${this.state.level}`); 
       this.playSFX('success'); 
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#00f3ff', '#bc13fe', '#ff007f'] });
+      }
     }
     localStorage.setItem('ll_xp', this.state.xp); localStorage.setItem('ll_lvl', this.state.level);
     this.updateAppTheme();
@@ -740,11 +743,20 @@ class LingoApp {
   checkVisualMatch(selectedEn, element) {
     const correctWord = this.state.learnPool[this.state.currentCardIdx];
     if (element.parentElement.classList.contains('locked')) return;
-    element.parentElement.classList.add('locked');
-    if (selectedEn === correctWord.en) { this.state.correctCount++; element.classList.add('correct'); this.playSFX('success'); this.addXP(30); this.updateMastery(selectedEn, true); }
-    else { this.state.wrongCount++; this.state.failedWords.push(correctWord.en); element.classList.add('wrong'); this.playSFX('click'); this.addXP(5); this.updateMastery(correctWord.en, false); }
-    this.updateSidebar();
-    setTimeout(() => { this.state.currentCardIdx++; if (this.state.currentCardIdx % 3 === 0) this.preloadImages(this.state.learnPool, this.state.currentCardIdx); if (this.state.currentCardIdx >= this.state.learnPool.length) this.showFinishScreen("Oyun Tamamlandı!"); else this.renderVisualMatch(); }, 1000);
+    
+    if (selectedEn === correctWord.en) { 
+      element.parentElement.classList.add('locked');
+      this.state.correctCount++; element.classList.add('correct'); 
+      this.playSFX('success'); this.addXP(30); this.updateMastery(selectedEn, true); 
+      setTimeout(() => { this.state.currentCardIdx++; if (this.state.currentCardIdx % 3 === 0) this.preloadImages(this.state.learnPool, this.state.currentCardIdx); if (this.state.currentCardIdx >= this.state.learnPool.length) this.showFinishScreen("Oyun Tamamlandı!"); else this.renderVisualMatch(); }, 1000);
+    }
+    else { 
+      element.classList.add('wrong', 'animate-shake'); 
+      this.state.wrongCount++; this.state.failedWords.push(correctWord.en); 
+      this.playSFX('click'); this.addXP(5); this.updateMastery(correctWord.en, false); 
+      setTimeout(() => element.classList.remove('animate-shake'), 400);
+      this.updateSidebar();
+    }
   }
 
   updateMastery(wordEn, isSuccess) {
@@ -758,11 +770,21 @@ class LingoApp {
   answerCard(isEasy) {
     const card = document.getElementById('flashcard'); if(!card || card.classList.contains('swipe-right') || card.classList.contains('swipe-left')) return;
     const word = this.state.learnPool[this.state.currentCardIdx];
-    if (isEasy) { this.state.correctCount++; this.playSFX('success'); this.addXP(20); this.updateMastery(word.en, true); }
-    else { this.state.wrongCount++; this.state.failedWords.push(word.en); this.playSFX('click'); this.addXP(5); this.updateMastery(word.en, false); }
+    if (isEasy) { 
+      this.state.correctCount++; this.playSFX('success'); this.addXP(20); this.updateMastery(word.en, true); 
+      card.classList.add('swipe-right');
+    }
+    else { 
+      this.state.wrongCount++; this.state.failedWords.push(word.en); this.playSFX('click'); this.addXP(5); this.updateMastery(word.en, false); 
+      card.classList.add('animate-shake');
+      setTimeout(() => {
+        card.classList.remove('animate-shake');
+        card.classList.add('swipe-left');
+      }, 400);
+    }
     this.updateSidebar();
-    card.classList.add(isEasy ? 'swipe-right' : 'swipe-left');
-    setTimeout(() => { this.state.currentCardIdx++; if (this.state.currentCardIdx % 5 === 0) this.preloadImages(this.state.learnPool, this.state.currentCardIdx); if (this.state.currentCardIdx >= this.state.learnPool.length) { if(this.state.timer) clearInterval(this.state.timer); this.showFinishScreen("Set Tamamlandı!"); } else this.renderFlashcard(); }, 400);
+    const delay = isEasy ? 400 : 800;
+    setTimeout(() => { this.state.currentCardIdx++; if (this.state.currentCardIdx % 5 === 0) this.preloadImages(this.state.learnPool, this.state.currentCardIdx); if (this.state.currentCardIdx >= this.state.learnPool.length) { if(this.state.timer) clearInterval(this.state.timer); this.showFinishScreen("Set Tamamlandı!"); } else this.renderFlashcard(); }, delay);
   }
 
   showFinishScreen(title) {
