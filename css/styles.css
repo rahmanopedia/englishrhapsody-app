@@ -129,6 +129,64 @@ body.rank-6 { --theme-accent: #ff5722; --theme-glow: rgba(255, 87, 34, 0.4); }
   .analytics-grid { grid-template-columns: 1fr; }
 }
 
+/* Focus Mode */
+body.focus-mode::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 998;
+  pointer-events: none;
+}
+body.focus-mode .glass-nav, body.focus-mode .mobile-nav {
+  opacity: 0.1;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+body.focus-mode #app-content {
+  position: relative;
+  z-index: 999;
+}
+.focus-btn {
+  background: transparent; border: 1px solid var(--glass-border); border-radius: 50%; width: 36px; height: 36px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+}
+.focus-btn:hover { background: rgba(255,255,255,0.1); }
+
+/* Reading / Cloze Deletion */
+.view-reading { max-width: 900px; width: 100%; padding: 30px 20px 100px; display: flex; flex-direction: column; gap: 20px; }
+.reading-header h1 { font-size: 2rem; font-weight: 900; }
+.reading-levels { display: flex; gap: 10px; padding: 10px; border-radius: 16px; width: fit-content; }
+.rd-level-btn { background: transparent; border: 1px solid transparent; color: var(--text-muted); padding: 8px 16px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+.rd-level-btn.active { background: rgba(var(--theme-accent-rgb), 0.15); color: var(--theme-accent); border-color: var(--theme-accent); }
+.story-title { font-size: 1.5rem; color: var(--theme-accent); margin-bottom: 15px; }
+.story-text { font-size: 1.25rem; line-height: 1.8; color: white; }
+.cloze-blank { 
+  display: inline-block; min-width: 100px; border-bottom: 2px solid var(--theme-accent); 
+  text-align: center; color: var(--theme-accent); cursor: pointer; padding: 0 10px;
+  transition: all 0.2s; font-weight: 800; background: rgba(255,255,255,0.05); border-radius: 8px 8px 0 0;
+}
+.cloze-blank.filled { border-bottom-color: var(--success); color: var(--success); }
+.cloze-blank.error { border-bottom-color: var(--danger); color: var(--danger); animation: shake 0.4s; }
+.cloze-options { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--glass-border); }
+.cloze-opt-btn { 
+  background: var(--glass-bg); border: 1px solid var(--glass-border); color: white;
+  padding: 10px 20px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+}
+.cloze-opt-btn:hover { border-color: var(--theme-accent); transform: translateY(-2px); box-shadow: 0 4px 10px var(--theme-glow); }
+.cloze-opt-btn.used { opacity: 0.3; pointer-events: none; }
+
+/* Grammar Tooltip */
+.has-tooltip { position: relative; border-bottom: 1px dashed rgba(255,255,255,0.3); cursor: help; }
+.has-tooltip::after {
+  content: attr(data-grammar);
+  position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
+  background: #111; color: var(--theme-accent); padding: 6px 12px; border-radius: 6px;
+  font-size: 0.75rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  border: 1px solid var(--theme-accent); box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 100;
+}
+.has-tooltip:hover::after { opacity: 1; }
+
 * {
   box-sizing: border-box;
   margin: 0;

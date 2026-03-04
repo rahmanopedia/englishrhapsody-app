@@ -52,12 +52,14 @@
     <div class="nav-links desktop-only">
       <button class="nav-btn active ripple" data-target="home">🚀 Ana Merkez</button>
       <button class="nav-btn ripple" data-target="learn">🃏 Akıllı Kartlar</button>
+      <button class="nav-btn ripple" data-target="reading">📖 Okuma</button>
       <button class="nav-btn ripple" data-target="analytics">📊 Gelişim</button>
       <button class="nav-btn ripple" data-target="league">🏆 Lig</button>
       <button class="nav-btn ripple" data-target="phrases">🗣️ Kalıplar</button>
       <button class="nav-btn ripple" data-target="speak">🎙️ Konuşma</button>
     </div>
     <div class="stats">
+      <button class="focus-btn ripple" onclick="app.toggleFocusMode()" title="Odak Modu">🧘</button>
       <div class="stat-badge streak">🔥 <span id="streak-val">1</span></div>
       <div class="stat-badge xp">⚡ <span id="xp-val">0</span> XP</div>
       <div class="stat-badge lvl">🏆 Lv <span id="lvl-val">1</span></div>
@@ -65,14 +67,18 @@
   </nav>
 
   <!-- Mobile Bottom Nav -->
-  <div class="mobile-nav">
+  <div class="mobile-nav" style="overflow-x: auto; justify-content: flex-start; gap: 15px; padding: 0 15px;">
     <button class="m-nav-btn active ripple" data-target="home">
       <span class="m-icon">🏠</span>
-      <span class="m-label">Ana Sayfa</span>
+      <span class="m-label">Ana Merkez</span>
     </button>
     <button class="m-nav-btn ripple" data-target="learn">
       <span class="m-icon">🃏</span>
       <span class="m-label">Kartlar</span>
+    </button>
+    <button class="m-nav-btn ripple" data-target="reading">
+      <span class="m-icon">📖</span>
+      <span class="m-label">Okuma</span>
     </button>
     <button class="m-nav-btn ripple" data-target="analytics">
       <span class="m-icon">📊</span>
@@ -98,6 +104,24 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Templates -->
+  <template id="tpl-reading">
+    <div class="view-reading animate-in">
+      <div class="reading-header">
+        <h1>📖 Hikayeler & Bağlam</h1>
+        <p>Okuduğunu anlama ve boşluk doldurma (Cloze Deletion)</p>
+      </div>
+
+      <div class="reading-levels glass">
+        <button class="rd-level-btn active" onclick="app.setReadingLevel('Kolay', this)">Kolay</button>
+        <button class="rd-level-btn" onclick="app.setReadingLevel('Orta', this)">Orta</button>
+        <button class="rd-level-btn" onclick="app.setReadingLevel('İleri', this)">İleri</button>
+      </div>
+
+      <div id="reading-game-area" class="glass" style="margin-top: 20px; padding: 25px; border-radius: 20px; position: relative;">
+        <!-- JS renders active story here -->
+      </div>
+    </div>
+  </template>
   <template id="tpl-analytics">
     <div class="view-analytics animate-in">
       <div class="analytics-header">

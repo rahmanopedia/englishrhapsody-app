@@ -41,7 +41,11 @@ class LingoApp {
       // Spaced Repetition & Analytics
       srData: JSON.parse(localStorage.getItem('ll_sr_data')) || {},
       history: JSON.parse(localStorage.getItem('ll_history')) || {}, // { date: xp }
-      voiceAccent: localStorage.getItem('ll_accent') || 'en-US'
+      voiceAccent: localStorage.getItem('ll_accent') || 'en-US',
+      // Reading logic
+      readingLevel: 'Kolay',
+      currentStoryIdx: 0,
+      activeBlank: null
     };
 
     this.synth = window.speechSynthesis;
@@ -561,11 +565,17 @@ class LingoApp {
     if (template) { content.innerHTML = ''; content.appendChild(template.content.cloneNode(true)); }
         if (viewName === 'home') this.updateHomeProgress();
         if (viewName === 'learn') this.setupLearnView();
+        if (viewName === 'reading') this.setupReadingView();
         if (viewName === 'phrases') this.setupPhrasesView();
         if (viewName === 'speak') this.setupSpeakView();
         if (viewName === 'analytics') this.setupAnalyticsView();
         if (viewName === 'league') this.setupLeagueView();
     
+  }
+
+  toggleFocusMode() {
+    document.body.classList.toggle('focus-mode');
+    this.playSFX('pop');
   }
 
   updateHomeProgress() {
@@ -947,6 +957,102 @@ class LingoApp {
     `).join('');
   }
 
+  // --- READING (CLOZE DELETION) ---
+  setupReadingView() {
+    this.renderReadingStory();
+  }
+
+  setReadingLevel(level, btn) {
+    this.state.readingLevel = level;
+    this.state.currentStoryIdx = 0;
+    document.querySelectorAll('.rd-level-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    this.playSFX('click');
+    this.renderReadingStory();
+  }
+
+  renderReadingStory() {
+    const container = document.getElementById('reading-game-area');
+    if (!container) return;
+
+    const levelStories = STORIES.filter(s => s.level === this.state.readingLevel);
+    if (!levelStories.length) {
+      container.innerHTML = '<p>Bu seviyede içerik bulunamadı.</p>';
+      return;
+    }
+
+    const story = levelStories[this.state.currentStoryIdx % levelStories.length];
+    
+    // Parse text and create blanks
+    let htmlText = story.text.replace(/{([^}]+)}/g, (match, word) => {
+      return `<span class="cloze-blank" data-answer="${word}" onclick="app.selectBlank(this)">____</span>`;
+    });
+
+    // Shuffle options
+    const optionsHtml = story.options.sort(() => Math.random() - 0.5).map(opt => 
+      `<button class="cloze-opt-btn" onclick="app.fillBlank('${opt}', this)">${opt}</button>`
+    ).join('');
+
+    container.innerHTML = `
+      <h2 class="story-title">${story.title}</h2>
+      <div class="story-text">${htmlText}</div>
+      <div class="cloze-options" id="cloze-options">${optionsHtml}</div>
+      <div style="margin-top: 20px; text-align:right;">
+        <button class="btn pink" onclick="app.nextStory()" style="display:none;" id="btn-next-story">Sonraki Hikaye →</button>
+      </div>
+    `;
+    this.state.activeBlank = null;
+  }
+
+  selectBlank(el) {
+    if (el.classList.contains('filled')) return;
+    document.querySelectorAll('.cloze-blank').forEach(b => b.style.borderColor = 'var(--theme-accent)');
+    el.style.borderColor = 'white';
+    this.state.activeBlank = el;
+    this.playSFX('click');
+  }
+
+  fillBlank(word, btn) {
+    if (!this.state.activeBlank) {
+      this.showToast('Lütfen önce metindeki bir boşluğu (____) seçin!');
+      return;
+    }
+
+    const correctAns = this.state.activeBlank.dataset.answer;
+    if (word === correctAns) {
+      this.state.activeBlank.innerText = word;
+      this.state.activeBlank.classList.add('filled');
+      this.state.activeBlank.classList.remove('error');
+      btn.classList.add('used');
+      this.state.activeBlank = null;
+      this.playSFX('success');
+      this.addXP(10);
+      
+      this.checkStoryComplete();
+    } else {
+      this.state.activeBlank.classList.add('error');
+      this.playSFX('click');
+      setTimeout(() => this.state.activeBlank.classList.remove('error'), 400);
+    }
+  }
+
+  checkStoryComplete() {
+    const blanks = document.querySelectorAll('.cloze-blank');
+    const allFilled = Array.from(blanks).every(b => b.classList.contains('filled'));
+    if (allFilled) {
+      document.getElementById('cloze-options').style.display = 'none';
+      document.getElementById('btn-next-story').style.display = 'inline-block';
+      this.addXP(50);
+      if (typeof confetti === 'function') confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    }
+  }
+
+  nextStory() {
+    this.state.currentStoryIdx++;
+    this.renderReadingStory();
+    this.playSFX('pop');
+  }
+
   setPhraseMastery(en, level) {
     this.state.phrasesMastery[en] = Math.max(0, Math.min(2, level));
     localStorage.setItem('ll_pmast', JSON.stringify(this.state.phrasesMastery));
@@ -1208,6 +1314,14 @@ class LingoApp {
     const mastery = this.getPhraseMastery(p.en);
     const isDaily = PHRASES[this.getDailyPhraseIdx()]?.en === p.en;
 
+    // Simple Grammar Engine for Tooltips
+    let tooltipAttr = "";
+    let displayEn = p.en;
+    if (p.en.toLowerCase().includes("how much")) { tooltipAttr = `data-grammar="'How much' sayılamayan isimler veya fiyat sorarken kullanılır."`; displayEn = displayEn.replace(/how much/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+    else if (p.en.toLowerCase().includes("would you like")) { tooltipAttr = `data-grammar="'Would you like' kibar bir teklif veya davet ifadesidir."`; displayEn = displayEn.replace(/would you like/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+    else if (p.en.toLowerCase().includes("could you")) { tooltipAttr = `data-grammar="'Could you' (Yapabilir miydiniz?) resmi bir rica kipi."`; displayEn = displayEn.replace(/could you/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+    else if (p.en.toLowerCase().includes("i'm looking for")) { tooltipAttr = `data-grammar="Present Continuous: Şu an devam eden bir arayışı belirtir."`; displayEn = displayEn.replace(/i'm looking for/i, '<span class="has-tooltip" '+tooltipAttr+'>$&</span>'); }
+
     list.innerHTML = `
       <div class="pc-flashcard-wrap">
         <div class="pc-topbar">
@@ -1230,7 +1344,7 @@ class LingoApp {
                 ${isDaily ? '<span class="pc-daily-badge">⭐ Günün Kalıbı</span>' : ''}
                 <span class="pc-mastery-stars">${'⭐'.repeat(mastery)}${'☆'.repeat(2 - mastery)}</span>
               </div>
-              <div class="pc-phrase-en">${p.en}</div>
+              <div class="pc-phrase-en">${displayEn}</div>
               <div class="pc-flip-hint">👆 Türkçeyi görmek için tıkla</div>
               <div class="pc-back-actions">
                 <button class="pc-btn-listen" onclick="event.stopPropagation(); app.speakWord('${safe}')">🔊 Dinle</button>

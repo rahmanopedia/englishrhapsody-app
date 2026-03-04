@@ -131,7 +131,41 @@ for (let i = 0; i < 300; i++) {
   PHRASES.push(phraseBases[i % phraseBases.length]);
 }
 
-const fileContent = `const WORDS = ${JSON.stringify(WORDS, null, 2)};\n\nconst SPEAK_CHALLENGES = ${JSON.stringify(SPEAK_CHALLENGES, null, 2)};\n\nconst PHRASES = ${JSON.stringify(PHRASES, null, 2)};\n`;
+// STORIES (Reading Comprehension / Cloze Deletion)
+const storyBases = [
+  {
+    title: "A Day in the Park",
+    text: "It was a beautiful sunny day. Alex decided to go to the {park}. He took his {dog} with him. They played {catch} for an hour. Afterwards, they sat under a large {tree} to rest.",
+    options: ["park", "dog", "catch", "tree", "car", "cat", "run", "building"],
+    level: "Kolay"
+  },
+  {
+    title: "The Job Interview",
+    text: "Sarah was very nervous about her {interview}. she wore her best {suit} and arrived ten minutes {early}. The manager asked her about her previous {experience}. She answered confidently.",
+    options: ["interview", "suit", "early", "experience", "party", "dress", "late", "hobby"],
+    level: "Orta"
+  },
+  {
+    title: "Space Exploration",
+    text: "The recent advancements in {astrophysics} have been remarkable. Scientists have discovered a new {exoplanet} in a distant galaxy. This could potentially answer questions about {extraterrestrial} life and the origins of our {universe}.",
+    options: ["astrophysics", "exoplanet", "extraterrestrial", "universe", "biology", "star", "human", "city"],
+    level: "İleri"
+  }
+];
+
+let STORIES = [];
+for (let i = 0; i < 50; i++) {
+  let base = storyBases[i % storyBases.length];
+  STORIES.push({
+    id: i + 1,
+    title: base.title + (i > 2 ? ` Part ${Math.floor(i/3) + 1}` : ""),
+    text: base.text,
+    options: base.options,
+    level: base.level
+  });
+}
+
+const fileContent = `const WORDS = ${JSON.stringify(WORDS, null, 2)};\n\nconst SPEAK_CHALLENGES = ${JSON.stringify(SPEAK_CHALLENGES, null, 2)};\n\nconst PHRASES = ${JSON.stringify(PHRASES, null, 2)};\n\nconst STORIES = ${JSON.stringify(STORIES, null, 2)};\n`;
 
 fs.writeFileSync('./js/data.js', fileContent, 'utf8');
-console.log('Data generated successfully without numbering and optimized for emojis!');
+console.log('Data generated successfully with reading stories!');
