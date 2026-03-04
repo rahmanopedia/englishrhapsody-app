@@ -55,7 +55,6 @@
       <button class="nav-btn ripple" data-target="reading">📖 Okuma</button>
       <button class="nav-btn ripple" data-target="analytics">📊 Gelişim</button>
       <button class="nav-btn ripple" data-target="league">🏆 Lig</button>
-      <button class="nav-btn ripple" data-target="phrases">🗣️ Kalıplar</button>
       <button class="nav-btn ripple" data-target="speak">🎙️ Konuşma</button>
     </div>
     <div class="stats">
@@ -79,10 +78,6 @@
     <button class="m-nav-btn ripple" data-target="reading">
       <span class="m-icon">📖</span>
       <span class="m-label">Okuma</span>
-    </button>
-    <button class="m-nav-btn ripple" data-target="phrases">
-      <span class="m-icon">🗣️</span>
-      <span class="m-label">Kalıplar</span>
     </button>
     <button class="m-nav-btn ripple" data-target="analytics">
       <span class="m-icon">📊</span>
@@ -189,10 +184,6 @@
           <span class="hs-val" id="hs-mastered">0</span>
           <span class="hs-label">Kelime</span>
         </div>
-        <div class="hs-card">
-          <span class="hs-val" id="hs-phrases">0</span>
-          <span class="hs-label">Kalıp</span>
-        </div>
         <div class="hs-card hs-streak">
           <span class="hs-val" id="hs-streak">🔥1</span>
           <span class="hs-label">Gün Serisi</span>
@@ -234,15 +225,6 @@
           <div class="dc-progress-row">
             <div class="dc-progress-bar-wrap"><div class="dc-progress-bar" id="dc-words-bar" style="width:0%"></div></div>
             <span class="dc-pct" id="dc-words-pct">0%</span>
-          </div>
-        </div>
-        <div class="dash-card glass" onclick="app.navigate('phrases')">
-          <div class="d-icon">🗣️</div>
-          <h3>Günlük Kalıplar</h3>
-          <p>Gerçek hayatta kullanılan İngilizce ifadeleri çalış.</p>
-          <div class="dc-progress-row">
-            <div class="dc-progress-bar-wrap"><div class="dc-progress-bar dc-bar-purple" id="dc-phrases-bar" style="width:0%"></div></div>
-            <span class="dc-pct" id="dc-phrases-pct">0%</span>
           </div>
         </div>
         <div class="dash-card glass" onclick="app.navigate('speak')">
@@ -486,31 +468,6 @@
           <button class="btn outline" onclick="app.navigate('home')">🏠 Ana Merkez</button>
         </div>
       </div>
-
-    </div>
-  </template>
-
-  <template id="tpl-phrases">
-    <div class="view-phrases animate-in">
-
-      <div class="phrases-hero">
-        <div>
-          <h2 class="phrases-title">🗣️ Günlük Kalıplar</h2>
-          <p class="phrases-sub">Her duruma uygun en pratik İngilizce ifadeler</p>
-        </div>
-        <div class="phrase-count-badge" id="phrase-count-badge">— kalıp</div>
-      </div>
-
-      <div class="phrases-search-wrap glass">
-        <span class="search-icon-inner">🔍</span>
-        <input type="text" id="phrase-search" placeholder="Kalıp veya Türkçe anlam ara..." oninput="app.filterPhrases()">
-      </div>
-
-      <div class="phrases-cat-bar">
-        <div id="phrase-categories" class="phrases-cat-list"></div>
-      </div>
-
-      <div class="phrases-list" id="phrases-list"></div>
 
     </div>
   </template>
