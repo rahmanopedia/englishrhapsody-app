@@ -665,7 +665,14 @@ class LingoApp {
     const countEl = document.getElementById('card-counter'); if(countEl) countEl.innerText = `${this.state.currentCardIdx + 1} / ${this.state.learnPool.length}`;
     const distractors = WORDS.filter(w => w.en !== correctWord.en).sort(() => Math.random() - 0.5).slice(0, 3);
     const choices = [correctWord, ...distractors].sort(() => Math.random() - 0.5);
-    const grid = document.getElementById('vm-grid'); if(grid) { grid.classList.remove('locked'); grid.innerHTML = choices.map(word => `<div class="vm-choice glass" onclick="app.checkVisualMatch('${word.en}', this)"><div class="vm-placeholder">${word.icon}</div><img src="${word.img}" onload="this.classList.add('loaded')" alt="choice"></div>`).join(''); }
+    const grid = document.getElementById('vm-grid'); 
+    if(grid) { 
+      grid.classList.remove('locked'); 
+      grid.innerHTML = choices.map(word => `
+        <div class="vm-choice glass" onclick="app.checkVisualMatch('${word.en}', this)">
+          <div class="vm-emoji-display" style="font-size: 5rem; display: flex; align-items: center; justify-content: center; height: 100%;">${word.icon || '❓'}</div>
+        </div>`).join(''); 
+    }
     const pct = ((this.state.currentCardIdx) / this.state.learnPool.length) * 100; const sBar = document.getElementById('session-progress'); if(sBar) sBar.style.width = `${pct}%`;
   }
 

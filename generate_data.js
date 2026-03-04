@@ -6,78 +6,112 @@ const icons = {
   'Bilim': '🧪', 'Doğa': '🌲', 'Hayvanlar': '🦁', 'Teknoloji': '💻', 'Mutfak': '🍳', 
   'Mimari': '🏛️', 'Kavram': '💡', 'Sanat': '🎨', 'Hava Durumu': '🌤️', 'Spor': '⚽'
 };
-const defaultImg = "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=200&h=200&fit=crop&q=30&fm=webp";
 
 const baseWords = [
-  // A generic list of words we will repeat and morph to hit 300+
-  { en: "Universe", tr: "Evren", ipa: "/ˈjuː.nɪ.vɜːrs/", cat: "Bilim" },
-  { en: "Gravity", tr: "Yerçekimi", ipa: "/ˈɡræv.ə.ti/", cat: "Bilim" },
-  { en: "Galaxy", tr: "Galaksi", ipa: "/ˈɡæl.ək.si/", cat: "Bilim" },
-  { en: "Microscope", tr: "Mikroskop", ipa: "/ˈmaɪ.krə.skəʊp/", cat: "Bilim" },
-  { en: "Ocean", tr: "Okyanus", ipa: "/ˈoʊ.ʃən/", cat: "Doğa" },
-  { en: "Volcano", tr: "Yanardağ", ipa: "/vɒlˈkeɪ.nəʊ/", cat: "Doğa" },
-  { en: "Forest", tr: "Orman", ipa: "/ˈfɒr.ɪst/", cat: "Doğa" },
-  { en: "Elephant", tr: "Fil", ipa: "/ˈelɪfənt/", cat: "Hayvanlar" },
-  { en: "Butterfly", tr: "Kelebek", ipa: "/ˈbʌtəflaɪ/", cat: "Hayvanlar" },
-  { en: "Smartphone", tr: "Akıllı Telefon", ipa: "/ˈsmɑːrt.fəʊn/", cat: "Teknoloji" },
-  { en: "Laptop", tr: "Dizüstü Bilgisayar", ipa: "/ˈlæp.tɒp/", cat: "Teknoloji" },
-  { en: "Chocolate", tr: "Çikolata", ipa: "/ˈtʃɒk.lət/", cat: "Mutfak" },
-  { en: "Avocado", tr: "Avokado", ipa: "/ˌæv.əˈkɑː.dəʊ/", cat: "Mutfak" },
-  { en: "Skyscraper", tr: "Gökdelen", ipa: "/ˈskaɪˌskreɪ.pər/", cat: "Mimari" },
-  { en: "Bridge", tr: "Köprü", ipa: "/brɪdʒ/", cat: "Mimari" },
-  { en: "Courage", tr: "Cesaret", ipa: "/ˈkɜːr.ɪdʒ/", cat: "Kavram" },
-  { en: "Wisdom", tr: "Bilgelik", ipa: "/ˈwɪz.dəm/", cat: "Kavram" },
-  { en: "Melody", tr: "Melodi", ipa: "/ˈmel.ə.di/", cat: "Sanat" },
-  { en: "Canvas", tr: "Tuval", ipa: "/ˈkæn.vəs/", cat: "Sanat" },
-  { en: "Rainbow", tr: "Gökkuşağı", ipa: "/ˈreɪn.bəʊ/", cat: "Hava Durumu" },
-  { en: "Bicycle", tr: "Bisiklet", ipa: "/ˈbaɪ.sɪ.kəl/", cat: "Spor" }
+  { en: "Universe", tr: "Evren", ipa: "/ˈjuː.nɪ.vɜːrs/", cat: "Bilim", icon: "🌌" },
+  { en: "Gravity", tr: "Yerçekimi", ipa: "/ˈɡræv.ə.ti/", cat: "Bilim", icon: "🍎" },
+  { en: "Galaxy", tr: "Galaksi", ipa: "/ˈɡæl.ək.si/", cat: "Bilim", icon: "🌀" },
+  { en: "Microscope", tr: "Mikroskop", ipa: "/ˈmaɪ.krə.skəʊp/", cat: "Bilim", icon: "🔬" },
+  { en: "Ocean", tr: "Okyanus", ipa: "/ˈoʊ.ʃən/", cat: "Doğa", icon: "🌊" },
+  { en: "Volcano", tr: "Yanardağ", ipa: "/vɒlˈkeɪ.nəʊ/", cat: "Doğa", icon: "🌋" },
+  { en: "Forest", tr: "Orman", ipa: "/ˈfɒr.ɪst/", cat: "Doğa", icon: "🌲" },
+  { en: "Elephant", tr: "Fil", ipa: "/ˈelɪfənt/", cat: "Hayvanlar", icon: "🐘" },
+  { en: "Butterfly", tr: "Kelebek", ipa: "/ˈbʌtəflaɪ/", cat: "Hayvanlar", icon: "🦋" },
+  { en: "Smartphone", tr: "Akıllı Telefon", ipa: "/ˈsmɑːrt.fəʊn/", cat: "Teknoloji", icon: "📱" },
+  { en: "Laptop", tr: "Dizüstü Bilgisayar", ipa: "/ˈlæp.tɒp/", cat: "Teknoloji", icon: "💻" },
+  { en: "Chocolate", tr: "Çikolata", ipa: "/ˈtʃɒk.lət/", cat: "Mutfak", icon: "🍫" },
+  { en: "Avocado", tr: "Avokado", ipa: "/ˌæv.əˈkɑː.dəʊ/", cat: "Mutfak", icon: "🥑" },
+  { en: "Skyscraper", tr: "Gökdelen", ipa: "/ˈskaɪˌskreɪ.pər/", cat: "Mimari", icon: "🏙️" },
+  { en: "Bridge", tr: "Köprü", ipa: "/brɪdʒ/", cat: "Mimari", icon: "🌉" },
+  { en: "Courage", tr: "Cesaret", ipa: "/ˈkɜːr.ɪdʒ/", cat: "Kavram", icon: "🦁" },
+  { en: "Wisdom", tr: "Bilgelik", ipa: "/ˈwɪz.dəm/", cat: "Kavram", icon: "🦉" },
+  { en: "Melody", tr: "Melodi", ipa: "/ˈmel.ə.di/", cat: "Sanat", icon: "🎶" },
+  { en: "Canvas", tr: "Tuval", ipa: "/ˈkæn.vəs/", cat: "Sanat", icon: "🎨" },
+  { en: "Rainbow", tr: "Gökkuşağı", ipa: "/ˈreɪn.bəʊ/", cat: "Hava Durumu", icon: "🌈" },
+  { en: "Bicycle", tr: "Bisiklet", ipa: "/ˈbaɪ.sɪ.kəl/", cat: "Spor", icon: "🚲" },
+  { en: "Lion", tr: "Aslan", ipa: "/ˈlaɪ.ən/", cat: "Hayvanlar", icon: "🦁" },
+  { en: "Owl", tr: "Baykuş", ipa: "/aʊl/", cat: "Hayvanlar", icon: "🦉" },
+  { en: "Octopus", tr: "Ahtapot", ipa: "/ˈɒk.tə.pəs/", cat: "Hayvanlar", icon: "🐙" },
+  { en: "Kangaroo", tr: "Kanguru", ipa: "/ˌkæŋ.ɡərˈuː/", cat: "Hayvanlar", icon: "🦘" },
+  { en: "Eagle", tr: "Kartal", ipa: "/ˈiː.ɡəl/", cat: "Hayvanlar", icon: "🦅" },
+  { en: "Satellite", tr: "Uydu", ipa: "/ˈsæt.əl.aɪt/", cat: "Teknoloji", icon: "🛰️" },
+  { en: "Server", tr: "Sunucu", ipa: "/ˈsɜː.vər/", cat: "Teknoloji", icon: "🖥️" },
+  { en: "Virtual Reality", tr: "Sanal Gerçeklik", ipa: "/ˌvɜː.tʃu.əl riˈæl.ə.ti/", cat: "Teknoloji", icon: "🥽" },
+  { en: "Cinnamon", tr: "Tarçın", ipa: "/ˈsɪn.ə.mən/", cat: "Mutfak", icon: "🍂" },
+  { en: "Vanilla", tr: "Vanilya", ipa: "/vəˈnɪl.ə/", cat: "Mutfak", icon: "🍦" },
+  { en: "Staircase", tr: "Merdiven", ipa: "/ˈsteə.keɪs/", cat: "Mimari", icon: "🪜" },
+  { en: "Columns", tr: "Sütunlar", ipa: "/ˈkɒl.əmz/", cat: "Mimari", icon: "🏛️" },
+  { en: "Balcony", tr: "Balkon", ipa: "/ˈbæl.kə.ni/", cat: "Mimari", icon: "🌅" },
+  { en: "Fountain", tr: "Fıskiye", ipa: "/ˈfaʊn.tɪn/", cat: "Mimari", icon: "⛲" },
+  { en: "Castle", tr: "Kale", ipa: "/ˈkɑː.səl/", cat: "Mimari", icon: "🏰" },
+  { en: "Euphoria", tr: "Mutluluk", ipa: "/juːˈfɔːr.i.ə/", cat: "Kavram", icon: "🏆" },
+  { en: "Resilience", tr: "Direnç", ipa: "/rɪˈzɪl.i.əns/", cat: "Kavram", icon: "🌵" },
+  { en: "Serendipity", tr: "Tesadüf", ipa: "/ˌser.ənˈdɪp.ə.ti/", cat: "Kavram", icon: "🍀" },
+  { en: "Nostalgia", tr: "Nostalji", ipa: "/nɒˈstæl.dʒə/", cat: "Kavram", icon: "📸" },
+  { en: "Freedom", tr: "Özgürlük", ipa: "/ˈfriː.dəm/", cat: "Kavram", icon: "🕊️" },
+  { en: "Peace", tr: "Barış", ipa: "/piːs/", cat: "Kavram", icon: "☮️" },
+  { en: "Sculpture", tr: "Heykel", ipa: "/ˈskʌlp.tʃər/", cat: "Sanat", icon: "🗿" },
+  { en: "Cinema", tr: "Sinema", ipa: "/ˈsɪn.ə.mə/", cat: "Sanat", icon: "🎬" },
+  { en: "Poetry", tr: "Şiir", ipa: "/ˈpəʊ.ɪ.tri/", cat: "Sanat", icon: "📜" },
+  { en: "Dance", tr: "Dans", ipa: "/dɑːns/", cat: "Sanat", icon: "💃" },
+  { en: "Snowflake", tr: "Kar Tanesi", ipa: "/ˈsnəʊ.fleɪk/", cat: "Hava Durumu", icon: "❄️" },
+  { en: "Hurricane", tr: "Kasırga", ipa: "/ˈhʌr.ɪ.kən/", cat: "Hava Durumu", icon: "🌪️" },
+  { en: "Sunset", tr: "Gün Batımı", ipa: "/ˈsʌn.set/", cat: "Hava Durumu", icon: "🌅" },
+  { en: "Thunder", tr: "Gök Gürültüsü", ipa: "/ˈθʌn.dər/", cat: "Hava Durumu", icon: "⚡" },
+  { en: "Marathon", tr: "Maraton", ipa: "/ˈmær.ə.θən/", cat: "Spor", icon: "🏃" },
+  { en: "Yoga", tr: "Yoga", ipa: "/ˈjəʊ.ɡə/", cat: "Spor", icon: "🧘" },
+  { en: "Basketball", tr: "Basketbol", ipa: "/ˈbɑː.skɪt.bɔːl/", cat: "Spor", icon: "🏀" },
+  { en: "Stadium", tr: "Stadyum", ipa: "/ˈsteɪ.di.əm/", cat: "Spor", icon: "🏟️" }
 ];
 
 let WORDS = [];
 let idx = 0;
 while(WORDS.length < 300) {
   let base = baseWords[idx % baseWords.length];
-  let uniqueId = Math.floor(idx / baseWords.length) + 1;
-  let word = {
-    en: base.en + (uniqueId > 1 ? ` ${uniqueId}` : ""),
-    tr: base.tr + (uniqueId > 1 ? ` ${uniqueId}` : ""),
+  WORDS.push({
+    en: base.en,
+    tr: base.tr,
     ipa: base.ipa,
-    ex: `This is an example for ${base.en}.`,
+    ex: `The ${base.en.toLowerCase()} is an essential part of the ${base.cat.toLowerCase()}.`,
     cat: base.cat,
-    icon: icons[base.cat],
-    img: defaultImg
-  };
-  WORDS.push(word);
+    icon: base.icon,
+    img: "" // No image needed for emoji-only visual match
+  });
   idx++;
 }
 
-// SPEAK CHALLENGES (100 easy, 100 medium, 100 hard)
+// SPEAK CHALLENGES
 const easyBases = [
   "Hello, how are you today?", "My name is Alex.", "I like to read books.", 
   "The weather is really beautiful.", "Can you please help me?", "I would like a cup of coffee.",
-  "Where is the nearest bus stop?", "I am very happy to meet you.", "This is a really nice city."
+  "Where is the nearest bus stop?", "I am very happy to meet you.", "This is a really nice city.",
+  "What is your favorite color?", "I have a cat and a dog.", "The sun is shining bright.",
+  "I want to learn English fast.", "Can we go to the park?", "See you later alligator."
 ];
 const mediumBases = [
   "Artificial intelligence is shaping our future.", "Consistency is the key to mastering a language.",
   "Technology makes our daily lives so much easier.", "The quick brown fox jumps over the lazy dog.",
   "I'm looking forward to working with your team.", "Could you please repeat that?",
-  "She has been studying English for three years now."
+  "She has been studying English for three years now.", "We should eat more vegetables for health.",
+  "Travel broadens the mind and soul.", "Success comes after hard work and dedication."
 ];
 const hardBases = [
   "The entrepreneur's perseverance ultimately led to unprecedented success.",
   "Photosynthesis is the process by which plants convert sunlight into energy.",
   "The parliamentary committee thoroughly investigated the allegations.",
   "Her enthusiasm for astrophysics was truly extraordinary and inspiring.",
-  "Despite the bureaucratic obstacles, the project was completed successfully."
+  "Despite the bureaucratic obstacles, the project was completed successfully.",
+  "The complex algorithm optimized the data processing speed significantly.",
+  "Environmental sustainability is a global priority for the next decade.",
+  "Historical artifacts provide a glimpse into ancient daily life."
 ];
 
 let SPEAK_CHALLENGES = { easy: [], medium: [], hard: [] };
-for (let i = 0; i < 300; i++) { SPEAK_CHALLENGES.easy.push(easyBases[i % easyBases.length].replace('.', ` ${i+1}.`)); }
-for (let i = 0; i < 300; i++) { SPEAK_CHALLENGES.medium.push(mediumBases[i % mediumBases.length].replace('.', ` ${i+1}.`)); }
-for (let i = 0; i < 300; i++) { SPEAK_CHALLENGES.hard.push(hardBases[i % hardBases.length].replace('.', ` ${i+1}.`)); }
+for (let i = 0; i < 300; i++) { SPEAK_CHALLENGES.easy.push(easyBases[i % easyBases.length]); }
+for (let i = 0; i < 300; i++) { SPEAK_CHALLENGES.medium.push(mediumBases[i % mediumBases.length]); }
+for (let i = 0; i < 300; i++) { SPEAK_CHALLENGES.hard.push(hardBases[i % hardBases.length]); }
 
 // PHRASES
-const phraseCats = ['Selamlaşma', 'Sosyal', 'Seyahat', 'Alışveriş', 'Restoran', 'Acil', 'Günlük', 'İş', 'Tartışma', 'Deyim', 'Duygular'];
 const phraseBases = [
   { en: "How’s it going?", tr: "Nasıl gidiyor?", cat: "Selamlaşma" },
   { en: "Could you help me, please?", tr: "Bana yardım edebilir misiniz?", cat: "Sosyal" },
@@ -94,16 +128,10 @@ const phraseBases = [
 
 let PHRASES = [];
 for (let i = 0; i < 300; i++) {
-  let base = phraseBases[i % phraseBases.length];
-  let uniqueId = Math.floor(i / phraseBases.length) + 1;
-  PHRASES.push({
-    en: base.en.replace('?', ` ${uniqueId}?`).replace('.', ` ${uniqueId}.`).replace('!', ` ${uniqueId}!`),
-    tr: base.tr + (uniqueId > 1 ? ` (${uniqueId})` : ""),
-    cat: base.cat
-  });
+  PHRASES.push(phraseBases[i % phraseBases.length]);
 }
 
 const fileContent = `const WORDS = ${JSON.stringify(WORDS, null, 2)};\n\nconst SPEAK_CHALLENGES = ${JSON.stringify(SPEAK_CHALLENGES, null, 2)};\n\nconst PHRASES = ${JSON.stringify(PHRASES, null, 2)};\n`;
 
 fs.writeFileSync('./js/data.js', fileContent, 'utf8');
-console.log('Data generated successfully!');
+console.log('Data generated successfully without numbering and optimized for emojis!');
