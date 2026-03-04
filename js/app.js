@@ -629,14 +629,14 @@ class LingoApp {
     // Word of the day (deterministic per day)
     const day = new Date().toDateString();
     let h = 0; for (const c of day) h = (h * 31 + c.charCodeAt(0)) & 0xffffffff;
-    const wod = WORDS[Math.abs(h) % WORDS.length];
+    const wod = window.WORDS[Math.abs(h) % window.WORDS.length];
     setEl('wod-en', wod.en);
     setEl('wod-ipa', wod.ipa);
     setEl('wod-tr', wod.tr);
 
     // Dashboard card progress bars
-    const wordsPct = Math.round((mastered / WORDS.length) * 100);
-    const phrasesPct = Math.round((phraseMastered / PHRASES.length) * 100);
+    const wordsPct = Math.round((mastered / window.WORDS.length) * 100);
+    const phrasesPct = Math.round((phraseMastered / window.PHRASES.length) * 100);
     const wBar = document.getElementById('dc-words-bar');
     const pBar = document.getElementById('dc-phrases-bar');
     if (wBar) setTimeout(() => wBar.style.width = `${wordsPct}%`, 200);
@@ -655,9 +655,9 @@ class LingoApp {
     // Category progress bars
     const catBarsEl = document.getElementById('home-cat-bars');
     if (catBarsEl) {
-      const cats = [...new Set(WORDS.map(w => w.cat))];
+      const cats = [...new Set(window.WORDS.map(w => w.cat))];
       catBarsEl.innerHTML = cats.map(cat => {
-        const pool = WORDS.filter(w => w.cat === cat);
+        const pool = window.WORDS.filter(w => w.cat === cat);
         const learned = pool.filter(w => (this.state.mastery[w.en] || 0) >= 3).length;
         const catPct = Math.round((learned / pool.length) * 100);
         return `<div class="hc-row">
@@ -691,9 +691,9 @@ class LingoApp {
     const catContainer = document.getElementById('learn-categories'); if(!catContainer) return;
     document.getElementById('learn-setup').style.display = 'block'; document.getElementById('learn-game').style.display = 'none'; document.getElementById('learn-finish').style.display = 'none';
 
-    const categories = ['all', ...new Set(WORDS.map(w => w.cat))];
+    const categories = ['all', ...new Set(window.WORDS.map(w => w.cat))];
     catContainer.innerHTML = categories.map(c => {
-      const pool = c === 'all' ? WORDS : WORDS.filter(w => w.cat === c);
+      const pool = c === 'all' ? window.WORDS : window.WORDS.filter(w => w.cat === c);
       const learned = pool.filter(w => this.state.mastery[w.en] >= 3).length;
       const masteryPct = (learned / pool.length) * 100;
       return `
@@ -719,7 +719,7 @@ class LingoApp {
   startLearnSession(mode) {
     this.state.gameMode = mode; this.state.currentCardIdx = 0; this.state.correctCount = 0; this.state.wrongCount = 0; this.state.failedWords = [];
     
-    let pool = this.state.selectedCategory === 'all' ? [...WORDS] : WORDS.filter(w => w.cat === this.state.selectedCategory);
+    let pool = this.state.selectedCategory === 'all' ? [...window.WORDS] : window.WORDS.filter(w => w.cat === this.state.selectedCategory);
     
     // Spaced Repetition Prioritization
     const now = Date.now();
@@ -749,7 +749,7 @@ class LingoApp {
 
   startVisualMatch() {
     this.state.gameMode = 'visual-match'; this.state.currentCardIdx = 0; this.state.correctCount = 0; this.state.wrongCount = 0; this.state.failedWords = [];
-    this.state.learnPool = this.state.selectedCategory === 'all' ? [...WORDS] : WORDS.filter(w => w.cat === this.state.selectedCategory);
+    this.state.learnPool = this.state.selectedCategory === 'all' ? [...window.WORDS] : window.WORDS.filter(w => w.cat === this.state.selectedCategory);
     if (this.state.learnPool.length < 4) { this.showToast("Bu kategoride yeterli kelime yok (En az 4 gerekli)."); return; }
     this.state.learnPool.sort(() => Math.random() - 0.5); this.preloadImages(this.state.learnPool);
     document.getElementById('learn-setup').style.display = 'none'; document.getElementById('learn-game').style.display = 'block'; document.getElementById('learn-finish').style.display = 'none';
@@ -789,7 +789,7 @@ class LingoApp {
     const correctWord = this.state.learnPool[this.state.currentCardIdx];
     const wordEl = document.getElementById('vm-word'); if(wordEl) wordEl.innerText = correctWord.en;
     const countEl = document.getElementById('card-counter'); if(countEl) countEl.innerText = `${this.state.currentCardIdx + 1} / ${this.state.learnPool.length}`;
-    const distractors = WORDS.filter(w => w.en !== correctWord.en).sort(() => Math.random() - 0.5).slice(0, 3);
+    const distractors = window.WORDS.filter(w => w.en !== correctWord.en).sort(() => Math.random() - 0.5).slice(0, 3);
     const choices = [correctWord, ...distractors].sort(() => Math.random() - 0.5);
     const grid = document.getElementById('vm-grid'); 
     if(grid) { 
@@ -914,9 +914,9 @@ class LingoApp {
     const ctx = document.getElementById('category-chart');
     if (!ctx) return;
     
-    const cats = [...new Set(WORDS.map(w => w.cat))];
+    const cats = [...new Set(window.WORDS.map(w => w.cat))];
     const data = cats.map(cat => {
-      const pool = WORDS.filter(w => w.cat === cat);
+      const pool = window.WORDS.filter(w => w.cat === cat);
       const learned = pool.filter(w => (this.state.mastery[w.en] || 0) >= 3).length;
       return Math.round((learned / pool.length) * 100);
     });
@@ -989,7 +989,7 @@ class LingoApp {
     const container = document.getElementById('reading-game-area');
     if (!container) return;
 
-    const levelStories = STORIES.filter(s => s.level === this.state.readingLevel);
+    const levelStories = window.STORIES.filter(s => s.level === this.state.readingLevel);
     if (!levelStories.length) {
       container.innerHTML = '<p>Bu seviyede içerik bulunamadı.</p>';
       return;
@@ -1073,14 +1073,16 @@ class LingoApp {
   }
 
   getDailyPhraseIdx() {
+    const PH_DATA = window.PHRASES || [];
+    if (!PH_DATA || !PH_DATA.length) return 0;
     const day = new Date().toDateString();
     let h = 0;
     for (let c of day) h = (h * 31 + c.charCodeAt(0)) & 0xffffffff;
-    return Math.abs(h) % PHRASES.length;
+    return Math.abs(h) % PH_DATA.length;
   }
 
   checkCategoryBadge(cat) {
-    const catPs = PHRASES.filter(p => p.cat === cat);
+    const catPs = window.PHRASES.filter(p => p.cat === cat);
     const allDone = catPs.every(p => (this.state.phrasesMastery[p.en] || 0) >= 2);
     if (allDone && !this.state.phrasesBadges.includes(cat)) {
       this.state.phrasesBadges.push(cat);
@@ -1106,7 +1108,8 @@ class LingoApp {
   }
 
   buildPhraseStatsHTML() {
-    const cats = [...new Set(PHRASES.map(p => p.cat))];
+    const PH_DATA = window.PHRASES || [];
+    const cats = [...new Set(PH_DATA.map(p => p.cat))];
     const mastered = Object.values(this.state.phrasesMastery).filter(v => v >= 2).length;
     return `
       <div class="ps-chip ps-streak">🔥 ${this.state.phraseStreak} günlük seri</div>
@@ -1115,13 +1118,13 @@ class LingoApp {
       <div class="ps-chip ps-badges">🏆 ${this.state.phrasesBadges.length}/${cats.length} rozet</div>`;
   }
 
-  // --- PHRASES ---
+  // --- window.PHRASES ---
   setupPhrasesView() {
     try {
       const list = document.getElementById('phrases-list');
       if (!list) return;
 
-      const PH_DATA = window.PHRASES || (typeof PHRASES !== 'undefined' ? PHRASES : []);
+      const PH_DATA = window.PHRASES || [];
       if (!PH_DATA || !PH_DATA.length) {
         list.innerHTML = '<div class="phrases-empty">⚠️ Veriler yüklenemedi. Lütfen sayfayı yenileyin.</div>';
         return;
@@ -1201,7 +1204,7 @@ class LingoApp {
   }
 
   goToDailyChallenge() {
-    const dailyP = PHRASES[this.getDailyPhraseIdx()];
+    const dailyP = window.PHRASES[this.getDailyPhraseIdx()];
     if (!dailyP) return;
     // Find in current pool or reset to all
     this.state.phraseCategory = 'all';
@@ -1303,7 +1306,7 @@ class LingoApp {
   }
 
   renderPhrases() {
-    const PH_DATA = window.PHRASES || (typeof PHRASES !== 'undefined' ? PHRASES : []);
+    const PH_DATA = window.PHRASES || [];
     const filtered = PH_DATA.filter(p => {
       const matchCat = this.state.phraseCategory === 'all' || p.cat === this.state.phraseCategory;
       const matchSearch = p.en.toLowerCase().includes(this.state.phraseSearch) ||
@@ -1351,7 +1354,7 @@ class LingoApp {
       const pct = ((idx + 1) / pool.length) * 100;
       const mastery = this.getPhraseMastery(p.en);
       
-      const PH_DATA = window.PHRASES || (typeof PHRASES !== 'undefined' ? PHRASES : []);
+      const PH_DATA = window.PHRASES || [];
       const isDaily = PH_DATA.length ? PH_DATA[this.getDailyPhraseIdx()]?.en === p.en : false;
 
       // Simple Grammar Engine for Tooltips
@@ -1448,14 +1451,14 @@ class LingoApp {
   }
 
   getCurrentSentenceText() {
-    const pool = SPEAK_CHALLENGES[this.state.speakDifficulty];
+    const pool = window.SPEAK_CHALLENGES[this.state.speakDifficulty];
     return pool[this.state.speakIdx % pool.length];
   }
 
   speakCurrentSentence() { this.speakWord(this.getCurrentSentenceText()); }
 
   renderSpeakChallenge() {
-    const pool = SPEAK_CHALLENGES[this.state.speakDifficulty];
+    const pool = window.SPEAK_CHALLENGES[this.state.speakDifficulty];
     const idx = this.state.speakIdx % pool.length;
     const text = pool[idx];
 
@@ -1606,7 +1609,7 @@ class LingoApp {
   }
 
   nextSpeakChallenge() {
-    const pool = SPEAK_CHALLENGES[this.state.speakDifficulty];
+    const pool = window.SPEAK_CHALLENGES[this.state.speakDifficulty];
     if (this.state.isRecording) { this.recognizer.stop(); this.stopRecording(); }
     this.state.speakIdx = (this.state.speakIdx + 1) % pool.length;
     this.renderSpeakChallenge();
@@ -1699,7 +1702,7 @@ class LingoApp {
       }
 
       // Günlük kalıp bonusu
-      const dailyP = PHRASES[this.getDailyPhraseIdx()];
+      const dailyP = window.PHRASES[this.getDailyPhraseIdx()];
       const isDaily = dailyP?.en === text;
       let xp = score > 70 ? 20 : score > 40 ? 10 : 3;
       if (isDaily && score > 80) { xp *= 2; this.showToast('⭐ Günün Kalıbı tamamlandı! 2× XP!'); }
@@ -1737,7 +1740,7 @@ class LingoApp {
     this.state.wrongCount = 0;
     this.state.failedWords = [];
     this.state.learnPool = this.state.selectedCategory === 'all'
-      ? [...WORDS] : WORDS.filter(w => w.cat === this.state.selectedCategory);
+      ? [...window.WORDS] : window.WORDS.filter(w => w.cat === this.state.selectedCategory);
     this.state.learnPool.sort(() => Math.random() - 0.5);
 
     document.getElementById('learn-setup').style.display = 'none';
