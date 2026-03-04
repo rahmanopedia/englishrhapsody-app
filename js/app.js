@@ -575,7 +575,6 @@ class LingoApp {
       if (viewName === 'home') this.updateHomeProgress();
       if (viewName === 'learn') this.setupLearnView();
       if (viewName === 'reading') this.setupReadingView();
-      if (viewName === 'phrases') this.setupPhrasesView();
       if (viewName === 'speak') this.setupSpeakView();
       if (viewName === 'analytics') this.setupAnalyticsView();
       if (viewName === 'league') this.setupLeagueView();
@@ -618,10 +617,8 @@ class LingoApp {
 
     // Stats row
     const mastered = Object.values(this.state.mastery).filter(v => v >= 3).length;
-    const phraseMastered = Object.values(this.state.phrasesMastery).filter(v => v >= 2).length;
     const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
     setEl('hs-mastered', mastered);
-    setEl('hs-phrases', phraseMastered);
     setEl('hs-streak', `🔥${this.state.streak}`);
     setEl('hs-xp', this.state.xp);
     setEl('hs-lvl', this.state.level);
@@ -636,13 +633,9 @@ class LingoApp {
 
     // Dashboard card progress bars
     const wordsPct = Math.round((mastered / window.WORDS.length) * 100);
-    const phrasesPct = Math.round((phraseMastered / window.PHRASES.length) * 100);
     const wBar = document.getElementById('dc-words-bar');
-    const pBar = document.getElementById('dc-phrases-bar');
     if (wBar) setTimeout(() => wBar.style.width = `${wordsPct}%`, 200);
-    if (pBar) setTimeout(() => pBar.style.width = `${phrasesPct}%`, 200);
     setEl('dc-words-pct', `${wordsPct}%`);
-    setEl('dc-phrases-pct', `${phrasesPct}%`);
 
     // Speak card hint
     const speakHint = document.getElementById('dc-speak-hint');
