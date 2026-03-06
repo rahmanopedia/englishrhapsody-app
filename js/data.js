@@ -2811,6 +2811,83 @@ const COLLOCATIONS = [
   { phrase:'doubt',              tr:'şüphe',                  warn:'⚠️ "da-ubt" değil! B sessizdir -> /daʊt/' },
 ];
 
+// ── Conversation Scenarios ────────────────────────────────────────────────
+const CONVERSATIONS = [
+  {
+    id: 'restaurant', title: 'Restoran', emoji: '🍽️', level: 'easy',
+    turns: [
+      { role: 'bot', text: "Good evening! Welcome. Do you have a reservation?", tr: "İyi akşamlar! Hoş geldiniz. Rezervasyonunuz var mı?" },
+      { role: 'user', hint: "Rezervasyonunuz olduğunu söyleyin", keywords: ['yes','reservation','have','booked','table','name'], expected: "Yes, I have a reservation for two." },
+      { role: 'bot', text: "Wonderful! Right this way. What would you like to order?", tr: "Harika! Buyurun. Ne sipariş vermek istersiniz?" },
+      { role: 'user', hint: "Yemek sipariş edin", keywords: ['like','order','have','want','chicken','fish','pasta','salad','steak','please'], expected: "I'd like the chicken pasta, please." },
+      { role: 'bot', text: "Excellent choice! Anything to drink?", tr: "Mükemmel seçim! İçecek ister misiniz?" },
+      { role: 'user', hint: "İçecek söyleyin", keywords: ['water','coffee','tea','juice','please','just','coke'], expected: "Just water, please." },
+      { role: 'bot', text: "Perfect! Your meal will be ready in 15 minutes. Enjoy!", tr: "Mükemmel! Yemeğiniz 15 dakikada hazır. Afiyet olsun!" },
+    ]
+  },
+  {
+    id: 'airport', title: 'Havalimanı', emoji: '✈️', level: 'easy',
+    turns: [
+      { role: 'bot', text: "Good morning! Passport and ticket, please.", tr: "Günaydın! Pasaportunuzu ve biletinizi alabilir miyim?" },
+      { role: 'user', hint: "Belgeleri verin", keywords: ['here','sure','course','take','you','passport'], expected: "Sure, here you go." },
+      { role: 'bot', text: "Thank you. How many bags to check in?", tr: "Teşekkürler. Kaç çanta kayıt ettireceksiniz?" },
+      { role: 'user', hint: "Çanta sayısını söyleyin", keywords: ['one','two','three','just','only','bag','bags'], expected: "Just one bag." },
+      { role: 'bot', text: "Window or aisle seat?", tr: "Pencere mi, koridor koltuğu mu?" },
+      { role: 'user', hint: "Koltuk tercihinizi söyleyin", keywords: ['window','aisle','seat','prefer','please'], expected: "A window seat, please." },
+      { role: 'bot', text: "Here's your boarding pass. Gate B12. Have a great flight!", tr: "Biniş kartınız. B12 kapısı. İyi uçuşlar!" },
+    ]
+  },
+  {
+    id: 'shopping', title: 'Alışveriş', emoji: '🛍️', level: 'medium',
+    turns: [
+      { role: 'bot', text: "Hi! Can I help you find something today?", tr: "Merhaba! Bugün bir şey bulmanıza yardım edebilir miyim?" },
+      { role: 'user', hint: "Aradığınızı söyleyin", keywords: ['looking','need','want','find','jacket','shirt','shoes','jeans','dress'], expected: "I'm looking for a jacket." },
+      { role: 'bot', text: "Great selection today! What size are you?", tr: "Bugün harika seçeneklerimiz var! Kaç bedensiniz?" },
+      { role: 'user', hint: "Bedeninizi söyleyin", keywords: ['medium','large','small','size','think','am','extra'], expected: "I think I'm a medium." },
+      { role: 'bot', text: "How about this one? It's 40% off today!", tr: "Bu nasıl? Bugün yüzde kırk indirimli!" },
+      { role: 'user', hint: "Beğenip fiyatını sorun", keywords: ['love','like','nice','great','how','much','price','cost'], expected: "I love it! How much is it?" },
+      { role: 'bot', text: "It's $59.99 with the discount. Fitting room is in the back!", tr: "İndirimli 59.99 dolar. Deneme kabini arkada!" },
+    ]
+  },
+  {
+    id: 'interview', title: 'İş Görüşmesi', emoji: '💼', level: 'hard',
+    turns: [
+      { role: 'bot', text: "Good morning! Please, have a seat. Tell me about yourself.", tr: "Günaydın! Oturun lütfen. Kendiniz hakkında bilgi verin." },
+      { role: 'user', hint: "Kendinizi tanıtın", keywords: ['my','name','years','experience','background','worked','professional','skills','developer'], expected: "I'm a developer with 3 years of experience in web technologies." },
+      { role: 'bot', text: "Interesting. Why do you want this position?", tr: "İlginç. Bu pozisyonu neden istiyorsunuz?" },
+      { role: 'user', hint: "İlginizi açıklayın", keywords: ['company','opportunity','grow','team','passionate','excited','challenge','mission'], expected: "I'm excited about the chance to grow with your innovative team." },
+      { role: 'bot', text: "What's your greatest strength?", tr: "En büyük güçlü yönünüz nedir?" },
+      { role: 'user', hint: "Güçlü yönünüzü söyleyin", keywords: ['problem','solving','communication','teamwork','creative','analytical','organized','pressure'], expected: "I'm a strong problem solver who works well under pressure." },
+      { role: 'bot', text: "Any questions for us?", tr: "Bizim için sorularınız var mı?" },
+      { role: 'user', hint: "Kariyer hakkında soru sorun", keywords: ['team','culture','growth','opportunity','next','steps','training','role'], expected: "What does career growth look like for this role?" },
+    ]
+  },
+  {
+    id: 'doctor', title: 'Doktor', emoji: '🏥', level: 'medium',
+    turns: [
+      { role: 'bot', text: "Hello! I'm Dr. Smith. What brings you in today?", tr: "Merhaba! Ben Dr. Smith. Bugün neden geldiniz?" },
+      { role: 'user', hint: "Şikayetinizi söyleyin", keywords: ['headache','fever','cold','cough','pain','hurt','stomach','throat','tired','sick','feel'], expected: "I've had a headache and fever for two days." },
+      { role: 'bot', text: "Do you have any other symptoms?", tr: "Başka belirtileriniz var mı?" },
+      { role: 'user', hint: "Diğer belirtileri söyleyin", keywords: ['also','sore','throat','cough','runny','nose','tired','exhausted'], expected: "I also have a sore throat and I'm very tired." },
+      { role: 'bot', text: "Sounds like flu. Are you allergic to any medications?", tr: "Grip gibi görünüyor. Herhangi bir ilaca alerjiniz var mı?" },
+      { role: 'user', hint: "Alerji durumunuzu söyleyin", keywords: ['no','not','allergic','penicillin','yes','nothing','anything'], expected: "No, I'm not allergic to anything." },
+      { role: 'bot', text: "Rest, drink fluids, and take this twice a day. Feel better soon!", tr: "Dinlenin, bol sıvı alın ve bunu günde iki kez kullanın. Geçmiş olsun!" },
+    ]
+  },
+  {
+    id: 'hotel', title: 'Otel', emoji: '🏨', level: 'easy',
+    turns: [
+      { role: 'bot', text: "Good evening! Welcome to Grand Hotel. Do you have a reservation?", tr: "İyi akşamlar! Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?" },
+      { role: 'user', hint: "Adınızı verin", keywords: ['yes','reservation','name','under','booked','room'], expected: "Yes, I have a reservation under the name Johnson." },
+      { role: 'bot', text: "Perfect! You have a deluxe room for two nights. Bed preference?", tr: "Mükemmel! İki gecelik deluxe odanız var. Yatak tercihiniz?" },
+      { role: 'user', hint: "Yatak tipini söyleyin", keywords: ['king','queen','twin','double','single','bed','please','large'], expected: "A king-sized bed, please." },
+      { role: 'bot', text: "Breakfast is included from 7 to 10 AM. Need help with luggage?", tr: "Kahvaltı 7-10 dahil. Bagajla yardım ister misiniz?" },
+      { role: 'user', hint: "Yardım durumu belirtin", keywords: ['no','thank','manage','fine','handle','yes','please','help'], expected: "No thank you, I can manage." },
+      { role: 'bot', text: "Room 412, fourth floor. Here's your key card. Enjoy your stay!", tr: "Dördüncü kattaki 412. İşte kart anahtarınız. İyi konaklamalar!" },
+    ]
+  }
+];
+
 // ── Achievements (Başarımlar) ──────────────────────────────────────────────
 const ACHIEVEMENTS_DATA = [
   { id: 'first_blood', title: 'İlk Adım', desc: 'Uygulamayı kullanmaya başladın.', icon: '🌱', req: { type: 'xp', val: 10 } },
