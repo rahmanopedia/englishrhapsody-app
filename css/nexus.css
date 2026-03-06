@@ -1,4 +1,4 @@
-/* Nexus Mode v3.0: Semantic Constellations */
+/* Nexus Mode v4.0: Learning Center */
 .nexus-shell {
   position: relative;
   width: 100%;
@@ -35,15 +35,15 @@
   gap: 10px;
 }
 
-.v3-badge {
+.v4-badge {
   font-size: 0.9rem;
-  background: linear-gradient(90deg, #7c3aed, #00d4ff);
+  background: linear-gradient(90deg, #10b981, #00d4ff);
   color: #fff;
   padding: 2px 8px;
   border-radius: 8px;
   font-weight: 800;
   letter-spacing: 1px;
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
 }
 
 .nexus-subtitle {
@@ -53,11 +53,64 @@
   font-weight: 500;
 }
 
-/* Soru ve Bilgi Kutusu */
+/* V4: Mode Selection Area */
+.nexus-mode-selector {
+  display: flex;
+  gap: 25px;
+  margin-top: 20px;
+  z-index: 15;
+  width: 90%;
+  max-width: 800px;
+}
+
+.nexus-mode-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.nexus-mode-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--cyan);
+  box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nm-icon {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+}
+
+.nm-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.nm-desc {
+  font-size: 0.95rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* Soru ve Bilgi Kutusu (Network Mode) */
 .nexus-display-container {
   width: 90%;
-  max-width: 550px;
-  min-height: 130px;
+  max-width: 600px;
+  min-height: 120px;
   margin: 15px auto;
   display: flex;
   flex-direction: column;
@@ -92,28 +145,145 @@
   animation: nexus-fade-up 0.4s forwards;
 }
 
-.nexus-feedback-area {
+/* V4 Cipher Mode Specific UI */
+.cipher-sentence-box {
+  width: 90%;
+  max-width: 700px;
+  margin: 20px auto 10px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-1);
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 25px 30px;
+  border-radius: 20px;
+  z-index: 12;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.cipher-blank {
+  display: inline-block;
+  min-width: 100px;
+  border-bottom: 3px solid var(--cyan);
+  color: var(--cyan);
+  padding: 0 10px;
+  text-align: center;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(0,212,255,0.4);
+}
+
+.cipher-hint {
+  font-size: 1rem;
+  color: var(--text-3);
+  margin-top: 15px;
+  font-style: italic;
+}
+
+.cipher-lock-mechanism {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px auto;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 15px 40px rgba(0,0,0,0.5);
+  z-index: 12;
+}
+
+.cipher-dial {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  animation: nexus-fade-up 0.4s forwards;
+  gap: 15px;
+  width: 150px;
 }
 
-.nexus-phrase-result {
-  font-size: 1.8rem;
+.cipher-nav-btn {
+  background: none;
+  border: none;
+  color: var(--text-3);
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.cipher-nav-btn:hover {
+  color: var(--cyan);
+  transform: scale(1.2);
+}
+
+.cipher-window {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
   font-weight: 800;
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+  user-select: none;
+}
+
+.cipher-window.glow {
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0,212,255,0.4), inset 0 0 15px rgba(0,212,255,0.2);
+  color: var(--cyan);
+}
+
+.cipher-window.correct {
+  border-color: #10b981;
+  box-shadow: 0 0 30px rgba(16,185,129,0.5), inset 0 0 15px rgba(16,185,129,0.2);
   color: #10b981;
-  margin-bottom: 5px;
-  text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+  animation: pulse-correct 1s infinite alternate;
 }
 
-.nexus-example-text {
-  font-size: 1rem;
-  color: var(--text-2);
-  font-style: italic;
-  line-height: 1.5;
+.cipher-window.wrong {
+  border-color: #ef4444;
+  color: #ef4444;
+  animation: nexus-shake 0.4s;
 }
 
-/* Oyun Alanı */
+@keyframes pulse-correct {
+  0% { box-shadow: 0 0 20px rgba(16,185,129,0.4), inset 0 0 15px rgba(16,185,129,0.2); }
+  100% { box-shadow: 0 0 40px rgba(16,185,129,0.7), inset 0 0 25px rgba(16,185,129,0.4); }
+}
+
+.cipher-engage-btn {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  padding: 16px 50px;
+  border-radius: 100px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 12;
+}
+
+.cipher-engage-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
+}
+
+/* Oyun Alanı (Network) */
 .nexus-game-area {
   position: relative;
   flex: 1;
@@ -227,15 +397,6 @@
   to { stroke-dasharray: 1000 1000; }
 }
 
-.pulse-line {
-  animation: line-pulse 1s infinite alternate;
-}
-
-@keyframes line-pulse {
-  0% { stroke-width: 4; filter: drop-shadow(0 0 8px #10b981); }
-  100% { stroke-width: 8; stroke: var(--cyan); filter: drop-shadow(0 0 15px var(--cyan)); }
-}
-
 /* Alt İstatistikler */
 .nexus-hud {
   position: absolute;
@@ -257,59 +418,43 @@
   backdrop-filter: blur(10px);
 }
 
-/* Hero / Giriş Kartı Tasarımı */
-.nexus-intro-card {
-  display: flex;
+.nexus-feedback-area {
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  max-width: 550px;
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 32px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-  animation: nexus-hero-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: nexus-fade-up 0.4s forwards;
 }
 
-@keyframes nexus-hero-in {
-  from { opacity: 0; transform: scale(0.9) translateY(20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+.nexus-phrase-result {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #10b981;
+  margin-bottom: 5px;
+  text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
 }
 
-.nexus-intro-text {
+.nexus-example-text {
+  font-size: 1rem;
   color: var(--text-2);
-  font-size: 1.15rem;
-  line-height: 1.7;
-  margin-bottom: 30px;
-  font-weight: 500;
+  font-style: italic;
+  line-height: 1.5;
 }
 
-.nexus-intro-btn {
-  font-size: 1.2rem !important;
-  padding: 16px 45px !important;
-  border-radius: 100px !important;
-  letter-spacing: 1px;
-  font-weight: 700 !important;
-  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
-  transition: all 0.3s ease !important;
-}
-
-.nexus-intro-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(124, 58, 237, 0.5);
-}
 
 /* Küçük Ekran Ayarları */
+@media (max-width: 700px) {
+  .nexus-mode-selector { flex-direction: column; }
+  .cipher-lock-mechanism { padding: 15px; gap: 10px; }
+  .cipher-window { font-size: 1.5rem; height: 60px; width: 110px; }
+  .cipher-sentence-box { font-size: 1.2rem; padding: 15px; }
+}
+
 @media (max-height: 700px) {
   .nexus-title { font-size: 1.4rem; }
   .nexus-display-container { min-height: 100px; margin: 10px auto; padding: 10px 20px; }
-  .nexus-question { font-size: 1.2rem; }
   .nexus-game-area { margin-bottom: 60px; }
   .nexus-core-node { width: 90px; height: 90px; font-size: 1.2rem; }
   .nexus-particle-node { width: 65px; height: 65px; font-size: 0.9rem; }
+  .cipher-sentence-box { font-size: 1.3rem; }
 }
 
 @keyframes nexus-fade-up {
