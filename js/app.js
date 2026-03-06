@@ -1029,9 +1029,13 @@ class App {
       }
     } else {
       this.session.synthFails++;
-      // NOTE: streak/combo only reset at word-level (in _completeSynthWord / skipSynthWord)
       this._playSynthError();
       this._updateSynthVisuals(false);
+
+      if (this.session.synthFails >= 3) {
+        UI.toast("⚠️ 3 Hata! Doğru cevap gösteriliyor...", 2000);
+        setTimeout(() => this.skipSynthWord(), 600);
+      }
     }
   }
 
@@ -1444,6 +1448,14 @@ class App {
     arc.style.animation = 'none';
     void arc.offsetWidth;
     arc.style.animation = 'speedDrain 20s linear forwards';
+
+    // Auto-skip after 20s
+    this.session.synthAutoSkipTimer = setTimeout(() => {
+      if (this.session.synthActive && !this.session.synthPaused) {
+        UI.toast("⏱️ Süre doldu!", 2000);
+        this.skipSynthWord();
+      }
+    }, 20000);
   }
 
   _stopSpeedTimer() {
@@ -1451,6 +1463,11 @@ class App {
     const arc = document.getElementById('synth-speed-arc');
     if (arc) arc.style.animation = 'none';
     if (svg) svg.style.display  = 'none';
+
+    if (this.session.synthAutoSkipTimer) {
+      clearTimeout(this.session.synthAutoSkipTimer);
+      this.session.synthAutoSkipTimer = null;
+    }
   }
 
   _getSpeedBonus(elapsed) {
@@ -1560,6 +1577,13 @@ class App {
       clearTimeout(this.session.synthRevealTimer);
       this.session.synthRevealTimer = null;
     }
+    // Pause auto-skip timer
+    if (this.session.synthAutoSkipTimer) {
+      const elapsed = Date.now() - (this.session.synthWordStartTime || Date.now());
+      this.session.synthTimeRemaining = Math.max(0, 20000 - elapsed);
+      clearTimeout(this.session.synthAutoSkipTimer);
+      this.session.synthAutoSkipTimer = null;
+    }
     const overlay = document.getElementById('synth-pause-overlay');
     if (overlay) overlay.style.display = 'flex';
   }
@@ -1576,6 +1600,16 @@ class App {
     }
     const overlay = document.getElementById('synth-pause-overlay');
     if (overlay) overlay.style.display = 'none';
+    // Resume auto-skip timer
+    if (this.session.synthTimeRemaining !== undefined) {
+      this.session.synthWordStartTime = Date.now() - (20000 - this.session.synthTimeRemaining);
+      this.session.synthAutoSkipTimer = setTimeout(() => {
+        if (this.session.synthActive && !this.session.synthPaused) {
+          UI.toast("⏱️ Süre doldu!", 2000);
+          this.skipSynthWord();
+        }
+      }, this.session.synthTimeRemaining);
+    }
     // Re-arm auto-reveal timer for current word (shorter since they already waited)
     const word = this.session.synthWord;
     if (word && this.session.synthTyped.length === 0) {
