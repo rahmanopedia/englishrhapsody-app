@@ -27,6 +27,7 @@ class NexusMode {
     
     // Synthesis Mode State
     this.synthSelected = { verb: null, particle: null, verbId: null, particleId: null };
+    this.synthHintTimer = null;
 
     this._loadData();
     this._resizeHandler = () => { if (this.mode === 'network' && this.current) this._positionNodes(); };
@@ -79,7 +80,15 @@ class NexusMode {
 
   destroy() {
     window.removeEventListener('resize', this._resizeHandler);
+    this._clearSynthTimer();
     if (this.root) this.root.innerHTML = '';
+  }
+
+  _clearSynthTimer() {
+    if (this.synthHintTimer) {
+      clearTimeout(this.synthHintTimer);
+      this.synthHintTimer = null;
+    }
   }
 
   _showIntro() {
@@ -149,6 +158,7 @@ class NexusMode {
   }
 
   nextSynthesisWord() {
+    this._clearSynthTimer();
     if (this.currentIndex >= this.queue.length) {
       this._showResults('Sentez Döngüsü Tamamlandı');
       return;
@@ -168,6 +178,24 @@ class NexusMode {
 
     this.currentSynthPool = { verbs, parts };
     this._renderSynthesis();
+
+    // v5.1: 10 saniye sonra fiili otomatik getir
+    this.synthHintTimer = setTimeout(() => {
+      if (this.mode === 'synthesis' && !this.locked && !this.synthSelected.verb) {
+        this._autoFillVerb();
+      }
+    }, 10000);
+  }
+
+  _autoFillVerb() {
+    const correctVerb = this.current.verb;
+    // Pool içindeki doğru id'yi bul
+    const idx = this.currentSynthPool.verbs.indexOf(correctVerb);
+    if (idx !== -1) {
+      const orbId = `sorb-v-${idx}`;
+      this.selectSynthOrb('verb', correctVerb, orbId, true);
+      if (typeof UI !== 'undefined' && UI.toast) UI.toast('Sistem yardımı: Fiil senkronize edildi.');
+    }
   }
 
   _renderSynthesis() {
@@ -210,23 +238,28 @@ class NexusMode {
     this._createStars(30);
   }
 
-  selectSynthOrb(type, word, orbId) {
+  selectSynthOrb(type, word, orbId, isAuto = false) {
       if (this.locked) return;
       if (this.synthSelected[type] !== null) return; // Slot already filled
       
+      if (!isAuto && type === 'verb') this._clearSynthTimer();
       if(this.app.audio) this.app.audio.play('tick');
       
       this.synthSelected[type] = word;
       this.synthSelected[type+'Id'] = orbId;
       
-      document.getElementById(orbId).classList.add('used');
+      const orb = document.getElementById(orbId);
+      if (orb) orb.classList.add('used');
       
       const slot = document.getElementById(`slot-${type}`);
-      slot.innerText = word;
-      slot.classList.add('filled', type);
+      if (slot) {
+        slot.innerText = word;
+        slot.classList.add('filled', type);
+      }
 
       if (this.synthSelected.verb && this.synthSelected.particle) {
           this.locked = true;
+          this._clearSynthTimer();
           setTimeout(() => this.checkSynthesis(), 400);
       }
   }
@@ -236,14 +269,17 @@ class NexusMode {
       if(this.app.audio) this.app.audio.play('pop');
       
       const orbId = this.synthSelected[type+'Id'];
-      document.getElementById(orbId).classList.remove('used');
+      const orb = document.getElementById(orbId);
+      if (orb) orb.classList.remove('used');
       
       this.synthSelected[type] = null;
       this.synthSelected[type+'Id'] = null;
       
       const slot = document.getElementById(`slot-${type}`);
-      slot.innerText = type === 'verb' ? 'FİİL' : 'EDAT';
-      slot.classList.remove('filled', type);
+      if (slot) {
+        slot.innerText = type === 'verb' ? 'FİİL' : 'EDAT';
+        slot.classList.remove('filled', type);
+      }
   }
 
   checkSynthesis() {
@@ -257,14 +293,18 @@ class NexusMode {
       if (isVerbCorrect && isParticleCorrect) {
           if(this.app.audio) this.app.audio.play('correct');
           
-          sVerb.classList.add('success');
-          sPart.classList.add('success');
-          reactor.style.borderColor = '#10b981';
-          reactor.style.background = 'radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 80%)';
+          if (sVerb) sVerb.classList.add('success');
+          if (sPart) sPart.classList.add('success');
+          if (reactor) {
+            reactor.style.borderColor = '#10b981';
+            reactor.style.background = 'radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 80%)';
+          }
           
           const sentBox = document.getElementById('synth-sentence');
-          sentBox.innerHTML = `"${this.current.ex}" <div style="color:#ec4899; margin-top:20px; font-size:1.5rem; font-weight:800; letter-spacing:3px;">FÜZYON BAŞARILI!</div>`;
-          sentBox.style.color = '#10b981';
+          if (sentBox) {
+            sentBox.innerHTML = `"${this.current.ex}" <div style="color:#ec4899; margin-top:20px; font-size:1.5rem; font-weight:800; letter-spacing:3px;">FÜZYON BAŞARILI!</div>`;
+            sentBox.style.color = '#10b981';
+          }
           
           if(this.app.speakWord) this.app.speakWord(this.current.ex);
           
@@ -280,23 +320,32 @@ class NexusMode {
       } else {
           if(this.app.audio) this.app.audio.play('error');
           
-          sVerb.classList.add('error');
-          sPart.classList.add('error');
+          if (sVerb) sVerb.classList.add('error');
+          if (sPart) sPart.classList.add('error');
           
           this.combo = 0;
           this._updateHUD();
           
           setTimeout(() => {
-              sVerb.classList.remove('error');
-              sPart.classList.remove('error');
+              if (sVerb) sVerb.classList.remove('error');
+              if (sPart) sPart.classList.remove('error');
               
-              // İlgili küreleri geri getir
-              document.getElementById(this.synthSelected.verbId).classList.remove('used');
-              document.getElementById(this.synthSelected.particleId).classList.remove('used');
+              if (this.synthSelected.verbId) {
+                const ov = document.getElementById(this.synthSelected.verbId);
+                if (ov) ov.classList.remove('used');
+              }
+              if (this.synthSelected.particleId) {
+                const op = document.getElementById(this.synthSelected.particleId);
+                if (op) op.classList.remove('used');
+              }
               
               this.synthSelected = { verb: null, particle: null, verbId: null, particleId: null };
-              sVerb.innerText = 'FİİL'; sVerb.classList.remove('filled', 'verb');
-              sPart.innerText = 'EDAT'; sPart.classList.remove('filled', 'particle');
+              if (sVerb) {
+                sVerb.innerText = 'FİİL'; sVerb.classList.remove('filled', 'verb');
+              }
+              if (sPart) {
+                sPart.innerText = 'EDAT'; sPart.classList.remove('filled', 'particle');
+              }
               
               this.locked = false;
           }, 800);
