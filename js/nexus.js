@@ -8,6 +8,7 @@ class NexusMode {
     this.score = 0;
     this.combo = 0;
     this.particles = ['up', 'down', 'in', 'out', 'on', 'off', 'over', 'away', 'back', 'into', 'with', 'through', 'for'];
+    this.locked = false;
     this._loadData();
   }
 
@@ -61,10 +62,10 @@ class NexusMode {
     const starContainer = document.getElementById('nexus-stars');
     if (!starContainer) return;
     let stars = '';
-    for(let i=0; i<50; i++) {
+    for(let i=0; i<60; i++) {
       const x = Math.random() * 100;
       const y = Math.random() * 100;
-      const size = Math.random() * 3 + 1;
+      const size = Math.random() * 2 + 1;
       const dur = Math.random() * 3 + 2;
       stars += `<div class="nexus-star" style="left:${x}%; top:${y}%; width:${size}px; height:${size}px; --dur:${dur}s"></div>`;
     }
@@ -102,11 +103,18 @@ class NexusMode {
     this.root.innerHTML = `
       <div class="nexus-header">
         <h1 class="nexus-title">NEXUS</h1>
-        <p class="nexus-subtitle">${this.currentIndex + 1} / ${this.queue.length}</p>
+        <p class="nexus-subtitle">Yörünge ${this.currentIndex + 1} / ${this.queue.length}</p>
       </div>
       <div class="nexus-game-area" id="nexus-board">
-        <div class="nexus-question">${this.current.tr}</div>
         
+        <div class="nexus-display-container">
+           <div class="nexus-question" id="nx-q">${this.current.tr}</div>
+           <div class="nexus-feedback-area" id="nx-feedback">
+              <div class="nexus-phrase-result" id="nx-phrase-res"></div>
+              <div class="nexus-example-text" id="nx-ex-res"></div>
+           </div>
+        </div>
+
         <svg class="nexus-connection-line" id="nexus-svg">
            <line id="nexus-line" x1="0" y1="0" x2="0" y2="0" class="nexus-line"></line>
         </svg>
@@ -139,12 +147,12 @@ class NexusMode {
     const boardRect = board.getBoundingClientRect();
     
     const centerX = boardRect.width / 2;
-    const centerY = boardRect.height / 2;
+    const centerY = boardRect.height * 0.6; // Core'u biraz aşağı çektik
     
     const particles = document.querySelectorAll('.nexus-particle-node');
     particles.forEach((p, i) => {
        const angle = (i / particles.length) * Math.PI * 2 - Math.PI/2;
-       const radius = window.innerWidth < 600 ? 120 : 180;
+       const radius = window.innerWidth < 600 ? 110 : 160;
        const x = centerX + Math.cos(angle) * radius - p.offsetWidth/2;
        const y = centerY + Math.sin(angle) * radius - p.offsetHeight/2;
        p.style.left = `${x}px`;
@@ -203,19 +211,25 @@ class NexusMode {
          if(this.app._renderHeader) this.app._renderHeader();
       }
       
-      const qEl = document.querySelector('.nexus-question');
-      if (qEl) {
-        qEl.innerHTML = `
-          <div style="color:#10b981; font-size:2rem; margin-bottom:10px;">${this.current.phrase}</div>
-          <div style="font-size:1.1rem; color:var(--text-2); font-style:italic;">"${this.current.ex}"</div>
-        `;
-      }
+      // UX OPTIMIZATION: Fade out question, show result
+      const qEl = document.getElementById('nx-q');
+      const feedbackArea = document.getElementById('nx-feedback');
+      const phraseRes = document.getElementById('nx-phrase-res');
+      const exRes = document.getElementById('nx-ex-res');
+
+      if (qEl) qEl.style.opacity = '0';
+      setTimeout(() => {
+          if (qEl) qEl.style.display = 'none';
+          if (feedbackArea) feedbackArea.style.display = 'flex';
+          if (phraseRes) phraseRes.innerText = this.current.phrase;
+          if (exRes) exRes.innerText = `"${this.current.ex}"`;
+      }, 300);
       
       setTimeout(() => {
         this.locked = false;
         this.currentIndex++;
         this.nextWord();
-      }, 2500);
+      }, 2800);
       
     } else {
       el.classList.add('wrong');
@@ -234,20 +248,25 @@ class NexusMode {
   _showResults() {
     this.root.innerHTML = `
       <div class="nexus-header">
-        <h1 class="nexus-title">BAĞLANTI TAMAMLANDI</h1>
+        <h1 class="nexus-title">KOZMİK BAĞ TAMAMLANDI</h1>
       </div>
       <div class="nexus-game-area" style="text-align:center;">
-        <div style="font-size:4rem; margin-bottom:20px;">🎉</div>
-        <h2 style="color:var(--text-1); font-size:2rem; margin-bottom:10px;">Harika İş Çıkardın!</h2>
-        <p style="color:var(--text-2); font-size:1.2rem; margin-bottom:30px;">Kazanılan XP: <strong style="color:var(--cyan)">+${this.score}</strong></p>
-        <div style="display:flex; gap:15px; justify-content:center;">
-           <button class="btn btn-primary" onclick="window.nexusMod.start()">Tekrar Oyna</button>
-           <button class="btn btn-ghost" onclick="app.navigate('home')">Ana Menü</button>
+        <div style="font-size:5rem; margin-bottom:20px; filter: drop-shadow(0 0 20px var(--cyan));">🌟</div>
+        <h2 style="color:#fff; font-size:2.2rem; margin-bottom:10px; font-weight:800;">Galaktik Ustalık!</h2>
+        <p style="color:var(--text-2); font-size:1.3rem; margin-bottom:35px;">Kazanılan Toplam Enerji: <strong style="color:var(--cyan)">+${this.score} XP</strong></p>
+        <div style="display:flex; gap:20px; justify-content:center;">
+           <button class="btn btn-primary" style="padding: 12px 30px;" onclick="window.nexusMod.start()">YENİDEN BAĞLAN</button>
+           <button class="btn btn-ghost" style="padding: 12px 30px;" onclick="app.navigate('home')">ANA MERKEZ</button>
         </div>
       </div>
       <div class="nexus-bg-stars" id="nexus-stars"></div>
     `;
     this._createStars();
-    if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 80, origin: {y: 0.6} });
+    if (typeof confetti === 'function') confetti({ 
+        particleCount: 200, 
+        spread: 90, 
+        origin: {y: 0.6},
+        colors: ['#00d4ff', '#7c3aed', '#10b981']
+    });
   }
 }
