@@ -130,13 +130,19 @@ class SpeechEngine {
     this._recognizer = null;
   }
 
-  speak(text, rate = 0.88) {
+  speak(text, rate = 0.88, onBoundary, onEnd) {
     if (!this.synth) return;
-    this.synth.cancel();
+    this.stop(); 
     const utt = new SpeechSynthesisUtterance(text);
     utt.lang = this.accent;
     utt.rate = rate;
+    if (onBoundary) utt.onboundary = onBoundary;
+    if (onEnd) utt.onend = onEnd;
     this.synth.speak(utt);
+  }
+
+  stop() {
+    if (this.synth) this.synth.cancel();
   }
 
   startRecognition({ onResult, onError, onEnd }) {
@@ -283,6 +289,8 @@ class App {
 
   navigate(view) {
     this.session.view = view;
+    this.speech.stop();
+    this.session.isSpeakingStory = false;
 
     // Cleanup synesthesia if active (prevents memory leaks and ghost timers)
     if (this.session.synthActive || this.session.synthPaused) {
@@ -1970,21 +1978,53 @@ class App {
   }
 
   playStory() {
+    const btn = document.getElementById('btn-play-story');
+    if (this.session.isSpeakingStory) {
+      this.speech.stop();
+      this.session.isSpeakingStory = false;
+      if (btn) btn.innerHTML = '<span class="audio-icon">🎧</span> Sesli Dinle';
+      document.querySelectorAll('.story-word, .sw').forEach(el => el.classList.remove('playing'));
+      return;
+    }
+
     const level = this.state.get('readingLevel');
     const stories = STORIES.filter(s => s.level === level);
     if (!stories.length) return;
     const story = stories[this.state.get('readingIdx') % stories.length];
+    
+    // Process text for speech (keep mapping possible)
     const rawText = story.text.replace(/\[([^\]]+)\]/g, '$1').replace(/\*+/g, '').replace(/#+/g, '').replace(/\{([^}]+)\}/g, '$1');
-    this.speakWord(rawText, 0.85);
-    const btn = document.getElementById('btn-play-story');
-    if (btn) {
-      btn.innerHTML = '<span class="audio-icon">🔊</span> Okunuyor...';
-      btn.style.opacity = '0.7';
-      setTimeout(() => {
-        btn.innerHTML = '<span class="audio-icon">🎧</span> Sesli Dinle';
-        btn.style.opacity = '1';
-      }, 5000);
-    }
+    
+    this.session.isSpeakingStory = true;
+    if (btn) btn.innerHTML = '<span class="audio-icon">🛑</span> Durdur';
+
+    const words = document.querySelectorAll('.story-word, .sw');
+    
+    this.speech.speak(rawText, 0.85, 
+      (event) => {
+        // Find current word by charIndex
+        let charAcc = 0;
+        let activeIdx = -1;
+        const textParts = rawText.split(/\s+/);
+        for(let i=0; i<textParts.length; i++) {
+          if (event.charIndex >= charAcc && event.charIndex < charAcc + textParts[i].length + 1) {
+            activeIdx = i;
+            break;
+          }
+          charAcc += textParts[i].length + 1;
+        }
+        if (activeIdx !== -1 && words[activeIdx]) {
+          words.forEach(el => el.classList.remove('playing'));
+          words[activeIdx].classList.add('playing');
+          words[activeIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      },
+      () => {
+        this.session.isSpeakingStory = false;
+        if (btn) btn.innerHTML = '<span class="audio-icon">🎧</span> Sesli Dinle';
+        words.forEach(el => el.classList.remove('playing'));
+      }
+    );
   }
 
   // ─────────────────────────────────────────────────────────
