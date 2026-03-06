@@ -1,4 +1,4 @@
-/* Nexus Mode v4.0: Learning Center */
+/* Nexus Mode v4.5: Quantum Hack & Cipher Optimization */
 .nexus-shell {
   position: relative;
   width: 100%;
@@ -7,476 +7,169 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: radial-gradient(circle at center, #0d111a 0%, #04060a 100%);
+  background: radial-gradient(circle at center, #05070a 0%, #000 100%);
   overflow: hidden;
   font-family: 'Plus Jakarta Sans', sans-serif;
   color: #fff;
 }
 
-/* Header alanı */
-.nexus-header {
-  padding: 20px 0 10px;
-  text-align: center;
-  z-index: 10;
-  flex-shrink: 0;
-}
-
-.nexus-title {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--cyan);
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.v4-badge {
-  font-size: 0.9rem;
-  background: linear-gradient(90deg, #10b981, #00d4ff);
-  color: #fff;
-  padding: 2px 8px;
-  border-radius: 8px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-}
-
-.nexus-subtitle {
-  font-size: 0.9rem;
-  color: var(--text-3);
-  margin-top: 5px;
-  font-weight: 500;
-}
-
-/* V4: Mode Selection Area */
-.nexus-mode-selector {
-  display: flex;
-  gap: 25px;
-  margin-top: 20px;
-  z-index: 15;
-  width: 90%;
-  max-width: 800px;
-}
-
-.nexus-mode-card {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 30px 20px;
-  text-align: center;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.nexus-mode-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--cyan);
-  box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.nm-icon {
-  font-size: 3.5rem;
-  margin-bottom: 15px;
-  filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-}
-
-.nm-title {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
-}
-
-.nm-desc {
-  font-size: 0.95rem;
-  color: var(--text-2);
-  line-height: 1.5;
-}
-
-/* Soru ve Bilgi Kutusu (Network Mode) */
-.nexus-display-container {
-  width: 90%;
-  max-width: 600px;
-  min-height: 120px;
-  margin: 15px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 20px 30px;
-  border-radius: 20px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  z-index: 12;
-  flex-shrink: 0;
-  transition: all 0.4s ease;
-}
-
-.nexus-task-progress {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--cyan);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
-
-.nexus-question {
-  font-size: 1.4rem;
-  color: #fff;
-  font-weight: 700;
-  line-height: 1.4;
-  animation: nexus-fade-up 0.4s forwards;
-}
-
-/* V4 Cipher Mode Specific UI */
-.cipher-sentence-box {
-  width: 90%;
-  max-width: 700px;
-  margin: 20px auto 10px;
-  text-align: center;
-  font-size: 1.6rem;
-  font-weight: 600;
-  line-height: 1.5;
-  color: var(--text-1);
-  background: rgba(16, 185, 129, 0.05);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  padding: 25px 30px;
-  border-radius: 20px;
-  z-index: 12;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-.cipher-blank {
+/* Glitch Efekti */
+.cipher-glitch {
   display: inline-block;
-  min-width: 100px;
-  border-bottom: 3px solid var(--cyan);
   color: var(--cyan);
-  padding: 0 10px;
-  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
   font-weight: 800;
-  text-shadow: 0 0 10px rgba(0,212,255,0.4);
+  min-width: 120px;
+  position: relative;
+  text-shadow: 0 0 8px var(--cyan);
 }
 
-.cipher-hint {
-  font-size: 1rem;
-  color: var(--text-3);
-  margin-top: 15px;
-  font-style: italic;
+.cipher-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px;
+  text-shadow: -2px 0 #ff00c1;
+  top: 0;
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+  animation: glitch-anim 2s infinite linear alternate-reverse;
 }
 
+@keyframes glitch-anim {
+  0% { clip: rect(10px, 9999px, 20px, 0); }
+  20% { clip: rect(30px, 9999px, 40px, 0); }
+  40% { clip: rect(15px, 9999px, 25px, 0); }
+  60% { clip: rect(45px, 9999px, 50px, 0); }
+  80% { clip: rect(5px, 9999px, 15px, 0); }
+  100% { clip: rect(25px, 9999px, 35px, 0); }
+}
+
+/* Şifre Paneli Revizyonu */
 .cipher-lock-mechanism {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 30px;
   margin: 20px auto;
-  padding: 30px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 15px 40px rgba(0,0,0,0.5);
-  z-index: 12;
+  padding: 40px;
+  background: linear-gradient(180deg, #1a1c23 0%, #0a0b0e 100%);
+  border-radius: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.02);
+  position: relative;
 }
 
 .cipher-dial {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
-  width: 150px;
-}
-
-.cipher-nav-btn {
-  background: none;
-  border: none;
-  color: var(--text-3);
-  font-size: 2rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  padding: 0;
-  line-height: 1;
-}
-
-.cipher-nav-btn:hover {
-  color: var(--cyan);
-  transform: scale(1.2);
+  gap: 10px;
+  width: 180px;
+  background: rgba(0,0,0,0.3);
+  padding: 15px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .cipher-window {
   width: 100%;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: 800;
-  background: rgba(255,255,255,0.05);
-  border: 2px solid rgba(255,255,255,0.15);
-  border-radius: 16px;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s;
-  box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
-  user-select: none;
-}
-
-.cipher-window.glow {
-  border-color: var(--cyan);
-  box-shadow: 0 0 20px rgba(0,212,255,0.4), inset 0 0 15px rgba(0,212,255,0.2);
-  color: var(--cyan);
-}
-
-.cipher-window.correct {
-  border-color: #10b981;
-  box-shadow: 0 0 30px rgba(16,185,129,0.5), inset 0 0 15px rgba(16,185,129,0.2);
-  color: #10b981;
-  animation: pulse-correct 1s infinite alternate;
-}
-
-.cipher-window.wrong {
-  border-color: #ef4444;
-  color: #ef4444;
-  animation: nexus-shake 0.4s;
-}
-
-@keyframes pulse-correct {
-  0% { box-shadow: 0 0 20px rgba(16,185,129,0.4), inset 0 0 15px rgba(16,185,129,0.2); }
-  100% { box-shadow: 0 0 40px rgba(16,185,129,0.7), inset 0 0 25px rgba(16,185,129,0.4); }
-}
-
-.cipher-engage-btn {
-  margin-top: 10px;
-  font-size: 1.2rem;
-  padding: 16px 50px;
-  border-radius: 100px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  background: linear-gradient(135deg, var(--cyan), var(--blue));
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  z-index: 12;
-}
-
-.cipher-engage-btn:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
-}
-
-/* Oyun Alanı (Network) */
-.nexus-game-area {
-  position: relative;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  margin-bottom: 80px;
-}
-
-.nexus-core-node {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--violet), var(--purple));
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.6rem;
   font-weight: 800;
-  color: #fff;
-  box-shadow: 0 0 40px rgba(124, 58, 237, 0.4), inset 0 0 15px rgba(255,255,255,0.3);
-  position: absolute;
-  cursor: pointer;
-  z-index: 10;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: #000;
+  border: 2px solid #222;
+  border-radius: 12px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
-.constellation-complete-glow {
-  animation: massive-glow 1.5s infinite alternate !important;
+/* Kademeli Durum Renkleri */
+.cipher-window.stabilizing {
+  border-color: #f59e0b;
+  color: #f59e0b;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.3), inset 0 0 10px rgba(245, 158, 11, 0.1);
 }
 
-@keyframes massive-glow {
-  0% { box-shadow: 0 0 40px var(--cyan), inset 0 0 20px #fff; background: linear-gradient(135deg, var(--cyan), var(--blue)); transform: scale(1.1); }
-  100% { box-shadow: 0 0 100px var(--violet), inset 0 0 40px #fff; background: linear-gradient(135deg, var(--violet), var(--cyan)); transform: scale(1.3); }
-}
-
-.nexus-particle-node {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #fff;
-  position: absolute;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  z-index: 8;
-  backdrop-filter: blur(5px);
-  text-align: center;
-}
-
-.nexus-particle-node:hover:not(.solved) {
-  background: rgba(255,255,255,0.12);
-  border-color: var(--cyan);
-  transform: scale(1.15);
-}
-
-.nexus-particle-node.solved {
-  background: rgba(16, 185, 129, 0.15);
+.cipher-window.locked-in {
   border-color: #10b981;
   color: #10b981;
-  box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
-  transform: scale(1.1);
-  pointer-events: none;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 15px rgba(16, 185, 129, 0.2);
+  transform: scale(1.05);
 }
 
-.nexus-particle-node.wrong {
-  background: linear-gradient(135deg, #ef4444, #b91c1c);
-  border-color: #f87171;
-  transform: scale(1.1);
-  animation: nexus-shake 0.5s;
-}
-
-.nexus-connection-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 6;
-}
-
-.nexus-line {
-  stroke: rgba(255,255,255,0.1);
-  stroke-width: 2;
-  transition: all 0.4s;
-}
-
-.nexus-line.correct-line {
-  stroke: #10b981;
-  stroke-width: 4;
-  filter: drop-shadow(0 0 8px #10b981);
-}
-
-.nexus-line.new-line {
-  animation: draw-line 0.5s ease-out forwards;
-}
-
-@keyframes draw-line {
-  from { stroke-dasharray: 0 1000; }
-  to { stroke-dasharray: 1000 1000; }
-}
-
-/* Alt İstatistikler */
-.nexus-hud {
-  position: absolute;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 12px;
-  z-index: 10;
-}
-
-.nexus-stat {
-  background: rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 8px 20px;
-  border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  backdrop-filter: blur(10px);
-}
-
-.nexus-feedback-area {
-  flex-direction: column;
-  align-items: center;
-  animation: nexus-fade-up 0.4s forwards;
-}
-
-.nexus-phrase-result {
+/* Cümle Kutusu Tasarımı */
+.cipher-sentence-box {
+  width: 90%;
+  max-width: 750px;
+  margin: 20px auto;
+  text-align: center;
   font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.6;
+  padding: 35px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  backdrop-filter: blur(15px);
+}
+
+.cipher-hint {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 6px 20px;
+  background: rgba(0, 212, 255, 0.1);
+  border-radius: 100px;
+  font-size: 0.9rem;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: 2px;
   font-weight: 800;
-  color: #10b981;
-  margin-bottom: 5px;
-  text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
 }
 
-.nexus-example-text {
-  font-size: 1rem;
-  color: var(--text-2);
-  font-style: italic;
-  line-height: 1.5;
+.cipher-engage-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  border: none;
+  padding: 18px 60px;
+  font-size: 1.3rem;
+  font-weight: 900;
+  border-radius: 100px;
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  letter-spacing: 2px;
 }
 
-
-/* Küçük Ekran Ayarları */
-@media (max-width: 700px) {
-  .nexus-mode-selector { flex-direction: column; }
-  .cipher-lock-mechanism { padding: 15px; gap: 10px; }
-  .cipher-window { font-size: 1.5rem; height: 60px; width: 110px; }
-  .cipher-sentence-box { font-size: 1.2rem; padding: 15px; }
+.cipher-engage-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 45px rgba(16, 185, 129, 0.5);
 }
 
-@media (max-height: 700px) {
-  .nexus-title { font-size: 1.4rem; }
-  .nexus-display-container { min-height: 100px; margin: 10px auto; padding: 10px 20px; }
-  .nexus-game-area { margin-bottom: 60px; }
-  .nexus-core-node { width: 90px; height: 90px; font-size: 1.2rem; }
-  .nexus-particle-node { width: 65px; height: 65px; font-size: 0.9rem; }
-  .cipher-sentence-box { font-size: 1.3rem; }
-}
-
-@keyframes nexus-fade-up {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes nexus-shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-6px); }
-  40%, 80% { transform: translateX(6px); }
-}
-
-.nexus-star {
+/* Matrix Background Elements */
+.nexus-bg-matrix {
   position: absolute;
-  background: #fff;
-  border-radius: 50%;
-  opacity: 0.5;
-  animation: nexus-twinkle var(--dur) infinite alternate;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.15;
 }
 
-@keyframes nexus-twinkle {
-  0% { opacity: 0.1; }
-  100% { opacity: 0.6; }
+.matrix-column {
+  position: absolute;
+  top: -100px;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  color: var(--cyan);
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); }
 }
