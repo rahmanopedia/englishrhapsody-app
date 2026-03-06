@@ -8,12 +8,12 @@
 // ── Constants ──────────────────────────────────────────────
 const XP_PER_LEVEL    = 500;
 const RANKS = [
-  { icon:'🌱', name:'Çırak',   min:1  },
-  { icon:'🧭', name:'Gezgin',  min:6  },
-  { icon:'📚', name:'Bilgin',  min:11 },
-  { icon:'🧙', name:'Usta',    min:16 },
-  { icon:'👑', name:'Efsane',  min:21 },
-  { icon:'⚡', name:'İlah',    min:26 },
+  { icon:'🌱', min:1  },
+  { icon:'🧭', min:6  },
+  { icon:'📚', min:11 },
+  { icon:'🧙', min:16 },
+  { icon:'👑', min:21 },
+  { icon:'⚡', min:26 },
 ];
 
 // ── Phrase Dictionary (Phrasal Verbs, Idioms, Grammar) ─────
@@ -2661,17 +2661,17 @@ class App {
     });
     // Update nav labels
     const navMap = {
-      'home':    { tr:'Merkez',    en:'Home',      es:'Inicio'   },
-      'learn':   { tr:'Sinestezi', en:'Practice',  es:'Práctica' },
-      'reading': { tr:'Okuma',     en:'Reading',   es:'Lectura'  },
-      'speak':   { tr:'Konuşma',   en:'Speaking',  es:'Hablar'   },
+      'home':    'nav_home',
+      'learn':   'nav_learn',
+      'reading': 'nav_reading',
+      'speak':   'nav_speak',
     };
     document.querySelectorAll('.nav-item, .m-nav-item').forEach(el => {
       const target = el.dataset.target;
       if (navMap[target]) {
         const spanEl = el.querySelector('span:last-child') || el.querySelector('.m-icon + span') || el.lastElementChild;
         if (spanEl && spanEl !== el.querySelector('.nav-icon') && spanEl !== el.querySelector('.m-icon')) {
-          spanEl.textContent = navMap[target][lang] || navMap[target].tr;
+          spanEl.textContent = this.t(navMap[target]);
         }
       }
     });
@@ -2696,7 +2696,7 @@ class App {
     document.querySelectorAll('.accent-btn').forEach(b => {
       b.classList.toggle('active', b.textContent.includes(accent === 'en-US' ? 'US' : 'UK'));
     });
-    UI.toast(`🗣️ Aksan: ${accent === 'en-US' ? 'Amerikan İngilizcesi' : 'İngiliz İngilizcesi'}`);
+    UI.toast(accent === 'en-US' ? this.t('toast_accent_us') : this.t('toast_accent_gb'));
   }
 
   speakWord(text, rate = 0.88) {
@@ -2733,7 +2733,7 @@ class App {
     if (xp >= needed) {
       xp -= needed;
       level++;
-      UI.toast(`🎉 Seviye atladın! Level ${level}`, 4000);
+      UI.toast(`🎉 ${this.t('toast_level_up')} Level ${level}`, 4000);
       this.audio.play('success');
       if (typeof confetti === 'function') {
         confetti({ particleCount:120, spread:70, origin:{y:0.6}, colors:['#00d4ff','#7c3aed','#f43f5e'] });
@@ -2750,7 +2750,7 @@ class App {
     if (milestones.includes(learned)) {
       const prev = this.state.get('_lastMilestoneCelebrated') || 0;
       if (learned > prev) {
-        UI.toast(`🏆 Harika! ${learned} kelimeye ulaştın!`, 5000);
+        UI.toast(`🏆 ${learned} ${this.t('toast_words_goal')}`, 5000);
         this.state.set('_lastMilestoneCelebrated', learned);
         if (typeof confetti === 'function') {
           setTimeout(() => confetti({ particleCount:80, spread:50, origin:{y:0.5} }), 500);
@@ -2797,7 +2797,7 @@ class App {
     toast.innerHTML = `
       <div class="ach-toast-icon">${ach.icon}</div>
       <div class="ach-toast-info">
-        <h4>Başarım Kilidi Açıldı!</h4>
+        <h4>${this.t('achievement_unlocked')}</h4>
         <h3>${ach.title}</h3>
         <p>${ach.desc}</p>
       </div>
@@ -2880,12 +2880,13 @@ class App {
     UI.setEl('home-lvl',    level);
 
     const needed = level * XP_PER_LEVEL;
-    UI.setEl('xp-remain', `${needed - xp} XP kaldı`);
+    UI.setEl('xp-remain', `${needed - xp} ${this.t('xp_remain')}`);
     setTimeout(() => UI.setWidth('xp-bar', (xp / needed) * 100), 100);
 
     const rank = this._getRank();
+    const rankIdx = RANKS.indexOf(rank);
     UI.setEl('rank-icon',  rank.icon);
-    UI.setEl('rank-name',  rank.name);
+    UI.setEl('rank-name',  this.t(`rank_${rankIdx}`));
     UI.setEl('rank-level', `Level ${level}`);
 
     const wordsPct = WORDS && WORDS.length ? Math.round((learned / WORDS.length) * 100) : 0;
@@ -2901,7 +2902,7 @@ class App {
 
     const bestSpeak = this.state.get('speakBest');
     const el = document.getElementById('ac-speak-hint');
-    if (el) el.textContent = bestSpeak > 0 ? `En iyi: ${bestSpeak}% 🏆` : 'Bugün dene →';
+    if (el) el.textContent = bestSpeak > 0 ? `${this.t('best_score')}: ${bestSpeak}% 🏆` : this.t('try_today');
 
     const todayKey = new Date().toISOString().split('T')[0];
     const todayXP  = (this.state.get('history')[todayKey] || 0);
@@ -2910,12 +2911,14 @@ class App {
     setTimeout(() => UI.setWidth('daily-goal-bar', goalPct), 200);
     UI.setEl('daily-goal-pct', `${todayXP}/${goalXP} XP`);
     const goalEl = document.getElementById('daily-goal-label');
-    if (goalEl) goalEl.textContent = goalPct >= 100 ? '✅ Günlük hedef tamamlandı!' : '🎯 Günlük Hedef';
+    if (goalEl) goalEl.textContent = goalPct >= 100 ? this.t('daily_done') : this.t('daily_goal');
 
     const hour = new Date().getHours();
-    const greet = hour < 12 ? '🌅 Günaydın!' : hour < 18 ? '☀️ İyi öğlenler!' : '🌙 İyi akşamlar!';
+    const greet = hour < 12 ? this.t('greeting_morning') : hour < 18 ? this.t('greeting_afternoon') : this.t('greeting_evening');
     UI.setEl('home-greeting', greet);
-    UI.setEl('home-date', new Date().toLocaleDateString('tr-TR', { weekday:'long', day:'numeric', month:'long' }));
+    const lang = this.state.get('uiLang') || 'tr';
+    const locale = lang === 'tr' ? 'tr-TR' : lang === 'es' ? 'es-ES' : 'en-GB';
+    UI.setEl('home-date', new Date().toLocaleDateString(locale, { weekday:'long', day:'numeric', month:'long' }));
   }
 
   _renderWOD() {
@@ -2934,7 +2937,7 @@ class App {
     const el = document.getElementById('streak-cal');
     if (!el) return;
     const hist = this.state.get('history');
-    const days = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+    const days = this.t('days_short');
     let html = '';
     for (let i = 6; i >= 0; i--) {
       const d   = new Date(Date.now() - i * 86400000);
@@ -2959,7 +2962,7 @@ class App {
     const tip = COLLOCATIONS[Math.abs(h) % COLLOCATIONS.length];
     el.innerHTML = `
       <div class="colloc-tip-inner">
-        <div class="colloc-tip-label">💡 Dil İpucu</div>
+        <div class="colloc-tip-label">${this.t('tip_label')}</div>
         <div class="colloc-phrase">${tip.phrase}</div>
         <div class="colloc-tr">${tip.tr}</div>
         ${tip.warn ? `<div class="colloc-warn">${tip.warn}</div>` : ''}
@@ -2986,28 +2989,28 @@ class App {
   _obQuestions() {
     return [
       {
-        icon:'🤔', title:'Seviyeni Belirle',
-        sub:'Sana uygun içeriği hazırlayalım',
+        icon:'🤔', title:this.t('ob_q1_title'),
+        sub:this.t('ob_q1_sub'),
         opts:[
-          {label:'Hiç bilmiyorum', sub:'A1 · Sıfırdan', pts:0},
-          {label:'Biraz biliyorum', sub:'A2 · Temel', pts:1},
-          {label:'Orta seviyeyim', sub:'B1/B2', pts:3},
-          {label:'İleri düzeydeyim', sub:'C1+', pts:5},
+          {label:this.t('ob_q1_a0'), sub:this.t('ob_q1_a0_sub'), pts:0},
+          {label:this.t('ob_q1_a1'), sub:this.t('ob_q1_a1_sub'), pts:1},
+          {label:this.t('ob_q1_a3'), sub:this.t('ob_q1_a3_sub'), pts:3},
+          {label:this.t('ob_q1_a5'), sub:this.t('ob_q1_a5_sub'), pts:5},
         ]
       },
       {
-        icon:'📖', title:'"Galaxy" ne demek?',
-        sub:'Doğru seçeneği tıkla',
+        icon:'📖', title:this.t('ob_q2_title'),
+        sub:this.t('ob_q2_sub'),
         opts:[
-          {label:'☀️ Güneş', pts:0},
-          {label:'🌀 Galaksi', pts:2, correct:true},
-          {label:'⭐ Yıldız', pts:0},
-          {label:'🪐 Gezegen', pts:0},
+          {label:this.t('ob_q2_a0'), pts:0},
+          {label:this.t('ob_q2_a1'), pts:2, correct:true},
+          {label:this.t('ob_q2_a2'), pts:0},
+          {label:this.t('ob_q2_a3'), pts:0},
         ]
       },
       {
-        icon:'✍️', title:'"I\'m looking forward to ___ you."',
-        sub:'Doğru seçeneği seç',
+        icon:'✍️', title:this.t('ob_q3_title'),
+        sub:this.t('ob_q3_sub'),
         opts:[
           {label:'meet', pts:0},
           {label:'meeting', pts:2, correct:true},
@@ -3032,9 +3035,9 @@ class App {
       screen.innerHTML = `
         <div class="ob-card">
           <div class="ob-icon">🎓</div>
-          <h2 class="ob-title">English<span style="color:var(--cyan)"> Rhapsody</span>'ye<br>Hoş Geldin!</h2>
-          <p class="ob-sub">Birkaç soruda seviyeni belirleyelim ve sana özel bir öğrenme deneyimi oluşturalım.</p>
-          <button class="btn btn-primary btn-lg" style="margin-top:8px" onclick="app._obNext()">Başla →</button>
+          <h2 class="ob-title">${this.t('ob_title')}</h2>
+          <p class="ob-sub">${this.t('ob_subtitle')}</p>
+          <button class="btn btn-primary btn-lg" style="margin-top:8px" onclick="app._obNext()">${this.t('ob_start')}</button>
         </div>`;
       return;
     }
@@ -3104,9 +3107,9 @@ class App {
   _obFinish() {
     const score = this._ob.score;
     let speakDiff, bonus, levelLabel;
-    if (score <= 2)     { speakDiff='easy';   bonus=0;   levelLabel='Başlangıç 🌱'; }
-    else if (score <= 6){ speakDiff='medium'; bonus=200; levelLabel='Orta Seviye 📚'; }
-    else                { speakDiff='hard';   bonus=500; levelLabel='İleri Seviye 🏆'; }
+    if (score <= 2)     { speakDiff='easy';   bonus=0;   levelLabel=this.t('ob_rank_begin'); }
+    else if (score <= 6){ speakDiff='medium'; bonus=200; levelLabel=this.t('ob_rank_mid'); }
+    else                { speakDiff='hard';   bonus=500; levelLabel=this.t('ob_rank_adv'); }
 
     const fill = document.getElementById('ob-progress-fill');
     if (fill) fill.style.width = '100%';
@@ -3115,11 +3118,11 @@ class App {
     if (screen) screen.innerHTML = `
       <div class="ob-card">
         <div class="ob-icon">🎯</div>
-        <h2 class="ob-title">Seviyeni Belirledik!</h2>
+        <h2 class="ob-title">${this.t('ob_finish_title')}</h2>
         <p class="ob-sub" style="margin-bottom:8px"><strong style="color:var(--cyan)">${levelLabel}</strong></p>
-        ${bonus > 0 ? `<p class="ob-sub">⚡ Başlangıç bonusu: +${bonus} XP</p>` : ''}
+        ${bonus > 0 ? `<p class="ob-sub">⚡ ${this.t('ob_bonus')} +${bonus} XP</p>` : ''}
         <button class="btn btn-primary btn-lg" style="margin-top:20px" onclick="app._obComplete('${speakDiff}', ${bonus})">
-          Hadi Başlayalım!
+          ${this.t('ob_finish')}
         </button>
       </div>`;
   }
@@ -3134,7 +3137,7 @@ class App {
       setTimeout(() => { overlay.style.display = 'none'; }, 420);
     }
     this.audio.play('success');
-    UI.toast(`✅ Seviye belirlendi! Öğrenmeye başla.`);
+    UI.toast(this.t('ob_level_set'));
     this._initHome();
   }
 
@@ -3329,16 +3332,16 @@ class App {
     if (modeInd) {
       modeInd.style.display = 'inline-flex';
       if (this._synthModeConfig === 'speed') {
-        modeInd.textContent = '⚡ ZAMANA KARŞI';
+        modeInd.textContent = this.t('synth_mode_ind_speed');
         modeInd.className = 'synth-mode-ind speed';
       } else if (wordMode === 'spell') {
-        modeInd.textContent = '⌨️ YAZMA';
+        modeInd.textContent = this.t('synth_write_mode');
         modeInd.className = 'synth-mode-ind spell';
       } else if (wordMode === 'context') {
-        modeInd.textContent = '🧩 BAĞLAM';
+        modeInd.textContent = this.t('synth_mode_ind_context');
         modeInd.className = 'synth-mode-ind context';
       } else {
-        modeInd.textContent = '🔘 SEÇME';
+        modeInd.textContent = this.t('synth_mode_ind_choice');
         modeInd.className = 'synth-mode-ind choice';
       }
     }
@@ -3385,7 +3388,7 @@ class App {
       this.session.synthRevealTimer = setTimeout(() => {
         if (this.session.synthActive && this.session.synthTyped.length === 0) {
           this._handleSynthKey(word.en[0]);
-          UI.toast(`💡 İpucu: İlk harf "${word.en[0].toUpperCase()}"`, 2000);
+          UI.toast(`💡 ${this.t('hint_first_letter')} "${word.en[0].toUpperCase()}"`, 2000);
         }
       }, 8000);
     } else {
@@ -3405,7 +3408,7 @@ class App {
         this.session.synthRevealTimer = setTimeout(() => {
           if (this.session.synthActive && this.session.synthTyped.length === 0) {
             this._handleSynthKey(word.en[0]);
-            UI.toast(`💡 İpucu: İlk harf "${word.en[0].toUpperCase()}"`, 2000);
+            UI.toast(`💡 ${this.t('hint_first_letter')} "${word.en[0].toUpperCase()}"`, 2000);
           }
         }, 8000);
       }
@@ -3444,7 +3447,7 @@ class App {
       this._updateSynthVisuals(false);
 
       if (this.session.synthFails >= 3) {
-        UI.toast("⚠️ 3 Hata! Doğru cevap gösteriliyor...", 2000);
+        UI.toast(this.t('hint_wrong3'), 2000);
         setTimeout(() => this.skipSynthWord(), 600);
       }
     }
@@ -3739,15 +3742,15 @@ class App {
 
     // Grade color and text
     let gradeColor, gradeText;
-    if      (acc >= 90) { gradeColor = 'var(--green)';  gradeText = '🏆 Mükemmel!'; }
-    else if (acc >= 70) { gradeColor = 'var(--cyan)';   gradeText = '🎉 Harika!'; }
-    else if (acc >= 50) { gradeColor = 'var(--amber)';  gradeText = '💪 İyi iş!'; }
-    else                { gradeColor = 'var(--rose)';   gradeText = '🔄 Devam et!'; }
+    if      (acc >= 90) { gradeColor = 'var(--green)';  gradeText = this.t('synth_grade_great'); }
+    else if (acc >= 70) { gradeColor = 'var(--cyan)';   gradeText = this.t('synth_grade_good'); }
+    else if (acc >= 50) { gradeColor = 'var(--amber)';  gradeText = this.t('synth_grade_ok'); }
+    else                { gradeColor = 'var(--rose)';   gradeText = this.t('synth_grade_retry'); }
 
     // Missed words section
     const missedHtml = missed.length > 0 ? `
       <div class="synth-missed-section">
-        <div class="synth-missed-title">📝 Tekrar Edilecekler (${missed.length})</div>
+        <div class="synth-missed-title">${this.t('synth_missed_title')} (${missed.length})</div>
         <div class="synth-missed-words">
           ${missed.map(w => `<span class="synth-missed-chip" title="${w.tr}">${w.icon || ''} ${w.en}</span>`).join('')}
         </div>
@@ -3764,9 +3767,9 @@ class App {
     const choiceCount = this.session.synthChoiceCount || 0;
     const modeHtml = (spellCount > 0 || choiceCount > 0) ? `
       <div class="synth-finish-modes">
-        ${spellCount  > 0 ? `<span class="sfm-chip spell">⌨️ ${spellCount} Yazma</span>`  : ''}
-        ${choiceCount > 0 ? `<span class="sfm-chip choice">🔘 ${choiceCount} Seçme</span>` : ''}
-        ${speedBonus  > 0 ? `<span class="sfm-chip speed">⚡ +${speedBonus} Hız XP</span>` : ''}
+        ${spellCount  > 0 ? `<span class="sfm-chip spell">${this.t('synth_write_mode')} ${spellCount}</span>`  : ''}
+        ${choiceCount > 0 ? `<span class="sfm-chip choice">${this.t('synth_choice_label')} ${choiceCount}</span>` : ''}
+        ${speedBonus  > 0 ? `<span class="sfm-chip speed">${this.t('synth_speed_bonus')} +${speedBonus}</span>` : ''}
       </div>` : '';
 
     const chamber = document.getElementById('synth-chamber');
@@ -3774,38 +3777,38 @@ class App {
     chamber.innerHTML = `
       <div class="synth-intro synth-finish-screen" style="display:flex">
         <div class="synth-finish-grade" style="color:${gradeColor}">${gradeText}</div>
-        <h1 class="synth-title" style="font-size:1.8rem;margin-bottom:20px">BAĞLANTI TAMAMLANDI</h1>
+        <h1 class="synth-title" style="font-size:1.8rem;margin-bottom:20px">${this.t('synth_finish_title')}</h1>
         ${modeHtml}
         <div class="synth-finish-stats">
           <div class="sfs">
             <div class="sfs-val" style="color:var(--cyan)">${this.session.synthScore}</div>
-            <div class="sfs-label">XP Kazanıldı</div>
+            <div class="sfs-label">${this.t('synth_xp_earned')}</div>
           </div>
           <div class="sfs">
             <div class="sfs-val" style="color:var(--green)">${perfect}/${total}</div>
-            <div class="sfs-label">Mükemmel</div>
+            <div class="sfs-label">${this.t('synth_perfect')}</div>
           </div>
           <div class="sfs">
             <div class="sfs-val" style="color:var(--violet)">${acc}%</div>
-            <div class="sfs-label">Doğruluk</div>
+            <div class="sfs-label">${this.t('synth_accuracy')}</div>
           </div>
           <div class="sfs">
             <div class="sfs-val" style="color:var(--amber)">${avgTime}s</div>
-            <div class="sfs-label">Ort. Süre</div>
+            <div class="sfs-label">${this.t('synth_avg_time')}</div>
           </div>
           <div class="sfs">
             <div class="sfs-val" style="color:var(--rose)">${fastestTime}s</div>
-            <div class="sfs-label">En Hızlı</div>
+            <div class="sfs-label">${this.t('synth_fastest')}</div>
           </div>
           <div class="sfs">
             <div class="sfs-val" style="color:var(--text-2)">${timeStr}</div>
-            <div class="sfs-label">Toplam</div>
+            <div class="sfs-label">${this.t('synth_total_label')}</div>
           </div>
         </div>
         ${missedHtml}
         <div class="synth-finish-actions">
-          <button class="synth-start-btn" onclick="app.navigate('learn')">TEKRAR OYNA</button>
-          <button class="synth-hint-btn synth-finish-home-btn" onclick="app.navigate('home')">Ana Menü</button>
+          <button class="synth-start-btn" onclick="app.navigate('learn')">${this.t('synth_replay_btn')}</button>
+          <button class="synth-hint-btn synth-finish-home-btn" onclick="app.navigate('home')">${this.t('synth_home_btn')}</button>
         </div>
       </div>
     `;
@@ -3851,8 +3854,8 @@ class App {
       ).join('')}</div>`
     ).join('') +
     `<div class="vkb-row vkb-action-row">
-      <button class="vkb-key vkb-hint" onclick="app.playSynthHint()">🔊 Dinle</button>
-      <button class="vkb-key vkb-skip" onclick="app.skipSynthWord()">⏭ Geç</button>
+      <button class="vkb-key vkb-hint" onclick="app.playSynthHint()">${this.t('synth_listen_btn')}</button>
+      <button class="vkb-key vkb-skip" onclick="app.skipSynthWord()">${this.t('synth_skip_btn')}</button>
     </div>`;
   }
 
@@ -3894,7 +3897,7 @@ class App {
     // Auto-skip after duration
     this.session.synthAutoSkipTimer = setTimeout(() => {
       if (this.session.synthActive && !this.session.synthPaused) {
-        UI.toast(this.session.synthWordMode === 'speed' ? "⚡ Çok yavaş!" : "⏱️ Süre doldu!", 2000);
+        UI.toast(this.session.synthWordMode === 'speed' ? this.t('synth_too_slow') : this.t('synth_timeout'), 2000);
         this.skipSynthWord();
       }
     }, duration * 1000);
@@ -3926,7 +3929,7 @@ class App {
   _showSpeedBonus(bonus) {
     const el = document.getElementById('synth-speed-bonus');
     if (!el) return;
-    el.textContent = `⚡ +${bonus} Hız`;
+    el.textContent = `${this.t('synth_speed_bonus')} +${bonus}`;
     el.style.display = 'block';
     el.classList.remove('sb-pop');
     void el.offsetWidth;
@@ -4049,7 +4052,7 @@ class App {
       this.session.synthWordStartTime = Date.now() - (duration - this.session.synthTimeRemaining);
       this.session.synthAutoSkipTimer = setTimeout(() => {
         if (this.session.synthActive && !this.session.synthPaused) {
-          UI.toast(this.session.synthWordMode === 'speed' ? "⚡ Çok yavaş!" : "⏱️ Süre doldu!", 2000);
+          UI.toast(this.session.synthWordMode === 'speed' ? this.t('synth_too_slow') : this.t('synth_timeout'), 2000);
           this.skipSynthWord();
         }
       }, this.session.synthTimeRemaining);
@@ -4060,7 +4063,7 @@ class App {
       this.session.synthRevealTimer = setTimeout(() => {
         if (this.session.synthActive && !this.session.synthPaused && this.session.synthTyped.length === 0) {
           this._handleSynthKey(word.en[0]);
-          UI.toast(`💡 İpucu: İlk harf "${word.en[0].toUpperCase()}"`, 2000);
+          UI.toast(`💡 ${this.t('hint_first_letter')} "${word.en[0].toUpperCase()}"`, 2000);
         }
       }, 5000);
     }
@@ -4136,7 +4139,7 @@ class App {
     const level  = this.state.get('readingLevel');
     const mode = this.state.get('readingMode') || 'read';
     const stories = STORIES.filter(s => s.level === level);
-    if (!stories.length) { container.innerHTML = '<p>İçerik bulunamadı.</p>'; return; }
+    if (!stories.length) { container.innerHTML = `<p>${this.t('no_content')}</p>`; return; }
 
     const rawIdx = this.state.get('readingIdx') % stories.length;
     const idx    = this._getStoryIndex();
@@ -4198,8 +4201,8 @@ class App {
           <div class="story-title">${story.title}</div>
         </div>
         <div style="display:flex;gap:8px">
-          ${idx > 0 ? `<button class="btn btn-ghost btn-sm" onclick="app._prevStory()">← Önceki</button>` : ''}
-          <button class="btn btn-ghost btn-sm" id="btn-next-story" ${mode === 'quiz' ? 'style="display:none"' : ''} onclick="app._nextStory()">Sonraki →</button>
+          ${idx > 0 ? `<button class="btn btn-ghost btn-sm" onclick="app._prevStory()">${this.t('reading_prev')}</button>` : ''}
+          <button class="btn btn-ghost btn-sm" id="btn-next-story" ${mode === 'quiz' ? 'style="display:none"' : ''} onclick="app._nextStory()">${this.t('reading_next')}</button>
         </div>
       </div>
       <div class="story-content-box">
@@ -4273,21 +4276,9 @@ class App {
     const wordMap = {};
     WORDS.forEach(w => { wordMap[w.en.toLowerCase()] = w; });
     
-    // Common functional words fallback
-    const basicDict = {
-      'the': 'belirli nesne (açıklayıcı)', 'a': 'bir', 'an': 'bir', 'and': 've', 'or': 'veya', 'but': 'fakat, ama', 
-      'is': 'dır/dir (olmak)', 'am': 'ım/im (olmak)', 'are': 'lar/ler (olmak)', 'was': 'idi (geçmiş zaman)', 'were': 'idiler',
-      'in': 'içinde', 'on': 'üzerinde', 'at': 'de/da', 'to': 'e/a (yönelme)', 'with': 'ile', 'from': 'den/dan',
-      'i': 'ben', 'you': 'sen/siz', 'he': 'o (erkek)', 'she': 'o (kadın)', 'it': 'o (cansız/hayvan)', 'we': 'biz', 'they': 'onlar',
-      'my': 'benim', 'your': 'senin', 'his': 'onun (erkek)', 'her': 'onun (kadın)', 'its': 'onun (cansız)', 'our': 'bizim', 'their': 'onların',
-      'me': 'beni/bana', 'him': 'onu/ona', 'us': 'bizi/bize', 'them': 'onları/onlara',
-      'this': 'bu', 'that': 'şu/o', 'these': 'bunlar', 'those': 'şunlar/onlar',
-      'for': 'için', 'of': 'ın/in (aitlik)', 'as': 'olarak', 'at': 'de/da', 'by': 'tarafından/yanında',
-      'can': 'ebilmek', 'will': 'ecek/acak', 'would': 'erdi/ardı', 'should': 'meli/malı', 'must': 'malı/meli (zorunluluk)',
-      'not': 'değil/olumsuzluk', 'no': 'hayır', 'yes': 'evet', 'very': 'çok', 'so': 'öylece/çok',
-      'have': 'sahip olmak', 'has': 'sahip olmak', 'had': 'sahip oldu', 'do': 'yapmak', 'does': 'yapmak', 'did': 'yaptı',
-      'said': 'dedi/söyledi', 'says': 'der/söyler', 'say': 'demek/söylemek'
-    };
+    // Common functional words fallback (uses BASIC_DICT from lang-ui.js)
+    const _uiLang = this.state.get('uiLang') || 'tr';
+    const basicDict = (typeof BASIC_DICT !== 'undefined' && BASIC_DICT[_uiLang]) || (typeof BASIC_DICT !== 'undefined' && BASIC_DICT.tr) || {};
 
     const cleanWord = word.toLowerCase().replace(/[^a-z']/g, '');
     // Also try without possessive 's  ("Anna's" → "anna")
@@ -4309,13 +4300,13 @@ class App {
            <div class="wdp-header">
              <div class="wdp-title-wrap">
                <div class="wdp-en">💡 ${word}</div>
-               <div class="wdp-ipa">/bağlam kelimesi/</div>
+               <div class="wdp-ipa">${this.t('popup_grammar_word')}</div>
              </div>
              <span class="wdp-close" onclick="app._closeWordDef()">✕</span>
              </div>
              <div class="wdp-tr">${basicTr}</div>
              <div class="wdp-section">
-             <p style="font-size:0.75rem; color:var(--text-3); font-style:italic">Bu temel bir dil bilgisi kelimesidir ve listeye eklenemez.</p>
+             <p style="font-size:0.75rem; color:var(--text-3); font-style:italic">${this.t('popup_grammar_note')}</p>
            </div>
          `;
        } else {
@@ -4367,7 +4358,7 @@ class App {
              <span class="wdp-close" onclick="app._closeWordDef()">✕</span>
            </div>
            <div class="wdp-section">
-             <button class="btn btn-ghost btn-sm" style="width:100%" onclick="app.speakWord('${word.replace(/'/g,"\\'")}')">🔊 Sesi Dinle</button>
+             <button class="btn btn-ghost btn-sm" style="width:100%" onclick="app.speakWord('${word.replace(/'/g,"\\'")}'">${this.t('popup_audio_only')}</button>
            </div>
          `;
        }
@@ -4395,9 +4386,9 @@ class App {
     const lang = this.state.get('uiLang') || 'tr';
     const translation = this._getTranslation(w, lang);
     const exLabel    = this.t('popup_example');
-    const synsLabel  = lang === 'es' ? 'Sinónimos' : lang === 'en' ? 'Synonyms' : 'Eş Anlamlılar';
-    const colLabel   = lang === 'es' ? 'Expresiones comunes' : lang === 'en' ? 'Common Collocations' : 'Sık Kullanılan Kalıplar';
-    const addLabel   = lang === 'es' ? '➕ Añadir' : lang === 'en' ? '➕ Add to List' : '➕ Listeye Ekle';
+    const synsLabel  = this.t('popup_synonyms');
+    const colLabel   = this.t('popup_collocations');
+    const addLabel   = this.t('popup_add');
 
     let synsHtml = '';
     if (w.syns && w.syns.length) {
@@ -4458,12 +4449,12 @@ class App {
     if (!mastery[id]) {
       mastery[id] = { score: 0, interval: 1, ease: 2.5, nextReview: Date.now() };
       this.state.set('mastery', mastery);
-      UI.toast("Kelime öğrenilecekler listesine eklendi! 📚", 3000);
+      UI.toast(this.t('toast_word_added'), 3000);
     } else {
-      UI.toast("Bu kelime zaten listende.", 2000);
+      UI.toast(this.t('toast_word_exists'), 2000);
     }
     if (btn) {
-      btn.textContent = '✅ Eklendi';
+      btn.textContent = this.t('word_added_btn');
       btn.style.background = 'var(--green)';
       btn.style.color = '#fff';
       btn.disabled = true;
@@ -4479,7 +4470,7 @@ class App {
   }
 
   _fillBlank(word, btn) {
-    if (!this._activeBlank) { UI.toast('Önce bir boşluk seçin (___).'); return; }
+    if (!this._activeBlank) { UI.toast(this.t('quiz_no_blank')); return; }
     const ans = this._activeBlank.dataset.answer;
     if (word === ans) {
       this._activeBlank.textContent = word;
@@ -4534,7 +4525,7 @@ class App {
     if (this.session.isSpeakingStory) {
       this.speech.stop();
       this.session.isSpeakingStory = false;
-      if (btn) btn.innerHTML = '<span class="audio-icon">🎧</span> Sesli Dinle';
+      if (btn) btn.innerHTML = `<span class="audio-icon">🎧</span> ${this.t('reading_listen')}`;
       document.querySelectorAll('.story-word, .sw').forEach(el => el.classList.remove('playing'));
       return;
     }
@@ -4548,7 +4539,7 @@ class App {
     const rawText = story.text.replace(/\[([^\]]+)\]/g, '$1').replace(/\*+/g, '').replace(/#+/g, '').replace(/\{([^}]+)\}/g, '$1');
     
     this.session.isSpeakingStory = true;
-    if (btn) btn.innerHTML = '<span class="audio-icon">🛑</span> Durdur';
+    if (btn) btn.innerHTML = `<span class="audio-icon">🛑</span> ${this.t('reading_stop')}`;
 
     const words = document.querySelectorAll('.story-word, .sw');
     
@@ -4573,7 +4564,7 @@ class App {
       },
       () => {
         this.session.isSpeakingStory = false;
-        if (btn) btn.innerHTML = '<span class="audio-icon">🎧</span> Sesli Dinle';
+        if (btn) btn.innerHTML = `<span class="audio-icon">🎧</span> ${this.t('reading_listen')}`;
         words.forEach(el => el.classList.remove('playing'));
       }
     );
@@ -4620,7 +4611,7 @@ class App {
   toggleShadowMode(val) {
     this.state.set('shadowMode', val);
     this.audio.play('click');
-    UI.toast(`Gölge Modu ${val ? 'Açık' : 'Kapalı'}`, 1500);
+    UI.toast(val ? this.t('toast_shadow_on') : this.t('toast_shadow_off'), 1500);
   }
 
   toggleShuffleMode(val) {
@@ -4629,7 +4620,7 @@ class App {
     this.session.speakIdx = 0;
     this._renderSpeak();
     this.audio.play('click');
-    UI.toast(`Karışık Mod ${val ? 'Açık' : 'Kapalı'}`, 1500);
+    UI.toast(val ? this.t('toast_shuffle_on') : this.t('toast_shuffle_off'), 1500);
   }
 
   _startMicAnalysis() {
@@ -4771,12 +4762,12 @@ class App {
   }
 
   toggleRecord() {
-    if (!this.speech.SpeechRecognition) { UI.toast("Tarayıcın ses tanıma API'sini desteklemiyor."); return; }
+    if (!this.speech.SpeechRecognition) { UI.toast(this.t('speak_no_support')); return; }
     if (this.session.isRecording) { this.speech.stopRecognition(); this._stopRecord(); return; }
     const scorePanel = document.getElementById('score-panel');
     if (scorePanel) scorePanel.style.display = 'none';
     const transcript = document.getElementById('speak-transcript');
-    if (transcript) transcript.innerHTML = '<span style="color:var(--cyan);animation:pulse 1.5s infinite">🎙️ Dinliyorum... Konuşmaya başla</span>';
+    if (transcript) transcript.innerHTML = `<span style="color:var(--cyan);animation:pulse 1.5s infinite">${this.t('speak_listening')}</span>`;
     document.querySelectorAll('.sw').forEach(el => el.className = 'sw');
     this.audio.play('pop');
     this.session.isRecording = true;
@@ -4803,7 +4794,7 @@ class App {
     const wave  = document.getElementById('waveform');
     if (btn)   btn.classList.toggle('recording', recording);
     if (icon)  icon.textContent  = recording ? '⏹️' : '🎤';
-    if (label) label.textContent = recording ? 'Durdur' : 'Konuş';
+    if (label) label.textContent = recording ? this.t('speak_rec_stop') : this.t('speak_rec_speak');
     if (wave)  wave.classList.toggle('recording', recording);
   }
 
@@ -4836,15 +4827,15 @@ class App {
     if (panel) panel.style.display = 'flex';
     this._animateScoreRing(score);
     let fb = '', xp = 0;
-    if (score >= 90)      { fb = '🏆 Mükemmel! Anadili gibi!'; xp = 60; }
-    else if (score >= 75) { fb = '🎉 Harika! Çok iyi gidiyorsun.'; xp = 40; }
-    else if (score >= 55) { fb = '💪 İyi iş! Biraz daha pratik yap.'; xp = 20; }
-    else                  { fb = '🔄 Tekrar dene — daha net söyle.'; xp = 5; }
+    if (score >= 90)      { fb = this.t('fb_perfect'); xp = 60; }
+    else if (score >= 75) { fb = this.t('fb_great');   xp = 40; }
+    else if (score >= 55) { fb = this.t('fb_good');    xp = 20; }
+    else                  { fb = this.t('fb_retry');   xp = 5; }
     UI.setEl('score-feedback', fb);
     const bd = document.getElementById('word-breakdown');
     if (bd) {
       bd.innerHTML = tWords.map((w, i) =>
-        `<span class="wb-chip ${results[i] ? 'wb-ok' : 'wb-miss'}" onclick="app.speakWord('${w.replace(/'/g,"\\'")}')" title="Dinle ve Tekrar Et">${w}</span>`
+        `<span class="wb-chip ${results[i] ? 'wb-ok' : 'wb-miss'}" onclick="app.speakWord('${w.replace(/'/g,"\\'")}')" title="${this.t('speak_word_chip')}">${w}</span>`
       ).join('');
     }
     const wordMap = {};
@@ -4858,11 +4849,11 @@ class App {
             <span>${wd.icon || '🔊'} <strong>${wd.en}</strong></span>
             <em>${wd.ipa}</em>
           </div>
-          <div style="font-size:0.65rem;opacity:0.7;margin-top:2px">Dinlemek için tıkla</div>
+          <div style="font-size:0.65rem;opacity:0.7;margin-top:2px">${this.t('speak_click_listen')}</div>
         </div>`)
       .join('');
     const ipaPanel = document.getElementById('ipa-hint-panel');
-    if (ipaPanel) { ipaPanel.innerHTML = missedIpa ? `<div class="ipa-hint-label">🎯 Telaffuzunu Geliştir:</div><div class="ipa-hints-grid">${missedIpa}</div>` : ''; }
+    if (ipaPanel) { ipaPanel.innerHTML = missedIpa ? `<div class="ipa-hint-label">${this.t('speak_improve_ipa')}</div><div class="ipa-hints-grid">${missedIpa}</div>` : ''; }
     this.audio.play(score >= 75 ? 'success' : score >= 40 ? 'pop' : 'click');
     this.addXP(xp);
     if (score === 100) {
@@ -4930,7 +4921,7 @@ class App {
     const el   = document.getElementById('speak-history');
     const hist = this.state.get('speakHistory');
     if (!el) return;
-    if (!hist.length) { el.innerHTML = '<p style="font-size:0.8rem;color:var(--text-3)">Henüz deneme yok</p>'; return; }
+    if (!hist.length) { el.innerHTML = `<p style="font-size:0.8rem;color:var(--text-3)">${this.t('speak_no_history')}</p>`; return; }
     el.innerHTML = hist.map(h => {
       const col = h.score >= 75 ? 'var(--green)' : h.score >= 50 ? 'var(--amber)' : 'var(--rose)';
       return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)">
@@ -4964,16 +4955,16 @@ class App {
     if (!el) return;
     el.innerHTML = `
       <div class="convo-list-header">
-        <h2>Senaryo Seç</h2>
-        <p>Gerçek hayat durumlarında İngilizce konuş</p>
+        <h2>${this.t('convo_title')}</h2>
+        <p>${this.t('convo_subtitle')}</p>
       </div>
       <div class="convo-scenarios">
         ${CONVERSATIONS.map(c => `
           <div class="convo-scenario-card" onclick="app.startConvo('${c.id}')">
             <div class="csc-emoji">${c.emoji}</div>
             <div class="csc-title">${c.title}</div>
-            <div class="csc-level level-${c.level}">${c.level === 'easy' ? '🌱 Kolay' : c.level === 'medium' ? '📚 Orta' : '🔥 İleri'}</div>
-            <div class="csc-turns">${c.turns.filter(t => t.role === 'user').length} konuşma turu</div>
+            <div class="csc-level level-${c.level}">${c.level === 'easy' ? this.t('convo_diff_easy') : c.level === 'medium' ? this.t('convo_diff_mid') : this.t('convo_diff_adv')}</div>
+            <div class="csc-turns">${c.turns.filter(t => t.role === 'user').length} ${this.t('convo_turns')}</div>
           </div>
         `).join('')}
       </div>
@@ -4993,7 +4984,7 @@ class App {
     const { scenario } = this.session.convo;
     el.innerHTML = `
       <div class="convo-chat-header">
-        <button class="btn btn-ghost btn-sm" onclick="app._renderConvoList()">← Senaryolar</button>
+        <button class="btn btn-ghost btn-sm" onclick="app._renderConvoList()">${this.t('convo_scenarios_back')}</button>
         <div class="cch-title">${scenario.emoji} ${scenario.title}</div>
         <div class="cch-progress" id="cch-progress">0/${scenario.turns.filter(t => t.role === 'user').length}</div>
       </div>
@@ -5059,30 +5050,30 @@ class App {
     area.innerHTML = `
       <div class="convo-prompt">
         <div class="cp-hint">💬 ${turn.hint}</div>
-        <div class="cp-expected">Örnek: <em>"${turn.expected}"</em></div>
+        <div class="cp-expected">${this.t('convo_example')} <em>"${turn.expected}"</em></div>
         <div class="convo-controls">
           <button class="speak-rec-btn" id="convo-rec-btn" onclick="app.toggleConvoRecord()">
             <span id="convo-rec-icon">🎤</span>
-            <small id="convo-rec-label">Konuş</small>
+            <small id="convo-rec-label">${this.t('convo_speak_label')}</small>
           </button>
-          <button class="speak-side-btn" onclick="app.skipConvoTurn()">⏭ Geç</button>
+          <button class="speak-side-btn" onclick="app.skipConvoTurn()">${this.t('skip')}</button>
         </div>
         <div id="convo-transcript" style="text-align:center;color:var(--text-2);font-size:0.85rem;min-height:24px;margin-top:8px"></div>
       </div>`;
   }
 
   toggleConvoRecord() {
-    if (!this.speech.SpeechRecognition) { UI.toast("Ses tanıma desteklenmiyor."); return; }
+    if (!this.speech.SpeechRecognition) { UI.toast(this.t('speak_no_support')); return; }
     if (this.session.isRecording) { this.speech.stopRecognition(); this._stopConvoRecord(); return; }
     const turn = this.session.convo.scenario.turns[this.session.convo.turnIdx];
     const btn = document.getElementById('convo-rec-btn');
     const icon = document.getElementById('convo-rec-icon');
     const label = document.getElementById('convo-rec-label');
     if (icon) icon.textContent = '⏹️';
-    if (label) label.textContent = 'Durdur';
+    if (label) label.textContent = this.t('convo_stop_label');
     if (btn) btn.classList.add('recording');
     const t = document.getElementById('convo-transcript');
-    if (t) t.innerHTML = '<span style="color:var(--cyan)">🎙️ Dinliyorum...</span>';
+    if (t) t.innerHTML = `<span style="color:var(--cyan)">🎙️ ${this.t('loading')}</span>`;
     this.session.isRecording = true;
     this.speech.startRecognition({
       onResult: (e) => this._handleConvoResult(e, turn),
@@ -5097,7 +5088,7 @@ class App {
     const icon = document.getElementById('convo-rec-icon');
     const label = document.getElementById('convo-rec-label');
     if (icon) icon.textContent = '🎤';
-    if (label) label.textContent = 'Konuş';
+    if (label) label.textContent = this.t('convo_speak_label');
     if (btn) btn.classList.remove('recording');
   }
 
@@ -5119,7 +5110,7 @@ class App {
   }
 
   skipConvoTurn() {
-    this._convoAddUserBubble('(atlandı)', 0);
+    this._convoAddUserBubble(this.t('convo_skipped'), 0);
     const area = document.getElementById('convo-user-area');
     if (area) area.innerHTML = '';
     this.session.convo.turnIdx++;
@@ -5139,13 +5130,13 @@ class App {
       d.className = 'convo-finish-card';
       d.innerHTML = `
         <div class="cf-emoji">🎉</div>
-        <div class="cf-title">Sohbet Tamamlandı!</div>
+        <div class="cf-title">${this.t('convo_finish_title')}</div>
         <div class="cf-score-row">
           <div class="cf-score-val" style="color:${avg >= 75 ? 'var(--green)' : avg >= 50 ? 'var(--amber)' : 'var(--rose)'}">${avg}%</div>
-          <div class="cf-score-label">Ortalama Skor</div>
+          <div class="cf-score-label">${this.t('convo_avg_score')}</div>
         </div>
-        <div class="cf-xp">+${xp} XP kazandın!</div>
-        <button class="btn btn-primary" style="margin-top:12px" onclick="app._renderConvoList()">Yeni Senaryo Seç</button>
+        <div class="cf-xp">+${xp} ${this.t('convo_xp')}</div>
+        <button class="btn btn-primary" style="margin-top:12px" onclick="app._renderConvoList()">${this.t('convo_new')}</button>
       `;
       chat.appendChild(d);
       chat.scrollTop = chat.scrollHeight;
