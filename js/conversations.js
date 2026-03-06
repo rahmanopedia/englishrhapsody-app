@@ -1,12577 +1,8414 @@
-// Auto-generated 100+ AI Conversations
+// Diversified AI Conversations
 const CONVERSATIONS = [
   {
-    "id": "travel_1",
-    "title": "Seyahat & Turizm",
-    "emoji": "✈️",
+    "id": "scen_1",
+    "c": "travel",
+    "emoji": "🏨",
+    "title": "Lüks Otelde Şikayet",
+    "level": "hard",
+    "turns": [
+      {
+        "bot": "I'm very sorry to hear that, sir. What exactly is the problem with your suite?",
+        "tr": "Bunu duyduğuma çok üzüldüm efendim. Süitinizdeki sorun tam olarak nedir?"
+      },
+      {
+        "userHint": "Klimanın çalışmadığını ve odanın çok sıcak olduğunu söyleyin",
+        "keywords": [
+          "air",
+          "conditioning",
+          "working",
+          "hot",
+          "room"
+        ],
+        "expected": "The air conditioning is not working and the room is too hot."
+      },
+      {
+        "bot": "That is unacceptable. I will send a technician right away or move you to another room. Which would you prefer?",
+        "tr": "Bu kabul edilemez. Hemen bir teknisyen göndereceğim ya da sizi başka bir odaya alacağım. Hangisini tercih edersiniz?"
+      },
+      {
+        "userHint": "Oda değiştirmek istediğinizi söyleyin",
+        "keywords": [
+          "prefer",
+          "change",
+          "move",
+          "another",
+          "room"
+        ],
+        "expected": "I would prefer to move to another room, please."
+      }
+    ]
+  },
+  {
+    "id": "scen_2",
+    "c": "travel",
+    "emoji": "🚉",
+    "title": "Tren İstasyonunda Kayıp Eşya",
+    "level": "medium",
+    "turns": [
+      {
+        "bot": "Lost and found office. How can I help you?",
+        "tr": "Kayıp eşya ofisi. Size nasıl yardımcı olabilirim?"
+      },
+      {
+        "userHint": "Sırt çantanızı trende unuttuğunuzu söyleyin",
+        "keywords": [
+          "forgot",
+          "left",
+          "backpack",
+          "bag",
+          "train"
+        ],
+        "expected": "I think I left my backpack on the train."
+      },
+      {
+        "bot": "Can you describe the bag and tell me which train you were on?",
+        "tr": "Çantayı tarif edebilir misiniz ve hangi trende olduğunuzu söyleyebilir misiniz?"
+      },
+      {
+        "userHint": "Mavi bir çanta olduğunu ve 10:15 treni olduğunu söyleyin",
+        "keywords": [
+          "blue",
+          "bag",
+          "10:15",
+          "ten",
+          "fifteen",
+          "train"
+        ],
+        "expected": "It's a blue bag and I was on the 10:15 train."
+      }
+    ]
+  },
+  {
+    "id": "scen_3",
+    "c": "business",
+    "emoji": "📊",
+    "title": "Maaş Pazarlığı",
+    "level": "hard",
+    "turns": [
+      {
+        "bot": "We are very happy with your performance, but your salary request is a bit high for this role.",
+        "tr": "Performansınızdan çok memnunuz ancak maaş talebiniz bu rol için biraz yüksek."
+      },
+      {
+        "userHint": "Piyasa değerinizi ve başarılarınızı hatırlatın",
+        "keywords": [
+          "market",
+          "value",
+          "achievements",
+          "skills",
+          "deserve"
+        ],
+        "expected": "Based on my achievements and market value, I believe I deserve this amount."
+      },
+      {
+        "bot": "I see. If we can't meet that number, would you consider extra vacation days instead?",
+        "tr": "Anlıyorum. Eğer bu rakamı karşılayamazsak, yerine ekstra tatil günlerini düşünür müsünüz?"
+      },
+      {
+        "userHint": "Düşünebileceğinizi ama maaşın öncelikli olduğunu söyleyin",
+        "keywords": [
+          "think",
+          "consider",
+          "salary",
+          "priority",
+          "main"
+        ],
+        "expected": "I can consider it, but the salary is my main priority."
+      }
+    ]
+  },
+  {
+    "id": "scen_4",
+    "c": "emergency",
+    "emoji": "🔥",
+    "title": "Yangın İhbarı",
     "level": "easy",
     "turns": [
       {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
+        "bot": "Emergency services. What is the location of the fire?",
+        "tr": "Acil servisler. Yangının konumu nedir?"
       },
       {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
+        "userHint": "Mutfakta yangın çıktığını ve adresinizi söyleyin",
         "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_2",
-    "title": "Seyahat & Turizm - Bölüm 2",
-    "emoji": "✈️",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_3",
-    "title": "Seyahat & Turizm - Bölüm 3",
-    "emoji": "✈️",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_4",
-    "title": "Seyahat & Turizm - Bölüm 4",
-    "emoji": "✈️",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_5",
-    "title": "Seyahat & Turizm - Bölüm 5",
-    "emoji": "✈️",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_6",
-    "title": "Seyahat & Turizm - Bölüm 6",
-    "emoji": "✈️",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_7",
-    "title": "Seyahat & Turizm - Bölüm 7",
-    "emoji": "✈️",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_8",
-    "title": "Seyahat & Turizm - Bölüm 8",
-    "emoji": "✈️",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_9",
-    "title": "Seyahat & Turizm - Bölüm 9",
-    "emoji": "✈️",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_10",
-    "title": "Seyahat & Turizm - Bölüm 10",
-    "emoji": "✈️",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_11",
-    "title": "Seyahat & Turizm - Bölüm 11",
-    "emoji": "✈️",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_12",
-    "title": "Seyahat & Turizm - Bölüm 12",
-    "emoji": "✈️",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_13",
-    "title": "Seyahat & Turizm - Bölüm 13",
-    "emoji": "✈️",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_14",
-    "title": "Seyahat & Turizm - Bölüm 14",
-    "emoji": "✈️",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "travel_15",
-    "title": "Seyahat & Turizm - Bölüm 15",
-    "emoji": "✈️",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "business_16",
-    "title": "İş & Kariyer",
-    "emoji": "💼",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_17",
-    "title": "İş & Kariyer - Bölüm 2",
-    "emoji": "💼",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_18",
-    "title": "İş & Kariyer - Bölüm 3",
-    "emoji": "💼",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_19",
-    "title": "İş & Kariyer - Bölüm 4",
-    "emoji": "💼",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_20",
-    "title": "İş & Kariyer - Bölüm 5",
-    "emoji": "💼",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_21",
-    "title": "İş & Kariyer - Bölüm 6",
-    "emoji": "💼",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_22",
-    "title": "İş & Kariyer - Bölüm 7",
-    "emoji": "💼",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_23",
-    "title": "İş & Kariyer - Bölüm 8",
-    "emoji": "💼",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_24",
-    "title": "İş & Kariyer - Bölüm 9",
-    "emoji": "💼",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_25",
-    "title": "İş & Kariyer - Bölüm 10",
-    "emoji": "💼",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_26",
-    "title": "İş & Kariyer - Bölüm 11",
-    "emoji": "💼",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_27",
-    "title": "İş & Kariyer - Bölüm 12",
-    "emoji": "💼",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_28",
-    "title": "İş & Kariyer - Bölüm 13",
-    "emoji": "💼",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_29",
-    "title": "İş & Kariyer - Bölüm 14",
-    "emoji": "💼",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "business_30",
-    "title": "İş & Kariyer - Bölüm 15",
-    "emoji": "💼",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "daily_31",
-    "title": "Günlük Yaşam",
-    "emoji": "☕",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_32",
-    "title": "Günlük Yaşam - Bölüm 2",
-    "emoji": "☕",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_33",
-    "title": "Günlük Yaşam - Bölüm 3",
-    "emoji": "☕",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_34",
-    "title": "Günlük Yaşam - Bölüm 4",
-    "emoji": "☕",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_35",
-    "title": "Günlük Yaşam - Bölüm 5",
-    "emoji": "☕",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_36",
-    "title": "Günlük Yaşam - Bölüm 6",
-    "emoji": "☕",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_37",
-    "title": "Günlük Yaşam - Bölüm 7",
-    "emoji": "☕",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_38",
-    "title": "Günlük Yaşam - Bölüm 8",
-    "emoji": "☕",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_39",
-    "title": "Günlük Yaşam - Bölüm 9",
-    "emoji": "☕",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_40",
-    "title": "Günlük Yaşam - Bölüm 10",
-    "emoji": "☕",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_41",
-    "title": "Günlük Yaşam - Bölüm 11",
-    "emoji": "☕",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_42",
-    "title": "Günlük Yaşam - Bölüm 12",
-    "emoji": "☕",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_43",
-    "title": "Günlük Yaşam - Bölüm 13",
-    "emoji": "☕",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_44",
-    "title": "Günlük Yaşam - Bölüm 14",
-    "emoji": "☕",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "daily_45",
-    "title": "Günlük Yaşam - Bölüm 15",
-    "emoji": "☕",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "social_46",
-    "title": "Sosyal Hayat",
-    "emoji": "🤝",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "social_47",
-    "title": "Sosyal Hayat - Bölüm 2",
-    "emoji": "🤝",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "social_48",
-    "title": "Sosyal Hayat - Bölüm 3",
-    "emoji": "🤝",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "social_49",
-    "title": "Sosyal Hayat - Bölüm 4",
-    "emoji": "🤝",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "social_50",
-    "title": "Sosyal Hayat - Bölüm 5",
-    "emoji": "🤝",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "social_51",
-    "title": "Sosyal Hayat - Bölüm 6",
-    "emoji": "🤝",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "social_52",
-    "title": "Sosyal Hayat - Bölüm 7",
-    "emoji": "🤝",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "social_53",
-    "title": "Sosyal Hayat - Bölüm 8",
-    "emoji": "🤝",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "social_54",
-    "title": "Sosyal Hayat - Bölüm 9",
-    "emoji": "🤝",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "social_55",
-    "title": "Sosyal Hayat - Bölüm 10",
-    "emoji": "🤝",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "social_56",
-    "title": "Sosyal Hayat - Bölüm 11",
-    "emoji": "🤝",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "social_57",
-    "title": "Sosyal Hayat - Bölüm 12",
-    "emoji": "🤝",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "social_58",
-    "title": "Sosyal Hayat - Bölüm 13",
-    "emoji": "🤝",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "social_59",
-    "title": "Sosyal Hayat - Bölüm 14",
-    "emoji": "🤝",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "social_60",
-    "title": "Sosyal Hayat - Bölüm 15",
-    "emoji": "🤝",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "academic_61",
-    "title": "Akademik",
-    "emoji": "🎓",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "academic_62",
-    "title": "Akademik - Bölüm 2",
-    "emoji": "🎓",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "academic_63",
-    "title": "Akademik - Bölüm 3",
-    "emoji": "🎓",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "academic_64",
-    "title": "Akademik - Bölüm 4",
-    "emoji": "🎓",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "academic_65",
-    "title": "Akademik - Bölüm 5",
-    "emoji": "🎓",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "academic_66",
-    "title": "Akademik - Bölüm 6",
-    "emoji": "🎓",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "academic_67",
-    "title": "Akademik - Bölüm 7",
-    "emoji": "🎓",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "academic_68",
-    "title": "Akademik - Bölüm 8",
-    "emoji": "🎓",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "academic_69",
-    "title": "Akademik - Bölüm 9",
-    "emoji": "🎓",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "academic_70",
-    "title": "Akademik - Bölüm 10",
-    "emoji": "🎓",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "academic_71",
-    "title": "Akademik - Bölüm 11",
-    "emoji": "🎓",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "academic_72",
-    "title": "Akademik - Bölüm 12",
-    "emoji": "🎓",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "academic_73",
-    "title": "Akademik - Bölüm 13",
-    "emoji": "🎓",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "academic_74",
-    "title": "Akademik - Bölüm 14",
-    "emoji": "🎓",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "academic_75",
-    "title": "Akademik - Bölüm 15",
-    "emoji": "🎓",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "emergency_76",
-    "title": "Acil Durumlar",
-    "emoji": "🚨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "emergency_77",
-    "title": "Acil Durumlar - Bölüm 2",
-    "emoji": "🚨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "emergency_78",
-    "title": "Acil Durumlar - Bölüm 3",
-    "emoji": "🚨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "emergency_79",
-    "title": "Acil Durumlar - Bölüm 4",
-    "emoji": "🚨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "emergency_80",
-    "title": "Acil Durumlar - Bölüm 5",
-    "emoji": "🚨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "emergency_81",
-    "title": "Acil Durumlar - Bölüm 6",
-    "emoji": "🚨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "emergency_82",
-    "title": "Acil Durumlar - Bölüm 7",
-    "emoji": "🚨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "emergency_83",
-    "title": "Acil Durumlar - Bölüm 8",
-    "emoji": "🚨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "emergency_84",
-    "title": "Acil Durumlar - Bölüm 9",
-    "emoji": "🚨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "emergency_85",
-    "title": "Acil Durumlar - Bölüm 10",
-    "emoji": "🚨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "emergency_86",
-    "title": "Acil Durumlar - Bölüm 11",
-    "emoji": "🚨",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "emergency_87",
-    "title": "Acil Durumlar - Bölüm 12",
-    "emoji": "🚨",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "emergency_88",
-    "title": "Acil Durumlar - Bölüm 13",
-    "emoji": "🚨",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "emergency_89",
-    "title": "Acil Durumlar - Bölüm 14",
-    "emoji": "🚨",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "emergency_90",
-    "title": "Acil Durumlar - Bölüm 15",
-    "emoji": "🚨",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_91",
-    "title": "Rol Yapma",
-    "emoji": "🎭",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_92",
-    "title": "Rol Yapma - Bölüm 2",
-    "emoji": "🎭",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_93",
-    "title": "Rol Yapma - Bölüm 3",
-    "emoji": "🎭",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_94",
-    "title": "Rol Yapma - Bölüm 4",
-    "emoji": "🎭",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_95",
-    "title": "Rol Yapma - Bölüm 5",
-    "emoji": "🎭",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_96",
-    "title": "Rol Yapma - Bölüm 6",
-    "emoji": "🎭",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_97",
-    "title": "Rol Yapma - Bölüm 7",
-    "emoji": "🎭",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_98",
-    "title": "Rol Yapma - Bölüm 8",
-    "emoji": "🎭",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_99",
-    "title": "Rol Yapma - Bölüm 9",
-    "emoji": "🎭",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_100",
-    "title": "Rol Yapma - Bölüm 10",
-    "emoji": "🎭",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_101",
-    "title": "Rol Yapma - Bölüm 11",
-    "emoji": "🎭",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_102",
-    "title": "Rol Yapma - Bölüm 12",
-    "emoji": "🎭",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_103",
-    "title": "Rol Yapma - Bölüm 13",
-    "emoji": "🎭",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_104",
-    "title": "Rol Yapma - Bölüm 14",
-    "emoji": "🎭",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_105",
-    "title": "Rol Yapma - Bölüm 15",
-    "emoji": "🎭",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "tech_106",
-    "title": "Teknoloji",
-    "emoji": "💻",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "tech_107",
-    "title": "Teknoloji - Bölüm 2",
-    "emoji": "💻",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "tech_108",
-    "title": "Teknoloji - Bölüm 3",
-    "emoji": "💻",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "tech_109",
-    "title": "Teknoloji - Bölüm 4",
-    "emoji": "💻",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "tech_110",
-    "title": "Teknoloji - Bölüm 5",
-    "emoji": "💻",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "tech_111",
-    "title": "Teknoloji - Bölüm 6",
-    "emoji": "💻",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "tech_112",
-    "title": "Teknoloji - Bölüm 7",
-    "emoji": "💻",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "tech_113",
-    "title": "Teknoloji - Bölüm 8",
-    "emoji": "💻",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "tech_114",
-    "title": "Teknoloji - Bölüm 9",
-    "emoji": "💻",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "tech_115",
-    "title": "Teknoloji - Bölüm 10",
-    "emoji": "💻",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "tech_116",
-    "title": "Teknoloji - Bölüm 11",
-    "emoji": "💻",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "tech_117",
-    "title": "Teknoloji - Bölüm 12",
-    "emoji": "💻",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "tech_118",
-    "title": "Teknoloji - Bölüm 13",
-    "emoji": "💻",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "tech_119",
-    "title": "Teknoloji - Bölüm 14",
-    "emoji": "💻",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "tech_120",
-    "title": "Teknoloji - Bölüm 15",
-    "emoji": "💻",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "culture_121",
-    "title": "Kültür & Sanat",
-    "emoji": "🎨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "culture_122",
-    "title": "Kültür & Sanat - Bölüm 2",
-    "emoji": "🎨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "culture_123",
-    "title": "Kültür & Sanat - Bölüm 3",
-    "emoji": "🎨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "culture_124",
-    "title": "Kültür & Sanat - Bölüm 4",
-    "emoji": "🎨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "culture_125",
-    "title": "Kültür & Sanat - Bölüm 5",
-    "emoji": "🎨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "culture_126",
-    "title": "Kültür & Sanat - Bölüm 6",
-    "emoji": "🎨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "culture_127",
-    "title": "Kültür & Sanat - Bölüm 7",
-    "emoji": "🎨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "culture_128",
-    "title": "Kültür & Sanat - Bölüm 8",
-    "emoji": "🎨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "culture_129",
-    "title": "Kültür & Sanat - Bölüm 9",
-    "emoji": "🎨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "culture_130",
-    "title": "Kültür & Sanat - Bölüm 10",
-    "emoji": "🎨",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "culture_131",
-    "title": "Kültür & Sanat - Bölüm 11",
-    "emoji": "🎨",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "culture_132",
-    "title": "Kültür & Sanat - Bölüm 12",
-    "emoji": "🎨",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "culture_133",
-    "title": "Kültür & Sanat - Bölüm 13",
-    "emoji": "🎨",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "culture_134",
-    "title": "Kültür & Sanat - Bölüm 14",
-    "emoji": "🎨",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "culture_135",
-    "title": "Kültür & Sanat - Bölüm 15",
-    "emoji": "🎨",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "health_136",
-    "title": "Sağlık",
-    "emoji": "🏥",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "health_137",
-    "title": "Sağlık - Bölüm 2",
-    "emoji": "🏥",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "health_138",
-    "title": "Sağlık - Bölüm 3",
-    "emoji": "🏥",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "health_139",
-    "title": "Sağlık - Bölüm 4",
-    "emoji": "🏥",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "health_140",
-    "title": "Sağlık - Bölüm 5",
-    "emoji": "🏥",
-    "level": "easy",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "health_141",
-    "title": "Sağlık - Bölüm 6",
-    "emoji": "🏥",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "health_142",
-    "title": "Sağlık - Bölüm 7",
-    "emoji": "🏥",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "health_143",
-    "title": "Sağlık - Bölüm 8",
-    "emoji": "🏥",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "health_144",
-    "title": "Sağlık - Bölüm 9",
-    "emoji": "🏥",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "health_145",
-    "title": "Sağlık - Bölüm 10",
-    "emoji": "🏥",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "health_146",
-    "title": "Sağlık - Bölüm 11",
-    "emoji": "🏥",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome to the Grand Hotel. Do you have a reservation?",
-        "tr": "Grand Hotel'e hoş geldiniz. Rezervasyonunuz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Rezervasyonunuz olduğunu söyleyin",
-        "keywords": [
-          "yes",
-          "reservation",
-          "name",
-          "under"
-        ],
-        "expected": "Yes, I have a reservation under the name John."
-      },
-      {
-        "role": "bot",
-        "text": "Ah yes, Mr. John. I see you booked a double room for three nights. Can I have your passport?",
-        "tr": "Ah evet, Bay John. Üç gecelik çift kişilik oda ayırtmışsınız. Pasaportunuzu alabilir miyim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Pasaportu uzatın",
-        "keywords": [
-          "here",
-          "you",
-          "go",
-          "passport",
-          "sure"
-        ],
-        "expected": "Sure, here you go."
-      },
-      {
-        "role": "bot",
-        "text": "Thank you. Would you like help with your luggage?",
-        "tr": "Teşekkürler. Bagajınız için yardım ister misiniz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Hayır teşekkürler deyin",
-        "keywords": [
-          "no",
-          "thank",
-          "fine",
-          "can",
-          "manage"
-        ],
-        "expected": "No thank you, I can manage."
-      }
-    ]
-  },
-  {
-    "id": "health_147",
-    "title": "Sağlık - Bölüm 12",
-    "emoji": "🏥",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Welcome. Please, take a seat. Let's start by having you tell us a bit about yourself.",
-        "tr": "Hoş geldiniz. Lütfen oturun. Biraz kendinizden bahsederek başlayalım.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Deneyiminizden bahsedin",
-        "keywords": [
-          "experience",
-          "years",
-          "working",
-          "field",
-          "background"
-        ],
-        "expected": "I have five years of experience in marketing."
-      },
-      {
-        "role": "bot",
-        "text": "Impressive. What would you say is your greatest professional strength?",
-        "tr": "Etkileyici. Profesyonel anlamda en büyük gücünüz nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Problem çözme becerinizi vurgulayın",
-        "keywords": [
-          "problem",
-          "solving",
-          "skills",
-          "teamwork",
-          "leadership"
-        ],
-        "expected": "My greatest strength is problem-solving."
-      },
-      {
-        "role": "bot",
-        "text": "We are looking for someone who can lead a team. Do you have leadership experience?",
-        "tr": "Takım yönetecek birini arıyoruz. Liderlik deneyiminiz var mı?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Evet deyin ve proje yönettiğinizi belirtin",
-        "keywords": [
-          "yes",
-          "led",
-          "managed",
-          "project",
-          "team"
-        ],
-        "expected": "Yes, I managed a large project last year."
-      }
-    ]
-  },
-  {
-    "id": "health_148",
-    "title": "Sağlık - Bölüm 13",
-    "emoji": "🏥",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Next! Passport and boarding pass, please. What is the purpose of your visit?",
-        "tr": "Sıradaki! Pasaport ve biniş kartı lütfen. Ziyaretinizin amacı nedir?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Turistik olduğunu söyleyin",
-        "keywords": [
-          "tourism",
-          "holiday",
-          "vacation",
-          "visit"
-        ],
-        "expected": "I am here for a holiday."
-      },
-      {
-        "role": "bot",
-        "text": "How long are you planning to stay in the country?",
-        "tr": "Ülkede ne kadar kalmayı planlıyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Bir hafta diye cevap verin",
-        "keywords": [
-          "one",
-          "week",
-          "seven",
-          "days"
-        ],
-        "expected": "I will stay for one week."
-      },
-      {
-        "role": "bot",
-        "text": "Are you traveling alone or with someone?",
-        "tr": "Yalnız mı yoksa biriyle mi seyahat ediyorsunuz?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Yalnız seyahat ettiğinizi söyleyin",
-        "keywords": [
-          "alone",
-          "myself",
-          "just",
-          "me"
-        ],
-        "expected": "I am traveling alone."
-      }
-    ]
-  },
-  {
-    "id": "health_149",
-    "title": "Sağlık - Bölüm 14",
-    "emoji": "🏥",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "health_150",
-    "title": "Sağlık - Bölüm 15",
-    "emoji": "🏥",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hi there! What can I get for you today?",
-        "tr": "Merhaba! Bugün size ne verebilirim?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Latte sipariş edin",
-        "keywords": [
-          "like",
-          "have",
-          "latte",
-          "please",
-          "coffee"
-        ],
-        "expected": "I'd like a latte, please."
-      },
-      {
-        "role": "bot",
-        "text": "Would you like that hot or iced?",
-        "tr": "Sıcak mı istersiniz, buzlu mu?",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Sıcak tercih edin",
-        "keywords": [
-          "hot",
-          "please",
-          "warm"
-        ],
-        "expected": "Hot, please."
-      },
-      {
-        "role": "bot",
-        "text": "What size? We have tall, grande, and venti.",
-        "tr": "Hangi boy? Küçük, orta ve büyük boylarımız var.",
-        "keywords": [],
-        "expected": ""
-      },
-      {
-        "role": "user",
-        "hint": "Orta boy isteyin",
-        "keywords": [
-          "grande",
-          "medium",
-          "middle"
-        ],
-        "expected": "A grande, please."
-      }
-    ]
-  },
-  {
-    "id": "roleplay_alien",
-    "title": "Uzaylıyla Temas",
-    "emoji": "👽",
-    "level": "hard",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Greetings, human. We come in peace. Are you the leader of this world?",
-        "tr": "Selam insan. Barış için geldik. Bu dünyanın lideri sen misin?"
-      },
-      {
-        "role": "user",
-        "hint": "Hayır deyin ve onları karşılayın",
-        "keywords": [
-          "no",
-          "not",
-          "leader",
-          "welcome",
-          "earth"
-        ],
-        "expected": "No, I am not the leader, but welcome to Earth."
-      },
-      {
-        "role": "bot",
-        "text": "Your planet is fascinating. What is the most important rule we should know?",
-        "tr": "Gezegeniniz büyüleyici. Bilmemiz gereken en önemli kural nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Barışçıl olmalarını söyleyin",
-        "keywords": [
-          "peace",
-          "kind",
-          "friendly",
-          "harm",
-          "no"
-        ],
-        "expected": "Please be peaceful and do not harm anyone."
-      },
-      {
-        "role": "bot",
-        "text": "Understood. We wish to share our advanced technology with you.",
-        "tr": "Anlaşıldı. Gelişmiş teknolojimizi sizinle paylaşmak istiyoruz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip ne olduğunu sorun",
-        "keywords": [
-          "thank",
-          "what",
-          "kind",
-          "technology",
-          "is",
-          "it"
-        ],
-        "expected": "Thank you! What kind of technology is it?"
-      }
-    ]
-  },
-  {
-    "id": "emergency_doctor",
-    "title": "Acil Servis",
-    "emoji": "🏥",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Doctor speaking. How can I help you?",
-        "tr": "Ben doktor. Size nasıl yardımcı olabilirim?"
-      },
-      {
-        "role": "user",
-        "hint": "Göğsünüzün ağrıdığını söyleyin",
-        "keywords": [
-          "chest",
-          "pain",
-          "hurts",
-          "heart"
-        ],
-        "expected": "I have a terrible pain in my chest."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Are you having trouble breathing?",
-        "tr": "Anlıyorum. Nefes almada zorluk çekiyor musunuz?"
-      },
-      {
-        "role": "user",
-        "hint": "Evet, biraz zor nefes alıyorum deyin",
-        "keywords": [
-          "yes",
-          "little",
-          "hard",
-          "breathe",
-          "difficult"
-        ],
-        "expected": "Yes, it's a little hard to breathe."
-      },
-      {
-        "role": "bot",
-        "text": "Please stay calm. I am sending an ambulance to your location immediately.",
-        "tr": "Lütfen sakin kalın. Bulunduğunuz yere hemen bir ambulans gönderiyorum."
-      },
-      {
-        "role": "user",
-        "hint": "Adresinizi verin (Main Street)",
-        "keywords": [
+          "fire",
+          "kitchen",
           "address",
-          "main",
-          "street",
-          "live"
+          "is",
+          "help"
         ],
-        "expected": "My address is 123 Main Street."
+        "expected": "There is a fire in my kitchen! My address is 5th Avenue."
+      },
+      {
+        "bot": "Are there any people trapped inside the building?",
+        "tr": "Binanın içinde mahsur kalan kimse var mı?"
+      },
+      {
+        "userHint": "Herkesin dışarıda olduğunu söyleyin",
+        "keywords": [
+          "everyone",
+          "outside",
+          "safe",
+          "nobody",
+          "inside"
+        ],
+        "expected": "No, everyone is outside and safe."
       }
     ]
   },
   {
-    "id": "debate_ai",
-    "title": "Münazara: Yapay Zeka",
-    "emoji": "🤖",
+    "id": "scen_5",
+    "c": "social",
+    "emoji": "🎉",
+    "title": "Parti Davetini Reddetme",
+    "level": "medium",
+    "turns": [
+      {
+        "bot": "Hey! We are having a big party this Friday. You're coming, right?",
+        "tr": "Hey! Bu Cuma büyük bir parti veriyoruz. Geliyorsun, değil mi?"
+      },
+      {
+        "userHint": "Gelemediğiniz için üzgün olduğunuzu ve planınız olduğunu söyleyin",
+        "keywords": [
+          "sorry",
+          "cannot",
+          "come",
+          "plans",
+          "already"
+        ],
+        "expected": "I'm sorry, I can't come. I already have plans."
+      },
+      {
+        "bot": "Oh, that's a shame! What are you doing instead?",
+        "tr": "Ah, ne yazık! Yerine ne yapıyorsun?"
+      },
+      {
+        "userHint": "Bir arkadaşınızın doğum günü olduğunu söyleyin",
+        "keywords": [
+          "friend",
+          "birthday",
+          "going",
+          "celebrate"
+        ],
+        "expected": "It is my best friend's birthday."
+      }
+    ]
+  },
+  {
+    "id": "scen_6",
+    "c": "tech",
+    "emoji": "🔧",
+    "title": "Bilgisayar Tamiri",
+    "level": "medium",
+    "turns": [
+      {
+        "bot": "Technical support. What seems to be the problem with your laptop?",
+        "tr": "Teknik destek. Laptopunuzdaki sorun nedir?"
+      },
+      {
+        "userHint": "Ekranın açılmadığını söyleyin",
+        "keywords": [
+          "screen",
+          "black",
+          "turning",
+          "on",
+          "won't"
+        ],
+        "expected": "The screen is black and it won't turn on."
+      },
+      {
+        "bot": "Did you try connecting the charger to see if it's a battery issue?",
+        "tr": "Batarya sorunu olup olmadığını anlamak için şarj aletini bağlamayı denediniz mi?"
+      },
+      {
+        "userHint": "Denediğinizi ama hala çalışmadığını söyleyin",
+        "keywords": [
+          "tried",
+          "still",
+          "working",
+          "charger",
+          "plugged"
+        ],
+        "expected": "Yes, I tried that, but it is still not working."
+      }
+    ]
+  },
+  {
+    "id": "scen_7",
+    "c": "academic",
+    "emoji": "📝",
+    "title": "Ödev Erteleme İsteği",
     "level": "hard",
     "turns": [
       {
+        "bot": "Professor, I wanted to ask if I can have an extension on my essay.",
+        "tr": "Profesör, ödevim için ek süre alıp alamayacağımı sormak istemiştim."
+      },
+      {
+        "userHint": "Neden ek süre istediğinizi açıklayın (hastalık)",
+        "keywords": [
+          "extension",
+          "essay",
+          "sick",
+          "ill",
+          "deadline"
+        ],
+        "expected": "Could I have an extension because I've been very sick lately?"
+      },
+      {
+        "bot": "I usually don't allow that. Do you have a doctor's note?",
+        "tr": "Normalde buna izin vermem. Doktor raporunuz var mı?"
+      },
+      {
+        "userHint": "Evet, raporum yanımda deyin",
+        "keywords": [
+          "yes",
+          "have",
+          "note",
+          "doctor",
+          "with",
+          "me"
+        ],
+        "expected": "Yes, I have the doctor's note right here."
+      }
+    ]
+  },
+  {
+    "id": "gen_8",
+    "title": "Müze Gezisi - Varyasyon 1",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
         "role": "bot",
-        "text": "Some people believe AI will take over all jobs. What is your opinion on this?",
-        "tr": "Bazı insanlar yapay zekanın tüm işleri ele geçireceğine inanıyor. Bu konudaki fikriniz nedir?"
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
       },
       {
         "role": "user",
-        "hint": "Katılmadığınızı, yeni işler yaratacağını söyleyin",
+        "hint": "Yardım isteyin",
         "keywords": [
-          "disagree",
-          "create",
-          "new",
-          "jobs",
-          "not",
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
           "all"
         ],
-        "expected": "I disagree, I think AI will create new jobs."
-      },
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_9",
+    "title": "Spor Salonu Kaydı - Varyasyon 1",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
       {
         "role": "bot",
-        "text": "That is a valid point. However, won't the transition period be difficult for many workers?",
-        "tr": "Bu geçerli bir nokta. Ancak, geçiş dönemi birçok çalışan için zor olmayacak mı?"
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
       },
       {
         "role": "user",
-        "hint": "Evet ama eğitimle çözülebilir deyin",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_10",
+    "title": "Kütüphane Üyeliği - Varyasyon 1",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_11",
+    "title": "Araba Kiralama - Varyasyon 1",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_12",
+    "title": "İş Toplantısı - Varyasyon 1",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_13",
+    "title": "Doktor Randevusu - Varyasyon 1",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_14",
+    "title": "Market Alışverişi - Varyasyon 1",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_15",
+    "title": "Sinema Bileti - Varyasyon 1",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_16",
+    "title": "İşten Ayrılma - Varyasyon 1",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_17",
+    "title": "Yeni Bir Şehir - Varyasyon 1",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_18",
+    "title": "Müze Gezisi - Varyasyon 2",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_19",
+    "title": "Spor Salonu Kaydı - Varyasyon 2",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_20",
+    "title": "Kütüphane Üyeliği - Varyasyon 2",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_21",
+    "title": "Araba Kiralama - Varyasyon 2",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_22",
+    "title": "İş Toplantısı - Varyasyon 2",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_23",
+    "title": "Doktor Randevusu - Varyasyon 2",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_24",
+    "title": "Market Alışverişi - Varyasyon 2",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_25",
+    "title": "Sinema Bileti - Varyasyon 2",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_26",
+    "title": "İşten Ayrılma - Varyasyon 2",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_27",
+    "title": "Yeni Bir Şehir - Varyasyon 2",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_28",
+    "title": "Müze Gezisi - Varyasyon 3",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_29",
+    "title": "Spor Salonu Kaydı - Varyasyon 3",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_30",
+    "title": "Kütüphane Üyeliği - Varyasyon 3",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_31",
+    "title": "Araba Kiralama - Varyasyon 3",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_32",
+    "title": "İş Toplantısı - Varyasyon 3",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_33",
+    "title": "Doktor Randevusu - Varyasyon 3",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_34",
+    "title": "Market Alışverişi - Varyasyon 3",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_35",
+    "title": "Sinema Bileti - Varyasyon 3",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_36",
+    "title": "İşten Ayrılma - Varyasyon 3",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_37",
+    "title": "Yeni Bir Şehir - Varyasyon 3",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_38",
+    "title": "Müze Gezisi - Varyasyon 4",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_39",
+    "title": "Spor Salonu Kaydı - Varyasyon 4",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_40",
+    "title": "Kütüphane Üyeliği - Varyasyon 4",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_41",
+    "title": "Araba Kiralama - Varyasyon 4",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_42",
+    "title": "İş Toplantısı - Varyasyon 4",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_43",
+    "title": "Doktor Randevusu - Varyasyon 4",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_44",
+    "title": "Market Alışverişi - Varyasyon 4",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_45",
+    "title": "Sinema Bileti - Varyasyon 4",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_46",
+    "title": "İşten Ayrılma - Varyasyon 4",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_47",
+    "title": "Yeni Bir Şehir - Varyasyon 4",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_48",
+    "title": "Müze Gezisi - Varyasyon 5",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_49",
+    "title": "Spor Salonu Kaydı - Varyasyon 5",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_50",
+    "title": "Kütüphane Üyeliği - Varyasyon 5",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_51",
+    "title": "Araba Kiralama - Varyasyon 5",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_52",
+    "title": "İş Toplantısı - Varyasyon 5",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_53",
+    "title": "Doktor Randevusu - Varyasyon 5",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_54",
+    "title": "Market Alışverişi - Varyasyon 5",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_55",
+    "title": "Sinema Bileti - Varyasyon 5",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_56",
+    "title": "İşten Ayrılma - Varyasyon 5",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_57",
+    "title": "Yeni Bir Şehir - Varyasyon 5",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_58",
+    "title": "Müze Gezisi - Varyasyon 6",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_59",
+    "title": "Spor Salonu Kaydı - Varyasyon 6",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_60",
+    "title": "Kütüphane Üyeliği - Varyasyon 6",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_61",
+    "title": "Araba Kiralama - Varyasyon 6",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_62",
+    "title": "İş Toplantısı - Varyasyon 6",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_63",
+    "title": "Doktor Randevusu - Varyasyon 6",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_64",
+    "title": "Market Alışverişi - Varyasyon 6",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_65",
+    "title": "Sinema Bileti - Varyasyon 6",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_66",
+    "title": "İşten Ayrılma - Varyasyon 6",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_67",
+    "title": "Yeni Bir Şehir - Varyasyon 6",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_68",
+    "title": "Müze Gezisi - Varyasyon 7",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_69",
+    "title": "Spor Salonu Kaydı - Varyasyon 7",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_70",
+    "title": "Kütüphane Üyeliği - Varyasyon 7",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_71",
+    "title": "Araba Kiralama - Varyasyon 7",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_72",
+    "title": "İş Toplantısı - Varyasyon 7",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_73",
+    "title": "Doktor Randevusu - Varyasyon 7",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_74",
+    "title": "Market Alışverişi - Varyasyon 7",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_75",
+    "title": "Sinema Bileti - Varyasyon 7",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_76",
+    "title": "İşten Ayrılma - Varyasyon 7",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_77",
+    "title": "Yeni Bir Şehir - Varyasyon 7",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_78",
+    "title": "Müze Gezisi - Varyasyon 8",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_79",
+    "title": "Spor Salonu Kaydı - Varyasyon 8",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_80",
+    "title": "Kütüphane Üyeliği - Varyasyon 8",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_81",
+    "title": "Araba Kiralama - Varyasyon 8",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_82",
+    "title": "İş Toplantısı - Varyasyon 8",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_83",
+    "title": "Doktor Randevusu - Varyasyon 8",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_84",
+    "title": "Market Alışverişi - Varyasyon 8",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_85",
+    "title": "Sinema Bileti - Varyasyon 8",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_86",
+    "title": "İşten Ayrılma - Varyasyon 8",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_87",
+    "title": "Yeni Bir Şehir - Varyasyon 8",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_88",
+    "title": "Müze Gezisi - Varyasyon 9",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_89",
+    "title": "Spor Salonu Kaydı - Varyasyon 9",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_90",
+    "title": "Kütüphane Üyeliği - Varyasyon 9",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_91",
+    "title": "Araba Kiralama - Varyasyon 9",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_92",
+    "title": "İş Toplantısı - Varyasyon 9",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_93",
+    "title": "Doktor Randevusu - Varyasyon 9",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_94",
+    "title": "Market Alışverişi - Varyasyon 9",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_95",
+    "title": "Sinema Bileti - Varyasyon 9",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_96",
+    "title": "İşten Ayrılma - Varyasyon 9",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_97",
+    "title": "Yeni Bir Şehir - Varyasyon 9",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_98",
+    "title": "Müze Gezisi - Varyasyon 10",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_99",
+    "title": "Spor Salonu Kaydı - Varyasyon 10",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_100",
+    "title": "Kütüphane Üyeliği - Varyasyon 10",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_101",
+    "title": "Araba Kiralama - Varyasyon 10",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_102",
+    "title": "İş Toplantısı - Varyasyon 10",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_103",
+    "title": "Doktor Randevusu - Varyasyon 10",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_104",
+    "title": "Market Alışverişi - Varyasyon 10",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_105",
+    "title": "Sinema Bileti - Varyasyon 10",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_106",
+    "title": "İşten Ayrılma - Varyasyon 10",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_107",
+    "title": "Yeni Bir Şehir - Varyasyon 10",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_108",
+    "title": "Müze Gezisi - Varyasyon 11",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_109",
+    "title": "Spor Salonu Kaydı - Varyasyon 11",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_110",
+    "title": "Kütüphane Üyeliği - Varyasyon 11",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_111",
+    "title": "Araba Kiralama - Varyasyon 11",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_112",
+    "title": "İş Toplantısı - Varyasyon 11",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_113",
+    "title": "Doktor Randevusu - Varyasyon 11",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_114",
+    "title": "Market Alışverişi - Varyasyon 11",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_115",
+    "title": "Sinema Bileti - Varyasyon 11",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_116",
+    "title": "İşten Ayrılma - Varyasyon 11",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_117",
+    "title": "Yeni Bir Şehir - Varyasyon 11",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_118",
+    "title": "Müze Gezisi - Varyasyon 12",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_119",
+    "title": "Spor Salonu Kaydı - Varyasyon 12",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_120",
+    "title": "Kütüphane Üyeliği - Varyasyon 12",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_121",
+    "title": "Araba Kiralama - Varyasyon 12",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_122",
+    "title": "İş Toplantısı - Varyasyon 12",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_123",
+    "title": "Doktor Randevusu - Varyasyon 12",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_124",
+    "title": "Market Alışverişi - Varyasyon 12",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_125",
+    "title": "Sinema Bileti - Varyasyon 12",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_126",
+    "title": "İşten Ayrılma - Varyasyon 12",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_127",
+    "title": "Yeni Bir Şehir - Varyasyon 12",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_128",
+    "title": "Müze Gezisi - Varyasyon 13",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_129",
+    "title": "Spor Salonu Kaydı - Varyasyon 13",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_130",
+    "title": "Kütüphane Üyeliği - Varyasyon 13",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_131",
+    "title": "Araba Kiralama - Varyasyon 13",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_132",
+    "title": "İş Toplantısı - Varyasyon 13",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_133",
+    "title": "Doktor Randevusu - Varyasyon 13",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_134",
+    "title": "Market Alışverişi - Varyasyon 13",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_135",
+    "title": "Sinema Bileti - Varyasyon 13",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_136",
+    "title": "İşten Ayrılma - Varyasyon 13",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_137",
+    "title": "Yeni Bir Şehir - Varyasyon 13",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_138",
+    "title": "Müze Gezisi - Varyasyon 14",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_139",
+    "title": "Spor Salonu Kaydı - Varyasyon 14",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_140",
+    "title": "Kütüphane Üyeliği - Varyasyon 14",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_141",
+    "title": "Araba Kiralama - Varyasyon 14",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_142",
+    "title": "İş Toplantısı - Varyasyon 14",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_143",
+    "title": "Doktor Randevusu - Varyasyon 14",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_144",
+    "title": "Market Alışverişi - Varyasyon 14",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_145",
+    "title": "Sinema Bileti - Varyasyon 14",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_146",
+    "title": "İşten Ayrılma - Varyasyon 14",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_147",
+    "title": "Yeni Bir Şehir - Varyasyon 14",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_148",
+    "title": "Müze Gezisi - Varyasyon 15",
+    "emoji": "🏛️",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the museum?",
+        "tr": "Hoş geldiniz! museum konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the museum, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_149",
+    "title": "Spor Salonu Kaydı - Varyasyon 15",
+    "emoji": "🏋️",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the gym?",
+        "tr": "Hoş geldiniz! gym konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the gym, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_150",
+    "title": "Kütüphane Üyeliği - Varyasyon 15",
+    "emoji": "📚",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the library?",
+        "tr": "Hoş geldiniz! library konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the library, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_151",
+    "title": "Araba Kiralama - Varyasyon 15",
+    "emoji": "🚗",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the car?",
+        "tr": "Hoş geldiniz! car konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the car, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_152",
+    "title": "İş Toplantısı - Varyasyon 15",
+    "emoji": "💼",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the meeting?",
+        "tr": "Hoş geldiniz! meeting konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the meeting, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_153",
+    "title": "Doktor Randevusu - Varyasyon 15",
+    "emoji": "🩺",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the doctor?",
+        "tr": "Hoş geldiniz! doctor konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the doctor, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_154",
+    "title": "Market Alışverişi - Varyasyon 15",
+    "emoji": "🛒",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the market?",
+        "tr": "Hoş geldiniz! market konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the market, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_155",
+    "title": "Sinema Bileti - Varyasyon 15",
+    "emoji": "🎬",
+    "level": "easy",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the cinema?",
+        "tr": "Hoş geldiniz! cinema konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the cinema, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_156",
+    "title": "İşten Ayrılma - Varyasyon 15",
+    "emoji": "🚪",
+    "level": "hard",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the quit?",
+        "tr": "Hoş geldiniz! quit konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the quit, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "gen_157",
+    "title": "Yeni Bir Şehir - Varyasyon 15",
+    "emoji": "🌆",
+    "level": "medium",
+    "turns": [
+      {
+        "role": "bot",
+        "text": "Welcome! How can I help you with the city?",
+        "tr": "Hoş geldiniz! city konusunda size nasıl yardımcı olabilirim?"
+      },
+      {
+        "role": "user",
+        "hint": "Yardım isteyin",
+        "keywords": [
+          "help",
+          "need",
+          "want",
+          "please"
+        ],
+        "expected": "I need some help with the city, please."
+      },
+      {
+        "role": "bot",
+        "text": "Of course. What are the details?",
+        "tr": "Tabii ki. Detaylar nedir?"
+      },
+      {
+        "role": "user",
+        "hint": "Bir detay verin",
+        "keywords": [
+          "detail",
+          "info",
+          "about"
+        ],
+        "expected": "I want to know more about the prices."
+      },
+      {
+        "role": "bot",
+        "text": "I can help with that. Anything else?",
+        "tr": "Bu konuda yardımcı olabilirim. Başka bir şey var mı?"
+      },
+      {
+        "role": "user",
+        "hint": "Teşekkür edin",
+        "keywords": [
+          "no",
+          "thanks",
+          "all"
+        ],
+        "expected": "No, that is all for now. Thank you."
+      }
+    ]
+  },
+  {
+    "id": "scen_space",
+    "title": "Mars'ta İlk Gün",
+    "emoji": "🚀",
+    "level": "hard",
+    "turns": [
+      {
+        "bot": "Commander, we have landed on Mars. What is our first mission?",
+        "tr": "Komutanım, Mars'a iniş yaptık. İlk görevimiz nedir?"
+      },
+      {
+        "userHint": "Su kaynağı aramamız gerektiğini söyleyin",
+        "keywords": [
+          "search",
+          "water",
+          "source",
+          "find",
+          "first"
+        ],
+        "expected": "Our first mission is to search for a water source."
+      },
+      {
+        "bot": "Oxygen levels are at 80%. Should we deploy the robots?",
+        "tr": "Oksijen seviyeleri %80'de. Robotları konuşlandıralım mı?"
+      },
+      {
+        "userHint": "Evet, hemen başlayın deyin",
         "keywords": [
           "yes",
-          "education",
-          "training",
-          "solve",
-          "adapt"
-        ],
-        "expected": "Yes, but it can be solved with proper training."
-      },
-      {
-        "role": "bot",
-        "text": "So you suggest that governments should invest more in re-education programs?",
-        "tr": "Yani hükümetlerin yeniden eğitim programlarına daha fazla yatırım yapması gerektiğini mi öne sürüyorsunuz?"
-      },
-      {
-        "role": "user",
-        "hint": "Kesinlikle diyerek onaylayın",
-        "keywords": [
-          "absolutely",
-          "definitely",
-          "agree",
-          "exactly"
-        ],
-        "expected": "Absolutely, that is exactly what I mean."
-      }
-    ]
-  },
-  {
-    "id": "auto_buying_a_car",
-    "title": "Buying a Car at the Office",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a car. How should we proceed?",
-        "tr": "Merhaba. a car hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
+          "deploy",
           "start",
-          "discuss",
-          "think",
-          "proposal"
+          "now",
+          "robots"
         ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_buying_a_house",
-    "title": "Buying a House in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a house. How should we proceed?",
-        "tr": "Merhaba. a house hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_buying_software",
-    "title": "Buying Software on the Phone",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about software. How should we proceed?",
-        "tr": "Merhaba. software hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_buying_a_phone",
-    "title": "Buying a Phone on the Phone",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a phone. How should we proceed?",
-        "tr": "Merhaba. a phone hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_buying_tickets",
-    "title": "Buying Tickets in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about tickets. How should we proceed?",
-        "tr": "Merhaba. tickets hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_buying_an_idea",
-    "title": "Buying an Idea in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about an idea. How should we proceed?",
-        "tr": "Merhaba. an idea hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_buying_a_problem",
-    "title": "Buying a Problem at the Office",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a problem. How should we proceed?",
-        "tr": "Merhaba. a problem hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_selling_a_car",
-    "title": "Selling a Car at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a car. How should we proceed?",
-        "tr": "Merhaba. a car hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_selling_a_house",
-    "title": "Selling a House at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a house. How should we proceed?",
-        "tr": "Merhaba. a house hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_selling_software",
-    "title": "Selling Software in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about software. How should we proceed?",
-        "tr": "Merhaba. software hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_selling_a_phone",
-    "title": "Selling a Phone on the Phone",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a phone. How should we proceed?",
-        "tr": "Merhaba. a phone hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_selling_tickets",
-    "title": "Selling Tickets on the Phone",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about tickets. How should we proceed?",
-        "tr": "Merhaba. tickets hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_selling_an_idea",
-    "title": "Selling an Idea at the Office",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about an idea. How should we proceed?",
-        "tr": "Merhaba. an idea hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_selling_a_problem",
-    "title": "Selling a Problem in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a problem. How should we proceed?",
-        "tr": "Merhaba. a problem hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_fixing_a_car",
-    "title": "Fixing a Car at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a car. How should we proceed?",
-        "tr": "Merhaba. a car hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_fixing_a_house",
-    "title": "Fixing a House at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a house. How should we proceed?",
-        "tr": "Merhaba. a house hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_fixing_software",
-    "title": "Fixing Software at the Airport",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about software. How should we proceed?",
-        "tr": "Merhaba. software hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_fixing_a_phone",
-    "title": "Fixing a Phone on the Phone",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a phone. How should we proceed?",
-        "tr": "Merhaba. a phone hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_fixing_tickets",
-    "title": "Fixing Tickets at the Airport",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about tickets. How should we proceed?",
-        "tr": "Merhaba. tickets hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_fixing_an_idea",
-    "title": "Fixing an Idea at the Airport",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about an idea. How should we proceed?",
-        "tr": "Merhaba. an idea hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_fixing_a_problem",
-    "title": "Fixing a Problem in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a problem. How should we proceed?",
-        "tr": "Merhaba. a problem hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_explaining_a_car",
-    "title": "Explaining a Car on the Phone",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a car. How should we proceed?",
-        "tr": "Merhaba. a car hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_explaining_a_house",
-    "title": "Explaining a House at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a house. How should we proceed?",
-        "tr": "Merhaba. a house hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_explaining_software",
-    "title": "Explaining Software at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about software. How should we proceed?",
-        "tr": "Merhaba. software hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_explaining_a_phone",
-    "title": "Explaining a Phone at the Office",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a phone. How should we proceed?",
-        "tr": "Merhaba. a phone hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_explaining_tickets",
-    "title": "Explaining Tickets at the Airport",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about tickets. How should we proceed?",
-        "tr": "Merhaba. tickets hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_explaining_an_idea",
-    "title": "Explaining an Idea at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about an idea. How should we proceed?",
-        "tr": "Merhaba. an idea hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_explaining_a_problem",
-    "title": "Explaining a Problem in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a problem. How should we proceed?",
-        "tr": "Merhaba. a problem hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_discussing_a_car",
-    "title": "Discussing a Car at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a car. How should we proceed?",
-        "tr": "Merhaba. a car hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_discussing_a_house",
-    "title": "Discussing a House on the Phone",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a house. How should we proceed?",
-        "tr": "Merhaba. a house hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_discussing_software",
-    "title": "Discussing Software in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about software. How should we proceed?",
-        "tr": "Merhaba. software hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_discussing_a_phone",
-    "title": "Discussing a Phone in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a phone. How should we proceed?",
-        "tr": "Merhaba. a phone hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_discussing_tickets",
-    "title": "Discussing Tickets at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about tickets. How should we proceed?",
-        "tr": "Merhaba. tickets hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_discussing_an_idea",
-    "title": "Discussing an Idea on the Phone",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about an idea. How should we proceed?",
-        "tr": "Merhaba. an idea hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_discussing_a_problem",
-    "title": "Discussing a Problem in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a problem. How should we proceed?",
-        "tr": "Merhaba. a problem hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_finding_a_car",
-    "title": "Finding a Car at the Office",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a car. How should we proceed?",
-        "tr": "Merhaba. a car hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_finding_a_house",
-    "title": "Finding a House at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a house. How should we proceed?",
-        "tr": "Merhaba. a house hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_finding_software",
-    "title": "Finding Software on the Phone",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about software. How should we proceed?",
-        "tr": "Merhaba. software hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_finding_a_phone",
-    "title": "Finding a Phone in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a phone. How should we proceed?",
-        "tr": "Merhaba. a phone hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_finding_tickets",
-    "title": "Finding Tickets in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about tickets. How should we proceed?",
-        "tr": "Merhaba. tickets hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_finding_an_idea",
-    "title": "Finding an Idea at the Airport",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about an idea. How should we proceed?",
-        "tr": "Merhaba. an idea hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_finding_a_problem",
-    "title": "Finding a Problem at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a problem. How should we proceed?",
-        "tr": "Merhaba. a problem hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_negotiating_a_car",
-    "title": "Negotiating a Car at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a car. How should we proceed?",
-        "tr": "Merhaba. a car hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_negotiating_a_house",
-    "title": "Negotiating a House in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a house. How should we proceed?",
-        "tr": "Merhaba. a house hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_negotiating_software",
-    "title": "Negotiating Software at the Office",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about software. How should we proceed?",
-        "tr": "Merhaba. software hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_negotiating_a_phone",
-    "title": "Negotiating a Phone at the Office",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a phone. How should we proceed?",
-        "tr": "Merhaba. a phone hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_negotiating_tickets",
-    "title": "Negotiating Tickets at the Airport",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about tickets. How should we proceed?",
-        "tr": "Merhaba. tickets hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_negotiating_an_idea",
-    "title": "Negotiating an Idea at the Mall",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about an idea. How should we proceed?",
-        "tr": "Merhaba. an idea hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
-      }
-    ]
-  },
-  {
-    "id": "auto_negotiating_a_problem",
-    "title": "Negotiating a Problem in a Meeting",
-    "emoji": "💬",
-    "level": "medium",
-    "turns": [
-      {
-        "role": "bot",
-        "text": "Hello. We need to talk about a problem. How should we proceed?",
-        "tr": "Merhaba. a problem hakkında konuşmalıyız. Nasıl ilerlemeliyiz?"
-      },
-      {
-        "role": "user",
-        "hint": "Konuya girmek için bir teklif sunun",
-        "keywords": [
-          "let",
-          "start",
-          "discuss",
-          "think",
-          "proposal"
-        ],
-        "expected": "Let's start by looking at the details."
-      },
-      {
-        "role": "bot",
-        "text": "Good idea. What is your main concern right now?",
-        "tr": "İyi fikir. Şu anki ana endişeniz nedir?"
-      },
-      {
-        "role": "user",
-        "hint": "Fiyat/zaman/kalite hakkında bir şey söyleyin",
-        "keywords": [
-          "price",
-          "time",
-          "cost",
-          "quality",
-          "worried"
-        ],
-        "expected": "I am mostly worried about the cost."
-      },
-      {
-        "role": "bot",
-        "text": "I understand. Let's see if we can find a compromise.",
-        "tr": "Anlıyorum. Bakalım bir uzlaşma bulabilecek miyiz."
-      },
-      {
-        "role": "user",
-        "hint": "Teşekkür edip anlaşmaya varın",
-        "keywords": [
-          "thank",
-          "agree",
-          "sounds",
-          "good",
-          "perfect"
-        ],
-        "expected": "Thank you, that sounds perfect."
+        "expected": "Yes, deploy the robots and start now."
       }
     ]
   }

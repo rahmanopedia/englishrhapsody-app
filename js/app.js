@@ -2350,14 +2350,26 @@ class App {
   _renderConvoList() {
     const el = document.getElementById('convo-content');
     if (!el) return;
+    this.session.convoFilter = { query: '', level: 'all' };
     el.innerHTML = `
       <div class="convo-list-header">
         <h2>Senaryo Seç</h2>
-        <p>Dünyanın en büyük senaryo kütüphanesi (${CONVERSATIONS.length} Senaryo)</p>
-        <div style="margin-top:16px; margin-bottom:16px;">
-          <input type="text" id="convo-search" placeholder="Senaryo ara (Örn: Seyahat, Kahve, İş)..." 
-                 oninput="app.filterConvos(this.value)"
-                 style="width:100%; padding:12px 16px; border-radius:12px; border:2px solid var(--violet); background:rgba(0,0,0,0.2); color:var(--text-1); font-size:16px; outline:none; box-shadow:0 4px 12px rgba(139, 92, 246, 0.1);">
+        <p>Kütüphanede ${CONVERSATIONS.length} benzersiz senaryo hazır!</p>
+        
+        <div style="margin-top:20px; display:flex; flex-direction:column; gap:12px;">
+          <input type="text" id="convo-search" placeholder="Senaryo ara..." 
+                 oninput="app.filterConvos(this.value, null)"
+                 style="width:100%; padding:14px 18px; border-radius:15px; border:2px solid var(--violet); background:rgba(255,255,255,0.05); color:var(--text-1); font-size:16px; outline:none;">
+          
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <button class="filter-btn active" onclick="app.filterConvos(null, 'all', this)">Hepsi</button>
+            <button class="filter-btn" onclick="app.filterConvos(null, 'easy', this)">🌱 Kolay</button>
+            <button class="filter-btn" onclick="app.filterConvos(null, 'medium', this)">📚 Orta</button>
+            <button class="filter-btn" onclick="app.filterConvos(null, 'hard', this)">🔥 İleri</button>
+            <button class="shuffle-btn" onclick="app.shuffleConvo()" style="margin-left:auto; background:var(--amber); color:#000; border:none; padding:8px 16px; border-radius:10px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px;">
+              <span>🔀</span> Rastgele Getir
+            </button>
+          </div>
         </div>
       </div>
       <div class="convo-scenarios" id="convo-list-container">
@@ -2367,6 +2379,7 @@ class App {
   }
 
   _generateConvoCardsHTML(list) {
+    if (list.length === 0) return `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-3);">Eşleşen senaryo bulunamadı.</div>`;
     return list.map(c => `
       <div class="convo-scenario-card" onclick="app.startConvo('${c.id}')">
         <div class="csc-emoji">${c.emoji}</div>
@@ -2377,12 +2390,33 @@ class App {
     `).join('');
   }
 
-  filterConvos(query) {
+  filterConvos(query, level, btn) {
+    if (query !== null) this.session.convoFilter.query = query.toLowerCase();
+    if (level !== null) this.session.convoFilter.level = level;
+    
+    if (btn) {
+      btn.parentElement.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
     const container = document.getElementById('convo-list-container');
     if (!container) return;
-    const q = query.toLowerCase();
-    const filtered = CONVERSATIONS.filter(c => c.title.toLowerCase().includes(q) || c.id.toLowerCase().includes(q));
+
+    const filtered = CONVERSATIONS.filter(c => {
+      const matchQuery = c.title.toLowerCase().includes(this.session.convoFilter.query);
+      const matchLevel = this.session.convoFilter.level === 'all' || c.level === this.session.convoFilter.level;
+      return matchQuery && matchLevel;
+    });
+
     container.innerHTML = this._generateConvoCardsHTML(filtered);
+    this.session.lastFiltered = filtered;
+  }
+
+  shuffleConvo() {
+    const list = this.session.lastFiltered || CONVERSATIONS;
+    if (list.length === 0) return;
+    const random = list[Math.floor(Math.random() * list.length)];
+    this.startConvo(random.id);
   }
 
   startConvo(id) {
