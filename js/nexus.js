@@ -9,11 +9,21 @@ class NexusMode {
     this.combo = 0;
     this.particles = ['up', 'down', 'in', 'out', 'on', 'off', 'over', 'away', 'back', 'into', 'with', 'through', 'for'];
     this.locked = false;
+    
+    // v2.0 Mechanics
+    this.energy = 100;
+    this.orbitAngles = [];
+    this.orbitSpeeds = [];
+    this.rafId = null;
+    this.lastTime = 0;
+
     this._loadData();
     
-    // Resize listener for true responsiveness
-    this._resizeHandler = () => { if (this.current) this._positionNodes(); };
+    this._resizeHandler = () => { if (this.current && !this.locked) this._initOrbits(); };
+    this._mouseHandler = (e) => this._parallax(e);
+    
     window.addEventListener('resize', this._resizeHandler);
+    window.addEventListener('mousemove', this._mouseHandler);
   }
 
   _loadData() {
@@ -42,34 +52,44 @@ class NexusMode {
 
   destroy() {
     window.removeEventListener('resize', this._resizeHandler);
+    window.removeEventListener('mousemove', this._mouseHandler);
+    if (this.rafId) cancelAnimationFrame(this.rafId);
     if (this.root) this.root.innerHTML = '';
+  }
+
+  _parallax(e) {
+    const board = document.getElementById('nexus-board');
+    if (!board) return;
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    board.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
   }
 
   _showIntro() {
     this.root.innerHTML = `
       <div class="nexus-header">
-        <h1 class="nexus-title">NEXUS MODU</h1>
-        <p class="nexus-subtitle">Phrasal Verb'leri Kozmik Bağlantılarla Öğren</p>
+        <h1 class="nexus-title">NEXUS <span class="v2-badge">v2.0</span></h1>
+        <p class="nexus-subtitle">Dinamik Yörüngeler & Enerji Matrisi</p>
       </div>
       <div class="nexus-game-area">
         <div class="nexus-intro-card">
           <p class="nexus-intro-text">
-            Fiil ve edatı (particle) birbirine bağlayarak doğru Phrasal Verb'ü oluştur. 
-            Görsel ve kassal hafızanı kullanarak kalıcı öğren.
+            Phrasal Verb'leri kozmik ağlarda hareket halindeyken bağla. <br>
+            <strong>Hızlı ol:</strong> Enerjin tükenmeden doğru edatı yakala, kombo yap, hiper enerji kazan.
           </p>
           <button class="btn btn-primary nexus-intro-btn" onclick="window.nexusMod.start()">OTURUMU BAŞLAT</button>
         </div>
       </div>
       <div class="nexus-bg-stars" id="nexus-stars"></div>
     `;
-    this._createStars();
+    this._createStars(80);
   }
 
-  _createStars() {
+  _createStars(count) {
     const starContainer = document.getElementById('nexus-stars');
     if (!starContainer) return;
     let stars = '';
-    for(let i=0; i<60; i++) {
+    for(let i=0; i<count; i++) {
       const x = Math.random() * 100;
       const y = Math.random() * 100;
       const dur = Math.random() * 3 + 2;
@@ -92,11 +112,14 @@ class NexusMode {
   }
 
   nextWord() {
+    if (this.rafId) cancelAnimationFrame(this.rafId);
     if (this.currentIndex >= this.queue.length) {
       this._showResults();
       return;
     }
     this.current = this.queue[this.currentIndex];
+    this.energy = 100;
+    this.locked = false;
     this.renderGame();
   }
 
@@ -108,8 +131,11 @@ class NexusMode {
 
     this.root.innerHTML = `
       <div class="nexus-header">
-        <h1 class="nexus-title">NEXUS</h1>
-        <p class="nexus-subtitle">Aşama ${this.currentIndex + 1} / ${this.queue.length}</p>
+        <h1 class="nexus-title">NEXUS <span class="v2-badge">v2.0</span></h1>
+        <p class="nexus-subtitle">Sektör ${this.currentIndex + 1} / ${this.queue.length}</p>
+        <div class="nexus-energy-container">
+           <div class="nexus-energy-fill" id="nx-energy"></div>
+        </div>
       </div>
       
       <div class="nexus-display-container">
@@ -130,7 +156,7 @@ class NexusMode {
         </div>
 
         ${options.map((opt, i) => {
-           return `<div class="nexus-particle-node" onclick="window.nexusMod.checkAnswer('${opt}', this)">${opt}</div>`;
+           return `<div class="nexus-particle-node" data-idx="${i}" onclick="window.nexusMod.checkAnswer('${opt}', this)">${opt}</div>`;
         }).join('')}
       </div>
 
@@ -141,36 +167,74 @@ class NexusMode {
       <div class="nexus-bg-stars" id="nexus-stars"></div>
     `;
     
-    setTimeout(() => this._positionNodes(), 30);
-    this._createStars();
+    setTimeout(() => {
+        this._initOrbits();
+        this.lastTime = performance.now();
+        this._loop(this.lastTime);
+    }, 30);
+    this._createStars(50);
     if(this.app.audio) this.app.audio.play('pop');
   }
 
-  _positionNodes() {
-    const board = document.getElementById('nexus-board');
+  _initOrbits() {
+    const boardRect = document.getElementById('nexus-board').getBoundingClientRect();
     const core = document.getElementById('nexus-core');
-    if (!board || !core) return;
-    const boardRect = board.getBoundingClientRect();
     
-    // Board'un tam merkezi
     const centerX = boardRect.width / 2;
     const centerY = boardRect.height / 2;
     
     core.style.left = `${centerX - core.offsetWidth/2}px`;
     core.style.top = `${centerY - core.offsetHeight/2}px`;
-    
+
     const particles = document.querySelectorAll('.nexus-particle-node');
+    this.orbitAngles = [];
+    this.orbitSpeeds = [];
+    
+    const baseRadius = Math.min(boardRect.width, boardRect.height) * 0.35;
+    this.orbitRadius = Math.max(baseRadius, window.innerWidth < 600 ? 90 : 130);
+
     particles.forEach((p, i) => {
-       const angle = (i / particles.length) * Math.PI * 2 - Math.PI/2;
-       
-       // Responsive radius: Board boyutuna göre ölçekle
-       const baseRadius = Math.min(boardRect.width, boardRect.height) * 0.35;
-       const radius = Math.max(baseRadius, window.innerWidth < 600 ? 90 : 130);
-       
-       const x = centerX + Math.cos(angle) * radius - p.offsetWidth/2;
-       const y = centerY + Math.sin(angle) * radius - p.offsetHeight/2;
-       p.style.left = `${x}px`;
-       p.style.top = `${y}px`;
+       const initialAngle = (i / particles.length) * Math.PI * 2;
+       this.orbitAngles.push(initialAngle);
+       // Rastgele ama tutarlı hızlar (bazıları saat yönünde, bazıları tersi)
+       const speed = (Math.random() * 0.0005 + 0.0008) * (i % 2 === 0 ? 1 : -1);
+       this.orbitSpeeds.push(speed);
+    });
+  }
+
+  _loop(time) {
+    if (this.locked) return; // Doğru cevapta dönmeyi durdur
+    this.rafId = requestAnimationFrame((t) => this._loop(t));
+    
+    const dt = time - this.lastTime;
+    this.lastTime = time;
+
+    // Enerji tükenmesi (Saniyede yaklaşık %0.5 azalır)
+    this.energy -= dt * 0.005;
+    if (this.energy <= 0) this.energy = 0;
+    
+    const energyBar = document.getElementById('nx-energy');
+    if (energyBar) {
+        energyBar.style.width = `${this.energy}%`;
+        if (this.energy < 30) energyBar.classList.add('warning');
+        else energyBar.classList.remove('warning');
+    }
+
+    // Yörünge Hareketi
+    const boardRect = document.getElementById('nexus-board').getBoundingClientRect();
+    const centerX = boardRect.width / 2;
+    const centerY = boardRect.height / 2;
+    const particles = document.querySelectorAll('.nexus-particle-node');
+
+    particles.forEach((p, i) => {
+       this.orbitAngles[i] += this.orbitSpeeds[i] * dt;
+       const angle = this.orbitAngles[i];
+       const x = centerX + Math.cos(angle) * this.orbitRadius - p.offsetWidth/2;
+       const y = centerY + Math.sin(angle) * this.orbitRadius - p.offsetHeight/2;
+       p.style.transform = `translate(${x}px, ${y}px)`;
+       // Top ve left sıfırlanıp transform ile hareket ettiriliyor (Performans için)
+       p.style.left = '0';
+       p.style.top = '0';
     });
   }
 
@@ -185,34 +249,35 @@ class NexusMode {
 
   checkAnswer(particle, el) {
     if (this.locked) return;
-    this.locked = true;
     
     const isCorrect = particle === this.current.particle;
-    const core = document.getElementById('nexus-core');
-    const line = document.getElementById('nexus-line');
-    const board = document.getElementById('nexus-board');
-    
-    if (!core || !line || !board) return;
-
-    const coreRect = core.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-    const boardRect = board.getBoundingClientRect();
-    
-    line.setAttribute('x1', coreRect.left + coreRect.width/2 - boardRect.left);
-    line.setAttribute('y1', coreRect.top + coreRect.height/2 - boardRect.top);
-    line.setAttribute('x2', elRect.left + elRect.width/2 - boardRect.left);
-    line.setAttribute('y2', elRect.top + elRect.height/2 - boardRect.top);
-    
-    line.classList.add('active');
     
     if (isCorrect) {
+      this.locked = true; // Yörüngeyi dondur
+      if (this.rafId) cancelAnimationFrame(this.rafId);
+
+      const core = document.getElementById('nexus-core');
+      const line = document.getElementById('nexus-line');
+      
+      const coreRect = core.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      const boardRect = document.getElementById('nexus-board').getBoundingClientRect();
+      
+      line.setAttribute('x1', coreRect.left + coreRect.width/2 - boardRect.left);
+      line.setAttribute('y1', coreRect.top + coreRect.height/2 - boardRect.top);
+      line.setAttribute('x2', elRect.left + elRect.width/2 - boardRect.left);
+      line.setAttribute('y2', elRect.top + elRect.height/2 - boardRect.top);
+      
+      line.classList.add('active', 'correct');
       el.classList.add('correct');
-      line.classList.add('correct');
       core.classList.add('active');
+      
       if(this.app.audio) this.app.audio.play('correct');
       if(this.app.speakWord) this.app.speakWord(this.current.phrase);
       
-      this.score += 25 + (this.combo * 5);
+      // Enerjiye bağlı hiper bonus
+      const energyBonus = Math.floor(this.energy * 0.2);
+      this.score += 25 + (this.combo * 5) + energyBonus;
       this.combo++;
       
       document.getElementById('nx-score').innerText = this.score;
@@ -220,7 +285,7 @@ class NexusMode {
       
       if(this.app.state) {
          let xp = this.app.state.get('xp') || 0;
-         this.app.state.update({ xp: xp + 25 + (this.combo * 5) });
+         this.app.state.update({ xp: xp + 25 + (this.combo * 5) + energyBonus });
          if(this.app._renderHeader) this.app._renderHeader();
       }
       
@@ -238,46 +303,46 @@ class NexusMode {
       }, 300);
       
       setTimeout(() => {
-        this.locked = false;
-        this.currentIndex++;
         this.nextWord();
-      }, 3000);
+      }, 2500);
       
     } else {
+      // Yanlış cevapta ceza
       el.classList.add('wrong');
       if(this.app.audio) this.app.audio.play('error');
       this.combo = 0;
+      this.energy -= 15; // Zaman cezası
+      if(this.energy < 0) this.energy = 0;
+      
       document.getElementById('nx-combo').innerText = this.combo;
       setTimeout(() => {
         el.classList.remove('wrong');
-        line.classList.remove('active');
-        this.locked = false;
-      }, 800);
+      }, 500);
     }
   }
 
   _showResults() {
     this.root.innerHTML = `
       <div class="nexus-header">
-        <h1 class="nexus-title">KOZMİK BAĞ TAMAMLANDI</h1>
+        <h1 class="nexus-title">NEXUS <span class="v2-badge">v2.0</span></h1>
       </div>
       <div class="nexus-game-area" style="text-align:center;">
-        <div style="font-size:4.5rem; margin-bottom:15px;">🌌</div>
-        <h2 style="color:#fff; font-size:2rem; margin-bottom:10px; font-weight:800;">Galaktik Ustalık!</h2>
-        <p style="color:var(--text-2); font-size:1.2rem; margin-bottom:30px;">Kazanılan Enerji: <strong style="color:var(--cyan)">+${this.score} XP</strong></p>
+        <div style="font-size:4.5rem; margin-bottom:15px; text-shadow: 0 0 20px var(--cyan);">🚀</div>
+        <h2 style="color:#fff; font-size:2rem; margin-bottom:10px; font-weight:800;">Hiperuzay Atlayışı Başarılı!</h2>
+        <p style="color:var(--text-2); font-size:1.2rem; margin-bottom:30px;">Kazanılan Toplam XP: <strong style="color:var(--cyan)">+${this.score}</strong></p>
         <div style="display:flex; gap:15px; justify-content:center;">
-           <button class="btn btn-primary" onclick="window.nexusMod.start()">YENİDEN BAĞLAN</button>
-           <button class="btn btn-ghost" onclick="app.navigate('home')">ANA MERKEZ</button>
+           <button class="btn btn-primary nexus-intro-btn" onclick="window.nexusMod.start()">YENİDEN BAĞLAN</button>
+           <button class="btn btn-ghost" style="padding: 16px 30px; font-size: 1.1rem;" onclick="app.navigate('home')">ANA MERKEZ</button>
         </div>
       </div>
       <div class="nexus-bg-stars" id="nexus-stars"></div>
     `;
-    this._createStars();
+    this._createStars(100);
     if (typeof confetti === 'function') confetti({ 
-        particleCount: 150, 
-        spread: 70, 
+        particleCount: 200, 
+        spread: 90, 
         origin: {y: 0.6},
-        colors: ['#00d4ff', '#7c3aed', '#10b981']
+        colors: ['#00d4ff', '#7c3aed', '#10b981', '#f59e0b']
     });
   }
 }
