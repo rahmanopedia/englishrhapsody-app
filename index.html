@@ -120,75 +120,76 @@
 <template id="tpl-home">
 <div class="home-grid animate-in">
 
-  <!-- Hero banner -->
+  <!-- Hero: greeting + rank + mini stats -->
   <div class="home-hero">
-    <div>
+    <div class="hero-left">
       <div class="hero-greeting" id="home-greeting">🌅 Günaydın!</div>
       <div class="hero-name" id="home-name">İngilizce öğrenimine devam et</div>
-      <div class="hero-date" id="home-date"></div>
-      <div class="accent-btns" style="margin-top:12px">
-        <button class="accent-btn" id="acc-us" onclick="app.setAccent('en-US')">🇺🇸 US</button>
-        <button class="accent-btn" id="acc-gb" onclick="app.setAccent('en-GB')">🇬🇧 UK</button>
+      <div class="hero-meta">
+        <span class="hero-date" id="home-date"></span>
+        <div class="accent-btns">
+          <button class="accent-btn" id="acc-us" onclick="app.setAccent('en-US')">🇺🇸 US</button>
+          <button class="accent-btn" id="acc-gb" onclick="app.setAccent('en-GB')">🇬🇧 UK</button>
+        </div>
       </div>
     </div>
-    <div class="hero-rank" id="hero-rank">
-      <div class="hero-rank-icon" id="rank-icon">🌱</div>
-      <div class="hero-rank-name" id="rank-name">Çırak</div>
-      <div class="hero-rank-level" id="rank-level">Level 1</div>
-    </div>
-  </div>
-
-  <!-- Quick stats -->
-  <div class="stats-row">
-    <div class="stat-card cyan">
-      <div class="stat-val" id="home-words">0</div>
-      <div class="stat-label">Kelime Öğrenildi</div>
-    </div>
-    <div class="stat-card violet">
-      <div class="stat-val" id="home-xp">0</div>
-      <div class="stat-label">Toplam XP</div>
-    </div>
-    <div class="stat-card amber">
-      <div class="stat-val" id="home-streak">🔥1</div>
-      <div class="stat-label">Gün Serisi</div>
-    </div>
-    <div class="stat-card green">
-      <div class="stat-val" id="home-acc">0%</div>
-      <div class="stat-label">Başarı Oranı</div>
-    </div>
-  </div>
-
-  <!-- Collocation tip of the day (Prominent Position) -->
-  <div class="colloc-tip-card" id="colloc-tip-card"></div>
-
-  <!-- XP bar -->
-  <div class="xp-bar-card">
-    <div class="xp-bar-header">
-      <span class="lvl">⚡ Level <span id="home-lvl">1</span></span>
-      <span class="remain" id="xp-remain">500 XP kaldı</span>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="xp-bar" style="width:0%"></div>
-    </div>
-  </div>
-
-  <!-- Word of the Day -->
-  <div class="wod-card">
-    <div class="wod-left">
-      <div class="wod-icon" id="wod-icon">🌌</div>
-      <div>
-        <div class="wod-label">⭐ Günün Kelimesi</div>
-        <div class="wod-word" id="wod-word">—</div>
-        <div class="wod-ipa" id="wod-ipa"></div>
-        <div class="wod-tr" id="wod-tr"></div>
+    <div class="hero-right">
+      <div class="hero-rank" id="hero-rank">
+        <div class="hero-rank-icon" id="rank-icon">🌱</div>
+        <div class="hero-rank-name" id="rank-name">Çırak</div>
+        <div class="hero-rank-level" id="rank-level">Level 1</div>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><span class="hstat-val cyan" id="home-words">0</span><span class="hstat-lbl">Kelime</span></div>
+        <div class="hstat"><span class="hstat-val violet" id="home-xp">0</span><span class="hstat-lbl">XP</span></div>
+        <div class="hstat"><span class="hstat-val amber" id="home-streak">🔥1</span><span class="hstat-lbl">Seri</span></div>
+        <div class="hstat"><span class="hstat-val green" id="home-acc">0%</span><span class="hstat-lbl">Başarı</span></div>
       </div>
     </div>
-    <button class="btn btn-ghost btn-sm" onclick="app.speakWord(document.getElementById('wod-word').textContent)">
-      🔊 Dinle
-    </button>
   </div>
 
-  <!-- Action cards -->
+  <!-- Progress + Streak in one card -->
+  <div class="home-progress-card">
+    <div class="home-progress-col">
+      <div class="prog-row">
+        <span class="lvl">⚡ Level <span id="home-lvl">1</span></span>
+        <span class="remain" id="xp-remain">500 XP kaldı</span>
+      </div>
+      <div class="progress-track" style="height:6px;margin:6px 0 12px">
+        <div class="progress-fill" id="xp-bar" style="width:0%"></div>
+      </div>
+      <div class="prog-row">
+        <span class="prog-label" id="daily-goal-label">🎯 Günlük Hedef</span>
+        <span class="prog-label" id="daily-goal-pct">0/100 XP</span>
+      </div>
+      <div class="progress-track" style="height:5px;margin-top:6px">
+        <div class="progress-fill" id="daily-goal-bar" style="width:0%;background:linear-gradient(90deg,var(--cyan),var(--violet))"></div>
+      </div>
+    </div>
+    <div class="home-streak-col">
+      <span class="prog-label" style="margin-bottom:8px;display:block">📅 Son 7 Gün</span>
+      <div class="streak-row" id="streak-cal"></div>
+    </div>
+  </div>
+
+  <!-- WoD + Colloc side by side -->
+  <div class="home-mid-row">
+    <div class="wod-card">
+      <div class="wod-left">
+        <div class="wod-icon" id="wod-icon">🌌</div>
+        <div>
+          <div class="wod-label">⭐ Günün Kelimesi</div>
+          <div class="wod-word" id="wod-word">—</div>
+          <div class="wod-ipa" id="wod-ipa"></div>
+          <div class="wod-tr" id="wod-tr"></div>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="app.speakWord(document.getElementById('wod-word').textContent)">🔊</button>
+    </div>
+    <div class="colloc-tip-card" id="colloc-tip-card"></div>
+  </div>
+
+  <!-- Action cards: compact 4-in-a-row -->
   <div class="actions-grid">
     <div class="action-card cards" onclick="app.navigate('learn')">
       <div class="ac-icon">🌀</div>
@@ -196,49 +197,26 @@
         <h3>Sinestezi Lab</h3>
         <span class="ac-due-badge" id="ac-due-badge" style="display:none">0</span>
       </div>
-      <p>Yapay zeka destekli aralıklı tekrar ile kelimeleri kalıcı öğren.</p>
-      <div class="progress-track">
+      <div class="progress-track" style="margin-top:10px">
         <div class="progress-fill" id="ac-words-bar" style="width:0%"></div>
       </div>
-      <div style="font-size:0.75rem;color:var(--text-3);margin-top:6px"><span id="ac-words-pct">0%</span> tamamlandı</div>
+      <div style="font-size:0.7rem;color:var(--text-3);margin-top:5px"><span id="ac-words-pct">0%</span> tamamlandı</div>
     </div>
     <div class="action-card speak" onclick="app.navigate('speak')">
       <div class="ac-icon">🎙️</div>
       <h3>Konuşma Lab</h3>
-      <p>Mikrofona konuş, AI telaffuzunu kelime kelime analiz etsin.</p>
-      <div style="font-size:0.8rem;color:var(--text-2);margin-top:8px" id="ac-speak-hint">Bugün dene →</div>
+      <div style="font-size:0.75rem;color:var(--text-2);margin-top:6px" id="ac-speak-hint">Bugün dene →</div>
     </div>
     <div class="action-card reading" onclick="app.navigate('reading')">
       <div class="ac-icon">📖</div>
       <h3>Okuma Atölyesi</h3>
-      <p>Hikayeler içinde bağlam kurarak kelime öğren ve anlamayı derinleştir.</p>
-      <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px">60 hikaye, 3 seviye</div>
+      <div style="font-size:0.75rem;color:var(--text-3);margin-top:6px">60 hikaye, 3 seviye</div>
     </div>
     <div class="action-card nexus" onclick="app.navigate('nexus')" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.05));border-color:rgba(16,185,129,0.2);">
       <div class="ac-icon">✨</div>
       <h3>Nexus Mod</h3>
-      <p>Phrasal Verbleri kozmik ağlarda bağlayarak öğren. Görsel hafıza ile kalıcı etki.</p>
-      <div style="font-size:0.75rem;color:#10b981;margin-top:8px">Yeni Mod 🚀</div>
+      <div style="font-size:0.75rem;color:#10b981;margin-top:6px">Phrasal Verbs 🚀</div>
     </div>
-  </div>
-
-  <!-- Daily goal -->
-  <div class="card" style="padding:20px 24px">
-    <div class="section-header">
-      <span class="section-title" id="daily-goal-label">🎯 Günlük Hedef</span>
-      <span style="font-size:0.8rem;color:var(--text-3)" id="daily-goal-pct">0/100 XP</span>
-    </div>
-    <div class="progress-track" style="height:10px;margin-top:10px">
-      <div class="progress-fill" id="daily-goal-bar" style="width:0%;background:linear-gradient(90deg,var(--cyan),var(--violet))"></div>
-    </div>
-  </div>
-
-  <!-- Streak calendar -->
-  <div class="card" style="padding:20px 24px">
-    <div class="section-header">
-      <span class="section-title">Son 7 Gün</span>
-    </div>
-    <div class="streak-row" id="streak-cal"></div>
   </div>
 
 </div>
