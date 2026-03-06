@@ -907,6 +907,7 @@ class App {
     };
     const themeColor = themes[word.cat] || '#00d4ff';
     document.documentElement.style.setProperty('--synth-accent', themeColor);
+    this.session.synthAccentColor = themeColor; // Cache for performance
 
     // Word counter + progress bar
     const idx   = this.session.learnIdx;
@@ -1046,8 +1047,7 @@ class App {
     const ring    = document.getElementById('synth-progress-ring');
     const typedLen = this.session.synthTyped.length;
     const wordLen  = this.session.synthWord.en.length;
-    // Cache accent to avoid repeated getComputedStyle calls
-    const accent   = getComputedStyle(document.documentElement).getPropertyValue('--synth-accent').trim() || '#00d4ff';
+    const accent   = this.session.synthAccentColor || '#00d4ff';
 
     if (display) {
       const spans = display.querySelectorAll('span');
@@ -2658,12 +2658,15 @@ class App {
       const tier  = Math.min(Math.floor((level - 1) / 5) + 1, 6);
       const palettes  = ['#00d4ff','#10b981','#f59e0b','#7c3aed','#f43f5e','#ff9d00'];
       ctx.fillStyle   = palettes[tier - 1] || '#00d4ff';
+      ctx.globalAlpha = 0.4;
       const speedMult = 1 + level * 0.035;
+
       stars.forEach(star => {
         star.y -= star.v * speedMult;
         if (star.y < 0) { star.y = canvas.height; star.x = Math.random() * canvas.width; }
-        ctx.globalAlpha = Math.random() * 0.45 + 0.2;
-        ctx.beginPath(); ctx.arc(star.x, star.y, star.s, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); 
+        ctx.arc(star.x, star.y, star.s, 0, Math.PI * 2); 
+        ctx.fill();
       });
       requestAnimationFrame(animate);
     };
