@@ -119,7 +119,7 @@ class NexusMode {
   }
 
   // ==========================================
-  // NETWORK MODE (Semantik Ağ)
+  // NETWORK MODE
   // ==========================================
 
   startNetwork() {
@@ -349,7 +349,7 @@ class NexusMode {
 
 
   // ==========================================
-  // CIPHER MODE (Kuantum Şifre)
+  // CIPHER MODE
   // ==========================================
 
   startCipher() {
@@ -377,12 +377,11 @@ class NexusMode {
     this.current = this.queue[this.currentIndex];
     this.locked = false;
     
-    // Çarkları oluştur
     this.cipherVerbs = [this.current.verb];
     let otherVerbs = this.allVerbs.filter(v => v !== this.current.verb).sort(() => 0.5 - Math.random()).slice(0, 4);
     this.cipherVerbs.push(...otherVerbs);
     this.cipherVerbs.sort(() => 0.5 - Math.random());
-    this.cipherVerbIdx = Math.floor(Math.random() * this.cipherVerbs.length); // Rastgele başla
+    this.cipherVerbIdx = Math.floor(Math.random() * this.cipherVerbs.length); 
     
     this.cipherParticles = [this.current.particle];
     let otherParts = this.allParticles.filter(p => p !== this.current.particle).sort(() => 0.5 - Math.random()).slice(0, 4);
@@ -394,15 +393,19 @@ class NexusMode {
   }
 
   _renderCipher() {
-    // Örnek cümleden phrasal verb'i gizle
-    const regex = new RegExp(`\\\\b${this.current.phrase}\\\\b`, 'gi');
-    let displayEx = this.current.ex.replace(regex, '<span class="cipher-blank">[ ? ]</span>');
-    // Bazen ekler olabilir (looking for vs), basit bir fallback:
-    if (displayEx === this.current.ex) {
-        // Eğer tam eşleşme bulamazsa, kelimeleri ayrı ayrı sansürle
-        const vRegex = new RegExp(`\\\\b${this.current.verb}[a-z]*\\\\b`, 'gi');
-        const pRegex = new RegExp(`\\\\b${this.current.particle}\\\\b`, 'gi');
-        displayEx = this.current.ex.replace(vRegex, '___').replace(pRegex, '___');
+    // Akıllı Sansür: Örnek cümleden phrasal verb'i gizle
+    // Hem tam deyimi hem de gerekirse ayrı ayrı fiil+edatı maskele
+    let displayEx = this.current.ex;
+    
+    // 1. Adım: Tam deyimi bul ve gizle (Case-insensitive)
+    const fullPhraseRegex = new RegExp(this.current.phrase.replace(' ', '\\s+'), 'gi');
+    displayEx = displayEx.replace(fullPhraseRegex, '<span class="cipher-blank">[ ? ]</span>');
+    
+    // 2. Adım: Eğer 1. adım başarısız olduysa (farklı zaman çekimi vs), fiil ve edatı ayrı ayrı maskele
+    if (!displayEx.includes('cipher-blank')) {
+        const vRegex = new RegExp(`\\b${this.current.verb}[a-z]*\\b`, 'gi');
+        const pRegex = new RegExp(`\\b${this.current.particle}\\b`, 'gi');
+        displayEx = displayEx.replace(vRegex, '___').replace(pRegex, '___');
     }
 
     this.root.innerHTML = `
@@ -413,20 +416,18 @@ class NexusMode {
       
       <div class="cipher-sentence-box" id="cipher-sentence">
         "${displayEx}"
-        <div class="cipher-hint">İpucu: ${this.current.tr}</div>
+        <div class="cipher-hint">Anlamı: ${this.current.tr}</div>
       </div>
 
       <div class="cipher-lock-mechanism">
-        <!-- Sol Çark: Fiiller -->
         <div class="cipher-dial">
           <button class="cipher-nav-btn" onclick="window.nexusMod.scrollDial('verb', -1)">▲</button>
           <div class="cipher-window" id="cipher-w-verb">${this.cipherVerbs[this.cipherVerbIdx]}</div>
           <button class="cipher-nav-btn" onclick="window.nexusMod.scrollDial('verb', 1)">▼</button>
         </div>
         
-        <div style="font-size:2rem; color:var(--text-3);">+</div
+        <div style="font-size:2.2rem; color:var(--text-3); font-weight:800;">+</div>
 
-        <!-- Sağ Çark: Edatlar -->
         <div class="cipher-dial">
           <button class="cipher-nav-btn" onclick="window.nexusMod.scrollDial('particle', -1)">▲</button>
           <div class="cipher-window" id="cipher-w-particle">${this.cipherParticles[this.cipherParticleIdx]}</div>
@@ -447,13 +448,12 @@ class NexusMode {
 
   scrollDial(type, dir) {
      if (this.locked) return;
-     if(this.app.audio) this.app.audio.play('tick'); // Optional sound
+     if(this.app.audio) this.app.audio.play('tick'); 
      
      if (type === 'verb') {
          this.cipherVerbIdx += dir;
          if (this.cipherVerbIdx < 0) this.cipherVerbIdx = this.cipherVerbs.length - 1;
          if (this.cipherVerbIdx >= this.cipherVerbs.length) this.cipherVerbIdx = 0;
-         
          const w = document.getElementById('cipher-w-verb');
          w.innerText = this.cipherVerbs[this.cipherVerbIdx];
          w.classList.add('glow');
@@ -462,7 +462,6 @@ class NexusMode {
          this.cipherParticleIdx += dir;
          if (this.cipherParticleIdx < 0) this.cipherParticleIdx = this.cipherParticles.length - 1;
          if (this.cipherParticleIdx >= this.cipherParticles.length) this.cipherParticleIdx = 0;
-         
          const w = document.getElementById('cipher-w-particle');
          w.innerText = this.cipherParticles[this.cipherParticleIdx];
          w.classList.add('glow');
@@ -490,9 +489,10 @@ class NexusMode {
           wp.classList.add('correct');
           
           const sentBox = document.getElementById('cipher-sentence');
-          sentBox.innerHTML = `"${this.current.ex}" <div style="color:#10b981; margin-top:10px; font-size:1.2rem;">Kilit Açıldı!</div>`;
+          sentBox.innerHTML = `"${this.current.ex}" <div style="color:#10b981; margin-top:15px; font-size:1.3rem; font-weight:800; text-transform:uppercase; letter-spacing:2px;">🔐 ŞİFRE KIRILDI!</div>`;
           sentBox.style.borderColor = '#10b981';
-          sentBox.style.background = 'rgba(16, 185, 129, 0.1)';
+          sentBox.style.background = 'rgba(16, 185, 129, 0.15)';
+          sentBox.style.transform = 'scale(1.05)';
           
           if(this.app.speakWord) this.app.speakWord(this.current.ex);
           
@@ -503,7 +503,7 @@ class NexusMode {
           setTimeout(() => {
               this.currentIndex++;
               this.nextCipherWord();
-          }, 3000);
+          }, 3500);
           
       } else {
           if(this.app.audio) this.app.audio.play('error');
@@ -536,7 +536,7 @@ class NexusMode {
       
       if(this.app.state) {
          let xp = this.app.state.get('xp') || 0;
-         this.app.state.update({ xp: xp + 30 }); // Simple increment
+         this.app.state.update({ xp: xp + 30 });
          if(this.app._renderHeader) this.app._renderHeader();
       }
   }
@@ -551,7 +551,7 @@ class NexusMode {
         <h2 style="color:#fff; font-size:2.2rem; margin-bottom:10px; font-weight:800;">${title}!</h2>
         <p style="color:var(--text-2); font-size:1.2rem; margin-bottom:30px;">Kazanılan Toplam XP: <strong style="color:var(--cyan)">+${this.score}</strong></p>
         <div style="display:flex; gap:15px; justify-content:center;">
-           <button class="btn btn-primary" style="padding: 16px 30px; font-size: 1.1rem;" onclick="window.nexusMod.init(window.nexusMod.root)">MOD SEÇİMİ</button>
+           <button class="btn btn-primary nexus-intro-btn" onclick="window.nexusMod.init(window.nexusMod.root)">MOD SEÇİMİ</button>
            <button class="btn btn-ghost" style="padding: 16px 30px; font-size: 1.1rem;" onclick="app.navigate('home')">ANA MERKEZ</button>
         </div>
       </div>
