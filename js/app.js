@@ -2319,6 +2319,8 @@ class StateManager {
       autoAdvance:  false,
       readingLevel: 'Kolay',
       readingIdx:   0,
+      readingShuffled: false,
+      readingOrder: {},
       achievements: [],
       mastery:    {},     // { wordId: { score, interval, ease, nextReview } }
       history:    {},     // { 'YYYY-MM-DD': xp }
@@ -3997,12 +3999,46 @@ class App {
     this._activeBlank = null;
     const currentMode = this.state.get('readingMode') || 'read';
     this.setReadingMode(currentMode);
+    // Sync shuffle button visual state
+    const shuffleBtn = document.getElementById('btn-shuffle');
+    if (shuffleBtn) shuffleBtn.classList.toggle('active', !!this.state.get('readingShuffled'));
+  }
+
+  toggleShuffle(btn) {
+    const nowShuffled = !this.state.get('readingShuffled');
+    this.state.set('readingShuffled', nowShuffled);
+    btn.classList.toggle('active', nowShuffled);
+    if (nowShuffled) {
+      this._buildShuffleOrder();
+      this.state.set('readingIdx', 0);
+    }
+    this._renderStory();
+    this.audio.play('click');
+  }
+
+  _buildShuffleOrder() {
+    const level = this.state.get('readingLevel');
+    const n = STORIES.filter(s => s.level === level).length;
+    const order = Array.from({ length: n }, (_, i) => i).sort(() => Math.random() - 0.5);
+    const readingOrder = this.state.get('readingOrder') || {};
+    readingOrder[level] = order;
+    this.state.set('readingOrder', readingOrder);
+  }
+
+  _getStoryIndex() {
+    const level = this.state.get('readingLevel');
+    const stories = STORIES.filter(s => s.level === level);
+    const rawIdx = this.state.get('readingIdx') % stories.length;
+    const shuffled = this.state.get('readingShuffled');
+    const order = (this.state.get('readingOrder') || {})[level];
+    return (shuffled && order && order[rawIdx] !== undefined) ? order[rawIdx] : rawIdx;
   }
 
   setReadingLevel(level, btn) {
     this.state.update({ readingLevel: level, readingIdx: 0 });
     document.querySelectorAll('.level-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    if (this.state.get('readingShuffled')) this._buildShuffleOrder();
     this._activeBlank = null;
     this._renderStory();
     this.audio.play('click');
@@ -4026,8 +4062,9 @@ class App {
     const stories = STORIES.filter(s => s.level === level);
     if (!stories.length) { container.innerHTML = '<p>İçerik bulunamadı.</p>'; return; }
 
-    const idx   = this.state.get('readingIdx') % stories.length;
-    const story = stories[idx];
+    const rawIdx = this.state.get('readingIdx') % stories.length;
+    const idx    = this._getStoryIndex();
+    const story  = stories[idx];
 
     let html = '';
     let optsHtml = '';
@@ -4080,7 +4117,7 @@ class App {
         <div>
           <div class="story-meta">
             <span class="badge badge-cyan">${level}</span>
-            <span class="badge badge-violet">${idx + 1}/${stories.length}</span>
+            <span class="badge badge-violet">${rawIdx + 1}/${stories.length}${this.state.get('readingShuffled') ? ' 🔀' : ''}</span>
           </div>
           <div class="story-title">${story.title}</div>
         </div>
@@ -4417,7 +4454,7 @@ class App {
     const level = this.state.get('readingLevel');
     const stories = STORIES.filter(s => s.level === level);
     if (!stories.length) return;
-    const story = stories[this.state.get('readingIdx') % stories.length];
+    const story = stories[this._getStoryIndex()];
     
     // Process text for speech (keep mapping possible)
     const rawText = story.text.replace(/\[([^\]]+)\]/g, '$1').replace(/\*+/g, '').replace(/#+/g, '').replace(/\{([^}]+)\}/g, '$1');
