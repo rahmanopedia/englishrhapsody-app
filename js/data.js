@@ -2019,6 +2019,86 @@ const STORIES = [
   {id:306,title:'The Economics of Automation',level:'İleri',
    text:'The widespread {implementation} of {automation} and artificial {intelligence} in manufacturing is fundamentally {disrupting} traditional labor {markets}. While these technologies exponentially increase {productivity} and reduce operational {costs}, they also render many manual {occupations} entirely {obsolete}. Economists warn that this {transition} could {exacerbate} income {inequality} if governments fail to implement adequate {retraining} programs. A proactive {strategy} involving universal basic income or robust social {safety} nets might be {imperative} to prevent widespread economic {disenfranchisement}.',
    options:['implementation','automation','intelligence','disrupting','markets','productivity','costs','occupations','obsolete','transition','exacerbate','inequality','retraining','strategy','safety','imperative','disenfranchisement','stable','wealth']},
+
+ {id:107,title:"Tom's Bicycle",level:'Kolay',
+  text:'Tom has a new {bicycle}. He {rides} it every morning before school. His father {taught} him how to ride last {summer}. Tom always wears a {helmet} to stay safe. He loves to go down the big {hill} near his house. One day, he found a {shortcut} through the park. Now he arrives at school five minutes {early}. His friends think his bicycle is very {cool}.',
+  options:['bicycle','rides','taught','summer','helmet','hill','shortcut','early','cool','bus','late','winter','scared','walk']},
+
+ {id:108,title:'The Lost Dog',level:'Kolay',
+  text:'One rainy afternoon, a small {dog} appeared at the door of Emma\'s house. It was wet and {shivering}. Emma gave it some {food} and a warm {blanket}. She checked the dog\'s {collar} and found a phone number. She {called} the owner right away. The owner was very {relieved} to hear his dog was safe. He came to pick up the dog and thanked Emma {warmly}. Emma felt happy that she had {helped}.',
+  options:['dog','shivering','food','blanket','collar','called','relieved','warmly','helped','cat','ignored','cold','scared','hungry']},
+
+ {id:109,title:'The Library',level:'Kolay',
+  text:'Sara loves going to the {library} after school. She always sits at her favourite {table} near the window. Today she is reading a book about {dolphins}. The librarian, Mrs. Green, helps her find the best {books}. Sara {borrowed} three books this week. She makes notes in a small {notebook} as she reads. Her dream is to become a {writer} one day. The library makes her feel {calm} and inspired.',
+  options:['library','table','dolphins','books','borrowed','notebook','writer','calm','noisy','bored','teacher','tired','bench','return']},
+
+ {id:110,title:'A Kind Neighbour',level:'Kolay',
+  text:'Old Mr. Hassan lives alone next door. Every Saturday, young Ali {visits} him and helps with the {garden}. They plant {flowers} and water the vegetables together. Mr. Hassan tells Ali {stories} about his life when he was young. Ali listens {carefully} and learns many things. One day, Ali brought him a homemade {cake}. Mr. Hassan was very {touched}. He said that Ali was like a {grandson} to him. Their {friendship} makes both of them happy.',
+  options:['visits','garden','flowers','stories','carefully','cake','touched','grandson','friendship','ignored','selfish','angry','stranger','weeds']},
+
+ {id:111,title:'The Football Match',level:'Kolay',
+  text:'It was the day of the big {match}. Leo and his team were nervous but {excited}. The {coach} gave them a short speech before the game. In the first half, the score was zero to zero. Then Leo {passed} the ball to his friend Marco, who {scored} the winning {goal}. Everyone {cheered} and ran onto the pitch. It was the best day of Leo\'s {life}.',
+  options:['match','excited','coach','passed','scored','goal','cheered','life','lost','angry','alone','referee','practice','tired']},
+
+ {id:112,title:'A Day at the Beach',level:'Kolay',
+  text:'The family drove to the {beach} on a sunny Saturday. The children ran straight into the {sea}. Mum {spread} a big towel on the sand and relaxed. Dad {built} a sandcastle with the youngest child. They ate sandwiches and cold drinks for {lunch}. In the afternoon, they {collected} shells along the shore. As the sun began to set, they packed their things and {headed} home. Everyone agreed it was a {perfect} day.',
+  options:['beach','sea','spread','built','lunch','collected','headed','perfect','stayed','cloudy','mountain','forest','dinner','crowded']},
+
+ {id:113,title:'The Camping Trip',level:'Kolay',
+  text:'Every year, Mia\'s family goes {camping} in the mountains. They pitch a tent beside a {stream}. In the morning, they wake up early and cook {breakfast} on a small fire. Mia loves to {explore} the forest trails with her older {brother}. They sometimes spot deer and rabbits. At night, they sit around the fire and tell {stories}. Mia always falls asleep looking at the {stars}. She says camping is her favourite {holiday}.',
+  options:['camping','stream','breakfast','explore','brother','stories','stars','holiday','boring','city','sister','evening','lunch','hotel']},
+
+ {id:207,title:'A Fresh Start',level:'Orta',
+  text:'After losing her job, Maria decided to open her own small {business}. It was a {risk}, but she had always dreamed of running a café. She found a suitable {location} in the town centre and signed a {lease}. The first few months were {challenging}. She had to manage the finances, hire {staff}, and attract new {customers}. She began offering free Wi-Fi and locally sourced {ingredients}. Word spread quickly, and the café became very {popular}. Maria realised that sometimes failure is the beginning of something {better}.',
+  options:['business','risk','location','lease','challenging','staff','customers','ingredients','popular','better','quit','easy','profit','closed']},
+
+ {id:208,title:'Moving to a New City',level:'Orta',
+  text:'When James moved to the city for work, he knew {nobody} there. He rented a small {apartment} and explored the neighbourhood on foot. At first, he felt quite {lonely}. He {joined} a local running club to meet people. Gradually, he started making friends. He {discovered} a fantastic market every Sunday where he bought fresh produce. He also found a café where he could work {remotely}. Six months later, the city felt like {home}. James realised that stepping out of your {comfort} zone can be truly {rewarding}.',
+  options:['nobody','apartment','lonely','joined','discovered','remotely','home','comfort','rewarding','stayed','afraid','familiar','isolated','empty']},
+
+ {id:209,title:'Language Exchange',level:'Orta',
+  text:'Fatima wanted to improve her English, so she joined an online language {exchange} programme. She was paired with Sophie, a student from Canada who was learning {Arabic}. They spoke for one hour in English, then one hour in Arabic. At first, the {conversations} were simple and sometimes {awkward}. But over time, they began discussing everything from food to {politics}. They also shared recipes and music {recommendations}. Fatima\'s English {improved} rapidly, and Sophie\'s Arabic became {stronger}. Language had brought them {together}.',
+  options:['exchange','Arabic','conversations','awkward','politics','recommendations','improved','stronger','together','failed','silent','apart','refused','boring']},
+
+ {id:210,title:'Finding Balance',level:'Orta',
+  text:'David was a dedicated software {engineer} who worked long hours every day. He rarely exercised and often skipped meals. After a routine {checkup}, his doctor warned him that his lifestyle was {unsustainable}. David decided to make {changes}. He started waking up thirty minutes earlier to go for a walk. He began cooking simple, healthy meals at home. He also set strict {boundaries} around work hours. Within a few months, he felt more {energetic} and less {stressed}. He learned that {productivity} depends on wellbeing, not just hard work.',
+  options:['engineer','checkup','unsustainable','changes','boundaries','energetic','stressed','productivity','lazy','ignored','balanced','exhausted','illness','stable']},
+
+ {id:211,title:'The Photography Club',level:'Orta',
+  text:'Nina had always been passionate about {photography} but never had the confidence to share her work. A friend suggested she join the school photography {club}. At the first meeting, she was surprised by how {friendly} everyone was. The club organised monthly photo {walks} around the city. Nina began experimenting with light and {composition}. Her mentor {encouraged} her to enter a national {competition}. She did not win, but her photo was {selected} for an exhibition. Seeing her work on a gallery wall changed something in her. She stopped doubting herself and started {creating} boldly.',
+  options:['photography','club','friendly','walks','composition','encouraged','competition','selected','creating','afraid','hidden','ignored','rejected','alone']},
+
+ {id:212,title:'Volunteering Abroad',level:'Orta',
+  text:'After finishing university, Tom chose to spend six months {volunteering} in East Africa. He taught mathematics at a rural {primary} school. The conditions were basic, with no electricity and limited {supplies}. But the children\'s {enthusiasm} for learning was extraordinary. Tom had to {adapt} his teaching methods and rely on {creativity} rather than technology. He also learned valuable lessons about {resilience} and community. The experience changed his {perspective} on education. When he returned home, he founded a charity to support rural schools. He says it was the most {meaningful} thing he has ever done.',
+  options:['volunteering','primary','supplies','enthusiasm','adapt','creativity','resilience','perspective','meaningful','comfortable','ignored','refused','simple','distant']},
+
+ {id:213,title:'Running a Marathon',level:'Orta',
+  text:'When Aisha first decided to run a marathon, she could barely jog for ten minutes without stopping. She followed a sixteen-week {training} plan. Every morning she got up at six to run. Some days she felt strong; other days she {struggled}. She {pushed} through knee pain and bad weather. On race day, the {atmosphere} was electric. Thousands of runners lined up together. At mile twenty, Aisha hit what runners call the {wall}. She slowed down but did not stop. She crossed the finish {line} in four hours. Tears ran down her face. She had proved something to {herself}.',
+  options:['training','struggled','pushed','atmosphere','wall','line','herself','quit','weak','failed','coach','distance','speed','record']},
+
+ {id:307,title:'The Neuroscience of Habit',level:'İleri',
+  text:'Habits are encoded in a region of the brain called the basal ganglia, which operates largely beneath conscious {awareness}. When a behaviour is repeated consistently, neural {pathways} are strengthened through a process known as {myelination}. This makes the behaviour progressively more {automatic}, requiring less cognitive {effort}. Research identifies a three-part {loop}: a cue that triggers the routine, the routine itself, and the {reward} that reinforces it. Understanding this {mechanism} enables individuals to {deliberately} replace harmful habits with {constructive} ones. The key insight is that habits are never truly deleted — they are only {overwritten} by new associations, making long-term {consistency} absolutely essential.',
+  options:['awareness','pathways','myelination','automatic','effort','loop','reward','mechanism','deliberately','constructive','overwritten','consistency','random','forgotten','passive','instant']},
+
+ {id:308,title:'Globalisation and Identity',level:'İleri',
+  text:'Globalisation has facilitated an unprecedented {exchange} of goods, ideas, and cultures, yet it has simultaneously {provoked} anxieties about the {erosion} of local identities. As multinational {corporations} homogenise consumer behaviour through global {branding}, distinct regional traditions risk becoming commercially {diluted}. Critics argue that economic {interdependence} can {subordinate} cultural {sovereignty} to market imperatives. However, others contend that globalisation also enables {marginalised} communities to amplify their {voices} on an international stage. The challenge for contemporary societies is to embrace the benefits of interconnectedness without {sacrificing} the cultural {diversity} that enriches human {civilisation}.',
+  options:['exchange','provoked','erosion','corporations','branding','diluted','interdependence','subordinate','sovereignty','marginalised','voices','sacrificing','diversity','civilisation','isolated','uniform','rejected','fading']},
+
+ {id:309,title:'The Psychology of Creativity',level:'İleri',
+  text:'Creativity is commonly {romanticised} as a spontaneous flash of inspiration, yet psychological research reveals a far more structured process. Teresa Amabile\'s model identifies three critical elements: domain-relevant {skills}, creativity-relevant processes, and intrinsic {motivation}. The latter is particularly significant: studies consistently show that external {rewards} can paradoxically {undermine} creative output by shifting focus from internal {satisfaction} to external {validation}. The neuroscientific concept of the {default} mode network further explains how relaxed, unfocused mental states {facilitate} associative thinking. Organisations that {cultivate} psychological {safety} — where employees feel free to experiment without fear of {judgement} — consistently generate more innovative {outcomes}.',
+  options:['romanticised','skills','motivation','rewards','undermine','satisfaction','validation','default','facilitate','cultivate','safety','judgement','outcomes','forced','fearful','blocked','rigid','suppressed']},
+
+ {id:310,title:'Clean Energy Solutions',level:'İleri',
+  text:'The global {transition} to clean energy represents one of the most complex and consequential {undertakings} of the twenty-first century. Solar and wind technologies have seen dramatic cost {reductions} over the past decade, making them increasingly {competitive} with fossil fuels. Nevertheless, the {intermittent} nature of renewable energy generation necessitates substantial {investment} in grid-scale {storage} solutions. Advanced batteries and emerging hydrogen fuel cell technology are being explored as potential {remedies}. Simultaneously, the decommissioning of carbon-intensive {infrastructure} poses significant economic and social {challenges}, particularly for communities historically {dependent} on coal and oil. A just and {equitable} energy transition requires coordinated international {cooperation} and long-term political {commitment}.',
+  options:['transition','undertakings','reductions','competitive','intermittent','investment','storage','remedies','infrastructure','challenges','dependent','equitable','cooperation','commitment','instant','simple','unlimited','passive']},
+
+ {id:311,title:'Digital Literacy',level:'İleri',
+  text:'In an era of pervasive digital media, the ability to critically {evaluate} information has become an indispensable civic {competency}. Research found that students at all levels struggled to {distinguish} sponsored content from {legitimate} journalism and to assess the credibility of social media sources. The proliferation of algorithmically curated newsfeeds creates epistemic {bubbles} that {reinforce} existing beliefs while systematically {excluding} contradictory {evidence}. Educators now advocate for explicit instruction in {lateral} reading — verifying claims by consulting independent sources simultaneously — as a more {effective} strategy than traditional fact-checking. Building a digitally {literate} citizenry is no longer optional; it is a {prerequisite} for a functioning {democracy}.',
+  options:['evaluate','competency','distinguish','legitimate','bubbles','reinforce','excluding','evidence','lateral','effective','literate','prerequisite','democracy','ignorant','passive','biased','misleading','trusted']},
+
+ {id:312,title:'The Science of Well-Being',level:'İleri',
+  text:'Positive psychology, pioneered by Martin Seligman, shifted the field\'s focus from {pathology} to the study of human {flourishing}. Seligman\'s PERMA model identifies five pillars of well-being: positive {emotions}, engagement, positive relationships, {meaning}, and achievement. Crucially, research consistently demonstrates that well-being is not primarily a function of material {wealth} beyond a moderate income threshold. Instead, {autonomy} — the sense of control over one\'s own life — and social {connectedness} emerge as the strongest {predictors} of long-term {happiness}. Longitudinal studies further confirm that the quality of close relationships is the single greatest {determinant} of a fulfilling life, {surpassing} career success and physical health as a predictor of late-life satisfaction.',
+  options:['pathology','flourishing','emotions','meaning','wealth','autonomy','connectedness','predictors','happiness','determinant','surpassing','miserable','isolated','material','passive','shallow','broken','empty']},
 ];
 
 // ── Speaking Challenges ────────────────────────────────────────────────────
