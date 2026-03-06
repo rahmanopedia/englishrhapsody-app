@@ -250,12 +250,12 @@
   <!-- Intro Screen -->
   <div class="synth-intro" id="synth-intro">
     <div class="synth-icon-main">🌀</div>
-    <h1 class="synth-title">SİNESTEZİ <span class="synth-version-badge">v5.0</span></h1>
+    <h1 class="synth-title">SİNESTEZİ <span class="synth-version-badge">v7.0</span></h1>
     <p class="synth-subtitle">Nöral Öğrenme Matrisi — Çok Modlu İmmersyon</p>
 
     <div class="synth-rules">
       <div class="rule-item"><span>1</span> <strong>YAZMA</strong>: Her harf kendi renginde parlar — gerçek sinestezi deneyimi.</div>
-      <div class="rule-item"><span>2</span> <strong>SEÇME</strong>: 4 seçenek arasından doğru İngilizceyi hızlıca seç.</div>
+      <div class="rule-item"><span>2</span> <strong>BAĞLAM</strong>: Kelimeleri cümle içindeki boşluklara yerleştirerek öğren.</div>
       <div class="rule-item"><span>3</span> Hız bonusu: Ne kadar hızlı o kadar <strong style="color:var(--amber)">+XP</strong>. Kombo: 5× = 2×, 10× = 3× XP.</div>
     </div>
 
@@ -273,10 +273,15 @@
           <span class="smc-name">KARMA</span>
           <span class="smc-desc">Rastgele mod</span>
         </button>
-        <button class="synth-mode-card" onclick="app._setSynthMode('choice',this)">
-          <span class="smc-icon">🔘</span>
-          <span class="smc-name">SEÇME</span>
-          <span class="smc-desc">10 XP / kelime</span>
+        <button class="synth-mode-card" onclick="app._setSynthMode('context',this)">
+          <span class="smc-icon">🧩</span>
+          <span class="smc-name">BAĞLAM</span>
+          <span class="smc-desc">Cümle tamamlama</span>
+        </button>
+        <button class="synth-mode-card" onclick="app._setSynthMode('speed',this)">
+          <span class="smc-icon">⚡</span>
+          <span class="smc-name">ZAMANA KARŞI</span>
+          <span class="smc-desc">Hızlı ol, 30 XP!</span>
         </button>
       </div>
     </div>
@@ -316,7 +321,11 @@
         <span class="synth-cefr-badge" id="synth-cefr-badge"></span>
         <span class="synth-cat-badge" id="synth-cat-badge"></span>
       </div>
-      <div class="synth-target-tr" id="synth-tr"></div>
+      <div class="synth-target-tr" id="synth-tr" style="display:block"></div>
+      
+      <!-- Context Mode UI (v7.0) -->
+      <div id="synth-context-area" style="display:none; font-size:1.6rem; font-weight:600; text-align:center; max-width:600px; line-height:1.6; color:var(--text-1); margin-top:10px; background:rgba(255,255,255,0.03); padding:20px; border-radius:20px; border:1px solid var(--border)"></div>
+      
       <div id="synth-ex" style="opacity:0;transition:opacity 0.6s ease;font-style:italic;color:var(--text-3);margin-top:8px;font-size:0.9rem;max-width:460px;text-align:center;line-height:1.6"></div>
       <div class="synth-hint-used" id="synth-hint-used" style="display:none">💡 <span id="synth-hints-count">0</span> ipucu kullanıldı</div>
     </div>

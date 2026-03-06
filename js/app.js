@@ -961,16 +961,28 @@ class App {
 
     // Determine word mode
     let wordMode = this._synthModeConfig || 'mix';
-    if (wordMode === 'mix') wordMode = Math.random() < 0.5 ? 'spell' : 'choice';
+    if (wordMode === 'mix') {
+      const r = Math.random();
+      if (r < 0.33) wordMode = 'spell';
+      else if (r < 0.66) wordMode = 'choice';
+      else wordMode = 'context';
+    }
+    if (this._synthModeConfig === 'speed') wordMode = 'choice'; // Speed mode always uses choice for pace
     this.session.synthWordMode = wordMode;
 
     // Update mode indicator in topbar
     const modeInd = document.getElementById('synth-mode-indicator');
     if (modeInd) {
       modeInd.style.display = 'inline-flex';
-      if (wordMode === 'spell') {
+      if (this._synthModeConfig === 'speed') {
+        modeInd.textContent = '⚡ ZAMANA KARŞI';
+        modeInd.className = 'synth-mode-ind speed';
+      } else if (wordMode === 'spell') {
         modeInd.textContent = '⌨️ YAZMA';
         modeInd.className = 'synth-mode-ind spell';
+      } else if (wordMode === 'context') {
+        modeInd.textContent = '🧩 BAĞLAM';
+        modeInd.className = 'synth-mode-ind context';
       } else {
         modeInd.textContent = '🔘 SEÇME';
         modeInd.className = 'synth-mode-ind choice';
@@ -980,7 +992,12 @@ class App {
     // Show/hide mode UI
     const display    = document.getElementById('synth-input-display');
     const choiceArea = document.getElementById('synth-choice-area');
+    const contextArea= document.getElementById('synth-context-area');
     const listenBtn  = document.getElementById('synth-hint-listen-btn');
+    const trEl       = document.getElementById('synth-tr');
+
+    if (contextArea) contextArea.style.display = 'none';
+    if (trEl) trEl.style.display = 'block';
 
     if (wordMode === 'choice') {
       this.session.synthChoiceCount = (this.session.synthChoiceCount || 0) + 1;
@@ -988,6 +1005,35 @@ class App {
       if (choiceArea) choiceArea.style.display = '';
       if (listenBtn)  listenBtn.style.display  = 'none';
       this._renderChoiceMode(word);
+    } else if (wordMode === 'context') {
+      if (display)    display.style.display    = '';
+      if (choiceArea) { choiceArea.style.display = 'none'; choiceArea.innerHTML = ''; }
+      if (listenBtn)  listenBtn.style.display  = '';
+      if (trEl)       trEl.style.display       = 'none'; // Hide direct translation in context mode
+      if (contextArea) {
+        contextArea.style.display = 'block';
+        // Simple sentence generation if no specific ex exists, otherwise use ex
+        let sentence = word.ex || `I need to remember the word ${word.en} for my exam.`;
+        // Replace target word with blanks
+        const regex = new RegExp(`\\b${word.en}\\b`, 'gi');
+        if (!regex.test(sentence)) sentence = `Here is an example for the word ${word.en}.`; // fallback
+        const blanked = sentence.replace(regex, `<span style="color:var(--cyan); border-bottom:2px solid var(--cyan)">${'_'.repeat(word.en.length)}</span>`);
+        contextArea.innerHTML = blanked;
+      }
+      
+      if (display) {
+        display.innerHTML = word.en.split('').map((ch, i) =>
+          `<span data-idx="${i}" data-ch="${ch.toLowerCase()}">_</span>`
+        ).join('');
+      }
+      // Auto-reveal first letter after 8s
+      if (this.session.synthRevealTimer) clearTimeout(this.session.synthRevealTimer);
+      this.session.synthRevealTimer = setTimeout(() => {
+        if (this.session.synthActive && this.session.synthTyped.length === 0) {
+          this._handleSynthKey(word.en[0]);
+          UI.toast(`💡 İpucu: İlk harf "${word.en[0].toUpperCase()}"`, 2000);
+        }
+      }, 8000);
     } else {
       this.session.synthSpellCount = (this.session.synthSpellCount || 0) + 1;
       if (choiceArea) { choiceArea.style.display = 'none'; choiceArea.innerHTML = ''; }
@@ -1077,6 +1123,29 @@ class App {
       }
     }
 
+    // Update Context Area if active
+    const contextArea = document.getElementById('synth-context-area');
+    if (this.session.synthWordMode === 'context' && contextArea) {
+      const word = this.session.synthWord;
+      let sentence = word.ex || `I need to remember the word ${word.en} for my exam.`;
+      const regex = new RegExp(`\\b${word.en}\\b`, 'gi');
+      if (!regex.test(sentence)) sentence = `Here is an example for the word ${word.en}.`;
+      
+      const typed = this.session.synthTyped;
+      const remainingBlanks = '_'.repeat(Math.max(0, word.en.length - typed.length));
+      
+      let displayHtml = '';
+      for (let i = 0; i < typed.length; i++) {
+        const ch = typed[i];
+        const letterColor = this._getLetterColor(ch);
+        displayHtml += `<span style="color:${letterColor}; text-shadow: 0 0 10px ${letterColor}88;">${ch}</span>`;
+      }
+      displayHtml += `<span style="color:var(--text-3); opacity:0.5">${remainingBlanks}</span>`;
+
+      const blanked = sentence.replace(regex, `<span style="border-bottom:2px solid var(--cyan)">${displayHtml}</span>`);
+      contextArea.innerHTML = blanked;
+    }
+
     if (ring) {
       const circ   = 301.44;
       ring.style.strokeDashoffset = circ - (typedLen / wordLen) * circ;
@@ -1124,23 +1193,30 @@ class App {
     this.session.synthWordTimes.push(elapsed);
 
     // Scoring & combo
-    const basePoints = this.session.synthWordMode === 'choice' ? 10 : 20;
-    let points = basePoints;
-    if (perfect) {
-      points += this.session.synthWordMode === 'choice' ? 5 : 10;
-      this.session.synthStreak++;
-      this.session.synthPerfect = (this.session.synthPerfect || 0) + 1;
-      if      (this.session.synthStreak >= 10) this.session.synthCombo = 3;
-      else if (this.session.synthStreak >= 5)  this.session.synthCombo = 2;
-      else                                     this.session.synthCombo = 1;
-      points = Math.round(points * this.session.synthCombo);
+    let points = this.session.synthWordMode === 'choice' ? 10 : 20;
+    if (this.session.synthWordMode === 'context') points = 25;
+    if (this._synthModeConfig === 'speed') points = 30; // Speed mode gives fixed 30 XP
 
-      // Speed bonus (only for perfect words)
-      const speedBonus = this._getSpeedBonus(elapsed);
-      if (speedBonus > 0) {
-        points += speedBonus;
-        this.session.synthSpeedBonusTotal = (this.session.synthSpeedBonusTotal || 0) + speedBonus;
-        this._showSpeedBonus(speedBonus);
+    if (perfect) {
+      if (this._synthModeConfig !== 'speed') {
+        points += this.session.synthWordMode === 'choice' ? 5 : 10;
+        this.session.synthStreak++;
+        this.session.synthPerfect = (this.session.synthPerfect || 0) + 1;
+        if      (this.session.synthStreak >= 10) this.session.synthCombo = 3;
+        else if (this.session.synthStreak >= 5)  this.session.synthCombo = 2;
+        else                                     this.session.synthCombo = 1;
+        points = Math.round(points * this.session.synthCombo);
+
+        const speedBonus = this._getSpeedBonus(elapsed);
+        if (speedBonus > 0) {
+          points += speedBonus;
+          this.session.synthSpeedBonusTotal = (this.session.synthSpeedBonusTotal || 0) + speedBonus;
+          this._showSpeedBonus(speedBonus);
+        }
+      } else {
+        // Simple combo for speed mode
+        this.session.synthStreak++;
+        if (this.session.synthStreak >= 5) points += 10;
       }
     } else {
       // Word not perfect — reset streak and combo
@@ -1455,15 +1531,17 @@ class App {
     svg.style.display = 'block';
     arc.style.animation = 'none';
     void arc.offsetWidth;
-    arc.style.animation = 'speedDrain 20s linear forwards';
+    
+    const duration = this.session.synthWordMode === 'speed' ? 6 : 20;
+    arc.style.animation = `speedDrain ${duration}s linear forwards`;
 
-    // Auto-skip after 20s
+    // Auto-skip after duration
     this.session.synthAutoSkipTimer = setTimeout(() => {
       if (this.session.synthActive && !this.session.synthPaused) {
-        UI.toast("⏱️ Süre doldu!", 2000);
+        UI.toast(this.session.synthWordMode === 'speed' ? "⚡ Çok yavaş!" : "⏱️ Süre doldu!", 2000);
         this.skipSynthWord();
       }
-    }, 20000);
+    }, duration * 1000);
   }
 
   _stopSpeedTimer() {
@@ -1587,8 +1665,9 @@ class App {
     }
     // Pause auto-skip timer
     if (this.session.synthAutoSkipTimer) {
+      const duration = this._synthModeConfig === 'speed' ? 6000 : 20000;
       const elapsed = Date.now() - (this.session.synthWordStartTime || Date.now());
-      this.session.synthTimeRemaining = Math.max(0, 20000 - elapsed);
+      this.session.synthTimeRemaining = Math.max(0, duration - elapsed);
       clearTimeout(this.session.synthAutoSkipTimer);
       this.session.synthAutoSkipTimer = null;
     }
@@ -1610,10 +1689,11 @@ class App {
     if (overlay) overlay.style.display = 'none';
     // Resume auto-skip timer
     if (this.session.synthTimeRemaining !== undefined) {
-      this.session.synthWordStartTime = Date.now() - (20000 - this.session.synthTimeRemaining);
+      const duration = this._synthModeConfig === 'speed' ? 6000 : 20000;
+      this.session.synthWordStartTime = Date.now() - (duration - this.session.synthTimeRemaining);
       this.session.synthAutoSkipTimer = setTimeout(() => {
         if (this.session.synthActive && !this.session.synthPaused) {
-          UI.toast("⏱️ Süre doldu!", 2000);
+          UI.toast(this.session.synthWordMode === 'speed' ? "⚡ Çok yavaş!" : "⏱️ Süre doldu!", 2000);
           this.skipSynthWord();
         }
       }, this.session.synthTimeRemaining);
