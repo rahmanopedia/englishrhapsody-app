@@ -3780,7 +3780,7 @@ class App {
     arc.style.animation = 'none';
     void arc.offsetWidth;
     
-    const duration = this._synthModeConfig === 'speed' ? 10 : 20;
+    const duration = this._synthModeConfig === 'speed' ? 6 : 20;
     arc.style.animation = `speedDrain ${duration}s linear forwards`;
 
     // Auto-skip after duration
