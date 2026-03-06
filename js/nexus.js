@@ -17,13 +17,16 @@ class NexusMode {
     this.score = 0;
     this.combo = 0;
     this.locked = false;
-    this.mode = null; // 'network' or 'cipher'
+    this.mode = null; // 'network', 'cipher', 'synthesis'
     
     // Cipher Mode State
     this.cipherVerbs = [];
     this.cipherParticles = [];
     this.cipherVerbIdx = 0;
     this.cipherParticleIdx = 0;
+    
+    // Synthesis Mode State
+    this.synthSelected = { verb: null, particle: null, verbId: null, particleId: null };
 
     this._loadData();
     this._resizeHandler = () => { if (this.mode === 'network' && this.current) this._positionNodes(); };
@@ -82,21 +85,27 @@ class NexusMode {
   _showIntro() {
     this.root.innerHTML = `
       <div class="nexus-header">
-        <h1 class="nexus-title">NEXUS <span class="v4-badge">v4.0</span></h1>
+        <h1 class="nexus-title">NEXUS <span class="v5-badge">v5.0</span></h1>
         <p class="nexus-subtitle">Evrensel Dil Öğrenim Merkezi</p>
       </div>
       
       <div class="nexus-mode-selector">
-        <div class="nexus-mode-card" onclick="window.nexusMod.startNetwork()">
+        <div class="nexus-mode-card" onclick="window.nexusMod.startNetwork()" style="--card-color: #8b5cf6;">
           <div class="nm-icon">🌌</div>
           <div class="nm-title">Semantik Ağ</div>
-          <div class="nm-desc">Merkez fiilin etrafına doğru edatları bağlayarak anlam haritaları (takımyıldızları) kur. Görsel hafızanı güçlendir.</div>
+          <div class="nm-desc">Merkez fiilin etrafına doğru edatları bağlayarak anlam haritaları kur. Görsel hafızanı güçlendir.</div>
         </div>
         
-        <div class="nexus-mode-card" onclick="window.nexusMod.startCipher()" style="border-color: rgba(16, 185, 129, 0.3);">
+        <div class="nexus-mode-card" onclick="window.nexusMod.startCipher()" style="--card-color: #10b981;">
           <div class="nm-icon">🔐</div>
-          <div class="nm-title" style="color: #10b981;">Kuantum Şifre</div>
-          <div class="nm-desc">Dünyada İlk! Bağlama uygun fiil ve edat kombinasyonunu çevirmeli şifre paneliyle (Cryptex) kırarak cümleyi çöz.</div>
+          <div class="nm-title">Kuantum Şifre</div>
+          <div class="nm-desc">Bağlama uygun fiil ve edat kombinasyonunu çevirmeli şifre paneliyle (Cryptex) kırarak cümleyi çöz.</div>
+        </div>
+
+        <div class="nexus-mode-card" onclick="window.nexusMod.startSynthesis()" style="--card-color: #ec4899;">
+          <div class="nm-icon">🧬</div>
+          <div class="nm-title">Kognitif Sentez</div>
+          <div class="nm-desc">Bölünmüş kelimeleri reaktörde birleştirerek yeni anlamlar üret. Yapılandırmacı öğrenim.</div>
         </div>
       </div>
       
@@ -117,6 +126,183 @@ class NexusMode {
     }
     starContainer.innerHTML = stars;
   }
+
+  // ==========================================
+  // SYNTHESIS MODE (Kognitif Sentez - v5.0)
+  // ==========================================
+
+  startSynthesis() {
+    this.mode = 'synthesis';
+    const hasEx = this.allPhrasals.filter(p => p.ex);
+    const shuffled = [...hasEx].sort(() => 0.5 - Math.random());
+    this.queue = shuffled.slice(0, 10);
+    
+    if(this.queue.length === 0) {
+       if (typeof UI !== 'undefined' && UI.toast) UI.toast('Sentezlenecek kelime bulunamadı!');
+       return;
+    }
+    
+    this.score = 0;
+    this.combo = 0;
+    this.currentIndex = 0;
+    this.nextSynthesisWord();
+  }
+
+  nextSynthesisWord() {
+    if (this.currentIndex >= this.queue.length) {
+      this._showResults('Sentez Döngüsü Tamamlandı');
+      return;
+    }
+    this.current = this.queue[this.currentIndex];
+    this.locked = false;
+    this.synthSelected = { verb: null, particle: null, verbId: null, particleId: null };
+    
+    // Rastgele 3 yanlış fiil, 3 yanlış edat ekle
+    let verbs = [this.current.verb];
+    let otherVerbs = this.allVerbs.filter(v => v !== this.current.verb).sort(() => 0.5 - Math.random()).slice(0, 3);
+    verbs.push(...otherVerbs); verbs.sort(() => 0.5 - Math.random());
+    
+    let parts = [this.current.particle];
+    let otherParts = this.allParticles.filter(p => p !== this.current.particle).sort(() => 0.5 - Math.random()).slice(0, 3);
+    parts.push(...otherParts); parts.sort(() => 0.5 - Math.random());
+
+    this.currentSynthPool = { verbs, parts };
+    this._renderSynthesis();
+  }
+
+  _renderSynthesis() {
+    const regex = new RegExp(`\\b${this.current.phrase.replace(' ', '\\s+')}\\b`, 'gi');
+    let displayEx = this.current.ex.replace(regex, '<span class="synth-blank"></span>');
+    if (displayEx === this.current.ex) {
+        const vRegex = new RegExp(`\\b${this.current.verb}[a-z]*\\b`, 'gi');
+        const pRegex = new RegExp(`\\b${this.current.particle}\\b`, 'gi');
+        displayEx = displayEx.replace(vRegex, '___').replace(pRegex, '___');
+    }
+
+    this.root.innerHTML = `
+      <div class="nexus-header">
+        <h1 class="nexus-title">NEXUS <span class="v5-badge">SENTEZ MODU</span></h1>
+        <p class="nexus-subtitle">Füzyon Aşaması ${this.currentIndex + 1} / ${this.queue.length}</p>
+      </div>
+      
+      <div class="synth-game-container animate-in">
+         <div style="font-size:1.1rem; color:var(--text-3); margin-bottom:10px; font-weight:700;">HEDEF ANLAM: <span style="color:var(--cyan)">${this.current.tr}</span></div>
+         <div class="synth-sentence" id="synth-sentence">"${displayEx}"</div>
+         
+         <div class="synth-reactor" id="synth-reactor">
+            <div class="synth-slot" id="slot-verb" onclick="window.nexusMod.clearSynthSlot('verb')">FİİL</div>
+            <div class="synth-plus">+</div>
+            <div class="synth-slot" id="slot-particle" onclick="window.nexusMod.clearSynthSlot('particle')">EDAT</div>
+         </div>
+
+         <div class="synth-pool">
+            ${this.currentSynthPool.verbs.map((v, i) => `<div class="synth-orb verb" id="sorb-v-${i}" onclick="window.nexusMod.selectSynthOrb('verb', '${v}', 'sorb-v-${i}')">${v}</div>`).join('')}
+            ${this.currentSynthPool.parts.map((p, i) => `<div class="synth-orb particle" id="sorb-p-${i}" onclick="window.nexusMod.selectSynthOrb('particle', '${p}', 'sorb-p-${i}')">${p}</div>`).join('')}
+         </div>
+      </div>
+
+      <div class="nexus-hud">
+        <div class="nexus-stat">⭐ <span id="nx-score">${this.score}</span> XP</div>
+        <div class="nexus-stat">🔥 <span id="nx-combo">${this.combo}</span></div>
+      </div>
+      <div class="nexus-bg-stars" id="nexus-stars"></div>
+    `;
+    this._createStars(30);
+  }
+
+  selectSynthOrb(type, word, orbId) {
+      if (this.locked) return;
+      if (this.synthSelected[type] !== null) return; // Slot already filled
+      
+      if(this.app.audio) this.app.audio.play('tick');
+      
+      this.synthSelected[type] = word;
+      this.synthSelected[type+'Id'] = orbId;
+      
+      document.getElementById(orbId).classList.add('used');
+      
+      const slot = document.getElementById(`slot-${type}`);
+      slot.innerText = word;
+      slot.classList.add('filled', type);
+
+      if (this.synthSelected.verb && this.synthSelected.particle) {
+          this.locked = true;
+          setTimeout(() => this.checkSynthesis(), 400);
+      }
+  }
+
+  clearSynthSlot(type) {
+      if (this.locked || !this.synthSelected[type]) return;
+      if(this.app.audio) this.app.audio.play('pop');
+      
+      const orbId = this.synthSelected[type+'Id'];
+      document.getElementById(orbId).classList.remove('used');
+      
+      this.synthSelected[type] = null;
+      this.synthSelected[type+'Id'] = null;
+      
+      const slot = document.getElementById(`slot-${type}`);
+      slot.innerText = type === 'verb' ? 'FİİL' : 'EDAT';
+      slot.classList.remove('filled', type);
+  }
+
+  checkSynthesis() {
+      const isVerbCorrect = this.synthSelected.verb === this.current.verb;
+      const isParticleCorrect = this.synthSelected.particle === this.current.particle;
+      
+      const sVerb = document.getElementById('slot-verb');
+      const sPart = document.getElementById('slot-particle');
+      const reactor = document.getElementById('synth-reactor');
+
+      if (isVerbCorrect && isParticleCorrect) {
+          if(this.app.audio) this.app.audio.play('correct');
+          
+          sVerb.classList.add('success');
+          sPart.classList.add('success');
+          reactor.style.borderColor = '#10b981';
+          reactor.style.background = 'radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 80%)';
+          
+          const sentBox = document.getElementById('synth-sentence');
+          sentBox.innerHTML = `"${this.current.ex}" <div style="color:#ec4899; margin-top:20px; font-size:1.5rem; font-weight:800; letter-spacing:3px;">FÜZYON BAŞARILI!</div>`;
+          sentBox.style.color = '#10b981';
+          
+          if(this.app.speakWord) this.app.speakWord(this.current.ex);
+          
+          this.score += 50 + (this.combo * 10);
+          this.combo++;
+          this._updateHUD();
+          
+          setTimeout(() => {
+              this.currentIndex++;
+              this.nextSynthesisWord();
+          }, 3500);
+
+      } else {
+          if(this.app.audio) this.app.audio.play('error');
+          
+          sVerb.classList.add('error');
+          sPart.classList.add('error');
+          
+          this.combo = 0;
+          this._updateHUD();
+          
+          setTimeout(() => {
+              sVerb.classList.remove('error');
+              sPart.classList.remove('error');
+              
+              // İlgili küreleri geri getir
+              document.getElementById(this.synthSelected.verbId).classList.remove('used');
+              document.getElementById(this.synthSelected.particleId).classList.remove('used');
+              
+              this.synthSelected = { verb: null, particle: null, verbId: null, particleId: null };
+              sVerb.innerText = 'FİİL'; sVerb.classList.remove('filled', 'verb');
+              sPart.innerText = 'EDAT'; sPart.classList.remove('filled', 'particle');
+              
+              this.locked = false;
+          }, 800);
+      }
+  }
+
 
   // ==========================================
   // NETWORK MODE
@@ -163,7 +349,7 @@ class NexusMode {
 
     this.root.innerHTML = `
       <div class="nexus-header">
-        <h1 class="nexus-title">NEXUS <span class="v4-badge" style="background:var(--cyan)">AĞ MODU</span></h1>
+        <h1 class="nexus-title">NEXUS <span class="v5-badge" style="background:#8b5cf6">AĞ MODU</span></h1>
         <p class="nexus-subtitle">Takımyıldızı ${this.currentIndex + 1} / ${this.queue.length}</p>
       </div>
       
@@ -336,8 +522,8 @@ class NexusMode {
       if (feedbackArea) {
           feedbackArea.style.display = 'flex';
           feedbackArea.innerHTML = `
-            <div style="font-size:2.5rem; margin-bottom:10px; filter: drop-shadow(0 0 10px var(--cyan));">🌌</div>
-            <div class="nexus-phrase-result" style="color:var(--cyan)">Ağ Tamamlandı!</div>
+            <div style="font-size:2.5rem; margin-bottom:10px; filter: drop-shadow(0 0 10px #8b5cf6);">🌌</div>
+            <div class="nexus-phrase-result" style="color:#8b5cf6">Ağ Tamamlandı!</div>
             <div class="nexus-example-text" style="color:#fff">+100 XP Ağ Bonusu</div>
           `;
       }
@@ -393,15 +579,10 @@ class NexusMode {
   }
 
   _renderCipher() {
-    // Akıllı Sansür: Örnek cümleden phrasal verb'i gizle
-    // Hem tam deyimi hem de gerekirse ayrı ayrı fiil+edatı maskele
     let displayEx = this.current.ex;
-    
-    // 1. Adım: Tam deyimi bul ve gizle (Case-insensitive)
     const fullPhraseRegex = new RegExp(this.current.phrase.replace(' ', '\\s+'), 'gi');
     displayEx = displayEx.replace(fullPhraseRegex, '<span class="cipher-blank">[ ? ]</span>');
     
-    // 2. Adım: Eğer 1. adım başarısız olduysa (farklı zaman çekimi vs), fiil ve edatı ayrı ayrı maskele
     if (!displayEx.includes('cipher-blank')) {
         const vRegex = new RegExp(`\\b${this.current.verb}[a-z]*\\b`, 'gi');
         const pRegex = new RegExp(`\\b${this.current.particle}\\b`, 'gi');
@@ -410,7 +591,7 @@ class NexusMode {
 
     this.root.innerHTML = `
       <div class="nexus-header">
-        <h1 class="nexus-title">NEXUS <span class="v4-badge">ŞİFRE MODU</span></h1>
+        <h1 class="nexus-title">NEXUS <span class="v5-badge" style="background:#10b981">ŞİFRE MODU</span></h1>
         <p class="nexus-subtitle">Kilit ${this.currentIndex + 1} / ${this.queue.length}</p>
       </div>
       
@@ -544,7 +725,7 @@ class NexusMode {
   _showResults(title) {
     this.root.innerHTML = `
       <div class="nexus-header">
-        <h1 class="nexus-title">NEXUS <span class="v4-badge">TAMAMLANDI</span></h1>
+        <h1 class="nexus-title">NEXUS <span class="v5-badge">BAŞARILI</span></h1>
       </div>
       <div class="nexus-game-area" style="text-align:center;">
         <div style="font-size:4.5rem; margin-bottom:15px; text-shadow: 0 0 20px var(--cyan);">🏆</div>
@@ -562,7 +743,7 @@ class NexusMode {
         particleCount: 200, 
         spread: 90, 
         origin: {y: 0.6},
-        colors: ['#00d4ff', '#7c3aed', '#10b981']
+        colors: ['#00d4ff', '#7c3aed', '#ec4899', '#10b981']
     });
   }
 }
