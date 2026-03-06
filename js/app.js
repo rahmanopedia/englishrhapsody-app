@@ -2570,8 +2570,8 @@ class App {
     this.speech.stop();
     this.session.isSpeakingStory = false;
 
-    // Cleanup cosmos if active
-    if (window.cosmosView) { window.cosmosView.destroy(); }
+    // Cleanup phantom if active
+    if (window.phantomMod) { window.phantomMod.destroy(); }
 
     // Cleanup synesthesia if active (prevents memory leaks and ghost timers)
     if (this.session.synthActive || this.session.synthPaused) {
@@ -2606,21 +2606,18 @@ class App {
       reading:   () => this._initReading(),
       speak:     () => this._initSpeak(),
       analytics: () => this._initAnalytics(),
-      cosmos:    () => this._initCosmos(),
+      phantom:   () => this._initPhantom(),
     };
     if (init[view]) init[view]();
 
     this.audio.play('click');
   }
 
-  _initCosmos() {
-    const root = document.getElementById('cosmos-root');
+  _initPhantom() {
+    const root = document.getElementById('phantom-root');
     if (!root) return;
-    // main-content padding'i sıfırla (galaksi tam ekran dolsun)
-    const main = document.getElementById('main-content');
-    if (main) main.style.padding = '0';
-    window.cosmosView = new CosmosView(this);
-    window.cosmosView.init(root);
+    window.phantomMod = new PhantomMode(this);
+    window.phantomMod.init(root);
   }
 
   toggleFocusMode() {
@@ -5195,7 +5192,7 @@ class App {
       if (e.key === '3') { e.preventDefault(); this.navigate('reading'); return; }
       if (e.key === '4') { e.preventDefault(); this.navigate('speak'); return; }
       if (e.key === '5') { e.preventDefault(); this.navigate('analytics'); return; }
-      if (e.key === '6') { e.preventDefault(); this.navigate('cosmos'); return; }
+      if (e.key === '6') { e.preventDefault(); this.navigate('phantom'); return; }
 
       if (view === 'learn' && (this.session.synthActive || this.session.synthPaused)) {
         if (e.code === 'Escape') {

@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/cosmos.css">
+  <link rel="stylesheet" href="css/phantom.css">
 </head>
 <body class="rank-1">
 
@@ -76,8 +76,8 @@
       <a class="nav-item" data-target="speak">
         <span class="nav-icon">🎙️</span> Konuşma Lab
       </a>
-      <a class="nav-item" data-target="cosmos">
-        <span class="nav-icon">🌌</span> Kelime Evreni
+      <a class="nav-item" data-target="phantom">
+        <span class="nav-icon">🌫️</span> Hayalet Mod
       </a>
     </nav>
   </aside>
@@ -104,9 +104,9 @@
     <span class="m-icon">🎙️</span>
     <span>Konuşma</span>
   </button>
-  <button class="m-nav-item" data-target="cosmos">
-    <span class="m-icon">🌌</span>
-    <span>Evren</span>
+  <button class="m-nav-item" data-target="phantom">
+    <span class="m-icon">🌫️</span>
+    <span>Hayalet</span>
   </button>
 </nav>
 
@@ -213,11 +213,11 @@
       <p>Hikayeler içinde bağlam kurarak kelime öğren ve anlamayı derinleştir.</p>
       <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px">60 hikaye, 3 seviye</div>
     </div>
-    <div class="action-card cosmos" onclick="app.navigate('cosmos')">
-      <div class="ac-icon">🌌</div>
-      <h3>Kelime Evreni</h3>
-      <p>Galaksini keşfet. Her kelime bir yıldız — evreni büyüt, hafızanı genişlet.</p>
-      <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px">🌍 Dünyada İlk · Uzay Hafıza Haritası</div>
+    <div class="action-card phantom" onclick="app.navigate('phantom')">
+      <div class="ac-icon">🌫️</div>
+      <h3>Hayalet Mod</h3>
+      <p>Kelimeler görünür, sonra kaybolur. Hafızandan geri çağır — görünmez mürekkep tekniği.</p>
+      <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px">🌍 Dünyada İlk · Görünmez Mürekkep Hafızası</div>
     </div>
   </div>
 
@@ -529,9 +529,9 @@
 </div>
 </template>
 
-<!-- Cosmos: Kelime Evreni -->
-<template id="tpl-cosmos">
-<div class="animate-in" id="cosmos-root" style="height:100%;padding:0;overflow:hidden"></div>
+<!-- Phantom: Hayalet Mod -->
+<template id="tpl-phantom">
+<div class="animate-in phantom-shell" id="phantom-root"></div>
 </template>
 
 <!-- External Libraries -->
@@ -540,7 +540,7 @@
 
 <!-- App -->
 <script src="js/data.js"></script>
-<script src="js/cosmos.js"></script>
+<script src="js/phantom.js"></script>
 <script src="js/app.js"></script>
 
 <script>
