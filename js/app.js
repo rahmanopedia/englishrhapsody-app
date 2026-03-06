@@ -130,13 +130,19 @@ class SpeechEngine {
     this._recognizer = null;
   }
 
-  speak(text, rate = 0.88) {
+  speak(text, rate = 0.88, onBoundary, onEnd) {
     if (!this.synth) return;
-    this.synth.cancel();
+    this.stop(); 
     const utt = new SpeechSynthesisUtterance(text);
     utt.lang = this.accent;
     utt.rate = rate;
+    if (onBoundary) utt.onboundary = onBoundary;
+    if (onEnd) utt.onend = onEnd;
     this.synth.speak(utt);
+  }
+
+  stop() {
+    if (this.synth) this.synth.cancel();
   }
 
   startRecognition({ onResult, onError, onEnd }) {
@@ -196,14 +202,14 @@ class UI {
       p.className = 'particle-fx';
       p.style.left = x + 'px';
       p.style.top  = y + 'px';
-      const size = Math.random() * 6 + 4;
-      p.style.cssText += `width:${size}px;height:${size}px;background:${colors[i % colors.length]}`;
+      const size = Math.random() * 5 + 3;
+      p.style.cssText += `width:${size}px;height:${size}px;background:${colors[i % colors.length]};transform:translate3d(0,0,0)`;
       const angle = (Math.random() * Math.PI * 2);
-      const dist  = Math.random() * 45 + 20;
+      const dist  = Math.random() * 40 + 20;
       p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
       p.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
       document.body.appendChild(p);
-      setTimeout(() => p.remove(), 820);
+      setTimeout(() => p.remove(), 800);
     }
   }
 }
@@ -283,6 +289,14 @@ class App {
 
   navigate(view) {
     this.session.view = view;
+    this.speech.stop();
+    this.session.isSpeakingStory = false;
+    
+    // Stop any active voice recognition
+    if (this.session.isRecording) {
+      this.speech.stopRecognition();
+      this._stopSynthVoiceUI();
+    }
 
     // Cleanup synesthesia if active (prevents memory leaks and ghost timers)
     if (this.session.synthActive || this.session.synthPaused) {
@@ -907,6 +921,7 @@ class App {
     };
     const themeColor = themes[word.cat] || '#00d4ff';
     document.documentElement.style.setProperty('--synth-accent', themeColor);
+    this.session.synthAccentColor = themeColor; // Cache for performance
 
     // Word counter + progress bar
     const idx   = this.session.learnIdx;
@@ -952,16 +967,32 @@ class App {
 
     // Determine word mode
     let wordMode = this._synthModeConfig || 'mix';
-    if (wordMode === 'mix') wordMode = Math.random() < 0.5 ? 'spell' : 'choice';
+    if (wordMode === 'mix') {
+      const r = Math.random();
+      if (r < 0.25) wordMode = 'spell';
+      else if (r < 0.50) wordMode = 'choice';
+      else if (r < 0.75) wordMode = 'context';
+      else wordMode = 'voice';
+    }
+    if (this._synthModeConfig === 'speed') wordMode = 'choice'; // Speed mode always uses choice for pace
     this.session.synthWordMode = wordMode;
 
     // Update mode indicator in topbar
     const modeInd = document.getElementById('synth-mode-indicator');
     if (modeInd) {
       modeInd.style.display = 'inline-flex';
-      if (wordMode === 'spell') {
+      if (this._synthModeConfig === 'speed') {
+        modeInd.textContent = '⚡ ZAMANA KARŞI';
+        modeInd.className = 'synth-mode-ind speed';
+      } else if (wordMode === 'spell') {
         modeInd.textContent = '⌨️ YAZMA';
         modeInd.className = 'synth-mode-ind spell';
+      } else if (wordMode === 'context') {
+        modeInd.textContent = '🧩 BAĞLAM';
+        modeInd.className = 'synth-mode-ind context';
+      } else if (wordMode === 'voice') {
+        modeInd.textContent = '🎙️ NÖRAL SES';
+        modeInd.className = 'synth-mode-ind voice';
       } else {
         modeInd.textContent = '🔘 SEÇME';
         modeInd.className = 'synth-mode-ind choice';
@@ -971,7 +1002,14 @@ class App {
     // Show/hide mode UI
     const display    = document.getElementById('synth-input-display');
     const choiceArea = document.getElementById('synth-choice-area');
+    const contextArea= document.getElementById('synth-context-area');
+    const voiceArea  = document.getElementById('synth-voice-area');
     const listenBtn  = document.getElementById('synth-hint-listen-btn');
+    const trEl       = document.getElementById('synth-tr');
+
+    if (contextArea) contextArea.style.display = 'none';
+    if (voiceArea)   voiceArea.style.display   = 'none';
+    if (trEl) trEl.style.display = 'block';
 
     if (wordMode === 'choice') {
       this.session.synthChoiceCount = (this.session.synthChoiceCount || 0) + 1;
@@ -979,6 +1017,42 @@ class App {
       if (choiceArea) choiceArea.style.display = '';
       if (listenBtn)  listenBtn.style.display  = 'none';
       this._renderChoiceMode(word);
+    } else if (wordMode === 'voice') {
+      if (display)    display.style.display    = 'none';
+      if (choiceArea) { choiceArea.style.display = 'none'; choiceArea.innerHTML = ''; }
+      if (voiceArea)  voiceArea.style.display   = 'block';
+      if (listenBtn)  listenBtn.style.display  = 'none';
+      const status = document.getElementById('synth-voice-status');
+      if (status) status.textContent = 'Kelimeyi söylemek için mikrofona dokun';
+    } else if (wordMode === 'context') {
+      if (display)    display.style.display    = '';
+      if (choiceArea) { choiceArea.style.display = 'none'; choiceArea.innerHTML = ''; }
+      if (listenBtn)  listenBtn.style.display  = '';
+      if (trEl)       trEl.style.display       = 'none'; // Hide direct translation in context mode
+      if (contextArea) {
+        contextArea.style.display = 'block';
+        // Simple sentence generation if no specific ex exists, otherwise use ex
+        let sentence = word.ex || `I need to remember the word ${word.en} for my exam.`;
+        // Replace target word with blanks
+        const regex = new RegExp(`\\b${word.en}\\b`, 'gi');
+        if (!regex.test(sentence)) sentence = `Here is an example for the word ${word.en}.`; // fallback
+        const blanked = sentence.replace(regex, `<span style="color:var(--cyan); border-bottom:2px solid var(--cyan)">${'_'.repeat(word.en.length)}</span>`);
+        contextArea.innerHTML = blanked;
+      }
+      
+      if (display) {
+        display.innerHTML = word.en.split('').map((ch, i) =>
+          `<span data-idx="${i}" data-ch="${ch.toLowerCase()}">_</span>`
+        ).join('');
+      }
+      // Auto-reveal first letter after 8s
+      if (this.session.synthRevealTimer) clearTimeout(this.session.synthRevealTimer);
+      this.session.synthRevealTimer = setTimeout(() => {
+        if (this.session.synthActive && this.session.synthTyped.length === 0) {
+          this._handleSynthKey(word.en[0]);
+          UI.toast(`💡 İpucu: İlk harf "${word.en[0].toUpperCase()}"`, 2000);
+        }
+      }, 8000);
     } else {
       this.session.synthSpellCount = (this.session.synthSpellCount || 0) + 1;
       if (choiceArea) { choiceArea.style.display = 'none'; choiceArea.innerHTML = ''; }
@@ -1029,9 +1103,13 @@ class App {
       }
     } else {
       this.session.synthFails++;
-      // NOTE: streak/combo only reset at word-level (in _completeSynthWord / skipSynthWord)
       this._playSynthError();
       this._updateSynthVisuals(false);
+
+      if (this.session.synthFails >= 3) {
+        UI.toast("⚠️ 3 Hata! Doğru cevap gösteriliyor...", 2000);
+        setTimeout(() => this.skipSynthWord(), 600);
+      }
     }
   }
 
@@ -1042,8 +1120,7 @@ class App {
     const ring    = document.getElementById('synth-progress-ring');
     const typedLen = this.session.synthTyped.length;
     const wordLen  = this.session.synthWord.en.length;
-    // Cache accent to avoid repeated getComputedStyle calls
-    const accent   = getComputedStyle(document.documentElement).getPropertyValue('--synth-accent').trim() || '#00d4ff';
+    const accent   = this.session.synthAccentColor || '#00d4ff';
 
     if (display) {
       const spans = display.querySelectorAll('span');
@@ -1054,7 +1131,7 @@ class App {
           span.textContent = ch;
           span.classList.add('filled');
           span.style.color      = letterColor;
-          span.style.textShadow = `0 0 14px ${letterColor}cc, 0 0 30px ${letterColor}55`;
+          span.style.textShadow = `0 0 8px ${letterColor}aa`;
           span.style.borderBottomColor = letterColor;
         }
       });
@@ -1065,6 +1142,29 @@ class App {
       }
     }
 
+    // Update Context Area if active
+    const contextArea = document.getElementById('synth-context-area');
+    if (this.session.synthWordMode === 'context' && contextArea) {
+      const word = this.session.synthWord;
+      let sentence = word.ex || `I need to remember the word ${word.en} for my exam.`;
+      const regex = new RegExp(`\\b${word.en}\\b`, 'gi');
+      if (!regex.test(sentence)) sentence = `Here is an example for the word ${word.en}.`;
+      
+      const typed = this.session.synthTyped;
+      const remainingBlanks = '_'.repeat(Math.max(0, word.en.length - typed.length));
+      
+      let displayHtml = '';
+      for (let i = 0; i < typed.length; i++) {
+        const ch = typed[i];
+        const letterColor = this._getLetterColor(ch);
+        displayHtml += `<span style="color:${letterColor}; text-shadow: 0 0 10px ${letterColor}88;">${ch}</span>`;
+      }
+      displayHtml += `<span style="color:var(--text-3); opacity:0.5">${remainingBlanks}</span>`;
+
+      const blanked = sentence.replace(regex, `<span style="border-bottom:2px solid var(--cyan)">${displayHtml}</span>`);
+      contextArea.innerHTML = blanked;
+    }
+
     if (ring) {
       const circ   = 301.44;
       ring.style.strokeDashoffset = circ - (typedLen / wordLen) * circ;
@@ -1072,17 +1172,15 @@ class App {
 
     if (core) {
       if (isCorrect) {
-        const scale = 1 + (typedLen / wordLen) * 0.55;
-        core.style.transform  = `scale(${scale})`;
-        core.style.boxShadow  = `0 0 ${35 + typedLen * 12}px ${accent}99`;
-        core.style.background = `${accent}2a`;
+        const scale = 1 + (typedLen / wordLen) * 0.4;
+        core.style.transform  = `translate3d(0,0,0) scale(${scale})`;
+        core.style.background = `${accent}33`;
         core.classList.remove('error');
       } else {
         core.classList.add('error');
         setTimeout(() => {
           if (this.session.synthActive) {
             core.classList.remove('error');
-            core.style.boxShadow = `0 0 ${35 + typedLen * 12}px ${accent}44`;
           }
         }, 320);
       }
@@ -1112,23 +1210,31 @@ class App {
     this.session.synthWordTimes.push(elapsed);
 
     // Scoring & combo
-    const basePoints = this.session.synthWordMode === 'choice' ? 10 : 20;
-    let points = basePoints;
-    if (perfect) {
-      points += this.session.synthWordMode === 'choice' ? 5 : 10;
-      this.session.synthStreak++;
-      this.session.synthPerfect = (this.session.synthPerfect || 0) + 1;
-      if      (this.session.synthStreak >= 10) this.session.synthCombo = 3;
-      else if (this.session.synthStreak >= 5)  this.session.synthCombo = 2;
-      else                                     this.session.synthCombo = 1;
-      points = Math.round(points * this.session.synthCombo);
+    let points = this.session.synthWordMode === 'choice' ? 10 : 20;
+    if (this.session.synthWordMode === 'context') points = 25;
+    if (this.session.synthWordMode === 'voice')   points = 40;
+    if (this._synthModeConfig === 'speed') points = 30; // Speed mode gives fixed 30 XP
 
-      // Speed bonus (only for perfect words)
-      const speedBonus = this._getSpeedBonus(elapsed);
-      if (speedBonus > 0) {
-        points += speedBonus;
-        this.session.synthSpeedBonusTotal = (this.session.synthSpeedBonusTotal || 0) + speedBonus;
-        this._showSpeedBonus(speedBonus);
+    if (perfect) {
+      if (this._synthModeConfig !== 'speed') {
+        points += this.session.synthWordMode === 'choice' ? 5 : 10;
+        this.session.synthStreak++;
+        this.session.synthPerfect = (this.session.synthPerfect || 0) + 1;
+        if      (this.session.synthStreak >= 10) this.session.synthCombo = 3;
+        else if (this.session.synthStreak >= 5)  this.session.synthCombo = 2;
+        else                                     this.session.synthCombo = 1;
+        points = Math.round(points * this.session.synthCombo);
+
+        const speedBonus = this._getSpeedBonus(elapsed);
+        if (speedBonus > 0) {
+          points += speedBonus;
+          this.session.synthSpeedBonusTotal = (this.session.synthSpeedBonusTotal || 0) + speedBonus;
+          this._showSpeedBonus(speedBonus);
+        }
+      } else {
+        // Simple combo for speed mode
+        this.session.synthStreak++;
+        if (this.session.synthStreak >= 5) points += 10;
       }
     } else {
       // Word not perfect — reset streak and combo
@@ -1421,6 +1527,57 @@ class App {
     this.audio.play('click');
   }
 
+  toggleSynthVoice() {
+    if (!this.speech.SpeechRecognition) { UI.toast("Ses tanıma desteklenmiyor."); return; }
+    if (this.session.isRecording) {
+      this.speech.stopRecognition();
+      return;
+    }
+
+    const btn = document.getElementById('synth-voice-btn');
+    const status = document.getElementById('synth-voice-status');
+    if (btn) btn.classList.add('listening');
+    if (status) status.textContent = 'Dinliyorum...';
+    
+    this.session.isRecording = true;
+    this.audio.play('pop');
+
+    this.speech.startRecognition({
+      onResult: (e) => {
+        const result = e.results[0][0].transcript.toLowerCase().trim().replace(/[.,?!]/g, '');
+        const target = this.session.synthWord.en.toLowerCase().trim();
+        
+        if (status) status.textContent = `Duyulan: "${result}"`;
+        
+        if (result === target) {
+          UI.toast("🎙️ Mükemmel telaffuz!", 1500);
+          setTimeout(() => this._completeSynthWord(), 400);
+        } else {
+          this.session.synthFails++;
+          this._playSynthError();
+          if (status) status.innerHTML = `<span style="color:var(--rose)">"${result}" değil, tekrar dene</span>`;
+          if (this.session.synthFails >= 3) {
+            UI.toast("⚠️ 3 Hata! Doğru cevap gösteriliyor...", 2000);
+            setTimeout(() => this.skipSynthWord(), 800);
+          }
+        }
+      },
+      onError: (e) => {
+        if (status) status.textContent = 'Hata oluştu, tekrar dene.';
+        this._stopSynthVoiceUI();
+      },
+      onEnd: () => {
+        this._stopSynthVoiceUI();
+      }
+    });
+  }
+
+  _stopSynthVoiceUI() {
+    this.session.isRecording = false;
+    const btn = document.getElementById('synth-voice-btn');
+    if (btn) btn.classList.remove('listening');
+  }
+
   // Chromesthesia letter → colour mapping (gerçek sinestezi)
   _getLetterColor(ch) {
     const map = {
@@ -1443,7 +1600,17 @@ class App {
     svg.style.display = 'block';
     arc.style.animation = 'none';
     void arc.offsetWidth;
-    arc.style.animation = 'speedDrain 20s linear forwards';
+    
+    const duration = this.session.synthWordMode === 'speed' ? 6 : 20;
+    arc.style.animation = `speedDrain ${duration}s linear forwards`;
+
+    // Auto-skip after duration
+    this.session.synthAutoSkipTimer = setTimeout(() => {
+      if (this.session.synthActive && !this.session.synthPaused) {
+        UI.toast(this.session.synthWordMode === 'speed' ? "⚡ Çok yavaş!" : "⏱️ Süre doldu!", 2000);
+        this.skipSynthWord();
+      }
+    }, duration * 1000);
   }
 
   _stopSpeedTimer() {
@@ -1451,6 +1618,11 @@ class App {
     const arc = document.getElementById('synth-speed-arc');
     if (arc) arc.style.animation = 'none';
     if (svg) svg.style.display  = 'none';
+
+    if (this.session.synthAutoSkipTimer) {
+      clearTimeout(this.session.synthAutoSkipTimer);
+      this.session.synthAutoSkipTimer = null;
+    }
   }
 
   _getSpeedBonus(elapsed) {
@@ -1560,6 +1732,14 @@ class App {
       clearTimeout(this.session.synthRevealTimer);
       this.session.synthRevealTimer = null;
     }
+    // Pause auto-skip timer
+    if (this.session.synthAutoSkipTimer) {
+      const duration = this._synthModeConfig === 'speed' ? 6000 : 20000;
+      const elapsed = Date.now() - (this.session.synthWordStartTime || Date.now());
+      this.session.synthTimeRemaining = Math.max(0, duration - elapsed);
+      clearTimeout(this.session.synthAutoSkipTimer);
+      this.session.synthAutoSkipTimer = null;
+    }
     const overlay = document.getElementById('synth-pause-overlay');
     if (overlay) overlay.style.display = 'flex';
   }
@@ -1576,6 +1756,17 @@ class App {
     }
     const overlay = document.getElementById('synth-pause-overlay');
     if (overlay) overlay.style.display = 'none';
+    // Resume auto-skip timer
+    if (this.session.synthTimeRemaining !== undefined) {
+      const duration = this._synthModeConfig === 'speed' ? 6000 : 20000;
+      this.session.synthWordStartTime = Date.now() - (duration - this.session.synthTimeRemaining);
+      this.session.synthAutoSkipTimer = setTimeout(() => {
+        if (this.session.synthActive && !this.session.synthPaused) {
+          UI.toast(this.session.synthWordMode === 'speed' ? "⚡ Çok yavaş!" : "⏱️ Süre doldu!", 2000);
+          this.skipSynthWord();
+        }
+      }, this.session.synthTimeRemaining);
+    }
     // Re-arm auto-reveal timer for current word (shorter since they already waited)
     const word = this.session.synthWord;
     if (word && this.session.synthTyped.length === 0) {
@@ -1936,21 +2127,53 @@ class App {
   }
 
   playStory() {
+    const btn = document.getElementById('btn-play-story');
+    if (this.session.isSpeakingStory) {
+      this.speech.stop();
+      this.session.isSpeakingStory = false;
+      if (btn) btn.innerHTML = '<span class="audio-icon">🎧</span> Sesli Dinle';
+      document.querySelectorAll('.story-word, .sw').forEach(el => el.classList.remove('playing'));
+      return;
+    }
+
     const level = this.state.get('readingLevel');
     const stories = STORIES.filter(s => s.level === level);
     if (!stories.length) return;
     const story = stories[this.state.get('readingIdx') % stories.length];
+    
+    // Process text for speech (keep mapping possible)
     const rawText = story.text.replace(/\[([^\]]+)\]/g, '$1').replace(/\*+/g, '').replace(/#+/g, '').replace(/\{([^}]+)\}/g, '$1');
-    this.speakWord(rawText, 0.85);
-    const btn = document.getElementById('btn-play-story');
-    if (btn) {
-      btn.innerHTML = '<span class="audio-icon">🔊</span> Okunuyor...';
-      btn.style.opacity = '0.7';
-      setTimeout(() => {
-        btn.innerHTML = '<span class="audio-icon">🎧</span> Sesli Dinle';
-        btn.style.opacity = '1';
-      }, 5000);
-    }
+    
+    this.session.isSpeakingStory = true;
+    if (btn) btn.innerHTML = '<span class="audio-icon">🛑</span> Durdur';
+
+    const words = document.querySelectorAll('.story-word, .sw');
+    
+    this.speech.speak(rawText, 0.85, 
+      (event) => {
+        // Find current word by charIndex
+        let charAcc = 0;
+        let activeIdx = -1;
+        const textParts = rawText.split(/\s+/);
+        for(let i=0; i<textParts.length; i++) {
+          if (event.charIndex >= charAcc && event.charIndex < charAcc + textParts[i].length + 1) {
+            activeIdx = i;
+            break;
+          }
+          charAcc += textParts[i].length + 1;
+        }
+        if (activeIdx !== -1 && words[activeIdx]) {
+          words.forEach(el => el.classList.remove('playing'));
+          words[activeIdx].classList.add('playing');
+          words[activeIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      },
+      () => {
+        this.session.isSpeakingStory = false;
+        if (btn) btn.innerHTML = '<span class="audio-icon">🎧</span> Sesli Dinle';
+        words.forEach(el => el.classList.remove('playing'));
+      }
+    );
   }
 
   // ─────────────────────────────────────────────────────────
@@ -2614,28 +2837,45 @@ class App {
   _initCanvas() {
     const canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false }); // Optimize for performance
     const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     resize(); window.addEventListener('resize', resize);
-    const stars = Array.from({length:140}, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, s: Math.random() * 1.8, v: Math.random() * 0.4 + 0.08 }));
+
+    const starCount = window.innerWidth < 768 ? 40 : 70; // Adaptive count
+    const stars = Array.from({length: starCount}, () => ({ 
+      x: Math.random() * canvas.width, 
+      y: Math.random() * canvas.height, 
+      s: Math.random() * 1.5 + 0.2, 
+      v: Math.random() * 0.35 + 0.05 
+    }));
+
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const level = this.state.get('level');
-      const tier  = Math.min(Math.floor((level - 1) / 5) + 1, 6);
-      const palettes  = ['#00d4ff','#10b981','#f59e0b','#7c3aed','#f43f5e','#ff9d00'];
-      ctx.fillStyle   = palettes[tier - 1] || '#00d4ff';
-      const speedMult = 1 + level * 0.035;
-      stars.forEach(star => {
-        star.y -= star.v * speedMult;
-        if (star.y < 0) { star.y = canvas.height; star.x = Math.random() * canvas.width; }
-        ctx.globalAlpha = Math.random() * 0.45 + 0.2;
-        ctx.beginPath(); ctx.arc(star.x, star.y, star.s, 0, Math.PI * 2); ctx.fill();
-      });
+      // Only run if visible to save CPU
+      if (document.visibilityState === 'visible') {
+        ctx.fillStyle = '#070a0f'; // Base background
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const level = this.state.get('level') || 1;
+        const tier  = Math.min(Math.floor((level - 1) / 5) + 1, 6);
+        const palettes  = ['#00d4ff','#10b981','#f59e0b','#7c3aed','#f43f5e','#ff9d00'];
+        ctx.fillStyle   = palettes[tier - 1] || '#00d4ff';
+        ctx.globalAlpha = 0.25;
+        const speedMult = 1 + level * 0.015;
+
+        ctx.beginPath();
+        for (let i = 0; i < stars.length; i++) {
+          const s = stars[i];
+          s.y -= s.v * speedMult;
+          if (s.y < 0) { s.y = canvas.height; s.x = Math.random() * canvas.width; }
+          ctx.moveTo(s.x, s.y);
+          ctx.arc(s.x, s.y, s.s, 0, 6.28);
+        }
+        ctx.fill();
+      }
       requestAnimationFrame(animate);
     };
     animate();
   }
-
   _bindGlobalEvents() {
     document.addEventListener('click', e => {
       const navItem = e.target.closest('.nav-item, .m-nav-item');
