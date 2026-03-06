@@ -51,12 +51,14 @@ class NexusMode {
         <h1 class="nexus-title">NEXUS MODU</h1>
         <p class="nexus-subtitle">Phrasal Verb'leri Kozmik Bağlantılarla Öğren</p>
       </div>
-      <div class="nexus-game-area" style="text-align:center;">
-        <p style="color:var(--text-2); font-size:1.1rem; max-width:500px; line-height:1.6; margin: 0 auto 30px;">
-          Fiil ve edatı (particle) birbirine bağlayarak doğru Phrasal Verb'ü oluştur. 
-          Görsel ve kassal hafızanı kullanarak kalıcı öğren.
-        </p>
-        <button class="btn btn-primary" style="font-size:1.2rem; padding:12px 40px;" onclick="window.nexusMod.start()">OTURUMU BAŞLAT</button>
+      <div class="nexus-game-area">
+        <div class="nexus-intro-card">
+          <p class="nexus-intro-text">
+            Fiil ve edatı (particle) birbirine bağlayarak doğru Phrasal Verb'ü oluştur. 
+            Görsel ve kassal hafızanı kullanarak kalıcı öğren.
+          </p>
+          <button class="btn btn-primary nexus-intro-btn" onclick="window.nexusMod.start()">OTURUMU BAŞLAT</button>
+        </div>
       </div>
       <div class="nexus-bg-stars" id="nexus-stars"></div>
     `;

@@ -91,14 +91,59 @@
 /* Oyun Alanı - Dairelerin döndüğü alan */
 .nexus-game-area {
   position: relative;
-  flex: 1; /* Kalan tüm boşluğu kaplar */
+  flex: 1;
   width: 100%;
   max-width: 800px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 5;
-  margin-bottom: 80px; /* HUD için yer bırak */
+  margin-bottom: 80px;
+}
+
+/* Hero / Giriş Kartı Tasarımı */
+.nexus-intro-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 550px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 32px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  animation: nexus-hero-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes nexus-hero-in {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.nexus-intro-text {
+  color: var(--text-2);
+  font-size: 1.15rem;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.nexus-intro-btn {
+  font-size: 1.2rem !important;
+  padding: 16px 45px !important;
+  border-radius: 100px !important;
+  letter-spacing: 1px;
+  font-weight: 700 !important;
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+  transition: all 0.3s ease !important;
+}
+
+.nexus-intro-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(124, 58, 237, 0.5);
 }
 
 .nexus-core-node {
