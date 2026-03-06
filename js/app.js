@@ -3780,7 +3780,7 @@ class App {
     arc.style.animation = 'none';
     void arc.offsetWidth;
     
-    const duration = this._synthModeConfig === 'speed' ? 6 : 20;
+    const duration = this._synthModeConfig === 'speed' ? 8 : 20;
     arc.style.animation = `speedDrain ${duration}s linear forwards`;
 
     // Auto-skip after duration
@@ -3913,7 +3913,7 @@ class App {
     }
     // Pause auto-skip timer
     if (this.session.synthAutoSkipTimer) {
-      const duration = this._synthModeConfig === 'speed' ? 6000 : 20000;
+      const duration = this._synthModeConfig === 'speed' ? 8000 : 20000;
       const elapsed = Date.now() - (this.session.synthWordStartTime || Date.now());
       this.session.synthTimeRemaining = Math.max(0, duration - elapsed);
       clearTimeout(this.session.synthAutoSkipTimer);
@@ -3937,7 +3937,7 @@ class App {
     if (overlay) overlay.style.display = 'none';
     // Resume auto-skip timer
     if (this.session.synthTimeRemaining !== undefined) {
-      const duration = this._synthModeConfig === 'speed' ? 6000 : 20000;
+      const duration = this._synthModeConfig === 'speed' ? 8000 : 20000;
       this.session.synthWordStartTime = Date.now() - (duration - this.session.synthTimeRemaining);
       this.session.synthAutoSkipTimer = setTimeout(() => {
         if (this.session.synthActive && !this.session.synthPaused) {
