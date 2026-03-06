@@ -16,6 +16,247 @@ const RANKS = [
   { icon:'⚡', name:'İlah',    min:26 },
 ];
 
+// ── Phrase Dictionary (Phrasal Verbs, Idioms, Grammar) ─────
+const PHRASE_DICT = {
+  // ── Phrasal Verbs ──────────────────────────────────────
+  'give up':          { type:'Phrasal Verb', tr:'vazgeçmek, bırakmak',                   ex:"Don't give up on your dreams." },
+  'give in':          { type:'Phrasal Verb', tr:'teslim olmak, boyun eğmek',             ex:'She refused to give in to the pressure.' },
+  'give away':        { type:'Phrasal Verb', tr:'bedava vermek, ele vermek',             ex:'He gave away all his books.' },
+  'give back':        { type:'Phrasal Verb', tr:'geri vermek',                           ex:'Give back what you borrowed.' },
+  'look up':          { type:'Phrasal Verb', tr:'aramak (sözlükte/internette)',          ex:'Look up the word in a dictionary.' },
+  'look after':       { type:'Phrasal Verb', tr:'bakmak, ilgilenmek',                   ex:'She looks after her elderly parents.' },
+  'look for':         { type:'Phrasal Verb', tr:'aramak',                               ex:'I am looking for my keys.' },
+  'looking for':      { type:'Phrasal Verb', tr:'aramak (-ıyor)',                       ex:'She is looking for a new job.' },
+  'look forward to':  { type:'Phrasal Verb', tr:'dört gözle beklemek',                  ex:'I look forward to seeing you.' },
+  'look into':        { type:'Phrasal Verb', tr:'araştırmak, incelemek',                ex:'The police will look into the matter.' },
+  'look out':         { type:'Phrasal Verb', tr:'dikkat etmek',                         ex:'Look out! There is a car coming.' },
+  'look through':     { type:'Phrasal Verb', tr:'gözden geçirmek',                      ex:'Look through your notes before the exam.' },
+  'look back':        { type:'Phrasal Verb', tr:'geriye bakmak, geçmişi düşünmek',      ex:'Looking back, I made the right choice.' },
+  'look at':          { type:'Phrasal Verb', tr:'bakmak, incelemek',                    ex:'Look at this amazing painting.' },
+  'get up':           { type:'Phrasal Verb', tr:'kalkmak, yataktan çıkmak',             ex:'I get up at 7 every morning.' },
+  'get over':         { type:'Phrasal Verb', tr:'atlatmak, üstesinden gelmek',          ex:'It took months to get over the flu.' },
+  'get along with':   { type:'Phrasal Verb', tr:'geçinmek, iyi ilişki kurmak',          ex:'Do you get along with your neighbours?' },
+  'get rid of':       { type:'Phrasal Verb', tr:'kurtulmak, elden çıkarmak',            ex:'Get rid of things you no longer need.' },
+  'get used to':      { type:'Phrasal Verb', tr:'alışmak',                              ex:'It takes time to get used to a new city.' },
+  'get back':         { type:'Phrasal Verb', tr:'geri dönmek, geri almak',              ex:'When did you get back from holiday?' },
+  'get on':           { type:'Phrasal Verb', tr:'binmek (araç), ilerlemek',             ex:'Get on the bus at the next stop.' },
+  'get off':          { type:'Phrasal Verb', tr:'inmek (araç)',                         ex:'We get off at the third stop.' },
+  'get away':         { type:'Phrasal Verb', tr:'kaçmak, uzaklaşmak',                   ex:'I need to get away from the city.' },
+  'put on':           { type:'Phrasal Verb', tr:'giymek, takmak',                       ex:"Put on your coat; it's cold outside." },
+  'puts on':          { type:'Phrasal Verb', tr:'giymek (3. tekil)',                    ex:'She puts on her shoes before leaving.' },
+  'put off':          { type:'Phrasal Verb', tr:'ertelemek',                            ex:'Stop putting off your homework.' },
+  'put up with':      { type:'Phrasal Verb', tr:'katlanmak, tahammül etmek',            ex:"I can't put up with the noise." },
+  'put out':          { type:'Phrasal Verb', tr:'söndürmek',                            ex:'Firefighters put out the fire quickly.' },
+  'put away':         { type:'Phrasal Verb', tr:'kaldırmak, yerine koymak',             ex:'Put away your toys after playing.' },
+  'put down':         { type:'Phrasal Verb', tr:'yere bırakmak, küçümsemek',            ex:'Put down the heavy bag.' },
+  'put together':     { type:'Phrasal Verb', tr:'bir araya getirmek, monte etmek',      ex:'We put together a great team.' },
+  'take off':         { type:'Phrasal Verb', tr:'kalkmak (uçak), çıkarmak (giysi)',     ex:'The plane takes off at noon.' },
+  'take on':          { type:'Phrasal Verb', tr:'üstlenmek, işe almak',                 ex:'She took on extra responsibilities.' },
+  'take care of':     { type:'Phrasal Verb', tr:'ilgilenmek, bakmak',                   ex:'Who will take care of the dog?' },
+  'take part in':     { type:'Phrasal Verb', tr:'katılmak (etkinlik)',                  ex:'Everyone should take part in the discussion.' },
+  'take over':        { type:'Phrasal Verb', tr:'devralmak',                            ex:'A new manager took over the department.' },
+  'take up':          { type:'Phrasal Verb', tr:'başlamak (hobi), yer kaplamak',        ex:'He took up painting last year.' },
+  'take away':        { type:'Phrasal Verb', tr:'götürmek, almak',                      ex:'They took away the old furniture.' },
+  'take back':        { type:'Phrasal Verb', tr:'geri almak, sözünü geri almak',        ex:'I take back what I said.' },
+  'turn on':          { type:'Phrasal Verb', tr:'açmak (cihaz)',                        ex:'Turn on the lights, please.' },
+  'turn off':         { type:'Phrasal Verb', tr:'kapatmak (cihaz)',                     ex:'Turn off the TV before sleeping.' },
+  'turn up':          { type:'Phrasal Verb', tr:'gelmek (beklenmedik), sesi artırmak',  ex:'She turned up late to the meeting.' },
+  'turn down':        { type:'Phrasal Verb', tr:'reddetmek, sesi kısmak',               ex:'He turned down the job offer.' },
+  'turn around':      { type:'Phrasal Verb', tr:'döndürmek, tersine çevirmek',          ex:'The new CEO turned the company around.' },
+  'turn into':        { type:'Phrasal Verb', tr:'dönüşmek',                             ex:'The caterpillar turns into a butterfly.' },
+  'come up with':     { type:'Phrasal Verb', tr:'bulmak, ortaya çıkarmak (fikir)',      ex:'She came up with a brilliant idea.' },
+  'come across':      { type:'Phrasal Verb', tr:'tesadüfen karşılaşmak',                ex:'I came across an old photo yesterday.' },
+  'come back':        { type:'Phrasal Verb', tr:'geri gelmek',                          ex:'Come back when you are ready.' },
+  'come out':         { type:'Phrasal Verb', tr:'çıkmak, ortaya çıkmak',                ex:'The results came out yesterday.' },
+  'come up':          { type:'Phrasal Verb', tr:'çıkmak, gündeme gelmek',               ex:'An interesting topic came up in class.' },
+  'come over':        { type:'Phrasal Verb', tr:'uğramak, ziyaret etmek',               ex:'Come over for dinner tonight.' },
+  'go on':            { type:'Phrasal Verb', tr:'devam etmek, olmak',                   ex:'What is going on here?' },
+  'go off':           { type:'Phrasal Verb', tr:'çalmak (alarm), patlamak',             ex:'My alarm goes off at 6 AM.' },
+  'go back':          { type:'Phrasal Verb', tr:'geri gitmek',                          ex:'I want to go back to my hometown.' },
+  'go out':           { type:'Phrasal Verb', tr:'dışarı çıkmak',                        ex:'They go out every Friday night.' },
+  'go through':       { type:'Phrasal Verb', tr:'geçirmek (zor süreç), incelemek',      ex:'She went through a difficult time.' },
+  'go over':          { type:'Phrasal Verb', tr:'gözden geçirmek',                      ex:"Let's go over the main points." },
+  'go ahead':         { type:'Phrasal Verb', tr:'devam etmek, buyrun',                  ex:"Go ahead; I'm listening." },
+  'go away':          { type:'Phrasal Verb', tr:'uzaklaşmak, gitmek',                   ex:'The pain went away after rest.' },
+  'goes for':         { type:'Phrasal Verb', tr:'geçerli olmak, gitmek (fiyat)',        ex:'This rule goes for everyone.' },
+  'went to':          { type:'Phrasal Verb', tr:'gitti',                                ex:'She went to the market.' },
+  'went down':        { type:'Phrasal Verb', tr:'indi, azaldı',                         ex:'Prices went down last month.' },
+  'walked into':      { type:'Phrasal Verb', tr:'içeri girdi, yürüyerek girdi',         ex:'He walked into the room quietly.' },
+  'climbed up':       { type:'Phrasal Verb', tr:'tırmandı, çıktı',                      ex:'She climbed up the steep hill.' },
+  'make up':          { type:'Phrasal Verb', tr:'uydurmak; barışmak; oluşturmak',       ex:'Stop making up excuses.' },
+  'make up for':      { type:'Phrasal Verb', tr:'telafi etmek',                         ex:'She worked extra to make up for lost time.' },
+  'break down':       { type:'Phrasal Verb', tr:'bozulmak, çökmek',                     ex:'The car broke down on the highway.' },
+  'break up':         { type:'Phrasal Verb', tr:'ayrılmak, parçalanmak',                ex:'They broke up after two years.' },
+  'break in':         { type:'Phrasal Verb', tr:'izinsiz girmek',                       ex:'Someone broke in and stole the laptop.' },
+  'break out':        { type:'Phrasal Verb', tr:'patlak vermek, kaçmak',                ex:'A fire broke out in the factory.' },
+  'run out of':       { type:'Phrasal Verb', tr:'tükenmek, bitmek',                     ex:'We ran out of milk.' },
+  'run into':         { type:'Phrasal Verb', tr:'rastlamak, çarpmak',                   ex:'I ran into an old friend today.' },
+  'set up':           { type:'Phrasal Verb', tr:'kurmak, hazırlamak',                   ex:'They set up a new business.' },
+  'set off':          { type:'Phrasal Verb', tr:'yola çıkmak, tetiklemek',              ex:'We set off early in the morning.' },
+  'carry out':        { type:'Phrasal Verb', tr:'yürütmek, uygulamak',                  ex:'Scientists carried out experiments.' },
+  'carry on':         { type:'Phrasal Verb', tr:'devam etmek',                          ex:'Carry on with your work.' },
+  'hold on':          { type:'Phrasal Verb', tr:'beklemek, tutunmak',                   ex:"Hold on! I'll be right back." },
+  'hold back':        { type:'Phrasal Verb', tr:'tutmak, geri çekmek',                  ex:'Nothing can hold back progress.' },
+  'pick up':          { type:'Phrasal Verb', tr:'almak (birini), yerden almak, öğrenmek', ex:'Can you pick me up at 5?' },
+  'work out':         { type:'Phrasal Verb', tr:'egzersiz yapmak; sonuçlanmak; çözmek', ex:'Everything will work out in the end.' },
+  'work on':          { type:'Phrasal Verb', tr:'üzerinde çalışmak',                    ex:'She is working on a new project.' },
+  'find out':         { type:'Phrasal Verb', tr:'öğrenmek, keşfetmek',                  ex:'I need to find out the truth.' },
+  'figure out':       { type:'Phrasal Verb', tr:'anlamak, çözmek',                      ex:'Can you figure out the answer?' },
+  'fill in':          { type:'Phrasal Verb', tr:'doldurmak (form)',                     ex:'Fill in your name on the form.' },
+  'pay off':          { type:'Phrasal Verb', tr:'karşılığını vermek, işe yaramak',      ex:'Hard work always pays off.' },
+  'paid off':         { type:'Phrasal Verb', tr:'karşılığını verdi, işe yaradı',        ex:'All the effort finally paid off.' },
+  'wake up':          { type:'Phrasal Verb', tr:'uyanmak',                              ex:'I wake up at 7 every day.' },
+  'woke up':          { type:'Phrasal Verb', tr:'uyandı (geçmiş zaman)',                ex:'She woke up early this morning.' },
+  'waking up':        { type:'Phrasal Verb', tr:'uyanmak (-ıyor/gerundum)',             ex:'Waking up early is a good habit.' },
+  'keep up with':     { type:'Phrasal Verb', tr:'ayak uydurmak, takip etmek',           ex:"It's hard to keep up with technology." },
+  'keep on':          { type:'Phrasal Verb', tr:'devam etmek',                          ex:'Keep on trying; you will succeed.' },
+  'call off':         { type:'Phrasal Verb', tr:'iptal etmek',                          ex:'They called off the meeting.' },
+  'call on':          { type:'Phrasal Verb', tr:'ziyaret etmek; söz vermek',            ex:'The teacher called on a student to answer.' },
+  'cut off':          { type:'Phrasal Verb', tr:'kesmek, bağlantıyı kesmek',            ex:'The storm cut off electricity.' },
+  'cut down on':      { type:'Phrasal Verb', tr:'azaltmak',                             ex:'You should cut down on sugar.' },
+  'check in':         { type:'Phrasal Verb', tr:'check-in yapmak, giriş yapmak',        ex:'We checked in at the hotel.' },
+  'check out':        { type:'Phrasal Verb', tr:'check-out yapmak; bakmak',             ex:'Check out this amazing book.' },
+  'point out':        { type:'Phrasal Verb', tr:'belirtmek, dikkat çekmek',             ex:'She pointed out a mistake in the report.' },
+  'end up':           { type:'Phrasal Verb', tr:'sonuçta … olmak',                      ex:'We ended up staying until midnight.' },
+  'add up':           { type:'Phrasal Verb', tr:'toplamak; mantıklı olmak',             ex:"The numbers don't add up." },
+  'pass on':          { type:'Phrasal Verb', tr:'aktarmak, iletmek',                    ex:'Pass on my regards to your family.' },
+  'depend on':        { type:'Phrasal Verb', tr:'bağlı olmak, güvenmek',                ex:'Success depends on hard work.' },
+  'wait for':         { type:'Phrasal Verb', tr:'beklemek',                             ex:'I have been waiting for you for an hour.' },
+  'aim to':           { type:'Phrasal Verb', tr:'hedeflemek',                           ex:'We aim to finish by Friday.' },
+  'fail to':          { type:'Phrasal Verb', tr:'başaramamak, yapamamak',               ex:'He failed to meet the deadline.' },
+  'led to':           { type:'Phrasal Verb', tr:'yol açtı, neden oldu',                 ex:'The discovery led to new treatments.' },
+  'lead to':          { type:'Phrasal Verb', tr:'yol açmak',                            ex:'This path leads to the park.' },
+  'listen to':        { type:'Phrasal Verb', tr:'dinlemek',                             ex:'Listen to the teacher carefully.' },
+  'listened to':      { type:'Phrasal Verb', tr:'dinledi',                              ex:'She listened to the teacher carefully.' },
+  'refer to':         { type:'Phrasal Verb', tr:'atıfta bulunmak, bahsetmek',           ex:'The report refers to recent research.' },
+  'refers to':        { type:'Phrasal Verb', tr:'atıfta bulunur, bahseder',             ex:'This term refers to a specific process.' },
+  'result in':        { type:'Phrasal Verb', tr:'sonuçlanmak, neden olmak',             ex:'Lack of sleep results in poor focus.' },
+  'results in':       { type:'Phrasal Verb', tr:'sonuçlanır',                           ex:'Regular exercise results in better health.' },
+  'grapple with':     { type:'Phrasal Verb', tr:'boğuşmak, mücadele etmek',             ex:'Scientists grapple with complex problems.' },
+  'cope with':        { type:'Phrasal Verb', tr:'başa çıkmak',                          ex:'She copes with stress by exercising.' },
+  'deal with':        { type:'Phrasal Verb', tr:'ilgilenmek, başa çıkmak',              ex:'How do you deal with difficult people?' },
+  'agree with':       { type:'Phrasal Verb', tr:'hemfikir olmak',                       ex:'I completely agree with your point.' },
+  'succeed in':       { type:'Phrasal Verb', tr:'başarmak',                             ex:'She succeeded in passing the exam.' },
+  'believe in':       { type:'Phrasal Verb', tr:'inanmak',                              ex:'I believe in your ability to do this.' },
+  'apply for':        { type:'Phrasal Verb', tr:'başvurmak',                            ex:'Did you apply for the scholarship?' },
+  'belong to':        { type:'Phrasal Verb', tr:'ait olmak',                            ex:'This book belongs to the library.' },
+  'contribute to':    { type:'Phrasal Verb', tr:'katkıda bulunmak',                     ex:'Everyone should contribute to society.' },
+  'respond to':       { type:'Phrasal Verb', tr:'yanıt vermek',                         ex:'Please respond to my email.' },
+  'clashes with':     { type:'Phrasal Verb', tr:'çakışmak, çatışmak',                   ex:'His opinion clashes with mine.' },
+  'moving toward':    { type:'Phrasal Verb', tr:'doğru ilerlemek',                      ex:'We are moving toward a solution.' },
+  'away from':        { type:'Phrasal Verb', tr:'uzaktan, uzağa',                       ex:'Stay away from negative people.' },
+  'worry about':      { type:'Phrasal Verb', tr:'endişelenmek',                         ex:"Don't worry about small things." },
+  'focused on':       { type:'Phrasal Verb', tr:'odaklanmış',                           ex:'Stay focused on your goal.' },
+  'based on':         { type:'Phrasal Verb', tr:'dayalı, temel alınan',                 ex:'The film is based on a true story.' },
+  'impact on':        { type:'Phrasal Verb', tr:'üzerinde etki',                        ex:'Technology has a big impact on education.' },
+  'linked to':        { type:'Phrasal Verb', tr:'bağlantılı, ilişkili',                 ex:'Stress is linked to many health issues.' },
+  'known for':        { type:'Phrasal Verb', tr:'ile tanınmak',                         ex:'Paris is known for its cuisine.' },
+  'prepared for':     { type:'Phrasal Verb', tr:'hazırlanmak, hazır olmak',             ex:'Are you prepared for the exam?' },
+  'arrived at':       { type:'Phrasal Verb', tr:'ulaşmak, varmak (bir yere)',           ex:'We arrived at the airport on time.' },
+  'provided with':    { type:'Phrasal Verb', tr:'ile donatılmış, sağlanmış',            ex:'Students were provided with books.' },
+  'answered with':    { type:'Phrasal Verb', tr:'cevap vermek (-ile)',                  ex:'She answered with a smile.' },
+  'separating from':  { type:'Phrasal Verb', tr:'den ayrılmak',                         ex:'Separating from family is never easy.' },
+  'lives in':         { type:'Phrasal Verb', tr:'yaşıyor, oturuyor',                    ex:'She lives in a small village.' },
+  'confined to':      { type:'Phrasal Verb', tr:'ile sınırlı, kısıtlı',                 ex:'The problem is not confined to one area.' },
+  'foster a':         { type:'Phrasal Verb', tr:'beslemek, geliştirmek',                ex:'Schools should foster a love of learning.' },
+  'prioritizes over': { type:'Phrasal Verb', tr:'öncelik vermek',                       ex:'She prioritizes health over work.' },
+  'pressure on':      { type:'Phrasal Verb', tr:'baskı uygulamak (üzerinde)',           ex:'There is too much pressure on students.' },
+  'interested in':    { type:'Gramer Kalıbı', tr:'ilgili, meraklı  (in = -de/-da)',     ex:'She is interested in learning Spanish.' },
+  'good at':          { type:'Gramer Kalıbı', tr:'iyi olmak  (at = -de)',               ex:'He is good at mathematics.' },
+  'proud of':         { type:'Gramer Kalıbı', tr:'gurur duymak  (of = -den)',           ex:"I'm proud of your achievement." },
+  'tired of':         { type:'Gramer Kalıbı', tr:'bıkmak, yorulmak  (of = -den)',       ex:'I am tired of waiting.' },
+  'aware of':         { type:'Gramer Kalıbı', tr:'farkında olmak  (of = -den)',         ex:'Are you aware of the risks?' },
+  'capable of':       { type:'Gramer Kalıbı', tr:'yapabilecek durumda  (of = -den)',    ex:'She is capable of doing it.' },
+  'responsible for':  { type:'Gramer Kalıbı', tr:'sorumlu  (for = -den)',               ex:'Who is responsible for this decision?' },
+  'potential for':    { type:'Gramer Kalıbı', tr:'için potansiyel/kapasite',            ex:'There is great potential for growth.' },
+  // ── Deyimler (Idioms) ──────────────────────────────────
+  'piece of cake':                   { type:'Deyim', tr:'çok kolay bir şey',                            ex:'The test was a piece of cake.' },
+  'break a leg':                     { type:'Deyim', tr:'bol şans! (tiyatro ifadesi)',                  ex:'Break a leg on your performance tonight!' },
+  'hit the nail on the head':        { type:'Deyim', tr:'tam isabetle ifade etmek',                    ex:'You hit the nail on the head with that.' },
+  'under the weather':               { type:'Deyim', tr:'kendini iyi hissettmemek, hasta olmak',       ex:"I'm feeling a bit under the weather today." },
+  'beat around the bush':            { type:'Deyim', tr:'lafı dolandırmak',                            ex:"Stop beating around the bush and say it." },
+  'bite the bullet':                 { type:'Deyim', tr:'dişini sıkmak, zorluğa katlanmak',            ex:'Just bite the bullet and apologize.' },
+  'once in a blue moon':             { type:'Deyim', tr:'kırk yılda bir',                              ex:'We meet once in a blue moon these days.' },
+  'see eye to eye':                  { type:'Deyim', tr:'hemfikir olmak',                              ex:'They rarely see eye to eye on politics.' },
+  'spill the beans':                 { type:'Deyim', tr:'sırrı ifşa etmek',                           ex:'Who spilled the beans about the party?' },
+  'sit on the fence':                { type:'Deyim', tr:'tarafsız kalmak, kararsız olmak',             ex:'Stop sitting on the fence; pick a side.' },
+  'in the nick of time':             { type:'Deyim', tr:'tam zamanında, son anda',                     ex:'The ambulance arrived in the nick of time.' },
+  'blessing in disguise':            { type:'Deyim', tr:'sonradan iyi olduğu anlaşılan şey',          ex:'Losing that job was a blessing in disguise.' },
+  'keep your chin up':               { type:'Deyim', tr:'cesaretini yitirmemek',                      ex:'Keep your chin up; things will improve.' },
+  'no pain no gain':                 { type:'Deyim', tr:'emeksiz yemek olmaz',                        ex:'You have to train hard; no pain no gain.' },
+  'not my cup of tea':               { type:'Deyim', tr:'benim için değil, sevmiyorum',               ex:"Horror films are not my cup of tea." },
+  'on the ball':                     { type:'Deyim', tr:'zinde, uyanık, işinin ehli',                 ex:'She is always on the ball.' },
+  'the tip of the iceberg':          { type:'Deyim', tr:'buzdağının görünen yüzü',                    ex:'What we see is only the tip of the iceberg.' },
+  'through thick and thin':          { type:'Deyim', tr:'her koşulda, iyi ve kötü günde',             ex:'We have been friends through thick and thin.' },
+  'up in the air':                   { type:'Deyim', tr:'belirsiz, kararsız',                         ex:'Our travel plans are still up in the air.' },
+  'back to square one':              { type:'Deyim', tr:'sıfıra dönmek',                              ex:'The plan failed and we are back to square one.' },
+  'hit the sack':                    { type:'Deyim', tr:'uyumaya gitmek',                             ex:"I'm exhausted; time to hit the sack." },
+  'in hot water':                    { type:'Deyim', tr:'başı belada olmak',                          ex:'He is in hot water with his boss.' },
+  'look on the bright side':         { type:'Deyim', tr:'olumlu tarafından bakmak',                   ex:'Look on the bright side: you learned from it.' },
+  'make ends meet':                  { type:'Deyim', tr:'geçimini sağlamak',                          ex:'With two jobs she barely makes ends meet.' },
+  'read between the lines':          { type:'Deyim', tr:'satır aralarını okumak',                     ex:'You need to read between the lines.' },
+  'stand your ground':               { type:'Deyim', tr:'kararlı durmak, mevzisini korumak',         ex:'Stand your ground and defend your idea.' },
+  'think outside the box':           { type:'Deyim', tr:'kalıpların dışında düşünmek',               ex:'Great innovations require thinking outside the box.' },
+  'have a ball':                     { type:'Deyim', tr:'çok eğlenmek',                               ex:'We had a ball at the party last night.' },
+  'cost an arm and a leg':           { type:'Deyim', tr:'çok pahalıya mal olmak',                    ex:'That handbag costs an arm and a leg.' },
+  'miss the boat':                   { type:'Deyim', tr:'fırsatı kaçırmak',                           ex:'You missed the boat by applying too late.' },
+  'bite off more than you can chew': { type:'Deyim', tr:'ağzından büyük lokma almak',                ex:"Don't bite off more than you can chew." },
+  'easier said than done':           { type:'Deyim', tr:'söylemesi kolay, yapması zor',              ex:'"Just relax." Easier said than done.' },
+  'every cloud has a silver lining': { type:'Deyim', tr:'her işte bir hayır vardır',                 ex:'Every cloud has a silver lining.' },
+  'kill two birds':                  { type:'Deyim', tr:'bir taşla iki kuş vurmak',                  ex:'By cycling to work I kill two birds with one stone.' },
+  'let the cat out of the bag':      { type:'Deyim', tr:'sırrı açığa çıkarmak',                      ex:'He let the cat out of the bag about the surprise.' },
+  'under pressure':                  { type:'Deyim', tr:'baskı altında',                              ex:'She performs well even under pressure.' },
+  // ── Gramer Kalıpları ──────────────────────────────────
+  'used to':       { type:'Gramer Kalıbı', tr:'eskiden …(-er)di — geçmiş alışkanlık',              ex:'I used to play football as a child.' },
+  'going to':      { type:'Gramer Kalıbı', tr:'yapacak olmak — gelecek niyet/plan',                ex:"I'm going to study tonight." },
+  'have to':       { type:'Gramer Kalıbı', tr:'zorunda olmak — dışsal zorunluluk',                  ex:'I have to finish this report.' },
+  'has to':        { type:'Gramer Kalıbı', tr:'zorunda olmak (3. tekil)',                           ex:'She has to leave by 8.' },
+  'had to':        { type:'Gramer Kalıbı', tr:'zorunda oldu (geçmiş)',                             ex:'He had to cancel the meeting.' },
+  'ought to':      { type:'Gramer Kalıbı', tr:'yapması gerekir — ahlaki zorunluluk',               ex:'You ought to apologize.' },
+  'be able to':    { type:'Gramer Kalıbı', tr:'yapabilmek — yetenek/imkân',                        ex:'Will you be able to come?' },
+  'would rather':  { type:'Gramer Kalıbı', tr:'tercih etmek (-meyi tercih ederim)',                ex:"I'd rather stay home." },
+  'had better':    { type:'Gramer Kalıbı', tr:'daha iyi olur — tavsiye/uyarı',                    ex:"You'd better leave now." },
+  'would like to': { type:'Gramer Kalıbı', tr:'yapmak istemek (nazik)',                            ex:"I'd like to order a coffee." },
+  'not only':      { type:'Gramer Kalıbı', tr:'sadece … değil, aynı zamanda',                     ex:'She is not only smart but also kind.' },
+  'as soon as':    { type:'Gramer Kalıbı', tr:'…r …maz — zaman bağlacı',                          ex:'Call me as soon as you arrive.' },
+  'as long as':    { type:'Gramer Kalıbı', tr:'olduğu sürece — koşul',                            ex:"I'll help as long as you are honest." },
+  'as well as':    { type:'Gramer Kalıbı', tr:'yanı sıra, hem … hem de',                          ex:'She speaks French as well as Spanish.' },
+  'as if':         { type:'Gramer Kalıbı', tr:'sanki … gibi',                                     ex:'He acts as if he knows everything.' },
+  'as though':     { type:'Gramer Kalıbı', tr:'sanki … gibi (yazılı)',                            ex:'She looked as though she had seen a ghost.' },
+  'even though':   { type:'Gramer Kalıbı', tr:'…e rağmen — zıtlık bağlacı (gerçek)',             ex:'Even though it rained, we went out.' },
+  'even if':       { type:'Gramer Kalıbı', tr:'…se bile — koşullu zıtlık',                       ex:'Even if you fail, try again.' },
+  'in order to':   { type:'Gramer Kalıbı', tr:'amacıyla, için — amaç bildirme',                   ex:'Study hard in order to pass the exam.' },
+  'so as to':      { type:'Gramer Kalıbı', tr:'amacıyla — resmi amaç bildirme',                   ex:'She arrived early so as to get a good seat.' },
+  'due to':        { type:'Gramer Kalıbı', tr:'nedeniyle — sebep bildirme',                       ex:'The flight was cancelled due to bad weather.' },
+  'because of':    { type:'Gramer Kalıbı', tr:'yüzünden, nedeniyle',                              ex:'We stayed inside because of the storm.' },
+  'in spite of':   { type:'Gramer Kalıbı', tr:'rağmen — zıtlık (isim öbeği ile)',                 ex:'In spite of the cold, they played outside.' },
+  'in front of':   { type:'Gramer Kalıbı', tr:'önünde',                                           ex:'Wait in front of the building.' },
+  'instead of':    { type:'Gramer Kalıbı', tr:'yerine',                                           ex:'Use stairs instead of the elevator.' },
+  'such as':       { type:'Gramer Kalıbı', tr:'gibi — örnek verme',                               ex:'Fruits such as oranges are rich in vitamin C.' },
+  'for example':   { type:'Gramer Kalıbı', tr:'örneğin',                                          ex:'Many animals, for example lions, are endangered.' },
+  'for instance':  { type:'Gramer Kalıbı', tr:'örneğin (resmi)',                                  ex:'Consider, for instance, the impact of technology.' },
+  'of course':     { type:'Gramer Kalıbı', tr:'tabii ki, elbette',                                ex:"Of course I'll help you." },
+  'by the way':    { type:'Gramer Kalıbı', tr:'bu arada',                                         ex:'By the way, have you met our new colleague?' },
+  'a lot of':      { type:'Gramer Kalıbı', tr:'çok fazla (sayılabilir + sayılamaz)',              ex:'There are a lot of people here.' },
+  'each other':    { type:'Gramer Kalıbı', tr:'birbirini/birbirine — karşılıklı eylem',           ex:'They help each other every day.' },
+  'next to':       { type:'Gramer Kalıbı', tr:'yanında, yanı başında',                            ex:'Sit next to me.' },
+  'at the moment': { type:'Gramer Kalıbı', tr:'şu an, şu anda',                                   ex:"I'm busy at the moment." },
+  'in case':       { type:'Gramer Kalıbı', tr:'-e karşı, ihtimale karşı',                        ex:'Take an umbrella in case it rains.' },
+  'no matter':     { type:'Gramer Kalıbı', tr:'fark etmez, ne olursa olsun',                     ex:'No matter what happens, I will be here.' },
+  'long term':     { type:'Gramer Kalıbı', tr:'uzun vadeli',                                      ex:'We need a long term solution.' },
+  'short term':    { type:'Gramer Kalıbı', tr:'kısa vadeli',                                      ex:'This is only a short term fix.' },
+  'on time':       { type:'Gramer Kalıbı', tr:'zamanında — tam planlandığı gibi',                 ex:'The bus arrived on time.' },
+  'in time':       { type:'Gramer Kalıbı', tr:'zamanında — geç kalmadan',                        ex:'We arrived in time for the show.' },
+  'rather than':   { type:'Gramer Kalıbı', tr:'yerine tercih etmek',                              ex:'I prefer tea rather than coffee.' },
+  'at the end':    { type:'Gramer Kalıbı', tr:'sonunda, en son',                                  ex:'At the end of the day, results matter.' },
+  'welcome to':    { type:'Gramer Kalıbı', tr:'hoş geldiniz / hoş geldin',                       ex:'Welcome to our school!' },
+  'good morning':  { type:'Gramer Kalıbı', tr:'günaydın',                                         ex:'Good morning! How are you?' },
+  'good evening':  { type:'Gramer Kalıbı', tr:'iyi akşamlar',                                    ex:'Good evening, everyone.' },
+  'good night':    { type:'Gramer Kalıbı', tr:'iyi geceler',                                     ex:'Good night! Sleep well.' },
+  'how are you':   { type:'Gramer Kalıbı', tr:'nasılsın/nasılsınız',                             ex:"How are you today?" },
+  'thank you':     { type:'Gramer Kalıbı', tr:'teşekkür ederim',                                  ex:'Thank you for your help.' },
+};
+
 // ── State Manager ──────────────────────────────────────────
 class StateManager {
   constructor() {
@@ -1823,13 +2064,53 @@ class App {
 
   _handleWordClick(word, element, event) {
     if (event) event.stopPropagation();
-    
+
     // Play pronunciation
     this.speakWord(word, 1.0);
-    
+
     // Highlight the word/phrase
     document.querySelectorAll('.story-word, .sw').forEach(el => el.classList.remove('playing'));
     if (element) element.classList.add('playing');
+
+    // ── Check PHRASE_DICT first (phrasal verbs, idioms, grammar patterns) ──
+    const phraseEntry = PHRASE_DICT[word.toLowerCase()];
+    if (phraseEntry) {
+      document.querySelectorAll('.word-def-popup').forEach(p => p.remove());
+      const typeColors = {
+        'Phrasal Verb':  { bg:'#0891b2', text:'#fff' },
+        'Deyim':         { bg:'#7c3aed', text:'#fff' },
+        'Gramer Kalıbı': { bg:'#b45309', text:'#fff' },
+      };
+      const tc = typeColors[phraseEntry.type] || { bg:'#374151', text:'#fff' };
+      const popup = document.createElement('div');
+      popup.className = 'word-def-popup';
+      popup.innerHTML = `
+        <div class="wdp-header">
+          <div class="wdp-title-wrap">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span style="background:${tc.bg};color:${tc.text};font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.04em">${phraseEntry.type}</span>
+              <div class="wdp-en">${word}</div>
+            </div>
+          </div>
+          <span class="wdp-close" onclick="app._closeWordDef()">✕</span>
+        </div>
+        <div class="wdp-tr">${phraseEntry.tr}</div>
+        <div class="wdp-section">
+          <div class="wdp-label">Örnek Cümle</div>
+          <div class="wdp-ex">"${phraseEntry.ex}"</div>
+        </div>
+      `;
+      document.body.appendChild(popup);
+      if (event) {
+        const x = Math.min(event.clientX, window.innerWidth - 300);
+        const y = Math.min(event.clientY + 16, window.innerHeight - 200);
+        popup.style.left = x + 'px';
+        popup.style.top  = y + 'px';
+      }
+      this.audio.play('pop');
+      setTimeout(() => { if (popup.parentElement) app._closeWordDef(); }, 9000);
+      return;
+    }
 
     // Check if in dictionary
     const wordMap = {};
@@ -2249,24 +2530,10 @@ class App {
   speakSentence(rate = 0.88) { this.speakWord(this._getSentence(), rate); }
 
   _markupText(text, className = 'story-word') {
-    // Multi-word expressions to look for (longest first)
-    const knownPhrases = [
-      'a lot of', 'each other', 'next to', 'in front of', 'because of', 'due to',
-      'as well as', 'instead of', 'rather than', 'long term', 'short term',
-      'on time', 'in time', 'at the end', 'at the moment', 'of course',
-      'as soon as', 'by the way', 'for example', 'for instance',
-      'woke up', 'puts on', 'put on', 'looked for', 'look for', 'look after',
-      'looking for', 'looking after', 'depend on', 'good at', 'proud of',
-      'wait for', 'tired of', 'responsible for', 'believe in', 'succeed in',
-      'get along with', 'get over', 'get used to', 'get rid of', 'give up',
-      'look forward to', 'pay off', 'paid off', 'worry about', 'moving toward',
-      'away from', 'foster a', 'grapple with', 'confined to', 'potential for',
-      'prioritizes over', 'pressure on', 'results in', 'aim to', 'fail to',
-      'clashes with', 'refers to', 'led to', 'provided with', 'arrived at',
-      'answered with', 'provided with', 'lives in', 'goes for', 'walked into',
-      'climbed up', 'researching the', 'preparing for', 'impact on',
-      'linked to', 'interested in', 'known for', 'piece of cake'
-    ];
+    // Build known phrases from PHRASE_DICT — longest first for greedy matching
+    const knownPhrases = Object.keys(PHRASE_DICT)
+      .filter(p => p.includes(' '))
+      .sort((a, b) => b.split(' ').length - a.split(' ').length || b.length - a.length);
 
     let processed = text;
     
