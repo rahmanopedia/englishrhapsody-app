@@ -520,6 +520,110 @@ const PHRASE_DICT = {
   'age limit':            { type:'İsim Tamlaması', tr:'yaş sınırı',                               ex:'There is an age limit for this activity.' },
   'age gap':              { type:'İsim Tamlaması', tr:'yaş farkı',                                ex:'The age gap between them is ten years.' },
   'generation gap':       { type:'İsim Tamlaması', tr:'nesil farkı, kuşak uçurumu',              ex:'The generation gap causes misunderstandings.' },
+  // ── Hikaye Metinlerinde Geçen Kelimeler (Vocabulary) ───
+  'accumulate':        { type:'Kelime', tr:'birikmek, toplanmak',                              ex:'Dust accumulates on shelves quickly.' },
+  'aesthetically':     { type:'Kelime', tr:'estetik açıdan, görsel olarak',                    ex:'The building is aesthetically pleasing.' },
+  'ai':                { type:'Kelime', tr:'YZ — Yapay Zeka (Artificial Intelligence) kısaltması', ex:'AI is transforming many industries.' },
+  'ambiguous':         { type:'Kelime', tr:'belirsiz, muğlak, iki anlama gelen',               ex:'The instructions were ambiguous and confusing.' },
+  'architecture':      { type:'Kelime', tr:'mimarlık; yapı mimarisi',                          ex:'She studied architecture at university.' },
+  'assist':            { type:'Kelime', tr:'yardım etmek, destek olmak',                       ex:'Can you assist me with this task?' },
+  'backpacks':         { type:'Kelime', tr:'sırt çantaları',                                   ex:'They packed their backpacks for the hike.' },
+  'beach':             { type:'Kelime', tr:'sahil, plaj',                                      ex:'We spent the day at the beach.' },
+  'bins':              { type:'Kelime', tr:'çöp kutuları, ayrıştırma kapları',                 ex:'Put recyclables in the correct bins.' },
+  'biographies':       { type:'Kelime', tr:'biyografiler, yaşam öyküleri',                     ex:'The library has many biographies of scientists.' },
+  'biotechnology':     { type:'Kelime', tr:'biyoteknoloji — canlılarla teknoloji bilimi',      ex:'Biotechnology is advancing medicine rapidly.' },
+  'bowl':              { type:'Kelime', tr:'kase, kâse',                                       ex:'She mixed the ingredients in a large bowl.' },
+  'breathtaking':      { type:'Kelime', tr:'nefes kesen, muhteşem, çarpıcı',                   ex:'The view from the summit was breathtaking.' },
+  'breeze':            { type:'Kelime', tr:'esinti, hafif rüzgar, meltem',                     ex:'A cool breeze made the hot day pleasant.' },
+  'campaign':          { type:'Kelime', tr:'kampanya; seçim kampanyası',                       ex:'The city launched a recycling campaign.' },
+  'chords':            { type:'Kelime', tr:'akorlar (müzikte aynı anda çalınan notalar)',      ex:'He practiced guitar chords every evening.' },
+  'clothes':           { type:'Kelime', tr:'kıyafetler, giysiler',                             ex:'She bought new clothes for the party.' },
+  'collection':        { type:'Kelime', tr:'koleksiyon; derleme; toplama',                     ex:'The library has a vast collection of books.' },
+  'company':           { type:'Kelime', tr:'şirket; arkadaşlık, sohbet',                       ex:'She works for a tech company.' },
+  'contradictory':     { type:'Kelime', tr:'çelişkili, birbirine zıt',                         ex:'The two reports gave contradictory results.' },
+  'crisis':            { type:'Kelime', tr:'kriz, bunalım, kritik dönüm noktası',              ex:'The company survived the financial crisis.' },
+  'dedication':        { type:'Kelime', tr:'adanmışlık, bağlılık, özveri',                     ex:'Her dedication to her work is admirable.' },
+  'defense':           { type:'Kelime', tr:'savunma, müdafaa; koruma mekanizması',             ex:'People use defense mechanisms to reduce stress.' },
+  'determined':        { type:'Kelime', tr:'kararlı, azimli',                                  ex:'She was determined to succeed no matter what.' },
+  'discomfort':        { type:'Kelime', tr:'rahatsızlık, huzursuzluk',                         ex:'He tried to hide his discomfort.' },
+  'disenfranchisement':{ type:'Kelime', tr:'hak/oy yoksunluğu; toplumsal dışlanma',            ex:'Economic disenfranchisement affects many workers.' },
+  'dismiss':           { type:'Kelime', tr:'göz ardı etmek; işten çıkarmak; kovmak',           ex:"Don't dismiss ideas before hearing them out." },
+  'disrupting':        { type:'Kelime', tr:'sekteye uğratmak, bozmak, altüst etmek',           ex:'AI is disrupting traditional labor markets.' },
+  'dissonance':        { type:'Kelime', tr:'uyumsuzluk; bilişsel çelişki',                     ex:'Cognitive dissonance causes mental discomfort.' },
+  'distractions':      { type:'Kelime', tr:'dikkat dağıtıcı şeyler; engeller',                 ex:'The library is free from distractions.' },
+  'earlier':           { type:'Kelime', tr:'daha erken; daha önce; önceki',                    ex:'She arrived earlier than expected.' },
+  'effort':            { type:'Kelime', tr:'çaba, gayret, emek',                               ex:'Small efforts create a massive impact.' },
+  'emotions':          { type:'Kelime', tr:'duygular, hisler',                                 ex:'Stoicism helps control destructive emotions.' },
+  'enhancement':       { type:'Kelime', tr:'geliştirme, iyileştirme, artırma',                 ex:'Genetic enhancement raises ethical concerns.' },
+  'flour':             { type:'Kelime', tr:'un (pişirmede kullanılan öğütülmüş tahıl)',        ex:'She used flour and sugar to bake the cookies.' },
+  'fortitude':         { type:'Kelime', tr:'dayanıklılık; zorluklar karşısında cesaret',       ex:'She showed great fortitude during hard times.' },
+  'gadgets':           { type:'Kelime', tr:'teknolojik cihazlar, alet edevat, gizmo',          ex:"It's hard to keep up with the latest gadgets." },
+  'giraffe':           { type:'Kelime', tr:'zürafa (boynu uzun Afrika hayvanı)',               ex:'The giraffe stretched its neck to reach the leaves.' },
+  'guitar':            { type:'Kelime', tr:'gitar',                                            ex:'He plays guitar every evening after work.' },
+  'hiking':            { type:'Kelime', tr:'doğa yürüyüşü, trekking',                         ex:'They went hiking in the mountains on the weekend.' },
+  'ice':               { type:'Kelime', tr:'buz',                                             ex:'She put ice in her drink to cool it down.' },
+  'implementation':    { type:'Kelime', tr:'uygulama, hayata geçirme',                         ex:'The implementation of the new policy took months.' },
+  'incorporating':     { type:'Kelime', tr:'dahil etmek, bünyesine katmak',                    ex:'Architects are incorporating green spaces into designs.' },
+  'inevitable':        { type:'Kelime', tr:'kaçınılmaz, önlenemez',                            ex:'Change is inevitable; we must adapt to it.' },
+  'information':       { type:'Kelime', tr:'bilgi, enformasyon',                               ex:'She found the exact information she needed.' },
+  'investigations':    { type:'Kelime', tr:'araştırmalar, soruşturmalar, incelemeler',         ex:'Scientific investigations revealed new findings.' },
+  'landfills':         { type:'Kelime', tr:'çöp depolama alanları, düzenli çöp sahaları',      ex:'Our local landfills are becoming completely full.' },
+  'librarians':        { type:'Kelime', tr:'kütüphaneciler',                                  ex:'The librarians helped visitors find information.' },
+  'manipulate':        { type:'Kelime', tr:'manipüle etmek, yönlendirmek, kullanmak',         ex:'Propaganda can manipulate public opinion.' },
+  'mars':              { type:'Kelime', tr:'Mars — Güneş Sistemi\'nin 4. gezegeni',            ex:'Scientists are planning missions to Mars.' },
+  'microplastics':     { type:'Kelime', tr:'mikroplastikler — küçük plastik parçacıklar',      ex:'Microplastics have been found in ocean depths.' },
+  'mimic':             { type:'Kelime', tr:'taklit etmek; taklitçi',                           ex:'Buildings can mimic natural processes.' },
+  'modification':      { type:'Kelime', tr:'değişiklik, modifikasyon, düzenleme',              ex:'The design required a small modification.' },
+  'modifying':         { type:'Kelime', tr:'değiştirmek, düzenlemek',                          ex:'Scientists are modifying DNA to cure diseases.' },
+  'month':             { type:'Kelime', tr:'ay (takvim birimi; ~30 günlük süre)',              ex:'She improved significantly over one month.' },
+  'months':            { type:'Kelime', tr:'aylar (takvim birimi; çoğul)',                     ex:'After three months he could play guitar smoothly.' },
+  'navigate':          { type:'Kelime', tr:'yön bulmak; idare etmek, yönetmek',               ex:'It is hard to navigate modern adversity alone.' },
+  'novels':            { type:'Kelime', tr:'romanlar (uzun edebi kurgu türü)',                 ex:'The library holds classic and modern novels.' },
+  'occupations':       { type:'Kelime', tr:'meslekler, uğraşlar',                             ex:'Automation renders many occupations obsolete.' },
+  'opinion':           { type:'Kelime', tr:'görüş, kanı, fikir',                              ex:'In my opinion, education is the key to success.' },
+  'options':           { type:'Kelime', tr:'seçenekler, alternatifler',                        ex:'We have too many options and cannot decide.' },
+  'organisms':         { type:'Kelime', tr:'organizmalar, canlılar (biyoloji)',                ex:'Marine organisms ingest microplastic particles.' },
+  'oven':              { type:'Kelime', tr:'fırın (pişirme cihazı)',                           ex:'Put the cookies in the oven for 20 minutes.' },
+  'paper':             { type:'Kelime', tr:'kağıt; araştırma makalesi',                        ex:'Separate paper from plastic for recycling.' },
+  'peaks':             { type:'Kelime', tr:'zirveler, doruklar; doruk noktalar',              ex:'Microplastics have reached the highest mountain peaks.' },
+  'physiology':        { type:'Kelime', tr:'fizyoloji (beden işlevleri ve sistemleri bilimi)', ex:'The effects on human physiology are still unknown.' },
+  'planet':            { type:'Kelime', tr:'gezegen',                                         ex:"We must protect our planet's resources." },
+  'plastic':           { type:'Kelime', tr:'plastik; plastikten yapılmış',                    ex:'Separate plastic from paper for recycling.' },
+  'polymers':          { type:'Kelime', tr:'polimerler (büyük moleküllü kimyasal bileşikler)', ex:'Synthetic polymers are found in microplastics.' },
+  'price':             { type:'Kelime', tr:'fiyat, bedel; bedelini ödemek',                   ex:'The price of the new phone was quite high.' },
+  'processor':         { type:'Kelime', tr:'işlemci (bilgisayar veya telefon çipi)',           ex:'The new smartphone has a very fast processor.' },
+  'psychological':     { type:'Kelime', tr:'psikolojik, ruhsal, zihinsel',                    ex:'Defense mechanisms reduce psychological stress.' },
+  'rationalize':       { type:'Kelime', tr:'akılcılaştırmak; kendini haklı çıkarmak',         ex:'People rationalize their behavior to feel better.' },
+  'reactions':         { type:'Kelime', tr:'tepkiler, reaksiyonlar; yanıtlar',                ex:'We cannot control events, only our reactions.' },
+  'recycling':         { type:'Kelime', tr:'geri dönüşüm',                                    ex:'Recycling reduces waste and helps the environment.' },
+  'relieved':          { type:'Kelime', tr:'rahatlamış, endişesi geçmiş',                     ex:'She felt relieved after finding the cat.' },
+  'resource':          { type:'Kelime', tr:'kaynak; değerli yardımcı araç',                   ex:'The library is a vital resource for the community.' },
+  'retraining':        { type:'Kelime', tr:'yeniden eğitim; meslek değişikliği eğitimi',      ex:'Retraining programs help workers learn new skills.' },
+  'sand':              { type:'Kelime', tr:'kum',                                             ex:'The yellow sand at the beach was very hot.' },
+  'scared':            { type:'Kelime', tr:'korkmuş, ürkmüş, endişeli',                       ex:'The cat looked scared on the high branch.' },
+  'season':            { type:'Kelime', tr:'mevsim; sezon; baharatlamak',                     ex:'Summer is his favorite season of the year.' },
+  'shells':            { type:'Kelime', tr:'kabuklar; deniz kabukları',                       ex:'He collected small shells along the beach.' },
+  'shopping':          { type:'Kelime', tr:'alışveriş; alışveriş yapmak',                     ex:'She went shopping for a party dress.' },
+  'smartphone':        { type:'Kelime', tr:'akıllı telefon',                                  ex:'He bought a new smartphone with a great camera.' },
+  'smell':             { type:'Kelime', tr:'koku; koklamak; kokmak',                          ex:'The smell of fresh cookies was wonderful.' },
+  'sofa':              { type:'Kelime', tr:'kanepe, üçlü koltuk',                             ex:'The cat was sleeping behind the sofa.' },
+  'sprawl':            { type:'Kelime', tr:'düzensiz kentsel yayılma; uzanmak',               ex:"Urban sprawl increases cities' carbon footprint." },
+  'steep':             { type:'Kelime', tr:'dik, sarp; (fiyat) yüksek; ıslatmak',            ex:'The trail was quite steep and physically demanding.' },
+  'summer':            { type:'Kelime', tr:'yaz',                                             ex:'Summer is the warmest season of the year.' },
+  'summit':            { type:'Kelime', tr:'zirve, doruk; liderler zirvesi (toplantı)',       ex:'When they reached the summit, the view was breathtaking.' },
+  'tenet':             { type:'Kelime', tr:'ilke, temel inanç, öğreti',                       ex:"A core tenet of Stoicism is accepting what you can't control." },
+  'terrible':          { type:'Kelime', tr:'berbat, korkunç, dehşetli',                       ex:"At first the guitar sounds were terrible, but he improved." },
+  'threat':            { type:'Kelime', tr:'tehdit, tehlike',                                 ex:'Microplastics are an invisible threat to health.' },
+  'toxicological':     { type:'Kelime', tr:'toksikolojik (zehir bilimi ile ilgili)',           ex:'Toxicological effects on humans remain ambiguous.' },
+  'tranquility':       { type:'Kelime', tr:'huzur, sükunet, dinginlik',                       ex:'Stoicism helps achieve a state of mental tranquility.' },
+  'tutorials':         { type:'Kelime', tr:'öğretici video/ders; rehber içerikler',           ex:'He watched online tutorials to learn guitar chords.' },
+  'ubiquitous':        { type:'Kelime', tr:'her yerde bulunan, son derece yaygın',            ex:'Smartphones are ubiquitous in modern life.' },
+  'view':              { type:'Kelime', tr:'manzara; görüş, bakış açısı; izlemek',            ex:'The panoramic view from the summit was spectacular.' },
+  'waste':             { type:'Kelime', tr:'atık, çöp; israf; ziyan etmek',                  ex:'We produce too much waste every day.' },
+  'well':              { type:'Kelime', tr:'iyi (zarf); sağlıklı; kuyu; pekâlâ',             ex:'She speaks English very well.' },
+  'yoga':              { type:'Kelime', tr:'yoga (zihin-beden sağlık pratiği)',               ex:'She started doing yoga every morning to reduce stress.' },
+  'zoo':               { type:'Kelime', tr:'hayvanat bahçesi',                               ex:'The school organized a trip to the city zoo.' },
+  'collaborative':     { type:'Kelime', tr:'işbirlikçi, ortak çalışmaya dayalı',             ex:'The event was supported by collaborative projects.' },
 };
 
 // ── State Manager ──────────────────────────────────────────
@@ -2338,7 +2442,9 @@ class App {
     if (element) element.classList.add('playing');
 
     // ── Check PHRASE_DICT first (phrasal verbs, idioms, grammar patterns) ──
-    const phraseEntry = PHRASE_DICT[word.toLowerCase()];
+    // Strip possessive 's before lookup: "Anna's" → "anna", "planet's" → "planet"
+    const baseWord = word.toLowerCase().replace(/'s$/, '').replace(/s'$/, 's');
+    const phraseEntry = PHRASE_DICT[word.toLowerCase()] || (baseWord !== word.toLowerCase() ? PHRASE_DICT[baseWord] : undefined);
     if (phraseEntry) {
       document.querySelectorAll('.word-def-popup').forEach(p => p.remove());
       const typeColors = {
@@ -2347,6 +2453,7 @@ class App {
         'Gramer Kalıbı':  { bg:'#b45309', text:'#fff' },
         'Eylem Kalıbı':   { bg:'#065f46', text:'#fff' },
         'İsim Tamlaması': { bg:'#be185d', text:'#fff' },
+        'Kelime':         { bg:'#1d4ed8', text:'#fff' },
       };
       const tc = typeColors[phraseEntry.type] || { bg:'#374151', text:'#fff' };
       const popup = document.createElement('div');
@@ -2400,7 +2507,9 @@ class App {
     };
 
     const cleanWord = word.toLowerCase().replace(/[^a-z']/g, '');
-    const found = wordMap[cleanWord] || wordMap[word.toLowerCase()];
+    // Also try without possessive 's  ("Anna's" → "anna")
+    const cleanBase = cleanWord.replace(/'s$/, '');
+    const found = wordMap[cleanWord] || wordMap[word.toLowerCase()] || (cleanBase !== cleanWord ? wordMap[cleanBase] : null);
 
     if (found) {
        this._showWordDef(found.en, event);
@@ -2433,23 +2542,31 @@ class App {
          else if (cleanWord.endsWith('ed')) lemma = cleanWord.slice(0, -2);
          else if (cleanWord.endsWith('es')) lemma = cleanWord.slice(0, -2);
          else if (cleanWord.endsWith('s') && cleanWord.length > 3) lemma = cleanWord.slice(0, -1);
-         
+
          const foundLemma = wordMap[lemma];
-         if (foundLemma) {
-           this._showWordDef(foundLemma.en, event);
+         if (foundLemma) { this._showWordDef(foundLemma.en, event); return; }
+
+         // Check PHRASE_DICT with lemma form (e.g. "accumulating" → "accumulate")
+         const lemmaPhrase = PHRASE_DICT[lemma] || PHRASE_DICT[cleanWord];
+         if (lemmaPhrase) {
+           const _tc = { 'Phrasal Verb':{bg:'#0891b2',text:'#fff'}, 'Deyim':{bg:'#7c3aed',text:'#fff'}, 'Gramer Kalıbı':{bg:'#b45309',text:'#fff'}, 'Eylem Kalıbı':{bg:'#065f46',text:'#fff'}, 'İsim Tamlaması':{bg:'#be185d',text:'#fff'}, 'Kelime':{bg:'#1d4ed8',text:'#fff'} }[lemmaPhrase.type] || {bg:'#374151',text:'#fff'};
+           popup.innerHTML = `<div class="wdp-header"><div class="wdp-title-wrap"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="background:${_tc.bg};color:${_tc.text};font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:99px">${lemmaPhrase.type}</span><div class="wdp-en">${word}</div></div></div><span class="wdp-close" onclick="app._closeWordDef()">✕</span></div><div class="wdp-tr">${lemmaPhrase.tr}</div><div class="wdp-section"><div class="wdp-label">Örnek Cümle</div><div class="wdp-ex">"${lemmaPhrase.ex}"</div></div>`;
+           document.body.appendChild(popup);
+           if (event) { popup.style.left = Math.min(event.clientX, window.innerWidth-300)+'px'; popup.style.top = Math.min(event.clientY+16, window.innerHeight-200)+'px'; }
+           this.audio.play('pop');
+           setTimeout(() => { if (popup.parentElement) app._closeWordDef(); }, 9000);
            return;
          }
 
          popup.innerHTML = `
            <div class="wdp-header">
              <div class="wdp-title-wrap">
-               <div class="wdp-en">🔍 ${word}</div>
+               <div class="wdp-en">🔊 ${word}</div>
              </div>
-               <span class="wdp-close" onclick="app._closeWordDef()">✕</span>
+             <span class="wdp-close" onclick="app._closeWordDef()">✕</span>
            </div>
-           <div class="wdp-tr" style="color: var(--text-2); font-weight: normal;">Bu kelime şu an veritabanında yok ancak sesini dinleyebilirsin.</div>
            <div class="wdp-section">
-             <button class="btn btn-ghost btn-sm" style="width:100%" onclick="app.speakWord('${word.replace(/'/g,"\\'")}')">🔊 Tekrar Dinle</button>
+             <button class="btn btn-ghost btn-sm" style="width:100%" onclick="app.speakWord('${word.replace(/'/g,"\\'")}')">🔊 Sesi Dinle</button>
            </div>
          `;
        }
