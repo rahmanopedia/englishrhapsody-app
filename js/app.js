@@ -3268,10 +3268,7 @@ class App {
     // Determine word mode
     let wordMode = this._synthModeConfig || 'mix';
     if (wordMode === 'mix') {
-      const r = Math.random();
-      if (r < 0.33) wordMode = 'spell';
-      else if (r < 0.66) wordMode = 'choice';
-      else wordMode = 'context';
+      wordMode = Math.random() < 0.5 ? 'spell' : 'choice';
     }
     if (this._synthModeConfig === 'speed') wordMode = 'spell'; // Speed mode uses spell (writing) for challenge
     this.session.synthWordMode = wordMode;
@@ -3286,9 +3283,6 @@ class App {
       } else if (wordMode === 'spell') {
         modeInd.textContent = '⌨️ YAZMA';
         modeInd.className = 'synth-mode-ind spell';
-      } else if (wordMode === 'context') {
-        modeInd.textContent = '🧩 BAĞLAM';
-        modeInd.className = 'synth-mode-ind context';
       } else {
         modeInd.textContent = '🔘 SEÇME';
         modeInd.className = 'synth-mode-ind choice';
@@ -3304,42 +3298,12 @@ class App {
 
     if (contextArea) contextArea.style.display = 'none';
     if (trEl) trEl.style.display = 'block';
-
     if (wordMode === 'choice') {
       this.session.synthChoiceCount = (this.session.synthChoiceCount || 0) + 1;
       if (display)    display.style.display    = 'none';
       if (choiceArea) choiceArea.style.display = '';
       if (listenBtn)  listenBtn.style.display  = 'none';
       this._renderChoiceMode(word);
-    } else if (wordMode === 'context') {
-      if (display)    display.style.display    = '';
-      if (choiceArea) { choiceArea.style.display = 'none'; choiceArea.innerHTML = ''; }
-      if (listenBtn)  listenBtn.style.display  = '';
-      if (trEl)       trEl.style.display       = 'none'; // Hide direct translation in context mode
-      if (contextArea) {
-        contextArea.style.display = 'block';
-        // Simple sentence generation if no specific ex exists, otherwise use ex
-        let sentence = word.ex || `I need to remember the word ${word.en} for my exam.`;
-        // Replace target word with blanks
-        const regex = new RegExp(`\\b${word.en}\\b`, 'gi');
-        if (!regex.test(sentence)) sentence = `Here is an example for the word ${word.en}.`; // fallback
-        const blanked = sentence.replace(regex, `<span style="color:var(--cyan); border-bottom:2px solid var(--cyan)">${'_'.repeat(word.en.length)}</span>`);
-        contextArea.innerHTML = blanked;
-      }
-      
-      if (display) {
-        display.innerHTML = word.en.split('').map((ch, i) =>
-          `<span data-idx="${i}" data-ch="${ch.toLowerCase()}">_</span>`
-        ).join('');
-      }
-      // Auto-reveal first letter after 8s
-      if (this.session.synthRevealTimer) clearTimeout(this.session.synthRevealTimer);
-      this.session.synthRevealTimer = setTimeout(() => {
-        if (this.session.synthActive && this.session.synthTyped.length === 0) {
-          this._handleSynthKey(word.en[0]);
-          UI.toast(`💡 İpucu: İlk harf "${word.en[0].toUpperCase()}"`, 2000);
-        }
-      }, 8000);
     } else {
       this.session.synthSpellCount = (this.session.synthSpellCount || 0) + 1;
       if (choiceArea) { choiceArea.style.display = 'none'; choiceArea.innerHTML = ''; }
@@ -3431,29 +3395,6 @@ class App {
       }
     }
 
-    // Update Context Area if active
-    const contextArea = document.getElementById('synth-context-area');
-    if (this.session.synthWordMode === 'context' && contextArea) {
-      const word = this.session.synthWord;
-      let sentence = word.ex || `I need to remember the word ${word.en} for my exam.`;
-      const regex = new RegExp(`\\b${word.en}\\b`, 'gi');
-      if (!regex.test(sentence)) sentence = `Here is an example for the word ${word.en}.`;
-      
-      const typed = this.session.synthTyped;
-      const remainingBlanks = '_'.repeat(Math.max(0, word.en.length - typed.length));
-      
-      let displayHtml = '';
-      for (let i = 0; i < typed.length; i++) {
-        const ch = typed[i];
-        const letterColor = this._getLetterColor(ch);
-        displayHtml += `<span style="color:${letterColor}; text-shadow: 0 0 10px ${letterColor}88;">${ch}</span>`;
-      }
-      displayHtml += `<span style="color:var(--text-3); opacity:0.5">${remainingBlanks}</span>`;
-
-      const blanked = sentence.replace(regex, `<span style="border-bottom:2px solid var(--cyan)">${displayHtml}</span>`);
-      contextArea.innerHTML = blanked;
-    }
-
     if (ring) {
       const circ   = 301.44;
       ring.style.strokeDashoffset = circ - (typedLen / wordLen) * circ;
@@ -3502,7 +3443,6 @@ class App {
 
     // Scoring & combo
     let points = this.session.synthWordMode === 'choice' ? 10 : 20;
-    if (this.session.synthWordMode === 'context') points = 25;
     if (this._synthModeConfig === 'speed') points = 30; // Speed mode gives fixed 30 XP
 
     if (perfect) {
