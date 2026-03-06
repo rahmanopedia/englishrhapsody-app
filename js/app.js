@@ -4854,49 +4854,65 @@ class App {
   _renderConvoLevels() {
     const el = document.getElementById('convo-content');
     if (!el) return;
+    const mastery   = this.state.get('mastery') || {};
+    const completed = this.state.get('convoCompleted') || {};
     const counts = {
       easy:   CONVERSATIONS.filter(c => c.level === 'easy').length,
       medium: CONVERSATIONS.filter(c => c.level === 'medium').length,
       hard:   CONVERSATIONS.filter(c => c.level === 'hard').length,
     };
+    const done = {
+      easy:   completed.easy   || 0,
+      medium: completed.medium || 0,
+      hard:   completed.hard   || 0,
+    };
+    const lvls = [
+      { key:'easy',   icon:'🌱', name:'Başlangıç', color:'var(--green)',  glow:'rgba(16,185,129,0.12)',
+        tags:['Alışveriş','Restoran','Otel','Ulaşım','Tanışma'],
+        desc:'Temel günlük iletişim' },
+      { key:'medium', icon:'📚', name:'Orta',       color:'var(--amber)',  glow:'rgba(245,158,11,0.12)',
+        tags:['İş görüşmesi','Seyahat','Sağlık','Bankacılık','Sosyal'],
+        desc:'İş hayatı ve sosyal durumlar' },
+      { key:'hard',   icon:'🔥', name:'İleri',      color:'var(--rose)',   glow:'rgba(244,63,94,0.12)',
+        tags:['Müzakere','Akademik','Hukuk','Finans','Liderlik'],
+        desc:'Profesyonel ve karmaşık senaryolar' },
+    ];
     el.innerHTML = `
       <div class="convo-level-screen">
         <div class="cls-header">
-          <div class="cls-icon">🤖</div>
-          <h2 class="cls-title">AI Sohbet</h2>
-          <p class="cls-sub">Seviyeni seç — AI senin için bir senaryo seçsin</p>
+          <div class="cls-orb">🤖</div>
+          <h2 class="cls-title">AI Sohbet Koçu</h2>
+          <p class="cls-sub">Gerçek hayat senaryolarında İngilizce pratik yap</p>
         </div>
         <div class="cls-levels">
-          <button class="cls-level-btn easy" onclick="app.startConvoByLevel('easy')">
-            <span class="clb-icon">🌱</span>
-            <span class="clb-name">Başlangıç</span>
-            <span class="clb-desc">Günlük hayat, temel iletişim</span>
-            <span class="clb-count">${counts.easy} senaryo</span>
-          </button>
-          <button class="cls-level-btn medium" onclick="app.startConvoByLevel('medium')">
-            <span class="clb-icon">📚</span>
-            <span class="clb-name">Orta</span>
-            <span class="clb-desc">İş hayatı, seyahat, sosyal durumlar</span>
-            <span class="clb-count">${counts.medium} senaryo</span>
-          </button>
-          <button class="cls-level-btn hard" onclick="app.startConvoByLevel('hard')">
-            <span class="clb-icon">🔥</span>
-            <span class="clb-name">İleri</span>
-            <span class="clb-desc">Karmaşık müzakere, akademik, profesyonel</span>
-            <span class="clb-count">${counts.hard} senaryo</span>
-          </button>
+          ${lvls.map(l => `
+            <button class="cls-level-btn ${l.key}" onclick="app.startConvoByLevel('${l.key}')" style="--lv-color:${l.color};--lv-glow:${l.glow}">
+              <div class="clb-left">
+                <span class="clb-icon">${l.icon}</span>
+              </div>
+              <div class="clb-body">
+                <div class="clb-top">
+                  <span class="clb-name">${l.name}</span>
+                  <span class="clb-done">${done[l.key]}/${counts[l.key]}</span>
+                </div>
+                <div class="clb-desc">${l.desc}</div>
+                <div class="clb-tags">${l.tags.map(t => `<span class="clb-tag">${t}</span>`).join('')}</div>
+                <div class="clb-bar"><div class="clb-bar-fill" style="width:${Math.round(done[l.key]/counts[l.key]*100)}%;background:${l.color}"></div></div>
+              </div>
+              <div class="clb-arrow">›</div>
+            </button>`).join('')}
         </div>
+        <p class="cls-hint">💡 Her seferinde farklı bir senaryo gelir</p>
       </div>`;
   }
 
   startConvoByLevel(level) {
     const pool = CONVERSATIONS.filter(c => c.level === level);
     if (!pool.length) return;
-    // Shuffle pool, avoid repeating last scenario
-    const lastId = this.session.convo?.scenario?.id;
+    const lastId   = this.session.convo?.scenario?.id;
     const candidates = pool.length > 1 ? pool.filter(c => c.id !== lastId) : pool;
     const scenario = candidates[Math.floor(Math.random() * candidates.length)];
-    this.session.convo = { scenario, level, turnIdx: 0, score: 0, total: 0 };
+    this.session.convo = { scenario, level, turnIdx: 0, score: 0, total: 0, sessionXP: 0, turnLog: [] };
     this._renderConvoChat();
   }
 
@@ -4904,26 +4920,45 @@ class App {
     const el = document.getElementById('convo-content');
     if (!el) return;
     const { scenario } = this.session.convo;
-    const userTurns = scenario.turns.filter(t => t.role === 'user' || t.userHint).length;
-    const levelLabel = { easy: '🌱 Başlangıç', medium: '📚 Orta', hard: '🔥 İleri' }[scenario.level] || '';
+    const userTurns  = scenario.turns.filter(t => t.role === 'user' || t.userHint).length;
+    const levelMeta  = { easy: { label:'Başlangıç', color:'var(--green)' }, medium: { label:'Orta', color:'var(--amber)' }, hard: { label:'İleri', color:'var(--rose)' } };
+    const lm = levelMeta[scenario.level] || { label:'', color:'var(--cyan)' };
     el.innerHTML = `
       <div class="convo-chat-wrap">
         <div class="convo-chat-header">
-          <button class="ccb-back" onclick="app._renderConvoLevels()">←</button>
+          <button class="ccb-back" onclick="app._renderConvoLevels()" title="Geri">←</button>
           <div class="cch-info">
             <span class="cch-emoji">${scenario.emoji || '💬'}</span>
-            <span class="cch-title">${scenario.title}</span>
-            <span class="cch-level">${levelLabel}</span>
+            <div class="cch-text">
+              <span class="cch-title">${scenario.title}</span>
+              <span class="cch-level" style="color:${lm.color}">${lm.label}</span>
+            </div>
           </div>
           <div class="cch-right">
             <span class="cch-xp" id="cch-xp">0 XP</span>
             <span class="cch-progress" id="cch-progress">0 / ${userTurns}</span>
           </div>
         </div>
+        <div class="cch-progbar"><div class="cch-progbar-fill" id="cch-progbar-fill" style="width:0%"></div></div>
         <div class="convo-chat" id="convo-chat"></div>
         <div class="convo-user-area" id="convo-user-area"></div>
       </div>`;
-    setTimeout(() => this._convoNextTurn(), 300);
+    // Show scene intro card first
+    this._convoShowScene(scenario);
+    setTimeout(() => this._convoNextTurn(), 900);
+  }
+
+  _convoShowScene(scenario) {
+    const chat = document.getElementById('convo-chat');
+    if (!chat) return;
+    const roleMap = { easy:'👤 Sen', medium:'👤 Sen', hard:'👤 Sen' };
+    const d = document.createElement('div');
+    d.className = 'convo-scene-card';
+    d.innerHTML = `
+      <div class="csc-badge">📍 Senaryo</div>
+      <div class="csc-name">${scenario.emoji || '💬'} ${scenario.title}</div>
+      <div class="csc-role">Rolün: Konuşmayı sürdür, doğal ol</div>`;
+    chat.appendChild(d);
   }
 
   _convoNextTurn() {
@@ -4948,7 +4983,9 @@ class App {
       const userTurns     = scenario.turns.filter(t => t.role === 'user' || t.userHint).length;
       const doneUserTurns = scenario.turns.slice(0, turnIdx).filter(t => t.role === 'user' || t.userHint).length;
       const prog = document.getElementById('cch-progress');
+      const fill = document.getElementById('cch-progbar-fill');
       if (prog) prog.textContent = `${doneUserTurns} / ${userTurns}`;
+      if (fill) fill.style.width = `${userTurns ? (doneUserTurns / userTurns) * 100 : 0}%`;
       this._convoShowUserPrompt(turn);
     }
   }
@@ -5009,16 +5046,20 @@ class App {
     const expected = turn.expected || '';
     area.innerHTML = `
       <div class="convo-prompt${isRetry ? ' retry' : ''}">
-        <div class="cp-hint">${isRetry ? '🔄 Tekrar dene: ' : '💬 '}${hint}</div>
-        ${expected ? `<div class="cp-expected">Örnek: <em>"${expected}"</em></div>` : ''}
-        <div class="convo-controls">
-          <button class="speak-rec-btn" id="convo-rec-btn" onclick="app.toggleConvoRecord()">
-            <span id="convo-rec-icon">🎤</span>
-            <small id="convo-rec-label">Konuş</small>
-          </button>
-          <button class="speak-side-btn" onclick="app.skipConvoTurn()">⏭ Geç</button>
+        <div class="cp-header">
+          <span class="cp-icon">${isRetry ? '🔄' : '💬'}</span>
+          <span class="cp-hint">${isRetry ? 'Tekrar dene: ' : ''}${hint}</span>
         </div>
-        <div id="convo-transcript" style="text-align:center;color:var(--text-2);font-size:0.85rem;min-height:22px;margin-top:8px"></div>
+        ${expected ? `<div class="cp-expected"><span class="cp-ex-label">Örnek:</span> <em>${expected}</em></div>` : ''}
+        <div class="cp-mic-row">
+          <button class="speak-side-btn cp-skip-btn" onclick="app.skipConvoTurn()">⏭ Geç</button>
+          <button class="convo-mic-btn" id="convo-rec-btn" onclick="app.toggleConvoRecord()">
+            <span id="convo-rec-icon">🎤</span>
+            <span id="convo-rec-label">Konuş</span>
+          </button>
+          <div class="cp-spacer"></div>
+        </div>
+        <div id="convo-transcript" class="cp-transcript"></div>
       </div>`;
   }
 
@@ -5033,7 +5074,7 @@ class App {
     if (label) label.textContent = 'Durdur';
     if (btn) btn.classList.add('recording');
     const t = document.getElementById('convo-transcript');
-    if (t) t.innerHTML = '<span style="color:var(--cyan);animation:pulse 1.5s infinite">🎙️ Dinliyorum...</span>';
+    if (t) t.innerHTML = '<span class="cp-listening">🎙️ Dinliyorum…</span>';
     this.session.isRecording = true;
     this.speech.startRecognition({
       onResult:  (e) => this._handleConvoResult(e, turn),
@@ -5069,6 +5110,7 @@ class App {
     this._convoAddUserBubble(raw, score);
     this.session.convo.score += score;
     this.session.convo.total++;
+    (this.session.convo.turnLog = this.session.convo.turnLog || []).push({ score });
 
     // Show expected with keyword highlights + optional retry
     const expected = turn.expected || '';
@@ -5133,25 +5175,43 @@ class App {
   }
 
   _convoFinish() {
-    const { score, total, level } = this.session.convo;
+    const { score, total, level, scenario, turnLog = [] } = this.session.convo;
     const avg = total > 0 ? Math.round(score / total) : 0;
     const xp  = Math.round(avg / 100 * 80);
     this.addXP(xp);
+
+    // Persist completion
+    const completed = this.state.get('convoCompleted') || {};
+    completed[scenario.id] = { avg, ts: Date.now() };
+    this.state.set('convoCompleted', completed);
+
+    // Grade
+    const grade     = avg >= 90 ? 'S' : avg >= 75 ? 'A' : avg >= 55 ? 'B' : 'C';
+    const gradeColor = { S:'var(--cyan)', A:'var(--green)', B:'var(--amber)', C:'var(--rose)' }[grade];
+    const gradeMsg   = { S:'Mükemmel!', A:'Harika!', B:'İyi iş!', C:'Devam et!' }[grade];
+
+    // Turn breakdown
+    const turnRows = turnLog.map((t, i) => {
+      const bar = Math.round(t.score / 10);
+      const fill = '█'.repeat(bar) + '░'.repeat(10 - bar);
+      return `<div class="cf-turn-row"><span class="cf-turn-num">${i+1}</span><span class="cf-turn-bar">${fill}</span><span class="cf-turn-pct">${t.score}%</span></div>`;
+    }).join('');
+
     const area = document.getElementById('convo-user-area');
     const chat = document.getElementById('convo-chat');
     if (area) area.innerHTML = '';
     if (chat) {
-      const color = avg >= 75 ? 'var(--green)' : avg >= 50 ? 'var(--amber)' : 'var(--rose)';
       const d = document.createElement('div');
       d.className = 'convo-finish-card';
       d.innerHTML = `
-        <div class="cf-emoji">${avg >= 75 ? '🎉' : avg >= 50 ? '👍' : '💪'}</div>
-        <div class="cf-title">Sohbet Tamamlandı</div>
+        <div class="cf-grade-badge" style="color:${gradeColor};border-color:${gradeColor}">${grade}</div>
+        <div class="cf-title">${gradeMsg}</div>
         <div class="cf-score-row">
-          <div class="cf-score-val" style="color:${color}">${avg}%</div>
-          <div class="cf-score-label">Ortalama Skor</div>
+          <div class="cf-score-val" style="color:${gradeColor}">${avg}%</div>
+          <div class="cf-score-label">Ortalama Başarı</div>
         </div>
-        <div class="cf-xp">+${xp} XP</div>
+        <div class="cf-xp">+${xp} XP kazandın</div>
+        ${turnRows ? `<div class="cf-turns">${turnRows}</div>` : ''}
         <div class="cf-actions">
           <button class="btn btn-primary" onclick="app.startConvoByLevel('${level}')">Sonraki Senaryo →</button>
           <button class="btn btn-ghost btn-sm" onclick="app._renderConvoLevels()">Seviye Değiştir</button>
@@ -5159,7 +5219,7 @@ class App {
       chat.appendChild(d);
       chat.scrollTop = chat.scrollHeight;
     }
-    if (avg >= 80 && typeof confetti === 'function') confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+    if (avg >= 75 && typeof confetti === 'function') confetti({ particleCount: 90, spread: 65, origin: { y: 0.6 } });
   }
 
   // ─────────────────────────────────────────────────────────

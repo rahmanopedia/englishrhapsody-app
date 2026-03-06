@@ -3510,6 +3510,21 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .cf-score-label { font-size: 0.78rem; color: var(--text-3); }
 .cf-xp { font-size: 0.88rem; color: var(--amber); font-weight: 700; margin: 6px 0 14px; }
 .cf-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.cf-grade-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 2px solid; font-size: 1.8rem; font-weight: 900;
+  margin: 0 auto 10px; letter-spacing: -1px;
+}
+.cf-turns {
+  display: flex; flex-direction: column; gap: 4px;
+  background: rgba(255,255,255,0.03); border-radius: 10px;
+  padding: 10px 14px; margin: 10px 0 14px; text-align: left;
+}
+.cf-turn-row { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; }
+.cf-turn-num { color: var(--text-3); width: 14px; flex-shrink: 0; text-align: right; }
+.cf-turn-bar { font-family: monospace; color: var(--cyan); letter-spacing: -1px; flex: 1; font-size: 0.65rem; }
+.cf-turn-pct { color: var(--text-2); font-weight: 700; width: 30px; text-align: right; flex-shrink: 0; }
 
 /* ── Convo: typing indicator ────────────────────── */
 .cb-typing {
@@ -3563,6 +3578,144 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .cch-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .cch-xp { font-size: 0.75rem; color: var(--amber); font-weight: 700; }
 .convo-prompt.retry { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.04); }
+
+/* ── Convo: level picker enhancements ──────────────────────── */
+.cls-orb {
+  font-size: 2.8rem; margin-bottom: 10px;
+  filter: drop-shadow(0 0 18px rgba(0,212,255,0.4));
+}
+.cls-hint {
+  font-size: 0.75rem; color: var(--text-3);
+  margin: 14px 0 0; text-align: center;
+}
+
+/* Level card internals */
+.clb-left {
+  display: flex; align-items: center; justify-content: center;
+  width: 48px; flex-shrink: 0;
+}
+.clb-body { flex: 1; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.clb-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.clb-done {
+  font-size: 0.7rem; color: var(--text-3); font-weight: 600;
+  white-space: nowrap; flex-shrink: 0;
+}
+.clb-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.clb-tag {
+  padding: 2px 8px; border-radius: 99px;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  font-size: 0.65rem; color: var(--text-3); font-weight: 500;
+}
+.clb-bar {
+  height: 3px; border-radius: 99px; background: rgba(255,255,255,0.07);
+  overflow: hidden; margin-top: 2px;
+}
+.clb-bar-fill {
+  height: 100%; border-radius: 99px;
+  transition: width 0.5s ease;
+}
+.clb-arrow {
+  font-size: 1.3rem; color: var(--text-3);
+  flex-shrink: 0; transition: transform 0.2s ease;
+}
+.cls-level-btn:hover .clb-arrow { transform: translateX(4px); }
+
+/* ── Convo: scene intro card ─────────────────────────────── */
+.convo-scene-card {
+  background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(124,58,237,0.06));
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 14px; padding: 16px 18px;
+  margin-bottom: 12px; animation: fadeIn 0.35s ease;
+}
+.csc-badge {
+  display: inline-block; font-size: 0.65rem; font-weight: 700;
+  color: var(--cyan); letter-spacing: 0.07em; text-transform: uppercase;
+  background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 99px; padding: 2px 8px; margin-bottom: 8px;
+}
+.csc-name {
+  font-size: 1rem; font-weight: 800; color: var(--text-1);
+  margin-bottom: 4px;
+}
+.csc-role {
+  font-size: 0.75rem; color: var(--text-3);
+}
+
+/* ── Convo: header progress bar ──────────────────────────── */
+.cch-progbar {
+  height: 3px; background: rgba(255,255,255,0.06);
+  position: relative; overflow: hidden;
+}
+.cch-progbar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--cyan), var(--purple));
+  border-radius: 0 99px 99px 0;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.cch-text {
+  display: flex; flex-direction: column; gap: 1px; min-width: 0;
+}
+
+/* ── Convo: mic prompt layout ────────────────────────────── */
+.cp-header {
+  display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;
+}
+.cp-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.cp-expected {
+  font-size: 0.78rem; color: var(--text-3); margin-bottom: 14px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.03); border-radius: 8px;
+  border-left: 2px solid rgba(0,212,255,0.25);
+}
+.cp-ex-label { font-weight: 700; color: var(--text-3); margin-right: 4px; }
+.cp-mic-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin: 10px 0 8px;
+}
+.cp-spacer { width: 80px; }
+.convo-mic-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(124,58,237,0.15));
+  border: 2px solid rgba(0,212,255,0.35);
+  color: var(--text-1); cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 0 20px rgba(0,212,255,0.15);
+}
+.convo-mic-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 30px rgba(0,212,255,0.3);
+  border-color: var(--cyan);
+}
+.convo-mic-btn.recording {
+  background: linear-gradient(135deg, rgba(244,63,94,0.2), rgba(244,63,94,0.1));
+  border-color: var(--rose);
+  box-shadow: 0 0 24px rgba(244,63,94,0.3);
+  animation: micPulse 1s ease-in-out infinite;
+}
+@keyframes micPulse {
+  0%,100% { box-shadow: 0 0 24px rgba(244,63,94,0.3); }
+  50% { box-shadow: 0 0 36px rgba(244,63,94,0.55); }
+}
+#convo-rec-icon { font-size: 1.6rem; }
+#convo-rec-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em; color: var(--text-3); }
+.cp-skip-btn {
+  padding: 7px 14px; border-radius: 99px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  color: var(--text-3); font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; transition: var(--transition);
+  white-space: nowrap;
+}
+.cp-skip-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-2); }
+.cp-transcript {
+  min-height: 22px; text-align: center;
+  font-size: 0.82rem; color: var(--text-2);
+  font-style: italic; transition: opacity 0.2s;
+}
+.cp-listening {
+  color: var(--rose); font-weight: 600; font-style: normal;
+  animation: blink 1.2s step-end infinite;
+}
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
 /* ── SPEED CHALLENGE ──────────────────────────────────────── */
 .speed-list-header { margin-bottom: 20px; }
