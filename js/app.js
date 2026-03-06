@@ -2423,7 +2423,7 @@ class SpeechEngine {
     if (this.synth) this.synth.cancel();
   }
 
-  startRecognition({ onResult, onError, onEnd }) {
+  startRecognition({ onResult, onError, onEnd, onInterim }) {
     if (!this.SpeechRecognition) {
       onError && onError({ error: 'not-supported' });
       return null;
@@ -2431,10 +2431,18 @@ class SpeechEngine {
     const rec = new this.SpeechRecognition();
     rec.lang = this.accent || 'en-US';
     rec.continuous = false;
-    rec.interimResults = false;
-    rec.onresult = onResult;
-    rec.onerror  = onError;
-    rec.onend    = onEnd;
+    rec.interimResults = true;
+    rec.maxAlternatives = 1;
+    rec.onresult = (e) => {
+      const result = e.results[0];
+      if (result.isFinal) {
+        onResult && onResult(e);
+      } else {
+        onInterim && onInterim(result[0].transcript);
+      }
+    };
+    rec.onerror = onError;
+    rec.onend   = onEnd;
     this._recognizer = rec;
     try { rec.start(); } catch {}
     return rec;
@@ -4670,7 +4678,11 @@ class App {
         const msg = e.error === 'not-allowed' ? 'Mikrofon izni gerekli.' : `Hata: ${e.error}`;
         if (el) el.innerHTML = `<span style="color:var(--rose)">${msg}</span>`;
       },
-      onEnd: () => this._stopRecord(),
+      onEnd:     () => this._stopRecord(),
+      onInterim: (text) => {
+        const el = document.getElementById('speak-transcript');
+        if (el) el.innerHTML = `<em style="color:var(--text-2)">${text}</em>`;
+      },
     });
   }
 
@@ -5001,9 +5013,13 @@ class App {
     if (t) t.innerHTML = '<span style="color:var(--cyan);animation:pulse 1.5s infinite">🎙️ Dinliyorum...</span>';
     this.session.isRecording = true;
     this.speech.startRecognition({
-      onResult: (e) => this._handleConvoResult(e, turn),
-      onError:  () => this._stopConvoRecord(),
-      onEnd:    () => this._stopConvoRecord(),
+      onResult:  (e) => this._handleConvoResult(e, turn),
+      onError:   () => this._stopConvoRecord(),
+      onEnd:     () => this._stopConvoRecord(),
+      onInterim: (text) => {
+        const t = document.getElementById('convo-transcript');
+        if (t) t.innerHTML = `<em style="color:var(--text-2)">${text}</em>`;
+      },
     });
   }
 
