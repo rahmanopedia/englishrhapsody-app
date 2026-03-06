@@ -18,8 +18,6 @@
 'use strict';
 
 const PH_MODES = {
-  flash:   { label:'⚡ Flash',   desc:'800ms / harf · Kolay',       imprintMs:800,  xp:15, allAtOnce:false },
-  ghost:   { label:'👻 Ghost',   desc:'400ms / harf · Orta',        imprintMs:400,  xp:25, allAtOnce:false },
   phantom: { label:'🌫️ Phantom', desc:'1.2s tümü birden · Zor',     imprintMs:1200, xp:40, allAtOnce:true  },
 };
 
@@ -32,7 +30,7 @@ class PhantomMode {
   constructor(appRef) {
     this.app        = appRef;
     this.root       = null;
-    this.mode       = 'ghost';
+    this.mode       = 'phantom';
     this.sessLen    = 10;
     this.cefrFilter = [];        // boş = tümü
     this.queue      = [];
@@ -108,19 +106,6 @@ class PhantomMode {
         </div>
 
         <div class="ph-config">
-
-          <div class="ph-config-row">
-            <span class="ph-config-label">Zorluk</span>
-            <div class="ph-mode-btns">
-              ${Object.entries(PH_MODES).map(([k,v]) =>
-                `<button class="ph-mode-btn ${k==='ghost'?'active':''}"
-                         onclick="window.phantomMod._setMode('${k}',this)">
-                   <span class="phmb-label">${v.label}</span>
-                   <span class="phmb-desc">${v.desc}</span>
-                 </button>`
-              ).join('')}
-            </div>
-          </div>
 
           <div class="ph-config-row">
             <span class="ph-config-label">Kelime Sayısı</span>
