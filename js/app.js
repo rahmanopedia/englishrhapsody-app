@@ -202,14 +202,14 @@ class UI {
       p.className = 'particle-fx';
       p.style.left = x + 'px';
       p.style.top  = y + 'px';
-      const size = Math.random() * 6 + 4;
-      p.style.cssText += `width:${size}px;height:${size}px;background:${colors[i % colors.length]}`;
+      const size = Math.random() * 5 + 3;
+      p.style.cssText += `width:${size}px;height:${size}px;background:${colors[i % colors.length]};transform:translate3d(0,0,0)`;
       const angle = (Math.random() * Math.PI * 2);
-      const dist  = Math.random() * 45 + 20;
+      const dist  = Math.random() * 40 + 20;
       p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
       p.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
       document.body.appendChild(p);
-      setTimeout(() => p.remove(), 820);
+      setTimeout(() => p.remove(), 800);
     }
   }
 }
@@ -291,6 +291,12 @@ class App {
     this.session.view = view;
     this.speech.stop();
     this.session.isSpeakingStory = false;
+    
+    // Stop any active voice recognition
+    if (this.session.isRecording) {
+      this.speech.stopRecognition();
+      this._stopSynthVoiceUI();
+    }
 
     // Cleanup synesthesia if active (prevents memory leaks and ghost timers)
     if (this.session.synthActive || this.session.synthPaused) {
@@ -1125,7 +1131,7 @@ class App {
           span.textContent = ch;
           span.classList.add('filled');
           span.style.color      = letterColor;
-          span.style.textShadow = `0 0 14px ${letterColor}cc, 0 0 30px ${letterColor}55`;
+          span.style.textShadow = `0 0 8px ${letterColor}aa`;
           span.style.borderBottomColor = letterColor;
         }
       });
@@ -1166,17 +1172,15 @@ class App {
 
     if (core) {
       if (isCorrect) {
-        const scale = 1 + (typedLen / wordLen) * 0.55;
-        core.style.transform  = `scale(${scale})`;
-        core.style.boxShadow  = `0 0 ${35 + typedLen * 12}px ${accent}99`;
-        core.style.background = `${accent}2a`;
+        const scale = 1 + (typedLen / wordLen) * 0.4;
+        core.style.transform  = `translate3d(0,0,0) scale(${scale})`;
+        core.style.background = `${accent}33`;
         core.classList.remove('error');
       } else {
         core.classList.add('error');
         setTimeout(() => {
           if (this.session.synthActive) {
             core.classList.remove('error');
-            core.style.boxShadow = `0 0 ${35 + typedLen * 12}px ${accent}44`;
           }
         }, 320);
       }
@@ -2833,31 +2837,45 @@ class App {
   _initCanvas() {
     const canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false }); // Optimize for performance
     const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     resize(); window.addEventListener('resize', resize);
-    const stars = Array.from({length:140}, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, s: Math.random() * 1.8, v: Math.random() * 0.4 + 0.08 }));
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const level = this.state.get('level');
-      const tier  = Math.min(Math.floor((level - 1) / 5) + 1, 6);
-      const palettes  = ['#00d4ff','#10b981','#f59e0b','#7c3aed','#f43f5e','#ff9d00'];
-      ctx.fillStyle   = palettes[tier - 1] || '#00d4ff';
-      ctx.globalAlpha = 0.4;
-      const speedMult = 1 + level * 0.035;
 
-      stars.forEach(star => {
-        star.y -= star.v * speedMult;
-        if (star.y < 0) { star.y = canvas.height; star.x = Math.random() * canvas.width; }
-        ctx.beginPath(); 
-        ctx.arc(star.x, star.y, star.s, 0, Math.PI * 2); 
+    const starCount = window.innerWidth < 768 ? 40 : 70; // Adaptive count
+    const stars = Array.from({length: starCount}, () => ({ 
+      x: Math.random() * canvas.width, 
+      y: Math.random() * canvas.height, 
+      s: Math.random() * 1.5 + 0.2, 
+      v: Math.random() * 0.35 + 0.05 
+    }));
+
+    const animate = () => {
+      // Only run if visible to save CPU
+      if (document.visibilityState === 'visible') {
+        ctx.fillStyle = '#070a0f'; // Base background
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const level = this.state.get('level') || 1;
+        const tier  = Math.min(Math.floor((level - 1) / 5) + 1, 6);
+        const palettes  = ['#00d4ff','#10b981','#f59e0b','#7c3aed','#f43f5e','#ff9d00'];
+        ctx.fillStyle   = palettes[tier - 1] || '#00d4ff';
+        ctx.globalAlpha = 0.25;
+        const speedMult = 1 + level * 0.015;
+
+        ctx.beginPath();
+        for (let i = 0; i < stars.length; i++) {
+          const s = stars[i];
+          s.y -= s.v * speedMult;
+          if (s.y < 0) { s.y = canvas.height; s.x = Math.random() * canvas.width; }
+          ctx.moveTo(s.x, s.y);
+          ctx.arc(s.x, s.y, s.s, 0, 6.28);
+        }
         ctx.fill();
-      });
+      }
       requestAnimationFrame(animate);
     };
     animate();
   }
-
   _bindGlobalEvents() {
     document.addEventListener('click', e => {
       const navItem = e.target.closest('.nav-item, .m-nav-item');
