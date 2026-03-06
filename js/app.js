@@ -353,7 +353,6 @@ const PHRASE_DICT = {
   'went in':        { type:'Eylem Kalıbı', tr:'içeri girdi',                                     ex:'She knocked and went in.' },
   'went out':       { type:'Eylem Kalıbı', tr:'dışarı çıktı',                                    ex:'They went out for dinner.' },
   'went up':        { type:'Eylem Kalıbı', tr:'yukarı çıktı; arttı',                             ex:'Prices went up again this month.' },
-  'went up':        { type:'Eylem Kalıbı', tr:'yukarı çıktı; arttı',                             ex:'Prices went up again this month.' },
   'went off':       { type:'Eylem Kalıbı', tr:'çaldı (alarm); patladı; bozuldu',                 ex:'The alarm went off at 6 AM.' },
   'came under':     { type:'Eylem Kalıbı', tr:'altından geçti; maruz kaldı',                     ex:'The plan came under criticism.' },
   'came inside':    { type:'Eylem Kalıbı', tr:'içeri geldi',                                     ex:'Come inside, it is cold out there.' },
