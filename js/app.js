@@ -5006,16 +5006,11 @@ class App {
     const area = document.getElementById('convo-user-area');
     if (!area) return;
     const hint     = turn.hint || turn.userHint || '';
-    const keywords = turn.keywords || [];
-    const keyChips = keywords.length
-      ? `<div class="cp-keywords">${keywords.map(k =>
-          `<button class="cp-kw" onclick="app.speech.speak('${k}',0.9)">${k}</button>`
-        ).join('')}</div>`
-      : '';
+    const expected = turn.expected || '';
     area.innerHTML = `
       <div class="convo-prompt${isRetry ? ' retry' : ''}">
         <div class="cp-hint">${isRetry ? '🔄 Tekrar dene: ' : '💬 '}${hint}</div>
-        ${keyChips}
+        ${expected ? `<div class="cp-expected">Örnek: <em>"${expected}"</em></div>` : ''}
         <div class="convo-controls">
           <button class="speak-rec-btn" id="convo-rec-btn" onclick="app.toggleConvoRecord()">
             <span id="convo-rec-icon">🎤</span>
