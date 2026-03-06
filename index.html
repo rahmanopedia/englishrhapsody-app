@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>English Rhapsody | Synesthesia Edition</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#070a0f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Rhapsody">
+  <link rel="apple-touch-icon" href="https://img.icons8.com/nolan/192/graduation-cap.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="rank-1">
+
+<!-- ── Splash ─────────────────────────────────────────────── -->
+<div id="splash-screen">
+  <div class="splash-logo">English<span> Rhapsody</span></div>
+  <div class="splash-spinner"></div>
+  <p class="splash-sub">Yükleniyor...</p>
+</div>
+
+<!-- ── Onboarding ─────────────────────────────────────────── -->
+<div id="onboarding-overlay" style="display:none">
+  <button class="ob-skip" onclick="app.skipOnboarding()">Atla →</button>
+  <div class="ob-wrap">
+    <div class="ob-progress" id="ob-progress" style="display:none">
+      <div class="ob-progress-fill" id="ob-progress-fill" style="width:0%"></div>
+    </div>
+    <div id="ob-screen"></div>
+  </div>
+</div>
+
+<!-- ── Background canvas ──────────────────────────────────── -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- ── App Layout ─────────────────────────────────────────── -->
+<div class="layout">
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-logo">
+      <div class="logo-dot"></div>
+      English<span> Rhapsody</span>
+    </div>
+    <div class="header-stats">
+      <button class="focus-btn" onclick="app.toggleFocusMode()" title="Odak Modu">🧘</button>
+      <div class="stat-chip streak">🔥 <span id="hdr-streak">1</span></div>
+      <div class="stat-chip xp">⚡ <span id="hdr-xp">0</span> XP</div>
+      <div class="stat-chip level">🏆 Lv <span id="hdr-level">1</span></div>
+    </div>
+  </header>
+
+  <!-- Sidebar (desktop) -->
+  <aside class="sidebar">
+    <nav id="sidebar-nav">
+      <a class="nav-item active" data-target="home">
+        <span class="nav-icon">🏠</span> Ana Merkez
+      </a>
+      <a class="nav-item" data-target="learn">
+        <span class="nav-icon">🌀</span> Sinestezi Lab
+      </a>
+      <a class="nav-item" data-target="reading">
+        <span class="nav-icon">📖</span> Okuma
+      </a>
+      <a class="nav-item" data-target="speak">
+        <span class="nav-icon">🎙️</span> Konuşma Lab
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-content animate-in" id="main-content"></main>
+</div>
+
+<!-- Mobile bottom nav -->
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="m-nav-item active" data-target="home">
+    <span class="m-icon">🏠</span>
+    <span>Merkez</span>
+  </button>
+  <button class="m-nav-item" data-target="learn">
+    <span class="m-icon">🌀</span>
+    <span>Sinestezi</span>
+  </button>
+  <button class="m-nav-item" data-target="reading">
+    <span class="m-icon">📖</span>
+    <span>Okuma</span>
+  </button>
+  <button class="m-nav-item" data-target="speak">
+    <span class="m-icon">🎙️</span>
+    <span>Konuşma</span>
+  </button>
+</nav>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<!-- ── Templates ──────────────────────────────────────────── -->
+
+<!-- Home -->
+<template id="tpl-home">
+<div class="home-grid animate-in">
+
+  <!-- Hero banner -->
+  <div class="home-hero">
+    <div>
+      <div class="hero-greeting" id="home-greeting">🌅 Günaydın!</div>
+      <div class="hero-name" id="home-name">İngilizce öğrenimine devam et</div>
+      <div class="hero-date" id="home-date"></div>
+      <div class="accent-btns" style="margin-top:12px">
+        <button class="accent-btn" id="acc-us" onclick="app.setAccent('en-US')">🇺🇸 US</button>
+        <button class="accent-btn" id="acc-gb" onclick="app.setAccent('en-GB')">🇬🇧 UK</button>
+      </div>
+    </div>
+    <div class="hero-rank" id="hero-rank">
+      <div class="hero-rank-icon" id="rank-icon">🌱</div>
+      <div class="hero-rank-name" id="rank-name">Çırak</div>
+      <div class="hero-rank-level" id="rank-level">Level 1</div>
+    </div>
+  </div>
+
+  <!-- Quick stats -->
+  <div class="stats-row">
+    <div class="stat-card cyan">
+      <div class="stat-val" id="home-words">0</div>
+      <div class="stat-label">Kelime Öğrenildi</div>
+    </div>
+    <div class="stat-card violet">
+      <div class="stat-val" id="home-xp">0</div>
+      <div class="stat-label">Toplam XP</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-val" id="home-streak">🔥1</div>
+      <div class="stat-label">Gün Serisi</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-val" id="home-acc">0%</div>
+      <div class="stat-label">Başarı Oranı</div>
+    </div>
+  </div>
+
+  <!-- Collocation tip of the day (Prominent Position) -->
+  <div class="colloc-tip-card" id="colloc-tip-card"></div>
+
+  <!-- XP bar -->
+  <div class="xp-bar-card">
+    <div class="xp-bar-header">
+      <span class="lvl">⚡ Level <span id="home-lvl">1</span></span>
+      <span class="remain" id="xp-remain">500 XP kaldı</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="xp-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Word of the Day -->
+  <div class="wod-card">
+    <div class="wod-left">
+      <div class="wod-icon" id="wod-icon">🌌</div>
+      <div>
+        <div class="wod-label">⭐ Günün Kelimesi</div>
+        <div class="wod-word" id="wod-word">—</div>
+        <div class="wod-ipa" id="wod-ipa"></div>
+        <div class="wod-tr" id="wod-tr"></div>
+      </div>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="app.speakWord(document.getElementById('wod-word').textContent)">
+      🔊 Dinle
+    </button>
+  </div>
+
+  <!-- Action cards -->
+  <div class="actions-grid">
+    <div class="action-card cards" onclick="app.navigate('learn')">
+      <div class="ac-icon">🌀</div>
+      <div class="ac-due-wrap">
+        <h3>Sinestezi Lab</h3>
+        <span class="ac-due-badge" id="ac-due-badge" style="display:none">0</span>
+      </div>
+      <p>Yapay zeka destekli aralıklı tekrar ile kelimeleri kalıcı öğren.</p>
+      <div class="progress-track">
+        <div class="progress-fill" id="ac-words-bar" style="width:0%"></div>
+      </div>
+      <div style="font-size:0.75rem;color:var(--text-3);margin-top:6px"><span id="ac-words-pct">0%</span> tamamlandı</div>
+    </div>
+    <div class="action-card speak" onclick="app.navigate('speak')">
+      <div class="ac-icon">🎙️</div>
+      <h3>Konuşma Lab</h3>
+      <p>Mikrofona konuş, AI telaffuzunu kelime kelime analiz etsin.</p>
+      <div style="font-size:0.8rem;color:var(--text-2);margin-top:8px" id="ac-speak-hint">Bugün dene →</div>
+    </div>
+    <div class="action-card reading" onclick="app.navigate('reading')">
+      <div class="ac-icon">📖</div>
+      <h3>Okuma Atölyesi</h3>
+      <p>Hikayeler içinde bağlam kurarak kelime öğren ve anlamayı derinleştir.</p>
+      <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px">60 hikaye, 3 seviye</div>
+    </div>
+  </div>
+
+  <!-- Daily goal -->
+  <div class="card" style="padding:20px 24px">
+    <div class="section-header">
+      <span class="section-title" id="daily-goal-label">🎯 Günlük Hedef</span>
+      <span style="font-size:0.8rem;color:var(--text-3)" id="daily-goal-pct">0/100 XP</span>
+    </div>
+    <div class="progress-track" style="height:10px;margin-top:10px">
+      <div class="progress-fill" id="daily-goal-bar" style="width:0%;background:linear-gradient(90deg,var(--cyan),var(--violet))"></div>
+    </div>
+  </div>
+
+  <!-- Streak calendar -->
+  <div class="card" style="padding:20px 24px">
+    <div class="section-header">
+      <span class="section-title">Son 7 Gün</span>
+    </div>
+    <div class="streak-row" id="streak-cal"></div>
+  </div>
+
+</div>
+</template>
+
+<!-- Learn: Sinestezi v5.0 -->
+<template id="tpl-learn">
+<div class="animate-in synesthesia-wrapper">
+
+  <!-- Topbar -->
+  <div class="synth-topbar">
+    <button class="synth-exit-btn" onclick="app.navigate('home')">← Merkez</button>
+    <div class="synth-progress-wrap" id="synth-progress-wrap" style="display:none">
+      <span class="synth-counter" id="synth-counter">1/10</span>
+      <div class="synth-prog-track"><div class="synth-prog-fill" id="synth-prog-fill" style="width:0%"></div></div>
+    </div>
+    <div class="synth-topbar-right">
+      <span class="synth-mode-ind" id="synth-mode-indicator" style="display:none"></span>
+      <span class="synth-combo-badge" id="synth-combo" style="display:none">🔥 ×<span id="synth-combo-val">1</span></span>
+      <span class="synth-score-chip" id="synth-score">0 XP</span>
+    </div>
+  </div>
+
+  <!-- Intro Screen -->
+  <div class="synth-intro" id="synth-intro">
+    <div class="synth-icon-main">🌀</div>
+    <h1 class="synth-title">SİNESTEZİ <span class="synth-version-badge">v7.0</span></h1>
+    <p class="synth-subtitle">Nöral Öğrenme Matrisi — Çok Modlu İmmersyon</p>
+
+    <div class="synth-rules">
+      <div class="rule-item"><span>1</span> <strong>YAZMA</strong>: Her harf kendi renginde parlar — gerçek sinestezi deneyimi.</div>
+      <div class="rule-item"><span>2</span> <strong>BAĞLAM</strong>: Kelimeleri cümle içindeki boşluklara yerleştirerek öğren.</div>
+      <div class="rule-item"><span>3</span> Hız bonusu: Ne kadar hızlı o kadar <strong style="color:var(--amber)">+XP</strong>. Kombo: 5× = 2×, 10× = 3× XP.</div>
+    </div>
+
+    <!-- Mode Picker -->
+    <div class="synth-mode-picker">
+      <span class="sp-label">Mod Seçimi</span>
+      <div class="synth-mode-cards">
+        <button class="synth-mode-card" onclick="app._setSynthMode('spell',this)">
+          <span class="smc-icon">⌨️</span>
+          <span class="smc-name">YAZMA</span>
+          <span class="smc-desc">20 XP / kelime</span>
+        </button>
+        <button class="synth-mode-card active" onclick="app._setSynthMode('mix',this)">
+          <span class="smc-icon">🌀</span>
+          <span class="smc-name">KARMA</span>
+          <span class="smc-desc">Rastgele mod</span>
+        </button>
+        <button class="synth-mode-card" onclick="app._setSynthMode('context',this)">
+          <span class="smc-icon">🧩</span>
+          <span class="smc-name">BAĞLAM</span>
+          <span class="smc-desc">Cümle tamamlama</span>
+        </button>
+        <button class="synth-mode-card" onclick="app._setSynthMode('speed',this)">
+          <span class="smc-icon">⚡</span>
+          <span class="smc-name">ZAMANA KARŞI</span>
+          <span class="smc-desc">Hızlı ol, 30 XP!</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="synth-session-picker">
+      <span class="sp-label">Oturum Uzunluğu</span>
+      <div class="sp-btns">
+        <button class="sp-btn" onclick="app._setSynthLen(5, this)">5 kelime</button>
+        <button class="sp-btn active" onclick="app._setSynthLen(10, this)">10 kelime</button>
+        <button class="sp-btn" onclick="app._setSynthLen(20, this)">20 kelime</button>
+      </div>
+    </div>
+
+    <button class="synth-start-btn" onclick="app.startSynesthesia()">BAĞLANTIYI KUR</button>
+  </div>
+
+  <!-- Chamber -->
+  <div class="synth-chamber" id="synth-chamber" style="display:none">
+
+    <div class="synth-bg-particles"></div>
+
+    <!-- Pause Overlay -->
+    <div class="synth-pause-overlay" id="synth-pause-overlay" style="display:none">
+      <div class="synth-pause-card">
+        <div class="synth-pause-icon">⏸</div>
+        <h2 class="synth-pause-title">DURAKLADI</h2>
+        <p class="synth-pause-sub">Hazır olunca devam et</p>
+        <button class="synth-pause-resume-btn" onclick="app.resumeSynesthesia()">▶ DEVAM ET</button>
+        <button class="synth-pause-exit-btn" onclick="app.navigate('home')">Ana Menüye Dön</button>
+      </div>
+    </div>
+
+    <!-- Word Info -->
+    <div class="synth-target-area">
+      <div class="synth-word-meta" id="synth-word-meta">
+        <span class="synth-word-icon" id="synth-word-icon"></span>
+        <span class="synth-cefr-badge" id="synth-cefr-badge"></span>
+        <span class="synth-cat-badge" id="synth-cat-badge"></span>
+      </div>
+      <div class="synth-target-tr" id="synth-tr" style="display:block"></div>
+      
+      <!-- Context Mode UI (v7.0) -->
+      <div id="synth-context-area" style="display:none; font-size:1.6rem; font-weight:600; text-align:center; max-width:600px; line-height:1.6; color:var(--text-1); margin-top:10px; background:rgba(255,255,255,0.03); padding:20px; border-radius:20px; border:1px solid var(--border)"></div>
+      
+      <div id="synth-ex" style="opacity:0;transition:opacity 0.6s ease;font-style:italic;color:var(--text-3);margin-top:8px;font-size:0.9rem;max-width:460px;text-align:center;line-height:1.6"></div>
+      <div class="synth-hint-used" id="synth-hint-used" style="display:none">💡 <span id="synth-hints-count">0</span> ipucu kullanıldı</div>
+    </div>
+
+    <!-- Core Orb -->
+    <div class="synth-core-container">
+      <div class="synth-ripple" id="synth-ripple"></div>
+      <div class="synth-core" id="synth-core"><div class="synth-core-inner"></div></div>
+      <svg class="synth-progress-svg" width="220" height="220" viewBox="0 0 100 100" style="position:absolute;transform:rotate(-90deg);pointer-events:none">
+        <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
+        <circle id="synth-progress-ring" cx="50" cy="50" r="48" fill="none" stroke="var(--cyan)" stroke-width="2" stroke-dasharray="301.44" stroke-dashoffset="301.44" style="transition:stroke-dashoffset 0.35s ease,stroke 0.4s"/>
+      </svg>
+      <!-- Speed Timer Ring -->
+      <svg id="synth-speed-timer" width="250" height="250" viewBox="0 0 100 100" style="position:absolute;transform:rotate(-90deg);pointer-events:none;display:none">
+        <circle id="synth-speed-arc" cx="50" cy="50" r="46" fill="none" stroke="rgba(245,158,11,0.55)" stroke-width="1.8" stroke-dasharray="289.02" stroke-dashoffset="0" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Letter Display (YAZMA modu) -->
+    <div class="synth-input-area" id="synth-input-display"></div>
+
+    <!-- Choice Grid (SEÇME modu) -->
+    <div class="synth-choice-grid" id="synth-choice-area" style="display:none"></div>
+
+    <!-- Speed Bonus Flash -->
+    <div class="synth-speed-bonus" id="synth-speed-bonus" style="display:none"></div>
+
+    <!-- Controls -->
+    <div class="synth-hint-action">
+      <button class="synth-hint-btn" id="synth-hint-listen-btn" onclick="app.playSynthHint()" title="Okunuşu dinle">🔊 Dinle</button>
+      <button class="synth-pause-btn" onclick="app._pauseSynesthesia()" title="Duraklat (Esc)">⏸</button>
+      <button class="synth-skip-btn" onclick="app.skipSynthWord()" title="Bilemedim, geç">Bilmiyorum ⏭</button>
+    </div>
+
+    <!-- Virtual Keyboard (mobile/touch) -->
+    <div class="synth-vkb" id="synth-vkb" style="display:none"></div>
+
+  </div>
+</div>
+</template>
+
+<!-- Reading -->
+<template id="tpl-reading">
+<div class="animate-in reading-workshop-container">
+  <div class="reading-header">
+    <div class="rh-left">
+      <h1>📖 Okuma Atölyesi</h1>
+      <p>Gerçek metinlerle bağlamı hisset, kelimeleri yaşa.</p>
+    </div>
+    <div class="rh-right">
+      <div class="reading-mode-toggle">
+        <button class="rm-btn active" id="btn-mode-read" onclick="app.setReadingMode('read')">📚 Okuma</button>
+        <button class="rm-btn" id="btn-mode-quiz" onclick="app.setReadingMode('quiz')">🧩 Egzersiz</button>
+      </div>
+      <button class="btn btn-primary btn-play-audio" id="btn-play-story" onclick="app.playStory()">
+        <span class="audio-icon">🎧</span> Sesli Dinle
+      </button>
+    </div>
+  </div>
+
+  <div class="level-tabs">
+    <button class="level-tab active" onclick="app.setReadingLevel('Kolay', this)">🌱 Kolay</button>
+    <button class="level-tab" onclick="app.setReadingLevel('Orta', this)">📚 Orta</button>
+    <button class="level-tab" onclick="app.setReadingLevel('İleri', this)">🔥 İleri</button>
+  </div>
+
+  <div class="story-wrapper" id="story-area"></div>
+</div>
+</template>
+
+<!-- Speaking -->
+<template id="tpl-speak">
+<div class="animate-in">
+
+  <div class="lab-header">
+    <div>
+      <h1>🎙️ Konuşma Lab</h1>
+      <p class="lab-subtitle">AI destekli konuşma koçunuz — 4 güçlü mod</p>
+    </div>
+  </div>
+
+  <div class="lab-mode-tabs">
+    <button class="lab-mode-tab active" data-mode="classic" onclick="app.setSpeakMode('classic',this)">
+      <span class="lmt-icon">🎯</span><span class="lmt-name">Telaffuz</span>
+    </button>
+    <button class="lab-mode-tab" data-mode="convo" onclick="app.setSpeakMode('convo',this)">
+      <span class="lmt-icon">🤖</span><span class="lmt-name">AI Sohbet</span>
+    </button>
+  </div>
+
+  <!-- CLASSIC MODE -->
+  <div class="speak-mode-panel active" id="speak-panel-classic">
+    <div class="diff-tabs">
+      <button class="diff-tab active" data-diff="easy" onclick="app.setSpeakDiff('easy', this)">🌱 Başlangıç</button>
+      <button class="diff-tab" data-diff="medium" onclick="app.setSpeakDiff('medium', this)">📚 Orta</button>
+      <button class="diff-tab" data-diff="hard" onclick="app.setSpeakDiff('hard', this)">🔥 İleri</button>
+    </div>
+    <div class="speak-layout">
+      <div class="speak-main">
+        <div class="speak-progress-row">
+          <span class="speak-counter" id="speak-counter">1/100</span>
+          <div class="speak-prog-bar"><div class="speak-prog-fill" id="speak-prog-fill" style="width:1%"></div></div>
+          <label class="shadow-toggle" title="Gölge Modu: AI okuduktan sonra otomatik dinler">
+            <input type="checkbox" id="shadow-mode" onchange="app.toggleShadowMode(this.checked)">
+            <span class="shadow-slider"></span>
+            <small>Gölge Modu</small>
+          </label>
+          <label class="shadow-toggle" title="Karışık Mod: Cümleleri rastgele sırayla getirir">
+            <input type="checkbox" id="shuffle-mode" onchange="app.toggleShuffleMode(this.checked)">
+            <span class="shadow-slider"></span>
+            <small>Karıştır</small>
+          </label>
+          <button class="speak-skip-btn" onclick="app.nextSpeak()" title="Atla">⏭</button>
+        </div>
+        <div class="sentence-card">
+          <div class="sentence-words" id="sentence-words"></div>
+        </div>
+        <div class="waveform" id="waveform"></div>
+        <div class="speak-controls">
+          <button class="speak-side-btn" onclick="app.speakSentence()"><span>🔊</span><small>Dinle</small></button>
+          <button class="speak-side-btn" onclick="app.speakSentence(0.55)"><span>🐢</span><small>Yavaş</small></button>
+          <button class="speak-rec-btn" id="rec-btn" onclick="app.toggleRecord()">
+            <span id="rec-icon">🎤</span>
+            <small id="rec-label">Konuş</small>
+          </button>
+          <button class="speak-side-btn" id="btn-playback" onclick="app.playLastRecording()" style="display:none; border-color:var(--violet); color:var(--violet)">
+            <span>🎧</span><small>Seni Dinle</small>
+          </button>
+          <button class="speak-side-btn" onclick="app.retrySpeak()"><span>🔄</span><small>Tekrar</small></button>
+        </div>
+        <div id="speak-transcript" style="text-align:center;color:var(--text-2);font-size:0.9rem;min-height:28px;margin-bottom:12px"></div>
+        <div id="score-panel" style="display:none" class="score-panel">
+          <div class="score-ring-wrap">
+            <svg class="score-svg" viewBox="0 0 120 120">
+              <circle class="score-track" cx="60" cy="60" r="50"/>
+              <circle class="score-arc" cx="60" cy="60" r="50" id="score-arc"/>
+            </svg>
+            <div class="score-center">
+              <span class="score-num" id="score-num">0</span>
+              <span class="score-pct">%</span>
+            </div>
+          </div>
+          <div class="score-detail">
+            <p class="score-feedback" id="score-feedback"></p>
+            <div class="word-breakdown" id="word-breakdown"></div>
+            <div class="ipa-hint-panel" id="ipa-hint-panel"></div>
+            <div class="score-btns">
+              <button class="btn btn-ghost btn-sm" onclick="app.retrySpeak()">🔄 Tekrar</button>
+              <button class="btn btn-primary btn-sm" onclick="app.nextSpeak()">Sonraki →</button>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:0.72rem;color:var(--text-3);margin-top:12px" class="desktop-only">
+          ⌨️ <strong>Boşluk</strong> — Kaydet / Durdur
+        </div>
+      </div>
+      <div class="game-sidebar desktop-only">
+        <div class="sidebar-panel">
+          <div class="sidebar-panel-title">📊 Oturum</div>
+          <div class="session-stats">
+            <div class="ss-stat correct"><span class="ss-val" id="sp-best">—</span><div class="ss-label">En İyi</div></div>
+            <div class="ss-stat"><span class="ss-val" id="sp-avg">—</span><div class="ss-label">Ortalama</div></div>
+          </div>
+          <div style="text-align:center;margin-top:10px;font-size:0.8rem;color:var(--text-3)"><span id="sp-total">0</span> deneme</div>
+        </div>
+        <div class="sidebar-panel">
+          <div class="sidebar-panel-title">📋 Son Denemeler</div>
+          <div id="speak-history"><p style="font-size:0.8rem;color:var(--text-3)">Henüz deneme yok</p></div>
+        </div>
+        <div class="sidebar-panel">
+          <div class="sidebar-panel-title">⚙️</div>
+          <label style="display:flex;align-items:center;gap:10px;font-size:0.82rem;cursor:pointer">
+            <input type="checkbox" id="auto-advance" onchange="app.state.set('autoAdvance',this.checked)">
+            <span style="color:var(--text-2)">Otomatik ilerle (80%+)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI CONVERSATION PANEL -->
+  <div class="speak-mode-panel" id="speak-panel-convo">
+    <div id="convo-content"></div>
+  </div>
+
+</div>
+</template>
+
+<!-- External Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<!-- App -->
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
