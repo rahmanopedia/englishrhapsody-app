@@ -1,4 +1,4 @@
-/* Nexus Mode v2.0: Dynamic Orbiting Constellations */
+/* Nexus Mode: Professional Phrasal Verb Constellations - Final UX Fix */
 .nexus-shell {
   position: relative;
   width: 100%;
@@ -6,12 +6,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  background: radial-gradient(circle at center, #0a0b10 0%, #020305 100%);
+  justify-content: flex-start; /* Üstten aşağıya doğru akış */
+  background: radial-gradient(circle at center, #0d111a 0%, #04060a 100%);
   overflow: hidden;
   font-family: 'Plus Jakarta Sans', sans-serif;
   color: #fff;
-  perspective: 1000px;
 }
 
 /* Header alanı */
@@ -20,32 +19,16 @@
   text-align: center;
   z-index: 10;
   flex-shrink: 0;
-  pointer-events: none;
 }
 
 .nexus-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 800;
   color: var(--cyan);
   text-transform: uppercase;
   letter-spacing: 3px;
   text-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
   margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.v2-badge {
-  font-size: 0.9rem;
-  background: linear-gradient(90deg, #f59e0b, #ef4444);
-  color: #fff;
-  padding: 2px 8px;
-  border-radius: 8px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
 }
 
 .nexus-subtitle {
@@ -54,37 +37,12 @@
   margin-top: 5px;
 }
 
-/* Enerji Çubuğu (Zamanlayıcı) */
-.nexus-energy-container {
-  width: 80%;
-  max-width: 400px;
-  height: 6px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 10px;
-  margin: 10px auto 0;
-  overflow: hidden;
-  position: relative;
-  z-index: 10;
-}
-
-.nexus-energy-fill {
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(90deg, #10b981, #34d399);
-  transition: width 0.1s linear, background-color 0.3s;
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-}
-.nexus-energy-fill.warning {
-  background: linear-gradient(90deg, #f59e0b, #ef4444);
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-}
-
-/* Soru ve Bilgi Kutusu */
+/* Soru ve Bilgi Kutusu - Artık akışın bir parçası */
 .nexus-display-container {
   width: 90%;
   max-width: 550px;
   min-height: 110px;
-  margin: 15px auto;
+  margin: 15px auto; /* Üstten ve alttan güvenli boşluk */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -95,7 +53,7 @@
   padding: 15px 25px;
   border-radius: 20px;
   backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   z-index: 12;
   flex-shrink: 0;
   transition: all 0.4s ease;
@@ -130,7 +88,7 @@
   line-height: 1.4;
 }
 
-/* Oyun Alanı */
+/* Oyun Alanı - Dairelerin döndüğü alan */
 .nexus-game-area {
   position: relative;
   flex: 1;
@@ -141,45 +99,83 @@
   justify-content: center;
   z-index: 5;
   margin-bottom: 80px;
-  transform-style: preserve-3d;
+}
+
+/* Hero / Giriş Kartı Tasarımı */
+.nexus-intro-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 550px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 32px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  animation: nexus-hero-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes nexus-hero-in {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.nexus-intro-text {
+  color: var(--text-2);
+  font-size: 1.15rem;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.nexus-intro-btn {
+  font-size: 1.2rem !important;
+  padding: 16px 45px !important;
+  border-radius: 100px !important;
+  letter-spacing: 1px;
+  font-weight: 700 !important;
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+  transition: all 0.3s ease !important;
+}
+
+.nexus-intro-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(124, 58, 237, 0.5);
 }
 
 .nexus-core-node {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--violet) 0%, var(--purple) 80%);
+  background: linear-gradient(135deg, var(--violet), var(--purple));
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
   font-weight: 800;
   color: #fff;
-  box-shadow: 0 0 40px rgba(124, 58, 237, 0.6), inset 0 0 20px rgba(255,255,255,0.4);
-  position: absolute;
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.4), inset 0 0 15px rgba(255,255,255,0.3);
+  position: absolute; /* Board içinde ortalanacak JS ile */
   cursor: pointer;
   z-index: 10;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  animation: core-pulse 3s infinite alternate;
-}
-
-@keyframes core-pulse {
-  0% { box-shadow: 0 0 30px rgba(124, 58, 237, 0.5), inset 0 0 15px rgba(255,255,255,0.3); }
-  100% { box-shadow: 0 0 60px rgba(124, 58, 237, 0.8), inset 0 0 25px rgba(255,255,255,0.6); }
 }
 
 .nexus-core-node.active {
-  transform: scale(1.2);
-  background: radial-gradient(circle, var(--cyan) 0%, var(--blue) 80%);
-  box-shadow: 0 0 80px rgba(0, 212, 255, 0.9), inset 0 0 30px rgba(255,255,255,0.8);
+  transform: scale(1.15);
+  box-shadow: 0 0 60px rgba(0, 212, 255, 0.7), inset 0 0 25px rgba(255,255,255,0.5);
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
 }
 
 .nexus-particle-node {
-  width: 65px;
-  height: 65px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -188,34 +184,23 @@
   color: #fff;
   position: absolute;
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s, border-color 0.3s;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
   z-index: 8;
   backdrop-filter: blur(5px);
 }
 
 .nexus-particle-node:hover {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.12);
   border-color: var(--cyan);
-  transform: scale(1.15) !important;
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-  z-index: 15;
+  transform: scale(1.1);
 }
 
 .nexus-particle-node.correct {
-  background: radial-gradient(circle, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #10b981, #059669);
   border-color: #34d399;
-  transform: scale(1.3) !important;
-  box-shadow: 0 0 40px rgba(16, 185, 129, 0.8);
-  color: #fff;
-  z-index: 20;
-}
-
-.nexus-particle-node.wrong {
-  background: radial-gradient(circle, #ef4444 0%, #b91c1c 100%);
-  border-color: #f87171;
-  animation: nexus-shake 0.5s;
-  color: #fff;
+  transform: scale(1.2);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
 }
 
 .nexus-connection-line {
@@ -236,16 +221,14 @@
 
 .nexus-line.active {
   stroke: var(--cyan);
-  stroke-width: 4;
-  stroke-dasharray: 8;
+  stroke-width: 3;
+  stroke-dasharray: 6;
   animation: nexus-dash 1s linear infinite;
-  filter: drop-shadow(0 0 10px var(--cyan));
 }
 
 .nexus-line.correct {
   stroke: #10b981;
-  stroke-width: 6;
-  filter: drop-shadow(0 0 15px #10b981);
+  stroke-width: 5;
 }
 
 /* Alt İstatistikler */
@@ -260,73 +243,13 @@
 }
 
 .nexus-stat {
-  background: rgba(0,0,0,0.6);
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 8px 20px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 6px 18px;
   border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 0.9rem;
+  font-weight: 600;
   backdrop-filter: blur(10px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-}
-
-/* Hero / Giriş Kartı Tasarımı */
-.nexus-intro-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  max-width: 550px;
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 32px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.02);
-  animation: nexus-hero-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.nexus-intro-card::before {
-  content: '';
-  position: absolute;
-  top: -50%; left: -50%; width: 200%; height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
-  animation: rotate-bg 10s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes rotate-bg {
-  100% { transform: rotate(360deg); }
-}
-
-.nexus-intro-text {
-  color: var(--text-2);
-  font-size: 1.15rem;
-  line-height: 1.7;
-  margin-bottom: 30px;
-  font-weight: 500;
-  position: relative;
-}
-
-.nexus-intro-btn {
-  font-size: 1.2rem !important;
-  padding: 16px 45px !important;
-  border-radius: 100px !important;
-  letter-spacing: 1px;
-  font-weight: 800 !important;
-  background: linear-gradient(135deg, var(--cyan), var(--blue)) !important;
-  border: none !important;
-  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-  position: relative;
-}
-
-.nexus-intro-btn:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
 }
 
 /* Küçük Ekran Ayarları */
@@ -335,8 +258,8 @@
   .nexus-display-container { min-height: 90px; margin: 10px auto; padding: 10px 20px; }
   .nexus-question { font-size: 1.2rem; }
   .nexus-game-area { margin-bottom: 60px; }
-  .nexus-core-node { width: 80px; height: 80px; font-size: 1.2rem; }
-  .nexus-particle-node { width: 55px; height: 55px; font-size: 0.9rem; }
+  .nexus-core-node { width: 85px; height: 85px; font-size: 1.2rem; }
+  .nexus-particle-node { width: 60px; height: 60px; font-size: 0.9rem; }
 }
 
 @keyframes nexus-fade-up {
@@ -346,12 +269,6 @@
 
 @keyframes nexus-dash {
   to { stroke-dashoffset: -20; }
-}
-
-@keyframes nexus-shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-6px); }
-  40%, 80% { transform: translateX(6px); }
 }
 
 .nexus-star {
@@ -364,5 +281,5 @@
 
 @keyframes nexus-twinkle {
   0% { opacity: 0.1; }
-  100% { opacity: 0.8; box-shadow: 0 0 8px #fff; }
+  100% { opacity: 0.6; }
 }
