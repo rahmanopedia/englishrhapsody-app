@@ -2578,9 +2578,10 @@ class App {
     this.speech.stop();
     this.session.isSpeakingStory = false;
 
-    // Cleanup phantom and nexus if active
-    if (window.phantomMod) { window.phantomMod.destroy(); }
-    if (window.nexusMod) { window.nexusMod.destroy(); }
+    // Cleanup phantom, nexus and grammar if active
+    if (window.phantomMod)  { window.phantomMod.destroy(); }
+    if (window.nexusMod)    { window.nexusMod.destroy(); }
+    if (window.grammarMod)  { window.grammarMod.destroy(); }
 
     // Cleanup synesthesia if active (prevents memory leaks and ghost timers)
     if (this.session.synthActive || this.session.synthPaused) {
@@ -2616,6 +2617,7 @@ class App {
       speak:     () => this._initSpeak(),
       analytics: () => this._initAnalytics(),
       nexus:     () => this._initNexus(),
+      grammar:   () => this._initGrammar(),
     };
     if (init[view]) init[view]();
 
@@ -2634,6 +2636,13 @@ class App {
     if (!root) return;
     window.nexusMod = new NexusMode(this);
     window.nexusMod.init(root);
+  }
+
+  _initGrammar() {
+    const root = document.getElementById('grammar-root');
+    if (!root) return;
+    window.grammarMod = new GrammarMode(this);
+    window.grammarMod.init(root);
   }
 
   toggleFocusMode() {
