@@ -33,134 +33,6 @@ class GrammarMode {
     return { done, total: rules.length };
   }
 
-  // ── BOSS BATTLE logic ───────────────────────────────────────
-  _checkBossUnlock(level) {
-    const { done, total } = this._getLevelProgress(level);
-    const bossMastery = this.app.state.get(`bossMastery_${level}`) || 0;
-    // Unlock boss if 70% of level is done
-    return (done / total >= 0.7) && bossMastery < 3;
-  }
-
-  _startBossBattle(level) {
-    const info = GRAMMAR_DATA.levelInfo[level];
-    const rules = GRAMMAR_DATA.rules.filter(r => r.level === level);
-    
-    // Pick 10 random drills from this level
-    let allDrills = [];
-    rules.forEach(r => {
-      r.drills.forEach(d => {
-        allDrills.push({ drill: d, rule: r });
-      });
-    });
-    
-    // Shuffle and pick 10
-    allDrills = allDrills.sort(() => 0.5 - Math.random()).slice(0, 10);
-    
-    this._bossState = {
-      level,
-      drills: allDrills,
-      idx: 0,
-      health: 100,
-      enemyHealth: 100,
-      xp: 0
-    };
-
-    this._renderBossScreen();
-  }
-
-  _renderBossScreen() {
-    const { level, idx, drills, health, enemyHealth } = this._bossState;
-    const info = GRAMMAR_DATA.levelInfo[level];
-    const item = drills[idx];
-    if (!item || health <= 0 || enemyHealth <= 0) {
-      this._completeBossBattle();
-      return;
-    }
-
-    const drillHtml = this._renderDrill(item.drill, item.rule);
-
-    this.root.innerHTML = `
-      <div class="logos-shell boss-shell">
-        <div class="boss-header">
-          <div class="boss-level-name">${level} GRAMER MUHAFIZI</div>
-          <div class="boss-bars">
-            <div class="boss-bar-wrap">
-              <div class="boss-bar-label">SEN</div>
-              <div class="boss-bar-track"><div class="boss-bar-fill player-hp" style="width:${health}%"></div></div>
-            </div>
-            <div class="boss-bar-wrap">
-              <div class="boss-bar-label">BOSS</div>
-              <div class="boss-bar-track"><div class="boss-bar-fill enemy-hp" style="width:${enemyHealth}%"></div></div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="boss-arena">
-          <div class="boss-monster">👾</div>
-          <div class="boss-vfx" id="boss-vfx"></div>
-        </div>
-
-        <div class="drill-card boss-drill-card" id="drill-card">
-          <div class="boss-drill-info">Soru ${idx+1}/10: ${item.rule.title}</div>
-          ${drillHtml}
-        </div>
-      </div>`;
-
-    if (item.drill.type === 'forge') this._attachForge(item.drill, item.rule, 0);
-    
-    // Override _showResult for boss mode
-    this._drillState = { rule: item.rule, idx: 0, isBoss: true };
-  }
-
-  _bossHit(isCorrect) {
-    const damage = 20;
-    if (isCorrect) {
-      this._bossState.enemyHealth -= damage;
-      this._playVFX('hit-enemy');
-    } else {
-      this._bossState.health -= damage;
-      this._playVFX('hit-player');
-    }
-    
-    setTimeout(() => {
-      this._bossState.idx++;
-      this._renderBossScreen();
-    }, 1000);
-  }
-
-  _playVFX(type) {
-    const vfx = document.getElementById('boss-vfx');
-    if (!vfx) return;
-    vfx.className = 'boss-vfx ' + type;
-    setTimeout(() => vfx.className = 'boss-vfx', 500);
-  }
-
-  _completeBossBattle() {
-    const { level, health, enemyHealth } = this._bossState;
-    const win = enemyHealth <= 0 && health > 0;
-    
-    if (win) {
-      const m = this.app.state.get(`bossMastery_${level}`) || 0;
-      this.app.state.set(`bossMastery_${level}`, m + 1);
-      this.app.addXP(200);
-    }
-
-    this.root.innerHTML = `
-      <div class="logos-shell">
-        <div class="boss-result-card ${win ? 'win' : 'lose'}">
-          <div class="br-icon">${win ? '🏆' : '💀'}</div>
-          <div class="br-title">${win ? 'BOSS MAĞLUP EDİLDİ!' : 'YENİLDİN...'}</div>
-          <div class="br-msg">${win ? 'Seviye muhafızını yendin ve büyük ödülü aldın.' : 'Daha fazla çalışıp tekrar gelmelisin.'}</div>
-          <div class="br-xp">${win ? '+200 XP' : '0 XP'}</div>
-          <button class="btn btn-primary" onclick="window.grammarMod._showLevels()">Seviyelere Dön</button>
-        </div>
-      </div>`;
-    
-    if (win && typeof confetti === 'function') {
-      confetti({ particleCount: 200, spread: 90, origin: { y: 0.5 } });
-    }
-  }
-
   // ══════════════════════════════════════════════════════════════
   //  SCREEN 1 — Level Selector
   // ══════════════════════════════════════════════════════════════
@@ -171,11 +43,8 @@ class GrammarMode {
       const pct = total ? Math.round(done / total * 100) : 0;
       const circumference = 2 * Math.PI * 26;
       const dash = circumference - (pct / 100 * circumference);
-      const bossUnlocked = this._checkBossUnlock(lv);
-      const bossMastery = this.app.state.get(`bossMastery_${lv}`) || 0;
-
       return `
-        <button class="gl-level-card ${bossUnlocked ? 'boss-available' : ''}" style="--lv-color:${info.color};--lv-glow:${info.glow}"
+        <button class="gl-level-card" style="--lv-color:${info.color};--lv-glow:${info.glow}"
                 onclick="window.grammarMod._showRules('${lv}')">
           <div class="glc-ring">
             <svg width="64" height="64" viewBox="0 0 64 64">
@@ -192,14 +61,14 @@ class GrammarMode {
             <div class="glc-desc">${info.desc}</div>
             <div class="glc-prog">${done} / ${total} kural tamamlandı</div>
           </div>
-          ${bossUnlocked ? `<div class="glc-boss-btn" onclick="event.stopPropagation();window.grammarMod._startBossBattle('${lv}')">⚔️ BOSS</div>` : '<div class="glc-arrow">›</div>'}
+          <div class="glc-arrow">›</div>
         </button>`;
     }).join('');
 
     this.root.innerHTML = `
       <div class="logos-shell">
         <div class="logos-header">
-          <img src="assets/images/logo-logos.svg" class="logos-main-logo" alt="LOGOS">
+          <div class="logos-logo">⚗️</div>
           <h1 class="logos-title">LOGOS</h1>
           <p class="logos-sub">Dil Zekası Motoru — A1'den C2'ye Tam Müfredat</p>
         </div>
@@ -555,11 +424,6 @@ class GrammarMode {
   // ══════════════════════════════════════════════════════════════
   _showResult(isCorrect, drill, rule, idx) {
     if (this.app.audio) this.app.audio.play(isCorrect ? 'correct' : 'error');
-
-    if (this._drillState && this._drillState.isBoss) {
-      this._bossHit(isCorrect);
-      return;
-    }
 
     const card = document.getElementById('drill-card');
     if (!card) return;
