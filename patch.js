@@ -1,280 +1,82 @@
 const fs = require('fs');
-const file = 'C:/Users/ruhme/OneDrive/Masaüstü/english-rhapsody-main/js/app.js';
-let content = fs.readFileSync(file, 'utf8');
+let content = fs.readFileSync('./js/app.js', 'utf8');
 
-const startMarker = '  // ─────────────────────────────────────────────────────────\n  //  MODERN LEARN MODULE v2.0\n  // ─────────────────────────────────────────────────────────';
-const endMarker = '  // ─────────────────────────────────────────────────────────\n  //  READING MODULE\n  // ─────────────────────────────────────────────────────────';
+const MARKER = "  'wi-fi':         { type:'Kelime', tr:'kablosuz internet ba\u011flant\u0131s\u0131',       ex:'The caf\u00e9 offered free Wi-Fi to attract customers.' },\n};";
 
-const startIndex = content.indexOf(startMarker);
-const endIndex = content.indexOf(endMarker);
+const entries = [
+  ["less",               "daha az",                   "She spent less time on social media."],
+  ["others",             "di\u011ferleri",                  "Some stayed quiet while others spoke up."],
+  ["systematically",     "sistematik olarak",          "He systematically reviewed every document."],
+  ["tall",               "uzun boylu",                 "The tall trees provided shade in the park."],
+  ["difficult",          "zor, g\u00fc\u00e7",                  "It was difficult to concentrate in the noise."],
+  ["direct",             "do\u011frudan",                   "She gave a direct answer to the question."],
+  ["financial",          "finansal, mali",             "They faced serious financial difficulties."],
+  ["having",             "sahip olmak",                "Having a good plan makes all the difference."],
+  ["least",              "en az",                      "At least try to understand the situation."],
+  ["panicking",          "pani\u011fe kap\u0131lmak",               "She stopped panicking and focused on solutions."],
+  ["realized",           "fark etti, anlad\u0131",           "He realized his mistake too late."],
+  ["acoustic",           "akustik",                    "The acoustic properties of the hall were excellent."],
+  ["adaptability",       "uyum yetene\u011fi",               "Adaptability is a key skill in the modern workplace."],
+  ["advised",            "tavsiye etti",               "The doctor advised her to rest for a week."],
+  ["airline",            "havayolu \u015firketi",            "The airline cancelled the flight due to bad weather."],
+  ["airport",            "havalimanı",                 "They arrived at the airport two hours early."],
+  ["albeit",             "her ne kadar",               "It was a small, albeit important, change."],
+  ["algorithmically",    "algoritmik olarak",          "Content is algorithmically ranked by engagement."],
+  ["analyzing",          "analiz etmek",               "She spent the morning analyzing the data."],
+  ["behavior",           "davran\u0131\u015f",                   "His behavior at the meeting was professional."],
+  ["beings",             "varl\u0131klar",                  "Human beings are inherently social creatures."],
+  ["believe",            "inanmak, d\u00fc\u015f\u00fcnmek",           "I believe we can solve this problem together."],
+  ["beside",             "yan\u0131nda",                    "She sat beside her friend during the ceremony."],
+  ["blew",               "\u00fcfledi, esti",                "The wind blew the leaves across the yard."],
+  ["bravest",            "en cesur",                   "She was the bravest person in the group."],
+  ["catastrophic",       "felaket niteli\u011finde",          "The drought had catastrophic effects on the harvest."],
+  ["closer",             "daha yak\u0131n",                 "Move closer so you can hear better."],
+  ["compatibilists",     "uyumcular (felsefe)",        "Compatibilists argue free will and determinism coexist."],
+  ["confidently",        "g\u00fcvenle, \u00f6zg\u00fcvenle",          "She spoke confidently in front of the audience."],
+  ["confined",           "s\u0131n\u0131rl\u0131, kapal\u0131",               "The discussion was confined to a single topic."],
+  ["coordinated",        "koordineli",                 "A coordinated response is needed from all departments."],
+  ["corner",             "k\u00f6\u015fe",                     "The cafe was tucked into a quiet corner of the street."],
+  ["creativity-relevant","yaratıcılıkla ilgili",       "Intrinsic motivation is a creativity-relevant skill."],
+  ["cried",              "a\u011flad\u0131",                   "She cried when she heard the news."],
+  ["discovery",          "ke\u015fif, bulu\u015f",              "The discovery of penicillin changed medicine forever."],
+  ["discussions",        "tart\u0131\u015fmalar",               "The discussions lasted well into the evening."],
+  ["domain-relevant",    "alana \u00f6zg\u00fc",                "Domain-relevant skills are necessary for creative work."],
+  ["drawn",              "\u00e7ekilmi\u015f, ilgi duymak",       "She was drawn to the quiet of the library."],
+  ["dual",               "\u00e7ift, ikili",                 "The device has a dual purpose in the lab."],
+  ["emergence",          "ortaya \u00e7\u0131k\u0131\u015f",              "The emergence of AI has transformed many industries."],
+  ["emphasized",         "vurgulad\u0131",                  "The teacher emphasized the importance of revision."],
+  ["emphasizes",         "vurgular",                   "The report emphasizes the need for urgent action."],
+  ["ending",             "son, biti\u015f",                 "The story had a surprising ending."],
+  ["environmentally",    "\u00e7evresel olarak",              "We need to act more environmentally responsibly."],
+  ["evenings",           "ak\u015famlar",                   "She spent her evenings reading by the window."],
+  ["exponentially",      "katlanarak",                 "Computing power has grown exponentially since the 1970s."],
+  ["exposure",           "maruz kalma",                "Regular exposure to English improves fluency."],
+  ["fact-checking",      "ger\u00e7ek do\u011frulama",            "Fact-checking is essential in digital journalism."],
+  ["forty-two",          "k\u0131rk iki",                   "She is forty-two years old."],
+  ["immediate",          "anl\u0131k, acil",                "The decision had an immediate impact on the team."],
+  ["inevitably",         "ka\u00e7\u0131n\u0131lmaz olarak",         "Change inevitably brings uncertainty."],
+  ["led",                "y\u00f6netti, \u00f6nc\u00fcl\u00fck etti",        "She led the project from start to finish."],
+  ["meant",              "anlam\u0131na geldi",              "He meant well, even if his words were clumsy."],
+  ["organized",          "organize, d\u00fczenlenmi\u015f",      "The event was well organized and ran smoothly."],
+  ["overconsumption",    "a\u015f\u0131r\u0131 t\u00fcketim",             "Overconsumption is a driver of climate change."],
+  ["perfectly",          "m\u00fckemmel \u015fekilde",            "The two parts fit together perfectly."],
+  ["relied",             "g\u00fcvendi, dayand\u0131",            "She relied on her experience to make the decision."],
+  ["thirty-five",        "otuz be\u015f",                   "The course lasts thirty-five hours in total."],
+  ["thirty-six",         "otuz alt\u0131",                  "He ran thirty-six kilometres during the race."],
+  ["understood",         "anlad\u0131, kavrad\u0131",             "She finally understood why the process mattered."],
+];
 
-if (startIndex === -1 || endIndex === -1) {
-    console.error('Markers not found.');
-    process.exit(1);
+const lines = entries.map(([w, tr, ex]) =>
+  `  '${w}': { type:'Kelime', tr:'${tr}', ex:'${ex}' },`
+).join('\n');
+
+const replacement = MARKER.replace('\n};', '\n\n' + lines + '\n};');
+
+if (content.includes(MARKER)) {
+  content = content.replace(MARKER, replacement);
+  fs.writeFileSync('./js/app.js', content, 'utf8');
+  console.log('Done - added', entries.length, 'entries');
+} else {
+  const idx = content.indexOf("'wi-fi'");
+  console.log('MARKER NOT FOUND. Snippet:', JSON.stringify(content.slice(idx, idx + 200)));
 }
-
-const newLogic = `  // ─────────────────────────────────────────────────────────
-  //  SYNESTHESIA MODULE (WORLD FIRST)
-  // ─────────────────────────────────────────────────────────
-
-  _initLearn() {
-    const intro = document.getElementById('synth-intro');
-    const chamber = document.getElementById('synth-chamber');
-    if (!intro) return;
-    
-    intro.style.display = 'flex';
-    chamber.style.display = 'none';
-    this.session.synthActive = false;
-  }
-
-  startSynesthesia() {
-    this.session.synthActive = true;
-    this.session.learnPool = [...WORDS].sort(() => Math.random() - 0.5).slice(0, 10);
-    this.session.learnIdx = 0;
-    this.session.synthScore = 0;
-    this.session.synthStreak = 0;
-
-    document.getElementById('synth-intro').style.display = 'none';
-    document.getElementById('synth-chamber').style.display = 'flex';
-    
-    this._startSynthDrone();
-    this._loadSynthWord();
-    this.audio.play('pop');
-  }
-
-  _startSynthDrone() {
-    if (this.session.synthDrone) return;
-    try {
-      const ctx = this.audio._ctx_ensure();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(130.81, ctx.currentTime); // C3
-      gain.gain.setValueAtTime(0, ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.05, ctx.currentTime + 2);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      this.session.synthDrone = { osc, gain };
-    } catch(e) {}
-  }
-
-  _stopSynthDrone() {
-    if (this.session.synthDrone) {
-      const { osc, gain } = this.session.synthDrone;
-      const ctx = this.audio._ctx;
-      if (ctx) {
-        gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 1);
-        setTimeout(() => { try { osc.stop(); } catch(e){} }, 1000);
-      }
-      this.session.synthDrone = null;
-    }
-  }
-
-  _loadSynthWord() {
-    const word = this.session.learnPool[this.session.learnIdx];
-    if (!word) {
-      this._finishSynesthesia();
-      return;
-    }
-
-    this.session.synthWord = word;
-    this.session.synthTyped = '';
-    this.session.synthFails = 0;
-
-    UI.setEl('synth-tr', word.tr);
-    
-    const display = document.getElementById('synth-input-display');
-    if (display) {
-      display.innerHTML = word.en.split('').map(() => '<span>_</span>').join('');
-    }
-
-    const core = document.getElementById('synth-core');
-    if (core) {
-      core.className = 'synth-core';
-      core.style.transform = 'scale(1)';
-    }
-
-    setTimeout(() => this.speakWord(word.en), 400);
-  }
-
-  _handleSynthKey(key) {
-    const word = this.session.synthWord;
-    if (!word) return;
-
-    const targetStr = word.en.toLowerCase();
-    const targetChar = targetStr[this.session.synthTyped.length];
-    
-    if (key.toLowerCase() === targetChar) {
-      this.session.synthTyped += targetChar;
-      this._playSynthChime(this.session.synthTyped.length);
-      this._updateSynthVisuals(true);
-
-      if (this.session.synthTyped.length === targetStr.length) {
-        setTimeout(() => this._completeSynthWord(), 200);
-      }
-    } else {
-      this.session.synthFails++;
-      this.session.synthStreak = 0;
-      this._playSynthError();
-      this._updateSynthVisuals(false);
-      UI.setEl('synth-streak', '🔥 0');
-    }
-  }
-
-  _updateSynthVisuals(isCorrect) {
-    const core = document.getElementById('synth-core');
-    const display = document.getElementById('synth-input-display');
-    const typedLen = this.session.synthTyped.length;
-    const wordLen = this.session.synthWord.en.length;
-
-    if (display) {
-      const spans = display.querySelectorAll('span');
-      spans.forEach((span, i) => {
-        if (i < typedLen) {
-          span.textContent = this.session.synthWord.en[i];
-          span.classList.add('filled');
-        }
-      });
-    }
-
-    if (core) {
-      if (isCorrect) {
-        const scale = 1 + (typedLen / wordLen) * 0.5;
-        core.style.transform = \`scale(\${scale})\`;
-        core.style.boxShadow = \`0 0 \${40 + typedLen*10}px rgba(0,212,255, \${0.5 + (typedLen/wordLen)*0.5})\`;
-        core.style.background = 'rgba(0,212,255, 0.2)';
-        core.classList.remove('error');
-      } else {
-        core.classList.add('error');
-        setTimeout(() => core.classList.remove('error'), 300);
-      }
-    }
-  }
-
-  _completeSynthWord() {
-    const word = this.session.synthWord;
-    this.audio.play('success');
-    
-    const core = document.getElementById('synth-core');
-    if (core) {
-      const rect = core.getBoundingClientRect();
-      UI.particles(rect.left + rect.width/2, rect.top + rect.height/2);
-      core.classList.add('explode');
-    }
-
-    let points = 20;
-    if (this.session.synthFails === 0) {
-      points += 10;
-      this.session.synthStreak++;
-      UI.setEl('synth-streak', \`🔥 \${this.session.synthStreak}\`);
-    }
-    this.session.synthScore += points;
-    UI.setEl('synth-score', \`\${this.session.synthScore} XP\`);
-
-    this._updateMastery(word.id || word.en, this.session.synthFails === 0);
-
-    setTimeout(() => {
-      this.session.learnIdx++;
-      this._loadSynthWord();
-    }, 1200);
-  }
-
-  skipSynthWord() {
-    this.session.synthFails++;
-    this.session.synthStreak = 0;
-    UI.setEl('synth-streak', '🔥 0');
-    const word = this.session.synthWord;
-    
-    const display = document.getElementById('synth-input-display');
-    if (display) {
-      display.innerHTML = word.en.split('').map(c => \`<span class="filled error-text">\${c}</span>\`).join('');
-    }
-    
-    this._playSynthError();
-    this._updateMastery(word.id || word.en, false);
-
-    setTimeout(() => {
-      this.session.learnIdx++;
-      this._loadSynthWord();
-    }, 1500);
-  }
-
-  playSynthHint() {
-    if (this.session.synthWord) {
-      this.speakWord(this.session.synthWord.en);
-      this.session.synthFails++;
-    }
-  }
-
-  _playSynthChime(index) {
-    try {
-      const ctx = this.audio._ctx_ensure();
-      const t = ctx.currentTime;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      
-      const scale = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99, 880.00];
-      const freq = scale[(index - 1) % scale.length];
-      
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, t);
-      
-      gain.gain.setValueAtTime(0, t);
-      gain.gain.linearRampToValueAtTime(0.3, t + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 1.5);
-      
-      osc.start(t);
-      osc.stop(t + 1.5);
-    } catch(e){}
-  }
-
-  _playSynthError() {
-    try {
-       const ctx = this.audio._ctx_ensure();
-       const t = ctx.currentTime;
-       const osc = ctx.createOscillator();
-       const gain = ctx.createGain();
-       osc.connect(gain); gain.connect(ctx.destination);
-       osc.type = 'sawtooth';
-       osc.frequency.setValueAtTime(150, t);
-       osc.frequency.exponentialRampToValueAtTime(40, t + 0.3);
-       gain.gain.setValueAtTime(0.4, t);
-       gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
-       osc.start(t); osc.stop(t+0.3);
-       if (navigator.vibrate) navigator.vibrate(50);
-    } catch(e){}
-  }
-
-  _finishSynesthesia() {
-    this._stopSynthDrone();
-    this.session.synthActive = false;
-    this.addXP(this.session.synthScore);
-    
-    document.getElementById('synth-chamber').innerHTML = \`
-      <div class="synth-intro" style="display:flex">
-        <div class="synth-icon-main" style="color:var(--green)">✨</div>
-        <h1 class="synth-title" style="color:var(--green)">BAĞLANTI TAMAMLANDI</h1>
-        <p class="synth-subtitle">Toplam Kazanım: \${this.session.synthScore} XP</p>
-        <button class="synth-start-btn" style="margin-top:30px" onclick="app.navigate('home')">MERKEZE DÖN</button>
-      </div>
-    \`;
-    if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 100 });
-  }
-
-  _updateMastery(id, isCorrect) {
-    const mastery = this.state.get('mastery');
-    const updated = SRS.update(mastery, id, isCorrect);
-    this.state.set('mastery', updated);
-    const total   = this.state.get('totalAttempts') + 1;
-    const correct = this.state.get('totalCorrect')  + (isCorrect ? 1 : 0);
-    this.state.update({ totalAttempts: total, totalCorrect: correct });
-  }
-
-`;
-
-const newContent = content.substring(0, startIndex) + newLogic + content.substring(endIndex);
-fs.writeFileSync(file, newContent, 'utf8');
-console.log('Successfully replaced logic.');
