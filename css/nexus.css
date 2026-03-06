@@ -1,4 +1,4 @@
-/* Nexus Mode v5.0: The Ultimate Learning Center */
+/* Nexus Mode v5.2: Cognitive Resonator & Fluid Dynamics */
 .nexus-shell {
   position: relative;
   width: 100%;
@@ -7,366 +7,112 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: radial-gradient(circle at center, #0d111a 0%, #04060a 100%);
+  background: radial-gradient(circle at center, #080a0f 0%, #000 100%);
   overflow: hidden;
   font-family: 'Plus Jakarta Sans', sans-serif;
   color: #fff;
 }
 
-/* Header alanı */
-.nexus-header {
-  padding: 20px 0 10px;
-  text-align: center;
-  z-index: 10;
-  flex-shrink: 0;
-}
+/* Header & Badges */
+.nexus-header { padding: 20px 0 10px; text-align: center; z-index: 10; flex-shrink: 0; }
+.nexus-title { font-size: 1.8rem; font-weight: 800; color: var(--cyan); text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 20px rgba(0, 212, 255, 0.4); margin: 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.v5-badge { font-size: 0.9rem; background: linear-gradient(90deg, #ec4899, #8b5cf6); color: #fff; padding: 2px 8px; border-radius: 8px; font-weight: 800; letter-spacing: 1px; box-shadow: 0 0 15px rgba(236, 72, 153, 0.4); }
 
-.nexus-title {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--cyan);
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.v5-badge {
-  font-size: 0.9rem;
-  background: linear-gradient(90deg, #ec4899, #8b5cf6);
-  color: #fff;
-  padding: 2px 8px;
-  border-radius: 8px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
-}
-
-.nexus-subtitle {
-  font-size: 0.9rem;
-  color: var(--text-3);
-  margin-top: 5px;
-  font-weight: 500;
-}
-
-/* V5: Mode Selection Grid */
-.nexus-mode-selector {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-  z-index: 15;
-  width: 95%;
-  max-width: 1000px;
-}
-
-.nexus-mode-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 30px 20px;
-  text-align: center;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-.nexus-mode-card::before {
-  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-  background: var(--card-color, var(--cyan));
-  opacity: 0.5; transition: opacity 0.3s;
-}
-
-.nexus-mode-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--card-color, var(--cyan));
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-  background: rgba(255, 255, 255, 0.05);
-}
-.nexus-mode-card:hover::before { opacity: 1; }
-
-.nm-icon {
-  font-size: 3rem;
-  margin-bottom: 15px;
-  filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
-}
-
-.nm-title {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
-}
-
-.nm-desc {
-  font-size: 0.9rem;
-  color: var(--text-2);
-  line-height: 1.5;
-}
-
-/* Ortak Soru Kutusu */
-.nexus-display-container {
-  width: 90%;
-  max-width: 600px;
-  min-height: 120px;
-  margin: 15px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 20px 30px;
-  border-radius: 20px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  z-index: 12;
-  flex-shrink: 0;
-  transition: all 0.4s ease;
-}
-
-/* ==========================================
-   NETWORK MODE (AĞ)
-   ========================================== */
-.nexus-game-area {
-  position: relative;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  margin-bottom: 80px;
-}
-
-.nexus-core-node {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--violet), var(--purple));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.6rem; font-weight: 800; color: #fff;
-  box-shadow: 0 0 40px rgba(124, 58, 237, 0.4), inset 0 0 15px rgba(255,255,255,0.3);
-  position: absolute; cursor: pointer; z-index: 10;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.nexus-particle-node {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem; font-weight: 700; color: #fff;
-  position: absolute; cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  z-index: 8; backdrop-filter: blur(5px);
-}
-.nexus-particle-node:hover:not(.solved) { border-color: var(--cyan); transform: scale(1.15); }
-.nexus-particle-node.solved { background: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #10b981; box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); transform: scale(1.1); pointer-events: none; }
-.nexus-particle-node.wrong { background: linear-gradient(135deg, #ef4444, #b91c1c); border-color: #f87171; animation: nexus-shake 0.5s; }
-
-.nexus-connection-line { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 6; }
-.nexus-line { stroke: rgba(255,255,255,0.1); stroke-width: 2; transition: all 0.4s; }
-.nexus-line.correct-line { stroke: #10b981; stroke-width: 4; filter: drop-shadow(0 0 8px #10b981); }
-
-/* ==========================================
-   CIPHER MODE (ŞİFRE)
-   ========================================== */
-.cipher-sentence-box {
-  width: 90%; max-width: 700px;
-  margin: 20px auto 10px; text-align: center;
-  font-size: 1.6rem; font-weight: 600; line-height: 1.5; color: var(--text-1);
-  background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);
-  padding: 25px 30px; border-radius: 20px; z-index: 12; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-.cipher-blank {
-  display: inline-block; min-width: 100px; border-bottom: 3px solid var(--cyan);
-  color: var(--cyan); padding: 0 10px; text-align: center; font-weight: 800;
-  text-shadow: 0 0 10px rgba(0,212,255,0.4);
-}
-.cipher-lock-mechanism {
-  display: flex; align-items: center; justify-content: center; gap: 20px;
-  margin: 20px auto; padding: 30px; background: rgba(0, 0, 0, 0.4);
-  border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 15px 40px rgba(0,0,0,0.5); z-index: 12;
-}
-.cipher-dial { display: flex; flex-direction: column; align-items: center; gap: 15px; width: 150px; }
-.cipher-window {
-  width: 100%; height: 80px; display: flex; align-items: center; justify-content: center;
-  font-size: 2rem; font-weight: 800; background: rgba(255,255,255,0.05);
-  border: 2px solid rgba(255,255,255,0.15); border-radius: 16px; color: #fff;
-  text-transform: uppercase; transition: all 0.3s; box-shadow: inset 0 0 15px rgba(0,0,0,0.5); user-select: none;
-}
-.cipher-window.correct { border-color: #10b981; color: #10b981; box-shadow: 0 0 30px rgba(16,185,129,0.5); }
-.cipher-window.wrong { border-color: #ef4444; color: #ef4444; animation: nexus-shake 0.4s; }
-
-/* ==========================================
-   SYNTHESIS MODE (SENTEZ - YENİ)
-   ========================================== */
-.synth-game-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 900px;
-  z-index: 10;
-  margin-top: 10px;
-}
-
-.synth-sentence {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #fff;
-  text-align: center;
-  margin-bottom: 30px;
-  line-height: 1.5;
-  padding: 0 20px;
-}
-
-.synth-blank {
-  display: inline-block;
-  min-width: 140px;
-  height: 45px;
-  border-bottom: 3px solid #ec4899;
-  color: #ec4899;
-  text-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
-  position: relative;
-  top: 5px;
-}
-
+/* Sentez Reaktörü */
 .synth-reactor {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 25px;
-  margin-bottom: 40px;
-  padding: 30px 50px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 80%);
-  border: 1px solid rgba(236, 72, 153, 0.2);
-  border-radius: 40px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  margin-bottom: 30px;
+  padding: 30px 60px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,255,255,0.02);
+  position: relative;
+  transition: all 0.5s ease;
+}
+
+.synth-reactor.resonating {
+  border-color: #8b5cf6;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 80%);
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
 }
 
 .synth-slot {
-  width: 140px;
-  height: 65px;
-  border-radius: 100px;
-  border: 2px dashed rgba(255,255,255,0.3);
+  width: 150px;
+  height: 70px;
+  border-radius: 20px;
+  border: 2px dashed rgba(255,255,255,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 800;
-  color: rgba(255,255,255,0.4);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  cursor: pointer;
-}
-
-.synth-slot.filled {
-  border-style: solid;
-  color: #fff;
-  transform: scale(1.05);
-}
-
-.synth-slot.filled.verb {
-  border-color: #8b5cf6;
-  background: rgba(139, 92, 246, 0.2);
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
-}
-
-.synth-slot.filled.particle {
-  border-color: #0ea5e9;
-  background: rgba(14, 165, 233, 0.2);
-  box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
-}
-
-.synth-slot.error {
-  border-color: #ef4444 !important;
-  background: rgba(239, 68, 68, 0.2) !important;
-  animation: nexus-shake 0.4s;
-}
-
-.synth-slot.success {
-  border-color: #10b981 !important;
-  background: rgba(16, 185, 129, 0.2) !important;
-  box-shadow: 0 0 30px rgba(16, 185, 129, 0.6) !important;
-}
-
-.synth-plus {
-  font-size: 2.5rem;
-  font-weight: 900;
   color: rgba(255,255,255,0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  background: rgba(0,0,0,0.2);
 }
 
+.synth-slot.filled.verb { border-color: #8b5cf6; color: #fff; background: rgba(139, 92, 246, 0.2); box-shadow: 0 0 25px rgba(139, 92, 246, 0.4); }
+.synth-slot.filled.particle { border-color: #0ea5e9; color: #fff; background: rgba(14, 165, 233, 0.2); box-shadow: 0 0 25px rgba(14, 165, 233, 0.4); }
+
+.synth-slot.correct-pulse { animation: slot-success-pulse 1s infinite alternate; border-style: solid; }
+@keyframes slot-success-pulse { 0% { box-shadow: 0 0 15px #10b981; } 100% { box-shadow: 0 0 35px #10b981; } }
+
+/* Küre Havuzu & Animasyonlar */
 .synth-pool {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
-  max-width: 700px;
+  max-width: 800px;
+  perspective: 1000px;
 }
 
 .synth-orb {
-  padding: 12px 30px;
+  padding: 14px 35px;
   border-radius: 100px;
   font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  user-select: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: orb-float var(--float-dur) infinite ease-in-out;
+  animation-delay: var(--float-delay);
 }
 
-.synth-orb.verb {
-  background: rgba(139, 92, 246, 0.1);
-  border: 1px solid #8b5cf6;
-  color: #ddd6fe;
+@keyframes orb-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
 }
 
-.synth-orb.particle {
-  background: rgba(14, 165, 233, 0.1);
-  border: 1px solid #0ea5e9;
-  color: #bae6fd;
+.synth-orb.verb { background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.4); color: #ddd6fe; }
+.synth-orb.particle { background: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.4); color: #bae6fd; }
+
+.synth-orb.resonating-target {
+  animation: target-glow 1.5s infinite alternate !important;
+  border-color: #fff !important;
+  box-shadow: 0 0 20px #fff;
+  z-index: 20;
 }
 
-.synth-orb:hover {
-  transform: translateY(-5px) scale(1.05);
-  filter: brightness(1.3);
+@keyframes target-glow {
+  0% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1.15); filter: brightness(1.5); box-shadow: 0 0 30px var(--cyan); }
 }
 
-.synth-orb.used {
-  opacity: 0;
-  transform: scale(0.5);
-  pointer-events: none;
-}
+.synth-orb.used { opacity: 0; transform: scale(0); pointer-events: none; }
 
-/* Animations */
-@keyframes nexus-fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes nexus-shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+/* HUD ve İstatistikler */
+.nexus-hud { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 10; }
+.nexus-stat { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 10px 25px; border-radius: 100px; font-size: 1rem; font-weight: 800; backdrop-filter: blur(10px); color: #fff; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
 
-/* Shared Utilities */
-.nexus-hud { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 10; }
-.nexus-stat { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); padding: 8px 20px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; backdrop-filter: blur(10px); }
-.nexus-star { position: absolute; background: #fff; border-radius: 50%; opacity: 0.5; animation: nexus-twinkle var(--dur) infinite alternate; }
-@keyframes nexus-twinkle { 0% { opacity: 0.1; } 100% { opacity: 0.6; } }
+/* Arka Plan */
+.nexus-bg-stars { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+.nexus-star { position: absolute; background: #fff; border-radius: 50%; opacity: 0.3; animation: star-twinkle var(--dur) infinite alternate; }
+@keyframes star-twinkle { 0% { opacity: 0.1; } 100% { opacity: 0.5; } }
 
-@media (max-width: 700px) {
-  .synth-reactor { flex-direction: column; padding: 20px; gap: 10px; }
-  .synth-slot { width: 180px; height: 50px; }
-  .synth-sentence { font-size: 1.3rem; }
-}
+.synth-sentence { font-size: 1.8rem; font-weight: 700; text-align: center; margin: 20px 0 40px; color: var(--text-1); text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+.synth-blank { display: inline-block; min-width: 150px; border-bottom: 4px solid #ec4899; height: 10px; position: relative; top: -5px; margin: 0 10px; }
