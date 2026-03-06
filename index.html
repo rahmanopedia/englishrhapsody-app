@@ -77,9 +77,6 @@
       <a class="nav-item" data-target="speak">
         <span class="nav-icon">🎙️</span> Konuşma Lab
       </a>
-      <a class="nav-item" data-target="phantom">
-        <span class="nav-icon">🌫️</span> Hayalet Mod
-      </a>
       <a class="nav-item" data-target="nexus">
         <span class="nav-icon">✨</span> Nexus Mod
       </a>
@@ -107,10 +104,6 @@
   <button class="m-nav-item" data-target="speak">
     <span class="m-icon">🎙️</span>
     <span>Konuşma</span>
-  </button>
-  <button class="m-nav-item" data-target="phantom">
-    <span class="m-icon">🌫️</span>
-    <span>Hayalet</span>
   </button>
   <button class="m-nav-item" data-target="nexus">
     <span class="m-icon">✨</span>
@@ -221,12 +214,6 @@
       <p>Hikayeler içinde bağlam kurarak kelime öğren ve anlamayı derinleştir.</p>
       <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px">60 hikaye, 3 seviye</div>
     </div>
-    <div class="action-card phantom" onclick="app.navigate('phantom')">
-      <div class="ac-icon">🌫️</div>
-      <h3>Hayalet Mod</h3>
-      <p>Kelimeler görünür, sonra kaybolur. Hafızandan geri çağır — görünmez mürekkep tekniği.</p>
-      <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px">🌍 Dünyada İlk · Görünmez Mürekkep Hafızası</div>
-    </div>
     <div class="action-card nexus" onclick="app.navigate('nexus')" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.05));border-color:rgba(16,185,129,0.2);">
       <div class="ac-icon">✨</div>
       <h3>Nexus Mod</h3>
@@ -310,6 +297,11 @@
           <span class="smc-icon">⚡</span>
           <span class="smc-name">ZAMANA KARŞI</span>
           <span class="smc-desc">Hızlı ol, 30 XP!</span>
+        </button>
+        <button class="synth-mode-card" onclick="app._setSynthMode('phantom',this)">
+          <span class="smc-icon">🌫️</span>
+          <span class="smc-name">HAYALET</span>
+          <span class="smc-desc">Görünmez mürekkep · 40 XP</span>
         </button>
       </div>
     </div>
@@ -541,11 +533,6 @@
   </div>
 
 </div>
-</template>
-
-<!-- Phantom: Hayalet Mod -->
-<template id="tpl-phantom">
-<div class="animate-in phantom-shell" id="phantom-root"></div>
 </template>
 
 <!-- Nexus: Phrasal Verb Mod -->

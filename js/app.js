@@ -2607,7 +2607,6 @@ class App {
       reading:   () => this._initReading(),
       speak:     () => this._initSpeak(),
       analytics: () => this._initAnalytics(),
-      phantom:   () => this._initPhantom(),
       nexus:     () => this._initNexus(),
     };
     if (init[view]) init[view]();
@@ -3111,6 +3110,15 @@ class App {
   }
 
   startSynesthesia() {
+    if (this._synthModeConfig === 'phantom') {
+      const wrapper = document.querySelector('.synesthesia-wrapper');
+      if (!wrapper) return;
+      document.getElementById('synth-intro').style.display = 'none';
+      window.phantomMod = new PhantomMode(this);
+      window.phantomMod.init(wrapper);
+      return;
+    }
+
     this.session.synthActive = true;
     const len = this._synthSessionLen || 10;
 
@@ -5201,7 +5209,7 @@ class App {
       if (e.key === '3') { e.preventDefault(); this.navigate('reading'); return; }
       if (e.key === '4') { e.preventDefault(); this.navigate('speak'); return; }
       if (e.key === '5') { e.preventDefault(); this.navigate('analytics'); return; }
-      if (e.key === '6') { e.preventDefault(); this.navigate('phantom'); return; }
+      if (e.key === '6') { e.preventDefault(); this.navigate('nexus'); return; }
 
       if (view === 'learn' && (this.session.synthActive || this.session.synthPaused)) {
         if (e.code === 'Escape') {

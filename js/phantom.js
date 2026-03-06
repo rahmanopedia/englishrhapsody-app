@@ -133,7 +133,7 @@ class PhantomMode {
           <span class="ph-start-icon">🌫️</span> BAŞLAT — IŞIĞI SÖNDÜR
         </button>
 
-        <button class="ph-back-btn" onclick="app.navigate('home')">← Ana Merkez</button>
+        <button class="ph-back-btn" onclick="app.navigate('learn')">← Ana Merkez</button>
       </div>`;
 
     this._animOrbCanvas();
@@ -821,9 +821,9 @@ class PhantomMode {
 
   // ── ÇIKIŞ ONAYI ─────────────────────────────────────────────
   _confirmExit() {
-    if (this.phase === 'intro' || this.phase === 'result') { this.app.navigate('home'); return; }
+    if (this.phase === 'intro' || this.phase === 'result') { this.app.navigate('learn'); return; }
     const ok = confirm('Oturumdan çıkmak istiyor musun? İlerleme kaydedildi.');
-    if (ok) this.app.navigate('home');
+    if (ok) this.app.navigate('learn');
   }
 
   // ── SONUÇ ────────────────────────────────────────────────────
@@ -908,7 +908,7 @@ class PhantomMode {
 
         <div class="ph-result-acts">
           <button class="ph-start-btn" onclick="window.phantomMod._startSession()">🔄 Yeniden Oyna</button>
-          <button class="ph-back-btn" onclick="app.navigate('home')">← Ana Merkez</button>
+          <button class="ph-back-btn" onclick="app.navigate('learn')">← Ana Merkez</button>
         </div>
 
       </div>`;
