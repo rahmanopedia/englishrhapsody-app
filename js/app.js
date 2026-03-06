@@ -4915,7 +4915,10 @@ class App {
             <span class="cch-title">${scenario.title}</span>
             <span class="cch-level">${levelLabel}</span>
           </div>
-          <div class="cch-progress" id="cch-progress">0 / ${userTurns}</div>
+          <div class="cch-right">
+            <span class="cch-xp" id="cch-xp">0 XP</span>
+            <span class="cch-progress" id="cch-progress">0 / ${userTurns}</span>
+          </div>
         </div>
         <div class="convo-chat" id="convo-chat"></div>
         <div class="convo-user-area" id="convo-user-area"></div>
@@ -4928,22 +4931,42 @@ class App {
     const turn = scenario.turns[turnIdx];
     if (!turn) { this._convoFinish(); return; }
 
-    // Support both data formats
     const isBot = turn.role === 'bot' || !!turn.bot;
     if (isBot) {
-      const text = turn.text || turn.bot;
-      const tr   = turn.tr   || '';
-      this._convoAddBotBubble(text, tr);
-      setTimeout(() => this.speech.speak(text, 0.88), 200);
-      this.session.convo.turnIdx++;
-      setTimeout(() => this._convoNextTurn(), 1800);
+      const text  = turn.text || turn.bot;
+      const tr    = turn.tr || '';
+      const delay = Math.min(2800, 900 + text.length * 28); // scale to message length
+      this._convoShowTyping();
+      setTimeout(() => {
+        this._convoHideTyping();
+        this._convoAddBotBubble(text, tr);
+        this.speech.speak(text, 0.88);
+        this.session.convo.turnIdx++;
+        setTimeout(() => this._convoNextTurn(), 500);
+      }, delay);
     } else {
-      const userTurns = scenario.turns.filter(t => t.role === 'user' || t.userHint).length;
+      const userTurns     = scenario.turns.filter(t => t.role === 'user' || t.userHint).length;
       const doneUserTurns = scenario.turns.slice(0, turnIdx).filter(t => t.role === 'user' || t.userHint).length;
       const prog = document.getElementById('cch-progress');
       if (prog) prog.textContent = `${doneUserTurns} / ${userTurns}`;
       this._convoShowUserPrompt(turn);
     }
+  }
+
+  _convoShowTyping() {
+    const chat = document.getElementById('convo-chat');
+    if (!chat || document.getElementById('convo-typing')) return;
+    const d = document.createElement('div');
+    d.id = 'convo-typing';
+    d.className = 'convo-bubble bot';
+    d.innerHTML = `<div class="cb-avatar">🤖</div><div class="cb-typing"><span></span><span></span><span></span></div>`;
+    chat.appendChild(d);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  _convoHideTyping() {
+    const el = document.getElementById('convo-typing');
+    if (el) el.remove();
   }
 
   _convoAddBotBubble(text, tr) {
@@ -4979,15 +5002,20 @@ class App {
     chat.scrollTop = chat.scrollHeight;
   }
 
-  _convoShowUserPrompt(turn) {
+  _convoShowUserPrompt(turn, isRetry = false) {
     const area = document.getElementById('convo-user-area');
     if (!area) return;
     const hint     = turn.hint || turn.userHint || '';
-    const expected = turn.expected || '';
+    const keywords = turn.keywords || [];
+    const keyChips = keywords.length
+      ? `<div class="cp-keywords">${keywords.map(k =>
+          `<button class="cp-kw" onclick="app.speech.speak('${k}',0.9)">${k}</button>`
+        ).join('')}</div>`
+      : '';
     area.innerHTML = `
-      <div class="convo-prompt">
-        <div class="cp-hint">💬 ${hint}</div>
-        ${expected ? `<div class="cp-expected">Örnek: <em>"${expected}"</em></div>` : ''}
+      <div class="convo-prompt${isRetry ? ' retry' : ''}">
+        <div class="cp-hint">${isRetry ? '🔄 Tekrar dene: ' : '💬 '}${hint}</div>
+        ${keyChips}
         <div class="convo-controls">
           <button class="speak-rec-btn" id="convo-rec-btn" onclick="app.toggleConvoRecord()">
             <span id="convo-rec-icon">🎤</span>
@@ -5035,30 +5063,78 @@ class App {
 
   _handleConvoResult(event, turn) {
     this._stopConvoRecord();
-    const spoken   = event.results[0][0].transcript.trim().toLowerCase();
+    const raw      = event.results[0][0].transcript.trim();
+    const spoken   = raw.toLowerCase();
     const keywords = turn.keywords || [];
-    const matched  = keywords.filter(k => spoken.includes(k.toLowerCase())).length;
+    const matched  = keywords.filter(k => spoken.includes(k.toLowerCase()));
     const score    = keywords.length
-      ? Math.min(100, Math.round((matched / Math.max(keywords.length * 0.4, 1)) * 100))
+      ? Math.min(100, Math.round((matched.length / Math.max(keywords.length * 0.4, 1)) * 100))
       : 70;
-    const t = document.getElementById('convo-transcript');
-    if (t) t.innerHTML = `<em>"${event.results[0][0].transcript.trim()}"</em>`;
-    this._convoAddUserBubble(event.results[0][0].transcript.trim(), score);
+
+    this._convoAddUserBubble(raw, score);
     this.session.convo.score += score;
     this.session.convo.total++;
-    this.session.convo.turnIdx++;
-    const area = document.getElementById('convo-user-area');
-    if (area) area.innerHTML = '';
-    setTimeout(() => this._convoNextTurn(), 600);
+
+    // Show expected with keyword highlights + optional retry
+    const expected = turn.expected || '';
+    const area     = document.getElementById('convo-user-area');
+    if (area && expected) {
+      let highlighted = expected;
+      keywords.forEach(k => {
+        const color = matched.includes(k) ? 'var(--green)' : 'var(--rose)';
+        highlighted = highlighted.replace(
+          new RegExp(`\\b${k}\\b`, 'gi'),
+          `<mark style="background:none;color:${color};font-weight:700">$&</mark>`
+        );
+      });
+      const xpGain = Math.round(score / 100 * 20);
+      area.innerHTML = `
+        <div class="cp-reveal">
+          <div class="cp-reveal-label">Model cevap:</div>
+          <div class="cp-reveal-text">${highlighted}</div>
+          ${score < 65
+            ? `<button class="cp-retry-btn" onclick="app._convoRetry()">🔄 Tekrar Dene</button>`
+            : `<div class="cp-xp-chip">+${xpGain} XP</div>`
+          }
+        </div>`;
+      // Update live XP in header
+      this.session.convo.sessionXP = (this.session.convo.sessionXP || 0) + xpGain;
+      const xpEl = document.getElementById('cch-xp');
+      if (xpEl) xpEl.textContent = `${this.session.convo.sessionXP} XP`;
+    } else if (area) {
+      area.innerHTML = '';
+    }
+
+    if (score >= 65) {
+      this.session.convo.turnIdx++;
+      setTimeout(() => {
+        if (area) area.innerHTML = '';
+        this._convoNextTurn();
+      }, score < 80 ? 2500 : 1800);
+    }
+  }
+
+  _convoRetry() {
+    const turn = this.session.convo.scenario.turns[this.session.convo.turnIdx];
+    this.session.convo.total--; // don't count the failed attempt in average
+    this.session.convo.score -= this.session.convo.score > 0 ? Math.min(65, this.session.convo.score) : 0;
+    this._convoShowUserPrompt(turn, true);
   }
 
   skipConvoTurn() {
+    const turn     = this.session.convo.scenario.turns[this.session.convo.turnIdx];
+    const expected = turn?.expected || turn?.hint || turn?.userHint || '';
     this._convoAddUserBubble('(atlandı)', 0);
-    const area = document.getElementById('convo-user-area');
-    if (area) area.innerHTML = '';
-    this.session.convo.turnIdx++;
     this.session.convo.total++;
-    setTimeout(() => this._convoNextTurn(), 400);
+    this.session.convo.turnIdx++;
+    const area = document.getElementById('convo-user-area');
+    if (area && expected) {
+      area.innerHTML = `<div class="cp-reveal"><div class="cp-reveal-label">Model cevap:</div><div class="cp-reveal-text">${expected}</div></div>`;
+      setTimeout(() => { if (area) area.innerHTML = ''; this._convoNextTurn(); }, 2000);
+    } else {
+      if (area) area.innerHTML = '';
+      setTimeout(() => this._convoNextTurn(), 400);
+    }
   }
 
   _convoFinish() {
