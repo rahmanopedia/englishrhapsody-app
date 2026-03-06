@@ -2353,19 +2353,36 @@ class App {
     el.innerHTML = `
       <div class="convo-list-header">
         <h2>Senaryo Seç</h2>
-        <p>Gerçek hayat durumlarında İngilizce konuş</p>
+        <p>Dünyanın en büyük senaryo kütüphanesi (${CONVERSATIONS.length} Senaryo)</p>
+        <div style="margin-top:16px; margin-bottom:16px;">
+          <input type="text" id="convo-search" placeholder="Senaryo ara (Örn: Seyahat, Kahve, İş)..." 
+                 oninput="app.filterConvos(this.value)"
+                 style="width:100%; padding:12px 16px; border-radius:12px; border:2px solid var(--violet); background:rgba(0,0,0,0.2); color:var(--text-1); font-size:16px; outline:none; box-shadow:0 4px 12px rgba(139, 92, 246, 0.1);">
+        </div>
       </div>
-      <div class="convo-scenarios">
-        ${CONVERSATIONS.map(c => `
-          <div class="convo-scenario-card" onclick="app.startConvo('${c.id}')">
-            <div class="csc-emoji">${c.emoji}</div>
-            <div class="csc-title">${c.title}</div>
-            <div class="csc-level level-${c.level}">${c.level === 'easy' ? '🌱 Kolay' : c.level === 'medium' ? '📚 Orta' : '🔥 İleri'}</div>
-            <div class="csc-turns">${c.turns.filter(t => t.role === 'user').length} konuşma turu</div>
-          </div>
-        `).join('')}
+      <div class="convo-scenarios" id="convo-list-container">
+        ${this._generateConvoCardsHTML(CONVERSATIONS)}
       </div>
     `;
+  }
+
+  _generateConvoCardsHTML(list) {
+    return list.map(c => `
+      <div class="convo-scenario-card" onclick="app.startConvo('${c.id}')">
+        <div class="csc-emoji">${c.emoji}</div>
+        <div class="csc-title">${c.title}</div>
+        <div class="csc-level level-${c.level}">${c.level === 'easy' ? '🌱 Kolay' : c.level === 'medium' ? '📚 Orta' : '🔥 İleri'}</div>
+        <div class="csc-turns">${c.turns.filter(t => t.role === 'user').length} tur</div>
+      </div>
+    `).join('');
+  }
+
+  filterConvos(query) {
+    const container = document.getElementById('convo-list-container');
+    if (!container) return;
+    const q = query.toLowerCase();
+    const filtered = CONVERSATIONS.filter(c => c.title.toLowerCase().includes(q) || c.id.toLowerCase().includes(q));
+    container.innerHTML = this._generateConvoCardsHTML(filtered);
   }
 
   startConvo(id) {
