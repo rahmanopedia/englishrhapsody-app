@@ -963,9 +963,10 @@ class App {
     let wordMode = this._synthModeConfig || 'mix';
     if (wordMode === 'mix') {
       const r = Math.random();
-      if (r < 0.33) wordMode = 'spell';
-      else if (r < 0.66) wordMode = 'choice';
-      else wordMode = 'context';
+      if (r < 0.25) wordMode = 'spell';
+      else if (r < 0.50) wordMode = 'choice';
+      else if (r < 0.75) wordMode = 'context';
+      else wordMode = 'voice';
     }
     if (this._synthModeConfig === 'speed') wordMode = 'choice'; // Speed mode always uses choice for pace
     this.session.synthWordMode = wordMode;
@@ -983,6 +984,9 @@ class App {
       } else if (wordMode === 'context') {
         modeInd.textContent = '🧩 BAĞLAM';
         modeInd.className = 'synth-mode-ind context';
+      } else if (wordMode === 'voice') {
+        modeInd.textContent = '🎙️ NÖRAL SES';
+        modeInd.className = 'synth-mode-ind voice';
       } else {
         modeInd.textContent = '🔘 SEÇME';
         modeInd.className = 'synth-mode-ind choice';
@@ -993,10 +997,12 @@ class App {
     const display    = document.getElementById('synth-input-display');
     const choiceArea = document.getElementById('synth-choice-area');
     const contextArea= document.getElementById('synth-context-area');
+    const voiceArea  = document.getElementById('synth-voice-area');
     const listenBtn  = document.getElementById('synth-hint-listen-btn');
     const trEl       = document.getElementById('synth-tr');
 
     if (contextArea) contextArea.style.display = 'none';
+    if (voiceArea)   voiceArea.style.display   = 'none';
     if (trEl) trEl.style.display = 'block';
 
     if (wordMode === 'choice') {
@@ -1005,6 +1011,13 @@ class App {
       if (choiceArea) choiceArea.style.display = '';
       if (listenBtn)  listenBtn.style.display  = 'none';
       this._renderChoiceMode(word);
+    } else if (wordMode === 'voice') {
+      if (display)    display.style.display    = 'none';
+      if (choiceArea) { choiceArea.style.display = 'none'; choiceArea.innerHTML = ''; }
+      if (voiceArea)  voiceArea.style.display   = 'block';
+      if (listenBtn)  listenBtn.style.display  = 'none';
+      const status = document.getElementById('synth-voice-status');
+      if (status) status.textContent = 'Kelimeyi söylemek için mikrofona dokun';
     } else if (wordMode === 'context') {
       if (display)    display.style.display    = '';
       if (choiceArea) { choiceArea.style.display = 'none'; choiceArea.innerHTML = ''; }
@@ -1195,6 +1208,7 @@ class App {
     // Scoring & combo
     let points = this.session.synthWordMode === 'choice' ? 10 : 20;
     if (this.session.synthWordMode === 'context') points = 25;
+    if (this.session.synthWordMode === 'voice')   points = 40;
     if (this._synthModeConfig === 'speed') points = 30; // Speed mode gives fixed 30 XP
 
     if (perfect) {
@@ -1507,6 +1521,57 @@ class App {
     document.querySelectorAll('.synth-mode-card').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
     this.audio.play('click');
+  }
+
+  toggleSynthVoice() {
+    if (!this.speech.SpeechRecognition) { UI.toast("Ses tanıma desteklenmiyor."); return; }
+    if (this.session.isRecording) {
+      this.speech.stopRecognition();
+      return;
+    }
+
+    const btn = document.getElementById('synth-voice-btn');
+    const status = document.getElementById('synth-voice-status');
+    if (btn) btn.classList.add('listening');
+    if (status) status.textContent = 'Dinliyorum...';
+    
+    this.session.isRecording = true;
+    this.audio.play('pop');
+
+    this.speech.startRecognition({
+      onResult: (e) => {
+        const result = e.results[0][0].transcript.toLowerCase().trim().replace(/[.,?!]/g, '');
+        const target = this.session.synthWord.en.toLowerCase().trim();
+        
+        if (status) status.textContent = `Duyulan: "${result}"`;
+        
+        if (result === target) {
+          UI.toast("🎙️ Mükemmel telaffuz!", 1500);
+          setTimeout(() => this._completeSynthWord(), 400);
+        } else {
+          this.session.synthFails++;
+          this._playSynthError();
+          if (status) status.innerHTML = `<span style="color:var(--rose)">"${result}" değil, tekrar dene</span>`;
+          if (this.session.synthFails >= 3) {
+            UI.toast("⚠️ 3 Hata! Doğru cevap gösteriliyor...", 2000);
+            setTimeout(() => this.skipSynthWord(), 800);
+          }
+        }
+      },
+      onError: (e) => {
+        if (status) status.textContent = 'Hata oluştu, tekrar dene.';
+        this._stopSynthVoiceUI();
+      },
+      onEnd: () => {
+        this._stopSynthVoiceUI();
+      }
+    });
+  }
+
+  _stopSynthVoiceUI() {
+    this.session.isRecording = false;
+    const btn = document.getElementById('synth-voice-btn');
+    if (btn) btn.classList.remove('listening');
   }
 
   // Chromesthesia letter → colour mapping (gerçek sinestezi)

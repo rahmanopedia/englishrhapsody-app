@@ -3211,11 +3211,55 @@ body.rank-6 { --theme-accent: #ff9d00; }
   border: 1px solid rgba(16,185,129,0.3);
   color: var(--green);
 }
+.synth-mode-ind.voice {
+  background: rgba(244,63,94,0.12);
+  border: 1px solid rgba(244,63,94,0.3);
+  color: var(--rose);
+  animation: roseGlow 2s infinite alternate;
+}
+@keyframes roseGlow {
+  from { box-shadow: 0 0 5px rgba(244,63,94,0.1); }
+  to { box-shadow: 0 0 15px rgba(244,63,94,0.3); }
+}
 .synth-mode-ind.speed {
   background: rgba(245,158,11,0.12);
   border: 1px solid rgba(245,158,11,0.3);
   color: var(--amber);
   animation: glowPulse 2s infinite alternate;
+}
+
+/* Voice Mode v8.0 Styles */
+.synth-mic-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(244,63,94,0.1);
+  border: 2px solid var(--rose);
+  color: var(--rose);
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 20px rgba(244,63,94,0.2);
+}
+.synth-mic-btn:hover {
+  background: rgba(244,63,94,0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(244,63,94,0.4);
+}
+.synth-mic-btn.listening {
+  background: var(--rose);
+  color: white;
+  animation: micPulse 1s infinite;
+  box-shadow: 0 0 40px rgba(244,63,94,0.6);
+}
+@keyframes micPulse {
+  0% { transform: scale(1); box-shadow: 0 0 20px rgba(244,63,94,0.4); }
+  50% { transform: scale(1.1); box-shadow: 0 0 40px rgba(244,63,94,0.7); }
+  100% { transform: scale(1); box-shadow: 0 0 20px rgba(244,63,94,0.4); }
 }
 @keyframes glowPulse {
   from { box-shadow: 0 0 5px rgba(245,158,11,0.1); }
