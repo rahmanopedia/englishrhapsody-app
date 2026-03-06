@@ -66,7 +66,7 @@ class NexusMode {
       const y = Math.random() * 100;
       const size = Math.random() * 3 + 1;
       const dur = Math.random() * 3 + 2;
-      stars += \`<div class="nexus-star" style="left:\${x}%; top:\${y}%; width:\${size}px; height:\${size}px; --dur:\${dur}s"></div>\`;
+      stars += `<div class="nexus-star" style="left:${x}%; top:${y}%; width:${size}px; height:${size}px; --dur:${dur}s"></div>`;
     }
     starContainer.innerHTML = stars;
   }
@@ -75,7 +75,7 @@ class NexusMode {
     const shuffled = [...this.phrasals].sort(() => 0.5 - Math.random());
     this.queue = shuffled.slice(0, 10);
     if(this.queue.length === 0) {
-       UI.toast('Phrasal Verb bulunamadı!');
+       if (typeof UI !== 'undefined' && UI.toast) UI.toast('Phrasal Verb bulunamadı!');
        return;
     }
     this.score = 0;
@@ -102,27 +102,27 @@ class NexusMode {
     this.root.innerHTML = `
       <div class="nexus-header">
         <h1 class="nexus-title">NEXUS</h1>
-        <p class="nexus-subtitle">\${this.currentIndex + 1} / \${this.queue.length}</p>
+        <p class="nexus-subtitle">${this.currentIndex + 1} / ${this.queue.length}</p>
       </div>
       <div class="nexus-game-area" id="nexus-board">
-        <div class="nexus-question">\${this.current.tr}</div>
+        <div class="nexus-question">${this.current.tr}</div>
         
         <svg class="nexus-connection-line" id="nexus-svg">
            <line id="nexus-line" x1="0" y1="0" x2="0" y2="0" class="nexus-line"></line>
         </svg>
 
         <div class="nexus-core-node" id="nexus-core" onclick="window.nexusMod.playVerbAudio()">
-          \${this.current.verb}
+          ${this.current.verb}
         </div>
 
-        \${options.map((opt, i) => {
-           return \`<div class="nexus-particle-node" onclick="window.nexusMod.checkAnswer('\${opt}', this)">\${opt}</div>\`;
+        ${options.map((opt, i) => {
+           return `<div class="nexus-particle-node" onclick="window.nexusMod.checkAnswer('${opt}', this)">${opt}</div>`;
         }).join('')}
 
       </div>
       <div class="nexus-hud">
-        <div class="nexus-stat">⭐ <span id="nx-score">\${this.score}</span> XP</div>
-        <div class="nexus-stat">🔥 <span id="nx-combo">\${this.combo}</span></div>
+        <div class="nexus-stat">⭐ <span id="nx-score">${this.score}</span> XP</div>
+        <div class="nexus-stat">🔥 <span id="nx-combo">${this.combo}</span></div>
       </div>
       <div class="nexus-bg-stars" id="nexus-stars"></div>
     `;
@@ -147,15 +147,18 @@ class NexusMode {
        const radius = window.innerWidth < 600 ? 120 : 180;
        const x = centerX + Math.cos(angle) * radius - p.offsetWidth/2;
        const y = centerY + Math.sin(angle) * radius - p.offsetHeight/2;
-       p.style.left = \`\${x}px\`;
-       p.style.top = \`\${y}px\`;
+       p.style.left = `${x}px`;
+       p.style.top = `${y}px`;
     });
   }
 
   playVerbAudio() {
     if(this.app.speakWord) this.app.speakWord(this.current.verb);
-    document.getElementById('nexus-core').classList.add('active');
-    setTimeout(() => document.getElementById('nexus-core').classList.remove('active'), 300);
+    const core = document.getElementById('nexus-core');
+    if (core) {
+      core.classList.add('active');
+      setTimeout(() => core.classList.remove('active'), 300);
+    }
   }
 
   checkAnswer(particle, el) {
@@ -166,6 +169,8 @@ class NexusMode {
     const core = document.getElementById('nexus-core');
     const line = document.getElementById('nexus-line');
     
+    if (!core || !line) return;
+
     const coreRect = core.getBoundingClientRect();
     const elRect = el.getBoundingClientRect();
     const boardRect = document.getElementById('nexus-board').getBoundingClientRect();
@@ -186,20 +191,25 @@ class NexusMode {
       
       this.score += 20 + (this.combo * 5);
       this.combo++;
-      document.getElementById('nx-score').innerText = this.score;
-      document.getElementById('nx-combo').innerText = this.combo;
       
-      // Update xp via generic way or specific if we know
+      const scEl = document.getElementById('nx-score');
+      const cbEl = document.getElementById('nx-combo');
+      if (scEl) scEl.innerText = this.score;
+      if (cbEl) cbEl.innerText = this.combo;
+      
       if(this.app.state) {
          let xp = this.app.state.get('xp') || 0;
          this.app.state.update({ xp: xp + 20 + (this.combo * 5) });
          if(this.app._renderHeader) this.app._renderHeader();
       }
       
-      document.querySelector('.nexus-question').innerHTML = \`
-        <div style="color:#10b981; font-size:2rem; margin-bottom:10px;">\${this.current.phrase}</div>
-        <div style="font-size:1.1rem; color:var(--text-2); font-style:italic;">"\${this.current.ex}"</div>
-      \`;
+      const qEl = document.querySelector('.nexus-question');
+      if (qEl) {
+        qEl.innerHTML = `
+          <div style="color:#10b981; font-size:2rem; margin-bottom:10px;">${this.current.phrase}</div>
+          <div style="font-size:1.1rem; color:var(--text-2); font-style:italic;">"${this.current.ex}"</div>
+        `;
+      }
       
       setTimeout(() => {
         this.locked = false;
@@ -211,7 +221,8 @@ class NexusMode {
       el.classList.add('wrong');
       if(this.app.audio) this.app.audio.play('error');
       this.combo = 0;
-      document.getElementById('nx-combo').innerText = this.combo;
+      const cbEl = document.getElementById('nx-combo');
+      if (cbEl) cbEl.innerText = this.combo;
       setTimeout(() => {
         el.classList.remove('wrong');
         line.classList.remove('active');
@@ -221,21 +232,21 @@ class NexusMode {
   }
 
   _showResults() {
-    this.root.innerHTML = \`
+    this.root.innerHTML = `
       <div class="nexus-header">
         <h1 class="nexus-title">BAĞLANTI TAMAMLANDI</h1>
       </div>
       <div class="nexus-game-area" style="text-align:center;">
         <div style="font-size:4rem; margin-bottom:20px;">🎉</div>
         <h2 style="color:var(--text-1); font-size:2rem; margin-bottom:10px;">Harika İş Çıkardın!</h2>
-        <p style="color:var(--text-2); font-size:1.2rem; margin-bottom:30px;">Kazanılan XP: <strong style="color:var(--cyan)">+\${this.score}</strong></p>
+        <p style="color:var(--text-2); font-size:1.2rem; margin-bottom:30px;">Kazanılan XP: <strong style="color:var(--cyan)">+${this.score}</strong></p>
         <div style="display:flex; gap:15px; justify-content:center;">
            <button class="btn btn-primary" onclick="window.nexusMod.start()">Tekrar Oyna</button>
            <button class="btn btn-ghost" onclick="app.navigate('home')">Ana Menü</button>
         </div>
       </div>
       <div class="nexus-bg-stars" id="nexus-stars"></div>
-    \`;
+    `;
     this._createStars();
     if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 80, origin: {y: 0.6} });
   }
