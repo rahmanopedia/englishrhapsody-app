@@ -4484,7 +4484,7 @@ class App {
     document.querySelectorAll('.speak-mode-panel').forEach(p => p.classList.remove('active'));
     const activePanel = document.getElementById(`speak-panel-${lastMode}`);
     if (activePanel) activePanel.classList.add('active');
-    if (lastMode === 'convo')   this._renderConvoList();
+    if (lastMode === 'convo')   this._renderConvoLevels();
     else if (lastMode === 'speed')   this._renderSpeedList();
     else if (lastMode === 'phoneme') this._renderPhonemeList();
   }
@@ -4833,37 +4833,58 @@ class App {
     if (panel) panel.classList.add('active');
     this.session.speakMode = mode;
     if (this.session.isRecording) { this.speech.stopRecognition(); this._stopRecord(); }
-    if (mode === 'convo')   this._renderConvoList();
+    if (mode === 'convo')   this._renderConvoLevels();
     this.audio.play('click');
   }
 
   // ─── AI CONVERSATION MODE ────────────────────────────────────────────────
 
-  _renderConvoList() {
+  _renderConvoLevels() {
     const el = document.getElementById('convo-content');
     if (!el) return;
+    const counts = {
+      easy:   CONVERSATIONS.filter(c => c.level === 'easy').length,
+      medium: CONVERSATIONS.filter(c => c.level === 'medium').length,
+      hard:   CONVERSATIONS.filter(c => c.level === 'hard').length,
+    };
     el.innerHTML = `
-      <div class="convo-list-header">
-        <h2>Senaryo Seç</h2>
-        <p>Gerçek hayat durumlarında İngilizce konuş</p>
-      </div>
-      <div class="convo-scenarios">
-        ${CONVERSATIONS.map(c => `
-          <div class="convo-scenario-card" onclick="app.startConvo('${c.id}')">
-            <div class="csc-emoji">${c.emoji}</div>
-            <div class="csc-title">${c.title}</div>
-            <div class="csc-level level-${c.level}">${c.level === 'easy' ? '🌱 Kolay' : c.level === 'medium' ? '📚 Orta' : '🔥 İleri'}</div>
-            <div class="csc-turns">${c.turns.filter(t => t.role === 'user').length} konuşma turu</div>
-          </div>
-        `).join('')}
-      </div>
-    `;
+      <div class="convo-level-screen">
+        <div class="cls-header">
+          <div class="cls-icon">🤖</div>
+          <h2 class="cls-title">AI Sohbet</h2>
+          <p class="cls-sub">Seviyeni seç — AI senin için bir senaryo seçsin</p>
+        </div>
+        <div class="cls-levels">
+          <button class="cls-level-btn easy" onclick="app.startConvoByLevel('easy')">
+            <span class="clb-icon">🌱</span>
+            <span class="clb-name">Başlangıç</span>
+            <span class="clb-desc">Günlük hayat, temel iletişim</span>
+            <span class="clb-count">${counts.easy} senaryo</span>
+          </button>
+          <button class="cls-level-btn medium" onclick="app.startConvoByLevel('medium')">
+            <span class="clb-icon">📚</span>
+            <span class="clb-name">Orta</span>
+            <span class="clb-desc">İş hayatı, seyahat, sosyal durumlar</span>
+            <span class="clb-count">${counts.medium} senaryo</span>
+          </button>
+          <button class="cls-level-btn hard" onclick="app.startConvoByLevel('hard')">
+            <span class="clb-icon">🔥</span>
+            <span class="clb-name">İleri</span>
+            <span class="clb-desc">Karmaşık müzakere, akademik, profesyonel</span>
+            <span class="clb-count">${counts.hard} senaryo</span>
+          </button>
+        </div>
+      </div>`;
   }
 
-  startConvo(id) {
-    const scenario = CONVERSATIONS.find(c => c.id === id);
-    if (!scenario) return;
-    this.session.convo = { scenario, turnIdx: 0, score: 0, total: 0 };
+  startConvoByLevel(level) {
+    const pool = CONVERSATIONS.filter(c => c.level === level);
+    if (!pool.length) return;
+    // Shuffle pool, avoid repeating last scenario
+    const lastId = this.session.convo?.scenario?.id;
+    const candidates = pool.length > 1 ? pool.filter(c => c.id !== lastId) : pool;
+    const scenario = candidates[Math.floor(Math.random() * candidates.length)];
+    this.session.convo = { scenario, level, turnIdx: 0, score: 0, total: 0 };
     this._renderConvoChat();
   }
 
@@ -4871,32 +4892,44 @@ class App {
     const el = document.getElementById('convo-content');
     if (!el) return;
     const { scenario } = this.session.convo;
+    const userTurns = scenario.turns.filter(t => t.role === 'user' || t.userHint).length;
+    const levelLabel = { easy: '🌱 Başlangıç', medium: '📚 Orta', hard: '🔥 İleri' }[scenario.level] || '';
     el.innerHTML = `
-      <div class="convo-chat-header">
-        <button class="btn btn-ghost btn-sm" onclick="app._renderConvoList()">← Senaryolar</button>
-        <div class="cch-title">${scenario.emoji} ${scenario.title}</div>
-        <div class="cch-progress" id="cch-progress">0/${scenario.turns.filter(t => t.role === 'user').length}</div>
-      </div>
-      <div class="convo-chat" id="convo-chat"></div>
-      <div class="convo-user-area" id="convo-user-area"></div>
-    `;
-    setTimeout(() => this._convoNextTurn(), 400);
+      <div class="convo-chat-wrap">
+        <div class="convo-chat-header">
+          <button class="ccb-back" onclick="app._renderConvoLevels()">←</button>
+          <div class="cch-info">
+            <span class="cch-emoji">${scenario.emoji || '💬'}</span>
+            <span class="cch-title">${scenario.title}</span>
+            <span class="cch-level">${levelLabel}</span>
+          </div>
+          <div class="cch-progress" id="cch-progress">0 / ${userTurns}</div>
+        </div>
+        <div class="convo-chat" id="convo-chat"></div>
+        <div class="convo-user-area" id="convo-user-area"></div>
+      </div>`;
+    setTimeout(() => this._convoNextTurn(), 300);
   }
 
   _convoNextTurn() {
     const { scenario, turnIdx } = this.session.convo;
     const turn = scenario.turns[turnIdx];
     if (!turn) { this._convoFinish(); return; }
-    if (turn.role === 'bot') {
-      this._convoAddBotBubble(turn.text, turn.tr);
-      setTimeout(() => this.speech.speak(turn.text, 0.85), 300);
+
+    // Support both data formats
+    const isBot = turn.role === 'bot' || !!turn.bot;
+    if (isBot) {
+      const text = turn.text || turn.bot;
+      const tr   = turn.tr   || '';
+      this._convoAddBotBubble(text, tr);
+      setTimeout(() => this.speech.speak(text, 0.88), 200);
       this.session.convo.turnIdx++;
-      setTimeout(() => this._convoNextTurn(), 2000);
+      setTimeout(() => this._convoNextTurn(), 1800);
     } else {
-      const userTurns = scenario.turns.filter(t => t.role === 'user').length;
-      const doneUserTurns = scenario.turns.slice(0, turnIdx).filter(t => t.role === 'user').length;
+      const userTurns = scenario.turns.filter(t => t.role === 'user' || t.userHint).length;
+      const doneUserTurns = scenario.turns.slice(0, turnIdx).filter(t => t.role === 'user' || t.userHint).length;
       const prog = document.getElementById('cch-progress');
-      if (prog) prog.textContent = `${doneUserTurns}/${userTurns}`;
+      if (prog) prog.textContent = `${doneUserTurns} / ${userTurns}`;
       this._convoShowUserPrompt(turn);
     }
   }
@@ -4911,7 +4944,7 @@ class App {
       <div class="cb-content">
         <div class="cb-text">${text}</div>
         ${tr ? `<div class="cb-tr">${tr}</div>` : ''}
-        <button class="cb-replay" onclick="app.speech.speak(${JSON.stringify(text)}, 0.85)">🔊</button>
+        <button class="cb-replay" onclick="app.speech.speak(${JSON.stringify(text)}, 0.88)">🔊</button>
       </div>`;
     chat.appendChild(d);
     chat.scrollTop = chat.scrollHeight;
@@ -4921,12 +4954,13 @@ class App {
     const chat = document.getElementById('convo-chat');
     if (!chat) return;
     const color = score >= 80 ? 'var(--green)' : score >= 50 ? 'var(--amber)' : 'var(--rose)';
+    const label = score >= 80 ? 'Harika' : score >= 50 ? 'İyi' : 'Tekrar et';
     const d = document.createElement('div');
     d.className = 'convo-bubble user';
     d.innerHTML = `
       <div class="cb-content right">
         <div class="cb-text">${text || '(sessiz)'}</div>
-        <div class="cb-score" style="color:${color}">%${score}</div>
+        <div class="cb-score" style="color:${color}">%${score} · ${label}</div>
       </div>
       <div class="cb-avatar">👤</div>`;
     chat.appendChild(d);
@@ -4936,10 +4970,12 @@ class App {
   _convoShowUserPrompt(turn) {
     const area = document.getElementById('convo-user-area');
     if (!area) return;
+    const hint     = turn.hint || turn.userHint || '';
+    const expected = turn.expected || '';
     area.innerHTML = `
       <div class="convo-prompt">
-        <div class="cp-hint">💬 ${turn.hint}</div>
-        <div class="cp-expected">Örnek: <em>"${turn.expected}"</em></div>
+        <div class="cp-hint">💬 ${hint}</div>
+        ${expected ? `<div class="cp-expected">Örnek: <em>"${expected}"</em></div>` : ''}
         <div class="convo-controls">
           <button class="speak-rec-btn" id="convo-rec-btn" onclick="app.toggleConvoRecord()">
             <span id="convo-rec-icon">🎤</span>
@@ -4947,12 +4983,12 @@ class App {
           </button>
           <button class="speak-side-btn" onclick="app.skipConvoTurn()">⏭ Geç</button>
         </div>
-        <div id="convo-transcript" style="text-align:center;color:var(--text-2);font-size:0.85rem;min-height:24px;margin-top:8px"></div>
+        <div id="convo-transcript" style="text-align:center;color:var(--text-2);font-size:0.85rem;min-height:22px;margin-top:8px"></div>
       </div>`;
   }
 
   toggleConvoRecord() {
-    if (!this.speech.SpeechRecognition) { UI.toast("Ses tanıma desteklenmiyor."); return; }
+    if (!this.speech.SpeechRecognition) { UI.toast("Ses tanıma bu tarayıcıda desteklenmiyor."); return; }
     if (this.session.isRecording) { this.speech.stopRecognition(); this._stopConvoRecord(); return; }
     const turn = this.session.convo.scenario.turns[this.session.convo.turnIdx];
     const btn = document.getElementById('convo-rec-btn');
@@ -4962,12 +4998,12 @@ class App {
     if (label) label.textContent = 'Durdur';
     if (btn) btn.classList.add('recording');
     const t = document.getElementById('convo-transcript');
-    if (t) t.innerHTML = '<span style="color:var(--cyan)">🎙️ Dinliyorum...</span>';
+    if (t) t.innerHTML = '<span style="color:var(--cyan);animation:pulse 1.5s infinite">🎙️ Dinliyorum...</span>';
     this.session.isRecording = true;
     this.speech.startRecognition({
       onResult: (e) => this._handleConvoResult(e, turn),
-      onError: () => this._stopConvoRecord(),
-      onEnd: () => this._stopConvoRecord(),
+      onError:  () => this._stopConvoRecord(),
+      onEnd:    () => this._stopConvoRecord(),
     });
   }
 
@@ -4983,10 +5019,12 @@ class App {
 
   _handleConvoResult(event, turn) {
     this._stopConvoRecord();
-    const spoken = event.results[0][0].transcript.trim().toLowerCase();
+    const spoken   = event.results[0][0].transcript.trim().toLowerCase();
     const keywords = turn.keywords || [];
-    const matched = keywords.filter(k => spoken.includes(k.toLowerCase())).length;
-    const score = Math.min(100, Math.round((matched / Math.max(keywords.length * 0.4, 1)) * 100));
+    const matched  = keywords.filter(k => spoken.includes(k.toLowerCase())).length;
+    const score    = keywords.length
+      ? Math.min(100, Math.round((matched / Math.max(keywords.length * 0.4, 1)) * 100))
+      : 70;
     const t = document.getElementById('convo-transcript');
     if (t) t.innerHTML = `<em>"${event.results[0][0].transcript.trim()}"</em>`;
     this._convoAddUserBubble(event.results[0][0].transcript.trim(), score);
@@ -4995,7 +5033,7 @@ class App {
     this.session.convo.turnIdx++;
     const area = document.getElementById('convo-user-area');
     if (area) area.innerHTML = '';
-    setTimeout(() => this._convoNextTurn(), 700);
+    setTimeout(() => this._convoNextTurn(), 600);
   }
 
   skipConvoTurn() {
@@ -5008,29 +5046,32 @@ class App {
   }
 
   _convoFinish() {
-    const { score, total, scenario } = this.session.convo;
+    const { score, total, level } = this.session.convo;
     const avg = total > 0 ? Math.round(score / total) : 0;
-    const xp = Math.round(avg / 100 * 80);
+    const xp  = Math.round(avg / 100 * 80);
     this.addXP(xp);
     const area = document.getElementById('convo-user-area');
     const chat = document.getElementById('convo-chat');
+    if (area) area.innerHTML = '';
     if (chat) {
+      const color = avg >= 75 ? 'var(--green)' : avg >= 50 ? 'var(--amber)' : 'var(--rose)';
       const d = document.createElement('div');
       d.className = 'convo-finish-card';
       d.innerHTML = `
-        <div class="cf-emoji">🎉</div>
-        <div class="cf-title">Sohbet Tamamlandı!</div>
+        <div class="cf-emoji">${avg >= 75 ? '🎉' : avg >= 50 ? '👍' : '💪'}</div>
+        <div class="cf-title">Sohbet Tamamlandı</div>
         <div class="cf-score-row">
-          <div class="cf-score-val" style="color:${avg >= 75 ? 'var(--green)' : avg >= 50 ? 'var(--amber)' : 'var(--rose)'}">${avg}%</div>
+          <div class="cf-score-val" style="color:${color}">${avg}%</div>
           <div class="cf-score-label">Ortalama Skor</div>
         </div>
-        <div class="cf-xp">+${xp} XP kazandın!</div>
-        <button class="btn btn-primary" style="margin-top:12px" onclick="app._renderConvoList()">Yeni Senaryo Seç</button>
-      `;
+        <div class="cf-xp">+${xp} XP</div>
+        <div class="cf-actions">
+          <button class="btn btn-primary" onclick="app.startConvoByLevel('${level}')">Sonraki Senaryo →</button>
+          <button class="btn btn-ghost btn-sm" onclick="app._renderConvoLevels()">Seviye Değiştir</button>
+        </div>`;
       chat.appendChild(d);
       chat.scrollTop = chat.scrollHeight;
     }
-    if (area) area.innerHTML = '';
     if (avg >= 80 && typeof confetti === 'function') confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
   }
 
