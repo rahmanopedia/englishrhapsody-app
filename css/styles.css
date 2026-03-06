@@ -1498,63 +1498,16 @@ a { color: inherit; text-decoration: none; }
 .hm-cell.l2 { background: rgba(0,212,255,0.45); }
 .hm-cell.l3 { background: var(--cyan); box-shadow: 0 0 8px rgba(0,212,255,0.4); }
 
-.analytics-stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.analytics-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
 .ana-stat {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 16px;
+  padding: 20px;
   text-align: center;
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
 }
-.ana-stat:hover { border-color: var(--border-hover); transform: translateY(-3px); background: rgba(255,255,255,0.03); }
-.ana-stat::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; width: 4px; height: 100%;
-  background: var(--theme-accent, var(--cyan));
-  opacity: 0.5;
-}
-.ana-stat-val { font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.02em; }
-.ana-stat-label { font-size: 0.68rem; color: var(--text-3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-
-/* Recommendation Section */
-.rec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 12px; }
-.rec-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  transition: var(--transition);
-  cursor: pointer;
-}
-.rec-card:hover { background: rgba(255,255,255,0.05); border-color: var(--cyan); transform: translateX(5px); }
-.rec-icon { font-size: 2rem; width: 48px; height: 48px; background: rgba(255,255,255,0.04); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-.rec-info { flex: 1; }
-.rec-title { font-size: 0.9rem; font-weight: 700; color: var(--text-1); margin-bottom: 2px; }
-.rec-desc { font-size: 0.75rem; color: var(--text-3); }
-.rec-action { color: var(--cyan); font-size: 1.2rem; font-weight: 800; }
-
-.export-btn {
-  margin-top: 24px;
-  width: 100%;
-  background: rgba(255,255,255,0.03);
-  border: 1px dashed var(--border);
-  color: var(--text-3);
-  padding: 12px;
-  border-radius: var(--radius-lg);
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-}
-.export-btn:hover { background: rgba(0,212,255,0.05); border-color: var(--cyan); color: var(--cyan); }
-
+.ana-stat-val { font-size: 2rem; font-weight: 800; margin-bottom: 4px; }
+.ana-stat-label { font-size: 0.75rem; color: var(--text-2); }
 
 /* ── 23. Animate In ───────────────────────────────────────── */
 .animate-in {
@@ -1761,35 +1714,24 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .hm-legend-cell.l2 { background: rgba(0,212,255,0.6); }
 .hm-legend-cell.l3 { background: var(--cyan); }
 
-/* Heatmap Tooltip (Dynamic JS) */
-.hm-cell { position: relative; cursor: pointer; }
-.hm-tooltip {
+/* Heatmap tooltip via CSS data-tip attribute */
+.hm-cell { position: relative; }
+.hm-cell[data-tip]:hover::after {
+  content: attr(data-tip);
   position: absolute;
-  background: rgba(17,24,39,0.95);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--border-hover);
-  color: var(--text-1);
-  padding: 10px 14px;
-  border-radius: var(--radius);
-  pointer-events: none;
-  z-index: 1000;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,212,255,0.1);
-  opacity: 0;
-  transform: translateY(5px);
-  transition: opacity 0.2s, transform 0.2s;
-  min-width: 140px;
-  text-align: center;
-}
-.hm-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
+  bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: var(--border-hover) transparent transparent transparent;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-hover);
+  color: var(--text-1);
+  font-size: 0.7rem;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 6px;
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
 /* Keyboard shortcut hints in analytics header */

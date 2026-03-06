@@ -521,37 +521,11 @@
   <div class="analytics-stat-row">
     <div class="ana-stat"><div class="ana-stat-val" id="an-words" style="color:var(--cyan)">0</div><div class="ana-stat-label">Öğrenilen Kelime</div></div>
     <div class="ana-stat"><div class="ana-stat-val" id="an-sessions" style="color:var(--violet)">0</div><div class="ana-stat-label">Tamamlanan Oturum</div></div>
-    <div class="ana-stat">
-      <div class="ana-stat-val" id="an-streak" style="color:var(--amber)">0</div>
-      <div class="ana-stat-label">Mevcut Seri</div>
-      <div style="font-size:0.65rem;color:var(--text-3);margin-top:4px">En İyi: <span id="an-best-streak">0</span></div>
-    </div>
-    <div class="ana-stat">
-      <div class="ana-stat-val" id="an-acc" style="color:var(--green)">0%</div>
-      <div class="ana-stat-label">Genel Başarı</div>
-      <div style="font-size:0.65rem;color:var(--text-3);margin-top:4px">Doğru: <span id="an-total-correct">0</span></div>
-    </div>
-    <div class="ana-stat"><div class="ana-stat-val" id="an-time" style="color:var(--indigo)">0s</div><div class="ana-stat-label">Toplam Süre</div></div>
-    <div class="ana-stat"><div class="ana-stat-val" id="an-velocity" style="color:var(--rose)">0</div><div class="ana-stat-label">Günlük Hız</div></div>
+    <div class="ana-stat"><div class="ana-stat-val" id="an-streak" style="color:var(--amber)">0</div><div class="ana-stat-label">Mevcut Seri</div></div>
+    <div class="ana-stat"><div class="ana-stat-val" id="an-acc" style="color:var(--green)">0%</div><div class="ana-stat-label">Genel Başarı</div></div>
   </div>
 
   <div class="analytics-grid">
-    <div class="card" style="padding:24px">
-      <div class="section-header">
-        <span class="section-title">XP İlerleme Grafiği (Son 30 Gün)</span>
-        <div class="badge badge-cyan">İstikrar</div>
-      </div>
-      <canvas id="xp-chart" height="200"></canvas>
-    </div>
-
-    <div class="card" style="padding:24px">
-      <div class="section-header">
-        <span class="section-title">Başarı Oranı Trendi (Son 15 Oturum)</span>
-        <div class="badge badge-green">Odak</div>
-      </div>
-      <canvas id="accuracy-chart" height="200"></canvas>
-    </div>
-
     <div class="card card-full" style="padding:24px">
       <div class="section-header">
         <span class="section-title">Öğrenme Isı Haritası (Son 91 Gün)</span>
@@ -566,43 +540,21 @@
       </div>
       <div class="heatmap-grid" id="heatmap-grid"></div>
     </div>
-
     <div class="card" style="padding:24px">
       <div class="section-header"><span class="section-title">Kategori Ustalığı</span></div>
       <canvas id="cat-chart" height="250"></canvas>
     </div>
-    
     <div class="card" style="padding:24px">
-      <div class="section-header"><span class="section-title">Kelime Durum Dağılımı</span></div>
-      <canvas id="status-chart" height="250"></canvas>
-    </div>
-
-    <div class="card card-full" style="padding:24px">
       <div class="section-header"><span class="section-title">CEFR Seviye Dağılımı</span></div>
-      <canvas id="cefr-chart" height="180"></canvas>
+      <canvas id="cefr-chart" height="250"></canvas>
     </div>
   </div>
 
-  <div class="card card-full" style="padding:24px; margin-top:16px;">
-    <div class="section-header"><span class="section-title">🎯 Akıllı Öneriler</span></div>
-    <div class="rec-grid" id="rec-grid">
-      <!-- Recommendations will be injected here -->
-    </div>
-  </div>
-
+  <!-- Badges / Achievements Section -->
   <div class="card card-full" style="padding:24px; margin-top:16px;">
     <div class="section-header"><span class="section-title">🏆 Başarımlar ve Rozetler</span></div>
     <div class="badges-grid" id="badges-grid"></div>
   </div>
-
-  <div style="display:flex;gap:12px;margin-top:24px;">
-    <button class="export-btn" onclick="app.exportData()" style="flex:1;margin-top:0;">📊 Verileri İndir (JSON)</button>
-    <button class="export-btn" onclick="app.shareStats()" style="flex:1;margin-top:0;border-color:var(--violet);color:var(--violet);">📸 İstatistikleri Paylaş</button>
-  </div>
-
-  <!-- Heatmap Tooltip -->
-  <div id="hm-tooltip" class="hm-tooltip"></div>
-
 </div>
 </template>
 

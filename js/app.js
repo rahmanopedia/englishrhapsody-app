@@ -46,10 +46,6 @@ class StateManager {
       achievements: [],
       mastery:    {},     // { wordId: { score, interval, ease, nextReview } }
       history:    {},     // { 'YYYY-MM-DD': xp }
-      totalTimeSpent: 0,  // in seconds
-      timeHistory:    {}, // { 'YYYY-MM-DD': seconds }
-      longestStreak:  1,
-      accuracyHistory: [],// Array of { date, correct, total }
     };
   }
 
@@ -260,11 +256,6 @@ class App {
       speakIdx:   0,
       shuffledPools: {},
       };
-    
-    this._charts = {}; // Chart instance cache
-    this._lastTick = Date.now();
-    setInterval(() => this._updateTimeSpent(), 10000); // Every 10s
-
     this._initCanvas();
     this._bindGlobalEvents();
     this._checkStreak();
@@ -291,7 +282,6 @@ class App {
   // ─────────────────────────────────────────────────────────
 
   navigate(view) {
-    this._updateTimeSpent();
     this.session.view = view;
 
     // Cleanup synesthesia if active (prevents memory leaks and ghost timers)
@@ -486,13 +476,7 @@ class App {
     } else if (lastActive && lastActive !== today) {
       streak = 1;
     }
-    
-    let longestStreak = this.state.get('longestStreak') || 1;
-    if (streak > longestStreak) {
-      longestStreak = streak;
-    }
-    
-    this.state.update({ streak, longestStreak, lastActive: today });
+    this.state.update({ streak, lastActive: today });
   }
 
   _updateHeader() {
@@ -2558,39 +2542,11 @@ class App {
     if (avg >= 80 && typeof confetti === 'function') confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
   }
 
-  _updateTimeSpent() {
-    const now = Date.now();
-    const diff = Math.floor((now - this._lastTick) / 1000); // in seconds
-    if (diff > 0) {
-      const total = this.state.get('totalTimeSpent') || 0;
-      this.state.set('totalTimeSpent', total + diff);
-      
-      const day = new Date().toISOString().split('T')[0];
-      const th  = this.state.get('timeHistory') || {};
-      th[day]   = (th[day] || 0) + diff;
-      this.state.set('timeHistory', th);
-    }
-    this._lastTick = now;
-  }
-
-  exportData() {
-    const data = JSON.stringify(this.state._state, null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href     = url;
-    a.download = `english_rhapsody_data_${new Date().toISOString().split('T')[0]}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    UI.toast('Verileriniz başarıyla indirildi!');
-  }
-
   // ─────────────────────────────────────────────────────────
   //  ANALYTICS MODULE
   // ─────────────────────────────────────────────────────────
 
   _initAnalytics() {
-    this._updateTimeSpent(); // Sync time before showing
     const mastery   = this.state.get('mastery');
     const learned   = Object.values(mastery).filter(m => (m.score || 0) >= 3).length;
     const sessions  = this.state.get('sessions');
@@ -2598,238 +2554,8 @@ class App {
     const total     = this.state.get('totalAttempts');
     const correct   = this.state.get('totalCorrect');
     const acc       = total > 0 ? Math.round((correct / total) * 100) : 0;
-    const timeSec   = this.state.get('totalTimeSpent') || 0;
-    const bestStreak = this.state.get('longestStreak') || streak;
-    
-    // Calculate Velocity (avg words learned per active day in history)
-    const hist = this.state.get('history') || {};
-    const activeDays = Object.keys(hist).length;
-    const velocity = activeDays > 0 ? (learned / activeDays).toFixed(1) : 0;
-
-    // Formatting time
-    const timeStr = timeSec > 3600 ? `${(timeSec / 3600).toFixed(1)}h` : 
-                    timeSec > 60   ? `${Math.floor(timeSec / 60)}m` : `${timeSec}s`;
-
-    UI.setEl('an-words', learned); UI.setEl('an-sessions', sessions); 
-    UI.setEl('an-streak', streak); UI.setEl('an-acc', `${acc}%`);
-    UI.setEl('an-time', timeStr); UI.setEl('an-velocity', velocity);
-    UI.setEl('an-best-streak', bestStreak);
-    UI.setEl('an-total-correct', correct);
-
-    // Clear existing chart instances if they exist
-    Object.values(this._charts).forEach(chart => chart.destroy());
-    this._charts = {};
-
-    this._renderXpChart();
-    this._renderAccuracyChart();
-    this._renderHeatmap(); 
-    this._renderCategoryChart(); 
-    this._renderStatusChart();
-    this._renderCefrChart(); 
-    this._renderBadges();
-    this._renderRecommendations();
-  }
-
-  _renderAccuracyChart() {
-    const ctx = document.getElementById('accuracy-chart');
-    if (!ctx || typeof Chart === 'undefined') return;
-    
-    let accHist = this.state.get('accuracyHistory') || [];
-    // If no history, we mock one data point based on current overall stats to not have it empty
-    if (accHist.length === 0) {
-      const total = this.state.get('totalAttempts');
-      const correct = this.state.get('totalCorrect');
-      if (total > 0) {
-        accHist = [{ date: new Date().toISOString().split('T')[0], correct, total }];
-      }
-    }
-    
-    // Last 15 sessions/days max
-    accHist = accHist.slice(-15);
-    const labels = accHist.map(h => {
-      const d = new Date(h.date);
-      return d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
-    });
-    
-    const data = accHist.map(h => h.total > 0 ? Math.round((h.correct / h.total) * 100) : 0);
-
-    this._charts.accuracy = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: labels.length ? labels : ['Bugün'],
-        datasets: [{
-          label: 'Doğruluk (%)',
-          data: data.length ? data : [0],
-          borderColor: '#10b981',
-          backgroundColor: 'rgba(16,185,129,0.1)',
-          fill: true,
-          tension: 0.4,
-          pointBackgroundColor: '#10b981',
-          pointRadius: 4,
-          borderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { grid: { display: false }, ticks: { color: '#4a5568', font: { size: 10 } } },
-          y: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#4a5568', font: { size: 10 } } }
-        }
-      }
-    });
-  }
-
-  shareStats() {
-    const mastery = this.state.get('mastery');
-    const learned = Object.values(mastery).filter(m => (m.score || 0) >= 3).length;
-    const streak = this.state.get('streak');
-    const level = this.state.get('level');
-    const rank = this._getRank();
-    
-    const text = `🎯 English Rhapsody'de harika gidiyorum!\n\n🔥 Seri: ${streak} Gün\n📚 Öğrenilen Kelime: ${learned}\n👑 Seviye ${level} (${rank.name})\n\nSende bana katıl! 🚀`;
-    
-    if (navigator.share) {
-      navigator.share({
-        title: 'English Rhapsody İstatistiklerim',
-        text: text,
-      }).catch(console.error);
-    } else {
-      navigator.clipboard.writeText(text);
-      UI.toast('İstatistikler panoya kopyalandı!');
-    }
-  }
-
-  _renderXpChart() {
-    const ctx = document.getElementById('xp-chart');
-    if (!ctx || typeof Chart === 'undefined') return;
-    const hist = this.state.get('history') || {};
-    const days = [];
-    const data = [];
-    for (let i = 29; i >= 0; i--) {
-      const d = new Date(Date.now() - i * 86400000);
-      const k = d.toISOString().split('T')[0];
-      days.push(d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' }));
-      data.push(hist[k] || 0);
-    }
-    this._charts.xp = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: days,
-        datasets: [{
-          label: 'Günlük XP',
-          data: data,
-          borderColor: '#00d4ff',
-          backgroundColor: 'rgba(0,212,255,0.1)',
-          fill: true,
-          tension: 0.4,
-          pointRadius: 0,
-          borderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { grid: { display: false }, ticks: { color: '#4a5568', font: { size: 10 } } },
-          y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#4a5568', font: { size: 10 } } }
-        }
-      }
-    });
-  }
-
-  _renderStatusChart() {
-    const ctx = document.getElementById('status-chart');
-    if (!ctx || typeof Chart === 'undefined') return;
-    const mastery = this.state.get('mastery');
-    const mValues = Object.values(mastery);
-    
-    const mastered  = mValues.filter(m => (m.score || 0) >= 3).length;
-    const learning  = mValues.filter(m => (m.score || 0) > 0 && (m.score || 0) < 3).length;
-    const difficult = mValues.filter(m => (m.score || 0) < 0).length;
-    const untouched = (typeof WORDS !== 'undefined' ? WORDS.length : 0) - mastered - learning - difficult;
-
-    this._charts.status = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Usta', 'Öğreniliyor', 'Zor', 'Yeni'],
-        datasets: [{
-          data: [mastered, learning, difficult, Math.max(0, untouched)],
-          backgroundColor: ['#10b981', '#7c3aed', '#f43f5e', '#1a2235'],
-          borderWidth: 0,
-          weight: 0.5
-        }]
-      },
-      options: {
-        cutout: '70%',
-        plugins: {
-          legend: { position: 'bottom', labels: { color: '#8b9cb8', font: { size: 11 }, padding: 15, usePointStyle: true } }
-        }
-      }
-    });
-  }
-
-  _renderRecommendations() {
-    const el = document.getElementById('rec-grid');
-    if (!el) return;
-    const mastery = this.state.get('mastery');
-    
-    // Find weak categories
-    const cats = [...new Set(WORDS.map(w => w.cat))];
-    const catScores = cats.map(c => {
-      const pool = WORDS.filter(w => w.cat === c);
-      const score = Math.round((pool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / pool.length) * 100);
-      return { name: c, score };
-    }).sort((a,b) => a.score - b.score);
-
-    const weakCat = catScores[0];
-    const dueWords = (typeof App !== 'undefined' && App.getDue) ? App.getDue(WORDS, mastery).length : 0;
-
-    let html = '';
-    
-    // Rec 1: SRS Due
-    if (dueWords > 0) {
-      html += `
-        <div class="rec-card" onclick="app.navigate('learn')">
-          <div class="rec-icon">⏰</div>
-          <div class="rec-info">
-            <div class="rec-title">Tekrar Vakti Geldi</div>
-            <div class="rec-desc">${dueWords} kelime bugün tekrar edilmeyi bekliyor. İstikrarı bozma!</div>
-          </div>
-          <div class="rec-action">→</div>
-        </div>
-      `;
-    }
-
-    // Rec 2: Weak category
-    if (weakCat && weakCat.score < 80) {
-      html += `
-        <div class="rec-card" onclick="app.navigate('learn')">
-          <div class="rec-icon">🎯</div>
-          <div class="rec-info">
-            <div class="rec-title">${weakCat.name} Geliştirilebilir</div>
-            <div class="rec-desc">Bu kategorideki ustalığın %${weakCat.score}. Biraz daha pratik iyi gelebilir.</div>
-          </div>
-          <div class="rec-action">→</div>
-        </div>
-      `;
-    }
-
-    // Rec 3: Speaking
-    html += `
-      <div class="rec-card" onclick="app.navigate('speak')">
-        <div class="rec-icon">🗣️</div>
-        <div class="rec-info">
-          <div class="rec-title">Konuşma Pratiği Yap</div>
-          <div class="rec-desc">Telaffuzunu geliştirmek için günlük konuşma labı seansını tamamla.</div>
-        </div>
-        <div class="rec-action">→</div>
-      </div>
-    `;
-
-    el.innerHTML = html;
+    UI.setEl('an-words', learned); UI.setEl('an-sessions', sessions); UI.setEl('an-streak', streak); UI.setEl('an-acc', `${acc}%`);
+    this._renderHeatmap(); this._renderCategoryChart(); this._renderCefrChart(); this._renderBadges();
   }
 
   _renderBadges() {
@@ -2845,68 +2571,17 @@ class App {
   _renderHeatmap() {
     const el = document.getElementById('heatmap-grid');
     if (!el) return;
-    const hist = this.state.get('history') || {};
-    const timeHist = this.state.get('timeHistory') || {};
-    
+    const hist = this.state.get('history');
     let html = '';
     for (let i = 90; i >= 0; i--) {
       const d   = new Date(Date.now() - i * 86400000);
       const key = d.toISOString().split('T')[0];
       const xp  = hist[key] || 0;
-      const timeSec = timeHist[key] || 0;
-      
       const cls = xp > 500 ? 'l3' : xp > 150 ? 'l2' : xp > 0 ? 'l1' : '';
-      const label = d.toLocaleDateString('tr-TR', { day:'numeric', month:'short', year:'numeric' });
-      
-      // We pass data to attributes for JS-based tooltip
-      html += `<div class="hm-cell ${cls}" data-date="${label}" data-xp="${xp}" data-time="${timeSec}"></div>`;
+      const label = d.toLocaleDateString('tr-TR', { day:'numeric', month:'short' });
+      html += `<div class="hm-cell ${cls}" data-tip="${label}: ${xp} XP"></div>`;
     }
     el.innerHTML = html;
-
-    // Attach hover events for interactive tooltip
-    const tooltip = document.getElementById('hm-tooltip');
-    if (!tooltip) return;
-
-    el.querySelectorAll('.hm-cell').forEach(cell => {
-      cell.addEventListener('mouseenter', (e) => {
-        const rect = e.target.getBoundingClientRect();
-        const xp = e.target.dataset.xp;
-        const date = e.target.dataset.date;
-        const timeSec = parseInt(e.target.dataset.time || 0);
-        
-        const timeStr = timeSec > 3600 ? `${(timeSec / 3600).toFixed(1)} sa` : 
-                        timeSec > 60   ? `${Math.floor(timeSec / 60)} dk` : `${timeSec} sn`;
-
-        tooltip.innerHTML = `
-          <div style="font-weight:700;margin-bottom:4px">${date}</div>
-          <div style="display:flex;gap:10px;font-size:0.75rem;color:var(--text-2);">
-            <span>⚡ ${xp} XP</span>
-            <span>⏱️ ${timeStr}</span>
-          </div>
-        `;
-        
-        tooltip.style.display = 'block';
-        
-        // Calculate position
-        let left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2);
-        let top = rect.top - tooltip.offsetHeight - 8;
-        
-        // Boundaries
-        if (left < 10) left = 10;
-        if (top < 10) top = rect.bottom + 8; // flip to bottom if too high
-        
-        tooltip.style.left = left + 'px';
-        tooltip.style.top = top + 'px';
-        tooltip.style.opacity = '1';
-        tooltip.style.transform = 'translateY(0)';
-      });
-
-      cell.addEventListener('mouseleave', () => {
-        tooltip.style.opacity = '0';
-        tooltip.style.transform = 'translateY(5px)';
-        setTimeout(() => { if (tooltip.style.opacity === '0') tooltip.style.display = 'none'; }, 200);
-      });
-    });
   }
 
   _renderCategoryChart() {
@@ -2915,34 +2590,9 @@ class App {
     const mastery = this.state.get('mastery');
     const cats    = [...new Set(WORDS.map(w => w.cat))];
     const data    = cats.map(c => { const pool = WORDS.filter(w => w.cat === c); return Math.round((pool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / pool.length) * 100); });
-    
-    this._charts.cat = new Chart(ctx, { 
-      type: 'radar', 
-      data: { 
-        labels: cats, 
-        datasets: [{ 
-          label: 'Ustalık %', 
-          data, 
-          backgroundColor: 'rgba(0,212,255,0.15)', 
-          borderColor: '#00d4ff', 
-          pointBackgroundColor: '#00d4ff', 
-          pointRadius: 3 
-        }]
-      }, 
-      options: { 
-        scales: { 
-          r: { 
-            beginAtZero:true, 
-            max:100, 
-            grid: { color:'rgba(255,255,255,0.07)' }, 
-            angleLines: { color:'rgba(255,255,255,0.07)' }, 
-            ticks: { display: false }, 
-            pointLabels:{ color:'#8b9cb8', font:{size:10} }
-          }
-        }, 
-        plugins: { legend:{display:false} } 
-      }
-    });
+    try {
+      new Chart(ctx, { type: 'radar', data: { labels: cats, datasets: [{ label: 'Ustalık %', data, backgroundColor: 'rgba(0,212,255,0.15)', borderColor: '#00d4ff', pointBackgroundColor: '#00d4ff', pointRadius: 3 }]}, options: { scales: { r: { beginAtZero:true, max:100, grid: { color:'rgba(255,255,255,0.07)' }, angleLines: { color:'rgba(255,255,255,0.07)' }, ticks: { color:'#4a5568', backdropColor:'transparent', font:{size:10} }, pointLabels:{ color:'#8b9cb8', font:{size:11} }}}, plugins: { legend:{display:false} } }});
+    } catch {}
   }
 
   _renderCefrChart() {
@@ -2952,28 +2602,9 @@ class App {
     const mastery = this.state.get('mastery');
     const data    = levels.map(lvl => { const pool = WORDS.filter(w => w.level === lvl); return pool.length ? Math.round((pool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / pool.length) * 100) : 0; });
     const colors  = ['#10b981','#4ade80','#00d4ff','#6366f1','#7c3aed','#f43f5e'];
-    
-    this._charts.cefr = new Chart(ctx, { 
-      type: 'bar', 
-      data: { 
-        labels: levels, 
-        datasets: [{ 
-          label: 'Ustalık %', 
-          data, 
-          backgroundColor: colors, 
-          borderRadius: 6, 
-          borderSkipped: false 
-        }]
-      }, 
-      options: { 
-        indexAxis: 'y',
-        scales: { 
-          x: { beginAtZero:true, max:100, grid:{color:'rgba(255,255,255,0.06)'}, ticks:{color:'#4a5568'} }, 
-          y: { grid:{display:false}, ticks:{color:'#8b9cb8'} }
-        }, 
-        plugins: { legend:{display:false} } 
-      }
-    });
+    try {
+      new Chart(ctx, { type: 'bar', data: { labels: levels, datasets: [{ label: 'Ustalık %', data, backgroundColor: colors, borderRadius: 6, borderSkipped: false }]}, options: { scales: { y: { beginAtZero:true, max:100, grid:{color:'rgba(255,255,255,0.06)'}, ticks:{color:'#4a5568'} }, x: { grid:{display:false}, ticks:{color:'#8b9cb8'} }}, plugins: { legend:{display:false} } }});
+    } catch {}
   }
 
   // ─────────────────────────────────────────────────────────
