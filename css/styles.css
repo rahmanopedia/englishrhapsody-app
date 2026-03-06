@@ -180,6 +180,36 @@ a { color: inherit; text-decoration: none; }
 }
 .focus-btn:hover { border-color: var(--border-hover); background: rgba(0,212,255,0.08); }
 
+/* ── Language Selector ────────────────────────────────────── */
+.lang-selector {
+  display: flex;
+  gap: 3px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 3px;
+}
+.lang-btn {
+  padding: 3px 9px;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.lang-btn.active {
+  background: var(--cyan);
+  color: #000;
+}
+.lang-btn:not(.active):hover {
+  background: rgba(255,255,255,0.08);
+  color: var(--text-1);
+}
+
 /* ── 8. Sidebar ───────────────────────────────────────────── */
 .sidebar {
   grid-row: 2;

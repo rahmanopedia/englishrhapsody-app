@@ -54,6 +54,11 @@
     </div>
     <div class="header-stats">
       <button class="focus-btn" onclick="app.toggleFocusMode()" title="Odak Modu">🧘</button>
+      <div class="lang-selector" id="lang-selector">
+        <button class="lang-btn active" data-lang="tr" onclick="app.setLang('tr')" title="Türkçe">TR</button>
+        <button class="lang-btn" data-lang="en" onclick="app.setLang('en')" title="English">EN</button>
+        <button class="lang-btn" data-lang="es" onclick="app.setLang('es')" title="Español">ES</button>
+      </div>
       <div class="stat-chip streak">🔥 <span id="hdr-streak">1</span></div>
       <div class="stat-chip xp">⚡ <span id="hdr-xp">0</span> XP</div>
       <div class="stat-chip level">🏆 Lv <span id="hdr-level">1</span></div>
@@ -520,6 +525,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <!-- App -->
+<script src="js/lang-ui.js"></script>
+<script src="js/lang-data.js"></script>
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 

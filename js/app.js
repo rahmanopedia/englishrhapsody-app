@@ -2321,6 +2321,7 @@ class StateManager {
       readingIdx:   0,
       readingShuffled: false,
       readingOrder: {},
+      uiLang: 'tr',
       achievements: [],
       mastery:    {},     // { wordId: { score, interval, ease, nextReview } }
       history:    {},     // { 'YYYY-MM-DD': xp }
@@ -2527,6 +2528,9 @@ class App {
     this.audio   = new AudioEngine();
     this.speech  = new SpeechEngine(this.state.get('accent'));
 
+    // Merge language translation data into WORDS and PHRASE_DICT
+    this._mergeLangData();
+
     // Session-level (not persisted)
     this.session = {
       view:       'home',
@@ -2554,6 +2558,7 @@ class App {
         splash.style.opacity = '0';
         setTimeout(() => {
           splash.remove();
+          this._applyLangUI();
           this.navigate('home');
           if (!this.state.get('onboarded')) this._showOnboarding();
         }, 520);
@@ -2612,6 +2617,77 @@ class App {
   toggleFocusMode() {
     document.body.classList.toggle('focus-mode');
     this.audio.play('pop');
+  }
+
+  // ── Language System ────────────────────────────────────────
+  _mergeLangData() {
+    // Merge Spanish translations into WORDS entries
+    if (typeof WORD_ES !== 'undefined') {
+      WORDS.forEach(w => {
+        if (WORD_ES[w.id]) w.es = WORD_ES[w.id];
+      });
+    }
+    // Merge Spanish + English definitions into PHRASE_DICT
+    if (typeof PHRASE_ES !== 'undefined') {
+      Object.keys(PHRASE_ES).forEach(k => {
+        if (PHRASE_DICT[k]) PHRASE_DICT[k].es = PHRASE_ES[k];
+      });
+    }
+    if (typeof PHRASE_EN !== 'undefined') {
+      Object.keys(PHRASE_EN).forEach(k => {
+        if (PHRASE_DICT[k]) PHRASE_DICT[k].en_def = PHRASE_EN[k];
+      });
+    }
+  }
+
+  t(key) {
+    const lang = this.state.get('uiLang') || 'tr';
+    const strings = (typeof LANG_UI !== 'undefined' && LANG_UI[lang]) || {};
+    const fallback = (typeof LANG_UI !== 'undefined' && LANG_UI.tr) || {};
+    return strings[key] || fallback[key] || key;
+  }
+
+  setLang(lang) {
+    this.state.set('uiLang', lang);
+    this._applyLangUI();
+    this.audio.play('click');
+  }
+
+  _applyLangUI() {
+    const lang = this.state.get('uiLang') || 'tr';
+    // Update lang-selector buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    // Update nav labels
+    const navMap = {
+      'home':    { tr:'Merkez',    en:'Home',      es:'Inicio'   },
+      'learn':   { tr:'Sinestezi', en:'Practice',  es:'Práctica' },
+      'reading': { tr:'Okuma',     en:'Reading',   es:'Lectura'  },
+      'speak':   { tr:'Konuşma',   en:'Speaking',  es:'Hablar'   },
+    };
+    document.querySelectorAll('.nav-item, .m-nav-item').forEach(el => {
+      const target = el.dataset.target;
+      if (navMap[target]) {
+        const spanEl = el.querySelector('span:last-child') || el.querySelector('.m-icon + span') || el.lastElementChild;
+        if (spanEl && spanEl !== el.querySelector('.nav-icon') && spanEl !== el.querySelector('.m-icon')) {
+          spanEl.textContent = navMap[target][lang] || navMap[target].tr;
+        }
+      }
+    });
+    // Re-render current view to update dynamic strings
+    if (this.session && this.session.view) {
+      const cur = this.session.view;
+      if (cur === 'reading') this._renderStory();
+    }
+  }
+
+  _getTranslation(entry, lang) {
+    // Returns the translation string for the given language from a WORDS or PHRASE_DICT entry
+    if (!entry) return '';
+    if (lang === 'es') return entry.es || entry.tr;
+    if (lang === 'en') return entry.en_def || entry.ex || '';
+    return entry.tr || '';
   }
 
   setAccent(accent) {
@@ -4150,6 +4226,7 @@ class App {
     const phraseEntry = PHRASE_DICT[word.toLowerCase()] || (baseWord !== word.toLowerCase() ? PHRASE_DICT[baseWord] : undefined);
     if (phraseEntry) {
       document.querySelectorAll('.word-def-popup').forEach(p => p.remove());
+      const _lang = this.state.get('uiLang') || 'tr';
       const typeColors = {
         'Phrasal Verb':   { bg:'#0891b2', text:'#fff' },
         'Deyim':          { bg:'#7c3aed', text:'#fff' },
@@ -4159,21 +4236,24 @@ class App {
         'Kelime':         { bg:'#1d4ed8', text:'#fff' },
       };
       const tc = typeColors[phraseEntry.type] || { bg:'#374151', text:'#fff' };
+      const _typeName = typeof getTypeName === 'function' ? getTypeName(phraseEntry.type, _lang) : phraseEntry.type;
+      const _translation = this._getTranslation(phraseEntry, _lang);
+      const _exLabel = this.t('popup_example');
       const popup = document.createElement('div');
       popup.className = 'word-def-popup';
       popup.innerHTML = `
         <div class="wdp-header">
           <div class="wdp-title-wrap">
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-              <span style="background:${tc.bg};color:${tc.text};font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.04em">${phraseEntry.type}</span>
+              <span style="background:${tc.bg};color:${tc.text};font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.04em">${_typeName}</span>
               <div class="wdp-en">${word}</div>
             </div>
           </div>
           <span class="wdp-close" onclick="app._closeWordDef()">✕</span>
         </div>
-        <div class="wdp-tr">${phraseEntry.tr}</div>
+        ${_translation ? `<div class="wdp-tr">${_translation}</div>` : ''}
         <div class="wdp-section">
-          <div class="wdp-label">Örnek Cümle</div>
+          <div class="wdp-label">${_exLabel}</div>
           <div class="wdp-ex">"${phraseEntry.ex}"</div>
         </div>
       `;
@@ -4266,8 +4346,12 @@ class App {
          // Check PHRASE_DICT with all lemma forms
          const lemmaPhrase = _lemmas.map(l => PHRASE_DICT[l]).find(Boolean) || PHRASE_DICT[cleanWord];
          if (lemmaPhrase) {
+           const _lLang = this.state.get('uiLang') || 'tr';
            const _tc = { 'Phrasal Verb':{bg:'#0891b2',text:'#fff'}, 'Deyim':{bg:'#7c3aed',text:'#fff'}, 'Gramer Kalıbı':{bg:'#b45309',text:'#fff'}, 'Eylem Kalıbı':{bg:'#065f46',text:'#fff'}, 'İsim Tamlaması':{bg:'#be185d',text:'#fff'}, 'Kelime':{bg:'#1d4ed8',text:'#fff'} }[lemmaPhrase.type] || {bg:'#374151',text:'#fff'};
-           popup.innerHTML = `<div class="wdp-header"><div class="wdp-title-wrap"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="background:${_tc.bg};color:${_tc.text};font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:99px">${lemmaPhrase.type}</span><div class="wdp-en">${word}</div></div></div><span class="wdp-close" onclick="app._closeWordDef()">✕</span></div><div class="wdp-tr">${lemmaPhrase.tr}</div><div class="wdp-section"><div class="wdp-label">Örnek Cümle</div><div class="wdp-ex">"${lemmaPhrase.ex}"</div></div>`;
+           const _lTypeName = typeof getTypeName === 'function' ? getTypeName(lemmaPhrase.type, _lLang) : lemmaPhrase.type;
+           const _lTr = this._getTranslation(lemmaPhrase, _lLang);
+           const _lEx = this.t('popup_example');
+           popup.innerHTML = `<div class="wdp-header"><div class="wdp-title-wrap"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="background:${_tc.bg};color:${_tc.text};font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:99px">${_lTypeName}</span><div class="wdp-en">${word}</div></div></div><span class="wdp-close" onclick="app._closeWordDef()">✕</span></div>${_lTr ? `<div class="wdp-tr">${_lTr}</div>` : ''}<div class="wdp-section"><div class="wdp-label">${_lEx}</div><div class="wdp-ex">"${lemmaPhrase.ex}"</div></div>`;
            document.body.appendChild(popup);
            if (event) { popup.style.left = Math.min(event.clientX, window.innerWidth-300)+'px'; popup.style.top = Math.min(event.clientY+16, window.innerHeight-200)+'px'; }
            this.audio.play('pop');
@@ -4304,18 +4388,22 @@ class App {
     const w = WORDS.find(x => x.en.toLowerCase() === en.toLowerCase());
     if (!w) return;
 
-    // Highlight logic moved to _handleWordClick
-    
     document.querySelectorAll('.word-def-popup').forEach(p => p.remove());
     const popup = document.createElement('div');
     popup.className = 'word-def-popup';
-    
-    // Add Synonyms and Collocations if they exist in the data
+
+    const lang = this.state.get('uiLang') || 'tr';
+    const translation = this._getTranslation(w, lang);
+    const exLabel    = this.t('popup_example');
+    const synsLabel  = lang === 'es' ? 'Sinónimos' : lang === 'en' ? 'Synonyms' : 'Eş Anlamlılar';
+    const colLabel   = lang === 'es' ? 'Expresiones comunes' : lang === 'en' ? 'Common Collocations' : 'Sık Kullanılan Kalıplar';
+    const addLabel   = lang === 'es' ? '➕ Añadir' : lang === 'en' ? '➕ Add to List' : '➕ Listeye Ekle';
+
     let synsHtml = '';
     if (w.syns && w.syns.length) {
       synsHtml = `
         <div class="wdp-section">
-          <div class="wdp-label">Eş Anlamlılar</div>
+          <div class="wdp-label">${synsLabel}</div>
           <div class="wdp-syns">${w.syns.map(s => `<span class="wdp-syn">${s}</span>`).join('')}</div>
         </div>`;
     }
@@ -4324,7 +4412,7 @@ class App {
     if (w.colloc && w.colloc.length) {
       collocsHtml = `
         <div class="wdp-section">
-          <div class="wdp-label">Sık Kullanılan Kalıplar</div>
+          <div class="wdp-label">${colLabel}</div>
           <div class="wdp-collocs">${w.colloc.map(c => `<div class="wdp-colloc">${c}</div>`).join('')}</div>
         </div>`;
     }
@@ -4337,16 +4425,16 @@ class App {
         </div>
         <span class="wdp-close" onclick="app._closeWordDef()">✕</span>
       </div>
-      <div class="wdp-tr">${w.tr}</div>
+      ${translation ? `<div class="wdp-tr">${translation}</div>` : ''}
       <div class="wdp-section">
-        <div class="wdp-label">Örnek Cümle</div>
+        <div class="wdp-label">${exLabel}</div>
         <div class="wdp-ex">"${w.ex}"</div>
       </div>
       ${synsHtml}
       ${collocsHtml}
       <div class="wdp-actions">
         <button class="btn btn-primary btn-sm" style="flex:1; font-size: 0.75rem;" onclick="app._addToMasteryFromDict('${w.id || w.en}', this)">
-          ➕ Listeye Ekle
+          ${addLabel}
         </button>
       </div>
     `;
