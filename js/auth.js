@@ -29,10 +29,7 @@ class AuthManager {
       // App Check — initializeApp sonrasi, diger servislerden once aktive edilmeli
       if (window._appCheckSiteKey && window._appCheckSiteKey !== 'YOUR_RECAPTCHA_V3_SITE_KEY') {
         try {
-          firebase.appCheck().activate(
-            new firebase.appCheck.ReCaptchaV3Provider(window._appCheckSiteKey),
-            true // token otomatik yenile
-          );
+          firebase.appCheck().activate(window._appCheckSiteKey, true);
           console.info('[Auth] App Check aktive edildi');
         } catch (e) {
           console.warn('[Auth] App Check hatasi:', e);
