@@ -4416,4 +4416,12 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .ss-lg.c-verb { color:#10b981; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); }
 .ss-lg.c-obj  { color:#f59e0b; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); }
 
+/* ── Meaning Card ────────────────────────────────────────────── */
+.meaning-card { margin-top:10px; background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(0,212,255,0.08)); border:1px solid rgba(124,58,237,0.35); border-radius:18px; padding:16px 20px; text-align:center; opacity:0; transform:translateY(12px); transition:opacity 0.35s ease, transform 0.35s ease; }
+.meaning-card.mc-show { opacity:1; transform:translateY(0); }
+.mc-en { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; font-size:1rem; font-weight:700; margin-bottom:10px; }
+.mc-divider { font-size:0.72rem; font-weight:800; color:var(--text-3); text-transform:uppercase; letter-spacing:2px; margin-bottom:8px; }
+.mc-tr { font-size:1.3rem; font-weight:800; color:#a78bfa; margin-bottom:6px; }
+.mc-tense { font-size:0.75rem; color:var(--text-3); font-weight:600; letter-spacing:0.5px; }
+
 

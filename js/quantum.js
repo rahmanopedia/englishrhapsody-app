@@ -3,21 +3,21 @@
 // ════════════════════════════════════════════════════════════════
 
 const QUANTUM_SCENARIOS = [
-  { id:'s1',  subj:{w:'I',          type:'I',  obj_form:'me'        }, verb:{v1:'eat',     v2:'ate',      v3:'eaten',    ving:'eating'    }, obj:{w:'an apple',       type:'sg'}, icon:'🍎' },
-  { id:'s2',  subj:{w:'The dog',    type:'sg', obj_form:'the dog'   }, verb:{v1:'chase',   v2:'chased',   v3:'chased',   ving:'chasing'   }, obj:{w:'the cat',        type:'sg'}, icon:'🐕' },
-  { id:'s3',  subj:{w:'She',        type:'sg', obj_form:'her'       }, verb:{v1:'write',   v2:'wrote',    v3:'written',  ving:'writing'   }, obj:{w:'a letter',       type:'sg'}, icon:'✉️' },
-  { id:'s4',  subj:{w:'They',       type:'pl', obj_form:'them'      }, verb:{v1:'build',   v2:'built',    v3:'built',    ving:'building'  }, obj:{w:'a bridge',       type:'sg'}, icon:'🌉' },
-  { id:'s5',  subj:{w:'The hacker', type:'sg', obj_form:'the hacker'}, verb:{v1:'steal',   v2:'stole',    v3:'stolen',   ving:'stealing'  }, obj:{w:'the files',     type:'pl'}, icon:'💻' },
-  { id:'s6',  subj:{w:'The chef',   type:'sg', obj_form:'the chef'  }, verb:{v1:'cook',    v2:'cooked',   v3:'cooked',   ving:'cooking'   }, obj:{w:'the meal',       type:'sg'}, icon:'👨‍🍳' },
-  { id:'s7',  subj:{w:'We',         type:'pl', obj_form:'us'        }, verb:{v1:'discover',v2:'discovered',v3:'discovered',ving:'discovering'},obj:{w:'a new planet',  type:'sg'}, icon:'🪐' },
-  { id:'s8',  subj:{w:'The robot',  type:'sg', obj_form:'the robot' }, verb:{v1:'destroy', v2:'destroyed',v3:'destroyed',ving:'destroying' },obj:{w:'the city',       type:'sg'}, icon:'🤖' },
-  { id:'s9',  subj:{w:'The wizard', type:'sg', obj_form:'the wizard'}, verb:{v1:'cast',    v2:'cast',     v3:'cast',     ving:'casting'   }, obj:{w:'a spell',       type:'sg'}, icon:'🧙' },
-  { id:'s10', subj:{w:'The dragon', type:'sg', obj_form:'the dragon'}, verb:{v1:'burn',    v2:'burned',   v3:'burned',   ving:'burning'   }, obj:{w:'the castle',     type:'sg'}, icon:'🐉' },
-  { id:'s11', subj:{w:'You',        type:'you',obj_form:'you'       }, verb:{v1:'solve',   v2:'solved',   v3:'solved',   ving:'solving'   }, obj:{w:'the mystery',    type:'sg'}, icon:'🔍' },
-  { id:'s12', subj:{w:'The pilot',  type:'sg', obj_form:'the pilot' }, verb:{v1:'land',    v2:'landed',   v3:'landed',   ving:'landing'   }, obj:{w:'the spacecraft', type:'sg'}, icon:'🚀' },
-  { id:'s13', subj:{w:'Scientists', type:'pl', obj_form:'scientists'}, verb:{v1:'study',   v2:'studied',  v3:'studied',  ving:'studying'  }, obj:{w:'the stars',      type:'pl'}, icon:'🔭' },
-  { id:'s14', subj:{w:'The artist', type:'sg', obj_form:'the artist'}, verb:{v1:'paint',   v2:'painted',  v3:'painted',  ving:'painting'  }, obj:{w:'a masterpiece',  type:'sg'}, icon:'🎨' },
-  { id:'s15', subj:{w:'The knight', type:'sg', obj_form:'the knight'}, verb:{v1:'protect', v2:'protected',v3:'protected',ving:'protecting'}, obj:{w:'the kingdom',    type:'sg'}, icon:'⚔️' },
+  { id:'s1',  subj:{w:'I',          type:'I',  obj_form:'me'        }, verb:{v1:'eat',     v2:'ate',      v3:'eaten',    ving:'eating'    }, obj:{w:'an apple',       type:'sg'}, icon:'🍎', tr:'Ben bir elma yerim.'                       },
+  { id:'s2',  subj:{w:'The dog',    type:'sg', obj_form:'the dog'   }, verb:{v1:'chase',   v2:'chased',   v3:'chased',   ving:'chasing'   }, obj:{w:'the cat',        type:'sg'}, icon:'🐕', tr:'Köpek kediyi kovalıyor.'                   },
+  { id:'s3',  subj:{w:'She',        type:'sg', obj_form:'her'       }, verb:{v1:'write',   v2:'wrote',    v3:'written',  ving:'writing'   }, obj:{w:'a letter',       type:'sg'}, icon:'✉️', tr:'O bir mektup yazıyor.'                     },
+  { id:'s4',  subj:{w:'They',       type:'pl', obj_form:'them'      }, verb:{v1:'build',   v2:'built',    v3:'built',    ving:'building'  }, obj:{w:'a bridge',       type:'sg'}, icon:'🌉', tr:'Onlar bir köprü inşa ediyor.'              },
+  { id:'s5',  subj:{w:'The hacker', type:'sg', obj_form:'the hacker'}, verb:{v1:'steal',   v2:'stole',    v3:'stolen',   ving:'stealing'  }, obj:{w:'the files',     type:'pl'}, icon:'💻', tr:'Hacker dosyaları çalıyor.'                 },
+  { id:'s6',  subj:{w:'The chef',   type:'sg', obj_form:'the chef'  }, verb:{v1:'cook',    v2:'cooked',   v3:'cooked',   ving:'cooking'   }, obj:{w:'the meal',       type:'sg'}, icon:'👨‍🍳', tr:'Şef yemeği pişiriyor.'                    },
+  { id:'s7',  subj:{w:'We',         type:'pl', obj_form:'us'        }, verb:{v1:'discover',v2:'discovered',v3:'discovered',ving:'discovering'},obj:{w:'a new planet',  type:'sg'}, icon:'🪐', tr:'Biz yeni bir gezegen keşfediyoruz.'       },
+  { id:'s8',  subj:{w:'The robot',  type:'sg', obj_form:'the robot' }, verb:{v1:'destroy', v2:'destroyed',v3:'destroyed',ving:'destroying' },obj:{w:'the city',       type:'sg'}, icon:'🤖', tr:'Robot şehri yok ediyor.'                  },
+  { id:'s9',  subj:{w:'The wizard', type:'sg', obj_form:'the wizard'}, verb:{v1:'cast',    v2:'cast',     v3:'cast',     ving:'casting'   }, obj:{w:'a spell',       type:'sg'}, icon:'🧙', tr:'Büyücü bir büyü yapıyor.'                  },
+  { id:'s10', subj:{w:'The dragon', type:'sg', obj_form:'the dragon'}, verb:{v1:'burn',    v2:'burned',   v3:'burned',   ving:'burning'   }, obj:{w:'the castle',     type:'sg'}, icon:'🐉', tr:'Ejderha kaleyi yakıyor.'                  },
+  { id:'s11', subj:{w:'You',        type:'you',obj_form:'you'       }, verb:{v1:'solve',   v2:'solved',   v3:'solved',   ving:'solving'   }, obj:{w:'the mystery',    type:'sg'}, icon:'🔍', tr:'Sen gizemi çözüyorsun.'                    },
+  { id:'s12', subj:{w:'The pilot',  type:'sg', obj_form:'the pilot' }, verb:{v1:'land',    v2:'landed',   v3:'landed',   ving:'landing'   }, obj:{w:'the spacecraft', type:'sg'}, icon:'🚀', tr:'Pilot uzay aracını indiriyor.'             },
+  { id:'s13', subj:{w:'Scientists', type:'pl', obj_form:'scientists'}, verb:{v1:'study',   v2:'studied',  v3:'studied',  ving:'studying'  }, obj:{w:'the stars',      type:'pl'}, icon:'🔭', tr:'Bilim insanları yıldızları inceliyor.'     },
+  { id:'s14', subj:{w:'The artist', type:'sg', obj_form:'the artist'}, verb:{v1:'paint',   v2:'painted',  v3:'painted',  ving:'painting'  }, obj:{w:'a masterpiece',  type:'sg'}, icon:'🎨', tr:'Sanatçı bir başyapıt boyuyor.'             },
+  { id:'s15', subj:{w:'The knight', type:'sg', obj_form:'the knight'}, verb:{v1:'protect', v2:'protected',v3:'protected',ving:'protecting'}, obj:{w:'the kingdom',    type:'sg'}, icon:'⚔️', tr:'Şövalye krallığı koruyor.'                 },
 ];
 
 const TR_LABELS = {
@@ -146,6 +146,24 @@ function getDistractors(part, sc) {
 
   pool = [...new Set(pool.filter(Boolean))].sort(()=>Math.random()-0.5);
   return pool.slice(0,2).map(clean);
+}
+
+// ── Meaning Card ────────────────────────────────────────────────
+function showMeaningCard(shellId, parts, tr, tenseLabel) {
+  const shell = document.getElementById(shellId);
+  if (!shell) return;
+  const old = shell.querySelector('.meaning-card');
+  if (old) old.remove();
+
+  const card = document.createElement('div');
+  card.className = 'meaning-card';
+  card.innerHTML = `
+    <div class="mc-en">${parts.map(p=>`<span class="qw-${p.c}">${p.w}</span>`).join(' ')}</div>
+    <div class="mc-divider">🇹🇷 Türkçe Anlamı</div>
+    <div class="mc-tr">${tr}</div>
+    <div class="mc-tense">${tenseLabel}</div>`;
+  shell.appendChild(card);
+  requestAnimationFrame(() => card.classList.add('mc-show'));
 }
 
 // ── Main Hub ────────────────────────────────────────────────────
@@ -376,7 +394,8 @@ class WordForge {
         this._feedback(`✅ Mükemmel! +${bonus} puan`, 'correct');
         document.getElementById('wf-choices').innerHTML='';
         document.getElementById('wf-score').textContent=this.score;
-        setTimeout(()=>this._newRound(), 1400);
+        showMeaningCard('wf-shell', this.parts, this.sc.tr, stateLabel(this.state));
+        setTimeout(()=>this._newRound(), 2800);
       } else {
         this._renderSentence();
         this._renderChoices();
@@ -408,10 +427,11 @@ class WordForge {
 
   _timeOut() {
     this.lives--;
-    this._feedback(`⏱️ Süre doldu! Doğru: "${this.parts.map(p=>p.w).join(' ')}"`, 'wrong');
+    this._feedback(`⏱️ Süre doldu! −1 can`, 'wrong');
     document.getElementById('wf-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-    if(this.lives<=0){ setTimeout(()=>this._over(false),2000); return; }
-    setTimeout(()=>this._newRound(),2200);
+    showMeaningCard('wf-shell', this.parts, this.sc.tr, stateLabel(this.state));
+    if(this.lives<=0){ setTimeout(()=>this._over(false),2800); return; }
+    setTimeout(()=>this._newRound(),2800);
   }
 
   _feedback(msg,type) {
@@ -507,9 +527,9 @@ class SentenceRush {
   _stopTimer() { if(this.timer){ clearInterval(this.timer); this.timer=null; } }
 
   _timeOut() {
-    const correct=this.parts.map(p=>p.w).join(' ');
-    this._feedback(`⏱️ Süre doldu! Doğrusu: "${correct}"`, 'wrong');
-    setTimeout(()=>this._newSentence(), 2000);
+    this._feedback(`⏱️ Süre doldu!`, 'wrong');
+    showMeaningCard('rush-shell', this.parts, this.sc.tr, stateLabel(this.st));
+    setTimeout(()=>this._newSentence(), 2800);
   }
 
   _newSentence() {
@@ -523,6 +543,7 @@ class SentenceRush {
       voice:'act',
       pol:  Math.random()>0.3?'aff':'neg',
     };
+    this.st=st;
     this.parts=generateSentence(this.sc,st.time,st.flow,st.voice,st.pol);
     this.remaining=shuffle(this.parts.map((p,i)=>({w:p.w.replace(/[?.]/g,''),c:p.c,i})));
 
@@ -595,8 +616,9 @@ class SentenceRush {
       document.getElementById('rush-score').textContent=this.score;
       const sh=document.getElementById('rush-shell');
       if(sh){sh.classList.add('flash-green');setTimeout(()=>sh.classList.remove('flash-green'),400);}
-      this._feedback(`✅ +${bonus} puan! Sıradaki →`,'correct');
-      setTimeout(()=>this._newSentence(),900);
+      this._feedback(`✅ +${bonus} puan!`,'correct');
+      showMeaningCard('rush-shell', this.parts, this.sc.tr, stateLabel(this.st));
+      setTimeout(()=>this._newSentence(),2500);
     } else {
       this.attempts++;
       const sh=document.getElementById('rush-shell');
@@ -691,6 +713,7 @@ class SentenceScramble {
       voice: Math.random()>0.4?'act':'pass',
       pol:   Math.random()>0.3?'aff':'neg',
     };
+    this.st=st;
     this.parts=generateSentence(this.sc,st.time,st.flow,st.voice,st.pol);
     this.remaining=shuffle(this.parts.map((p,i)=>({w:p.w.replace(/[?.]/g,''),c:p.c,i})));
 
@@ -756,15 +779,17 @@ class SentenceScramble {
       const sh=document.getElementById('ss-shell');
       if(sh){sh.classList.add('flash-green');setTimeout(()=>sh.classList.remove('flash-green'),500);}
       document.getElementById('ss-score').textContent=this.score;
-      setTimeout(()=>this._newRound(),1300);
+      showMeaningCard('ss-shell', this.parts, this.sc.tr, stateLabel(this.st));
+      setTimeout(()=>this._newRound(),2800);
     } else {
       this.lives--;
-      this._feedback(`❌ Yanlış sıra! Doğrusu: "${this.parts.map(p=>p.w).join(' ')}"`, 'wrong');
+      this._feedback(`❌ Yanlış sıra! −1 can`, 'wrong');
       const sh=document.getElementById('ss-shell');
       if(sh){sh.classList.add('shake');setTimeout(()=>sh.classList.remove('shake'),500);}
       document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-      if(this.lives<=0){setTimeout(()=>this._over(false),2000);return;}
-      setTimeout(()=>{this.clear();this._startTimer();},2200);
+      showMeaningCard('ss-shell', this.parts, this.sc.tr, stateLabel(this.st));
+      if(this.lives<=0){setTimeout(()=>this._over(false),2800);return;}
+      setTimeout(()=>{this.clear();this._startTimer();},2800);
     }
   }
 
@@ -784,10 +809,11 @@ class SentenceScramble {
 
   _timeOut(){
     this.lives--;
-    this._feedback(`⏱️ Süre doldu! Doğrusu: "${this.parts.map(p=>p.w).join(' ')}"`, 'wrong');
+    this._feedback(`⏱️ Süre doldu! −1 can`, 'wrong');
     document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-    if(this.lives<=0){setTimeout(()=>this._over(false),2200);return;}
-    setTimeout(()=>this._newRound(),2400);
+    showMeaningCard('ss-shell', this.parts, this.sc.tr, stateLabel(this.st));
+    if(this.lives<=0){setTimeout(()=>this._over(false),2800);return;}
+    setTimeout(()=>this._newRound(),2800);
   }
 
   _feedback(msg,type){
