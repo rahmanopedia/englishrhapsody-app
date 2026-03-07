@@ -65,7 +65,7 @@
   color: #fff; padding: 3px 7px; border-radius: 6px;
   letter-spacing: 0.1em;
 }
-.ph-tagline { font-size: 0.75rem; color: #4a5568; margin-top: 5px; letter-spacing: 0.06em; }
+.ph-tagline { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 5px; letter-spacing: 0.06em; }
 
 /* Nasıl çalışır */
 .ph-how {
@@ -95,9 +95,9 @@
 .ph-config-row { display: flex; flex-direction: column; gap: 7px; }
 .ph-config-label {
   font-size: 0.65rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em; color: #4a5568;
+  text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.45);
 }
-.ph-config-label small { text-transform: none; font-weight: 400; letter-spacing: 0; color: #2d3748; }
+.ph-config-label small { text-transform: none; font-weight: 400; letter-spacing: 0; color: rgba(255,255,255,0.3); }
 
 .ph-mode-btns { display: flex; gap: 7px; flex-wrap: wrap; }
 .ph-mode-btn {
@@ -111,14 +111,14 @@
   display: flex; flex-direction: column; align-items: center; gap: 3px;
 }
 .phmb-label { font-size: 0.82rem; font-weight: 700; }
-.phmb-desc  { font-size: 0.62rem; color: #4a5568; }
+.phmb-desc  { font-size: 0.62rem; color: rgba(255,255,255,0.35); }
 .ph-mode-btn:hover { border-color: rgba(167,139,250,0.3); color: #f0f6ff; }
 .ph-mode-btn.active {
   background: rgba(167,139,250,0.1);
   border-color: rgba(167,139,250,0.5);
   color: #a78bfa;
 }
-.ph-mode-btn.active .phmb-desc { color: #6d28d9; }
+.ph-mode-btn.active .phmb-desc { color: rgba(167,139,250,0.7); }
 
 .ph-len-btns { display: flex; gap: 7px; }
 .ph-len-btn {
@@ -136,7 +136,7 @@
   padding: 4px 12px;
   background: rgba(255,255,255,0.028);
   border: 1px solid rgba(255,255,255,0.065);
-  border-radius: 20px; color: #4a5568;
+  border-radius: 20px; color: rgba(255,255,255,0.45);
   font-size: 0.72rem; font-weight: 700; font-family: inherit;
   cursor: pointer; transition: all 0.18s; letter-spacing: 0.05em;
 }
@@ -160,10 +160,10 @@
 
 .ph-back-btn {
   background: none; border: none;
-  color: #4a5568; font-size: 0.78rem; font-family: inherit;
+  color: rgba(255,255,255,0.35); font-size: 0.78rem; font-family: inherit;
   cursor: pointer; transition: color 0.2s;
 }
-.ph-back-btn:hover { color: #8b9cb8; }
+.ph-back-btn:hover { color: rgba(255,255,255,0.65); }
 
 /* ══════════════════════════════════════════════════════════════
    ARENA (CHAMBER)
