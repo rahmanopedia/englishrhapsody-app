@@ -32,3 +32,18 @@ const firebaseConfig = {
 };
 
 window._firebaseConfigured = true;
+
+/*
+  App Check (reCAPTCHA v3) — Firestore ve Storage'i botlara karsi koru
+
+  KURULUM:
+  1. Firebase Console → App Check → Apps → Web uygulamani sec
+  2. reCAPTCHA v3 provider'i sec
+  3. Google reCAPTCHA Admin (https://www.google.com/recaptcha/admin) → yeni site key al
+     - Tip: reCAPTCHA v3
+     - Domain: uygulamanin deploy edildigi domain
+  4. Asagidaki 'YOUR_RECAPTCHA_V3_SITE_KEY' yerine site key'i yaz
+  5. index.html <head> bolumune ekle:
+     <script src="https://www.google.com/recaptcha/api.js?render=YOUR_RECAPTCHA_V3_SITE_KEY"></script>
+*/
+window._appCheckSiteKey = 'YOUR_RECAPTCHA_V3_SITE_KEY';

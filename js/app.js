@@ -2572,6 +2572,14 @@ class App {
       await window.authManager.init();
     }
 
+    // Firebase ek servisler — auth tamamlandiktan sonra init
+    if (window._firebaseConfigured) {
+      window.storageManager?.init();
+      window.analyticsManager?.init();
+      window.notificationsManager?.init();
+      window.remoteConfigManager?.init(); // async ama beklemiyoruz — defaults hemen kullanilabilir
+    }
+
     const splash = document.getElementById('splash-screen');
     if (splash) {
       splash.style.transition = 'opacity 0.5s';
@@ -2640,6 +2648,10 @@ class App {
     if (init[view]) init[view]();
 
     this.audio.play('click');
+    window.analyticsManager?.screenView(view);
+    if (['learn', 'speak', 'reading'].includes(view)) {
+      window.analyticsManager?.lessonStart(view);
+    }
   }
 
   _initQuantum() {
@@ -2717,8 +2729,10 @@ class App {
         confetti({ particleCount:120, spread:70, origin:{y:0.6}, colors:['#00d4ff','#7c3aed','#f43f5e'] });
       }
       this._applyRankTheme();
+      window.analyticsManager?.levelUp(level);
     }
     this.state.update({ xp, level }, true);
+    window.analyticsManager?.xpGain(amount, this.session.view || 'unknown');
     this._updateHeader();
     if (this.session.view === 'home') this._updateHomeStats();
 
@@ -2817,6 +2831,7 @@ class App {
       streak = 1;
     }
     this.state.update({ streak, lastActive: today }, true);
+    window.analyticsManager?.streakUpdate(streak);
   }
 
   _updateHeader() {
@@ -4634,6 +4649,7 @@ class App {
     const ipaPanel = document.getElementById('ipa-hint-panel');
     if (ipaPanel) { ipaPanel.innerHTML = missedIpa ? `<div class="ipa-hint-label">🎯 Telaffuzunu Geliştir:</div><div class="ipa-hints-grid">${missedIpa}</div>` : ''; }
     this.audio.play(score >= 75 ? 'success' : score >= 40 ? 'pop' : 'click');
+    window.analyticsManager?.speakingAttempt(score, this.state.get('accent'));
     this.addXP(xp);
     if (score === 100) {
       const ring = document.querySelector('.score-ring-wrap');

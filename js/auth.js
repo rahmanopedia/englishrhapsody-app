@@ -25,6 +25,20 @@ class AuthManager {
     }
     try {
       firebase.initializeApp(firebaseConfig);
+
+      // App Check — initializeApp sonrasi, diger servislerden once aktive edilmeli
+      if (window._appCheckSiteKey && window._appCheckSiteKey !== 'YOUR_RECAPTCHA_V3_SITE_KEY') {
+        try {
+          firebase.appCheck().activate(
+            new firebase.appCheck.ReCaptchaV3Provider(window._appCheckSiteKey),
+            true // token otomatik yenile
+          );
+          console.info('[Auth] App Check aktive edildi');
+        } catch (e) {
+          console.warn('[Auth] App Check hatasi:', e);
+        }
+      }
+
       this._auth = firebase.auth();
       this._db   = firebase.firestore();
       this._auth.languageCode = 'tr';
@@ -140,6 +154,12 @@ class AuthManager {
     }
     this._hideAuthModal();
     if (window.app) window.app._syncUIFromState();
+
+    // Analytics: kullanici kimligini set et
+    if (window.analyticsManager) window.analyticsManager.setUser(user.uid);
+
+    // Notifications: gunluk uyarilari goster
+    if (window.notificationsManager) window.notificationsManager.runDailyChecks();
   }
 
   async _loadCloudSafe() {
