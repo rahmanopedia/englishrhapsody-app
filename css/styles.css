@@ -609,6 +609,18 @@ a { color: inherit; text-decoration: none; }
 .auth-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(var(--a1-rgb),0.45); }
 .auth-submit-btn:disabled { opacity: 0.6; transform: none; cursor: not-allowed; }
 
+.auth-remember {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.82rem; color: var(--text-2); cursor: pointer;
+  user-select: none;
+}
+.auth-remember input[type="checkbox"] {
+  width: 16px; height: 16px; border-radius: 4px;
+  accent-color: var(--cyan); cursor: pointer;
+  padding: 0 !important; border: none !important;
+  box-shadow: none !important; background: none !important;
+}
+
 .auth-forgot {
   background: none; border: none; color: var(--text-3); font-size: 0.78rem;
   cursor: pointer; font-family: inherit; transition: color 0.2s;

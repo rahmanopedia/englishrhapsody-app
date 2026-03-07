@@ -58,7 +58,11 @@ class AuthManager {
 
   // ── Login / Signup / Logout ────────────────────────────────
 
-  async login(email, pass) {
+  async login(email, pass, remember) {
+    const persistence = remember
+      ? firebase.auth.Auth.Persistence.LOCAL   // tarayıcı kapansa da kalır
+      : firebase.auth.Auth.Persistence.SESSION; // sekme kapanınca çıkış
+    await this._auth.setPersistence(persistence);
     const cred = await this._auth.signInWithEmailAndPassword(email, pass);
     return cred.user;
   }
@@ -247,12 +251,13 @@ window.authUI = {
   },
 
   async submitLogin() {
-    const email = document.getElementById('auth-email').value.trim();
-    const pass  = document.getElementById('auth-pass').value;
+    const email    = document.getElementById('auth-email').value.trim();
+    const pass     = document.getElementById('auth-pass').value;
+    const remember = document.getElementById('auth-remember').checked;
     if (!email || !pass) return authUI._setError('E-posta ve şifre gerekli');
     authUI._setLoading(true, 'login-btn');
     try {
-      await window.authManager.login(email, pass);
+      await window.authManager.login(email, pass, remember);
     } catch (e) {
       authUI._setError(authUI._errMsg(e));
     } finally {
