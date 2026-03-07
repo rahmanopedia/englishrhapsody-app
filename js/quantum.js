@@ -1,195 +1,232 @@
 // ════════════════════════════════════════════════════════════════
-//  QUANTUM GAME CENTER v4.0 — Full Grammar Game Hub
+//  QUANTUM GAME CENTER v5.0 — Sentence Building Games
 // ════════════════════════════════════════════════════════════════
 
 const QUANTUM_SCENARIOS = [
-  { id: 's1',  subj: { w: 'I',          type: 'I',  obj_form: 'me'        }, verb: { v1: 'eat',     v2: 'ate',     v3: 'eaten',   ving: 'eating'    }, obj: { w: 'an apple',      type: 'sg' }, icon: '🍎' },
-  { id: 's2',  subj: { w: 'The dog',    type: 'sg', obj_form: 'the dog'   }, verb: { v1: 'chase',   v2: 'chased',  v3: 'chased',  ving: 'chasing'   }, obj: { w: 'the cat',       type: 'sg' }, icon: '🐕' },
-  { id: 's3',  subj: { w: 'She',        type: 'sg', obj_form: 'her'       }, verb: { v1: 'write',   v2: 'wrote',   v3: 'written', ving: 'writing'   }, obj: { w: 'a letter',      type: 'sg' }, icon: '✉️' },
-  { id: 's4',  subj: { w: 'They',       type: 'pl', obj_form: 'them'      }, verb: { v1: 'build',   v2: 'built',   v3: 'built',   ving: 'building'  }, obj: { w: 'a bridge',      type: 'sg' }, icon: '🌉' },
-  { id: 's5',  subj: { w: 'The hacker', type: 'sg', obj_form: 'the hacker'}, verb: { v1: 'steal',   v2: 'stole',   v3: 'stolen',  ving: 'stealing'  }, obj: { w: 'the files',    type: 'pl' }, icon: '💻' },
-  { id: 's6',  subj: { w: 'The chef',   type: 'sg', obj_form: 'the chef'  }, verb: { v1: 'cook',    v2: 'cooked',  v3: 'cooked',  ving: 'cooking'   }, obj: { w: 'the meal',      type: 'sg' }, icon: '👨‍🍳' },
-  { id: 's7',  subj: { w: 'We',         type: 'pl', obj_form: 'us'        }, verb: { v1: 'discover',v2: 'discovered',v3:'discovered',ving:'discovering'},obj: { w: 'a new planet',  type: 'sg' }, icon: '🪐' },
-  { id: 's8',  subj: { w: 'The robot',  type: 'sg', obj_form: 'the robot' }, verb: { v1: 'destroy', v2: 'destroyed',v3:'destroyed',ving:'destroying' }, obj: { w: 'the city',     type: 'sg' }, icon: '🤖' },
-  { id: 's9',  subj: { w: 'The wizard', type: 'sg', obj_form: 'the wizard'}, verb: { v1: 'cast',    v2: 'cast',    v3: 'cast',    ving: 'casting'   }, obj: { w: 'a spell',      type: 'sg' }, icon: '🧙' },
-  { id: 's10', subj: { w: 'The dragon', type: 'sg', obj_form: 'the dragon'}, verb: { v1: 'burn',    v2: 'burned',  v3: 'burned',  ving: 'burning'   }, obj: { w: 'the castle',   type: 'sg' }, icon: '🐉' },
-  { id: 's11', subj: { w: 'You',        type: 'you',obj_form: 'you'       }, verb: { v1: 'solve',   v2: 'solved',  v3: 'solved',  ving: 'solving'   }, obj: { w: 'the mystery',  type: 'sg' }, icon: '🔍' },
-  { id: 's12', subj: { w: 'The pilot',  type: 'sg', obj_form: 'the pilot' }, verb: { v1: 'land',    v2: 'landed',  v3: 'landed',  ving: 'landing'   }, obj: { w: 'the spacecraft',type:'sg' }, icon: '🚀' },
-  { id: 's13', subj: { w: 'Scientists', type: 'pl', obj_form: 'scientists'}, verb: { v1: 'study',   v2: 'studied', v3: 'studied', ving: 'studying'  }, obj: { w: 'the stars',    type: 'pl' }, icon: '🔭' },
-  { id: 's14', subj: { w: 'The virus',  type: 'sg', obj_form: 'the virus' }, verb: { v1: 'infect',  v2: 'infected',v3:'infected', ving:'infecting'  }, obj: { w: 'the network',  type: 'sg' }, icon: '🦠' },
-  { id: 's15', subj: { w: 'The artist', type: 'sg', obj_form: 'the artist'}, verb: { v1: 'paint',   v2: 'painted', v3: 'painted', ving: 'painting'  }, obj: { w: 'a masterpiece',type: 'sg' }, icon: '🎨' },
+  { id:'s1',  subj:{w:'I',          type:'I',  obj_form:'me'        }, verb:{v1:'eat',     v2:'ate',      v3:'eaten',    ving:'eating'    }, obj:{w:'an apple',       type:'sg'}, icon:'🍎' },
+  { id:'s2',  subj:{w:'The dog',    type:'sg', obj_form:'the dog'   }, verb:{v1:'chase',   v2:'chased',   v3:'chased',   ving:'chasing'   }, obj:{w:'the cat',        type:'sg'}, icon:'🐕' },
+  { id:'s3',  subj:{w:'She',        type:'sg', obj_form:'her'       }, verb:{v1:'write',   v2:'wrote',    v3:'written',  ving:'writing'   }, obj:{w:'a letter',       type:'sg'}, icon:'✉️' },
+  { id:'s4',  subj:{w:'They',       type:'pl', obj_form:'them'      }, verb:{v1:'build',   v2:'built',    v3:'built',    ving:'building'  }, obj:{w:'a bridge',       type:'sg'}, icon:'🌉' },
+  { id:'s5',  subj:{w:'The hacker', type:'sg', obj_form:'the hacker'}, verb:{v1:'steal',   v2:'stole',    v3:'stolen',   ving:'stealing'  }, obj:{w:'the files',     type:'pl'}, icon:'💻' },
+  { id:'s6',  subj:{w:'The chef',   type:'sg', obj_form:'the chef'  }, verb:{v1:'cook',    v2:'cooked',   v3:'cooked',   ving:'cooking'   }, obj:{w:'the meal',       type:'sg'}, icon:'👨‍🍳' },
+  { id:'s7',  subj:{w:'We',         type:'pl', obj_form:'us'        }, verb:{v1:'discover',v2:'discovered',v3:'discovered',ving:'discovering'},obj:{w:'a new planet',  type:'sg'}, icon:'🪐' },
+  { id:'s8',  subj:{w:'The robot',  type:'sg', obj_form:'the robot' }, verb:{v1:'destroy', v2:'destroyed',v3:'destroyed',ving:'destroying' },obj:{w:'the city',       type:'sg'}, icon:'🤖' },
+  { id:'s9',  subj:{w:'The wizard', type:'sg', obj_form:'the wizard'}, verb:{v1:'cast',    v2:'cast',     v3:'cast',     ving:'casting'   }, obj:{w:'a spell',       type:'sg'}, icon:'🧙' },
+  { id:'s10', subj:{w:'The dragon', type:'sg', obj_form:'the dragon'}, verb:{v1:'burn',    v2:'burned',   v3:'burned',   ving:'burning'   }, obj:{w:'the castle',     type:'sg'}, icon:'🐉' },
+  { id:'s11', subj:{w:'You',        type:'you',obj_form:'you'       }, verb:{v1:'solve',   v2:'solved',   v3:'solved',   ving:'solving'   }, obj:{w:'the mystery',    type:'sg'}, icon:'🔍' },
+  { id:'s12', subj:{w:'The pilot',  type:'sg', obj_form:'the pilot' }, verb:{v1:'land',    v2:'landed',   v3:'landed',   ving:'landing'   }, obj:{w:'the spacecraft', type:'sg'}, icon:'🚀' },
+  { id:'s13', subj:{w:'Scientists', type:'pl', obj_form:'scientists'}, verb:{v1:'study',   v2:'studied',  v3:'studied',  ving:'studying'  }, obj:{w:'the stars',      type:'pl'}, icon:'🔭' },
+  { id:'s14', subj:{w:'The artist', type:'sg', obj_form:'the artist'}, verb:{v1:'paint',   v2:'painted',  v3:'painted',  ving:'painting'  }, obj:{w:'a masterpiece',  type:'sg'}, icon:'🎨' },
+  { id:'s15', subj:{w:'The knight', type:'sg', obj_form:'the knight'}, verb:{v1:'protect', v2:'protected',v3:'protected',ving:'protecting'}, obj:{w:'the kingdom',    type:'sg'}, icon:'⚔️' },
 ];
 
-const GRAMMAR_LABELS = {
-  time:  { pres: 'Present',  past: 'Past',       fut: 'Future'           },
-  flow:  { simp: 'Simple',   cont: 'Continuous', perf: 'Perfect',  perf_cont: 'Perfect Cont.' },
-  voice: { act:  'Active',   pass: 'Passive'                             },
-  pol:   { aff:  'Positive', neg:  'Negative',   que: 'Question'         },
-};
-
 const TR_LABELS = {
-  time:  { pres: 'Şimdiki',  past: 'Geçmiş',     fut: 'Gelecek'          },
-  flow:  { simp: 'Basit',    cont: 'Süregelen',  perf: 'Tamamlanmış', perf_cont: 'Süreçsel' },
-  voice: { act:  'Etken',    pass: 'Edilgen'                              },
-  pol:   { aff:  'Olumlu',   neg:  'Olumsuz',    que: 'Soru'             },
+  time:  { pres:'Şimdiki', past:'Geçmiş',      fut:'Gelecek'              },
+  flow:  { simp:'Basit',   cont:'Süregelen',    perf:'Tamamlanmış',  perf_cont:'Süreçsel' },
+  voice: { act:'Etken',    pass:'Edilgen'                                  },
+  pol:   { aff:'Olumlu',   neg:'Olumsuz',       que:'Soru'                 },
 };
 
 const BOSSES = [
-  { name: 'Grammar Goblin',   emoji: '👺', hp: 80,  color: '#10b981', desc: 'Başlangıç Seviyesi' },
-  { name: 'Syntax Serpent',   emoji: '🐍', hp: 100, color: '#f59e0b', desc: 'Orta Seviye' },
-  { name: 'Tense Titan',      emoji: '🗿', hp: 120, color: '#f43f5e', desc: 'Zor Seviye' },
-  { name: 'Grammar Overlord', emoji: '💀', hp: 150, color: '#7c3aed', desc: 'Efsanevi Boss' },
+  { name:'Grammar Goblin',   emoji:'👺', maxHp:60,  color:'#10b981', atk:15, desc:'Başlangıç' },
+  { name:'Syntax Serpent',   emoji:'🐍', maxHp:80,  color:'#f59e0b', atk:20, desc:'Orta'      },
+  { name:'Tense Titan',      emoji:'🗿', maxHp:100, color:'#f43f5e', atk:25, desc:'Zor'       },
+  { name:'Grammar Overlord', emoji:'💀', maxHp:130, color:'#7c3aed', atk:30, desc:'Efsane'    },
 ];
 
-// ── GRAMMAR ENGINE ──────────────────────────────────────────────
-function generateSentence(scenario, time, flow, voice, pol) {
-  let subj = voice === 'act' ? scenario.subj : scenario.obj;
-  let originalSubj = scenario.subj;
-  let s_type = subj.type;
-  let isThirdSg = !['I','you','we','they','pl','you'].includes(s_type);
-  let isPluralOrYouWeThey = ['you','we','they','pl'].includes(s_type);
+// ── Grammar Engine ──────────────────────────────────────────────
+function generateSentence(sc, time, flow, voice, pol) {
+  let subj = voice === 'act' ? sc.subj : sc.obj;
+  let origSubj = sc.subj;
+  let stype = subj.type;
+  let isTsg  = !['I','you','we','they','pl'].includes(stype);
+  let isPl   = ['you','we','they','pl'].includes(stype);
 
-  let be_pres  = s_type === 'I' ? 'am' : (isPluralOrYouWeThey ? 'are' : 'is');
-  let be_past  = isPluralOrYouWeThey ? 'were' : 'was';
-  let have_pres = (s_type === 'I' || isPluralOrYouWeThey) ? 'have' : 'has';
+  let be_p  = stype==='I' ? 'am' : (isPl ? 'are' : 'is');
+  let be_pa = isPl ? 'were' : 'was';
+  let hv    = (stype==='I'||isPl) ? 'have' : 'has';
 
-  let { v1, v2, v3, ving } = scenario.verb;
-  let v_s = v1;
-  if (isThirdSg) {
-    if (v1.endsWith('y') && !['a','e','i','o','u'].includes(v1[v1.length-2])) v_s = v1.slice(0,-1)+'ies';
-    else if (v1.match(/(ch|sh|s|x|z|o)$/)) v_s = v1+'es';
-    else v_s = v1+'s';
+  let {v1,v2,v3,ving} = sc.verb;
+  let vs = v1;
+  if (isTsg) {
+    if (v1.endsWith('y') && !['a','e','i','o','u'].includes(v1[v1.length-2])) vs = v1.slice(0,-1)+'ies';
+    else if (v1.match(/(ch|sh|s|x|z|o)$/)) vs = v1+'es';
+    else vs = v1+'s';
   }
 
-  let aux = [], main_verb = '';
+  let aux=[], mv='';
 
-  if (voice === 'act') {
-    if (time === 'pres') {
-      if      (flow === 'simp')      { if (pol === 'aff') main_verb = v_s; else { aux = [isThirdSg ? 'does' : 'do']; main_verb = v1; } }
-      else if (flow === 'cont')      { aux = [be_pres]; main_verb = ving; }
-      else if (flow === 'perf')      { aux = [have_pres]; main_verb = v3; }
-      else if (flow === 'perf_cont') { aux = [have_pres, 'been']; main_verb = ving; }
-    } else if (time === 'past') {
-      if      (flow === 'simp')      { if (pol === 'aff') main_verb = v2; else { aux = ['did']; main_verb = v1; } }
-      else if (flow === 'cont')      { aux = [be_past]; main_verb = ving; }
-      else if (flow === 'perf')      { aux = ['had']; main_verb = v3; }
-      else if (flow === 'perf_cont') { aux = ['had', 'been']; main_verb = ving; }
-    } else {
-      if      (flow === 'simp')      { aux = ['will']; main_verb = v1; }
-      else if (flow === 'cont')      { aux = ['will', 'be']; main_verb = ving; }
-      else if (flow === 'perf')      { aux = ['will', 'have']; main_verb = v3; }
-      else if (flow === 'perf_cont') { aux = ['will', 'have', 'been']; main_verb = ving; }
-    }
+  if (voice==='act') {
+    if      (time==='pres'&&flow==='simp')      { if(pol==='aff') mv=vs; else {aux=[isTsg?'does':'do'];mv=v1;} }
+    else if (time==='pres'&&flow==='cont')      { aux=[be_p]; mv=ving; }
+    else if (time==='pres'&&flow==='perf')      { aux=[hv]; mv=v3; }
+    else if (time==='pres'&&flow==='perf_cont') { aux=[hv,'been']; mv=ving; }
+    else if (time==='past'&&flow==='simp')      { if(pol==='aff') mv=v2; else {aux=['did'];mv=v1;} }
+    else if (time==='past'&&flow==='cont')      { aux=[be_pa]; mv=ving; }
+    else if (time==='past'&&flow==='perf')      { aux=['had']; mv=v3; }
+    else if (time==='past'&&flow==='perf_cont') { aux=['had','been']; mv=ving; }
+    else if (time==='fut' &&flow==='simp')      { aux=['will']; mv=v1; }
+    else if (time==='fut' &&flow==='cont')      { aux=['will','be']; mv=ving; }
+    else if (time==='fut' &&flow==='perf')      { aux=['will','have']; mv=v3; }
+    else if (time==='fut' &&flow==='perf_cont') { aux=['will','have','been']; mv=ving; }
   } else {
-    if (time === 'pres') {
-      if      (flow === 'simp')      { aux = [be_pres]; main_verb = v3; }
-      else if (flow === 'cont')      { aux = [be_pres, 'being']; main_verb = v3; }
-      else if (flow === 'perf')      { aux = [have_pres, 'been']; main_verb = v3; }
-      else if (flow === 'perf_cont') { aux = [have_pres, 'been', 'being']; main_verb = v3; }
-    } else if (time === 'past') {
-      if      (flow === 'simp')      { aux = [be_past]; main_verb = v3; }
-      else if (flow === 'cont')      { aux = [be_past, 'being']; main_verb = v3; }
-      else if (flow === 'perf')      { aux = ['had', 'been']; main_verb = v3; }
-      else if (flow === 'perf_cont') { aux = ['had', 'been', 'being']; main_verb = v3; }
-    } else {
-      if      (flow === 'simp')      { aux = ['will', 'be']; main_verb = v3; }
-      else if (flow === 'cont')      { aux = ['will', 'be', 'being']; main_verb = v3; }
-      else if (flow === 'perf')      { aux = ['will', 'have', 'been']; main_verb = v3; }
-      else if (flow === 'perf_cont') { aux = ['will', 'have', 'been', 'being']; main_verb = v3; }
-    }
+    if      (time==='pres'&&flow==='simp')      { aux=[be_p]; mv=v3; }
+    else if (time==='pres'&&flow==='cont')      { aux=[be_p,'being']; mv=v3; }
+    else if (time==='pres'&&flow==='perf')      { aux=[hv,'been']; mv=v3; }
+    else if (time==='pres'&&flow==='perf_cont') { aux=[hv,'been','being']; mv=v3; }
+    else if (time==='past'&&flow==='simp')      { aux=[be_pa]; mv=v3; }
+    else if (time==='past'&&flow==='cont')      { aux=[be_pa,'being']; mv=v3; }
+    else if (time==='past'&&flow==='perf')      { aux=['had','been']; mv=v3; }
+    else if (time==='past'&&flow==='perf_cont') { aux=['had','been','being']; mv=v3; }
+    else if (time==='fut' &&flow==='simp')      { aux=['will','be']; mv=v3; }
+    else if (time==='fut' &&flow==='cont')      { aux=['will','be','being']; mv=v3; }
+    else if (time==='fut' &&flow==='perf')      { aux=['will','have','been']; mv=v3; }
+    else if (time==='fut' &&flow==='perf_cont') { aux=['will','have','been','being']; mv=v3; }
   }
 
-  if (pol === 'neg') {
-    if (aux.length > 0) {
-      if (aux[0] === 'will') aux[0] = "won't";
-      else if (aux[0] === 'am') { aux.splice(1, 0, 'not'); }
-      else aux[0] = aux[0] + "n't";
+  if (pol==='neg') {
+    if (aux.length>0) {
+      if (aux[0]==='will') aux[0]="won't";
+      else if (aux[0]==='am') aux.splice(1,0,'not');
+      else aux[0]=aux[0]+"n't";
     }
   }
 
-  let parts = [];
-  if (pol === 'que' && aux.length > 0) {
-    let fa = aux.shift();
-    parts.push({ w: fa.charAt(0).toUpperCase() + fa.slice(1), c: 'aux' });
-    parts.push({ w: subj.w.toLowerCase(), c: 'subj' });
+  let parts=[];
+  if (pol==='que'&&aux.length>0) {
+    let fa=aux.shift();
+    parts.push({w:fa[0].toUpperCase()+fa.slice(1), c:'aux'});
+    parts.push({w:subj.w.toLowerCase(), c:'subj'});
   } else {
-    let sw = subj.w;
-    parts.push({ w: sw.charAt(0).toUpperCase() + sw.slice(1), c: 'subj' });
+    parts.push({w:subj.w[0].toUpperCase()+subj.w.slice(1), c:'subj'});
   }
-
-  aux.forEach(a => parts.push({ w: a, c: 'aux' }));
-  if (main_verb) parts.push({ w: main_verb, c: 'verb' });
-
-  if (voice === 'act') {
-    parts.push({ w: scenario.obj.w + (pol === 'que' ? '?' : '.'), c: 'obj' });
+  aux.forEach(a=>parts.push({w:a,c:'aux'}));
+  if (mv) parts.push({w:mv,c:'verb'});
+  if (voice==='act') {
+    parts.push({w:sc.obj.w+(pol==='que'?'?':'.'), c:'obj'});
   } else {
-    let agent = originalSubj.obj_form || originalSubj.w.toLowerCase();
-    parts.push({ w: `by ${agent}` + (pol === 'que' ? '?' : '.'), c: 'obj' });
+    let ag=origSubj.obj_form||origSubj.w.toLowerCase();
+    parts.push({w:`by ${ag}`+(pol==='que'?'?':'.'), c:'obj'});
   }
-
   return parts;
 }
 
-function randomState(exclude) {
-  const times  = ['pres','past','fut'];
-  const flows  = ['simp','cont','perf','perf_cont'];
-  const voices = ['act','pass'];
-  const pols   = ['aff','neg','que'];
-  let s;
-  do {
-    s = {
-      time:  times [Math.floor(Math.random()*times.length)],
-      flow:  flows [Math.floor(Math.random()*flows.length)],
-      voice: voices[Math.floor(Math.random()*voices.length)],
-      pol:   pols  [Math.floor(Math.random()*pols.length)],
-    };
-  } while (exclude && s.time===exclude.time && s.flow===exclude.flow && s.voice===exclude.voice && s.pol===exclude.pol);
-  return s;
+function randState() {
+  const times=['pres','past','fut'], flows=['simp','cont','perf','perf_cont'],
+        voices=['act','pass'], pols=['aff','neg','que'];
+  return {
+    time:  times [Math.floor(Math.random()*times.length)],
+    flow:  flows [Math.floor(Math.random()*flows.length)],
+    voice: voices[Math.floor(Math.random()*voices.length)],
+    pol:   pols  [Math.floor(Math.random()*pols.length)],
+  };
 }
 
 function stateLabel(s) {
   return `${TR_LABELS.pol[s.pol]} · ${TR_LABELS.time[s.time]} ${TR_LABELS.flow[s.flow]} · ${TR_LABELS.voice[s.voice]}`;
 }
 
-// ── MAIN CLASS ──────────────────────────────────────────────────
+function shuffle(arr) { return [...arr].sort(()=>Math.random()-0.5); }
+
+function randScenario() { return QUANTUM_SCENARIOS[Math.floor(Math.random()*QUANTUM_SCENARIOS.length)]; }
+
+// Distractors for Word Forge
+function getDistractors(part, sc) {
+  const clean = w => w.replace(/[?.]/g,'');
+  const correct = clean(part.w);
+  let pool = [];
+
+  if (part.c==='subj') {
+    pool = QUANTUM_SCENARIOS.map(s=>s.subj.w).filter(w=>w!==correct);
+  } else if (part.c==='aux') {
+    pool = ['am','is','are','was','were','have','has','had','will','do','does','did','been','being','be','would','shall','being','not']
+      .filter(w=>w!==correct&&!correct.includes(w));
+  } else if (part.c==='verb') {
+    const {v1,v2,v3,ving}=sc.verb;
+    pool=[v1,v2,v3,ving].filter(w=>w!==correct&&w);
+    QUANTUM_SCENARIOS.forEach(s=>{
+      pool.push(s.verb.v1,s.verb.v2,s.verb.v3,s.verb.ving);
+    });
+  } else if (part.c==='obj') {
+    pool = QUANTUM_SCENARIOS.map(s=>s.obj.w).filter(w=>clean(w)!==clean(correct));
+  }
+
+  pool = [...new Set(pool.filter(Boolean))].sort(()=>Math.random()-0.5);
+  return pool.slice(0,2).map(clean);
+}
+
+// Error generation for Error Sniper
+const AUX_SWAPS = {
+  'have':'has','has':'have','had':'have',
+  'is':'are','are':'is','am':'is',
+  'was':'were','were':'was',
+  'do':'does','does':'do','did':'does',
+  'been':'being','being':'been','be':'been',
+  'will':'would','would':'will',
+};
+
+function generateErrorSentence(sc, time, flow, voice, pol) {
+  const parts = generateSentence(sc, time, flow, voice, pol);
+
+  const candidates = parts.map((p,i)=>({...p,i}))
+    .filter(p=>(p.c==='aux'||p.c==='verb') && !["not","n't","won't"].some(x=>p.w.includes(x)));
+
+  if (!candidates.length) return {parts, errorIdx:-1};
+
+  const target = candidates[Math.floor(Math.random()*candidates.length)];
+  const eIdx   = target.i;
+  let wrongWord;
+
+  if (target.c==='verb') {
+    const {v1,v2,v3,ving}=sc.verb;
+    const alts=[v1,v2,v3,ving].filter(x=>x&&x!==target.w);
+    wrongWord = alts[Math.floor(Math.random()*alts.length)]||v1;
+  } else {
+    wrongWord = AUX_SWAPS[target.w] || (target.w+'s');
+  }
+
+  const errorParts = parts.map((p,i)=>i===eIdx?{...p,w:wrongWord}:p);
+  return {parts:errorParts, errorIdx:eIdx};
+}
+
+// ── Main Hub ────────────────────────────────────────────────────
 class QuantumMode {
-  constructor(app) {
-    this.app = app;
-    this.root = null;
-  }
+  constructor(app) { this.app=app; this.root=null; }
 
-  init(root) {
-    this.root = root;
-    this.renderHub();
-  }
-
-  destroy() { this.root.innerHTML = ''; }
+  init(root) { this.root=root; window._qmode=this; this.renderHub(); }
+  destroy()  { this.root.innerHTML=''; }
+  addXP(n)   { if(this.app?.addXP) this.app.addXP(n); }
+  confetti(o){ if(typeof confetti==='function') confetti({particleCount:160,spread:90,origin:{y:0.6},colors:['#00d4ff','#7c3aed','#ec4899'],...o}); }
 
   renderHub() {
+    const wins   = localStorage.getItem('q_wins')   ||'0';
+    const best   = localStorage.getItem('q_best')   ||'—';
+    const bosses = localStorage.getItem('q_bosses') ||'0';
+
     this.root.innerHTML = `
 <div class="qhub-shell">
   <div class="qhub-header">
     <div class="qhub-logo">⚛️</div>
     <h1 class="qhub-title">QUANTUM GAME CENTER</h1>
-    <p class="qhub-sub">Gramer gücünü dört farklı savaş alanında kanıtla</p>
+    <p class="qhub-sub">4 farklı cümle kurma oyunu ile gramer ustası ol</p>
   </div>
 
   <div class="qhub-stats-bar">
-    <div class="qhs-item"><span class="qhs-val" id="qhub-wins">0</span><span class="qhs-lbl">Zafer</span></div>
-    <div class="qhs-item"><span class="qhs-val cyan" id="qhub-best">—</span><span class="qhs-lbl">En Yüksek Skor</span></div>
-    <div class="qhs-item"><span class="qhs-val violet" id="qhub-bosses">0</span><span class="qhs-lbl">Boss Yenildi</span></div>
+    <div class="qhs-item"><span class="qhs-val">${wins}</span><span class="qhs-lbl">Zafer</span></div>
+    <div class="qhs-item"><span class="qhs-val cyan">${best}</span><span class="qhs-lbl">En İyi Skor</span></div>
+    <div class="qhs-item"><span class="qhs-val violet">${bosses}</span><span class="qhs-lbl">Boss Yenildi</span></div>
   </div>
 
   <div class="qhub-grid">
 
-    <div class="qhub-card arena" onclick="window._qmode.startGame('arena')">
+    <div class="qhub-card arena" onclick="window._qmode.startGame('forge')">
       <div class="qhc-glow"></div>
-      <div class="qhc-icon">⚔️</div>
+      <div class="qhc-icon">🔨</div>
       <div class="qhc-body">
-        <h2>Grammar Arena</h2>
-        <p>Diyalları kullanarak hedef gramer durumunu bul. 3 can, süre sayacı, 10 tur.</p>
+        <h2>Word Forge</h2>
+        <p>Hedef gramer yapısına göre cümleyi kelime kelime inşa et. Her adımda doğru kelimeyi seç.</p>
         <div class="qhc-tags">
-          <span class="qhc-tag">Diyal Kontrol</span>
+          <span class="qhc-tag">Kelime Seçimi</span>
           <span class="qhc-tag">3 Can</span>
           <span class="qhc-tag amber">100 XP</span>
         </div>
@@ -197,16 +234,16 @@ class QuantumMode {
       <div class="qhc-arrow">→</div>
     </div>
 
-    <div class="qhub-card blitz" onclick="window._qmode.startGame('blitz')">
+    <div class="qhub-card blitz" onclick="window._qmode.startGame('rush')">
       <div class="qhc-glow"></div>
       <div class="qhc-icon">⚡</div>
       <div class="qhc-body">
-        <h2>Speed Blitz</h2>
-        <p>60 saniyede maksimum doğru eşleştirme yap. Hız = güç.</p>
+        <h2>Sentence Rush</h2>
+        <p>60 saniyede karışık cümleleri sıraya diz. Ne kadar çok cümle o kadar çok puan.</p>
         <div class="qhc-tags">
           <span class="qhc-tag">60 Saniye</span>
-          <span class="qhc-tag">Sonsuz Tur</span>
-          <span class="qhc-tag amber">+15 XP/doğru</span>
+          <span class="qhc-tag">Sonsuz</span>
+          <span class="qhc-tag amber">+20 XP/cümle</span>
         </div>
       </div>
       <div class="qhc-arrow">→</div>
@@ -217,25 +254,25 @@ class QuantumMode {
       <div class="qhc-icon">🧩</div>
       <div class="qhc-body">
         <h2>Sentence Scramble</h2>
-        <p>Karışık kelimeleri doğru sıraya dizarak cümle kur. Süre ile yarış.</p>
+        <p>Karışık kelimeleri doğru gramer sırasına yerleştir. Renkler seni yönlendirir.</p>
         <div class="qhc-tags">
-          <span class="qhc-tag">Kelime Dizimi</span>
           <span class="qhc-tag">8 Cümle</span>
+          <span class="qhc-tag">3 Can</span>
           <span class="qhc-tag amber">150 XP</span>
         </div>
       </div>
       <div class="qhc-arrow">→</div>
     </div>
 
-    <div class="qhub-card boss" onclick="window._qmode.startGame('boss')">
+    <div class="qhub-card boss" onclick="window._qmode.startGame('sniper')">
       <div class="qhc-glow"></div>
-      <div class="qhc-icon">👹</div>
+      <div class="qhc-icon">🎯</div>
       <div class="qhc-body">
-        <h2>Boss Battle</h2>
-        <p>4 efsanevi Grammar Boss ile epik duel. Her doğru cevap boss'a hasar verir.</p>
+        <h2>Error Sniper</h2>
+        <p>Boss yanlış bir cümle gösterir. Gramer hatasını bul ve o kelimeye tıkla. Boss'u yen!</p>
         <div class="qhc-tags">
           <span class="qhc-tag">4 Boss</span>
-          <span class="qhc-tag rose">Yüksek Zorluk</span>
+          <span class="qhc-tag rose">Hata Avı</span>
           <span class="qhc-tag amber">300 XP</span>
         </div>
       </div>
@@ -244,975 +281,796 @@ class QuantumMode {
 
   </div>
 </div>`;
-
-    window._qmode = this;
-    this._loadHubStats();
-  }
-
-  _loadHubStats() {
-    const wins   = parseInt(localStorage.getItem('q_wins')   || '0');
-    const best   = localStorage.getItem('q_best') || '—';
-    const bosses = parseInt(localStorage.getItem('q_bosses') || '0');
-    const w = document.getElementById('qhub-wins');
-    const b = document.getElementById('qhub-best');
-    const bo = document.getElementById('qhub-bosses');
-    if (w) w.textContent  = wins;
-    if (b) b.textContent  = best;
-    if (bo) bo.textContent = bosses;
   }
 
   startGame(type) {
-    this.root.innerHTML = '';
-    if (type === 'arena')   new GrammarArena(this).start();
-    if (type === 'blitz')   new SpeedBlitz(this).start();
-    if (type === 'scramble') new SentenceScramble(this).start();
-    if (type === 'boss')    new BossBattle(this).start();
+    this.root.innerHTML='';
+    if (type==='forge')   new WordForge(this).start();
+    if (type==='rush')    new SentenceRush(this).start();
+    if (type==='scramble') new SentenceScramble(this).start();
+    if (type==='sniper')  new ErrorSniper(this).start();
   }
 
   backToHub() { this.renderHub(); }
 
-  addXP(n) { if (this.app && this.app.addXP) this.app.addXP(n); }
+  recordBest(score) {
+    const prev = parseInt(localStorage.getItem('q_best')||'0');
+    if (score>prev) localStorage.setItem('q_best',String(score));
+  }
 
-  confetti(opts) {
-    if (typeof confetti === 'function') {
-      confetti({ particleCount: 160, spread: 90, origin: { y: 0.6 }, colors: ['#00d4ff','#7c3aed','#ec4899'], ...opts });
-    }
+  recordWin() {
+    const w=parseInt(localStorage.getItem('q_wins')||'0')+1;
+    localStorage.setItem('q_wins',w);
   }
 }
 
 // ════════════════════════════════════════════════════════════════
-//  GAME 1 — GRAMMAR ARENA
+//  GAME 1 — WORD FORGE (kelime kelime cümle kurma)
 // ════════════════════════════════════════════════════════════════
-class GrammarArena {
+class WordForge {
   constructor(qm) {
-    this.qm       = qm;
-    this.root     = qm.root;
-    this.lives    = 3;
-    this.round    = 0;
-    this.maxRound = 10;
-    this.score    = 0;
-    this.combo    = 0;
-    this.state    = { time: 'pres', flow: 'simp', voice: 'act', pol: 'aff' };
-    this.target   = null;
-    this.timer    = null;
-    this.timeLeft = 30;
-    this.scenarioIdx = Math.floor(Math.random() * QUANTUM_SCENARIOS.length);
+    this.qm=qm; this.root=qm.root;
+    this.round=0; this.maxRound=8;
+    this.lives=3; this.score=0;
+    this.curIdx=0; // which word we're currently placing
+    this.parts=[]; this.placed=[];
+    this.sc=null; this.state=null;
+    this.timer=null; this.timeLeft=25;
   }
 
-  scenario() { return QUANTUM_SCENARIOS[this.scenarioIdx]; }
-
   start() {
-    this.root.innerHTML = `
-<div class="qgame-shell" id="arena-shell">
+    this.root.innerHTML=`
+<div class="qgame-shell" id="wf-shell">
   <div class="qgame-topbar">
-    <button class="qback-btn" id="arena-back">← Hub</button>
+    <button class="qback-btn" onclick="window._qmode.backToHub()">← Hub</button>
     <div class="qgame-topbar-center">
       <span class="qtb-label">Round</span>
-      <span class="qtb-val" id="arena-round">1/10</span>
+      <span class="qtb-val" id="wf-round">1/8</span>
     </div>
     <div class="qgame-topbar-right">
-      <span id="arena-lives">❤️❤️❤️</span>
-      <span class="qtb-score" id="arena-score">0</span>
+      <span id="wf-lives">❤️❤️❤️</span>
+      <span class="qtb-score" id="wf-score">0</span>
     </div>
   </div>
 
-  <div class="arena-timer-bar"><div class="arena-timer-fill" id="arena-timer-fill"></div></div>
+  <div class="arena-timer-bar"><div class="arena-timer-fill" id="wf-timer"></div></div>
 
-  <div class="arena-target-card" id="arena-target">
-    <div class="atc-label">HEDEF DURUM</div>
-    <div class="atc-state" id="arena-target-state">—</div>
-    <div class="atc-sentence" id="arena-target-sentence">—</div>
-  </div>
-
-  <div class="arena-scenario-row">
-    <span class="arena-icon" id="arena-icon">🍎</span>
-    <div class="arena-sentence-display" id="arena-sentence">—</div>
-  </div>
-
-  <div class="q-dials arena-dials">
-    <div class="q-dial-row">
-      <div class="q-dial-group" style="flex:1">
-        <label>Polarity</label>
-        <div class="q-slider" id="a-dial-pol">
-          <button data-type="pol" data-val="aff" class="active">+</button>
-          <button data-type="pol" data-val="neg">−</button>
-          <button data-type="pol" data-val="que">?</button>
-        </div>
-      </div>
-      <div class="q-dial-group" style="flex:2">
-        <label>Voice</label>
-        <div class="q-slider" id="a-dial-voice">
-          <button data-type="voice" data-val="act" class="active">Active</button>
-          <button data-type="voice" data-val="pass">Passive</button>
-        </div>
-      </div>
+  <div class="wf-target-card">
+    <span class="wf-target-icon" id="wf-icon">🍎</span>
+    <div class="wf-target-info">
+      <div class="atc-label">HEDEF YAPI</div>
+      <div class="atc-state" id="wf-state">—</div>
     </div>
-    <div class="q-dial-group">
-      <label>Time</label>
-      <div class="q-slider" id="a-dial-time">
-        <button data-type="time" data-val="past">Past</button>
-        <button data-type="time" data-val="pres" class="active">Present</button>
-        <button data-type="time" data-val="fut">Future</button>
-      </div>
-    </div>
-    <div class="q-dial-group">
-      <label>Flow</label>
-      <div class="q-slider" id="a-dial-flow">
-        <button data-type="flow" data-val="simp" class="active">Simple</button>
-        <button data-type="flow" data-val="cont">Continuous</button>
-        <button data-type="flow" data-val="perf">Perfect</button>
-        <button data-type="flow" data-val="perf_cont">Perf. Cont.</button>
-      </div>
-    </div>
+    <div class="wf-timer-num" id="wf-timer-num">25</div>
   </div>
 
-  <div class="arena-check-row">
-    <div class="arena-combo" id="arena-combo" style="display:none">🔥 ×<span id="arena-combo-val">1</span></div>
-    <button class="arena-check-btn" id="arena-check">✓ KONTROL ET</button>
-  </div>
+  <div class="wf-sentence-area" id="wf-sentence-area"></div>
 
-  <div class="arena-feedback" id="arena-feedback"></div>
+  <div class="wf-instruction">Şu anda hangi kelime gerekiyor?</div>
+
+  <div class="wf-choices" id="wf-choices"></div>
+
+  <div class="arena-feedback" id="wf-feedback"></div>
 </div>`;
-
-    document.getElementById('arena-back').onclick = () => { this._stopTimer(); this.qm.backToHub(); };
-    document.getElementById('arena-check').onclick = () => this._check();
-
-    this.root.querySelectorAll('.q-slider button').forEach(btn => {
-      btn.onclick = () => {
-        const type = btn.dataset.type;
-        this.state[type] = btn.dataset.val;
-        btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        this._updateSentenceDisplay();
-      };
-    });
-
     this._newRound();
   }
 
   _newRound() {
-    if (this.round >= this.maxRound) { this._gameOver(true); return; }
+    if (this.round>=this.maxRound) { this._over(true); return; }
     this.round++;
-    this.target = randomState();
-    this.scenarioIdx = Math.floor(Math.random() * QUANTUM_SCENARIOS.length);
-    this.state = { time: 'pres', flow: 'simp', voice: 'act', pol: 'aff' };
-    this._resetDials();
-    this._updateDisplay();
+    this.curIdx=0;
+    this.placed=[];
+    this.sc=randScenario();
+
+    // Limit to active/aff for cleaner game (avoid double-negatives etc.)
+    this.state = {
+      time:  ['pres','past','fut'][Math.floor(Math.random()*3)],
+      flow:  ['simp','cont','perf','perf_cont'][Math.floor(Math.random()*4)],
+      voice: Math.random()>0.4?'act':'pass',
+      pol:   Math.random()>0.3?'aff':'neg',
+    };
+
+    this.parts = generateSentence(this.sc, this.state.time, this.state.flow, this.state.voice, this.state.pol);
+
+    document.getElementById('wf-round').textContent=`${this.round}/${this.maxRound}`;
+    document.getElementById('wf-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
+    document.getElementById('wf-score').textContent=this.score;
+    document.getElementById('wf-icon').textContent=this.sc.icon;
+    document.getElementById('wf-state').textContent=stateLabel(this.state);
+
+    this._renderSentence();
+    this._renderChoices();
     this._startTimer();
   }
 
-  _resetDials() {
-    this.root.querySelectorAll('.q-slider button').forEach(btn => {
-      btn.classList.remove('active');
-      const defaults = { time: 'pres', flow: 'simp', voice: 'act', pol: 'aff' };
-      if (btn.dataset.val === defaults[btn.dataset.type]) btn.classList.add('active');
+  _renderSentence() {
+    const el=document.getElementById('wf-sentence-area');
+    if (!el) return;
+    el.innerHTML=this.parts.map((p,i)=>{
+      if (i<this.curIdx) {
+        return `<span class="wf-word filled c-${p.c}">${p.w}</span>`;
+      } else if (i===this.curIdx) {
+        return `<span class="wf-word current">?</span>`;
+      } else {
+        return `<span class="wf-word blank">_</span>`;
+      }
+    }).join(' ');
+  }
+
+  _renderChoices() {
+    const el=document.getElementById('wf-choices');
+    if (!el||this.curIdx>=this.parts.length) return;
+
+    const part=this.parts[this.curIdx];
+    const correct=part.w.replace(/[?.]/g,'');
+    const distractors=getDistractors(part, this.sc);
+    const options=shuffle([correct, ...distractors]);
+
+    el.innerHTML=options.map(opt=>`
+      <button class="wf-choice-btn" data-word="${opt}">${opt}</button>
+    `).join('');
+
+    el.querySelectorAll('.wf-choice-btn').forEach(btn=>{
+      btn.onclick=()=>this._pick(btn.dataset.word, btn);
     });
   }
 
-  _updateDisplay() {
-    const el_round  = document.getElementById('arena-round');
-    const el_lives  = document.getElementById('arena-lives');
-    const el_score  = document.getElementById('arena-score');
-    const el_ts     = document.getElementById('arena-target-state');
-    const el_tsen   = document.getElementById('arena-target-sentence');
-    const el_combo  = document.getElementById('arena-combo');
-    const el_cval   = document.getElementById('arena-combo-val');
+  _pick(word, btn) {
+    const part=this.parts[this.curIdx];
+    const correct=part.w.replace(/[?.]/g,'');
 
-    if (el_round) el_round.textContent = `${this.round}/${this.maxRound}`;
-    if (el_lives) el_lives.textContent = '❤️'.repeat(this.lives) + '🖤'.repeat(3 - this.lives);
-    if (el_score) el_score.textContent = this.score;
-    if (el_ts)    el_ts.textContent    = stateLabel(this.target);
+    if (word===correct) {
+      btn.classList.add('wf-correct');
+      this.placed.push(word);
+      this.curIdx++;
 
-    const sc  = this.scenario();
-    const pts = generateSentence(sc, this.target.time, this.target.flow, this.target.voice, this.target.pol);
-    if (el_tsen) el_tsen.textContent = pts.map(p => p.w).join(' ');
-
-    if (el_combo) el_combo.style.display = this.combo >= 2 ? 'flex' : 'none';
-    if (el_cval)  el_cval.textContent    = this.combo;
-
-    this._updateSentenceDisplay();
-  }
-
-  _updateSentenceDisplay() {
-    const sc   = this.scenario();
-    const icon = document.getElementById('arena-icon');
-    const sent = document.getElementById('arena-sentence');
-    if (icon) icon.textContent = sc.icon;
-    if (sent) {
-      const pts = generateSentence(sc, this.state.time, this.state.flow, this.state.voice, this.state.pol);
-      sent.innerHTML = pts.map(p => `<span class="qw-${p.c}">${p.w}</span>`).join(' ');
+      if (this.curIdx>=this.parts.length) {
+        // Sentence complete!
+        this._stopTimer();
+        const bonus=30+Math.ceil(this.timeLeft*2);
+        this.score+=bonus;
+        this._renderSentence();
+        this._feedback(`✅ Mükemmel! +${bonus} puan`, 'correct');
+        document.getElementById('wf-choices').innerHTML='';
+        document.getElementById('wf-score').textContent=this.score;
+        setTimeout(()=>this._newRound(), 1400);
+      } else {
+        this._renderSentence();
+        this._renderChoices();
+      }
+    } else {
+      this.lives--;
+      btn.classList.add('wf-wrong');
+      setTimeout(()=>btn.classList.remove('wf-wrong'),500);
+      this._flash('wf-shell','shake');
+      this._feedback(`❌ Yanlış! −1 can`, 'wrong');
+      document.getElementById('wf-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
+      if (this.lives<=0) { this._stopTimer(); setTimeout(()=>this._over(false),1000); }
     }
   }
 
   _startTimer() {
-    this.timeLeft = 30;
-    this._stopTimer();
-    const fill = document.getElementById('arena-timer-fill');
-    this.timer = setInterval(() => {
+    this.timeLeft=25; this._stopTimer();
+    const fill=document.getElementById('wf-timer');
+    const num =document.getElementById('wf-timer-num');
+    this.timer=setInterval(()=>{
       this.timeLeft--;
-      if (fill) fill.style.width = (this.timeLeft / 30 * 100) + '%';
-      if (fill) fill.style.background = this.timeLeft < 10 ? '#f43f5e' : 'var(--cyan)';
-      if (this.timeLeft <= 0) { this._stopTimer(); this._timeOut(); }
-    }, 1000);
+      if(fill) { fill.style.width=(this.timeLeft/25*100)+'%'; fill.style.background=this.timeLeft<8?'#f43f5e':'var(--cyan)'; }
+      if(num)  { num.textContent=this.timeLeft; num.style.color=this.timeLeft<8?'#f43f5e':'var(--text-2)'; }
+      if(this.timeLeft<=0){ this._stopTimer(); this._timeOut(); }
+    },1000);
   }
 
-  _stopTimer() { if (this.timer) { clearInterval(this.timer); this.timer = null; } }
+  _stopTimer() { if(this.timer){clearInterval(this.timer);this.timer=null;} }
 
   _timeOut() {
     this.lives--;
-    this.combo = 0;
-    this._flash('arena-shell', 'shake');
-    this._showFeedback('⏱️ Süre doldu! −1 can', 'wrong');
-    this._updateDisplay();
-    if (this.lives <= 0) { setTimeout(() => this._gameOver(false), 1500); return; }
-    setTimeout(() => this._newRound(), 1800);
+    this._feedback(`⏱️ Süre doldu! Doğru: "${this.parts.map(p=>p.w).join(' ')}"`, 'wrong');
+    document.getElementById('wf-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
+    if(this.lives<=0){ setTimeout(()=>this._over(false),2000); return; }
+    setTimeout(()=>this._newRound(),2200);
   }
 
-  _check() {
-    const s = this.state, t = this.target;
-    const correct = s.time===t.time && s.flow===t.flow && s.voice===t.voice && s.pol===t.pol;
+  _feedback(msg,type) {
+    const el=document.getElementById('wf-feedback');
+    if(!el)return;
+    el.textContent=msg; el.className=`arena-feedback fb-${type} fb-show`;
+    setTimeout(()=>el.classList.remove('fb-show'),1800);
+  }
+
+  _flash(id,cls) {
+    const el=document.getElementById(id);
+    if(!el)return; el.classList.add(cls); setTimeout(()=>el.classList.remove(cls),500);
+  }
+
+  _over(won) {
     this._stopTimer();
-
-    if (correct) {
-      this.combo++;
-      const mult  = this.combo >= 5 ? 3 : this.combo >= 3 ? 2 : 1;
-      const bonus = 10 * mult + Math.ceil(this.timeLeft * 1.5);
-      this.score += bonus;
-      this._showFeedback(`✅ Doğru! +${bonus} puan ${mult > 1 ? `(×${mult} kombo!)` : ''}`, 'correct');
-      this._flash('arena-shell', 'flash-green');
-      if (this.combo >= 3) this.qm.confetti({ particleCount: 60, spread: 50 });
-      setTimeout(() => this._newRound(), 1200);
-    } else {
-      this.lives--;
-      this.combo = 0;
-      this._showFeedback('❌ Yanlış! −1 can', 'wrong');
-      this._flash('arena-shell', 'shake');
-      this._updateDisplay();
-      if (this.lives <= 0) { setTimeout(() => this._gameOver(false), 1500); return; }
-      setTimeout(() => this._newRound(), 1600);
-    }
-  }
-
-  _showFeedback(msg, type) {
-    const el = document.getElementById('arena-feedback');
-    if (!el) return;
-    el.textContent = msg;
-    el.className = `arena-feedback fb-${type} fb-show`;
-    setTimeout(() => el.classList.remove('fb-show'), 1400);
-  }
-
-  _flash(id, cls) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.add(cls);
-    setTimeout(() => el.classList.remove(cls), 500);
-  }
-
-  _gameOver(won) {
-    this._stopTimer();
-    const prev = parseInt(localStorage.getItem('q_best_arena') || '0');
-    if (this.score > prev) localStorage.setItem('q_best_arena', this.score);
-    if (won) {
-      const wins = parseInt(localStorage.getItem('q_wins') || '0') + 1;
-      localStorage.setItem('q_wins', wins);
-      this.qm.addXP(100);
-      this.qm.confetti();
-    }
-    const bestStr = localStorage.getItem('q_best') || '0';
-    const scoreStr = String(this.score);
-    if (parseInt(scoreStr) > parseInt(bestStr)) localStorage.setItem('q_best', scoreStr);
-
-    this.root.innerHTML = `
-<div class="qresult-shell">
-  <div class="qresult-icon">${won ? '🏆' : '💀'}</div>
-  <h1 class="qresult-title">${won ? 'ZAFER!' : 'GAME OVER'}</h1>
-  <div class="qresult-score">${this.score}</div>
-  <div class="qresult-sub">Puan · ${this.round-1}/${this.maxRound} tur tamamlandı</div>
-  ${won ? '<div class="qresult-xp">+100 XP kazandın!</div>' : ''}
-  <div class="qresult-btns">
-    <button class="qres-btn primary" onclick="window._qmode.startGame('arena')">🔄 Tekrar Oyna</button>
-    <button class="qres-btn ghost"   onclick="window._qmode.backToHub()">← Hub</button>
-  </div>
-</div>`;
+    this.qm.recordBest(this.score);
+    if(won){ this.qm.recordWin(); this.qm.addXP(100); this.qm.confetti(); }
+    this.root.innerHTML=_resultHTML('🔨','Word Forge',won,this.score,`${this.round-1}/${this.maxRound} tur`,won?100:0,'forge');
   }
 }
 
 // ════════════════════════════════════════════════════════════════
-//  GAME 2 — SPEED BLITZ
+//  GAME 2 — SENTENCE RUSH (60s rapid-fire scramble)
 // ════════════════════════════════════════════════════════════════
-class SpeedBlitz {
+class SentenceRush {
   constructor(qm) {
-    this.qm      = qm;
-    this.root    = qm.root;
-    this.score   = 0;
-    this.correct = 0;
-    this.total   = 0;
-    this.timer   = null;
-    this.qTimer  = null;
-    this.timeLeft = 60;
-    this.qTimeLeft = 8;
-    this.target  = null;
-    this.options = [];
-    this.answered = false;
+    this.qm=qm; this.root=qm.root;
+    this.score=0; this.solved=0; this.attempts=0;
+    this.timeLeft=60; this.timer=null;
+    this.placed=[]; this.remaining=[];
+    this.parts=[]; this.sc=null;
   }
 
   start() {
-    this.root.innerHTML = `
-<div class="qgame-shell" id="blitz-shell">
+    this.root.innerHTML=`
+<div class="qgame-shell" id="rush-shell">
   <div class="qgame-topbar">
-    <button class="qback-btn" id="blitz-back">← Hub</button>
-    <div class="blitz-time-display">
-      <span class="btd-val" id="blitz-time">60</span>
-      <span class="btd-lbl">saniye</span>
+    <button class="qback-btn" onclick="window._qmode.backToHub()">← Hub</button>
+    <div class="rush-time-wrap">
+      <span class="rush-time-val" id="rush-time">60</span>
+      <span class="rush-time-lbl">s</span>
     </div>
     <div class="qgame-topbar-right">
-      <span class="qtb-label">Skor</span>
-      <span class="qtb-score" id="blitz-score">0</span>
+      <span class="rush-solved" id="rush-solved">✓ 0</span>
+      <span class="qtb-score" id="rush-score">0</span>
     </div>
   </div>
 
-  <div class="arena-timer-bar"><div class="arena-timer-fill" id="blitz-timer-fill" style="background:var(--amber)"></div></div>
+  <div class="arena-timer-bar"><div class="arena-timer-fill" id="rush-fill" style="background:var(--amber)"></div></div>
 
-  <div class="blitz-target-card" id="blitz-target">
-    <div class="atc-label">Bu cümlenin gramer durumu hangisi?</div>
-    <div class="blitz-sentence" id="blitz-sentence">—</div>
+  <div class="rush-info-bar">
+    <span class="rush-icon" id="rush-icon">🍎</span>
+    <span class="rush-label" id="rush-label">Cümleyi doğru sıraya diz</span>
   </div>
 
-  <div class="blitz-q-timer-bar"><div class="blitz-q-fill" id="blitz-q-fill"></div></div>
+  <div class="sc-drop-zone" id="rush-drop" style="min-height:60px"></div>
 
-  <div class="blitz-options" id="blitz-options"></div>
+  <div class="sc-word-pool" id="rush-pool"></div>
 
-  <div class="blitz-stats-row">
-    <span class="bsr-item green" id="blitz-correct">✓ 0</span>
-    <span class="bsr-item rose"  id="blitz-wrong">✗ 0</span>
-    <span class="bsr-item cyan"  id="blitz-total">0 soru</span>
+  <div class="rush-actions">
+    <button class="sc-clear-btn" onclick="window._rush.clear()">↺ Sıfırla</button>
+    <button class="sc-check-btn" id="rush-check" onclick="window._rush.check()">✓ Gönder</button>
   </div>
+
+  <div class="arena-feedback" id="rush-feedback"></div>
 </div>`;
 
-    document.getElementById('blitz-back').onclick = () => { this._stopTimers(); this.qm.backToHub(); };
-    this._newQuestion();
-    this._startMainTimer();
+    window._rush=this;
+    this._newSentence();
+    this._startGlobalTimer();
   }
 
-  _startMainTimer() {
-    this.timer = setInterval(() => {
+  _startGlobalTimer() {
+    this.timer=setInterval(()=>{
       this.timeLeft--;
-      const fill = document.getElementById('blitz-timer-fill');
-      const disp = document.getElementById('blitz-time');
-      if (fill) fill.style.width = (this.timeLeft / 60 * 100) + '%';
-      if (disp) {
-        disp.textContent = this.timeLeft;
-        disp.style.color = this.timeLeft < 15 ? '#f43f5e' : '#f59e0b';
-      }
-      if (this.timeLeft <= 0) { this._stopTimers(); this._gameOver(); }
-    }, 1000);
+      const fill=document.getElementById('rush-fill');
+      const disp=document.getElementById('rush-time');
+      if(fill) fill.style.width=(this.timeLeft/60*100)+'%';
+      if(disp) { disp.textContent=this.timeLeft; disp.style.color=this.timeLeft<15?'#f43f5e':'#f59e0b'; }
+      if(this.timeLeft<=0){clearInterval(this.timer); this._over(); }
+    },1000);
   }
 
-  _startQTimer() {
-    this.qTimeLeft = 8;
-    if (this.qTimer) clearInterval(this.qTimer);
-    const fill = document.getElementById('blitz-q-fill');
-    this.qTimer = setInterval(() => {
-      this.qTimeLeft--;
-      if (fill) fill.style.width = (this.qTimeLeft / 8 * 100) + '%';
-      if (fill) fill.style.background = this.qTimeLeft < 3 ? '#f43f5e' : '#7c3aed';
-      if (this.qTimeLeft <= 0) {
-        clearInterval(this.qTimer);
-        if (!this.answered) this._answer(null);
-      }
-    }, 1000);
+  _newSentence() {
+    this.placed=[]; this.attempts=0;
+    this.sc=randScenario();
+    const st={
+      time: ['pres','past','fut'][Math.floor(Math.random()*3)],
+      flow: ['simp','cont','perf'][Math.floor(Math.random()*3)], // no perf_cont for speed
+      voice:'act',
+      pol:  Math.random()>0.3?'aff':'neg',
+    };
+    this.parts=generateSentence(this.sc,st.time,st.flow,st.voice,st.pol);
+    this.remaining=shuffle(this.parts.map((p,i)=>({w:p.w.replace(/[?.]/g,''),c:p.c,i})));
+
+    const icon=document.getElementById('rush-icon');
+    const lbl =document.getElementById('rush-label');
+    if(icon) icon.textContent=this.sc.icon;
+    if(lbl)  lbl.textContent =stateLabel(st);
+
+    this._renderPool();
+    this._renderDrop();
   }
 
-  _stopTimers() {
-    if (this.timer)  clearInterval(this.timer);
-    if (this.qTimer) clearInterval(this.qTimer);
-  }
-
-  _newQuestion() {
-    this.answered = false;
-    this.total++;
-    const scenarioIdx = Math.floor(Math.random() * QUANTUM_SCENARIOS.length);
-    const sc   = QUANTUM_SCENARIOS[scenarioIdx];
-    this.target = randomState();
-
-    const pts  = generateSentence(sc, this.target.time, this.target.flow, this.target.voice, this.target.pol);
-    const sent = document.getElementById('blitz-sentence');
-    if (sent) sent.innerHTML = pts.map(p => `<span class="qw-${p.c}">${p.w}</span>`).join(' ');
-
-    // Generate 3 wrong options
-    const wrong = [];
-    while (wrong.length < 3) {
-      const w = randomState(this.target);
-      const dup = wrong.some(x => x.time===w.time && x.flow===w.flow && x.voice===w.voice && x.pol===w.pol);
-      if (!dup) wrong.push(w);
-    }
-
-    this.options = this._shuffle([this.target, ...wrong]);
-
-    const opt_el = document.getElementById('blitz-options');
-    if (opt_el) {
-      opt_el.innerHTML = this.options.map((o, i) => `
-        <button class="blitz-opt" data-idx="${i}">${stateLabel(o)}</button>
-      `).join('');
-      opt_el.querySelectorAll('.blitz-opt').forEach(btn => {
-        btn.onclick = () => {
-          if (this.answered) return;
-          this._answer(parseInt(btn.dataset.idx));
-        };
-      });
-    }
-
-    this._updateStats();
-    this._startQTimer();
-  }
-
-  _answer(idx) {
-    this.answered = true;
-    if (this.qTimer) clearInterval(this.qTimer);
-
-    const opt_el = document.getElementById('blitz-options');
-    if (!opt_el) return;
-
-    const correctIdx = this.options.indexOf(this.target);
-    opt_el.querySelectorAll('.blitz-opt').forEach((btn, i) => {
-      if (i === correctIdx)  btn.classList.add('opt-correct');
-      else if (i === idx)    btn.classList.add('opt-wrong');
-      btn.disabled = true;
+  _renderPool() {
+    const el=document.getElementById('rush-pool');
+    if(!el)return;
+    el.innerHTML=this.remaining.map((w,i)=>
+      `<button class="sc-word-chip c-${w.c}" data-i="${i}">${w.w}</button>`
+    ).join('');
+    el.querySelectorAll('.sc-word-chip').forEach(btn=>{
+      btn.onclick=()=>{
+        const i=parseInt(btn.dataset.i);
+        this.placed.push(this.remaining[i]);
+        this.remaining.splice(i,1);
+        this._renderPool(); this._renderDrop();
+      };
     });
+  }
 
-    if (idx === correctIdx) {
-      this.correct++;
-      this.score += 15 + this.qTimeLeft * 2;
-      const sc = document.getElementById('blitz-score');
-      if (sc) sc.textContent = this.score;
-    } else {
-      this.score = Math.max(0, this.score - 5);
-      const sc = document.getElementById('blitz-score');
-      if (sc) sc.textContent = this.score;
+  _renderDrop() {
+    const el=document.getElementById('rush-drop');
+    if(!el)return;
+    if(!this.placed.length){ el.innerHTML='<div class="sc-dz-placeholder">Kelimelere tıkla →</div>'; return; }
+    el.innerHTML=this.placed.map((w,i)=>
+      `<button class="sc-placed-chip c-${w.c}" data-i="${i}">${w.w}</button>`
+    ).join('');
+    el.querySelectorAll('.sc-placed-chip').forEach(btn=>{
+      btn.onclick=()=>{
+        const i=parseInt(btn.dataset.i);
+        this.remaining.push(this.placed[i]);
+        this.placed.splice(i,1);
+        this._renderPool(); this._renderDrop();
+      };
+    });
+  }
+
+  clear() {
+    this.remaining=[...this.remaining,...this.placed];
+    this.placed=[];
+    this._renderPool(); this._renderDrop();
+  }
+
+  check() {
+    const correctWords=this.parts.map(p=>p.w.replace(/[?.]/g,'').toLowerCase());
+    const userWords=this.placed.map(w=>w.w.toLowerCase());
+
+    if(userWords.length!==correctWords.length){
+      this._feedback('⚠️ Tüm kelimeleri kullan!','warn'); return;
     }
 
-    this._updateStats();
-    setTimeout(() => this._newQuestion(), 900);
+    const ok=correctWords.every((w,i)=>w===userWords[i]);
+    if(ok){
+      this.solved++;
+      const bonus=20+Math.ceil(this.timeLeft/4);
+      this.score+=bonus;
+      document.getElementById('rush-solved').textContent=`✓ ${this.solved}`;
+      document.getElementById('rush-score').textContent=this.score;
+      const sh=document.getElementById('rush-shell');
+      if(sh){sh.classList.add('flash-green');setTimeout(()=>sh.classList.remove('flash-green'),400);}
+      this._feedback(`✅ +${bonus} puan! Sıradaki →`,'correct');
+      setTimeout(()=>this._newSentence(),800);
+    } else {
+      this.attempts++;
+      const sh=document.getElementById('rush-shell');
+      if(sh){sh.classList.add('shake');setTimeout(()=>sh.classList.remove('shake'),400);}
+      this._feedback(`❌ Yanlış sıra! Tekrar dene.`,'wrong');
+    }
   }
 
-  _updateStats() {
-    const c = document.getElementById('blitz-correct');
-    const w = document.getElementById('blitz-wrong');
-    const t = document.getElementById('blitz-total');
-    const wrong = this.total - this.correct - 1;
-    if (c) c.textContent = `✓ ${this.correct}`;
-    if (w) w.textContent = `✗ ${Math.max(0, wrong)}`;
-    if (t) t.textContent = `${this.total} soru`;
+  _feedback(msg,type){
+    const el=document.getElementById('rush-feedback');
+    if(!el)return;
+    el.textContent=msg; el.className=`arena-feedback fb-${type} fb-show`;
+    setTimeout(()=>el.classList.remove('fb-show'),900);
   }
 
-  _shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
-
-  _gameOver() {
-    const prev = parseInt(localStorage.getItem('q_best_blitz') || '0');
-    if (this.score > prev) localStorage.setItem('q_best_blitz', this.score);
-    const bestStr = localStorage.getItem('q_best') || '0';
-    if (this.score > parseInt(bestStr)) localStorage.setItem('q_best', String(this.score));
-
-    this.qm.addXP(Math.floor(this.score / 5));
-    const acc = this.total > 1 ? Math.round(this.correct / (this.total - 1) * 100) : 0;
-
-    this.root.innerHTML = `
-<div class="qresult-shell">
-  <div class="qresult-icon">⚡</div>
-  <h1 class="qresult-title">BLITZ BİTTİ!</h1>
-  <div class="qresult-score">${this.score}</div>
-  <div class="qresult-sub">Puan · ${this.correct} doğru · %${acc} başarı</div>
-  <div class="qresult-xp">+${Math.floor(this.score/5)} XP kazandın!</div>
-  <div class="qresult-btns">
-    <button class="qres-btn primary" onclick="window._qmode.startGame('blitz')">🔄 Tekrar Oyna</button>
-    <button class="qres-btn ghost"   onclick="window._qmode.backToHub()">← Hub</button>
-  </div>
-</div>`;
+  _over(){
+    this.qm.recordBest(this.score);
+    if(this.solved>=5){ this.qm.recordWin(); this.qm.addXP(this.solved*20); this.qm.confetti(); }
+    this.root.innerHTML=_resultHTML('⚡','Sentence Rush',this.solved>=3,this.score,`${this.solved} cümle çözüldü`,this.solved*20,'rush');
   }
 }
 
 // ════════════════════════════════════════════════════════════════
-//  GAME 3 — SENTENCE SCRAMBLE
+//  GAME 3 — SENTENCE SCRAMBLE (color-zone enhanced)
 // ════════════════════════════════════════════════════════════════
 class SentenceScramble {
   constructor(qm) {
-    this.qm       = qm;
-    this.root     = qm.root;
-    this.round    = 0;
-    this.maxRound = 8;
-    this.score    = 0;
-    this.timer    = null;
-    this.timeLeft = 20;
-    this.correct  = [];
-    this.remaining = [];
-    this.scenario = null;
-    this.target   = null;
-    this.targetParts = [];
+    this.qm=qm; this.root=qm.root;
+    this.round=0; this.maxRound=8;
+    this.lives=3; this.score=0;
+    this.placed=[]; this.remaining=[];
+    this.parts=[]; this.sc=null;
+    this.timer=null; this.timeLeft=30;
   }
 
   start() {
-    this.root.innerHTML = `
-<div class="qgame-shell" id="scramble-shell">
+    this.root.innerHTML=`
+<div class="qgame-shell" id="ss-shell">
   <div class="qgame-topbar">
-    <button class="qback-btn" id="sc-back">← Hub</button>
+    <button class="qback-btn" onclick="window._qmode.backToHub()">← Hub</button>
     <div class="qgame-topbar-center">
       <span class="qtb-label">Round</span>
-      <span class="qtb-val" id="sc-round">1/8</span>
+      <span class="qtb-val" id="ss-round">1/8</span>
     </div>
     <div class="qgame-topbar-right">
-      <span class="qtb-score" id="sc-score">0</span>
+      <span id="ss-lives">❤️❤️❤️</span>
+      <span class="qtb-score" id="ss-score">0</span>
     </div>
   </div>
 
-  <div class="arena-timer-bar"><div class="arena-timer-fill" id="sc-timer-fill" style="background:var(--green)"></div></div>
+  <div class="arena-timer-bar"><div class="arena-timer-fill" id="ss-timer" style="background:var(--green)"></div></div>
 
-  <div class="sc-info-card">
-    <div class="sc-scenario-icon" id="sc-icon">🍎</div>
-    <div class="sc-target-label" id="sc-tense-label">Past Simple · Active · Positive</div>
-    <div class="sc-timer-disp" id="sc-timer">20s</div>
+  <div class="ss-info-card">
+    <span class="ss-icon" id="ss-icon">🍎</span>
+    <div class="ss-info-mid">
+      <div class="atc-label">HEDEF YAPI</div>
+      <div class="atc-state" id="ss-state">—</div>
+    </div>
+    <span class="ss-time" id="ss-time">30s</span>
   </div>
 
-  <div class="sc-drop-zone" id="sc-drop-zone">
-    <div class="sc-dz-placeholder">Buraya kelime ekle →</div>
+  <div class="ss-legend">
+    <span class="ss-lg c-subj">Özne</span>
+    <span class="ss-lg c-aux">Yardımcı</span>
+    <span class="ss-lg c-verb">Fiil</span>
+    <span class="ss-lg c-obj">Nesne</span>
   </div>
 
-  <div class="sc-word-pool" id="sc-word-pool"></div>
+  <div class="sc-drop-zone" id="ss-drop"></div>
+
+  <div class="sc-word-pool" id="ss-pool"></div>
 
   <div class="sc-controls">
-    <button class="sc-clear-btn" id="sc-clear">↺ Sıfırla</button>
-    <button class="sc-check-btn" id="sc-check">✓ Gönder</button>
+    <button class="sc-clear-btn" onclick="window._ss.clear()">↺ Sıfırla</button>
+    <button class="sc-check-btn" onclick="window._ss.check()">✓ Gönder</button>
   </div>
 
-  <div class="arena-feedback" id="sc-feedback"></div>
+  <div class="arena-feedback" id="ss-feedback"></div>
 </div>`;
 
-    document.getElementById('sc-back').onclick  = () => { this._stopTimer(); this.qm.backToHub(); };
-    document.getElementById('sc-check').onclick = () => this._check();
-    document.getElementById('sc-clear').onclick = () => this._clear();
-
+    window._ss=this;
     this._newRound();
   }
 
   _newRound() {
-    if (this.round >= this.maxRound) { this._gameOver(true); return; }
+    if(this.round>=this.maxRound){this._over(true);return;}
     this.round++;
-    this.correct   = [];
-    this.scenario  = QUANTUM_SCENARIOS[Math.floor(Math.random() * QUANTUM_SCENARIOS.length)];
-    this.target    = randomState();
+    this.placed=[]; this.sc=randScenario();
+    const st={
+      time:  ['pres','past','fut'][Math.floor(Math.random()*3)],
+      flow:  ['simp','cont','perf','perf_cont'][Math.floor(Math.random()*4)],
+      voice: Math.random()>0.4?'act':'pass',
+      pol:   Math.random()>0.3?'aff':'neg',
+    };
+    this.parts=generateSentence(this.sc,st.time,st.flow,st.voice,st.pol);
+    this.remaining=shuffle(this.parts.map((p,i)=>({w:p.w.replace(/[?.]/g,''),c:p.c,i})));
 
-    // Restrict to active/affirmative for readability
-    this.target.voice = 'act';
-    this.target.pol   = Math.random() > 0.5 ? 'aff' : 'neg';
+    document.getElementById('ss-round').textContent=`${this.round}/${this.maxRound}`;
+    document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
+    document.getElementById('ss-score').textContent=this.score;
+    document.getElementById('ss-icon').textContent=this.sc.icon;
+    document.getElementById('ss-state').textContent=stateLabel(st);
 
-    this.targetParts = generateSentence(this.scenario, this.target.time, this.target.flow, this.target.voice, this.target.pol);
-
-    const icon = document.getElementById('sc-icon');
-    const lbl  = document.getElementById('sc-tense-label');
-    const rnd  = document.getElementById('sc-round');
-    const sc   = document.getElementById('sc-score');
-    if (icon) icon.textContent = this.scenario.icon;
-    if (lbl)  lbl.textContent  = stateLabel(this.target);
-    if (rnd)  rnd.textContent  = `${this.round}/${this.maxRound}`;
-    if (sc)   sc.textContent   = this.score;
-
-    // Shuffle words
-    const words = this.targetParts.map((p, i) => ({ w: p.w.replace(/[?.]/g,''), c: p.c, idx: i }));
-    this.remaining = this._shuffle([...words]);
-    this._renderPool();
-    this._renderDropZone();
+    this._renderPool(); this._renderDrop();
     this._startTimer();
   }
 
-  _shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
-
   _renderPool() {
-    const pool = document.getElementById('sc-word-pool');
-    if (!pool) return;
-    pool.innerHTML = this.remaining.map((w, i) =>
+    const el=document.getElementById('ss-pool');
+    if(!el)return;
+    el.innerHTML=this.remaining.map((w,i)=>
       `<button class="sc-word-chip c-${w.c}" data-i="${i}">${w.w}</button>`
     ).join('');
-    pool.querySelectorAll('.sc-word-chip').forEach(btn => {
-      btn.onclick = () => {
-        const i = parseInt(btn.dataset.i);
-        const word = this.remaining[i];
-        this.remaining.splice(i, 1);
-        this.correct.push(word);
-        this._renderPool();
-        this._renderDropZone();
+    el.querySelectorAll('.sc-word-chip').forEach(btn=>{
+      btn.onclick=()=>{
+        const i=parseInt(btn.dataset.i);
+        this.placed.push(this.remaining[i]);
+        this.remaining.splice(i,1);
+        this._renderPool(); this._renderDrop();
       };
     });
   }
 
-  _renderDropZone() {
-    const dz = document.getElementById('sc-drop-zone');
-    if (!dz) return;
-    if (this.correct.length === 0) {
-      dz.innerHTML = '<div class="sc-dz-placeholder">Buraya kelime ekle →</div>';
-      return;
-    }
-    dz.innerHTML = this.correct.map((w, i) =>
+  _renderDrop() {
+    const el=document.getElementById('ss-drop');
+    if(!el)return;
+    if(!this.placed.length){el.innerHTML='<div class="sc-dz-placeholder">Kelimelere tıkla, cümleyi kur →</div>';return;}
+    el.innerHTML=this.placed.map((w,i)=>
       `<button class="sc-placed-chip c-${w.c}" data-i="${i}">${w.w}</button>`
     ).join('');
-    dz.querySelectorAll('.sc-placed-chip').forEach(btn => {
-      btn.onclick = () => {
-        const i = parseInt(btn.dataset.i);
-        const word = this.correct[i];
-        this.correct.splice(i, 1);
-        this.remaining.push(word);
-        this._renderPool();
-        this._renderDropZone();
+    el.querySelectorAll('.sc-placed-chip').forEach(btn=>{
+      btn.onclick=()=>{
+        const i=parseInt(btn.dataset.i);
+        this.remaining.push(this.placed[i]);
+        this.placed.splice(i,1);
+        this._renderPool(); this._renderDrop();
       };
     });
   }
 
-  _clear() {
-    this.remaining = [...this.remaining, ...this.correct];
-    this.correct = [];
-    this._renderPool();
-    this._renderDropZone();
+  clear() {
+    this.remaining=[...this.remaining,...this.placed];
+    this.placed=[];
+    this._renderPool(); this._renderDrop();
   }
 
-  _check() {
-    const correctWords = this.targetParts.map(p => p.w.replace(/[?.]/g,'').toLowerCase());
-    const userWords    = this.correct.map(w => w.w.toLowerCase());
-
-    if (userWords.length !== correctWords.length) {
-      this._feedback('⚠️ Tüm kelimeleri kullan!', 'warn');
-      return;
-    }
-
-    const ok = correctWords.every((w, i) => w === userWords[i]);
+  check() {
+    const correct=this.parts.map(p=>p.w.replace(/[?.]/g,'').toLowerCase());
+    const user=this.placed.map(w=>w.w.toLowerCase());
+    if(user.length!==correct.length){this._feedback('⚠️ Tüm kelimeleri kullan!','warn');return;}
     this._stopTimer();
-
-    if (ok) {
-      const bonus = 20 + Math.ceil(this.timeLeft * 2);
-      this.score += bonus;
-      this._feedback(`✅ Mükemmel! +${bonus} puan`, 'correct');
-      this._flashGreen();
-      setTimeout(() => this._newRound(), 1400);
+    const ok=correct.every((w,i)=>w===user[i]);
+    if(ok){
+      const bonus=25+Math.ceil(this.timeLeft*2);
+      this.score+=bonus;
+      this._feedback(`✅ Harika! +${bonus} puan`,'correct');
+      const sh=document.getElementById('ss-shell');
+      if(sh){sh.classList.add('flash-green');setTimeout(()=>sh.classList.remove('flash-green'),500);}
+      document.getElementById('ss-score').textContent=this.score;
+      setTimeout(()=>this._newRound(),1300);
     } else {
-      this.score = Math.max(0, this.score - 5);
-      const answer = this.targetParts.map(p => p.w).join(' ');
-      this._feedback(`❌ Yanlış! Doğrusu: "${answer}"`, 'wrong');
-      setTimeout(() => { this._clear(); this._startTimer(); }, 2200);
+      this.lives--;
+      this._feedback(`❌ Yanlış sıra! Doğrusu: "${this.parts.map(p=>p.w).join(' ')}"`, 'wrong');
+      const sh=document.getElementById('ss-shell');
+      if(sh){sh.classList.add('shake');setTimeout(()=>sh.classList.remove('shake'),500);}
+      document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
+      if(this.lives<=0){setTimeout(()=>this._over(false),2000);return;}
+      setTimeout(()=>{this.clear();this._startTimer();},2200);
     }
-  }
-
-  _feedback(msg, type) {
-    const el = document.getElementById('sc-feedback');
-    if (!el) return;
-    el.textContent = msg;
-    el.className = `arena-feedback fb-${type} fb-show`;
-    setTimeout(() => el.classList.remove('fb-show'), 2000);
-  }
-
-  _flashGreen() {
-    const sh = document.getElementById('scramble-shell');
-    if (sh) { sh.classList.add('flash-green'); setTimeout(() => sh.classList.remove('flash-green'), 500); }
   }
 
   _startTimer() {
-    this.timeLeft = 20;
-    this._stopTimer();
-    const fill = document.getElementById('sc-timer-fill');
-    const disp = document.getElementById('sc-timer');
-    this.timer = setInterval(() => {
+    this.timeLeft=30; this._stopTimer();
+    const fill=document.getElementById('ss-timer');
+    const disp=document.getElementById('ss-time');
+    this.timer=setInterval(()=>{
       this.timeLeft--;
-      if (fill) { fill.style.width = (this.timeLeft / 20 * 100) + '%'; fill.style.background = this.timeLeft < 7 ? '#f43f5e' : 'var(--green)'; }
-      if (disp) disp.textContent = `${this.timeLeft}s`;
-      if (this.timeLeft <= 0) { this._stopTimer(); this._timeOut(); }
-    }, 1000);
+      if(fill){fill.style.width=(this.timeLeft/30*100)+'%';fill.style.background=this.timeLeft<10?'#f43f5e':'var(--green)';}
+      if(disp)disp.textContent=`${this.timeLeft}s`;
+      if(this.timeLeft<=0){this._stopTimer();this._timeOut();}
+    },1000);
   }
 
-  _stopTimer() { if (this.timer) { clearInterval(this.timer); this.timer = null; } }
+  _stopTimer(){if(this.timer){clearInterval(this.timer);this.timer=null;}}
 
-  _timeOut() {
-    const answer = this.targetParts.map(p => p.w).join(' ');
-    this._feedback(`⏱️ Süre doldu! Doğrusu: "${answer}"`, 'wrong');
-    setTimeout(() => this._newRound(), 2400);
+  _timeOut(){
+    this.lives--;
+    this._feedback(`⏱️ Süre doldu! Doğrusu: "${this.parts.map(p=>p.w).join(' ')}"`, 'wrong');
+    document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
+    if(this.lives<=0){setTimeout(()=>this._over(false),2200);return;}
+    setTimeout(()=>this._newRound(),2400);
   }
 
-  _gameOver(won) {
-    const bestStr = localStorage.getItem('q_best') || '0';
-    if (this.score > parseInt(bestStr)) localStorage.setItem('q_best', String(this.score));
-    if (won) { this.qm.addXP(150); this.qm.confetti(); const w = parseInt(localStorage.getItem('q_wins')||'0')+1; localStorage.setItem('q_wins',w); }
+  _feedback(msg,type){
+    const el=document.getElementById('ss-feedback');
+    if(!el)return;
+    el.textContent=msg; el.className=`arena-feedback fb-${type} fb-show`;
+    setTimeout(()=>el.classList.remove('fb-show'),2000);
+  }
 
-    this.root.innerHTML = `
-<div class="qresult-shell">
-  <div class="qresult-icon">🧩</div>
-  <h1 class="qresult-title">${won ? 'TAMAMLANDI!' : 'OYUN BİTTİ'}</h1>
-  <div class="qresult-score">${this.score}</div>
-  <div class="qresult-sub">Puan · ${this.maxRound} cümle tamamlandı</div>
-  ${won ? '<div class="qresult-xp">+150 XP kazandın!</div>' : ''}
-  <div class="qresult-btns">
-    <button class="qres-btn primary" onclick="window._qmode.startGame('scramble')">🔄 Tekrar Oyna</button>
-    <button class="qres-btn ghost"   onclick="window._qmode.backToHub()">← Hub</button>
-  </div>
-</div>`;
+  _over(won) {
+    this._stopTimer();
+    this.qm.recordBest(this.score);
+    if(won){this.qm.recordWin();this.qm.addXP(150);this.qm.confetti();}
+    this.root.innerHTML=_resultHTML('🧩','Sentence Scramble',won,this.score,`${this.maxRound} cümle`,won?150:0,'scramble');
   }
 }
 
 // ════════════════════════════════════════════════════════════════
-//  GAME 4 — BOSS BATTLE
+//  GAME 4 — ERROR SNIPER (yanlış kelimeyi bul)
 // ════════════════════════════════════════════════════════════════
-class BossBattle {
+class ErrorSniper {
   constructor(qm) {
-    this.qm        = qm;
-    this.root      = qm.root;
-    this.bossIdx   = 0;
-    this.boss      = null;
-    this.bossHp    = 0;
-    this.playerHp  = 100;
-    this.score     = 0;
-    this.streak    = 0;
-    this.options   = [];
-    this.target    = null;
-    this.answered  = false;
-    this.scenario  = null;
-    this.qTimer    = null;
-    this.qTimeLeft = 10;
+    this.qm=qm; this.root=qm.root;
+    this.bossIdx=0; this.bossHp=0; this.playerHp=100;
+    this.score=0; this.streak=0;
+    this.errorIdx=-1; this.parts=[];
+    this.answered=false;
+    this.qTimer=null; this.qTimeLeft=12;
   }
 
-  get currentBoss() { return BOSSES[this.bossIdx]; }
+  get boss(){return BOSSES[this.bossIdx];}
 
-  start() {
-    this._loadBoss();
-  }
+  start(){this._loadBoss();}
 
-  _loadBoss() {
-    this.boss    = this.currentBoss;
-    this.bossHp  = this.boss.hp;
-    this.playerHp = 100;
-    this.streak  = 0;
+  _loadBoss(){
+    this.bossHp=this.boss.maxHp;
+    this.streak=0;
 
-    this.root.innerHTML = `
-<div class="qgame-shell" id="boss-shell">
+    this.root.innerHTML=`
+<div class="qgame-shell" id="es-shell">
   <div class="qgame-topbar">
-    <button class="qback-btn" id="boss-back">← Hub</button>
-    <div class="boss-name-display">
-      <span class="boss-stage-badge">${this.bossIdx + 1}/4</span>
-      <span class="boss-name-text" id="boss-name">${this.boss.name}</span>
+    <button class="qback-btn" onclick="window._qmode.backToHub()">← Hub</button>
+    <div class="es-boss-name">
+      <span class="boss-stage-badge">${this.bossIdx+1}/4</span>
+      <span>${this.boss.emoji} ${this.boss.name}</span>
     </div>
-    <div class="qgame-topbar-right">
-      <span class="qtb-score" id="boss-score">0</span>
-    </div>
+    <span class="qtb-score" id="es-score">0</span>
   </div>
 
   <div class="boss-arena">
     <div class="boss-hp-section">
-      <div class="bhp-label">👹 ${this.boss.name}</div>
-      <div class="bhp-track"><div class="bhp-fill" id="boss-hp-fill" style="background:${this.boss.color}"></div></div>
-      <div class="bhp-val" id="boss-hp-val">${this.bossHp}/${this.boss.hp}</div>
+      <div class="bhp-label">👹 Boss HP</div>
+      <div class="bhp-track"><div class="bhp-fill" id="es-boss-fill" style="background:${this.boss.color}"></div></div>
+      <div class="bhp-val" id="es-boss-val">${this.bossHp}/${this.boss.maxHp}</div>
     </div>
-
     <div class="boss-sprite-wrap">
-      <div class="boss-sprite" id="boss-sprite">${this.boss.emoji}</div>
-      <div class="boss-hit-text" id="boss-hit" style="display:none"></div>
+      <div class="boss-sprite" id="es-sprite">${this.boss.emoji}</div>
+      <div class="boss-hit-text" id="es-hit" style="display:none"></div>
     </div>
-
     <div class="player-hp-section">
-      <div class="php-label">🧠 Senin Canın</div>
-      <div class="php-track"><div class="php-fill" id="player-hp-fill"></div></div>
-      <div class="php-val" id="player-hp-val">100/100</div>
+      <div class="php-label">🧠 Senin HP</div>
+      <div class="php-track"><div class="php-fill" id="es-player-fill"></div></div>
+      <div class="php-val" id="es-player-val">100/100</div>
     </div>
   </div>
 
-  <div class="boss-q-timer-bar"><div class="boss-q-fill" id="boss-q-fill"></div></div>
+  <div class="boss-q-timer-bar"><div class="boss-q-fill" id="es-qtimer" style="background:${this.boss.color}"></div></div>
 
-  <div class="boss-question-card">
-    <div class="bqc-label">Bu cümle hangi gramer yapısını kullanıyor?</div>
-    <div class="boss-sentence" id="boss-sentence">—</div>
+  <div class="es-question-card">
+    <div class="es-instruction">
+      <span class="es-instr-icon">🎯</span>
+      <span>Bu cümlede gramer <strong>hatası</strong> olan kelimeyi tıkla!</span>
+    </div>
+    <div class="es-sentence" id="es-sentence"></div>
   </div>
 
-  <div class="boss-options" id="boss-options"></div>
-
-  <div class="boss-streak" id="boss-streak" style="display:none">
-    🔥 <span id="boss-streak-val">1</span> kombo!
+  <div class="es-streak" id="es-streak" style="display:none">
+    🔥 <span id="es-streak-val">1</span> kombo!
   </div>
 
-  <div class="arena-feedback" id="boss-feedback"></div>
+  <div class="arena-feedback" id="es-feedback"></div>
 </div>`;
 
-    document.getElementById('boss-back').onclick = () => { this._stopQTimer(); this.qm.backToHub(); };
     this._newQuestion();
   }
 
-  _newQuestion() {
-    this.answered = false;
-    this.scenario = QUANTUM_SCENARIOS[Math.floor(Math.random() * QUANTUM_SCENARIOS.length)];
-    this.target   = randomState();
+  _newQuestion(){
+    this.answered=false;
+    const sc=randScenario();
+    const st=randState();
+    const res=generateErrorSentence(sc,st.time,st.flow,st.voice,st.pol);
 
-    const pts  = generateSentence(this.scenario, this.target.time, this.target.flow, this.target.voice, this.target.pol);
-    const sent = document.getElementById('boss-sentence');
-    if (sent) sent.innerHTML = pts.map(p => `<span class="qw-${p.c}">${p.w}</span>`).join(' ');
+    if(res.errorIdx===-1){this._newQuestion();return;}
 
-    const wrong = [];
-    while (wrong.length < 3) {
-      const w = randomState(this.target);
-      if (!wrong.some(x => x.time===w.time && x.flow===w.flow && x.voice===w.voice && x.pol===w.pol)) wrong.push(w);
-    }
-    this.options = this._shuffle([this.target, ...wrong]);
+    this.parts=res.parts;
+    this.errorIdx=res.errorIdx;
 
-    const opt_el = document.getElementById('boss-options');
-    if (opt_el) {
-      opt_el.innerHTML = this.options.map((o, i) =>
-        `<button class="boss-opt" data-idx="${i}">${stateLabel(o)}</button>`
-      ).join('');
-      opt_el.querySelectorAll('.boss-opt').forEach(btn => {
-        btn.onclick = () => { if (!this.answered) this._answer(parseInt(btn.dataset.idx)); };
+    const el=document.getElementById('es-sentence');
+    if(el){
+      el.innerHTML=this.parts.map((p,i)=>
+        `<button class="es-word-btn c-${p.c}" data-idx="${i}">${p.w}</button>`
+      ).join(' ');
+      el.querySelectorAll('.es-word-btn').forEach(btn=>{
+        btn.onclick=()=>{if(!this.answered)this._answer(parseInt(btn.dataset.idx),btn);};
       });
     }
 
-    this._startQTimer();
     this._updateBars();
+    this._startQTimer();
   }
 
-  _startQTimer() {
-    this.qTimeLeft = 10;
-    this._stopQTimer();
-    const fill = document.getElementById('boss-q-fill');
-    this.qTimer = setInterval(() => {
+  _startQTimer(){
+    this.qTimeLeft=12; this._stopQTimer();
+    const fill=document.getElementById('es-qtimer');
+    this.qTimer=setInterval(()=>{
       this.qTimeLeft--;
-      if (fill) { fill.style.width = (this.qTimeLeft / 10 * 100) + '%'; fill.style.background = this.qTimeLeft < 4 ? '#f43f5e' : this.boss.color; }
-      if (this.qTimeLeft <= 0) { clearInterval(this.qTimer); if (!this.answered) this._answer(null); }
-    }, 1000);
+      if(fill)fill.style.width=(this.qTimeLeft/12*100)+'%';
+      if(this.qTimeLeft<=0){clearInterval(this.qTimer);if(!this.answered)this._answer(-1,null);}
+    },1000);
   }
 
-  _stopQTimer() { if (this.qTimer) { clearInterval(this.qTimer); this.qTimer = null; } }
+  _stopQTimer(){if(this.qTimer){clearInterval(this.qTimer);this.qTimer=null;}}
 
-  _answer(idx) {
-    this.answered = true;
+  _answer(idx, btn){
+    this.answered=true;
     this._stopQTimer();
 
-    const correctIdx = this.options.indexOf(this.target);
-    const opt_el = document.getElementById('boss-options');
-    if (opt_el) {
-      opt_el.querySelectorAll('.boss-opt').forEach((btn, i) => {
-        if (i === correctIdx) btn.classList.add('opt-correct');
-        else if (i === idx)   btn.classList.add('opt-wrong');
-        btn.disabled = true;
-      });
-    }
+    // Reveal correct error word
+    const allBtns=document.querySelectorAll('.es-word-btn');
+    allBtns.forEach((b,i)=>{
+      if(i===this.errorIdx) b.classList.add('es-error-word');
+      b.disabled=true;
+    });
 
-    if (idx === correctIdx) {
+    if(idx===this.errorIdx){
+      // Correct!
       this.streak++;
-      const dmg = 20 + (this.streak >= 3 ? 10 : 0);
-      this.bossHp  = Math.max(0, this.bossHp - dmg);
-      this.score  += 30 + this.qTimeLeft * 3;
-      this._showHit(`-${dmg}`, 'hit');
-      this._showFeedback(`⚔️ ${dmg} hasar verdin!${this.streak >= 3 ? ' KOMBO!' : ''}`, 'correct');
-      this._updateBars();
-      this._updateStreak();
-      if (this.bossHp <= 0) { setTimeout(() => this._bossDefeated(), 1200); return; }
+      const dmg=20+(this.streak>=3?10:0);
+      this.bossHp=Math.max(0,this.bossHp-dmg);
+      this.score+=30+this.qTimeLeft*3;
+      if(btn) btn.classList.add('es-hit-correct');
+      this._showHit(`-${dmg}💥`);
+      this._feedback(`🎯 İsabet! Boss'a ${dmg} hasar! ${this.streak>=3?'KOMBO!':''}`, 'correct');
     } else {
-      this.streak = 0;
-      const atk = 25;
-      this.playerHp = Math.max(0, this.playerHp - atk);
-      this._showFeedback(`👹 Boss sana ${atk} hasar verdi!`, 'wrong');
-      this._bossAttackAnim();
-      this._updateBars();
-      this._updateStreak();
-      if (this.playerHp <= 0) { setTimeout(() => this._gameOver(false), 1200); return; }
+      this.streak=0;
+      this.playerHp=Math.max(0,this.playerHp-this.boss.atk);
+      this._feedback(`💢 Boss sana ${this.boss.atk} hasar verdi! Doğru hata: "${this.parts[this.errorIdx].w}"`, 'wrong');
+      const sh=document.getElementById('es-shell');
+      if(sh){sh.classList.add('shake');setTimeout(()=>sh.classList.remove('shake'),500);}
     }
 
-    setTimeout(() => this._newQuestion(), 1100);
+    this._updateBars();
+    this._updateStreak();
+    document.getElementById('es-score').textContent=this.score;
+
+    if(this.bossHp<=0){setTimeout(()=>this._bossDefeated(),1400);return;}
+    if(this.playerHp<=0){setTimeout(()=>this._over(false),1400);return;}
+    setTimeout(()=>this._newQuestion(),1400);
   }
 
-  _showHit(text, type) {
-    const el = document.getElementById('boss-hit');
-    if (!el) return;
-    el.textContent = text;
-    el.className   = `boss-hit-text ht-${type}`;
-    el.style.display = 'block';
-    setTimeout(() => { el.style.display = 'none'; }, 800);
+  _showHit(text){
+    const el=document.getElementById('es-hit');
+    if(!el)return;
+    el.textContent=text; el.style.display='block';
+    el.style.animation='none'; el.offsetHeight;
+    el.style.animation='hit-float 0.9s ease-out forwards';
+    setTimeout(()=>el.style.display='none',900);
   }
 
-  _bossAttackAnim() {
-    const sh = document.getElementById('boss-shell');
-    if (sh) { sh.classList.add('shake'); setTimeout(() => sh.classList.remove('shake'), 500); }
+  _updateBars(){
+    const bf=document.getElementById('es-boss-fill');
+    const bv=document.getElementById('es-boss-val');
+    const pf=document.getElementById('es-player-fill');
+    const pv=document.getElementById('es-player-val');
+    if(bf) bf.style.width=(this.bossHp/this.boss.maxHp*100)+'%';
+    if(bv) bv.textContent=`${this.bossHp}/${this.boss.maxHp}`;
+    if(pf){pf.style.width=this.playerHp+'%';pf.style.background=this.playerHp<30?'#f43f5e':'#10b981';}
+    if(pv) pv.textContent=`${this.playerHp}/100`;
   }
 
-  _showFeedback(msg, type) {
-    const el = document.getElementById('boss-feedback');
-    if (!el) return;
-    el.textContent = msg;
-    el.className = `arena-feedback fb-${type} fb-show`;
-    setTimeout(() => el.classList.remove('fb-show'), 1000);
+  _updateStreak(){
+    const el=document.getElementById('es-streak');
+    const v=document.getElementById('es-streak-val');
+    if(el)el.style.display=this.streak>=2?'block':'none';
+    if(v)v.textContent=this.streak;
   }
 
-  _updateBars() {
-    const bfill = document.getElementById('boss-hp-fill');
-    const bval  = document.getElementById('boss-hp-val');
-    const pfill = document.getElementById('player-hp-fill');
-    const pval  = document.getElementById('player-hp-val');
-    const sc    = document.getElementById('boss-score');
-    if (bfill) bfill.style.width = (this.bossHp / this.boss.hp * 100) + '%';
-    if (bval)  bval.textContent  = `${this.bossHp}/${this.boss.hp}`;
-    if (pfill) { pfill.style.width = this.playerHp + '%'; pfill.style.background = this.playerHp < 30 ? '#f43f5e' : '#10b981'; }
-    if (pval)  pval.textContent  = `${this.playerHp}/100`;
-    if (sc)    sc.textContent    = this.score;
+  _feedback(msg,type){
+    const el=document.getElementById('es-feedback');
+    if(!el)return;
+    el.textContent=msg; el.className=`arena-feedback fb-${type} fb-show`;
+    setTimeout(()=>el.classList.remove('fb-show'),1300);
   }
 
-  _updateStreak() {
-    const el  = document.getElementById('boss-streak');
-    const val = document.getElementById('boss-streak-val');
-    if (el)  el.style.display  = this.streak >= 2 ? 'block' : 'none';
-    if (val) val.textContent   = this.streak;
-  }
+  _bossDefeated(){
+    this.qm.confetti({particleCount:100,spread:70});
+    const bosses=parseInt(localStorage.getItem('q_bosses')||'0')+1;
+    localStorage.setItem('q_bosses',bosses);
 
-  _bossDefeated() {
-    this.qm.confetti({ particleCount: 120, spread: 80 });
-    const nextIdx = this.bossIdx + 1;
-    const defeated = parseInt(localStorage.getItem('q_bosses') || '0') + 1;
-    localStorage.setItem('q_bosses', defeated);
+    const next=this.bossIdx+1;
+    if(next>=BOSSES.length){this._over(true);return;}
 
-    if (nextIdx >= BOSSES.length) {
-      this._gameOver(true);
-      return;
-    }
-
-    this.root.innerHTML = `
+    this.root.innerHTML=`
 <div class="qresult-shell">
   <div class="qresult-icon">${this.boss.emoji}</div>
   <h1 class="qresult-title">${this.boss.name} YENİLDİ!</h1>
   <div class="qresult-score">${this.score}</div>
-  <div class="qresult-sub">Sonraki Boss: ${BOSSES[nextIdx].name} ${BOSSES[nextIdx].emoji}</div>
-  <div class="qresult-xp">Skor: ${this.score}</div>
+  <div class="qresult-sub">Sonraki Boss: ${BOSSES[next].emoji} ${BOSSES[next].name}</div>
+  <div class="qresult-xp">+30 HP bonus alıyorsun!</div>
   <div class="qresult-btns">
-    <button class="qres-btn primary" id="btn-next-boss">⚔️ Sonraki Boss →</button>
-    <button class="qres-btn ghost"   onclick="window._qmode.backToHub()">← Hub</button>
+    <button class="qres-btn primary" id="es-next">⚔️ Sonraki Boss →</button>
+    <button class="qres-btn ghost" onclick="window._qmode.backToHub()">← Hub</button>
   </div>
 </div>`;
-
-    document.getElementById('btn-next-boss').onclick = () => {
+    document.getElementById('es-next').onclick=()=>{
       this.bossIdx++;
-      this.playerHp = Math.min(100, this.playerHp + 30); // heal between bosses
+      this.playerHp=Math.min(100,this.playerHp+30);
       this._loadBoss();
     };
   }
 
-  _gameOver(won) {
+  _over(won){
     this._stopQTimer();
-    if (won) { this.qm.addXP(300); this.qm.confetti(); const w = parseInt(localStorage.getItem('q_wins')||'0')+1; localStorage.setItem('q_wins',w); }
-    else { this.qm.addXP(Math.floor(this.score / 10)); }
-    const bestStr = localStorage.getItem('q_best') || '0';
-    if (this.score > parseInt(bestStr)) localStorage.setItem('q_best', String(this.score));
+    this.qm.recordBest(this.score);
+    if(won){this.qm.recordWin();this.qm.addXP(300);this.qm.confetti();}
+    else{this.qm.addXP(Math.floor(this.score/10));}
+    this.root.innerHTML=_resultHTML(
+      won?'👑':'💀','Error Sniper',won,this.score,
+      won?'Tüm boss\'lar yenildi!':`${this.bossIdx+1}. boss'da düştün`,
+      won?300:Math.floor(this.score/10),'sniper'
+    );
+  }
+}
 
-    this.root.innerHTML = `
+// ── Shared Result Screen ────────────────────────────────────────
+function _resultHTML(icon,game,won,score,sub,xp,gameKey){
+  return `
 <div class="qresult-shell">
-  <div class="qresult-icon">${won ? '👑' : '💀'}</div>
-  <h1 class="qresult-title">${won ? 'TÜM BOSS\'LAR YENİLDİ!' : 'YENİLDİN!'}</h1>
-  <div class="qresult-score">${this.score}</div>
-  <div class="qresult-sub">${won ? '4 boss yenildi — efsane!' : `${this.bossIdx + 1}. boss\'da düştün`}</div>
-  <div class="qresult-xp">+${won ? 300 : Math.floor(this.score/10)} XP kazandın!</div>
+  <div class="qresult-icon">${icon}</div>
+  <h1 class="qresult-title">${won?'TAMAMLANDI!':'GAME OVER'}</h1>
+  <div class="qresult-score">${score}</div>
+  <div class="qresult-sub">${game} · ${sub}</div>
+  <div class="qresult-xp">+${xp} XP kazandın!</div>
   <div class="qresult-btns">
-    <button class="qres-btn primary" onclick="window._qmode.startGame('boss')">🔄 Tekrar Oyna</button>
-    <button class="qres-btn ghost"   onclick="window._qmode.backToHub()">← Hub</button>
+    <button class="qres-btn primary" onclick="window._qmode.startGame('${gameKey}')">🔄 Tekrar Oyna</button>
+    <button class="qres-btn ghost" onclick="window._qmode.backToHub()">← Hub</button>
   </div>
 </div>`;
-  }
-
-  _shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 }
 
 window.QuantumMode = QuantumMode;

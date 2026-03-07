@@ -4367,3 +4367,70 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .qres-btn.ghost { background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-2); }
 .qres-btn.ghost:hover { background:rgba(255,255,255,0.12); color:var(--text-1); }
 
+/* ── Word Forge ──────────────────────────────────────────────── */
+.wf-target-card { display:flex; align-items:center; gap:14px; background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(124,58,237,0.08)); border:1px solid rgba(0,212,255,0.25); border-radius:18px; padding:16px 20px; }
+.wf-target-icon { font-size:2.2rem; flex-shrink:0; }
+.wf-target-info { flex:1; }
+.wf-timer-num { font-size:1.8rem; font-weight:900; color:var(--text-2); min-width:44px; text-align:right; transition:color 0.3s; }
+
+.wf-sentence-area { display:flex; flex-wrap:wrap; gap:8px; align-items:center; background:var(--bg-elevated); border:1px solid var(--border); border-radius:18px; padding:18px 20px; min-height:64px; }
+.wf-word { padding:8px 14px; border-radius:10px; font-size:1.1rem; font-weight:800; transition:all 0.3s; }
+.wf-word.filled { opacity:1; transform:scale(1); }
+.wf-word.filled.c-subj { color:#3b82f6; background:rgba(59,130,246,0.12); border:2px solid rgba(59,130,246,0.3); }
+.wf-word.filled.c-aux  { color:#c084fc; background:rgba(192,132,252,0.12); border:2px solid rgba(192,132,252,0.3); }
+.wf-word.filled.c-verb { color:#10b981; background:rgba(16,185,129,0.12); border:2px solid rgba(16,185,129,0.3); }
+.wf-word.filled.c-obj  { color:#f59e0b; background:rgba(245,158,11,0.12); border:2px solid rgba(245,158,11,0.3); }
+.wf-word.current { color:var(--cyan); background:rgba(0,212,255,0.1); border:2px dashed rgba(0,212,255,0.5); animation:pulse-border 1s ease-in-out infinite; }
+.wf-word.blank { color:var(--text-3); background:rgba(255,255,255,0.03); border:2px dashed rgba(255,255,255,0.1); }
+@keyframes pulse-border { 0%,100%{border-color:rgba(0,212,255,0.5);box-shadow:none} 50%{border-color:rgba(0,212,255,0.9);box-shadow:0 0 12px rgba(0,212,255,0.3)} }
+
+.wf-instruction { font-size:0.8rem; color:var(--text-3); text-align:center; text-transform:uppercase; letter-spacing:1px; font-weight:700; }
+
+.wf-choices { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+.wf-choice-btn { padding:14px 24px; border-radius:14px; font-size:1rem; font-weight:800; cursor:pointer; background:var(--bg-card); border:2px solid var(--border); color:var(--text-1); transition:all 0.2s; }
+.wf-choice-btn:hover { background:var(--bg-elevated); border-color:rgba(0,212,255,0.4); color:var(--cyan); transform:translateY(-2px); }
+.wf-choice-btn.wf-correct { background:rgba(16,185,129,0.2); border-color:#10b981; color:#10b981; transform:scale(1.06); }
+.wf-choice-btn.wf-wrong   { background:rgba(244,63,94,0.2);  border-color:#f43f5e; color:#f43f5e; animation:shake-anim 0.4s; }
+
+/* ── Sentence Rush ───────────────────────────────────────────── */
+.rush-time-wrap { flex:1; text-align:center; }
+.rush-time-val { font-size:2.2rem; font-weight:900; color:var(--amber); transition:color 0.3s; }
+.rush-time-lbl { font-size:0.8rem; color:var(--text-3); margin-left:3px; }
+.rush-solved { font-size:0.95rem; font-weight:800; color:var(--green); }
+
+.rush-info-bar { display:flex; align-items:center; gap:12px; background:var(--bg-elevated); border:1px solid var(--border); border-radius:14px; padding:12px 16px; }
+.rush-icon { font-size:1.8rem; }
+.rush-label { font-size:0.85rem; font-weight:700; color:var(--text-2); flex:1; }
+
+.rush-actions { display:flex; gap:12px; }
+
+/* ── Sentence Scramble ───────────────────────────────────────── */
+.ss-info-card { display:flex; align-items:center; gap:12px; background:var(--bg-elevated); border:1px solid var(--border); border-radius:16px; padding:14px 18px; }
+.ss-icon { font-size:2rem; flex-shrink:0; }
+.ss-info-mid { flex:1; }
+.ss-time { font-size:1.4rem; font-weight:900; color:var(--green); min-width:40px; text-align:right; transition:color 0.3s; }
+.ss-legend { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.ss-lg { font-size:0.72rem; font-weight:800; padding:4px 10px; border-radius:99px; }
+.ss-lg.c-subj { color:#3b82f6; background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.3); }
+.ss-lg.c-aux  { color:#c084fc; background:rgba(192,132,252,0.1); border:1px solid rgba(192,132,252,0.3); }
+.ss-lg.c-verb { color:#10b981; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); }
+.ss-lg.c-obj  { color:#f59e0b; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); }
+
+/* ── Error Sniper ────────────────────────────────────────────── */
+.es-boss-name { flex:1; text-align:center; display:flex; align-items:center; justify-content:center; gap:8px; font-weight:800; font-size:0.95rem; }
+.es-question-card { background:var(--bg-elevated); border:1px solid var(--border); border-radius:18px; padding:20px; }
+.es-instruction { display:flex; align-items:center; gap:10px; font-size:0.85rem; color:var(--text-2); margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+.es-instr-icon { font-size:1.4rem; }
+.es-sentence { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+
+.es-word-btn { padding:10px 16px; border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer; border:2px solid transparent; transition:all 0.2s; }
+.es-word-btn.c-subj { color:#3b82f6; background:rgba(59,130,246,0.08); border-color:rgba(59,130,246,0.2); }
+.es-word-btn.c-aux  { color:#c084fc; background:rgba(192,132,252,0.08); border-color:rgba(192,132,252,0.2); }
+.es-word-btn.c-verb { color:#10b981; background:rgba(16,185,129,0.08); border-color:rgba(16,185,129,0.2); }
+.es-word-btn.c-obj  { color:#f59e0b; background:rgba(245,158,11,0.08); border-color:rgba(245,158,11,0.2); }
+.es-word-btn:hover:not(:disabled) { transform:translateY(-2px) scale(1.05); box-shadow:0 4px 14px rgba(0,0,0,0.3); filter:brightness(1.3); }
+.es-word-btn:disabled { cursor:default; }
+.es-error-word { background:rgba(244,63,94,0.25) !important; border-color:#f43f5e !important; color:#f43f5e !important; animation:shake-anim 0.4s; }
+.es-hit-correct { background:rgba(16,185,129,0.25) !important; border-color:#10b981 !important; transform:scale(1.1) !important; }
+.es-streak { text-align:center; font-size:1rem; font-weight:800; color:var(--amber); background:rgba(245,158,11,0.1); border-radius:10px; padding:8px; }
+
