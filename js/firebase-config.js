@@ -29,5 +29,5 @@ window._firebaseConfigured = true;
      → Web Push certificates → Generate key pair
 ────────────────────────────────────────────────────────────── */
 
-window._appCheckSiteKey = 'YOUR_RECAPTCHA_V3_SITE_KEY'; // App Check icin — placeholder ise devre disi
+window._appCheckSiteKey = '6LfOLlMsAAAAAE4K1Xr0yVKAAp4FB6GSlacAdZKy'; // reCAPTCHA v3 site key
 window._vapidKey        = 'YOUR_VAPID_PUBLIC_KEY_HERE';  // FCM Web Push icin — placeholder ise devre disi
