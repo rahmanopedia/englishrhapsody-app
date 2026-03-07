@@ -22,13 +22,13 @@
    ================================================================ */
 
 const firebaseConfig = {
-  apiKey:            "BURAYA_API_KEY",
-  authDomain:        "BURAYA_AUTH_DOMAIN",
-  projectId:         "BURAYA_PROJECT_ID",
-  storageBucket:     "BURAYA_STORAGE_BUCKET",
-  messagingSenderId: "BURAYA_MESSAGING_SENDER_ID",
-  appId:             "BURAYA_APP_ID",
+  apiKey:            "AIzaSyAF97SX_GlK7QMNhvhD5eFvS5a8FdApo_A",
+  authDomain:        "englishrhapsody-78866.firebaseapp.com",
+  projectId:         "englishrhapsody-78866",
+  storageBucket:     "englishrhapsody-78866.firebasestorage.app",
+  messagingSenderId: "94842633226",
+  appId:             "1:94842633226:web:26f0f89fdf558b918eb3f3",
+  measurementId:     "G-8NR909GK54",
 };
 
-// Config doldurmadan önce placeholder kontrolü
-window._firebaseConfigured = !firebaseConfig.apiKey.includes('BURAYA');
+window._firebaseConfigured = true;

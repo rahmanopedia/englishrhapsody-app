@@ -2830,8 +2830,8 @@ class App {
     this._applyRankTheme();
     this._checkStreak();
     this._initTheme();
-    // Eğer home ekranındaysa yeniden render et
-    if (this.session.view === 'home') this.navigate('home');
+    this.navigate('home');
+    if (!this.state.get('onboarded')) this._showOnboarding();
   }
 
   // ─────────────────────────────────────────────────────────
