@@ -3,21 +3,261 @@
 // ════════════════════════════════════════════════════════════════
 
 const QUANTUM_SCENARIOS = [
-  { id:'s1',  subj:{w:'I',          type:'I',  obj_form:'me'        }, verb:{v1:'eat',     v2:'ate',      v3:'eaten',    ving:'eating'    }, obj:{w:'an apple',       type:'sg'}, icon:'🍎', tr:'Ben bir elma yerim.'                       },
-  { id:'s2',  subj:{w:'The dog',    type:'sg', obj_form:'the dog'   }, verb:{v1:'chase',   v2:'chased',   v3:'chased',   ving:'chasing'   }, obj:{w:'the cat',        type:'sg'}, icon:'🐕', tr:'Köpek kediyi kovalıyor.'                   },
-  { id:'s3',  subj:{w:'She',        type:'sg', obj_form:'her'       }, verb:{v1:'write',   v2:'wrote',    v3:'written',  ving:'writing'   }, obj:{w:'a letter',       type:'sg'}, icon:'✉️', tr:'O bir mektup yazıyor.'                     },
-  { id:'s4',  subj:{w:'They',       type:'pl', obj_form:'them'      }, verb:{v1:'build',   v2:'built',    v3:'built',    ving:'building'  }, obj:{w:'a bridge',       type:'sg'}, icon:'🌉', tr:'Onlar bir köprü inşa ediyor.'              },
-  { id:'s5',  subj:{w:'The hacker', type:'sg', obj_form:'the hacker'}, verb:{v1:'steal',   v2:'stole',    v3:'stolen',   ving:'stealing'  }, obj:{w:'the files',     type:'pl'}, icon:'💻', tr:'Hacker dosyaları çalıyor.'                 },
-  { id:'s6',  subj:{w:'The chef',   type:'sg', obj_form:'the chef'  }, verb:{v1:'cook',    v2:'cooked',   v3:'cooked',   ving:'cooking'   }, obj:{w:'the meal',       type:'sg'}, icon:'👨‍🍳', tr:'Şef yemeği pişiriyor.'                    },
-  { id:'s7',  subj:{w:'We',         type:'pl', obj_form:'us'        }, verb:{v1:'discover',v2:'discovered',v3:'discovered',ving:'discovering'},obj:{w:'a new planet',  type:'sg'}, icon:'🪐', tr:'Biz yeni bir gezegen keşfediyoruz.'       },
-  { id:'s8',  subj:{w:'The robot',  type:'sg', obj_form:'the robot' }, verb:{v1:'destroy', v2:'destroyed',v3:'destroyed',ving:'destroying' },obj:{w:'the city',       type:'sg'}, icon:'🤖', tr:'Robot şehri yok ediyor.'                  },
-  { id:'s9',  subj:{w:'The wizard', type:'sg', obj_form:'the wizard'}, verb:{v1:'cast',    v2:'cast',     v3:'cast',     ving:'casting'   }, obj:{w:'a spell',       type:'sg'}, icon:'🧙', tr:'Büyücü bir büyü yapıyor.'                  },
-  { id:'s10', subj:{w:'The dragon', type:'sg', obj_form:'the dragon'}, verb:{v1:'burn',    v2:'burned',   v3:'burned',   ving:'burning'   }, obj:{w:'the castle',     type:'sg'}, icon:'🐉', tr:'Ejderha kaleyi yakıyor.'                  },
-  { id:'s11', subj:{w:'You',        type:'you',obj_form:'you'       }, verb:{v1:'solve',   v2:'solved',   v3:'solved',   ving:'solving'   }, obj:{w:'the mystery',    type:'sg'}, icon:'🔍', tr:'Sen gizemi çözüyorsun.'                    },
-  { id:'s12', subj:{w:'The pilot',  type:'sg', obj_form:'the pilot' }, verb:{v1:'land',    v2:'landed',   v3:'landed',   ving:'landing'   }, obj:{w:'the spacecraft', type:'sg'}, icon:'🚀', tr:'Pilot uzay aracını indiriyor.'             },
-  { id:'s13', subj:{w:'Scientists', type:'pl', obj_form:'scientists'}, verb:{v1:'study',   v2:'studied',  v3:'studied',  ving:'studying'  }, obj:{w:'the stars',      type:'pl'}, icon:'🔭', tr:'Bilim insanları yıldızları inceliyor.'     },
-  { id:'s14', subj:{w:'The artist', type:'sg', obj_form:'the artist'}, verb:{v1:'paint',   v2:'painted',  v3:'painted',  ving:'painting'  }, obj:{w:'a masterpiece',  type:'sg'}, icon:'🎨', tr:'Sanatçı bir başyapıt boyuyor.'             },
-  { id:'s15', subj:{w:'The knight', type:'sg', obj_form:'the knight'}, verb:{v1:'protect', v2:'protected',v3:'protected',ving:'protecting'}, obj:{w:'the kingdom',    type:'sg'}, icon:'⚔️', tr:'Şövalye krallığı koruyor.'                 },
+  {
+    id:'s1', icon:'🍎',
+    subj:{w:'I',          type:'I',  obj_form:'me'        },
+    verb:{v1:'eat',     v2:'ate',      v3:'eaten',    ving:'eating'    },
+    obj: {w:'an apple',       type:'sg'},
+    tr:'Ben bir elma yerim.',
+    trData:{
+      act:{ subj:'Ben', obj:'bir elma',
+        pres:['yerim','yemem'], prg:['yiyorum','yemiyorum'],
+        past:['yedim','yemedim'], ppas:['yemiştim','yememiştim'],
+        fut:['yiyeceğim','yemeyeceğim'] },
+      pass:{ subj:'Bir elma', agent:'benim tarafımdan',
+        pres:['yenilir','yenilmez'], prg:['yeniyor','yenmiyor'],
+        past:['yendi','yenmedi'], ppas:['yenmişti','yenmemişti'],
+        fut:['yenilecek','yenilmeyecek'] }
+    }
+  },
+  {
+    id:'s2', icon:'🐕',
+    subj:{w:'The dog',    type:'sg', obj_form:'the dog'   },
+    verb:{v1:'chase',   v2:'chased',   v3:'chased',   ving:'chasing'   },
+    obj: {w:'the cat',        type:'sg'},
+    tr:'Köpek kediyi kovalar.',
+    trData:{
+      act:{ subj:'Köpek', obj:'kediyi',
+        pres:['kovalar','kovamaz'], prg:['kovalıyor','kovalamıyor'],
+        past:['kovaladı','kovalamadı'], ppas:['kovalamıştı','kovalamamıştı'],
+        fut:['kovalayacak','kovalamayacak'] },
+      pass:{ subj:'Kedi', agent:'köpek tarafından',
+        pres:['kovalanır','kovalanmaz'], prg:['kovalanıyor','kovalanmıyor'],
+        past:['kovalandı','kovalanmadı'], ppas:['kovalanmıştı','kovalanmamıştı'],
+        fut:['kovalanacak','kovalanmayacak'] }
+    }
+  },
+  {
+    id:'s3', icon:'✉️',
+    subj:{w:'She',        type:'sg', obj_form:'her'       },
+    verb:{v1:'write',   v2:'wrote',    v3:'written',  ving:'writing'   },
+    obj: {w:'a letter',       type:'sg'},
+    tr:'O bir mektup yazar.',
+    trData:{
+      act:{ subj:'O', obj:'bir mektup',
+        pres:['yazar','yazmaz'], prg:['yazıyor','yazmıyor'],
+        past:['yazdı','yazmadı'], ppas:['yazmıştı','yazmamıştı'],
+        fut:['yazacak','yazmayacak'] },
+      pass:{ subj:'Bir mektup', agent:'onun tarafından',
+        pres:['yazılır','yazılmaz'], prg:['yazılıyor','yazılmıyor'],
+        past:['yazıldı','yazılmadı'], ppas:['yazılmıştı','yazılmamıştı'],
+        fut:['yazılacak','yazılmayacak'] }
+    }
+  },
+  {
+    id:'s4', icon:'🌉',
+    subj:{w:'They',       type:'pl', obj_form:'them'      },
+    verb:{v1:'build',   v2:'built',    v3:'built',    ving:'building'  },
+    obj: {w:'a bridge',       type:'sg'},
+    tr:'Onlar bir köprü inşa eder.',
+    trData:{
+      act:{ subj:'Onlar', obj:'bir köprü',
+        pres:['inşa ederler','inşa etmezler'], prg:['inşa ediyorlar','inşa etmiyorlar'],
+        past:['inşa ettiler','inşa etmediler'], ppas:['inşa etmişlerdi','inşa etmemişlerdi'],
+        fut:['inşa edecekler','inşa etmeyecekler'] },
+      pass:{ subj:'Bir köprü', agent:'onlar tarafından',
+        pres:['inşa edilir','inşa edilmez'], prg:['inşa ediliyor','inşa edilmiyor'],
+        past:['inşa edildi','inşa edilmedi'], ppas:['inşa edilmişti','inşa edilmemişti'],
+        fut:['inşa edilecek','inşa edilmeyecek'] }
+    }
+  },
+  {
+    id:'s5', icon:'💻',
+    subj:{w:'The hacker', type:'sg', obj_form:'the hacker'},
+    verb:{v1:'steal',   v2:'stole',    v3:'stolen',   ving:'stealing'  },
+    obj: {w:'the files',      type:'pl'},
+    tr:'Hacker dosyaları çalar.',
+    trData:{
+      act:{ subj:'Hacker', obj:'dosyaları',
+        pres:['çalar','çalmaz'], prg:['çalıyor','çalmıyor'],
+        past:['çaldı','çalmadı'], ppas:['çalmıştı','çalmamıştı'],
+        fut:['çalacak','çalmayacak'] },
+      pass:{ subj:'Dosyalar', agent:'hacker tarafından',
+        pres:['çalınır','çalınmaz'], prg:['çalınıyor','çalınmıyor'],
+        past:['çalındı','çalınmadı'], ppas:['çalınmıştı','çalınmamıştı'],
+        fut:['çalınacak','çalınmayacak'] }
+    }
+  },
+  {
+    id:'s6', icon:'👨‍🍳',
+    subj:{w:'The chef',   type:'sg', obj_form:'the chef'  },
+    verb:{v1:'cook',    v2:'cooked',   v3:'cooked',   ving:'cooking'   },
+    obj: {w:'the meal',       type:'sg'},
+    tr:'Şef yemeği pişirir.',
+    trData:{
+      act:{ subj:'Şef', obj:'yemeği',
+        pres:['pişirir','pişirmez'], prg:['pişiriyor','pişirmiyor'],
+        past:['pişirdi','pişirmedi'], ppas:['pişirmişti','pişirmemişti'],
+        fut:['pişirecek','pişirmeyecek'] },
+      pass:{ subj:'Yemek', agent:'şef tarafından',
+        pres:['pişirilir','pişirilmez'], prg:['pişiriliyor','pişirilmiyor'],
+        past:['pişirildi','pişirilmedi'], ppas:['pişirilmişti','pişirilmemişti'],
+        fut:['pişirilecek','pişirilmeyecek'] }
+    }
+  },
+  {
+    id:'s7', icon:'🪐',
+    subj:{w:'We',         type:'pl', obj_form:'us'        },
+    verb:{v1:'discover',v2:'discovered',v3:'discovered',ving:'discovering'},
+    obj: {w:'a new planet',   type:'sg'},
+    tr:'Biz yeni bir gezegen keşfederiz.',
+    trData:{
+      act:{ subj:'Biz', obj:'yeni bir gezegen',
+        pres:['keşfederiz','keşfetmeyiz'], prg:['keşfediyoruz','keşfetmiyoruz'],
+        past:['keşfettik','keşfetmedik'], ppas:['keşfetmiştik','keşfetmemiştik'],
+        fut:['keşfedeceğiz','keşfetmeyeceğiz'] },
+      pass:{ subj:'Yeni bir gezegen', agent:'bizim tarafımızdan',
+        pres:['keşfedilir','keşfedilmez'], prg:['keşfediliyor','keşfedilmiyor'],
+        past:['keşfedildi','keşfedilmedi'], ppas:['keşfedilmişti','keşfedilmemişti'],
+        fut:['keşfedilecek','keşfedilmeyecek'] }
+    }
+  },
+  {
+    id:'s8', icon:'🤖',
+    subj:{w:'The robot',  type:'sg', obj_form:'the robot' },
+    verb:{v1:'destroy', v2:'destroyed',v3:'destroyed',ving:'destroying' },
+    obj: {w:'the city',       type:'sg'},
+    tr:'Robot şehri yok eder.',
+    trData:{
+      act:{ subj:'Robot', obj:'şehri',
+        pres:['yok eder','yok etmez'], prg:['yok ediyor','yok etmiyor'],
+        past:['yok etti','yok etmedi'], ppas:['yok etmişti','yok etmemişti'],
+        fut:['yok edecek','yok etmeyecek'] },
+      pass:{ subj:'Şehir', agent:'robot tarafından',
+        pres:['yok edilir','yok edilmez'], prg:['yok ediliyor','yok edilmiyor'],
+        past:['yok edildi','yok edilmedi'], ppas:['yok edilmişti','yok edilmemişti'],
+        fut:['yok edilecek','yok edilmeyecek'] }
+    }
+  },
+  {
+    id:'s9', icon:'🧙',
+    subj:{w:'The wizard', type:'sg', obj_form:'the wizard'},
+    verb:{v1:'cast',    v2:'cast',     v3:'cast',     ving:'casting'   },
+    obj: {w:'a spell',        type:'sg'},
+    tr:'Büyücü bir büyü yapar.',
+    trData:{
+      act:{ subj:'Büyücü', obj:'bir büyü',
+        pres:['yapar','yapmaz'], prg:['yapıyor','yapmıyor'],
+        past:['yaptı','yapmadı'], ppas:['yapmıştı','yapmamıştı'],
+        fut:['yapacak','yapmayacak'] },
+      pass:{ subj:'Bir büyü', agent:'büyücü tarafından',
+        pres:['yapılır','yapılmaz'], prg:['yapılıyor','yapılmıyor'],
+        past:['yapıldı','yapılmadı'], ppas:['yapılmıştı','yapılmamıştı'],
+        fut:['yapılacak','yapılmayacak'] }
+    }
+  },
+  {
+    id:'s10', icon:'🐉',
+    subj:{w:'The dragon', type:'sg', obj_form:'the dragon'},
+    verb:{v1:'burn',    v2:'burned',   v3:'burned',   ving:'burning'   },
+    obj: {w:'the castle',     type:'sg'},
+    tr:'Ejderha kaleyi yakar.',
+    trData:{
+      act:{ subj:'Ejderha', obj:'kaleyi',
+        pres:['yakar','yakmaz'], prg:['yakıyor','yakmıyor'],
+        past:['yaktı','yakmadı'], ppas:['yakmıştı','yakmamıştı'],
+        fut:['yakacak','yakmayacak'] },
+      pass:{ subj:'Kale', agent:'ejderha tarafından',
+        pres:['yakılır','yakılmaz'], prg:['yakılıyor','yakılmıyor'],
+        past:['yakıldı','yakılmadı'], ppas:['yakılmıştı','yakılmamıştı'],
+        fut:['yakılacak','yakılmayacak'] }
+    }
+  },
+  {
+    id:'s11', icon:'🔍',
+    subj:{w:'You',        type:'you',obj_form:'you'       },
+    verb:{v1:'solve',   v2:'solved',   v3:'solved',   ving:'solving'   },
+    obj: {w:'the mystery',    type:'sg'},
+    tr:'Sen gizemi çözersin.',
+    trData:{
+      act:{ subj:'Sen', obj:'gizemi',
+        pres:['çözersin','çözmezsin'], prg:['çözüyorsun','çözmüyorsun'],
+        past:['çözdün','çözmedin'], ppas:['çözmüştün','çözmemiştin'],
+        fut:['çözeceksin','çözmeyeceksin'] },
+      pass:{ subj:'Gizem', agent:'senin tarafından',
+        pres:['çözülür','çözülmez'], prg:['çözülüyor','çözülmüyor'],
+        past:['çözüldü','çözülmedi'], ppas:['çözülmüştü','çözülmemişti'],
+        fut:['çözülecek','çözülmeyecek'] }
+    }
+  },
+  {
+    id:'s12', icon:'🚀',
+    subj:{w:'The pilot',  type:'sg', obj_form:'the pilot' },
+    verb:{v1:'land',    v2:'landed',   v3:'landed',   ving:'landing'   },
+    obj: {w:'the spacecraft', type:'sg'},
+    tr:'Pilot uzay aracını indirir.',
+    trData:{
+      act:{ subj:'Pilot', obj:'uzay aracını',
+        pres:['indirir','indirmez'], prg:['indiriyor','indirmiyor'],
+        past:['indirdi','indirmedi'], ppas:['indirmişti','indirmemişti'],
+        fut:['indirecek','indirmeyecek'] },
+      pass:{ subj:'Uzay aracı', agent:'pilot tarafından',
+        pres:['indirilir','indirilmez'], prg:['indiriliyor','indirilmiyor'],
+        past:['indirildi','indirilmedi'], ppas:['indirilmişti','indirilmemişti'],
+        fut:['indirilecek','indirilmeyecek'] }
+    }
+  },
+  {
+    id:'s13', icon:'🔭',
+    subj:{w:'Scientists', type:'pl', obj_form:'scientists'},
+    verb:{v1:'study',   v2:'studied',  v3:'studied',  ving:'studying'  },
+    obj: {w:'the stars',      type:'pl'},
+    tr:'Bilim insanları yıldızları inceler.',
+    trData:{
+      act:{ subj:'Bilim insanları', obj:'yıldızları',
+        pres:['inceler','incelemez'], prg:['inceliyor','incelemiyor'],
+        past:['inceledi','incelemedi'], ppas:['incelemişti','incelememişti'],
+        fut:['inceleyecek','incelemeyecek'] },
+      pass:{ subj:'Yıldızlar', agent:'bilim insanları tarafından',
+        pres:['incelenir','incelenmez'], prg:['inceleniyor','incelenmiyor'],
+        past:['incelendi','incelenmedi'], ppas:['incelenmişti','incelenmemişti'],
+        fut:['incelenecek','incelenmeyecek'] }
+    }
+  },
+  {
+    id:'s14', icon:'🎨',
+    subj:{w:'The artist', type:'sg', obj_form:'the artist'},
+    verb:{v1:'paint',   v2:'painted',  v3:'painted',  ving:'painting'  },
+    obj: {w:'a masterpiece',  type:'sg'},
+    tr:'Sanatçı bir başyapıt boyar.',
+    trData:{
+      act:{ subj:'Sanatçı', obj:'bir başyapıt',
+        pres:['boyar','boyamaz'], prg:['boyuyor','boyamıyor'],
+        past:['boyadı','boyamadı'], ppas:['boyamıştı','boyamamıştı'],
+        fut:['boyayacak','boyamayacak'] },
+      pass:{ subj:'Bir başyapıt', agent:'sanatçı tarafından',
+        pres:['boyanır','boyanmaz'], prg:['boyanıyor','boyanmıyor'],
+        past:['boyandı','boyanmadı'], ppas:['boyanmıştı','boyanmamıştı'],
+        fut:['boyanacak','boyanmayacak'] }
+    }
+  },
+  {
+    id:'s15', icon:'⚔️',
+    subj:{w:'The knight', type:'sg', obj_form:'the knight'},
+    verb:{v1:'protect', v2:'protected',v3:'protected',ving:'protecting'},
+    obj: {w:'the kingdom',    type:'sg'},
+    tr:'Şövalye krallığı korur.',
+    trData:{
+      act:{ subj:'Şövalye', obj:'krallığı',
+        pres:['korur','korumaz'], prg:['koruyor','korumuyor'],
+        past:['korudu','korumadı'], ppas:['korumuştu','korumamıştı'],
+        fut:['koruyacak','korumayacak'] },
+      pass:{ subj:'Krallık', agent:'şövalye tarafından',
+        pres:['korunur','korunmaz'], prg:['korunuyor','korunmuyor'],
+        past:['korundu','korunmadı'], ppas:['korunmuştu','korunmamıştı'],
+        fut:['korunacak','korunmayacak'] }
+    }
+  },
 ];
 
 const TR_LABELS = {
@@ -102,6 +342,52 @@ function generateSentence(sc, time, flow, voice, pol) {
     parts.push({w:`by ${ag}`+(pol==='que'?'?':'.'), c:'obj'});
   }
   return parts;
+}
+
+// ── Turkish Translation Engine ───────────────────────────────────
+function trQueForm(verb) {
+  // Add question particle based on last vowel (vowel harmony)
+  const vowelMap = {a:'mı',e:'mi',ı:'mı',i:'mi',o:'mu',ö:'mü',u:'mu',ü:'mü'};
+  for (let i = verb.length-1; i >= 0; i--) {
+    if (vowelMap[verb[i]]) return verb + ' ' + vowelMap[verb[i]] + '?';
+  }
+  return verb + ' mi?';
+}
+
+function generateTurkishTranslation(sc, time, flow, voice, pol) {
+  const d = sc.trData;
+  if (!d) return sc.tr || '—';
+
+  const side = d[voice]; // d.act or d.pass
+
+  // Map time+flow to verb category
+  let cat;
+  if      (time==='pres' && flow==='simp')                         cat = 'pres';
+  else if (flow==='cont')                                          cat = 'prg';
+  else if (time==='pres' && (flow==='perf'||flow==='perf_cont'))   cat = 'past';
+  else if (time==='past' && flow==='simp')                         cat = 'past';
+  else if (time==='past' && (flow==='perf'||flow==='perf_cont'))   cat = 'ppas';
+  else if (time==='fut')                                           cat = 'fut';
+  else                                                             cat = 'pres';
+
+  const pair = side[cat]; // [aff_form, neg_form]
+  const affVerb = pair[0];
+  const negVerb = pair[1];
+
+  let verb = pol === 'neg' ? negVerb : affVerb;
+
+  let sentence;
+  if (pol === 'que') {
+    sentence = voice === 'act'
+      ? `${side.subj} ${side.obj} ${trQueForm(affVerb)}`
+      : `${side.subj} ${side.agent} ${trQueForm(affVerb)}`;
+  } else {
+    sentence = voice === 'act'
+      ? `${side.subj} ${side.obj} ${verb}.`
+      : `${side.subj} ${side.agent} ${verb}.`;
+  }
+
+  return sentence;
 }
 
 function randState() {
@@ -216,7 +502,7 @@ class QuantumMode {
       <div class="qhc-icon">⚡</div>
       <div class="qhc-body">
         <h2>Sentence Rush</h2>
-        <p>10 cümlede kelimerleri doğru sıraya diz. Her cümle için 20 saniye. Hızlı ol, bonus kazan!</p>
+        <p>10 cümlede kelimeleri doğru sıraya diz. Her cümle için 20 saniye. Hızlı ol, bonus kazan!</p>
         <div class="qhc-tags">
           <span class="qhc-tag">20s / Cümle</span>
           <span class="qhc-tag">10 Cümle</span>
@@ -247,8 +533,8 @@ class QuantumMode {
 
   startGame(type) {
     this.root.innerHTML='';
-    if (type==='forge')   new WordForge(this).start();
-    if (type==='rush')    new SentenceRush(this).start();
+    if (type==='forge')    new WordForge(this).start();
+    if (type==='rush')     new SentenceRush(this).start();
     if (type==='scramble') new SentenceScramble(this).start();
   }
 
@@ -273,7 +559,7 @@ class WordForge {
     this.qm=qm; this.root=qm.root;
     this.round=0; this.maxRound=8;
     this.lives=3; this.score=0;
-    this.curIdx=0; // which word we're currently placing
+    this.curIdx=0;
     this.parts=[]; this.placed=[];
     this.sc=null; this.state=null;
     this.timer=null; this.timeLeft=25;
@@ -323,7 +609,6 @@ class WordForge {
     this.placed=[];
     this.sc=randScenario();
 
-    // Limit to active/aff for cleaner game (avoid double-negatives etc.)
     this.state = {
       time:  ['pres','past','fut'][Math.floor(Math.random()*3)],
       flow:  ['simp','cont','perf','perf_cont'][Math.floor(Math.random()*4)],
@@ -386,7 +671,6 @@ class WordForge {
       this.curIdx++;
 
       if (this.curIdx>=this.parts.length) {
-        // Sentence complete!
         this._stopTimer();
         const bonus=30+Math.ceil(this.timeLeft*2);
         this.score+=bonus;
@@ -394,7 +678,8 @@ class WordForge {
         this._feedback(`✅ Mükemmel! +${bonus} puan`, 'correct');
         document.getElementById('wf-choices').innerHTML='';
         document.getElementById('wf-score').textContent=this.score;
-        showMeaningCard('wf-shell', this.parts, this.sc.tr, stateLabel(this.state));
+        const tr = generateTurkishTranslation(this.sc, this.state.time, this.state.flow, this.state.voice, this.state.pol);
+        showMeaningCard('wf-shell', this.parts, tr, stateLabel(this.state));
         setTimeout(()=>this._newRound(), 2800);
       } else {
         this._renderSentence();
@@ -429,7 +714,8 @@ class WordForge {
     this.lives--;
     this._feedback(`⏱️ Süre doldu! −1 can`, 'wrong');
     document.getElementById('wf-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-    showMeaningCard('wf-shell', this.parts, this.sc.tr, stateLabel(this.state));
+    const tr = generateTurkishTranslation(this.sc, this.state.time, this.state.flow, this.state.voice, this.state.pol);
+    showMeaningCard('wf-shell', this.parts, tr, stateLabel(this.state));
     if(this.lives<=0){ setTimeout(()=>this._over(false),2800); return; }
     setTimeout(()=>this._newRound(),2800);
   }
@@ -464,7 +750,7 @@ class SentenceRush {
     this.round=0; this.maxRound=10;
     this.timeLeft=20; this.timer=null;
     this.placed=[]; this.remaining=[];
-    this.parts=[]; this.sc=null;
+    this.parts=[]; this.sc=null; this.st=null;
   }
 
   start() {
@@ -528,7 +814,8 @@ class SentenceRush {
 
   _timeOut() {
     this._feedback(`⏱️ Süre doldu!`, 'wrong');
-    showMeaningCard('rush-shell', this.parts, this.sc.tr, stateLabel(this.st));
+    const tr = generateTurkishTranslation(this.sc, this.st.time, this.st.flow, this.st.voice, this.st.pol);
+    showMeaningCard('rush-shell', this.parts, tr, stateLabel(this.st));
     setTimeout(()=>this._newSentence(), 2800);
   }
 
@@ -617,10 +904,10 @@ class SentenceRush {
       const sh=document.getElementById('rush-shell');
       if(sh){sh.classList.add('flash-green');setTimeout(()=>sh.classList.remove('flash-green'),400);}
       this._feedback(`✅ +${bonus} puan!`,'correct');
-      showMeaningCard('rush-shell', this.parts, this.sc.tr, stateLabel(this.st));
+      const tr = generateTurkishTranslation(this.sc, this.st.time, this.st.flow, this.st.voice, this.st.pol);
+      showMeaningCard('rush-shell', this.parts, tr, stateLabel(this.st));
       setTimeout(()=>this._newSentence(),2500);
     } else {
-      this.attempts++;
       const sh=document.getElementById('rush-shell');
       if(sh){sh.classList.add('shake');setTimeout(()=>sh.classList.remove('shake'),400);}
       this._feedback(`❌ Yanlış sıra! Tekrar dene.`,'wrong');
@@ -650,7 +937,7 @@ class SentenceScramble {
     this.round=0; this.maxRound=8;
     this.lives=3; this.score=0;
     this.placed=[]; this.remaining=[];
-    this.parts=[]; this.sc=null;
+    this.parts=[]; this.sc=null; this.st=null;
     this.timer=null; this.timeLeft=30;
   }
 
@@ -772,6 +1059,7 @@ class SentenceScramble {
     if(user.length!==correct.length){this._feedback('⚠️ Tüm kelimeleri kullan!','warn');return;}
     this._stopTimer();
     const ok=correct.every((w,i)=>w===user[i]);
+    const tr = generateTurkishTranslation(this.sc, this.st.time, this.st.flow, this.st.voice, this.st.pol);
     if(ok){
       const bonus=25+Math.ceil(this.timeLeft*2);
       this.score+=bonus;
@@ -779,7 +1067,7 @@ class SentenceScramble {
       const sh=document.getElementById('ss-shell');
       if(sh){sh.classList.add('flash-green');setTimeout(()=>sh.classList.remove('flash-green'),500);}
       document.getElementById('ss-score').textContent=this.score;
-      showMeaningCard('ss-shell', this.parts, this.sc.tr, stateLabel(this.st));
+      showMeaningCard('ss-shell', this.parts, tr, stateLabel(this.st));
       setTimeout(()=>this._newRound(),2800);
     } else {
       this.lives--;
@@ -787,7 +1075,7 @@ class SentenceScramble {
       const sh=document.getElementById('ss-shell');
       if(sh){sh.classList.add('shake');setTimeout(()=>sh.classList.remove('shake'),500);}
       document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-      showMeaningCard('ss-shell', this.parts, this.sc.tr, stateLabel(this.st));
+      showMeaningCard('ss-shell', this.parts, tr, stateLabel(this.st));
       if(this.lives<=0){setTimeout(()=>this._over(false),2800);return;}
       setTimeout(()=>{this.clear();this._startTimer();},2800);
     }
@@ -811,7 +1099,8 @@ class SentenceScramble {
     this.lives--;
     this._feedback(`⏱️ Süre doldu! −1 can`, 'wrong');
     document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-    showMeaningCard('ss-shell', this.parts, this.sc.tr, stateLabel(this.st));
+    const tr = generateTurkishTranslation(this.sc, this.st.time, this.st.flow, this.st.voice, this.st.pol);
+    showMeaningCard('ss-shell', this.parts, tr, stateLabel(this.st));
     if(this.lives<=0){setTimeout(()=>this._over(false),2800);return;}
     setTimeout(()=>this._newRound(),2800);
   }
