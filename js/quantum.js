@@ -27,13 +27,6 @@ const TR_LABELS = {
   pol:   { aff:'Olumlu',   neg:'Olumsuz',       que:'Soru'                 },
 };
 
-const BOSSES = [
-  { name:'Grammar Goblin',   emoji:'👺', maxHp:60,  color:'#10b981', atk:15, desc:'Başlangıç' },
-  { name:'Syntax Serpent',   emoji:'🐍', maxHp:80,  color:'#f59e0b', atk:20, desc:'Orta'      },
-  { name:'Tense Titan',      emoji:'🗿', maxHp:100, color:'#f43f5e', atk:25, desc:'Zor'       },
-  { name:'Grammar Overlord', emoji:'💀', maxHp:130, color:'#7c3aed', atk:30, desc:'Efsane'    },
-];
-
 // ── Grammar Engine ──────────────────────────────────────────────
 function generateSentence(sc, time, flow, voice, pol) {
   let subj = voice === 'act' ? sc.subj : sc.obj;
@@ -155,40 +148,6 @@ function getDistractors(part, sc) {
   return pool.slice(0,2).map(clean);
 }
 
-// Error generation for Error Sniper
-const AUX_SWAPS = {
-  'have':'has','has':'have','had':'have',
-  'is':'are','are':'is','am':'is',
-  'was':'were','were':'was',
-  'do':'does','does':'do','did':'does',
-  'been':'being','being':'been','be':'been',
-  'will':'would','would':'will',
-};
-
-function generateErrorSentence(sc, time, flow, voice, pol) {
-  const parts = generateSentence(sc, time, flow, voice, pol);
-
-  const candidates = parts.map((p,i)=>({...p,i}))
-    .filter(p=>(p.c==='aux'||p.c==='verb') && !["not","n't","won't"].some(x=>p.w.includes(x)));
-
-  if (!candidates.length) return {parts, errorIdx:-1};
-
-  const target = candidates[Math.floor(Math.random()*candidates.length)];
-  const eIdx   = target.i;
-  let wrongWord;
-
-  if (target.c==='verb') {
-    const {v1,v2,v3,ving}=sc.verb;
-    const alts=[v1,v2,v3,ving].filter(x=>x&&x!==target.w);
-    wrongWord = alts[Math.floor(Math.random()*alts.length)]||v1;
-  } else {
-    wrongWord = AUX_SWAPS[target.w] || (target.w+'s');
-  }
-
-  const errorParts = parts.map((p,i)=>i===eIdx?{...p,w:wrongWord}:p);
-  return {parts:errorParts, errorIdx:eIdx};
-}
-
 // ── Main Hub ────────────────────────────────────────────────────
 class QuantumMode {
   constructor(app) { this.app=app; this.root=null; }
@@ -264,21 +223,6 @@ class QuantumMode {
       <div class="qhc-arrow">→</div>
     </div>
 
-    <div class="qhub-card boss" onclick="window._qmode.startGame('sniper')">
-      <div class="qhc-glow"></div>
-      <div class="qhc-icon">🎯</div>
-      <div class="qhc-body">
-        <h2>Error Sniper</h2>
-        <p>Boss yanlış bir cümle gösterir. Gramer hatasını bul ve o kelimeye tıkla. Boss'u yen!</p>
-        <div class="qhc-tags">
-          <span class="qhc-tag">4 Boss</span>
-          <span class="qhc-tag rose">Hata Avı</span>
-          <span class="qhc-tag amber">300 XP</span>
-        </div>
-      </div>
-      <div class="qhc-arrow">→</div>
-    </div>
-
   </div>
 </div>`;
   }
@@ -288,7 +232,6 @@ class QuantumMode {
     if (type==='forge')   new WordForge(this).start();
     if (type==='rush')    new SentenceRush(this).start();
     if (type==='scramble') new SentenceScramble(this).start();
-    if (type==='sniper')  new ErrorSniper(this).start();
   }
 
   backToHub() { this.renderHub(); }
@@ -837,223 +780,6 @@ class SentenceScramble {
     this.qm.recordBest(this.score);
     if(won){this.qm.recordWin();this.qm.addXP(150);this.qm.confetti();}
     this.root.innerHTML=_resultHTML('🧩','Sentence Scramble',won,this.score,`${this.maxRound} cümle`,won?150:0,'scramble');
-  }
-}
-
-// ════════════════════════════════════════════════════════════════
-//  GAME 4 — ERROR SNIPER (yanlış kelimeyi bul)
-// ════════════════════════════════════════════════════════════════
-class ErrorSniper {
-  constructor(qm) {
-    this.qm=qm; this.root=qm.root;
-    this.bossIdx=0; this.bossHp=0; this.playerHp=100;
-    this.score=0; this.streak=0;
-    this.errorIdx=-1; this.parts=[];
-    this.answered=false;
-    this.qTimer=null; this.qTimeLeft=12;
-  }
-
-  get boss(){return BOSSES[this.bossIdx];}
-
-  start(){this._loadBoss();}
-
-  _loadBoss(){
-    this.bossHp=this.boss.maxHp;
-    this.streak=0;
-
-    this.root.innerHTML=`
-<div class="qgame-shell" id="es-shell">
-  <div class="qgame-topbar">
-    <button class="qback-btn" onclick="window._qmode.backToHub()">← Hub</button>
-    <div class="es-boss-name">
-      <span class="boss-stage-badge">${this.bossIdx+1}/4</span>
-      <span>${this.boss.emoji} ${this.boss.name}</span>
-    </div>
-    <span class="qtb-score" id="es-score">0</span>
-  </div>
-
-  <div class="boss-arena">
-    <div class="boss-hp-section">
-      <div class="bhp-label">👹 Boss HP</div>
-      <div class="bhp-track"><div class="bhp-fill" id="es-boss-fill" style="background:${this.boss.color}"></div></div>
-      <div class="bhp-val" id="es-boss-val">${this.bossHp}/${this.boss.maxHp}</div>
-    </div>
-    <div class="boss-sprite-wrap">
-      <div class="boss-sprite" id="es-sprite">${this.boss.emoji}</div>
-      <div class="boss-hit-text" id="es-hit" style="display:none"></div>
-    </div>
-    <div class="player-hp-section">
-      <div class="php-label">🧠 Senin HP</div>
-      <div class="php-track"><div class="php-fill" id="es-player-fill"></div></div>
-      <div class="php-val" id="es-player-val">100/100</div>
-    </div>
-  </div>
-
-  <div class="boss-q-timer-bar"><div class="boss-q-fill" id="es-qtimer" style="background:${this.boss.color}"></div></div>
-
-  <div class="es-question-card">
-    <div class="es-instruction">
-      <span class="es-instr-icon">🎯</span>
-      <span>Bu cümlede gramer <strong>hatası</strong> olan kelimeyi tıkla!</span>
-    </div>
-    <div class="es-sentence" id="es-sentence"></div>
-  </div>
-
-  <div class="es-streak" id="es-streak" style="display:none">
-    🔥 <span id="es-streak-val">1</span> kombo!
-  </div>
-
-  <div class="arena-feedback" id="es-feedback"></div>
-</div>`;
-
-    this._newQuestion();
-  }
-
-  _newQuestion(){
-    this.answered=false;
-    const sc=randScenario();
-    const st=randState();
-    const res=generateErrorSentence(sc,st.time,st.flow,st.voice,st.pol);
-
-    if(res.errorIdx===-1){this._newQuestion();return;}
-
-    this.parts=res.parts;
-    this.errorIdx=res.errorIdx;
-
-    const el=document.getElementById('es-sentence');
-    if(el){
-      el.innerHTML=this.parts.map((p,i)=>
-        `<button class="es-word-btn c-${p.c}" data-idx="${i}">${p.w}</button>`
-      ).join(' ');
-      el.querySelectorAll('.es-word-btn').forEach(btn=>{
-        btn.onclick=()=>{if(!this.answered)this._answer(parseInt(btn.dataset.idx),btn);};
-      });
-    }
-
-    this._updateBars();
-    this._startQTimer();
-  }
-
-  _startQTimer(){
-    this.qTimeLeft=12; this._stopQTimer();
-    const fill=document.getElementById('es-qtimer');
-    this.qTimer=setInterval(()=>{
-      this.qTimeLeft--;
-      if(fill)fill.style.width=(this.qTimeLeft/12*100)+'%';
-      if(this.qTimeLeft<=0){clearInterval(this.qTimer);if(!this.answered)this._answer(-1,null);}
-    },1000);
-  }
-
-  _stopQTimer(){if(this.qTimer){clearInterval(this.qTimer);this.qTimer=null;}}
-
-  _answer(idx, btn){
-    this.answered=true;
-    this._stopQTimer();
-
-    // Reveal correct error word
-    const allBtns=document.querySelectorAll('.es-word-btn');
-    allBtns.forEach((b,i)=>{
-      if(i===this.errorIdx) b.classList.add('es-error-word');
-      b.disabled=true;
-    });
-
-    if(idx===this.errorIdx){
-      // Correct!
-      this.streak++;
-      const dmg=20+(this.streak>=3?10:0);
-      this.bossHp=Math.max(0,this.bossHp-dmg);
-      this.score+=30+this.qTimeLeft*3;
-      if(btn) btn.classList.add('es-hit-correct');
-      this._showHit(`-${dmg}💥`);
-      this._feedback(`🎯 İsabet! Boss'a ${dmg} hasar! ${this.streak>=3?'KOMBO!':''}`, 'correct');
-    } else {
-      this.streak=0;
-      this.playerHp=Math.max(0,this.playerHp-this.boss.atk);
-      this._feedback(`💢 Boss sana ${this.boss.atk} hasar verdi! Doğru hata: "${this.parts[this.errorIdx].w}"`, 'wrong');
-      const sh=document.getElementById('es-shell');
-      if(sh){sh.classList.add('shake');setTimeout(()=>sh.classList.remove('shake'),500);}
-    }
-
-    this._updateBars();
-    this._updateStreak();
-    document.getElementById('es-score').textContent=this.score;
-
-    if(this.bossHp<=0){setTimeout(()=>this._bossDefeated(),1400);return;}
-    if(this.playerHp<=0){setTimeout(()=>this._over(false),1400);return;}
-    setTimeout(()=>this._newQuestion(),1400);
-  }
-
-  _showHit(text){
-    const el=document.getElementById('es-hit');
-    if(!el)return;
-    el.textContent=text; el.style.display='block';
-    el.style.animation='none'; el.offsetHeight;
-    el.style.animation='hit-float 0.9s ease-out forwards';
-    setTimeout(()=>el.style.display='none',900);
-  }
-
-  _updateBars(){
-    const bf=document.getElementById('es-boss-fill');
-    const bv=document.getElementById('es-boss-val');
-    const pf=document.getElementById('es-player-fill');
-    const pv=document.getElementById('es-player-val');
-    if(bf) bf.style.width=(this.bossHp/this.boss.maxHp*100)+'%';
-    if(bv) bv.textContent=`${this.bossHp}/${this.boss.maxHp}`;
-    if(pf){pf.style.width=this.playerHp+'%';pf.style.background=this.playerHp<30?'#f43f5e':'#10b981';}
-    if(pv) pv.textContent=`${this.playerHp}/100`;
-  }
-
-  _updateStreak(){
-    const el=document.getElementById('es-streak');
-    const v=document.getElementById('es-streak-val');
-    if(el)el.style.display=this.streak>=2?'block':'none';
-    if(v)v.textContent=this.streak;
-  }
-
-  _feedback(msg,type){
-    const el=document.getElementById('es-feedback');
-    if(!el)return;
-    el.textContent=msg; el.className=`arena-feedback fb-${type} fb-show`;
-    setTimeout(()=>el.classList.remove('fb-show'),1300);
-  }
-
-  _bossDefeated(){
-    this.qm.confetti({particleCount:100,spread:70});
-    const bosses=parseInt(localStorage.getItem('q_bosses')||'0')+1;
-    localStorage.setItem('q_bosses',bosses);
-
-    const next=this.bossIdx+1;
-    if(next>=BOSSES.length){this._over(true);return;}
-
-    this.root.innerHTML=`
-<div class="qresult-shell">
-  <div class="qresult-icon">${this.boss.emoji}</div>
-  <h1 class="qresult-title">${this.boss.name} YENİLDİ!</h1>
-  <div class="qresult-score">${this.score}</div>
-  <div class="qresult-sub">Sonraki Boss: ${BOSSES[next].emoji} ${BOSSES[next].name}</div>
-  <div class="qresult-xp">+30 HP bonus alıyorsun!</div>
-  <div class="qresult-btns">
-    <button class="qres-btn primary" id="es-next">⚔️ Sonraki Boss →</button>
-    <button class="qres-btn ghost" onclick="window._qmode.backToHub()">← Hub</button>
-  </div>
-</div>`;
-    document.getElementById('es-next').onclick=()=>{
-      this.bossIdx++;
-      this.playerHp=Math.min(100,this.playerHp+30);
-      this._loadBoss();
-    };
-  }
-
-  _over(won){
-    this._stopQTimer();
-    this.qm.recordBest(this.score);
-    if(won){this.qm.recordWin();this.qm.addXP(300);this.qm.confetti();}
-    else{this.qm.addXP(Math.floor(this.score/10));}
-    this.root.innerHTML=_resultHTML(
-      won?'👑':'💀','Error Sniper',won,this.score,
-      won?'Tüm boss\'lar yenildi!':`${this.bossIdx+1}. boss'da düştün`,
-      won?300:Math.floor(this.score/10),'sniper'
-    );
   }
 }
 
