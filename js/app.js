@@ -2715,7 +2715,7 @@ class App {
   addXP(amount) {
     let xp    = this.state.get('xp') + amount;
     let level = this.state.get('level');
-    const needed = level * XP_PER_LEVEL;
+    const needed = level * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL);
 
     const today = new Date().toISOString().split('T')[0];
     const hist  = this.state.get('history');
@@ -2761,7 +2761,7 @@ class App {
     let newlyUnlocked = false;
 
     const stats = {
-      xp: this.state.get('xp') + (this.state.get('level') - 1) * XP_PER_LEVEL,
+      xp: this.state.get('xp') + (this.state.get('level') - 1) * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL),
       level: this.state.get('level'),
       streak: this.state.get('streak'),
       words: Object.values(this.state.get('mastery') || {}).filter(m => (m.score || 0) >= 3).length,
@@ -2855,10 +2855,28 @@ class App {
   _applyRemoteFlags() {
     const flags = window.remoteFlags;
     if (!flags) return;
-    // feature_speaking_ai: Speaking Lab'da AI rozeti goster
+
+    // feature_speaking_ai
     const aiLabel = document.getElementById('speaking-ai-badge');
     if (aiLabel) aiLabel.style.display = flags.feature_speaking_ai ? '' : 'none';
-    // Gelecekte yeni feature flag'ler buraya eklenebilir
+
+    // feature_confetti: false ise confetti fonksiyonunu devre disi birak
+    if (!flags.feature_confetti && typeof window.confetti === 'function') {
+      window._confettiBackup = window._confettiBackup || window.confetti;
+      window.confetti = () => {};
+    } else if (flags.feature_confetti && window._confettiBackup) {
+      window.confetti = window._confettiBackup;
+    }
+
+    // feature_nexus_mode: nexus nav itemlarini gizle/goster
+    document.querySelectorAll('[data-target="nexus"]').forEach(el => {
+      el.style.display = flags.feature_nexus_mode ? '' : 'none';
+    });
+
+    // feature_convo_mode: convo (speaking lab) butonunu gizle/goster
+    document.querySelectorAll('[data-target="quantum"]').forEach(el => {
+      el.style.display = flags.feature_convo_mode ? '' : 'none';
+    });
   }
 
   // ─────────────────────────────────────────────────────────
@@ -2893,7 +2911,7 @@ class App {
     UI.setEl('home-acc',    `${acc}%`);
     UI.setEl('home-lvl',    level);
 
-    const needed = level * XP_PER_LEVEL;
+    const needed = level * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL);
     UI.setEl('xp-remain', `${needed - xp} XP kaldı`);
     setTimeout(() => UI.setWidth('xp-bar', (xp / needed) * 100), 100);
 
@@ -2905,7 +2923,7 @@ class App {
     UI.setEl('sf-rank-icon', rank.icon);
     UI.setEl('sf-rank-name', rank.name);
     UI.setEl('sf-level-txt', `Level ${level}`);
-    const needed2 = level * (window.XP_PER_LEVEL || 500);
+    const needed2 = level * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL);
     setTimeout(() => UI.setWidth('sf-xp-fill', Math.min((xp / needed2) * 100, 100)), 200);
 
     const wordsPct = WORDS && WORDS.length ? Math.round((learned / WORDS.length) * 100) : 0;
@@ -4677,7 +4695,7 @@ class App {
     this.state.update({ speakBest: Math.max(best, score), speakTotal: total, speakSum: sum, speakHistory: hist });
     this._renderSpeakStats();
     this._renderSpeakHistory();
-    if (this.state.get('autoAdvance') && score >= 80) {
+    if (this.state.get('autoAdvance') && score >= (window.remoteFlags?.speaking_auto_advance_score ?? 80)) {
       let cd = 3;
       const fbEl = document.getElementById('score-feedback');
       const orig = fbEl ? fbEl.textContent : '';
