@@ -2550,6 +2550,7 @@ class App {
       shuffledPools: {},
       };
     this._initCanvas();
+    this._initTheme();
     this._bindGlobalEvents();
     this._checkStreak();
     this._applyRankTheme();
@@ -5298,6 +5299,89 @@ class App {
   }
 
   // ─────────────────────────────────────────────────────────
+  //  THEME SYSTEM
+  // ─────────────────────────────────────────────────────────
+
+  _THEMES = [
+    { id: 'nebula',   icon: '🌌', name: 'Nebula',   desc: 'Kozmik karanlık — derin uzay',     starColor: '#00d4ff' },
+    { id: 'aurora',   icon: '🌤️', name: 'Aurora',   desc: 'Kuzey ışıkları — açık mod',       starColor: '#00c4b4' },
+    { id: 'sakura',   icon: '🌸', name: 'Sakura',   desc: 'Kiraz çiçeği — sıcak karanlık',   starColor: '#f472b6' },
+    { id: 'obsidian', icon: '⚫', name: 'Obsidian', desc: 'Saf siyah lüks — altın aksanlar', starColor: '#d4a843' },
+  ];
+
+  _initTheme() {
+    const saved = localStorage.getItem('er-theme') || 'nebula';
+    this.setTheme(saved, true);
+  }
+
+  setTheme(id, silent = false) {
+    const valid = ['nebula','aurora','sakura','obsidian'];
+    if (!valid.includes(id)) id = 'nebula';
+    document.body.classList.remove(...valid.map(t => `theme-${t}`));
+    if (id !== 'nebula') document.body.classList.add(`theme-${id}`);
+    else document.body.classList.add('theme-nebula');
+    localStorage.setItem('er-theme', id);
+    this._currentTheme = id;
+    // Update canvas star color
+    const theme = this._THEMES.find(t => t.id === id);
+    if (theme) this._canvasStarColor = theme.starColor;
+    // Close picker if open
+    if (!silent) {
+      document.getElementById('theme-picker-overlay')?.remove();
+    }
+  }
+
+  openThemePicker() {
+    document.getElementById('theme-picker-overlay')?.remove();
+    const current = this._currentTheme || 'nebula';
+    const cards = this._THEMES.map(t => `
+      <div class="tp-card tp-${t.id} ${current === t.id ? 'active' : ''}"
+           onclick="app.setTheme('${t.id}');app._refreshPickerActive('${t.id}')">
+        <div class="tp-check">✓</div>
+        <div class="tp-card-icon">${t.icon}</div>
+        <div class="tp-card-name">${t.name}</div>
+        <div class="tp-card-desc">${t.desc}</div>
+        <div class="tp-swatches">
+          ${this._themeSwatches(t.id)}
+        </div>
+      </div>`).join('');
+
+    const overlay = document.createElement('div');
+    overlay.id = 'theme-picker-overlay';
+    overlay.className = 'theme-picker-overlay';
+    overlay.innerHTML = `
+      <div class="theme-picker-panel">
+        <div class="tp-header">
+          <div>
+            <div class="tp-title">Tema Seç</div>
+            <div class="tp-subtitle">4 dünya klasmanında tasarım</div>
+          </div>
+          <button class="tp-close" onclick="document.getElementById('theme-picker-overlay').remove()">✕</button>
+        </div>
+        <div class="tp-grid">${cards}</div>
+      </div>`;
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+    document.body.appendChild(overlay);
+  }
+
+  _refreshPickerActive(id) {
+    document.querySelectorAll('.tp-card').forEach(c => c.classList.remove('active'));
+    document.querySelector(`.tp-${id}`)?.classList.add('active');
+  }
+
+  _themeSwatches(id) {
+    const map = {
+      nebula:   ['#00d4ff','#7c3aed','#f59e0b','#10b981'],
+      aurora:   ['#00a496','#6d28d9','#d97706','#059669'],
+      sakura:   ['#f472b6','#c084fc','#fbbf24','#4ade80'],
+      obsidian: ['#d4a843','#c8b87a','#f5d076','#4a9e6f'],
+    };
+    return (map[id] || map.nebula).map(c =>
+      `<div class="tp-swatch" style="background:${c}"></div>`
+    ).join('');
+  }
+
+  // ─────────────────────────────────────────────────────────
   //  CANVAS BACKGROUND
   // ─────────────────────────────────────────────────────────
 
@@ -5307,15 +5391,16 @@ class App {
     const ctx = canvas.getContext('2d');
     const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     resize(); window.addEventListener('resize', resize);
-    const stars = Array.from({length:140}, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, s: Math.random() * 1.8, v: Math.random() * 0.4 + 0.08 }));
+    const stars = Array.from({length:160}, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, s: Math.random() * 1.8, v: Math.random() * 0.4 + 0.08 }));
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const level = this.state.get('level');
-      const tier  = Math.min(Math.floor((level - 1) / 5) + 1, 6);
-      const palettes  = ['#00d4ff','#10b981','#f59e0b','#7c3aed','#f43f5e','#ff9d00'];
-      ctx.fillStyle   = palettes[tier - 1] || '#00d4ff';
-      ctx.globalAlpha = 0.4;
       const speedMult = 1 + level * 0.035;
+      // Use theme star color if set, else level-based palette
+      const levelPalettes = ['#00d4ff','#10b981','#f59e0b','#7c3aed','#f43f5e','#ff9d00'];
+      const tier = Math.min(Math.floor((level - 1) / 5) + 1, 6);
+      ctx.fillStyle = this._canvasStarColor || levelPalettes[tier - 1] || '#00d4ff';
+      ctx.globalAlpha = 0.45;
 
       stars.forEach(star => {
         star.y -= star.v * speedMult;
