@@ -24,10 +24,9 @@
 .nexus-title {
   font-size: 1.8rem;
   font-weight: 800;
-  color: var(--cyan);
+  color: #00d4ff;
   text-transform: uppercase;
   letter-spacing: 3px;
-  text-shadow: none;
   margin: 0;
   display: flex;
   align-items: center;
