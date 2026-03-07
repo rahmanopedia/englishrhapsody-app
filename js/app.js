@@ -3034,7 +3034,7 @@ class App {
     }
 
     this.session.synthActive = true;
-    const len = this._synthSessionLen || 10;
+    const len = this._synthSessionLen || (window.remoteFlags?.srs_session_word_count ?? 10);
 
     // SRS-prioritized pool: due words first, then fill with random
     const mastery = this.state.get('mastery');
@@ -4299,7 +4299,7 @@ class App {
       btn.classList.add('used');
       this._activeBlank = null;
       this.audio.play('success');
-      this.addXP(10);
+      this.addXP(window.remoteFlags?.xp_reading_correct ?? 10);
       this._checkStoryDone();
     } else {
       this._activeBlank.classList.add('error');
@@ -4315,7 +4315,7 @@ class App {
       if (opts) opts.style.display = 'none';
       const btn = document.getElementById('btn-next-story');
       if (btn) btn.style.display = '';
-      this.addXP(50);
+      this.addXP(window.remoteFlags?.xp_reading_complete ?? 50);
       if (typeof confetti === 'function') confetti({ particleCount:80, spread:60, origin:{y:0.6} });
     }
   }
@@ -4696,7 +4696,7 @@ class App {
     this._renderSpeakStats();
     this._renderSpeakHistory();
     if (this.state.get('autoAdvance') && score >= (window.remoteFlags?.speaking_auto_advance_score ?? 80)) {
-      let cd = 3;
+      let cd = window.remoteFlags?.speaking_countdown_sec ?? 3;
       const fbEl = document.getElementById('score-feedback');
       const orig = fbEl ? fbEl.textContent : '';
       const iv = setInterval(() => { cd--; if (fbEl) fbEl.textContent = cd > 0 ? `${orig} ⏩ ${cd}s` : orig; if (cd <= 0) { clearInterval(iv); this.nextSpeak(); } }, 1000);
@@ -5101,7 +5101,7 @@ class App {
   _convoFinish() {
     const { score, total, level, scenario, turnLog = [] } = this.session.convo;
     const avg = total > 0 ? Math.round(score / total) : 0;
-    const xp  = Math.round(avg / 100 * 80);
+    const xp  = Math.round(avg / 100 * (window.remoteFlags?.xp_speaking_max ?? 80));
     this.addXP(xp);
 
     // Persist completion

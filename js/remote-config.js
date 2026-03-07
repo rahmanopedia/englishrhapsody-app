@@ -31,6 +31,11 @@ class RemoteConfigManager {
       feature_nexus_mode:          true,
       feature_convo_mode:          true,
       feature_confetti:            true,
+      xp_reading_correct:          10,
+      xp_reading_complete:         50,
+      xp_speaking_max:             80,
+      speaking_countdown_sec:      3,
+      srs_session_word_count:      10,
     };
   }
 
@@ -56,6 +61,11 @@ class RemoteConfigManager {
         feature_nexus_mode:          String(this._defaults.feature_nexus_mode),
         feature_convo_mode:          String(this._defaults.feature_convo_mode),
         feature_confetti:            String(this._defaults.feature_confetti),
+        xp_reading_correct:          String(this._defaults.xp_reading_correct),
+        xp_reading_complete:         String(this._defaults.xp_reading_complete),
+        xp_speaking_max:             String(this._defaults.xp_speaking_max),
+        speaking_countdown_sec:      String(this._defaults.speaking_countdown_sec),
+        srs_session_word_count:      String(this._defaults.srs_session_word_count),
       };
       await this._rc.fetchAndActivate();
       console.info('[RemoteConfig] Initialized');
@@ -94,6 +104,11 @@ class RemoteConfigManager {
       feature_nexus_mode:          this._bool('feature_nexus_mode'),
       feature_convo_mode:          this._bool('feature_convo_mode'),
       feature_confetti:            this._bool('feature_confetti'),
+      xp_reading_correct:          Number(this._raw('xp_reading_correct'))     || this._defaults.xp_reading_correct,
+      xp_reading_complete:         Number(this._raw('xp_reading_complete'))    || this._defaults.xp_reading_complete,
+      xp_speaking_max:             Number(this._raw('xp_speaking_max'))        || this._defaults.xp_speaking_max,
+      speaking_countdown_sec:      Number(this._raw('speaking_countdown_sec')) || this._defaults.speaking_countdown_sec,
+      srs_session_word_count:      Number(this._raw('srs_session_word_count')) || this._defaults.srs_session_word_count,
     };
   }
 
@@ -126,6 +141,11 @@ window.remoteFlags = {
   feature_nexus_mode:          true,
   feature_convo_mode:          true,
   feature_confetti:            true,
+  xp_reading_correct:          10,
+  xp_reading_complete:         50,
+  xp_speaking_max:             80,
+  speaking_countdown_sec:      3,
+  srs_session_word_count:      10,
 };
 
 window.remoteConfigManager = new RemoteConfigManager();
