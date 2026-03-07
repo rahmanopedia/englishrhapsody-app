@@ -30,4 +30,4 @@ window._firebaseConfigured = true;
 ────────────────────────────────────────────────────────────── */
 
 window._appCheckSiteKey = '6LfOLlMsAAAAAE4K1Xr0yVKAAp4FB6GSlacAdZKy'; // reCAPTCHA v3 site key
-window._vapidKey        = 'YOUR_VAPID_PUBLIC_KEY_HERE';  // FCM Web Push icin — placeholder ise devre disi
+window._vapidKey        = 'BEMtSqIYuDmXgJdfk293kQllR-1cJoIPHt3s1VBqAtXYoJLE1dD0rxyg5XMimsg3BvyqV2k4dHmkN_NmUuw7-HU';

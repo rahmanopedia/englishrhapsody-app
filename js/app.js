@@ -2943,7 +2943,7 @@ class App {
 
     const todayKey = new Date().toISOString().split('T')[0];
     const todayXP  = (this.state.get('history')[todayKey] || 0);
-    const goalXP   = 100;
+    const goalXP   = window.remoteFlags?.dailyXPGoal ?? 100;
     const goalPct  = Math.min(100, Math.round((todayXP / goalXP) * 100));
     setTimeout(() => UI.setWidth('daily-goal-bar', goalPct), 200);
     UI.setEl('daily-goal-pct', `${todayXP}/${goalXP} XP`);
@@ -4651,10 +4651,10 @@ class App {
     if (panel) panel.style.display = 'flex';
     this._animateScoreRing(score);
     let fb = '', xp = 0;
-    if (score >= 90)      { fb = '🏆 Mükemmel! Anadili gibi!'; xp = 60; }
-    else if (score >= 75) { fb = '🎉 Harika! Çok iyi gidiyorsun.'; xp = 40; }
-    else if (score >= 55) { fb = '💪 İyi iş! Biraz daha pratik yap.'; xp = 20; }
-    else                  { fb = '🔄 Tekrar dene — daha net söyle.'; xp = 5; }
+    if (score >= 90)      { fb = '🏆 Mükemmel! Anadili gibi!'; xp = window.remoteFlags?.xp_speak_perfect ?? 60; }
+    else if (score >= 75) { fb = '🎉 Harika! Çok iyi gidiyorsun.'; xp = window.remoteFlags?.xp_speak_great ?? 40; }
+    else if (score >= 55) { fb = '💪 İyi iş! Biraz daha pratik yap.'; xp = window.remoteFlags?.xp_speak_good ?? 20; }
+    else                  { fb = '🔄 Tekrar dene — daha net söyle.'; xp = window.remoteFlags?.xp_speak_retry ?? 5; }
     UI.setEl('score-feedback', fb);
     const bd = document.getElementById('word-breakdown');
     if (bd) {

@@ -36,6 +36,14 @@ class RemoteConfigManager {
       xp_speaking_max:             80,
       speaking_countdown_sec:      3,
       srs_session_word_count:      10,
+      xp_speak_perfect:            60,
+      xp_speak_great:              40,
+      xp_speak_good:               20,
+      xp_speak_retry:              5,
+      streak_warning_enabled:      true,
+      xp_reminder_enabled:         true,
+      reminder_hour:               20,
+      speaking_inactive_days:      3,
     };
   }
 
@@ -66,6 +74,14 @@ class RemoteConfigManager {
         xp_speaking_max:             String(this._defaults.xp_speaking_max),
         speaking_countdown_sec:      String(this._defaults.speaking_countdown_sec),
         srs_session_word_count:      String(this._defaults.srs_session_word_count),
+        xp_speak_perfect:            String(this._defaults.xp_speak_perfect),
+        xp_speak_great:              String(this._defaults.xp_speak_great),
+        xp_speak_good:               String(this._defaults.xp_speak_good),
+        xp_speak_retry:              String(this._defaults.xp_speak_retry),
+        streak_warning_enabled:      String(this._defaults.streak_warning_enabled),
+        xp_reminder_enabled:         String(this._defaults.xp_reminder_enabled),
+        reminder_hour:               String(this._defaults.reminder_hour),
+        speaking_inactive_days:      String(this._defaults.speaking_inactive_days),
       };
       await this._rc.fetchAndActivate();
       console.info('[RemoteConfig] Initialized');
@@ -109,6 +125,14 @@ class RemoteConfigManager {
       xp_speaking_max:             Number(this._raw('xp_speaking_max'))        || this._defaults.xp_speaking_max,
       speaking_countdown_sec:      Number(this._raw('speaking_countdown_sec')) || this._defaults.speaking_countdown_sec,
       srs_session_word_count:      Number(this._raw('srs_session_word_count')) || this._defaults.srs_session_word_count,
+      xp_speak_perfect:            Number(this._raw('xp_speak_perfect'))          || this._defaults.xp_speak_perfect,
+      xp_speak_great:              Number(this._raw('xp_speak_great'))            || this._defaults.xp_speak_great,
+      xp_speak_good:               Number(this._raw('xp_speak_good'))             || this._defaults.xp_speak_good,
+      xp_speak_retry:              Number(this._raw('xp_speak_retry'))            || this._defaults.xp_speak_retry,
+      streak_warning_enabled:      this._bool('streak_warning_enabled'),
+      xp_reminder_enabled:         this._bool('xp_reminder_enabled'),
+      reminder_hour:               Number(this._raw('reminder_hour'))             || this._defaults.reminder_hour,
+      speaking_inactive_days:      Number(this._raw('speaking_inactive_days'))    || this._defaults.speaking_inactive_days,
     };
   }
 
@@ -146,6 +170,14 @@ window.remoteFlags = {
   xp_speaking_max:             80,
   speaking_countdown_sec:      3,
   srs_session_word_count:      10,
+  xp_speak_perfect:            60,
+  xp_speak_great:              40,
+  xp_speak_good:               20,
+  xp_speak_retry:              5,
+  streak_warning_enabled:      true,
+  xp_reminder_enabled:         true,
+  reminder_hour:               20,
+  speaking_inactive_days:      3,
 };
 
 window.remoteConfigManager = new RemoteConfigManager();

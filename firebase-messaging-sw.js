@@ -1,7 +1,7 @@
 /* ================================================================
    ENGLISH RHAPSODY — Firebase Messaging Service Worker
-   Arka plan push notification handler
-   Dosya konumu: proje koku (index.html ile ayni dizin)
+   Background push notification handler
+   Location: project root (same directory as index.html)
    ================================================================ */
 
 importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
@@ -18,32 +18,42 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// Uygulama kapali/arka plandayken gelen bildirimler
+// Handle background messages (app closed or in background)
 messaging.onBackgroundMessage(payload => {
   const title = payload.notification?.title || payload.data?.title || 'English Rhapsody';
   const body  = payload.notification?.body  || payload.data?.body  || '';
+  const url   = payload.data?.url || '/';
 
   self.registration.showNotification(title, {
     body,
     icon:    '/icons/icon-192.png',
     badge:   '/icons/icon-72.png',
     vibrate: [200, 100, 200],
-    data:    payload.data || {},
+    data:    Object.assign({ url }, payload.data || {}),
     actions: [
-      { action: 'open',    title: 'Uygulamayi Ac' },
+      { action: 'open',    title: 'Uygulamay\u0131 A\u00E7' },
       { action: 'dismiss', title: 'Kapat' },
     ],
   });
 });
 
-// Bildirime tiklama
+// Handle notification click
 self.addEventListener('notificationclick', e => {
   e.notification.close();
   if (e.action === 'dismiss') return;
+
+  const url = e.notification.data?.url || '/';
+
   e.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
-      if (list.length) return list[0].focus();
-      return clients.openWindow('/');
+      // Focus existing tab if open
+      const existing = list.find(c => c.url.startsWith(self.location.origin));
+      if (existing) {
+        existing.focus();
+        if (url !== '/') existing.navigate(url);
+        return;
+      }
+      return clients.openWindow(url);
     })
   );
 });

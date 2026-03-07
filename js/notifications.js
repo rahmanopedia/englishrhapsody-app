@@ -1,23 +1,23 @@
 /* ================================================================
-   ENGLISH RHAPSODY — Firebase Cloud Messaging Manager
-   Push notification ve on plan mesaj yonetimi
-
-   KURULUM:
-   1. Firebase Console → Project Settings → Cloud Messaging
-   2. "Web Push certificates" → "Generate key pair"
-   3. Olusturulan VAPID public key'i firebase-config.js icinde
-      window._vapidKey = '...' satirina yaz
-   4. firebase-messaging-sw.js proje kokunde olmali
+   ENGLISH RHAPSODY — Notification Manager
+   FCM Web Push + client-side smart reminder system
    ================================================================ */
 
 class NotificationsManager {
   constructor() {
     this._messaging = null;
     this._token     = null;
-    // Tarayici destegi kontrolu
     this._supported = typeof Notification !== 'undefined'
                    && 'serviceWorker' in navigator
-                   && 'PushManager' in window;
+                   && 'PushManager'   in window;
+
+    this._defaultPrefs = {
+      enabled:          true,
+      dailyReminder:    true,
+      streakReminder:   true,
+      xpReminder:       true,
+      speakingReminder: true,
+    };
   }
 
   // ── Init ───────────────────────────────────────────────────
@@ -29,7 +29,6 @@ class NotificationsManager {
       this._messaging.onMessage(payload => this._handleForeground(payload));
       console.info('[Notifications] Initialized');
     } catch (e) {
-      // messaging() desteklenmeyen tarayicilarda (Safari <16 vb.) sessizce gecebilir
       console.warn('[Notifications] Init error:', e.message);
       this._messaging = null;
     }
@@ -37,28 +36,20 @@ class NotificationsManager {
 
   // ── Permission & Token ─────────────────────────────────────
 
-  /**
-   * Bildirim izni iste, FCM token al ve Firestore'a kaydet.
-   * Kullanici aksiyonuna (buton click vb.) baglanarak cagrilmali.
-   * @returns {Promise<boolean>} basarili mi
-   */
   async requestPermission() {
     if (!this._messaging || !this._supported) return false;
 
-    // feature_notifications flag kontrolu
-    if (window.remoteFlags && window.remoteFlags.feature_notifications === false) {
-      console.info('[Notifications] feature_notifications disabled by Remote Config');
+    if (window.remoteFlags?.feature_notifications === false) {
+      console.info('[Notifications] Disabled by Remote Config');
       return false;
     }
 
-    // VAPID key kontrolu — placeholder ise skip et
     const vapidKey = window._vapidKey;
     if (!vapidKey || vapidKey === 'YOUR_VAPID_PUBLIC_KEY_HERE') {
-      console.warn('[Notifications] VAPID key ayarlanmamis. firebase-config.js dosyasini guncelle.');
+      console.warn('[Notifications] VAPID key missing');
       return false;
     }
 
-    // Service Worker kayitli mi kontrol et
     let swReg;
     try {
       swReg = await navigator.serviceWorker.getRegistration('/');
@@ -66,14 +57,14 @@ class NotificationsManager {
         swReg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
       }
     } catch (e) {
-      console.warn('[Notifications] Service Worker kayit hatasi:', e.message);
+      console.warn('[Notifications] SW registration error:', e.message);
       return false;
     }
 
     try {
       const perm = await Notification.requestPermission();
       if (perm !== 'granted') {
-        console.info('[Notifications] Izin verilmedi:', perm);
+        console.info('[Notifications] Permission denied:', perm);
         return false;
       }
       this._token = await this._messaging.getToken({
@@ -82,12 +73,13 @@ class NotificationsManager {
       });
       if (this._token) {
         await this._saveToken(this._token);
-        console.info('[Notifications] Token alindi ve kaydedildi');
+        await this._ensurePrefs();
+        console.info('[Notifications] Token saved');
         return true;
       }
       return false;
     } catch (e) {
-      console.warn('[Notifications] Token hatasi:', e.message);
+      console.warn('[Notifications] Token error:', e.message);
       return false;
     }
   }
@@ -97,35 +89,142 @@ class NotificationsManager {
     const uid = window.authManager?.uid;
     if (!db || !uid) return;
     try {
-      // profile doc'a merge ederek kaydet — mevcut alanlari silme
       await db.doc(`users/${uid}/meta/profile`).set(
         {
-          fcmToken:       token,
-          fcmUpdatedAt:   firebase.firestore.FieldValue.serverTimestamp(),
-          fcmPlatform:    'web',
+          fcmToken:     token,
+          fcmUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          fcmPlatform:  'web',
         },
         { merge: true }
       );
     } catch (e) {
-      console.warn('[Notifications] Token Firestore kayit hatasi:', e.message);
+      console.warn('[Notifications] Token save error:', e.message);
     }
   }
 
-  // ── Local Uyarilar ─────────────────────────────────────────
+  // ── Notification Preferences ───────────────────────────────
+
+  async _ensurePrefs() {
+    const db  = window.authManager?._db;
+    const uid = window.authManager?.uid;
+    if (!db || !uid) return;
+    try {
+      const snap = await db.doc(`users/${uid}/meta/profile`).get();
+      if (!snap.exists || !snap.data().notificationPrefs) {
+        await db.doc(`users/${uid}/meta/profile`).set(
+          { notificationPrefs: this._defaultPrefs },
+          { merge: true }
+        );
+      }
+    } catch (e) {
+      console.warn('[Notifications] Prefs init error:', e.message);
+    }
+  }
+
+  async saveNotificationPrefs(prefs) {
+    const db  = window.authManager?._db;
+    const uid = window.authManager?.uid;
+    if (!db || !uid) return;
+    try {
+      const merged = Object.assign({}, this._defaultPrefs, prefs);
+      await db.doc(`users/${uid}/meta/profile`).set(
+        { notificationPrefs: merged },
+        { merge: true }
+      );
+      console.info('[Notifications] Prefs saved');
+    } catch (e) {
+      console.warn('[Notifications] Prefs save error:', e.message);
+    }
+  }
+
+  async getNotificationPrefs() {
+    const db  = window.authManager?._db;
+    const uid = window.authManager?.uid;
+    if (!db || !uid) return Object.assign({}, this._defaultPrefs);
+    try {
+      const snap = await db.doc(`users/${uid}/meta/profile`).get();
+      if (snap.exists && snap.data().notificationPrefs) {
+        return Object.assign({}, this._defaultPrefs, snap.data().notificationPrefs);
+      }
+      return Object.assign({}, this._defaultPrefs);
+    } catch (e) {
+      return Object.assign({}, this._defaultPrefs);
+    }
+  }
+
+  // ── User Eligibility Data ──────────────────────────────────
 
   /**
-   * Login sonrasi cagrilir.
-   * feature_notifications=false ise hicbir toast gostermez.
+   * Updates Firestore with current user activity state.
+   * Cloud Functions use these fields for scheduling decisions.
+   * Called on login and after each study session.
+   */
+  async updateUserData() {
+    const db  = window.authManager?._db;
+    const uid = window.authManager?.uid;
+    if (!db || !uid || !window.app) return;
+    try {
+      const todayKey   = new Date().toISOString().split('T')[0];
+      const history    = window.app.state?.get('history') || {};
+      const xpToday    = history[todayKey] || 0;
+      const streak     = window.app.state?.get('streak')     || 0;
+      const lastActive = window.app.state?.get('lastActive') || '';
+
+      await db.doc(`users/${uid}/meta/profile`).set(
+        {
+          lastActive,
+          streak,
+          xpToday,
+          xpGoal:    window.remoteFlags?.dailyXPGoal ?? 100,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        },
+        { merge: true }
+      );
+    } catch (e) {
+      console.warn('[Notifications] updateUserData error:', e.message);
+    }
+  }
+
+  /**
+   * Call this after user completes a speaking session.
+   * Updates lastSpeakingAt so Cloud Function can schedule speaking reminders.
+   */
+  async onSpeakingComplete() {
+    const db  = window.authManager?._db;
+    const uid = window.authManager?.uid;
+    if (!db || !uid) return;
+    try {
+      await db.doc(`users/${uid}/meta/profile`).set(
+        { lastSpeakingAt: firebase.firestore.FieldValue.serverTimestamp() },
+        { merge: true }
+      );
+      localStorage.setItem('er_last_speaking', String(Date.now()));
+    } catch (e) {
+      console.warn('[Notifications] onSpeakingComplete error:', e.message);
+    }
+  }
+
+  // ── Client-Side Smart Reminders ────────────────────────────
+
+  /**
+   * Called after login. Updates Firestore eligibility data and
+   * shows in-app reminders. Real push notifications are sent
+   * by the Cloud Function (functions/index.js) on a schedule.
    */
   runDailyChecks() {
     if (!window.app) return;
-    if (window.remoteFlags && window.remoteFlags.feature_notifications === false) return;
+    if (window.remoteFlags?.feature_notifications === false) return;
+
+    this.updateUserData();
+
     this._checkStreakWarning();
     this._checkDailyGoal();
+    this._checkSpeakingReminder();
   }
 
   _checkStreakWarning() {
-    const streak     = window.app.state?.get('streak') || 0;
+    if (window.remoteFlags?.streak_warning_enabled === false) return;
+    const streak     = window.app.state?.get('streak')     || 0;
     const lastActive = window.app.state?.get('lastActive') || '';
     if (!streak || !lastActive) return;
 
@@ -133,13 +232,14 @@ class NotificationsManager {
     if (lastActive === yesterday) {
       setTimeout(() => {
         if (typeof UI !== 'undefined') {
-          UI.toast(`Streakini korumak icin bugun calis! ${streak} gunluk serin risk altinda.`, 8000);
+          UI.toast(`\uD83D\uDD25 ${streak} \u0261\u00FCnl\u00FCk serin risk alt\u0131nda! Bug\u00FCn \u00E7al\u0131\u015Fmay\u0131 unutma.`, 8000);
         }
       }, 5000);
     }
   }
 
   _checkDailyGoal() {
+    if (window.remoteFlags?.xp_reminder_enabled === false) return;
     const goal     = window.remoteFlags?.dailyXPGoal ?? 100;
     const hist     = window.app.state?.get('history') || {};
     const todayKey = new Date().toISOString().split('T')[0];
@@ -147,15 +247,29 @@ class NotificationsManager {
     if (todayXP === 0) {
       setTimeout(() => {
         if (typeof UI !== 'undefined') {
-          UI.toast(`Bugun hedefin: ${goal} XP. Hadi basla!`, 6000);
+          UI.toast(`\u26A1 Bug\u00FCnk\u00FC hedefin: ${goal} XP. Hadi ba\u015Fla!`, 6000);
         }
       }, 10000);
     }
   }
 
+  _checkSpeakingReminder() {
+    const inactiveDays = window.remoteFlags?.speaking_inactive_days ?? 3;
+    const lastSpeaking = Number(localStorage.getItem('er_last_speaking') || 0);
+    const inactiveMs   = inactiveDays * 86_400_000;
+    if (lastSpeaking && Date.now() - lastSpeaking < inactiveMs) return;
+
+    setTimeout(() => {
+      if (typeof UI !== 'undefined') {
+        UI.toast('\uD83C\uDFA4 Bug\u00FCn konu\u015Fma pratiği yapal\u0131m!', 5000);
+      }
+    }, 15000);
+  }
+
   // ── Foreground Handler ─────────────────────────────────────
 
   _handleForeground(payload) {
+    console.info('[Notifications] Foreground message:', payload);
     const title = payload.notification?.title || payload.data?.title || '';
     const body  = payload.notification?.body  || payload.data?.body  || '';
     if (title && typeof UI !== 'undefined') {
