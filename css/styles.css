@@ -3733,7 +3733,7 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .nexus-header { text-align: center; margin-bottom: 20px; z-index: 1; }
 .nexus-title {
   font-size: 2rem; font-weight: 900; letter-spacing: 6px;
-  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text; margin: 0 0 6px;
 }
