@@ -533,6 +533,168 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
 }
 
+/* ── ElevenLabs Header Button ─────────────────────────────── */
+.el-settings-btn {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  backdrop-filter: blur(8px);
+}
+.el-settings-btn:hover {
+  background: rgba(var(--a1-rgb),0.12);
+  border-color: rgba(var(--a1-rgb),0.35);
+  transform: scale(1.1);
+}
+.el-settings-btn.el-btn-active {
+  background: rgba(var(--a1-rgb),0.15);
+  border-color: rgba(var(--a1-rgb),0.4);
+  box-shadow: 0 0 12px rgba(var(--a1-rgb),0.25);
+}
+
+/* ── ElevenLabs Modal ─────────────────────────────────────── */
+#el-modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  z-index: 9500;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.el-modal-box {
+  background: linear-gradient(160deg, rgba(10,18,32,0.98), rgba(6,10,20,0.99));
+  border: 1px solid rgba(var(--a1-rgb),0.2);
+  border-radius: 24px;
+  width: 100%; max-width: 520px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04) inset;
+  overflow: hidden;
+  animation: entrance-up 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.el-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(90deg, rgba(var(--a1-rgb),0.05), transparent);
+}
+.el-modal-title {
+  display: flex; align-items: center; gap: 14px;
+}
+.el-modal-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 10px rgba(var(--a1-rgb),0.4));
+}
+.el-modal-close {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; width: 30px; height: 30px;
+  color: var(--text-3); cursor: pointer; font-size: 0.75rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.el-modal-close:hover { background: rgba(255,80,80,0.15); color: #ff5c5c; border-color: rgba(255,80,80,0.3); }
+
+.el-modal-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 18px; }
+
+.el-status-bar {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 0.82rem; color: var(--text-2);
+}
+.el-status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.2); flex-shrink: 0;
+  transition: background 0.3s;
+}
+.el-status-dot.active {
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34,197,94,0.5);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.el-field { display: flex; flex-direction: column; gap: 8px; }
+.el-label {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: rgba(255,255,255,0.45);
+  display: flex; align-items: center; gap: 8px;
+}
+.el-link {
+  color: var(--cyan); text-decoration: none; font-size: 0.68rem;
+  text-transform: none; letter-spacing: 0;
+}
+.el-link:hover { text-decoration: underline; }
+
+.el-key-row { display: flex; gap: 8px; }
+.el-input {
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 10px !important;
+  color: var(--text-1) !important;
+  padding: 10px 14px !important;
+  font-family: 'Plus Jakarta Sans', monospace !important;
+  font-size: 0.88rem !important;
+  outline: none;
+  width: 100%;
+}
+.el-input:focus {
+  border-color: rgba(var(--a1-rgb),0.5) !important;
+  box-shadow: 0 0 0 3px rgba(var(--a1-rgb),0.12) !important;
+}
+.el-eye-btn {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 0 12px; cursor: pointer; font-size: 1rem;
+  color: var(--text-2); transition: all 0.2s; flex-shrink: 0;
+}
+.el-eye-btn:hover { background: rgba(255,255,255,0.1); }
+
+.el-hint { font-size: 0.72rem; color: var(--text-3); }
+
+.el-voice-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.el-voice-btn {
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 10px 12px;
+  text-align: left; cursor: pointer; transition: all 0.18s;
+}
+.el-voice-btn:hover {
+  background: rgba(var(--a1-rgb),0.08);
+  border-color: rgba(var(--a1-rgb),0.25);
+}
+.el-voice-btn.active {
+  background: rgba(var(--a1-rgb),0.12);
+  border-color: rgba(var(--a1-rgb),0.5);
+  box-shadow: 0 0 12px rgba(var(--a1-rgb),0.15);
+}
+.el-vb-name { font-size: 0.85rem; font-weight: 700; color: var(--text-1); }
+.el-vb-desc { font-size: 0.68rem; color: var(--text-3); margin-top: 2px; }
+
+.el-test-row { display: flex; gap: 10px; align-items: center; }
+
+.el-cache-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.75rem; color: var(--text-3);
+  background: rgba(255,255,255,0.02);
+  border-radius: 8px; padding: 8px 12px;
+}
+.el-clear-btn {
+  background: none; border: none; color: rgba(239,68,68,0.7);
+  font-size: 0.72rem; cursor: pointer; transition: color 0.2s;
+  font-family: inherit;
+}
+.el-clear-btn:hover { color: #ef4444; }
+
+.el-modal-footer {
+  display: flex; justify-content: flex-end; gap: 10px;
+  padding: 14px 22px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
 /* ── 17. Onboarding ───────────────────────────────────────── */
 #onboarding-overlay {
   position: fixed;

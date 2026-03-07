@@ -624,6 +624,15 @@ body.theme-aurora ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15) !impo
    ================================================================ */
 body.theme-aurora .sidebar-footer { border-top-color: rgba(0,0,0,0.08); }
 
+/* ElevenLabs button — aurora */
+body.theme-aurora .el-settings-btn {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+body.theme-aurora .el-settings-btn.el-btn-active {
+  background: rgba(var(--a1-rgb),0.1) !important;
+}
+
 
 /* ================================================================
    16. HOME GRID — Tighter gap for revolution layout

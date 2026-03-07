@@ -2410,8 +2410,24 @@ class SpeechEngine {
   }
 
   speak(text, rate = 0.88, onBoundary, onEnd) {
+    // ElevenLabs: sadece onBoundary olmayan çağrılarda kullan
+    // (okuma modu kelime vurgulaması Web Speech gerektiriyor)
+    if (!onBoundary && window._elTTS?.enabled) {
+      this.stop();
+      const didPlay = window._elTTS.speak(text, onEnd);
+      // Eğer ElevenLabs başarıyla başladıysa (async), web speech'i atla
+      // Promise resolve'u beklemeden fire-and-forget; hata durumunda fallback
+      didPlay instanceof Promise
+        ? didPlay.then(ok => { if (!ok) this._webSpeak(text, rate, null, onEnd); })
+        : void 0;
+      return;
+    }
+    this._webSpeak(text, rate, onBoundary, onEnd);
+  }
+
+  _webSpeak(text, rate, onBoundary, onEnd) {
     if (!this.synth) return;
-    this.stop(); 
+    this.synth.cancel();
     const utt = new SpeechSynthesisUtterance(text);
     utt.lang = this.accent;
     utt.rate = rate;
@@ -2421,6 +2437,7 @@ class SpeechEngine {
   }
 
   stop() {
+    if (window._elTTS) window._elTTS.stop();
     if (this.synth) this.synth.cancel();
   }
 

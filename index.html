@@ -59,6 +59,7 @@
       </div>
     </div>
     <div class="header-stats">
+      <button class="el-settings-btn" onclick="elModalOpen()" title="ElevenLabs TTS Ayarları" id="el-header-btn">🔊</button>
       <button class="theme-btn" onclick="app.openThemePicker()" title="Tema Seç">🎨</button>
       <button class="focus-btn" onclick="app.toggleFocusMode()" title="Odak Modu">🧘</button>
       <div class="stat-chip streak">🔥 <span id="hdr-streak">1</span></div>
@@ -140,6 +141,66 @@
 
 <!-- Toast container -->
 <div id="toast-container"></div>
+
+<!-- ── ElevenLabs Settings Modal ──────────────────────────── -->
+<div id="el-modal" style="display:none" onclick="if(event.target===this)elModalClose()">
+  <div class="el-modal-box">
+    <div class="el-modal-header">
+      <div class="el-modal-title">
+        <span class="el-modal-icon">🎙️</span>
+        <div>
+          <div style="font-weight:900;font-size:1.05rem">ElevenLabs TTS</div>
+          <div style="font-size:0.75rem;color:var(--text-3);margin-top:1px">Doğal yapay zeka sesi entegrasyonu</div>
+        </div>
+      </div>
+      <button class="el-modal-close" onclick="elModalClose()">✕</button>
+    </div>
+
+    <div class="el-modal-body">
+      <!-- Status indicator -->
+      <div class="el-status-bar" id="el-status-bar">
+        <span class="el-status-dot" id="el-status-dot"></span>
+        <span id="el-status-txt">API anahtarı girilmedi — Web Speech API kullanılıyor</span>
+      </div>
+
+      <!-- API Key -->
+      <div class="el-field">
+        <label class="el-label">API Anahtarı <a href="https://elevenlabs.io/app/settings/api-keys" target="_blank" rel="noopener" class="el-link">→ ElevenLabs'tan al</a></label>
+        <div class="el-key-row">
+          <input type="password" id="el-api-key-input" placeholder="sk_..." autocomplete="off" oninput="elUpdateStatus()" class="el-input">
+          <button class="el-eye-btn" onclick="elToggleKeyVisibility()" title="Göster/Gizle">👁️</button>
+        </div>
+        <div class="el-hint">Ücretsiz plan: ayda 10.000 karakter. Kelime başına ~5 karakter sayılır.</div>
+      </div>
+
+      <!-- Voice picker -->
+      <div class="el-field">
+        <label class="el-label">Ses</label>
+        <div class="el-voice-grid" id="el-voice-grid"></div>
+      </div>
+
+      <!-- Test -->
+      <div class="el-field">
+        <label class="el-label">Test</label>
+        <div class="el-test-row">
+          <input type="text" id="el-test-input" value="The quick brown fox jumps over the lazy dog." class="el-input" style="flex:1">
+          <button class="btn btn-primary btn-sm" onclick="elTest()" id="el-test-btn">▶ Dinle</button>
+        </div>
+      </div>
+
+      <!-- Cache info -->
+      <div class="el-cache-row">
+        <span id="el-cache-count">— öğe önbellekte</span>
+        <button class="el-clear-btn" onclick="elClearCache()">🗑 Önbelleği Temizle</button>
+      </div>
+    </div>
+
+    <div class="el-modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="elModalClose()">İptal</button>
+      <button class="btn btn-primary btn-sm" onclick="elModalSave()">💾 Kaydet</button>
+    </div>
+  </div>
+</div>
 
 <!-- ── Templates ──────────────────────────────────────────── -->
 
@@ -555,12 +616,122 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <!-- App -->
+<script src="js/elevenlabs.js"></script>
 <script src="js/data.js"></script>
 <script src="js/phantom.js"></script>
 <script src="js/nexus.js"></script>
 <script src="js/quantum.js"></script>
 <script src="js/app.js"></script>
 <script src="js/phrasal_verbs_ext.js"></script>
+
+<script>
+/* ── ElevenLabs Modal Controller ─────────────────────────── */
+function elModalOpen() {
+  const modal = document.getElementById('el-modal');
+  modal.style.display = 'flex';
+  // Populate fields
+  document.getElementById('el-api-key-input').value = localStorage.getItem('el_api_key') || '';
+  // Build voice grid
+  const grid = document.getElementById('el-voice-grid');
+  const curVoice = localStorage.getItem('el_voice_id') || '21m00Tcm4TlvDq8ikWAM';
+  grid.innerHTML = Object.entries(ElevenLabsTTS.VOICES).map(([id, label]) => {
+    const [name, ...rest] = label.split(' — ');
+    return `<button class="el-voice-btn ${id === curVoice ? 'active' : ''}" data-id="${id}" onclick="elSelectVoice('${id}')">
+      <div class="el-vb-name">${name}</div>
+      <div class="el-vb-desc">${rest.join(' — ')}</div>
+    </button>`;
+  }).join('');
+  elUpdateStatus();
+  elUpdateCacheCount();
+}
+
+function elModalClose() {
+  document.getElementById('el-modal').style.display = 'none';
+}
+
+function elModalSave() {
+  const key = document.getElementById('el-api-key-input').value.trim();
+  if (key) localStorage.setItem('el_api_key', key);
+  else     localStorage.removeItem('el_api_key');
+  elUpdateHeaderBtn();
+  elModalClose();
+  if (typeof UI !== 'undefined') UI.toast(key ? '✅ ElevenLabs aktif!' : '🔇 Web Speech API\'ye dönüldü');
+}
+
+function elSelectVoice(id) {
+  localStorage.setItem('el_voice_id', id);
+  document.querySelectorAll('.el-voice-btn').forEach(b => b.classList.toggle('active', b.dataset.id === id));
+}
+
+function elToggleKeyVisibility() {
+  const inp = document.getElementById('el-api-key-input');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+function elUpdateStatus() {
+  const key  = document.getElementById('el-api-key-input').value.trim();
+  const dot  = document.getElementById('el-status-dot');
+  const txt  = document.getElementById('el-status-txt');
+  if (key) {
+    dot.className = 'el-status-dot active';
+    txt.textContent = 'ElevenLabs aktif — tüm sesler AI ile üretilecek';
+  } else {
+    dot.className = 'el-status-dot';
+    txt.textContent = 'API anahtarı girilmedi — Web Speech API kullanılıyor';
+  }
+}
+
+async function elUpdateCacheCount() {
+  if (!window._elTTS) return;
+  const n = await window._elTTS.getCacheSize();
+  const el = document.getElementById('el-cache-count');
+  if (el) el.textContent = `${n} ses önbellekte (tekrar API çağrısı yapılmaz)`;
+}
+
+async function elClearCache() {
+  if (!window._elTTS) return;
+  await window._elTTS.clearCache();
+  elUpdateCacheCount();
+  if (typeof UI !== 'undefined') UI.toast('🗑 Ses önbelleği temizlendi');
+}
+
+async function elTest() {
+  const btn  = document.getElementById('el-test-btn');
+  const text = document.getElementById('el-test-input').value.trim();
+  if (!text) return;
+  // Save key first so _elTTS can use it
+  const key = document.getElementById('el-api-key-input').value.trim();
+  if (key) localStorage.setItem('el_api_key', key);
+  else { localStorage.removeItem('el_api_key'); }
+
+  if (!window._elTTS?.enabled) {
+    if (typeof UI !== 'undefined') UI.toast('⚠️ Önce API anahtarını gir');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳';
+  const ok = await window._elTTS.speak(text);
+  btn.disabled = false;
+  btn.textContent = '▶ Dinle';
+  if (!ok && typeof UI !== 'undefined') UI.toast('❌ Ses üretilemedi. API anahtarını kontrol et.');
+  else elUpdateCacheCount();
+}
+
+function elUpdateHeaderBtn() {
+  const btn = document.getElementById('el-header-btn');
+  if (!btn) return;
+  const active = !!localStorage.getItem('el_api_key');
+  btn.textContent = active ? '🔊' : '🔇';
+  btn.title = active ? 'ElevenLabs TTS Aktif — Ayarlar' : 'ElevenLabs TTS (Kapalı) — Ayarlar';
+  btn.classList.toggle('el-btn-active', active);
+}
+
+// Keyboard close
+document.addEventListener('keydown', e => { if (e.key === 'Escape') elModalClose(); });
+// Init header button state on load
+window.addEventListener('load', elUpdateHeaderBtn);
+</script>
 
 <script>
 if ('serviceWorker' in navigator) {
