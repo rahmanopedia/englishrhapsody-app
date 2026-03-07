@@ -2337,6 +2337,10 @@ class StateManager {
 
   save() {
     try { localStorage.setItem('er_state', JSON.stringify(this._state)); } catch {}
+    // Buluta debounced kaydet
+    if (window.authManager && window.authManager.isLoggedIn) {
+      window.authManager.saveToCloud(this._state);
+    }
   }
 
   get(key)        { return this._state[key]; }
@@ -2556,19 +2560,30 @@ class App {
     this._applyRankTheme();
     this._updateHeader();
 
-    // Boot
-    setTimeout(() => {
-      const splash = document.getElementById('splash-screen');
-      if (splash) {
-        splash.style.transition = 'opacity 0.5s';
-        splash.style.opacity = '0';
-        setTimeout(() => {
-          splash.remove();
+    // Boot — Firebase auth sonrası splash kaldır
+    this._boot();
+  }
+
+  async _boot() {
+    // Firebase başlat (yapılandırılmışsa)
+    if (window.authManager) {
+      await window.authManager.init();
+    }
+
+    const splash = document.getElementById('splash-screen');
+    if (splash) {
+      splash.style.transition = 'opacity 0.5s';
+      splash.style.opacity = '0';
+      setTimeout(() => {
+        splash.remove();
+        // Auth modal açıksa navigate etme — kullanıcı giriş yaptıktan sonra _onLogin navigate eder
+        const authModal = document.getElementById('auth-modal');
+        if (!authModal || authModal.style.display === 'none') {
           this.navigate('home');
           if (!this.state.get('onboarded')) this._showOnboarding();
-        }, 520);
-      }
-    }, 900);
+        }
+      }, 520);
+    }
   }
 
   // ─────────────────────────────────────────────────────────
@@ -2807,6 +2822,16 @@ class App {
     UI.setEl('hdr-xp',     this.state.get('xp'));
     UI.setEl('hdr-level',  this.state.get('level'));
     UI.setEl('hdr-streak', this.state.get('streak'));
+  }
+
+  // Buluttan veri yüklendikten sonra tüm UI'ı yeniler
+  _syncUIFromState() {
+    this._updateHeader();
+    this._applyRankTheme();
+    this._checkStreak();
+    this._initTheme();
+    // Eğer home ekranındaysa yeniden render et
+    if (this.session.view === 'home') this.navigate('home');
   }
 
   // ─────────────────────────────────────────────────────────

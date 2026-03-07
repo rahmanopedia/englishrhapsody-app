@@ -59,6 +59,7 @@
       </div>
     </div>
     <div class="header-stats">
+      <button id="auth-user-btn" class="auth-user-btn" onclick="authUI.open()" style="display:none" title="Hesap"></button>
       <button class="theme-btn" onclick="app.openThemePicker()" title="Tema Seç">🎨</button>
       <button class="focus-btn" onclick="app.toggleFocusMode()" title="Odak Modu">🧘</button>
       <div class="stat-chip streak">🔥 <span id="hdr-streak">1</span></div>
@@ -140,6 +141,86 @@
 
 <!-- Toast container -->
 <div id="toast-container"></div>
+
+<!-- ── Auth Modal ──────────────────────────────────────────── -->
+<div id="auth-modal" style="display:none" onclick="if(event.target===this)authUI.close()">
+  <div class="auth-box">
+
+    <!-- Logo -->
+    <div class="auth-logo">
+      <div class="auth-logo-icon">📚</div>
+      <div class="auth-logo-text">English <span>Rhapsody</span></div>
+      <div class="auth-logo-sub">Hesabına giriş yap, ilerleme kaybolmasın</div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button id="auth-tab-login"  class="auth-tab active" onclick="authUI.switchTab('login')">Giriş Yap</button>
+      <button id="auth-tab-signup" class="auth-tab"        onclick="authUI.switchTab('signup')">Kayıt Ol</button>
+    </div>
+
+    <!-- Error -->
+    <div id="auth-error" class="auth-error-msg" style="display:none"></div>
+
+    <!-- Login Form -->
+    <form id="auth-form-login" class="auth-form" onsubmit="event.preventDefault();authUI.submitLogin()" style="display:flex">
+      <div class="auth-field">
+        <label class="auth-label">E-posta</label>
+        <input id="auth-email" type="email" class="auth-input" placeholder="ornek@mail.com" required autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Şifre</label>
+        <input id="auth-pass" type="password" class="auth-input" placeholder="Şifreniz" required autocomplete="current-password">
+      </div>
+      <button id="login-btn" type="submit" class="auth-submit-btn">Giriş Yap</button>
+      <button type="button" class="auth-forgot" onclick="authUI.showReset()">Şifremi unuttum</button>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="auth-form-signup" class="auth-form" onsubmit="event.preventDefault();authUI.submitSignup()" style="display:none">
+      <div class="auth-field">
+        <label class="auth-label">İsim (isteğe bağlı)</label>
+        <input id="auth-name" type="text" class="auth-input" placeholder="Adın" autocomplete="name">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">E-posta</label>
+        <input id="auth-email-reg" type="email" class="auth-input" placeholder="ornek@mail.com" required autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Şifre</label>
+        <input id="auth-pass-reg" type="password" class="auth-input" placeholder="En az 6 karakter" required autocomplete="new-password">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Şifre tekrar</label>
+        <input id="auth-pass-reg2" type="password" class="auth-input" placeholder="Şifreyi tekrarla" required autocomplete="new-password">
+      </div>
+      <button id="signup-btn" type="submit" class="auth-submit-btn">Hesap Oluştur</button>
+    </form>
+
+    <!-- Reset Form -->
+    <form id="auth-form-reset" class="auth-form" onsubmit="event.preventDefault();authUI.submitReset()" style="display:none">
+      <div class="auth-field">
+        <label class="auth-label">E-posta adresin</label>
+        <input id="auth-reset-email" type="email" class="auth-input" placeholder="ornek@mail.com" required>
+      </div>
+      <button id="reset-btn" type="submit" class="auth-submit-btn">Sıfırlama Gönder</button>
+      <button type="button" class="auth-forgot" onclick="authUI.switchTab('login')">← Giriş yap</button>
+    </form>
+
+    <!-- Hesap bilgisi (giriş yapıldığında) -->
+    <div id="auth-account-panel" class="auth-account-panel" style="display:none">
+      <div class="auth-account-info">
+        <div class="auth-account-avatar" id="auth-panel-avatar">?</div>
+        <div>
+          <div class="auth-account-name" id="auth-panel-name">—</div>
+          <div class="auth-account-email" id="auth-panel-email">—</div>
+        </div>
+      </div>
+      <button class="auth-logout-btn" onclick="authManager.logout()">🚪 Çıkış Yap</button>
+    </div>
+
+  </div>
+</div>
 
 <!-- ── Templates ──────────────────────────────────────────── -->
 
@@ -555,6 +636,13 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <!-- App -->
+<!-- Firebase (sadece config doluysa yukle) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
 <script src="js/data.js"></script>
 <script src="js/phantom.js"></script>
 <script src="js/nexus.js"></script>
