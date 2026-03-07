@@ -5,19 +5,19 @@
    KURULUM:
    1. Firebase Console → Project Settings → Cloud Messaging
    2. "Web Push certificates" → "Generate key pair"
-   3. Olusturulan VAPID public key'i asagidaki VAPID_KEY'e yaz
-   4. firebase-messaging-sw.js proje kokunde olmali (index.html ile ayni dizin)
+   3. Olusturulan VAPID public key'i firebase-config.js icinde
+      window._vapidKey = '...' satirina yaz
+   4. firebase-messaging-sw.js proje kokunde olmali
    ================================================================ */
-
-const VAPID_KEY = 'YOUR_VAPID_PUBLIC_KEY_HERE'; // Firebase Console'dan al
 
 class NotificationsManager {
   constructor() {
-    this._messaging  = null;
-    this._token      = null;
-    this._supported  = typeof Notification !== 'undefined'
-                    && 'serviceWorker' in navigator
-                    && 'PushManager' in window;
+    this._messaging = null;
+    this._token     = null;
+    // Tarayici destegi kontrolu
+    this._supported = typeof Notification !== 'undefined'
+                   && 'serviceWorker' in navigator
+                   && 'PushManager' in window;
   }
 
   // ── Init ───────────────────────────────────────────────────
@@ -26,36 +26,68 @@ class NotificationsManager {
     if (!window._firebaseConfigured || !this._supported) return;
     try {
       this._messaging = firebase.messaging();
-      // On planda gelen mesajlari toast ile goster
       this._messaging.onMessage(payload => this._handleForeground(payload));
       console.info('[Notifications] Initialized');
     } catch (e) {
-      console.warn('[Notifications] Init error:', e);
+      // messaging() desteklenmeyen tarayicilarda (Safari <16 vb.) sessizce gecebilir
+      console.warn('[Notifications] Init error:', e.message);
+      this._messaging = null;
     }
   }
 
   // ── Permission & Token ─────────────────────────────────────
 
   /**
-   * Bildirim izni iste ve FCM token'i Firestore'a kaydet
-   * Login sonrasi kullanici kabul ederse cagrilabilir
-   * @returns {Promise<boolean>}
+   * Bildirim izni iste, FCM token al ve Firestore'a kaydet.
+   * Kullanici aksiyonuna (buton click vb.) baglanarak cagrilmali.
+   * @returns {Promise<boolean>} basarili mi
    */
   async requestPermission() {
     if (!this._messaging || !this._supported) return false;
-    if (VAPID_KEY === 'YOUR_VAPID_PUBLIC_KEY_HERE') {
-      console.warn('[Notifications] VAPID_KEY ayarlanmamis. notifications.js dosyasini guncelle.');
+
+    // feature_notifications flag kontrolu
+    if (window.remoteFlags && window.remoteFlags.feature_notifications === false) {
+      console.info('[Notifications] feature_notifications disabled by Remote Config');
       return false;
     }
+
+    // VAPID key kontrolu — placeholder ise skip et
+    const vapidKey = window._vapidKey;
+    if (!vapidKey || vapidKey === 'YOUR_VAPID_PUBLIC_KEY_HERE') {
+      console.warn('[Notifications] VAPID key ayarlanmamis. firebase-config.js dosyasini guncelle.');
+      return false;
+    }
+
+    // Service Worker kayitli mi kontrol et
+    let swReg;
+    try {
+      swReg = await navigator.serviceWorker.getRegistration('/');
+      if (!swReg) {
+        swReg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+      }
+    } catch (e) {
+      console.warn('[Notifications] Service Worker kayit hatasi:', e.message);
+      return false;
+    }
+
     try {
       const perm = await Notification.requestPermission();
-      if (perm !== 'granted') return false;
-      this._token = await this._messaging.getToken({ vapidKey: VAPID_KEY });
-      if (this._token) await this._saveToken(this._token);
-      console.info('[Notifications] Token alindi');
-      return true;
+      if (perm !== 'granted') {
+        console.info('[Notifications] Izin verilmedi:', perm);
+        return false;
+      }
+      this._token = await this._messaging.getToken({
+        vapidKey,
+        serviceWorkerRegistration: swReg,
+      });
+      if (this._token) {
+        await this._saveToken(this._token);
+        console.info('[Notifications] Token alindi ve kaydedildi');
+        return true;
+      }
+      return false;
     } catch (e) {
-      console.warn('[Notifications] Permission error:', e);
+      console.warn('[Notifications] Token hatasi:', e.message);
       return false;
     }
   }
@@ -65,21 +97,29 @@ class NotificationsManager {
     const uid = window.authManager?.uid;
     if (!db || !uid) return;
     try {
-      await db.doc(`users/${uid}/meta/fcm`).set({
-        token,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        platform:  'web',
-      });
+      // profile doc'a merge ederek kaydet — mevcut alanlari silme
+      await db.doc(`users/${uid}/meta/profile`).set(
+        {
+          fcmToken:       token,
+          fcmUpdatedAt:   firebase.firestore.FieldValue.serverTimestamp(),
+          fcmPlatform:    'web',
+        },
+        { merge: true }
+      );
     } catch (e) {
-      console.warn('[Notifications] Token kayit hatasi:', e);
+      console.warn('[Notifications] Token Firestore kayit hatasi:', e.message);
     }
   }
 
   // ── Local Uyarilar ─────────────────────────────────────────
 
-  /** Login sonrasi streak ve gunluk hedef kontrolu yap */
+  /**
+   * Login sonrasi cagrilir.
+   * feature_notifications=false ise hicbir toast gostermez.
+   */
   runDailyChecks() {
     if (!window.app) return;
+    if (window.remoteFlags && window.remoteFlags.feature_notifications === false) return;
     this._checkStreakWarning();
     this._checkDailyGoal();
   }
@@ -91,17 +131,16 @@ class NotificationsManager {
 
     const yesterday = new Date(Date.now() - 86_400_000).toDateString();
     if (lastActive === yesterday) {
-      // Bugun calisilmamis, streak risk altinda
       setTimeout(() => {
         if (typeof UI !== 'undefined') {
-          UI.toast(`Streakini korumak icin bugun calis! Serin risk altinda: ${streak} gun`, 8000);
+          UI.toast(`Streakini korumak icin bugun calis! ${streak} gunluk serin risk altinda.`, 8000);
         }
       }, 5000);
     }
   }
 
   _checkDailyGoal() {
-    const goal     = window.remoteConfigManager?.dailyXPGoal ?? 100;
+    const goal     = window.remoteFlags?.dailyXPGoal ?? 100;
     const hist     = window.app.state?.get('history') || {};
     const todayKey = new Date().toISOString().split('T')[0];
     const todayXP  = hist[todayKey] || 0;
@@ -119,7 +158,7 @@ class NotificationsManager {
   _handleForeground(payload) {
     const title = payload.notification?.title || payload.data?.title || '';
     const body  = payload.notification?.body  || payload.data?.body  || '';
-    if (typeof UI !== 'undefined') {
+    if (title && typeof UI !== 'undefined') {
       UI.toast(`${title}${body ? ': ' + body : ''}`, 7000);
     }
   }

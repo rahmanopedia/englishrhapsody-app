@@ -2,74 +2,105 @@
    ENGLISH RHAPSODY — Firebase Remote Config Manager
    Uygulama ayarlarini Firebase console'dan uzaktan yonet
 
-   KURULUM:
-   Firebase Console → Remote Config → Asagidaki key'leri ekle:
-     dailyXPGoal         (Number)  ornek: 100
-     maxStreakBonus      (Number)  ornek: 50
-     speakingDifficulty  (String)  ornek: "medium"
-     featureFlags        (JSON)    ornek: {"nexusMode":true,"readingLab":true}
+   Firebase Console → Remote Config → Asagidaki parametreleri ekle:
+     dailyXPGoal          Number   100
+     maxStreakBonus        Number   50
+     speakingDifficulty   String   "easy"
+     feature_speaking_ai  Boolean  false
+     feature_notifications Boolean true
    ================================================================ */
 
 class RemoteConfigManager {
   constructor() {
     this._rc = null;
+
+    // Kod icindeki local defaults — Remote Config'den cekilemedigi durumda kullanilir
     this._defaults = {
-      dailyXPGoal:        100,
-      maxStreakBonus:     50,
-      speakingDifficulty: 'medium',
-      featureFlags: JSON.stringify({
-        nexusMode:   true,
-        readingLab:  true,
-        speakingLab: true,
-      }),
+      dailyXPGoal:           100,
+      maxStreakBonus:         50,
+      speakingDifficulty:    'easy',
+      feature_speaking_ai:   false,
+      feature_notifications: true,
     };
   }
 
   async init() {
-    if (!window._firebaseConfigured) return;
+    if (!window._firebaseConfigured) {
+      this._applyFlags(this._defaults);
+      return;
+    }
     try {
       this._rc = firebase.remoteConfig();
       this._rc.settings = {
-        minimumFetchIntervalMillis: 3_600_000, // 1 saat
+        minimumFetchIntervalMillis: 3_600_000, // 1 saat cache
         fetchTimeoutMillis:         10_000,
       };
-      this._rc.defaultConfig = this._defaults;
+      // Boolean degerleri string olarak saklanir — defaultConfig icin string'e cevir
+      this._rc.defaultConfig = {
+        dailyXPGoal:           String(this._defaults.dailyXPGoal),
+        maxStreakBonus:         String(this._defaults.maxStreakBonus),
+        speakingDifficulty:    this._defaults.speakingDifficulty,
+        feature_speaking_ai:   String(this._defaults.feature_speaking_ai),
+        feature_notifications: String(this._defaults.feature_notifications),
+      };
       await this._rc.fetchAndActivate();
       console.info('[RemoteConfig] Initialized');
     } catch (e) {
-      console.warn('[RemoteConfig] Init error (defaults kullaniliyor):', e);
+      console.warn('[RemoteConfig] Fetch basarisiz, defaults kullaniliyor:', e.message);
     }
+    this._applyFlags(this._buildFlags());
   }
 
-  // ── Getters ────────────────────────────────────────────────
+  // ── Internal ───────────────────────────────────────────────
 
   _raw(key) {
-    if (!this._rc) return this._defaults[key];
+    if (!this._rc) return String(this._defaults[key] ?? '');
     try {
       const v = this._rc.getValue(key).asString();
-      return v !== '' ? v : this._defaults[key];
+      return v !== '' ? v : String(this._defaults[key] ?? '');
     } catch {
-      return this._defaults[key];
+      return String(this._defaults[key] ?? '');
     }
   }
 
-  get dailyXPGoal()        { return Number(this._raw('dailyXPGoal'))   || 100; }
-  get maxStreakBonus()      { return Number(this._raw('maxStreakBonus')) || 50; }
-  get speakingDifficulty() { return this._raw('speakingDifficulty'); }
+  _bool(key) {
+    const v = this._raw(key).toLowerCase();
+    return v === 'true' || v === '1';
+  }
 
-  /**
-   * Feature flag deger
-   * @param {string} flag - ornek: 'nexusMode'
-   * @returns {boolean}
-   */
+  _buildFlags() {
+    return {
+      dailyXPGoal:           Number(this._raw('dailyXPGoal'))   || this._defaults.dailyXPGoal,
+      maxStreakBonus:         Number(this._raw('maxStreakBonus')) || this._defaults.maxStreakBonus,
+      speakingDifficulty:    this._raw('speakingDifficulty')    || this._defaults.speakingDifficulty,
+      feature_speaking_ai:   this._bool('feature_speaking_ai'),
+      feature_notifications: this._bool('feature_notifications'),
+    };
+  }
+
+  /** Tum flagleri window.remoteFlags'e yaz — app her yerden okuyabilir */
+  _applyFlags(flags) {
+    window.remoteFlags = Object.assign({}, flags);
+  }
+
+  // ── Public Getters ─────────────────────────────────────────
+
+  get dailyXPGoal()        { return window.remoteFlags?.dailyXPGoal        ?? this._defaults.dailyXPGoal; }
+  get maxStreakBonus()      { return window.remoteFlags?.maxStreakBonus      ?? this._defaults.maxStreakBonus; }
+  get speakingDifficulty() { return window.remoteFlags?.speakingDifficulty  ?? this._defaults.speakingDifficulty; }
+
   feature(flag) {
-    try {
-      const flags = JSON.parse(this._raw('featureFlags'));
-      return flags[flag] ?? true;
-    } catch {
-      return true;
-    }
+    return window.remoteFlags?.[flag] ?? this._defaults[flag] ?? true;
   }
 }
+
+// Defaults'u hemen yaz — init() bitmeden de remoteFlags erisebilir olsun
+window.remoteFlags = {
+  dailyXPGoal:           100,
+  maxStreakBonus:         50,
+  speakingDifficulty:    'easy',
+  feature_speaking_ai:   false,
+  feature_notifications: true,
+};
 
 window.remoteConfigManager = new RemoteConfigManager();

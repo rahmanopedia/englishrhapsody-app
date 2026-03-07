@@ -1,24 +1,5 @@
 /* ================================================================
-   ENGLISH RHAPSODY — Firebase Yapılandırması
-   
-   KURULUM:
-   1. https://console.firebase.google.com adresine git
-   2. Yeni proje oluştur (örn. "english-rhapsody")
-   3. Authentication → Sign-in method → Email/Password → Etkinleştir
-   4. Firestore Database → Create database → Production mode → Başlat
-   5. Firestore → Rules sekmesi → şu kuralı yapıştır:
-      
-      rules_version = '2';
-      service cloud.firestore {
-        match /databases/{database}/documents {
-          match /users/{userId}/{document=**} {
-            allow read, write: if request.auth != null && request.auth.uid == userId;
-          }
-        }
-      }
-   
-   6. Project Settings (⚙️) → Your apps → </> Web uygulaması ekle
-   7. Aşağıdaki firebaseConfig nesnesini kendi bilgilerinle doldur
+   ENGLISH RHAPSODY — Firebase Yapilandirmasi
    ================================================================ */
 
 const firebaseConfig = {
@@ -33,17 +14,20 @@ const firebaseConfig = {
 
 window._firebaseConfigured = true;
 
-/*
-  App Check (reCAPTCHA v3) — Firestore ve Storage'i botlara karsi koru
+/* ──────────────────────────────────────────────────────────────
+   PLACEHOLDER ALANLARI — asagidaki degerleri Firebase Console'dan al
 
-  KURULUM:
-  1. Firebase Console → App Check → Apps → Web uygulamani sec
-  2. reCAPTCHA v3 provider'i sec
-  3. Google reCAPTCHA Admin (https://www.google.com/recaptcha/admin) → yeni site key al
-     - Tip: reCAPTCHA v3
-     - Domain: uygulamanin deploy edildigi domain
-  4. Asagidaki 'YOUR_RECAPTCHA_V3_SITE_KEY' yerine site key'i yaz
-  5. index.html <head> bolumune ekle:
-     <script src="https://www.google.com/recaptcha/api.js?render=YOUR_RECAPTCHA_V3_SITE_KEY"></script>
-*/
-window._appCheckSiteKey = 'YOUR_RECAPTCHA_V3_SITE_KEY';
+   App Check (reCAPTCHA v3):
+     Firebase Console → App Check → Apps → Web → reCAPTCHA v3
+     Google reCAPTCHA Admin → https://www.google.com/recaptcha/admin
+     - Tip: reCAPTCHA v3   - Domain: deploy edilen domain
+     index.html <head>'ine ekle:
+       <script src="https://www.google.com/recaptcha/api.js?render=SITE_KEY"></script>
+
+   VAPID Key (Web Push):
+     Firebase Console → Project Settings → Cloud Messaging
+     → Web Push certificates → Generate key pair
+────────────────────────────────────────────────────────────── */
+
+window._appCheckSiteKey = 'YOUR_RECAPTCHA_V3_SITE_KEY'; // App Check icin — placeholder ise devre disi
+window._vapidKey        = 'YOUR_VAPID_PUBLIC_KEY_HERE';  // FCM Web Push icin — placeholder ise devre disi

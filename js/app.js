@@ -2577,8 +2577,10 @@ class App {
       window.storageManager?.init();
       window.analyticsManager?.init();
       window.notificationsManager?.init();
-      window.remoteConfigManager?.init(); // async ama beklemiyoruz — defaults hemen kullanilabilir
+      // Remote Config: await ile bekle — splash kaldirilmadan once flagler hazir olsun
+      if (window.remoteConfigManager) await window.remoteConfigManager.init();
     }
+    this._applyRemoteFlags();
 
     const splash = document.getElementById('splash-screen');
     if (splash) {
@@ -2847,6 +2849,16 @@ class App {
     this._checkStreak();
     this._initTheme();
     this.navigate('home');
+  }
+
+  // Remote Config flaglerine gore UI section'larini goster/gizle
+  _applyRemoteFlags() {
+    const flags = window.remoteFlags;
+    if (!flags) return;
+    // feature_speaking_ai: Speaking Lab'da AI rozeti goster
+    const aiLabel = document.getElementById('speaking-ai-badge');
+    if (aiLabel) aiLabel.style.display = flags.feature_speaking_ai ? '' : 'none';
+    // Gelecekte yeni feature flag'ler buraya eklenebilir
   }
 
   // ─────────────────────────────────────────────────────────
