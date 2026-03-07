@@ -87,6 +87,7 @@ class AuthManager {
       console.warn('[Auth] logout error:', e);
     }
     this._cloudReady = false;
+    if (window.app) window.app.cloudLoaded = false;
     this._user = null;
 
     // Header butonunu gizle
@@ -128,6 +129,7 @@ class AuthManager {
       }, 1000);
     } else {
       this._cloudReady = true; // Başarılı okuma — artık yazmaya izin var
+      if (window.app) window.app.cloudLoaded = true; // App-level flag: saveToCloud artık açık
       if (result.data && window.app) {
         // Bulut kazanır — localStorage silinse bile veri kaybolmaz
         delete result.data._updatedAt;

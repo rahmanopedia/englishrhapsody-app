@@ -2337,7 +2337,9 @@ class StateManager {
 
   save(immediate = false) {
     try { localStorage.setItem('er_state', JSON.stringify(this._state)); } catch {}
-    if (window.authManager && window.authManager.isLoggedIn) {
+    // Cloud'a yalnızca: auth hazırsa + cloud state yüklenmiş veya teyit edilmişse yaz
+    if (window.authManager && window.authManager.isLoggedIn &&
+        window.app && window.app.cloudLoaded) {
       window.authManager.saveToCloud(this._state, immediate);
     }
   }
@@ -2535,6 +2537,7 @@ class SRS {
 // ── Main Application ───────────────────────────────────────
 class App {
   constructor() {
+    this.cloudLoaded = false; // true olana kadar saveToCloud çağrılmaz
     this.state   = new StateManager();
     this.audio   = new AudioEngine();
     this.speech  = new SpeechEngine(this.state.get('accent'));
@@ -5280,7 +5283,7 @@ class App {
 
   _bindGlobalEvents() {
     window.addEventListener('beforeunload', () => {
-      if (window.authManager && window.authManager.isLoggedIn) {
+      if (window.authManager && window.authManager.isLoggedIn && this.cloudLoaded) {
         window.authManager.saveToCloud(this.state._state, true);
       }
     });
@@ -5343,4 +5346,4 @@ class App {
   }
 }
 
-const app = new App();
+window.app = new App();
