@@ -147,8 +147,6 @@ const LANG_UI = {
     popup_collocations:  'Sık Kullanılan Kalıplar',
     popup_add:           '➕ Listeye Ekle',
     popup_no_entry:      'Bu kelime şu an veritabanında yok',
-    popup_grammar_word:  '/bağlam kelimesi/',
-    popup_grammar_note:  'Bu temel bir dil bilgisi kelimesidir ve listeye eklenemez.',
     popup_audio_only:    '🔊 Sesi Dinle',
 
     // Word Type Labels
@@ -387,8 +385,6 @@ const LANG_UI = {
     popup_collocations:  'Common Collocations',
     popup_add:           '➕ Add to List',
     popup_no_entry:      'This word is not in the database yet',
-    popup_grammar_word:  '/grammar word/',
-    popup_grammar_note:  'This is a functional word and cannot be added to the list.',
     popup_audio_only:    '🔊 Listen',
 
     type_word:         'Word',
@@ -620,8 +616,6 @@ const LANG_UI = {
     popup_collocations:  'Expresiones Comunes',
     popup_add:           '➕ Añadir a la Lista',
     popup_no_entry:      'Esta palabra aún no está en la base de datos',
-    popup_grammar_word:  '/palabra gramatical/',
-    popup_grammar_note:  'Esta es una palabra funcional y no se puede añadir a la lista.',
     popup_audio_only:    '🔊 Escuchar',
 
     type_word:         'Palabra',

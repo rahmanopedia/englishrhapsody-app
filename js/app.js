@@ -2322,6 +2322,7 @@ class StateManager {
       readingShuffled: false,
       readingOrder: {},
       achievements: [],
+      gems:       0,
       mastery:    {},     // { wordId: { score, interval, ease, nextReview } }
       history:    {},     // { 'YYYY-MM-DD': xp }
     };
@@ -2578,10 +2579,10 @@ class App {
     this.speech.stop();
     this.session.isSpeakingStory = false;
 
-    // Cleanup phantom, nexus and grammar if active
+    // Cleanup phantom, nexus and quantum if active
     if (window.phantomMod)  { window.phantomMod.destroy(); }
     if (window.nexusMod)    { window.nexusMod.destroy(); }
-    if (window.grammarMod)  { window.grammarMod.destroy(); }
+    if (window.quantumMod)  { window.quantumMod.destroy(); }
 
     // Cleanup synesthesia if active (prevents memory leaks and ghost timers)
     if (this.session.synthActive || this.session.synthPaused) {
@@ -2617,11 +2618,18 @@ class App {
       speak:     () => this._initSpeak(),
       analytics: () => this._initAnalytics(),
       nexus:     () => this._initNexus(),
-      grammar:   () => this._initGrammar(),
+      quantum:   () => this._initQuantum(),
     };
     if (init[view]) init[view]();
 
     this.audio.play('click');
+  }
+
+  _initQuantum() {
+    const root = document.getElementById('quantum-root');
+    if (!root) return;
+    window.quantumMod = new QuantumMode(this);
+    window.quantumMod.init(root);
   }
 
   _initPhantom() {
@@ -2636,13 +2644,6 @@ class App {
     if (!root) return;
     window.nexusMod = new NexusMode(this);
     window.nexusMod.init(root);
-  }
-
-  _initGrammar() {
-    const root = document.getElementById('grammar-root');
-    if (!root) return;
-    window.grammarMod = new GrammarMode(this);
-    window.grammarMod.init(root);
   }
 
   toggleFocusMode() {
