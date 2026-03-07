@@ -2849,6 +2849,12 @@ class App {
     UI.setEl('rank-icon',  rank.icon);
     UI.setEl('rank-name',  rank.name);
     UI.setEl('rank-level', `Level ${level}`);
+    // Sidebar footer
+    UI.setEl('sf-rank-icon', rank.icon);
+    UI.setEl('sf-rank-name', rank.name);
+    UI.setEl('sf-level-txt', `Level ${level}`);
+    const needed2 = level * (window.XP_PER_LEVEL || 500);
+    setTimeout(() => UI.setWidth('sf-xp-fill', Math.min((xp / needed2) * 100, 100)), 200);
 
     const wordsPct = WORDS && WORDS.length ? Math.round((learned / WORDS.length) * 100) : 0;
     setTimeout(() => UI.setWidth('ac-words-bar', wordsPct), 150);

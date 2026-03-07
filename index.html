@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/phantom.css">
   <link rel="stylesheet" href="css/nexus.css">
   <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/revolution.css">
 </head>
 <body class="rank-1">
 
@@ -53,7 +54,9 @@
   <header class="app-header">
     <div class="header-logo">
       <div class="logo-dot"></div>
-      English<span> Rhapsody</span>
+      <div class="logo-text">
+        <span class="logo-en">English</span><span class="logo-rh"> Rhapsody</span>
+      </div>
     </div>
     <div class="header-stats">
       <button class="theme-btn" onclick="app.openThemePicker()" title="Tema Seç">🎨</button>
@@ -70,6 +73,7 @@
       <a class="nav-item active" data-target="home">
         <span class="nav-icon">🏠</span> Ana Merkez
       </a>
+      <div class="nav-divider"></div>
       <a class="nav-item" data-target="learn">
         <span class="nav-icon">🌀</span> Sinestezi Lab
       </a>
@@ -85,7 +89,21 @@
       <a class="nav-item" data-target="quantum">
         <span class="nav-icon">⚛️</span> Kuantum Modu
       </a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" data-target="analytics">
+        <span class="nav-icon">📊</span> Analitik
+      </a>
     </nav>
+    <div class="sidebar-footer">
+      <div class="sf-user">
+        <div class="sf-icon" id="sf-rank-icon">🌱</div>
+        <div class="sf-info">
+          <div class="sf-rank" id="sf-rank-name">Çırak</div>
+          <div class="sf-level" id="sf-level-txt">Level 1</div>
+          <div class="sf-bar"><div class="sf-bar-fill" id="sf-xp-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
   </aside>
 
   <!-- Main content -->
