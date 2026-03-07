@@ -2580,7 +2580,6 @@ class App {
         const authModal = document.getElementById('auth-modal');
         if (!authModal || authModal.style.display === 'none') {
           this.navigate('home');
-          if (!this.state.get('onboarded')) this._showOnboarding();
         }
       }, 520);
     }
@@ -2831,7 +2830,6 @@ class App {
     this._checkStreak();
     this._initTheme();
     this.navigate('home');
-    if (!this.state.get('onboarded')) this._showOnboarding();
   }
 
   // ─────────────────────────────────────────────────────────
@@ -2959,187 +2957,6 @@ class App {
       </div>`;
   }
 
-  // ─────────────────────────────────────────────────────────
-  //  ONBOARDING
-  // ─────────────────────────────────────────────────────────
-
-  _showOnboarding() {
-    this._ob = { step: 0, score: 0 };
-    const overlay = document.getElementById('onboarding-overlay');
-    if (!overlay) return;
-    overlay.style.display = 'flex';
-    overlay.style.opacity = '0';
-    requestAnimationFrame(() => {
-      overlay.style.transition = 'opacity 0.4s';
-      overlay.style.opacity = '1';
-    });
-    this._renderObStep();
-  }
-
-  _obQuestions() {
-    return [
-      {
-        icon:'🤔', title:'Seviyeni Belirle',
-        sub:'Sana uygun içeriği hazırlayalım',
-        opts:[
-          {label:'Hiç bilmiyorum', sub:'A1 · Sıfırdan', pts:0},
-          {label:'Biraz biliyorum', sub:'A2 · Temel', pts:1},
-          {label:'Orta seviyeyim', sub:'B1/B2', pts:3},
-          {label:'İleri düzeydeyim', sub:'C1+', pts:5},
-        ]
-      },
-      {
-        icon:'📖', title:'"Galaxy" ne demek?',
-        sub:'Doğru seçeneği tıkla',
-        opts:[
-          {label:'☀️ Güneş', pts:0},
-          {label:'🌀 Galaksi', pts:2, correct:true},
-          {label:'⭐ Yıldız', pts:0},
-          {label:'🪐 Gezegen', pts:0},
-        ]
-      },
-      {
-        icon:'✍️', title:'"I\'m looking forward to ___ you."',
-        sub:'Doğru seçeneği seç',
-        opts:[
-          {label:'meet', pts:0},
-          {label:'meeting', pts:2, correct:true},
-          {label:'met', pts:0},
-          {label:'to meet', pts:0},
-        ]
-      },
-    ];
-  }
-
-  _renderObStep() {
-    const screen = document.getElementById('ob-screen');
-    const progress = document.getElementById('ob-progress');
-    const fill = document.getElementById('ob-progress-fill');
-    if (!screen) return;
-
-    const step = this._ob.step;
-    const qs = this._obQuestions();
-
-    if (step === 0) {
-      if (progress) progress.style.display = 'none';
-      screen.innerHTML = `
-        <div class="ob-card">
-          <div class="ob-icon">🎓</div>
-          <h2 class="ob-title">English<span style="color:var(--cyan)"> Rhapsody</span>'ye<br>Hoş Geldin!</h2>
-          <p class="ob-sub">Birkaç soruda seviyeni belirleyelim ve sana özel bir öğrenme deneyimi oluşturalım.</p>
-          <button class="btn btn-primary btn-lg" style="margin-top:8px" onclick="app._obNext()">Başla →</button>
-        </div>`;
-      return;
-    }
-
-    const q = qs[step - 1];
-    if (!q) { this._obFinish(); return; }
-
-    const pct = ((step - 1) / qs.length) * 100;
-    if (progress) { progress.style.display = 'block'; }
-    if (fill) fill.style.width = `${pct}%`;
-
-    screen.innerHTML = `
-      <div class="ob-card">
-        <div class="ob-icon">${q.icon}</div>
-        <h2 class="ob-title">${q.title}</h2>
-        <p class="ob-sub">${q.sub}</p>
-        <div class="ob-options">
-          ${q.opts.map((o, i) => `
-            <button class="ob-option" onclick="app._obSelect(${step - 1}, ${i})">
-              <span>${o.label}</span>
-              ${o.sub ? `<span class="ob-opt-sub">${o.sub}</span>` : ''}
-            </button>`).join('')}
-        </div>
-      </div>`;
-  }
-
-  _obSelect(qIdx, optIdx) {
-    const q   = this._obQuestions()[qIdx];
-    const opt = q.opts[optIdx];
-    const btns = document.querySelectorAll('.ob-option');
-    btns.forEach(b => b.disabled = true);
-    btns[optIdx].classList.add('selected');
-    this._ob.score += (opt.pts || 0);
-
-    if (q.opts.some(o => o.correct)) {
-      if (opt.correct) btns[optIdx].classList.add('correct');
-      else {
-        btns[optIdx].classList.add('wrong');
-        const ci = q.opts.findIndex(o => o.correct);
-        if (ci >= 0 && btns[ci]) btns[ci].classList.add('correct');
-      }
-    }
-
-    this.audio.play('pop');
-    setTimeout(() => this._obNext(), 750);
-  }
-
-  _obNext() {
-    this._ob.step++;
-    const screen = document.getElementById('ob-screen');
-    if (screen) {
-      screen.style.opacity = '0';
-      screen.style.transform = 'translateX(20px)';
-      setTimeout(() => {
-        screen.style.transition = 'none';
-        screen.style.transform = 'translateX(-20px)';
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          screen.style.transition = 'opacity 0.3s, transform 0.3s var(--bounce)';
-          screen.style.opacity = '1';
-          screen.style.transform = 'translateX(0)';
-          this._renderObStep();
-        }));
-      }, 180);
-    }
-  }
-
-  _obFinish() {
-    const score = this._ob.score;
-    let speakDiff, bonus, levelLabel;
-    if (score <= 2)     { speakDiff='easy';   bonus=0;   levelLabel='Başlangıç 🌱'; }
-    else if (score <= 6){ speakDiff='medium'; bonus=200; levelLabel='Orta Seviye 📚'; }
-    else                { speakDiff='hard';   bonus=500; levelLabel='İleri Seviye 🏆'; }
-
-    const fill = document.getElementById('ob-progress-fill');
-    if (fill) fill.style.width = '100%';
-
-    const screen = document.getElementById('ob-screen');
-    if (screen) screen.innerHTML = `
-      <div class="ob-card">
-        <div class="ob-icon">🎯</div>
-        <h2 class="ob-title">Seviyeni Belirledik!</h2>
-        <p class="ob-sub" style="margin-bottom:8px"><strong style="color:var(--cyan)">${levelLabel}</strong></p>
-        ${bonus > 0 ? `<p class="ob-sub">⚡ Başlangıç bonusu: +${bonus} XP</p>` : ''}
-        <button class="btn btn-primary btn-lg" style="margin-top:20px" onclick="app._obComplete('${speakDiff}', ${bonus})">
-          Hadi Başlayalım!
-        </button>
-      </div>`;
-  }
-
-  _obComplete(speakDiff, bonus) {
-    this.state.update({ onboarded: true, speakDiff });
-    if (bonus > 0) this.addXP(bonus);
-    const overlay = document.getElementById('onboarding-overlay');
-    if (overlay) {
-      overlay.style.transition = 'opacity 0.4s';
-      overlay.style.opacity = '0';
-      setTimeout(() => { overlay.style.display = 'none'; }, 420);
-    }
-    this.audio.play('success');
-    UI.toast(`✅ Seviye belirlendi! Öğrenmeye başla.`);
-    this._initHome();
-  }
-
-  skipOnboarding() {
-    this.state.set('onboarded', true);
-    const overlay = document.getElementById('onboarding-overlay');
-    if (overlay) {
-      overlay.style.transition = 'opacity 0.3s';
-      overlay.style.opacity = '0';
-      setTimeout(() => { overlay.style.display = 'none'; }, 320);
-    }
-  }
 
   // ─────────────────────────────────────────────────────────
   //  SYNESTHESIA MODULE (WORLD FIRST)
