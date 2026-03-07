@@ -5,11 +5,12 @@
 
 class AuthManager {
   constructor() {
-    this._user      = null;
-    this._db        = null;
-    this._auth      = null;
-    this._syncTimer = null;
-    this._ready     = false;
+    this._user       = null;
+    this._db         = null;
+    this._auth       = null;
+    this._syncTimer  = null;
+    this._ready      = false;
+    this._cloudReady = false; // true yalnızca bu oturumda buluttan başarılı okuma yapıldıktan sonra
   }
 
   // ── Baslat ────────────────────────────────────────────────
@@ -85,6 +86,7 @@ class AuthManager {
     } catch (e) {
       console.warn('[Auth] logout error:', e);
     }
+    this._cloudReady = false;
     this._user = null;
 
     // Header butonunu gizle
@@ -117,23 +119,36 @@ class AuthManager {
 
   async _onLogin(user) {
     this._updateHeaderUser(user);
-    const cloudData = await this.loadFromCloud();
-    if (cloudData && window.app) {
-      const localTs = parseInt(localStorage.getItem('er_state_ts') || '0');
-      const cloudTs = cloudData._updatedAt || 0;
-      if (cloudTs >= localTs) {
-        delete cloudData._updatedAt;
-        window.app.state._state = Object.assign(window.app.state._defaults(), cloudData);
+    const result = await this._loadCloudSafe();
+    if (!result.ok) {
+      // Firestore'a ulaşılamadı — buluta YAZMA, mevcut (local) state korunsun
+      console.warn('[Auth] Bulut okunamadı; bu oturumda buluta yazılmayacak.');
+      setTimeout(() => {
+        if (typeof UI !== 'undefined') UI.toast('⚠️ Bulut verisi yüklenemedi — veriler korunuyor, internet bağlantınızı kontrol edin');
+      }, 1000);
+    } else {
+      this._cloudReady = true; // Başarılı okuma — artık yazmaya izin var
+      if (result.data && window.app) {
+        // Bulut kazanır — localStorage silinse bile veri kaybolmaz
+        delete result.data._updatedAt;
+        window.app.state._state = Object.assign(window.app.state._defaults(), result.data);
         window.app.state.save();
-      } else {
-        await this.saveToCloud(window.app.state._state, true);
       }
-    } else if (window.app) {
-      // Ilk giris — mevcut lokal veriyi buluta kaydet
-      await this.saveToCloud(window.app.state._state, true);
+      // result.data === null → yeni kullanıcı, lokal state doğru, kaydetmeye izin var
     }
     this._hideAuthModal();
     if (window.app) window.app._syncUIFromState();
+  }
+
+  async _loadCloudSafe() {
+    if (!this.uid || !this._db) return { ok: false };
+    try {
+      const snap = await this._db.doc('users/' + this.uid + '/data/state').get();
+      return { ok: true, data: snap.exists ? snap.data() : null };
+    } catch (e) {
+      console.warn('[Auth] Load error:', e);
+      return { ok: false };
+    }
   }
 
   async _initUserDoc(user) {
@@ -163,6 +178,7 @@ class AuthManager {
 
   async saveToCloud(stateObj, immediate) {
     if (!this.uid || !this._db) return;
+    if (!this._cloudReady) return; // Buluttan başarılı okuma yapılmadan yazma yok
     const doSave = async () => {
       try {
         const ts = Date.now();
