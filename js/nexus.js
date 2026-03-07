@@ -199,7 +199,7 @@ class NexusMode {
   }
 
   _renderSynthesis() {
-    const regex = new RegExp(`\\b${this.current.phrase.replace(' ', '\\s+')}\\b`, 'gi');
+    const regex = new RegExp(`\\b${this.current.phrase.replace(/ /g, '\\s+')}\\b`, 'gi');
     let displayEx = this.current.ex.replace(regex, '<span class="synth-blank"></span>');
     if (displayEx === this.current.ex) {
         const vRegex = new RegExp(`\\b${this.current.verb}[a-z]*\\b`, 'gi');
@@ -382,29 +382,25 @@ class NexusMode {
   }
 
   _renderNetwork() {
-    let tasks = [...this.current.tasks];
-    tasks.sort(() => 0.5 - Math.random());
-    this.current.tasks = tasks;
+    this.currentTasks = [...this.current.tasks].sort(() => 0.5 - Math.random());
     this.currentTaskIndex = 0;
 
-    let particlesToShow = tasks.map(p => p.particle);
+    let particlesToShow = this.currentTasks.map(p => p.particle);
     let wrongParticles = this.allParticles.filter(p => !particlesToShow.includes(p));
     wrongParticles.sort(() => 0.5 - Math.random());
-    
-    particlesToShow.push(...wrongParticles.slice(0, 3));
+
+    particlesToShow = [...particlesToShow, ...wrongParticles.slice(0, 3)];
     particlesToShow.sort(() => 0.5 - Math.random());
-    
-    this.current.nodes = particlesToShow;
 
     this.root.innerHTML = `
       <div class="nexus-header">
         <h1 class="nexus-title">NEXUS <span class="v5-badge" style="background:#8b5cf6">AĞ MODU</span></h1>
         <p class="nexus-subtitle">Takımyıldızı ${this.currentIndex + 1} / ${this.queue.length}</p>
       </div>
-      
+
       <div class="nexus-display-container">
-         <div class="nexus-task-progress">Düğüm ${this.currentTaskIndex + 1} / ${this.current.tasks.length}</div>
-         <div class="nexus-question" id="nx-q">${this.current.tasks[0].tr}</div>
+         <div class="nexus-task-progress">Düğüm ${this.currentTaskIndex + 1} / ${this.currentTasks.length}</div>
+         <div class="nexus-question" id="nx-q">${this.currentTasks[0].tr}</div>
          <div class="nexus-feedback-area" id="nx-feedback" style="display:none;">
             <div class="nexus-phrase-result" id="nx-phrase-res"></div>
             <div class="nexus-example-text" id="nx-ex-res"></div>
@@ -416,7 +412,7 @@ class NexusMode {
         <div class="nexus-core-node" id="nexus-core" onclick="window.nexusMod.playVerbAudio('${this.current.verb}')">
           ${this.current.verb}
         </div>
-        ${this.current.nodes.map((opt, i) => {
+        ${particlesToShow.map((opt, i) => {
            return `<div class="nexus-particle-node" id="particle-${i}" onclick="window.nexusMod.checkNetworkAnswer('${opt}', this)">${opt}</div>`;
         }).join('')}
       </div>
@@ -510,7 +506,7 @@ class NexusMode {
     if (this.locked) return;
     if (el.classList.contains('solved')) return;
     
-    const task = this.current.tasks[this.currentTaskIndex];
+    const task = this.currentTasks[this.currentTaskIndex];
     if (particle === task.particle) {
        this.locked = true;
        el.classList.add('solved');
@@ -534,16 +530,16 @@ class NexusMode {
        this.currentTaskIndex++;
        
        setTimeout(() => {
-          if (this.currentTaskIndex >= this.current.tasks.length) {
+          if (this.currentTaskIndex >= this.currentTasks.length) {
              this._completeConstellation();
           } else {
              if (qEl) {
                  qEl.style.display = 'block';
-                 qEl.innerText = this.current.tasks[this.currentTaskIndex].tr;
+                 qEl.innerText = this.currentTasks[this.currentTaskIndex].tr;
              }
              if (feedbackArea) feedbackArea.style.display = 'none';
              const prog = document.querySelector('.nexus-task-progress');
-             if (prog) prog.innerText = `Düğüm ${this.currentTaskIndex + 1} / ${this.current.tasks.length}`;
+             if (prog) prog.innerText = `Düğüm ${this.currentTaskIndex + 1} / ${this.currentTasks.length}`;
              this.locked = false;
           }
        }, 2500);
@@ -629,7 +625,7 @@ class NexusMode {
 
   _renderCipher() {
     let displayEx = this.current.ex;
-    const fullPhraseRegex = new RegExp(this.current.phrase.replace(' ', '\\s+'), 'gi');
+    const fullPhraseRegex = new RegExp(this.current.phrase.replace(/ /g, '\\s+'), 'gi');
     displayEx = displayEx.replace(fullPhraseRegex, '<span class="cipher-blank">[ ? ]</span>');
     
     if (!displayEx.includes('cipher-blank')) {
@@ -763,15 +759,14 @@ class NexusMode {
       const cbEl = document.getElementById('nx-combo');
       if (scEl) scEl.innerText = this.score;
       if (cbEl) cbEl.innerText = this.combo;
-      
-      if(this.app.state) {
-         let xp = this.app.state.get('xp') || 0;
-         this.app.state.update({ xp: xp + 30 });
-         if(this.app._renderHeader) this.app._renderHeader();
-      }
   }
 
   _showResults(title) {
+    if (this.app.state) {
+      const xp = this.app.state.get('xp') || 0;
+      this.app.state.update({ xp: xp + this.score });
+      if (this.app._renderHeader) this.app._renderHeader();
+    }
     this.root.innerHTML = `
       <div class="nexus-header">
         <h1 class="nexus-title">NEXUS <span class="v5-badge">BAŞARILI</span></h1>
@@ -782,7 +777,7 @@ class NexusMode {
         <p style="color:var(--text-2); font-size:1.2rem; margin-bottom:30px;">Kazanılan Toplam XP: <strong style="color:var(--cyan)">+${this.score}</strong></p>
         <div style="display:flex; gap:15px; justify-content:center;">
            <button class="btn btn-primary nexus-intro-btn" onclick="window.nexusMod.init(window.nexusMod.root)">MOD SEÇİMİ</button>
-           <button class="btn btn-ghost" style="padding: 16px 30px; font-size: 1.1rem;" onclick="app.navigate('home')">ANA MERKEZ</button>
+           <button class="btn btn-ghost" style="padding: 16px 30px; font-size: 1.1rem;" onclick="window.app.navigate('home')">ANA MERKEZ</button>
         </div>
       </div>
       <div class="nexus-bg-stars" id="nexus-stars"></div>
