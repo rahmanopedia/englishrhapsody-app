@@ -409,31 +409,6 @@ function shuffle(arr) { return [...arr].sort(()=>Math.random()-0.5); }
 
 function randScenario() { return QUANTUM_SCENARIOS[Math.floor(Math.random()*QUANTUM_SCENARIOS.length)]; }
 
-// Distractors for Word Forge
-function getDistractors(part, sc) {
-  const clean = w => w.replace(/[?.]/g,'');
-  const correct = clean(part.w);
-  let pool = [];
-
-  if (part.c==='subj') {
-    pool = QUANTUM_SCENARIOS.map(s=>s.subj.w).filter(w=>w!==correct);
-  } else if (part.c==='aux') {
-    pool = ['am','is','are','was','were','have','has','had','will','do','does','did','been','being','be','would','shall','being','not']
-      .filter(w=>w!==correct&&!correct.includes(w));
-  } else if (part.c==='verb') {
-    const {v1,v2,v3,ving}=sc.verb;
-    pool=[v1,v2,v3,ving].filter(w=>w!==correct&&w);
-    QUANTUM_SCENARIOS.forEach(s=>{
-      pool.push(s.verb.v1,s.verb.v2,s.verb.v3,s.verb.ving);
-    });
-  } else if (part.c==='obj') {
-    pool = QUANTUM_SCENARIOS.map(s=>s.obj.w).filter(w=>clean(w)!==clean(correct));
-  }
-
-  pool = [...new Set(pool.filter(Boolean))].sort(()=>Math.random()-0.5);
-  return pool.slice(0,2).map(clean);
-}
-
 // ── Meaning Card ────────────────────────────────────────────────
 function showMeaningCard(shellId, parts, tr, tenseLabel) {
   const shell = document.getElementById(shellId);
@@ -482,21 +457,6 @@ class QuantumMode {
 
   <div class="qhub-grid">
 
-    <div class="qhub-card arena" onclick="window._qmode.startGame('forge')">
-      <div class="qhc-glow"></div>
-      <div class="qhc-icon">🔨</div>
-      <div class="qhc-body">
-        <h2>Word Forge</h2>
-        <p>Hedef gramer yapısına göre cümleyi kelime kelime inşa et. Her adımda doğru kelimeyi seç.</p>
-        <div class="qhc-tags">
-          <span class="qhc-tag">Kelime Seçimi</span>
-          <span class="qhc-tag">3 Can</span>
-          <span class="qhc-tag amber">100 XP</span>
-        </div>
-      </div>
-      <div class="qhc-arrow">→</div>
-    </div>
-
     <div class="qhub-card blitz" onclick="window._qmode.startGame('rush')">
       <div class="qhc-glow"></div>
       <div class="qhc-icon">⚡</div>
@@ -533,7 +493,6 @@ class QuantumMode {
 
   startGame(type) {
     this.root.innerHTML='';
-    if (type==='forge')    new WordForge(this).start();
     if (type==='rush')     new SentenceRush(this).start();
     if (type==='scramble') new SentenceScramble(this).start();
   }
@@ -552,196 +511,7 @@ class QuantumMode {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  GAME 1 — WORD FORGE (kelime kelime cümle kurma)
-// ════════════════════════════════════════════════════════════════
-class WordForge {
-  constructor(qm) {
-    this.qm=qm; this.root=qm.root;
-    this.round=0; this.maxRound=8;
-    this.lives=3; this.score=0;
-    this.curIdx=0;
-    this.parts=[]; this.placed=[];
-    this.sc=null; this.state=null;
-    this.timer=null; this.timeLeft=25;
-  }
-
-  start() {
-    this.root.innerHTML=`
-<div class="qgame-shell" id="wf-shell">
-  <div class="qgame-topbar">
-    <button class="qback-btn" onclick="window._qmode.backToHub()">← Hub</button>
-    <div class="qgame-topbar-center">
-      <span class="qtb-label">Round</span>
-      <span class="qtb-val" id="wf-round">1/8</span>
-    </div>
-    <div class="qgame-topbar-right">
-      <span id="wf-lives">❤️❤️❤️</span>
-      <span class="qtb-score" id="wf-score">0</span>
-    </div>
-  </div>
-
-  <div class="arena-timer-bar"><div class="arena-timer-fill" id="wf-timer"></div></div>
-
-  <div class="wf-target-card">
-    <span class="wf-target-icon" id="wf-icon">🍎</span>
-    <div class="wf-target-info">
-      <div class="atc-label">HEDEF YAPI</div>
-      <div class="atc-state" id="wf-state">—</div>
-    </div>
-    <div class="wf-timer-num" id="wf-timer-num">25</div>
-  </div>
-
-  <div class="wf-sentence-area" id="wf-sentence-area"></div>
-
-  <div class="wf-instruction">Şu anda hangi kelime gerekiyor?</div>
-
-  <div class="wf-choices" id="wf-choices"></div>
-
-  <div class="arena-feedback" id="wf-feedback"></div>
-</div>`;
-    this._newRound();
-  }
-
-  _newRound() {
-    if (this.round>=this.maxRound) { this._over(true); return; }
-    this.round++;
-    this.curIdx=0;
-    this.placed=[];
-    this.sc=randScenario();
-
-    this.state = {
-      time:  ['pres','past','fut'][Math.floor(Math.random()*3)],
-      flow:  ['simp','cont','perf','perf_cont'][Math.floor(Math.random()*4)],
-      voice: Math.random()>0.4?'act':'pass',
-      pol:   Math.random()>0.3?'aff':'neg',
-    };
-
-    this.parts = generateSentence(this.sc, this.state.time, this.state.flow, this.state.voice, this.state.pol);
-
-    document.getElementById('wf-round').textContent=`${this.round}/${this.maxRound}`;
-    document.getElementById('wf-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-    document.getElementById('wf-score').textContent=this.score;
-    document.getElementById('wf-icon').textContent=this.sc.icon;
-    document.getElementById('wf-state').textContent=stateLabel(this.state);
-
-    this._renderSentence();
-    this._renderChoices();
-    this._startTimer();
-  }
-
-  _renderSentence() {
-    const el=document.getElementById('wf-sentence-area');
-    if (!el) return;
-    el.innerHTML=this.parts.map((p,i)=>{
-      if (i<this.curIdx) {
-        return `<span class="wf-word filled c-${p.c}">${p.w}</span>`;
-      } else if (i===this.curIdx) {
-        return `<span class="wf-word current">?</span>`;
-      } else {
-        return `<span class="wf-word blank">_</span>`;
-      }
-    }).join(' ');
-  }
-
-  _renderChoices() {
-    const el=document.getElementById('wf-choices');
-    if (!el||this.curIdx>=this.parts.length) return;
-
-    const part=this.parts[this.curIdx];
-    const correct=part.w.replace(/[?.]/g,'');
-    const distractors=getDistractors(part, this.sc);
-    const options=shuffle([correct, ...distractors]);
-
-    el.innerHTML=options.map(opt=>`
-      <button class="wf-choice-btn" data-word="${opt}">${opt}</button>
-    `).join('');
-
-    el.querySelectorAll('.wf-choice-btn').forEach(btn=>{
-      btn.onclick=()=>this._pick(btn.dataset.word, btn);
-    });
-  }
-
-  _pick(word, btn) {
-    const part=this.parts[this.curIdx];
-    const correct=part.w.replace(/[?.]/g,'');
-
-    if (word===correct) {
-      btn.classList.add('wf-correct');
-      this.placed.push(word);
-      this.curIdx++;
-
-      if (this.curIdx>=this.parts.length) {
-        this._stopTimer();
-        const bonus=30+Math.ceil(this.timeLeft*2);
-        this.score+=bonus;
-        this._renderSentence();
-        this._feedback(`✅ Mükemmel! +${bonus} puan`, 'correct');
-        document.getElementById('wf-choices').innerHTML='';
-        document.getElementById('wf-score').textContent=this.score;
-        const tr = generateTurkishTranslation(this.sc, this.state.time, this.state.flow, this.state.voice, this.state.pol);
-        showMeaningCard('wf-shell', this.parts, tr, stateLabel(this.state));
-        setTimeout(()=>this._newRound(), 2800);
-      } else {
-        this._renderSentence();
-        this._renderChoices();
-      }
-    } else {
-      this.lives--;
-      btn.classList.add('wf-wrong');
-      setTimeout(()=>btn.classList.remove('wf-wrong'),500);
-      this._flash('wf-shell','shake');
-      this._feedback(`❌ Yanlış! −1 can`, 'wrong');
-      document.getElementById('wf-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-      if (this.lives<=0) { this._stopTimer(); setTimeout(()=>this._over(false),1000); }
-    }
-  }
-
-  _startTimer() {
-    this.timeLeft=25; this._stopTimer();
-    const fill=document.getElementById('wf-timer');
-    const num =document.getElementById('wf-timer-num');
-    this.timer=setInterval(()=>{
-      this.timeLeft--;
-      if(fill) { fill.style.width=(this.timeLeft/25*100)+'%'; fill.style.background=this.timeLeft<8?'#f43f5e':'var(--cyan)'; }
-      if(num)  { num.textContent=this.timeLeft; num.style.color=this.timeLeft<8?'#f43f5e':'var(--text-2)'; }
-      if(this.timeLeft<=0){ this._stopTimer(); this._timeOut(); }
-    },1000);
-  }
-
-  _stopTimer() { if(this.timer){clearInterval(this.timer);this.timer=null;} }
-
-  _timeOut() {
-    this.lives--;
-    this._feedback(`⏱️ Süre doldu! −1 can`, 'wrong');
-    document.getElementById('wf-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-    const tr = generateTurkishTranslation(this.sc, this.state.time, this.state.flow, this.state.voice, this.state.pol);
-    showMeaningCard('wf-shell', this.parts, tr, stateLabel(this.state));
-    if(this.lives<=0){ setTimeout(()=>this._over(false),2800); return; }
-    setTimeout(()=>this._newRound(),2800);
-  }
-
-  _feedback(msg,type) {
-    const el=document.getElementById('wf-feedback');
-    if(!el)return;
-    el.textContent=msg; el.className=`arena-feedback fb-${type} fb-show`;
-    setTimeout(()=>el.classList.remove('fb-show'),1800);
-  }
-
-  _flash(id,cls) {
-    const el=document.getElementById(id);
-    if(!el)return; el.classList.add(cls); setTimeout(()=>el.classList.remove(cls),500);
-  }
-
-  _over(won) {
-    this._stopTimer();
-    this.qm.recordBest(this.score);
-    if(won){ this.qm.recordWin(); this.qm.addXP(100); this.qm.confetti(); }
-    this.root.innerHTML=_resultHTML('🔨','Word Forge',won,this.score,`${this.round-1}/${this.maxRound} tur`,won?100:0,'forge');
-  }
-}
-
-// ════════════════════════════════════════════════════════════════
-//  GAME 2 — SENTENCE RUSH (20s per sentence)
+//  GAME 1 — SENTENCE RUSH (20s per sentence)
 // ════════════════════════════════════════════════════════════════
 class SentenceRush {
   constructor(qm) {
