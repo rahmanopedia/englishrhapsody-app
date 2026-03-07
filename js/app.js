@@ -2335,17 +2335,16 @@ class StateManager {
     } catch { return this._defaults(); }
   }
 
-  save() {
+  save(immediate = false) {
     try { localStorage.setItem('er_state', JSON.stringify(this._state)); } catch {}
-    // Buluta debounced kaydet
     if (window.authManager && window.authManager.isLoggedIn) {
-      window.authManager.saveToCloud(this._state);
+      window.authManager.saveToCloud(this._state, immediate);
     }
   }
 
-  get(key)        { return this._state[key]; }
-  set(key, value) { this._state[key] = value; this.save(); }
-  update(partial) { Object.assign(this._state, partial); this.save(); }
+  get(key)                   { return this._state[key]; }
+  set(key, value, imm=false) { this._state[key] = value; this.save(imm); }
+  update(partial, imm=false) { Object.assign(this._state, partial); this.save(imm); }
 }
 
 // ── Audio Engine ───────────────────────────────────────────
@@ -2716,7 +2715,7 @@ class App {
       }
       this._applyRankTheme();
     }
-    this.state.update({ xp, level });
+    this.state.update({ xp, level }, true);
     this._updateHeader();
     if (this.session.view === 'home') this._updateHomeStats();
 
@@ -2814,7 +2813,7 @@ class App {
     } else if (lastActive && lastActive !== today) {
       streak = 1;
     }
-    this.state.update({ streak, lastActive: today });
+    this.state.update({ streak, lastActive: today }, true);
   }
 
   _updateHeader() {
@@ -3590,10 +3589,10 @@ class App {
   _updateMastery(id, isCorrect) {
     const mastery = this.state.get('mastery');
     const updated = SRS.update(mastery, id, isCorrect);
-    this.state.set('mastery', updated);
+    this.state.set('mastery', updated, true);
     const total   = this.state.get('totalAttempts') + 1;
     const correct = this.state.get('totalCorrect')  + (isCorrect ? 1 : 0);
-    this.state.update({ totalAttempts: total, totalCorrect: correct });
+    this.state.update({ totalAttempts: total, totalCorrect: correct }, true);
   }
 
   _updateSynthCombo() {
@@ -5280,6 +5279,12 @@ class App {
   }
 
   _bindGlobalEvents() {
+    window.addEventListener('beforeunload', () => {
+      if (window.authManager && window.authManager.isLoggedIn) {
+        window.authManager.saveToCloud(this.state._state, true);
+      }
+    });
+
     document.addEventListener('click', e => {
       const navItem = e.target.closest('.nav-item, .m-nav-item');
       if (navItem) { this.navigate(navItem.dataset.target); return; }
