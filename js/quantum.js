@@ -19,6 +19,7 @@ const QUANTUM_SCENARIOS = [
         fut:['yenilecek','yenilmeyecek'] }
     }
   },
+  // ── 35 new scenarios added below ────────────────────────────────
   {
     id:'s2', icon:'🐕',
     subj:{w:'The dog',    type:'sg', obj_form:'the dog'   },
@@ -241,6 +242,566 @@ const QUANTUM_SCENARIOS = [
         pres:['korunur','korunmaz'], prg:['korunuyor','korunmuyor'],
         past:['korundu','korunmadı'], ppas:['korunmuştu','korunmamıştı'],
         fut:['korunacak','korunmayacak'] }
+    }
+  },
+  {
+    id:'s16', icon:'📖',
+    subj:{w:'The teacher', type:'sg', obj_form:'the teacher'},
+    verb:{v1:'explain',  v2:'explained', v3:'explained', ving:'explaining'},
+    obj: {w:'the lesson',     type:'sg'},
+    trData:{
+      act:{ subj:'Öğretmen', obj:'dersi',
+        pres:['açıklar','açıklamaz'], prg:['açıklıyor','açıklamıyor'],
+        past:['açıkladı','açıklamadı'], ppas:['açıklamıştı','açıklamamıştı'],
+        fut:['açıklayacak','açıklamayacak'] },
+      pass:{ subj:'Ders', agent:'öğretmen tarafından',
+        pres:['açıklanır','açıklanmaz'], prg:['açıklanıyor','açıklanmıyor'],
+        past:['açıklandı','açıklanmadı'], ppas:['açıklanmıştı','açıklanmamıştı'],
+        fut:['açıklanacak','açıklanmayacak'] }
+    }
+  },
+  {
+    id:'s17', icon:'🐱',
+    subj:{w:'The cat',    type:'sg', obj_form:'the cat'   },
+    verb:{v1:'catch',    v2:'caught',   v3:'caught',   ving:'catching'  },
+    obj: {w:'the mouse',      type:'sg'},
+    trData:{
+      act:{ subj:'Kedi', obj:'fareyi',
+        pres:['yakalar','yakalamaz'], prg:['yakalıyor','yakalamıyor'],
+        past:['yakaladı','yakalamadı'], ppas:['yakalamıştı','yakalamamıştı'],
+        fut:['yakalayacak','yakalamayacak'] },
+      pass:{ subj:'Fare', agent:'kedi tarafından',
+        pres:['yakalanır','yakalanmaz'], prg:['yakalanıyor','yakalanmıyor'],
+        past:['yakalandı','yakalanmadı'], ppas:['yakalanmıştı','yakalanmamıştı'],
+        fut:['yakalanacak','yakalanmayacak'] }
+    }
+  },
+  {
+    id:'s18', icon:'📚',
+    subj:{w:'The student', type:'sg', obj_form:'the student'},
+    verb:{v1:'read',     v2:'read',     v3:'read',     ving:'reading'   },
+    obj: {w:'a book',         type:'sg'},
+    trData:{
+      act:{ subj:'Öğrenci', obj:'bir kitap',
+        pres:['okur','okumaz'], prg:['okuyor','okumuyor'],
+        past:['okudu','okumadı'], ppas:['okumuştu','okumamıştı'],
+        fut:['okuyacak','okumayacak'] },
+      pass:{ subj:'Bir kitap', agent:'öğrenci tarafından',
+        pres:['okunur','okunmaz'], prg:['okunuyor','okunmuyor'],
+        past:['okundu','okunmadı'], ppas:['okunmuştu','okunmamıştı'],
+        fut:['okunacak','okunmayacak'] }
+    }
+  },
+  {
+    id:'s19', icon:'🏥',
+    subj:{w:'The doctor', type:'sg', obj_form:'the doctor'},
+    verb:{v1:'save',     v2:'saved',    v3:'saved',    ving:'saving'    },
+    obj: {w:'the patient',    type:'sg'},
+    trData:{
+      act:{ subj:'Doktor', obj:'hastayı',
+        pres:['kurtarır','kurtarmaz'], prg:['kurtarıyor','kurtarmıyor'],
+        past:['kurtardı','kurtarmadı'], ppas:['kurtarmıştı','kurtarmamıştı'],
+        fut:['kurtaracak','kurtarmayacak'] },
+      pass:{ subj:'Hasta', agent:'doktor tarafından',
+        pres:['kurtarılır','kurtarılmaz'], prg:['kurtarılıyor','kurtarılmıyor'],
+        past:['kurtarıldı','kurtarılmadı'], ppas:['kurtarılmıştı','kurtarılmamıştı'],
+        fut:['kurtarılacak','kurtarılmayacak'] }
+    }
+  },
+  {
+    id:'s20', icon:'🕵️',
+    subj:{w:'The spy',   type:'sg', obj_form:'the spy'   },
+    verb:{v1:'find',     v2:'found',    v3:'found',    ving:'finding'   },
+    obj: {w:'the secret',     type:'sg'},
+    trData:{
+      act:{ subj:'Casus', obj:'sırrı',
+        pres:['bulur','bulmaz'], prg:['buluyor','bulmuyor'],
+        past:['buldu','bulmadı'], ppas:['bulmuştu','bulmamıştı'],
+        fut:['bulacak','bulmayacak'] },
+      pass:{ subj:'Sır', agent:'casus tarafından',
+        pres:['bulunur','bulunmaz'], prg:['bulunuyor','bulunmuyor'],
+        past:['bulundu','bulunmadı'], ppas:['bulunmuştu','bulunmamıştı'],
+        fut:['bulunacak','bulunmayacak'] }
+    }
+  },
+  {
+    id:'s21', icon:'🧸',
+    subj:{w:'The child',  type:'sg', obj_form:'the child' },
+    verb:{v1:'break',    v2:'broke',    v3:'broken',   ving:'breaking'  },
+    obj: {w:'the toy',        type:'sg'},
+    trData:{
+      act:{ subj:'Çocuk', obj:'oyuncağı',
+        pres:['kırar','kırmaz'], prg:['kırıyor','kırmıyor'],
+        past:['kırdı','kırmadı'], ppas:['kırmıştı','kırmamıştı'],
+        fut:['kıracak','kırmayacak'] },
+      pass:{ subj:'Oyuncak', agent:'çocuk tarafından',
+        pres:['kırılır','kırılmaz'], prg:['kırılıyor','kırılmıyor'],
+        past:['kırıldı','kırılmadı'], ppas:['kırılmıştı','kırılmamıştı'],
+        fut:['kırılacak','kırılmayacak'] }
+    }
+  },
+  {
+    id:'s22', icon:'🎤',
+    subj:{w:'The singer', type:'sg', obj_form:'the singer'},
+    verb:{v1:'sing',     v2:'sang',     v3:'sung',     ving:'singing'   },
+    obj: {w:'a song',         type:'sg'},
+    trData:{
+      act:{ subj:'Şarkıcı', obj:'bir şarkı',
+        pres:['söyler','söylemez'], prg:['söylüyor','söylemiyor'],
+        past:['söyledi','söylemedi'], ppas:['söylemişti','söylememişti'],
+        fut:['söyleyecek','söylemeyecek'] },
+      pass:{ subj:'Bir şarkı', agent:'şarkıcı tarafından',
+        pres:['söylenir','söylenmez'], prg:['söyleniyor','söylenmiyor'],
+        past:['söylendi','söylenmedi'], ppas:['söylenmişti','söylenmemişti'],
+        fut:['söylenecek','söylenmeyecek'] }
+    }
+  },
+  {
+    id:'s23', icon:'🪖',
+    subj:{w:'The soldier', type:'sg', obj_form:'the soldier'},
+    verb:{v1:'defend',   v2:'defended', v3:'defended', ving:'defending' },
+    obj: {w:'the country',    type:'sg'},
+    trData:{
+      act:{ subj:'Asker', obj:'ülkeyi',
+        pres:['savunur','savunmaz'], prg:['savunuyor','savunmuyor'],
+        past:['savundu','savunmadı'], ppas:['savunmuştu','savunmamıştı'],
+        fut:['savunacak','savunmayacak'] },
+      pass:{ subj:'Ülke', agent:'asker tarafından',
+        pres:['savunulur','savunulmaz'], prg:['savunuluyor','savunulmuyor'],
+        past:['savunuldu','savunulmadı'], ppas:['savunulmuştu','savunulmamıştı'],
+        fut:['savunulacak','savunulmayacak'] }
+    }
+  },
+  {
+    id:'s24', icon:'⛈️',
+    subj:{w:'The storm',  type:'sg', obj_form:'the storm' },
+    verb:{v1:'hit',      v2:'hit',      v3:'hit',      ving:'hitting'   },
+    obj: {w:'the ship',       type:'sg'},
+    trData:{
+      act:{ subj:'Fırtına', obj:'gemiyi',
+        pres:['vurur','vurmaz'], prg:['vuruyor','vurmuyor'],
+        past:['vurdu','vurmadı'], ppas:['vurmuştu','vurmamıştı'],
+        fut:['vuracak','vurmayacak'] },
+      pass:{ subj:'Gemi', agent:'fırtına tarafından',
+        pres:['vurulur','vurulmaz'], prg:['vuruluyor','vurulmuyor'],
+        past:['vuruldu','vurulmadı'], ppas:['vurulmuştu','vurulmamıştı'],
+        fut:['vurulacak','vurulmayacak'] }
+    }
+  },
+  {
+    id:'s25', icon:'👑',
+    subj:{w:'The queen',  type:'sg', obj_form:'the queen' },
+    verb:{v1:'rule',     v2:'ruled',    v3:'ruled',    ving:'ruling'    },
+    obj: {w:'the empire',     type:'sg'},
+    trData:{
+      act:{ subj:'Kraliçe', obj:'imparatorluğu',
+        pres:['yönetir','yönetmez'], prg:['yönetiyor','yönetmiyor'],
+        past:['yönetti','yönetmedi'], ppas:['yönetmişti','yönetmemişti'],
+        fut:['yönetecek','yönetmeyecek'] },
+      pass:{ subj:'İmparatorluk', agent:'kraliçe tarafından',
+        pres:['yönetilir','yönetilmez'], prg:['yönetiliyor','yönetilmiyor'],
+        past:['yönetildi','yönetilmedi'], ppas:['yönetilmişti','yönetilmemişti'],
+        fut:['yönetilecek','yönetilmeyecek'] }
+    }
+  },
+  {
+    id:'s26', icon:'🏹',
+    subj:{w:'The hunter', type:'sg', obj_form:'the hunter'},
+    verb:{v1:'shoot',    v2:'shot',     v3:'shot',     ving:'shooting'  },
+    obj: {w:'the wolf',       type:'sg'},
+    trData:{
+      act:{ subj:'Avcı', obj:'kurdu',
+        pres:['vurur','vurmaz'], prg:['vuruyor','vurmuyor'],
+        past:['vurdu','vurmadı'], ppas:['vurmuştu','vurmamıştı'],
+        fut:['vuracak','vurmayacak'] },
+      pass:{ subj:'Kurt', agent:'avcı tarafından',
+        pres:['vurulur','vurulmaz'], prg:['vuruluyor','vurulmuyor'],
+        past:['vuruldu','vurulmadı'], ppas:['vurulmuştu','vurulmamıştı'],
+        fut:['vurulacak','vurulmayacak'] }
+    }
+  },
+  {
+    id:'s27', icon:'🎓',
+    subj:{w:'The professor', type:'sg', obj_form:'the professor'},
+    verb:{v1:'teach',    v2:'taught',   v3:'taught',   ving:'teaching'  },
+    obj: {w:'the students',   type:'pl'},
+    trData:{
+      act:{ subj:'Profesör', obj:'öğrencileri',
+        pres:['öğretir','öğretmez'], prg:['öğretiyor','öğretmiyor'],
+        past:['öğretti','öğretmedi'], ppas:['öğretmişti','öğretmemişti'],
+        fut:['öğretecek','öğretmeyecek'] },
+      pass:{ subj:'Öğrenciler', agent:'profesör tarafından',
+        pres:['öğretilir','öğretilmez'], prg:['öğretiliyor','öğretilmiyor'],
+        past:['öğretildi','öğretilmedi'], ppas:['öğretilmişti','öğretilmemişti'],
+        fut:['öğretilecek','öğretilmeyecek'] }
+    }
+  },
+  {
+    id:'s28', icon:'⚙️',
+    subj:{w:'The engineer', type:'sg', obj_form:'the engineer'},
+    verb:{v1:'design',   v2:'designed', v3:'designed', ving:'designing' },
+    obj: {w:'the machine',    type:'sg'},
+    trData:{
+      act:{ subj:'Mühendis', obj:'makineyi',
+        pres:['tasarlar','tasarlamaz'], prg:['tasarlıyor','tasarlamıyor'],
+        past:['tasarladı','tasarlamadı'], ppas:['tasarlamıştı','tasarlamamıştı'],
+        fut:['tasarlayacak','tasarlamayacak'] },
+      pass:{ subj:'Makine', agent:'mühendis tarafından',
+        pres:['tasarlanır','tasarlanmaz'], prg:['tasarlanıyor','tasarlanmıyor'],
+        past:['tasarlandı','tasarlanmadı'], ppas:['tasarlanmıştı','tasarlanmamıştı'],
+        fut:['tasarlanacak','tasarlanmayacak'] }
+    }
+  },
+  {
+    id:'s29', icon:'🏅',
+    subj:{w:'The athlete', type:'sg', obj_form:'the athlete'},
+    verb:{v1:'win',      v2:'won',      v3:'won',      ving:'winning'   },
+    obj: {w:'the race',       type:'sg'},
+    trData:{
+      act:{ subj:'Sporcu', obj:'yarışı',
+        pres:['kazanır','kazanmaz'], prg:['kazanıyor','kazanmıyor'],
+        past:['kazandı','kazanmadı'], ppas:['kazanmıştı','kazanmamıştı'],
+        fut:['kazanacak','kazanmayacak'] },
+      pass:{ subj:'Yarış', agent:'sporcu tarafından',
+        pres:['kazanılır','kazanılmaz'], prg:['kazanılıyor','kazanılmıyor'],
+        past:['kazanıldı','kazanılmadı'], ppas:['kazanılmıştı','kazanılmamıştı'],
+        fut:['kazanılacak','kazanılmayacak'] }
+    }
+  },
+  {
+    id:'s30', icon:'😈',
+    subj:{w:'The villain', type:'sg', obj_form:'the villain'},
+    verb:{v1:'threaten', v2:'threatened',v3:'threatened',ving:'threatening'},
+    obj: {w:'the hero',       type:'sg'},
+    trData:{
+      act:{ subj:'Kötü adam', obj:'kahramanı',
+        pres:['tehdit eder','tehdit etmez'], prg:['tehdit ediyor','tehdit etmiyor'],
+        past:['tehdit etti','tehdit etmedi'], ppas:['tehdit etmişti','tehdit etmemişti'],
+        fut:['tehdit edecek','tehdit etmeyecek'] },
+      pass:{ subj:'Kahraman', agent:'kötü adam tarafından',
+        pres:['tehdit edilir','tehdit edilmez'], prg:['tehdit ediliyor','tehdit edilmiyor'],
+        past:['tehdit edildi','tehdit edilmedi'], ppas:['tehdit edilmişti','tehdit edilmemişti'],
+        fut:['tehdit edilecek','tehdit edilmeyecek'] }
+    }
+  },
+  {
+    id:'s31', icon:'🦁',
+    subj:{w:'The lion',   type:'sg', obj_form:'the lion'  },
+    verb:{v1:'hunt',     v2:'hunted',   v3:'hunted',   ving:'hunting'   },
+    obj: {w:'the zebra',      type:'sg'},
+    trData:{
+      act:{ subj:'Aslan', obj:'zebrayı',
+        pres:['avlar','avlamaz'], prg:['avlıyor','avlamıyor'],
+        past:['avladı','avlamadı'], ppas:['avlamıştı','avlamamıştı'],
+        fut:['avlayacak','avlamayacak'] },
+      pass:{ subj:'Zebra', agent:'aslan tarafından',
+        pres:['avlanır','avlanmaz'], prg:['avlanıyor','avlanmıyor'],
+        past:['avlandı','avlanmadı'], ppas:['avlanmıştı','avlanmamıştı'],
+        fut:['avlanacak','avlanmayacak'] }
+    }
+  },
+  {
+    id:'s32', icon:'🩺',
+    subj:{w:'The nurse',  type:'sg', obj_form:'the nurse' },
+    verb:{v1:'treat',    v2:'treated',  v3:'treated',  ving:'treating'  },
+    obj: {w:'the injury',     type:'sg'},
+    trData:{
+      act:{ subj:'Hemşire', obj:'yarayı',
+        pres:['tedavi eder','tedavi etmez'], prg:['tedavi ediyor','tedavi etmiyor'],
+        past:['tedavi etti','tedavi etmedi'], ppas:['tedavi etmişti','tedavi etmemişti'],
+        fut:['tedavi edecek','tedavi etmeyecek'] },
+      pass:{ subj:'Yara', agent:'hemşire tarafından',
+        pres:['tedavi edilir','tedavi edilmez'], prg:['tedavi ediliyor','tedavi edilmiyor'],
+        past:['tedavi edildi','tedavi edilmedi'], ppas:['tedavi edilmişti','tedavi edilmemişti'],
+        fut:['tedavi edilecek','tedavi edilmeyecek'] }
+    }
+  },
+  {
+    id:'s33', icon:'🗺️',
+    subj:{w:'The explorer', type:'sg', obj_form:'the explorer'},
+    verb:{v1:'find',     v2:'found',    v3:'found',    ving:'finding'   },
+    obj: {w:'the treasure',   type:'sg'},
+    trData:{
+      act:{ subj:'Kaşif', obj:'hazineyi',
+        pres:['bulur','bulmaz'], prg:['buluyor','bulmuyor'],
+        past:['buldu','bulmadı'], ppas:['bulmuştu','bulmamıştı'],
+        fut:['bulacak','bulmayacak'] },
+      pass:{ subj:'Hazine', agent:'kaşif tarafından',
+        pres:['bulunur','bulunmaz'], prg:['bulunuyor','bulunmuyor'],
+        past:['bulundu','bulunmadı'], ppas:['bulunmuştu','bulunmamıştı'],
+        fut:['bulunacak','bulunmayacak'] }
+    }
+  },
+  {
+    id:'s34', icon:'💾',
+    subj:{w:'The programmer', type:'sg', obj_form:'the programmer'},
+    verb:{v1:'fix',      v2:'fixed',    v3:'fixed',    ving:'fixing'    },
+    obj: {w:'the bug',        type:'sg'},
+    trData:{
+      act:{ subj:'Programcı', obj:'hatayı',
+        pres:['düzeltir','düzeltmez'], prg:['düzeltiyor','düzeltmiyor'],
+        past:['düzeltti','düzeltmedi'], ppas:['düzeltmişti','düzeltmemişti'],
+        fut:['düzeltecek','düzeltmeyecek'] },
+      pass:{ subj:'Hata', agent:'programcı tarafından',
+        pres:['düzeltilir','düzeltilmez'], prg:['düzeltiliyor','düzeltilmiyor'],
+        past:['düzeltildi','düzeltilmedi'], ppas:['düzeltilmişti','düzeltilmemişti'],
+        fut:['düzeltilecek','düzeltilmeyecek'] }
+    }
+  },
+  {
+    id:'s35', icon:'🔎',
+    subj:{w:'The detective', type:'sg', obj_form:'the detective'},
+    verb:{v1:'follow',   v2:'followed', v3:'followed', ving:'following' },
+    obj: {w:'the suspect',    type:'sg'},
+    trData:{
+      act:{ subj:'Dedektif', obj:'şüpheliyi',
+        pres:['takip eder','takip etmez'], prg:['takip ediyor','takip etmiyor'],
+        past:['takip etti','takip etmedi'], ppas:['takip etmişti','takip etmemişti'],
+        fut:['takip edecek','takip etmeyecek'] },
+      pass:{ subj:'Şüpheli', agent:'dedektif tarafından',
+        pres:['takip edilir','takip edilmez'], prg:['takip ediliyor','takip edilmiyor'],
+        past:['takip edildi','takip edilmedi'], ppas:['takip edilmişti','takip edilmemişti'],
+        fut:['takip edilecek','takip edilmeyecek'] }
+    }
+  },
+  {
+    id:'s36', icon:'💝',
+    subj:{w:'The mother', type:'sg', obj_form:'the mother'},
+    verb:{v1:'love',     v2:'loved',    v3:'loved',    ving:'loving'    },
+    obj: {w:'the child',      type:'sg'},
+    trData:{
+      act:{ subj:'Anne', obj:'çocuğu',
+        pres:['sever','sevmez'], prg:['seviyor','sevmiyor'],
+        past:['sevdi','sevmedi'], ppas:['sevmişti','sevmemişti'],
+        fut:['sevecek','sevmeyecek'] },
+      pass:{ subj:'Çocuk', agent:'anne tarafından',
+        pres:['sevilir','sevilmez'], prg:['seviliyor','sevilmiyor'],
+        past:['sevildi','sevilmedi'], ppas:['sevilmişti','sevilmemişti'],
+        fut:['sevilecek','sevilmeyecek'] }
+    }
+  },
+  {
+    id:'s37', icon:'🍞',
+    subj:{w:'The baker',  type:'sg', obj_form:'the baker' },
+    verb:{v1:'bake',     v2:'baked',    v3:'baked',    ving:'baking'    },
+    obj: {w:'the bread',      type:'sg'},
+    trData:{
+      act:{ subj:'Fırıncı', obj:'ekmeği',
+        pres:['pişirir','pişirmez'], prg:['pişiriyor','pişirmiyor'],
+        past:['pişirdi','pişirmedi'], ppas:['pişirmişti','pişirmemişti'],
+        fut:['pişirecek','pişirmeyecek'] },
+      pass:{ subj:'Ekmek', agent:'fırıncı tarafından',
+        pres:['pişirilir','pişirilmez'], prg:['pişiriliyor','pişirilmiyor'],
+        past:['pişirildi','pişirilmedi'], ppas:['pişirilmişti','pişirilmemişti'],
+        fut:['pişirilecek','pişirilmeyecek'] }
+    }
+  },
+  {
+    id:'s38', icon:'🧛',
+    subj:{w:'The vampire', type:'sg', obj_form:'the vampire'},
+    verb:{v1:'bite',     v2:'bit',      v3:'bitten',   ving:'biting'    },
+    obj: {w:'the victim',     type:'sg'},
+    trData:{
+      act:{ subj:'Vampir', obj:'kurbanı',
+        pres:['ısırır','ısırmaz'], prg:['ısırıyor','ısırmıyor'],
+        past:['ısırdı','ısırmadı'], ppas:['ısırmıştı','ısırmamıştı'],
+        fut:['ısıracak','ısırmayacak'] },
+      pass:{ subj:'Kurban', agent:'vampir tarafından',
+        pres:['ısırılır','ısırılmaz'], prg:['ısırılıyor','ısırılmıyor'],
+        past:['ısırıldı','ısırılmadı'], ppas:['ısırılmıştı','ısırılmamıştı'],
+        fut:['ısırılacak','ısırılmayacak'] }
+    }
+  },
+  {
+    id:'s39', icon:'⚓',
+    subj:{w:'The captain', type:'sg', obj_form:'the captain'},
+    verb:{v1:'command',  v2:'commanded',v3:'commanded',ving:'commanding'},
+    obj: {w:'the crew',       type:'sg'},
+    trData:{
+      act:{ subj:'Kaptan', obj:'mürettebatı',
+        pres:['komuta eder','komuta etmez'], prg:['komuta ediyor','komuta etmiyor'],
+        past:['komuta etti','komuta etmedi'], ppas:['komuta etmişti','komuta etmemişti'],
+        fut:['komuta edecek','komuta etmeyecek'] },
+      pass:{ subj:'Mürettebat', agent:'kaptan tarafından',
+        pres:['komuta edilir','komuta edilmez'], prg:['komuta ediliyor','komuta edilmiyor'],
+        past:['komuta edildi','komuta edilmedi'], ppas:['komuta edilmişti','komuta edilmemişti'],
+        fut:['komuta edilecek','komuta edilmeyecek'] }
+    }
+  },
+  {
+    id:'s40', icon:'👽',
+    subj:{w:'The alien',  type:'sg', obj_form:'the alien' },
+    verb:{v1:'invade',   v2:'invaded',  v3:'invaded',  ving:'invading'  },
+    obj: {w:'the planet',     type:'sg'},
+    trData:{
+      act:{ subj:'Uzaylı', obj:'gezegeni',
+        pres:['istila eder','istila etmez'], prg:['istila ediyor','istila etmiyor'],
+        past:['istila etti','istila etmedi'], ppas:['istila etmişti','istila etmemişti'],
+        fut:['istila edecek','istila etmeyecek'] },
+      pass:{ subj:'Gezegen', agent:'uzaylı tarafından',
+        pres:['istila edilir','istila edilmez'], prg:['istila ediliyor','istila edilmiyor'],
+        past:['istila edildi','istila edilmedi'], ppas:['istila edilmişti','istila edilmemişti'],
+        fut:['istila edilecek','istila edilmeyecek'] }
+    }
+  },
+  {
+    id:'s41', icon:'🐺',
+    subj:{w:'The wolf',   type:'sg', obj_form:'the wolf'  },
+    verb:{v1:'attack',   v2:'attacked', v3:'attacked', ving:'attacking' },
+    obj: {w:'the sheep',      type:'sg'},
+    trData:{
+      act:{ subj:'Kurt', obj:'koyuna',
+        pres:['saldırır','saldırmaz'], prg:['saldırıyor','saldırmıyor'],
+        past:['saldırdı','saldırmadı'], ppas:['saldırmıştı','saldırmamıştı'],
+        fut:['saldıracak','saldırmayacak'] },
+      pass:{ subj:'Koyun', agent:'kurt tarafından',
+        pres:['saldırılır','saldırılmaz'], prg:['saldırılıyor','saldırılmıyor'],
+        past:['saldırıldı','saldırılmadı'], ppas:['saldırılmıştı','saldırılmamıştı'],
+        fut:['saldırılacak','saldırılmayacak'] }
+    }
+  },
+  {
+    id:'s42', icon:'🤴',
+    subj:{w:'The king',   type:'sg', obj_form:'the king'  },
+    verb:{v1:'reward',   v2:'rewarded', v3:'rewarded', ving:'rewarding' },
+    obj: {w:'the hero',       type:'sg'},
+    trData:{
+      act:{ subj:'Kral', obj:'kahramanı',
+        pres:['ödüllendirir','ödüllendirmez'], prg:['ödüllendiriyor','ödüllendirmiyor'],
+        past:['ödüllendirdi','ödüllendirmedi'], ppas:['ödüllendirmişti','ödüllendirmemişti'],
+        fut:['ödüllendirecek','ödüllendirmeyecek'] },
+      pass:{ subj:'Kahraman', agent:'kral tarafından',
+        pres:['ödüllendirilir','ödüllendirilmez'], prg:['ödüllendiriliyor','ödüllendirilmiyor'],
+        past:['ödüllendirildi','ödüllendirilmedi'], ppas:['ödüllendirilmişti','ödüllendirilmemişti'],
+        fut:['ödüllendirilecek','ödüllendirilmeyecek'] }
+    }
+  },
+  {
+    id:'s43', icon:'🦠',
+    subj:{w:'The virus',  type:'sg', obj_form:'the virus' },
+    verb:{v1:'infect',   v2:'infected', v3:'infected', ving:'infecting' },
+    obj: {w:'the computer',   type:'sg'},
+    trData:{
+      act:{ subj:'Virüs', obj:'bilgisayarı',
+        pres:['bulaştırır','bulaştırmaz'], prg:['bulaştırıyor','bulaştırmıyor'],
+        past:['bulaştırdı','bulaştırmadı'], ppas:['bulaştırmıştı','bulaştırmamıştı'],
+        fut:['bulaştıracak','bulaştırmayacak'] },
+      pass:{ subj:'Bilgisayar', agent:'virüs tarafından',
+        pres:['bulaştırılır','bulaştırılmaz'], prg:['bulaştırılıyor','bulaştırılmıyor'],
+        past:['bulaştırıldı','bulaştırılmadı'], ppas:['bulaştırılmıştı','bulaştırılmamıştı'],
+        fut:['bulaştırılacak','bulaştırılmayacak'] }
+    }
+  },
+  {
+    id:'s44', icon:'⚖️',
+    subj:{w:'The judge',  type:'sg', obj_form:'the judge' },
+    verb:{v1:'sentence', v2:'sentenced',v3:'sentenced',ving:'sentencing'},
+    obj: {w:'the criminal',   type:'sg'},
+    trData:{
+      act:{ subj:'Hakim', obj:'suçluyu',
+        pres:['mahkum eder','mahkum etmez'], prg:['mahkum ediyor','mahkum etmiyor'],
+        past:['mahkum etti','mahkum etmedi'], ppas:['mahkum etmişti','mahkum etmemişti'],
+        fut:['mahkum edecek','mahkum etmeyecek'] },
+      pass:{ subj:'Suçlu', agent:'hakim tarafından',
+        pres:['mahkum edilir','mahkum edilmez'], prg:['mahkum ediliyor','mahkum edilmiyor'],
+        past:['mahkum edildi','mahkum edilmedi'], ppas:['mahkum edilmişti','mahkum edilmemişti'],
+        fut:['mahkum edilecek','mahkum edilmeyecek'] }
+    }
+  },
+  {
+    id:'s45', icon:'🦅',
+    subj:{w:'The eagle',  type:'sg', obj_form:'the eagle' },
+    verb:{v1:'drop',     v2:'dropped',  v3:'dropped',  ving:'dropping'  },
+    obj: {w:'the fish',       type:'sg'},
+    trData:{
+      act:{ subj:'Kartal', obj:'balığı',
+        pres:['düşürür','düşürmez'], prg:['düşürüyor','düşürmüyor'],
+        past:['düşürdü','düşürmedi'], ppas:['düşürmüştü','düşürmemişti'],
+        fut:['düşürecek','düşürmeyecek'] },
+      pass:{ subj:'Balık', agent:'kartal tarafından',
+        pres:['düşürülür','düşürülmez'], prg:['düşürülüyor','düşürülmüyor'],
+        past:['düşürüldü','düşürülmedi'], ppas:['düşürülmüştü','düşürülmemişti'],
+        fut:['düşürülecek','düşürülmeyecek'] }
+    }
+  },
+  {
+    id:'s46', icon:'📕',
+    subj:{w:'The author', type:'sg', obj_form:'the author'},
+    verb:{v1:'publish',  v2:'published',v3:'published',ving:'publishing'},
+    obj: {w:'a book',         type:'sg'},
+    trData:{
+      act:{ subj:'Yazar', obj:'bir kitap',
+        pres:['yayımlar','yayımlamaz'], prg:['yayımlıyor','yayımlamıyor'],
+        past:['yayımladı','yayımlamadı'], ppas:['yayımlamıştı','yayımlamamıştı'],
+        fut:['yayımlayacak','yayımlamayacak'] },
+      pass:{ subj:'Bir kitap', agent:'yazar tarafından',
+        pres:['yayımlanır','yayımlanmaz'], prg:['yayımlanıyor','yayımlanmıyor'],
+        past:['yayımlandı','yayımlanmadı'], ppas:['yayımlanmıştı','yayımlanmamıştı'],
+        fut:['yayımlanacak','yayımlanmayacak'] }
+    }
+  },
+  {
+    id:'s47', icon:'🧙‍♀️',
+    subj:{w:'The witch',  type:'sg', obj_form:'the witch' },
+    verb:{v1:'curse',    v2:'cursed',   v3:'cursed',   ving:'cursing'   },
+    obj: {w:'the prince',     type:'sg'},
+    trData:{
+      act:{ subj:'Cadı', obj:'prensi',
+        pres:['lanetler','lanetlemez'], prg:['lanetliyor','lanetlemiyor'],
+        past:['lanetledi','lanetlemedi'], ppas:['lanetlemişti','lanetlememişti'],
+        fut:['lanetleyecek','lanetlemeyecek'] },
+      pass:{ subj:'Prens', agent:'cadı tarafından',
+        pres:['lanetlenir','lanetlenmez'], prg:['lanetleniyor','lanetlenmiyor'],
+        past:['lanetlendi','lanetlenmedi'], ppas:['lanetlenmişti','lanetlenmemişti'],
+        fut:['lanetlenecek','lanetlenmeyecek'] }
+    }
+  },
+  {
+    id:'s48', icon:'🌋',
+    subj:{w:'The volcano', type:'sg', obj_form:'the volcano'},
+    verb:{v1:'cover',    v2:'covered',  v3:'covered',  ving:'covering'  },
+    obj: {w:'the village',    type:'sg'},
+    trData:{
+      act:{ subj:'Yanardağ', obj:'köyü',
+        pres:['örter','örtmez'], prg:['örtüyor','örtmüyor'],
+        past:['örttü','örtmedi'], ppas:['örtmüştü','örtmemişti'],
+        fut:['örtecek','örtmeyecek'] },
+      pass:{ subj:'Köy', agent:'yanardağ tarafından',
+        pres:['örtülür','örtülmez'], prg:['örtülüyor','örtülmüyor'],
+        past:['örtüldü','örtülmedi'], ppas:['örtülmüştü','örtülmemişti'],
+        fut:['örtülecek','örtülmeyecek'] }
+    }
+  },
+  {
+    id:'s49', icon:'👸',
+    subj:{w:'The princess', type:'sg', obj_form:'the princess'},
+    verb:{v1:'rescue',   v2:'rescued',  v3:'rescued',  ving:'rescuing'  },
+    obj: {w:'the dragon',     type:'sg'},
+    trData:{
+      act:{ subj:'Prenses', obj:'ejderhayı',
+        pres:['kurtarır','kurtarmaz'], prg:['kurtarıyor','kurtarmıyor'],
+        past:['kurtardı','kurtarmadı'], ppas:['kurtarmıştı','kurtarmamıştı'],
+        fut:['kurtaracak','kurtarmayacak'] },
+      pass:{ subj:'Ejderha', agent:'prenses tarafından',
+        pres:['kurtarılır','kurtarılmaz'], prg:['kurtarılıyor','kurtarılmıyor'],
+        past:['kurtarıldı','kurtarılmadı'], ppas:['kurtarılmıştı','kurtarılmamıştı'],
+        fut:['kurtarılacak','kurtarılmayacak'] }
+    }
+  },
+  {
+    id:'s50', icon:'💎',
+    subj:{w:'The thief',  type:'sg', obj_form:'the thief' },
+    verb:{v1:'hide',     v2:'hid',      v3:'hidden',   ving:'hiding'    },
+    obj: {w:'the jewel',      type:'sg'},
+    trData:{
+      act:{ subj:'Hırsız', obj:'mücevheri',
+        pres:['saklar','saklamaz'], prg:['saklıyor','saklamıyor'],
+        past:['sakladı','saklamadı'], ppas:['saklamıştı','saklamamıştı'],
+        fut:['saklayacak','saklamayacak'] },
+      pass:{ subj:'Mücevher', agent:'hırsız tarafından',
+        pres:['saklanır','saklanmaz'], prg:['saklanıyor','saklanmıyor'],
+        past:['saklandı','saklanmadı'], ppas:['saklanmıştı','saklanmamıştı'],
+        fut:['saklanacak','saklanmayacak'] }
     }
   },
 ];
