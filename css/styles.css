@@ -3352,6 +3352,20 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .synth-input-area span.error-text {
   color: var(--rose); border-bottom-color: var(--rose); text-shadow: 0 0 15px var(--rose);
 }
+/* Boşluk slotu */
+.synth-input-area span.synth-space-slot {
+  font-size: 1.4rem;
+  color: rgba(255,255,255,0.2);
+  border-bottom-color: rgba(255,255,255,0.08);
+  width: 32px;
+  letter-spacing: 0;
+}
+.synth-input-area span.synth-space-filled {
+  transform: none !important;
+  font-size: 1.4rem !important;
+  color: rgba(255,255,255,0.3) !important;
+  text-shadow: none !important;
+}
 
 .synth-hint-action { margin-top: 40px; display: flex; gap: 20px; z-index: 20; }
 .synth-hint-btn, .synth-skip-btn {
@@ -3495,8 +3509,9 @@ body.rank-6 { --theme-accent: #ff9d00; }
   user-select: none;
 }
 .vkb-key:active { background: var(--cyan); color: #000; transform: scale(0.92); }
-.vkb-hint { background: rgba(var(--a1-rgb),0.1); border-color: rgba(var(--a1-rgb),0.3); color: var(--cyan); }
-.vkb-skip { background: rgba(244,63,94,0.1); border-color: rgba(244,63,94,0.25); color: var(--rose); min-width: 80px; }
+.vkb-hint  { background: rgba(var(--a1-rgb),0.1); border-color: rgba(var(--a1-rgb),0.3); color: var(--cyan); }
+.vkb-skip  { background: rgba(244,63,94,0.1); border-color: rgba(244,63,94,0.25); color: var(--rose); min-width: 80px; }
+.vkb-space { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.18); color: var(--text-2); min-width: 56px; font-size: 1.1rem; }
 
 @media (max-width: 480px) {
   .vkb-key { min-width: 28px; height: 38px; font-size: 0.78rem; }

@@ -3337,7 +3337,9 @@ class App {
       // Build letter blanks with synesthetic colors
       if (display) {
         display.innerHTML = word.en.split('').map((ch, i) =>
-          `<span data-idx="${i}" data-ch="${ch.toLowerCase()}">_</span>`
+          ch === ' '
+            ? `<span data-idx="${i}" data-ch=" " class="synth-space-slot">⎵</span>`
+            : `<span data-idx="${i}" data-ch="${ch.toLowerCase()}">_</span>`
         ).join('');
       }
       // Auto-reveal first letter after 8s (disabled in speed mode)
@@ -3354,6 +3356,10 @@ class App {
 
     // Start speed timer (both modes)
     this._startSpeedTimer();
+
+    // Update VKB space button visibility per word
+    const vkb = document.getElementById('synth-vkb');
+    if (vkb && vkb.style.display !== 'none') this._renderSynthVKB();
 
     setTimeout(() => { if (this.session.synthActive) this.speakWord(word.en); }, 400);
   }
@@ -3405,12 +3411,20 @@ class App {
       spans.forEach((span, i) => {
         if (i < typedLen) {
           const ch = this.session.synthWord.en[i];
-          const letterColor = this._getLetterColor(ch);
-          span.textContent = ch;
-          span.classList.add('filled');
-          span.style.color      = letterColor;
-          span.style.textShadow = `0 0 14px ${letterColor}cc, 0 0 30px ${letterColor}55`;
-          span.style.borderBottomColor = letterColor;
+          if (ch === ' ') {
+            span.textContent = '⎵';
+            span.classList.add('filled', 'synth-space-filled');
+            span.style.color = 'rgba(255,255,255,0.3)';
+            span.style.textShadow = '';
+            span.style.borderBottomColor = 'transparent';
+          } else {
+            const letterColor = this._getLetterColor(ch);
+            span.textContent = ch;
+            span.classList.add('filled');
+            span.style.color      = letterColor;
+            span.style.textShadow = `0 0 14px ${letterColor}cc, 0 0 30px ${letterColor}55`;
+            span.style.borderBottomColor = letterColor;
+          }
         }
       });
       // Shake the current blank on wrong key
@@ -3762,12 +3776,15 @@ class App {
     const vkb = document.getElementById('synth-vkb');
     if (!vkb) return;
     const rows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+    const word = this.session.synthWord;
+    const hasSpace = word && word.en.includes(' ');
     vkb.innerHTML = rows.map(row =>
       `<div class="vkb-row">${row.split('').map(k =>
         `<button class="vkb-key" onclick="app._handleSynthKey('${k}')">${k}</button>`
       ).join('')}</div>`
     ).join('') +
     `<div class="vkb-row vkb-action-row">
+      ${hasSpace ? `<button class="vkb-key vkb-space" onclick="app._handleSynthKey(' ')">⎵</button>` : ''}
       <button class="vkb-key vkb-hint" onclick="app.playSynthHint()">🔊 Dinle</button>
       <button class="vkb-key vkb-skip" onclick="app.skipSynthWord()">⏭ Geç</button>
     </div>`;
@@ -5451,9 +5468,15 @@ class App {
       if (view === 'learn' && this.session.synthActive) {
         if (e.code === 'Space') {
           e.preventDefault();
-          this.playSynthHint();
+          const word = this.session.synthWord;
+          const nextChar = word?.en[this.session.synthTyped.length];
+          if (nextChar === ' ') {
+            this._handleSynthKey(' ');
+          } else {
+            this.playSynthHint();
+          }
         }
-        else if (e.key.length === 1 && /[a-zA-ZçğıöşüÇĞİÖŞÜ'-]/.test(e.key)) {
+        else if (e.key.length === 1 && /[a-zA-ZçğıöşüÇĞİÖŞÜ' -]/.test(e.key)) {
           e.preventDefault();
           this._handleSynthKey(e.key);
         }
