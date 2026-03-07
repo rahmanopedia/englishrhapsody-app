@@ -153,6 +153,7 @@
         <div class="hstat"><span class="hstat-val green" id="home-acc">0%</span><span class="hstat-lbl">Başarı</span></div>
       </div>
     </div>
+    <div class="hero-bottom-line"></div>
   </div>
 
   <!-- Progress + Streak in one card -->
@@ -212,17 +213,17 @@
     <div class="action-card speak" onclick="app.navigate('speak')">
       <div class="ac-icon">🎙️</div>
       <h3>Konuşma Lab</h3>
-      <div style="font-size:0.75rem;color:var(--text-2);margin-top:6px" id="ac-speak-hint">Bugün dene →</div>
+      <div class="ac-hint" id="ac-speak-hint">Bugün dene →</div>
     </div>
     <div class="action-card reading" onclick="app.navigate('reading')">
       <div class="ac-icon">📖</div>
       <h3>Okuma Atölyesi</h3>
-      <div style="font-size:0.75rem;color:var(--text-3);margin-top:6px">60 hikaye, 3 seviye</div>
+      <div class="ac-hint">60 hikaye, 3 seviye</div>
     </div>
-    <div class="action-card nexus" onclick="app.navigate('nexus')" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.05));border-color:rgba(16,185,129,0.2);">
+    <div class="action-card nexus" onclick="app.navigate('nexus')">
       <div class="ac-icon">✨</div>
       <h3>Nexus Mod</h3>
-      <div style="font-size:0.75rem;color:#10b981;margin-top:6px">Phrasal Verbs 🚀</div>
+      <div class="ac-hint">Phrasal Verbs 🚀</div>
     </div>
   </div>
 
