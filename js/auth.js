@@ -75,11 +75,37 @@ class AuthManager {
   }
 
   async logout() {
-    if (window.app) await this.saveToCloud(window.app.state._state, true);
-    await this._auth.signOut();
+    try {
+      if (window.app) await this.saveToCloud(window.app.state._state, true);
+      await this._auth.signOut();
+    } catch (e) {
+      console.warn('[Auth] logout error:', e);
+    }
     this._user = null;
+
+    // Header butonunu gizle
     const btn = document.getElementById('auth-user-btn');
     if (btn) btn.style.display = 'none';
+
+    // Modalı login ekranına sıfırla
+    const panel  = document.getElementById('auth-account-panel');
+    const tabs   = document.querySelector('.auth-tabs');
+    const fLogin = document.getElementById('auth-form-login');
+    const fReg   = document.getElementById('auth-form-signup');
+    const fReset = document.getElementById('auth-form-reset');
+    if (panel)  panel.style.display  = 'none';
+    if (tabs)   tabs.style.display   = 'flex';
+    if (fLogin) fLogin.style.display = 'flex';
+    if (fReg)   fReg.style.display   = 'none';
+    if (fReset) fReset.style.display = 'none';
+
+    // Tab aktifliğini sıfırla
+    const tLogin  = document.getElementById('auth-tab-login');
+    const tSignup = document.getElementById('auth-tab-signup');
+    if (tLogin)  tLogin.classList.add('active');
+    if (tSignup) tSignup.classList.remove('active');
+
+    authUI._clearError();
     this._showAuthModal();
   }
 
