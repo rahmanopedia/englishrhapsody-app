@@ -496,7 +496,7 @@ const GRAMMAR_DATA = {
     err:{w:'If you freeze water, it will become ice.',r:'If you freeze water, it becomes ice.',tip:'0. koşulda her iki cümle de Present Simple — will yok!'},
     drills:[
       {type:'mutate', sentence:'If you mix red and blue, you ___ purple.',  opts:['will get','get','got','getting'],  ans:1, tip:'0. Koşul → sonuç cümlesi Simple Present'},
-      {type:'clash',  q:'Hangisi doğru?',  a:'If you heat ice, it will melt.',  b:'If you heat ice, it melts.',  correct:'b'},
+      {type:'clash',  q:'Hangisi doğru?',  a:'If you heat ice, it will military.',  b:'If you heat ice, it melts.',  correct:'b'},
       {type:'forge',  prompt:'Cümleyi oluştur:', words:['you','If','not','eat,','hungry','get','you'],   ans:'If you do not eat you get hungry'},
     ]
   },
@@ -846,6 +846,180 @@ const GRAMMAR_DATA = {
     drills:[
       {type:'clash',  q:'Hangisi resmi (formal) versiyonu?',  a:'They got rid of the problem.',  b:'The issue was subsequently resolved.',  correct:'b'},
       {type:'mutate', sentence:'The project ___ (resmi) significant challenges.',  opts:['got lots of','encountered','had lots of','faced up to'], ans:1, tip:'"encountered" resmi — "got lots of" informal'},
+    ]
+  },
+
+  // ══════════════ NEW DEEP RESEARCH ADDITIONS ══════════════
+  {
+    id:'a1-wh-questions', level:'A1', cat:'Zaman Kipleri', icon:'🔍',
+    title:'WH- Questions', sub:'Bilgi İsteme Soruları',
+    desc:'What, Where, When, Who, Why ve How gibi soru sözcükleriyle kurulan sorulardır. Yardımcı fiilden önce gelirler.',
+    contrast:'Türkçede soru kelimesi genellikle fiilden önce gelir. İngilizcede WH- kelimesi cümlenin en başındadır.',
+    register:{ formal:80, informal:95, written:85, spoken:95 },
+    formula:[{t:'WH- Word',c:'#ec4899'},{t:'+',c:'#6b7280'},{t:'do/does/is/are',c:'#ef4444'},{t:'+',c:'#6b7280'},{t:'Özne',c:'#3b82f6'},{t:'+',c:'#6b7280'},{t:'Fiil?',c:'#10b981'}],
+    dna:[{w:'Where',r:'WH- Soru Kelimesi',c:'#ec4899'},{w:'do',r:'Yardımcı fiil',c:'#ef4444'},{w:'you',r:'Özne',c:'#3b82f6'},{w:'live?',r:'Fiil',c:'#10b981'}],
+    exs:[
+      {en:'Where do you live?',         tr:'Nerede yaşıyorsun?'},
+      {en:'What is your name?',         tr:'Adın ne?'},
+      {en:'Why are they late?',         tr:'Neden geç kaldılar?'},
+    ],
+    err:{w:'Where you live?',r:'Where do you live?',tip:'Soru kelimesinden sonra yardımcı fiil (do/does/is/are) gelmelidir!'},
+    drills:[
+      {type:'mutate', sentence:'___ is your favorite color?', opts:['Who','What','Where','Why'], ans:1, tip:'Nesne/tercih sorarken "What" kullanılır.'},
+      {type:'forge',  prompt:'Soru cümlesi oluştur:', words:['you','do','When','sleep?'], ans:'When do you sleep'},
+      {type:'clash',  q:'Hangisi doğru?', a:'How old are you?', b:'How old you are?', correct:'a'},
+    ]
+  },
+  {
+    id:'b2-causative-have', level:'B2', cat:'Edilgen Çatı', icon:'🛠️',
+    title:'Causatives: Have something done', sub:'Bir Şeyi Başkasına Yaptırmak',
+    desc:'Bir işi kendimiz yapmak yerine başkasına yaptırdığımızda kullanılır. Yapı: have + nesne + V3.',
+    contrast:'Türkçede "-tırmak/-tirmek" ekleriyle yapılır (boyatmak, yaptırmak). İngilizcede have + nesne + V3 kalıbı yaygındır.',
+    register:{ formal:85, informal:80, written:90, spoken:80 },
+    formula:[{t:'Özne',c:'#3b82f6'},{t:'+',c:'#6b7280'},{t:'have/has/had',c:'#10b981'},{t:'+',c:'#6b7280'},{t:'Nesne',c:'#f59e0b'},{t:'+',c:'#6b7280'},{t:'V3',c:'#8b5cf6'}],
+    dna:[{w:'I',r:'Özne',c:'#3b82f6'},{w:'had',r:'Have (geçmiş)',c:'#10b981'},{w:'my car',r:'Nesne',c:'#f59e0b'},{w:'repaired',r:'V3 (tamir edildi)',c:'#8b5cf6'},{w:'yesterday.',r:'Zaman',c:'#6b7280'}],
+    exs:[
+      {en:'I had my hair cut.',            tr:'Saçımı kestirdim.'},
+      {en:'She is having her house painted.',tr:'Evini boyatıyor.'},
+      {en:'We must have the report checked.',tr:'Raporu kontrol ettirmeliyiz.'},
+    ],
+    err:{w:'I had cut my hair.',r:'I had my hair cut.',tip:'Eğer sen değil başkası kesti ise nesne (hair) fiilden (cut) önce gelmeli!'},
+    drills:[
+      {type:'mutate', sentence:'He needs to have his eyes ___.', opts:['test','testing','tested','to test'], ans:2, tip:'Causative yapısında fiil her zaman V3 olur.'},
+      {type:'forge',  prompt:'Cümleyi oluştur:', words:['had','She','her','stolen','bag'], ans:'She had her bag stolen'},
+      {type:'clash',  q:'Hangisi "tamir ettirmek" anlamına gelir?', a:'I repaired my watch.', b:'I had my watch repaired.', correct:'b'},
+    ]
+  },
+  {
+    id:'c1-hedging', level:'C1', cat:'İleri Yapılar', icon:'🛡️',
+    title:'Hedging & Boosting', sub:'İfadeleri Yumuşatma ve Güçlendirme',
+    desc:'Akademik ve profesyonel dilde iddiaları yumuşatmak (hedging) veya kesinleştirmek (boosting) için kullanılır.',
+    contrast:'Türkçede "görünüşe göre, şüphesiz, muhtemelen" gibi zarflarla yapılır. İngilizce\'de "it would appear that" gibi kalıplar çok yaygındır.',
+    register:{ formal:95, informal:30, written:98, spoken:30 },
+    formula:[{t:'Arguably/Undeniably',c:'#ec4899'},{t:'|',c:'#6b7280'},{t:'It would appear that',c:'#06b6d4'}],
+    dna:[{w:'It',r:'Sözde özne',c:'#6b7280'},{w:'would appear',r:'Hedging fiili',c:'#06b6d4'},{w:'that',r:'Bağlaç',c:'#6b7280'},{w:'the data is',r:'Cümle',c:'#3b82f6'},{w:'inconclusive.',r:'Sıfat',c:'#f59e0b'}],
+    exs:[
+      {en:'It would appear that the results are inconclusive.', tr:'Görünüşe göre sonuçlar yetersiz.'},
+      {en:'This is arguably the best solution.',               tr:'Bu, muhtemelen/tartışmasız en iyi çözüm.'},
+      {en:'Undeniably, climate change is a global threat.',    tr:'Yadsınamaz bir şekilde, iklim değişikliği küresel bir tehdittir.'},
+    ],
+    err:{w:'For sure the data is wrong.',r:'The data is arguably inaccurate.',tip:'Akademik dilde "for sure" yerine "arguably" veya "undeniably" tercih edilir.'},
+    drills:[
+      {type:'mutate', sentence:'___, the implementation was a success.', opts:['Arguably','Maybe','I think','Like'], ans:0, tip:'Daha profesyonel bir ifade için "Arguably" kullan.'},
+      {type:'clash',  q:'Hangisi daha resmi bir hedging?', a:'It seems like it.', b:'It would appear to be the case.', correct:'b'},
+    ]
+  },
+  {
+    id:'c2-future-in-past', level:'C2', cat:'Uzman Yapılar', icon:'⏳',
+    title:'Future in the Past', sub:'Geçmişteki Gelecek Niyeti',
+    desc:'Geçmişte bir zamanda geleceğe yönelik niyetleri veya gerçekleşmemiş planları anlatmak için kullanılır (was going to, was about to).',
+    contrast:'Türkçede "-acaktı" ekiyle yapılır. İngilizcede niyetin gerçekleşip gerçekleşmediği bağlamdan anlaşılır.',
+    register:{ formal:85, informal:90, written:85, spoken:90 },
+    formula:[{t:'Özne',c:'#3b82f6'},{t:'+',c:'#6b7280'},{t:'was/were going to',c:'#8b5cf6'},{t:'+',c:'#6b7280'},{t:'Fiil (yalın)',c:'#10b981'}],
+    dna:[{w:'I',r:'Özne',c:'#3b82f6'},{w:'was going to',r:'Geçmişteki niyet',c:'#8b5cf6'},{w:'call',r:'Fiil',c:'#10b981'},{w:'you,',r:'Nesne',c:'#6b7280'},{w:'but I forgot.',r:'Engel (geçmiş)',c:'#f59e0b'}],
+    exs:[
+      {en:'I was going to call you, but I forgot.',         tr:'Seni arayacaktım ama unuttum.'},
+      {en:'They were about to leave when the phone rang.', tr:'Telefon çaldığında çıkmak üzerelerdi.'},
+      {en:'The meeting was to have taken place yesterday.',tr:'Toplantının dün yapılması planlanmıştı (ama olmadı).'},
+    ],
+    err:{w:'I would call you yesterday but I didn\'t.',r:'I was going to call you yesterday but I didn\'t.',tip:'Geçmişteki planlar için "was going to" kullanılır.'},
+    drills:[
+      {type:'mutate', sentence:'We ___ visit the museum, but it was closed.', opts:['are going to','were going to','will go to','went to'], ans:1, tip:'Geçmişteki niyet → were going to'},
+      {type:'clash',  q:'Hangisi "neredeyse olacaktı" anlamı verir?', a:'I was about to win.', b:'I was winning.', correct:'a'},
+    ]
+  },
+  {
+    id:'c2-impersonal-passive', level:'C2', cat:'Edilgen Çatı', icon:'🏛️',
+    title:'Impersonal Passive', sub:'Genel Kanı ve Söylentiler',
+    desc:'"It is believed/said/thought that..." yapısıdır. Kişisel olmayan, genel kanaat bildiren ifadelerde kullanılır.',
+    contrast:'Türkçede "inanılıyor, söyleniyor, düşünülüyor" gibi edilgen yapılarla karşılanır.',
+    register:{ formal:98, informal:10, written:98, spoken:10 },
+    formula:[{t:'It is',c:'#6b7280'},{t:'+',c:'#6b7280'},{t:'said/believed',c:'#8b5cf6'},{t:'+',c:'#6b7280'},{t:'that + cümle',c:'#10b981'}],
+    dna:[{w:'It',r:'Sözde özne',c:'#6b7280'},{w:'is widely believed',r:'Edilgen yapı',c:'#8b5cf6'},{w:'that',r:'Bağlaç',c:'#6b7280'},{w:'the earth',r:'Yan cümle öznesi',c:'#3b82f6'},{w:'is round.',r:'Yüklem',c:'#10b981'}],
+    exs:[
+      {en:'It is said that he is very rich.',             tr:'Onun çok zengin olduğu söyleniyor.'},
+      {en:'He is thought to be living in London.',        tr:'Onun Londra\'da yaşadığı düşünülüyor.'},
+      {en:'It is widely believed that the policy failed.',tr:'Politikanın başarısız olduğu yaygın olarak inanılıyor.'},
+    ],
+    err:{w:'People is said he is rich.',r:'He is said to be rich.',tip:'Kişisel passive\'de (He is said...) fiil "to be" veya "to + fiil" şeklinde gelmelidir.'},
+    drills:[
+      {type:'mutate', sentence:'The company is reported ___ a huge profit.', opts:['made','making','to have made','makes'], ans:2, tip:'He is reported to have + V3 (geçmişteki olay için).'},
+      {type:'clash',  q:'Hangisi daha resmi?', a:'People say he is a genius.', b:'It is said that he is a genius.', correct:'b'},
+    ]
+  },
+  {
+    id:'b1-used-to', level:'B1', cat:'Geçmiş Alışkanlıklar', icon:'🕰️',
+    title:'Used to', sub:'Geçmişteki Alışkanlıklar ve Durumlar',
+    desc:'Geçmişte yapılıp artık yapılmayan eylemler veya durumlar için kullanılır. Yapı: used to + yalın fiil.',
+    contrast:'Türkçede "-rdı/-rdi" ekiyle karşılanır (yapardım, gelirdi). İngilizcede "used to" sadece geçmiş alışkanlıklar içindir.',
+    register:{ formal:80, informal:95, written:85, spoken:95 },
+    formula:[{t:'Özne',c:'#3b82f6'},{t:'+',c:'#6b7280'},{t:'used to',c:'#8b5cf6'},{t:'+',c:'#6b7280'},{t:'Fiil (yalın)',c:'#10b981'}],
+    dna:[{w:'I',r:'Özne',c:'#3b82f6'},{w:'used to',r:'Geçmiş alışkanlık',c:'#8b5cf6'},{w:'smoke',r:'Fiil',c:'#10b981'},{w:'ten years ago.',r:'Zaman',c:'#6b7280'}],
+    exs:[
+      {en:'I used to smoke, but I quit.',         tr:'Eskiden sigara içerdim ama bıraktım.'},
+      {en:'She used to live in London.',          tr:'Eskiden Londra\'da yaşardı.'},
+      {en:'Did you use to play football?',       tr:'Eskiden futbol oynar mıydın?'},
+    ],
+    err:{w:'I am used to smoke.',r:'I used to smoke.',tip:'"am used to" alışkın olmak demektir. Eskiden yapardım demek için sadece "used to" kullan.'},
+    drills:[
+      {type:'mutate', sentence:'I ___ like vegetables, but now I love them.', opts:['didn\'t use to','am not used to','don\'t used to','not used to'], ans:0, tip:'Geçmişteki olumsuz alışkanlık: didn\'t use to'},
+      {type:'clash',  q:'Hangisi "eskiden öğretmendi" anlamına gelir?', a:'He is a teacher.', b:'He used to be a teacher.', correct:'b'},
+    ]
+  },
+  {
+    id:'b2-future-cont', level:'B2', cat:'Gelecek Zaman', icon:'⏳',
+    title:'Future Continuous', sub:'Gelecekte Devam Edecek Eylem',
+    desc:'Gelecekte belirli bir anda devam ediyor olacak eylemler için kullanılır. Yapı: will be + fiil-ing.',
+    contrast:'Türkçede "-yor olacağım" yapısıyla karşılanır.',
+    register:{ formal:80, informal:90, written:85, spoken:90 },
+    formula:[{t:'Özne',c:'#3b82f6'},{t:'+',c:'#6b7280'},{t:'will be',c:'#06b6d4'},{t:'+',c:'#6b7280'},{t:'Fiil-ing',c:'#10b981'}],
+    dna:[{w:'This time tomorrow,',r:'Zaman zarfı',c:'#6b7280'},{w:'I',r:'Özne',c:'#3b82f6'},{w:'will be',r:'Future Cont.',c:'#06b6d4'},{w:'flying',r:'Fiil-ing',c:'#10b981'},{w:'to New York.',r:'Nesne',c:'#f59e0b'}],
+    exs:[
+      {en:'This time tomorrow, I will be flying to NY.', tr:'Yarın bu saatlerde NY\'a uçuyor olacağım.'},
+      {en:'Don\'t call me at 8, I will be eating dinner.', tr:'8\'de beni arama, akşam yemeği yiyor olacağım.'},
+    ],
+    err:{w:'I will be fly tomorrow.',r:'I will be flying tomorrow.',tip:'Will be yapısından sonra fiil -ing almalıdır.'},
+    drills:[
+      {type:'mutate', sentence:'They ___ playing football at 5 PM tomorrow.', opts:['will','will be','are going to','be'], ans:1, tip:'Gelecekteki süreç → will be + -ing'},
+      {type:'clash',  q:'Hangisi doğru?', a:'I will be study.', b:'I will be studying.', correct:'b'},
+    ]
+  },
+  {
+    id:'c1-inverted-cond', level:'C1', cat:'Koşul Cümleleri', icon:'🔄',
+    title:'Inverted Conditionals', sub:'If Olmadan Koşul (Should/Were/Had)',
+    desc:'Resmi dilde "If" yerine yardımcı fiili başa alarak koşul kurulur. Vurgu ve resmiyet katar.',
+    contrast:'Türkçede bu devrik yapının tam bir karşılığı yoktur, anlam "ise/saydı" ile verilir.',
+    register:{ formal:98, informal:10, written:98, spoken:10 },
+    formula:[{t:'Should/Were/Had',c:'#ec4899'},{t:'+',c:'#6b7280'},{t:'Özne',c:'#3b82f6'},{t:'+',c:'#6b7280'},{t:'Fiil...',c:'#10b981'}],
+    dna:[{w:'Should',r:'If anlamında (1. koşul)',c:'#ec4899'},{w:'you',r:'Özne',c:'#3b82f6'},{w:'need',r:'Fiil',c:'#10b981'},{w:'help,',r:'Nesne',c:'#6b7280'},{w:'just ask.',r:'Sonuç',c:'#10b981'}],
+    exs:[
+      {en:'Should you need help, just ask.',             tr:'Yardıma ihtiyacınız olursa sormanız yeterli.'},
+      {en:'Were I rich, I would buy that car.',         tr:'Zengin olsam o arabayı alırdım.'},
+      {en:'Had I known, I would have told you.',        tr:'Bilseydim sana söylerdim.'},
+    ],
+    err:{w:'Should you will need help...',r:'Should you need help...',tip:'Should devriğinde "will" kullanılmaz.'},
+    drills:[
+      {type:'mutate', sentence:'___ it not for your help, I would have failed.', opts:['Had','Were','Should','If'], ans:1, tip:'2. Koşul devriği: Were it not for...'},
+      {type:'clash',  q:'Hangisi daha resmi?', a:'If you need anything...', b:'Should you need anything...', correct:'b'},
+    ]
+  },
+  {
+    id:'c2-negative-inversion', level:'C2', cat:'Uzman Yapılar', icon:'⚡',
+    title:'Negative Inversion', sub:'Zarf ile Devrik Cümle',
+    desc:'Never, Seldom, Rarely gibi olumsuz zarflar cümle başına geldiğinde özne ve yardımcı fiil yer değiştirir.',
+    contrast:'Türkçede vurgu genellikle yükleme yakınlaştırılarak yapılır. İngilizcede bu yapı çok güçlü bir edebi vurgu sağlar.',
+    register:{ formal:95, informal:20, written:98, spoken:20 },
+    formula:[{t:'Negative Adverb',c:'#ec4899'},{t:'+',c:'#6b7280'},{t:'Auxiliary',c:'#ef4444'},{t:'+',c:'#6b7280'},{t:'Subject',c:'#3b82f6'}],
+    dna:[{w:'Rarely',r:'Olumsuz Zarf',c:'#ec4899'},{w:'does',r:'Yardımcı Fiil (devrik)',c:'#ef4444'},{w:'he',r:'Özne',c:'#3b82f6'},{w:'speak',r:'Fiil',c:'#10b981'},{w:'about his past.',r:'Tamamlayıcı',c:'#f59e0b'}],
+    exs:[
+      {en:'Rarely does he speak about his past.',       tr:'Geçmişi hakkında nadiren konuşur.'},
+      {en:'Not only did she win, but she also... ',     tr:'Sadece kazanmakla kalmadı, ayrıca...'},
+      {en:'Under no circumstances should you open it.', tr:'Hiçbir koşulda onu açmamalısın.'},
+    ],
+    err:{w:'Never I have seen such a thing.',r:'Never have I seen such a thing.',tip:'Devrik yapıda yardımcı fiili özneden önce getir!'},
+    drills:[
+      {type:'mutate', sentence:'Seldom ___ such a beautiful sunset.', opts:['I have seen','have I seen','I saw','did I see'], ans:1, tip:'Seldom + have I + V3'},
+      {type:'forge',  prompt:'Cümleyi oluştur:', words:['Never','did','imagine','I','this.'], ans:'Never did I imagine this'},
     ]
   },
 
