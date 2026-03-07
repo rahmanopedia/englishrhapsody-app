@@ -198,10 +198,10 @@ class QuantumMode {
       <div class="qhc-icon">⚡</div>
       <div class="qhc-body">
         <h2>Sentence Rush</h2>
-        <p>60 saniyede karışık cümleleri sıraya diz. Ne kadar çok cümle o kadar çok puan.</p>
+        <p>10 cümlede kelimerleri doğru sıraya diz. Her cümle için 20 saniye. Hızlı ol, bonus kazan!</p>
         <div class="qhc-tags">
-          <span class="qhc-tag">60 Saniye</span>
-          <span class="qhc-tag">Sonsuz</span>
+          <span class="qhc-tag">20s / Cümle</span>
+          <span class="qhc-tag">10 Cümle</span>
           <span class="qhc-tag amber">+20 XP/cümle</span>
         </div>
       </div>
@@ -435,13 +435,14 @@ class WordForge {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  GAME 2 — SENTENCE RUSH (60s rapid-fire scramble)
+//  GAME 2 — SENTENCE RUSH (20s per sentence)
 // ════════════════════════════════════════════════════════════════
 class SentenceRush {
   constructor(qm) {
     this.qm=qm; this.root=qm.root;
-    this.score=0; this.solved=0; this.attempts=0;
-    this.timeLeft=60; this.timer=null;
+    this.score=0; this.solved=0;
+    this.round=0; this.maxRound=10;
+    this.timeLeft=20; this.timer=null;
     this.placed=[]; this.remaining=[];
     this.parts=[]; this.sc=null;
   }
@@ -450,9 +451,9 @@ class SentenceRush {
     this.root.innerHTML=`
 <div class="qgame-shell" id="rush-shell">
   <div class="qgame-topbar">
-    <button class="qback-btn" onclick="window._qmode.backToHub()">← Hub</button>
+    <button class="qback-btn" onclick="window._rush._stopTimer(); window._qmode.backToHub();">← Hub</button>
     <div class="rush-time-wrap">
-      <span class="rush-time-val" id="rush-time">60</span>
+      <span class="rush-time-val" id="rush-time">20</span>
       <span class="rush-time-lbl">s</span>
     </div>
     <div class="qgame-topbar-right">
@@ -461,11 +462,14 @@ class SentenceRush {
     </div>
   </div>
 
-  <div class="arena-timer-bar"><div class="arena-timer-fill" id="rush-fill" style="background:var(--amber)"></div></div>
+  <div class="arena-timer-bar"><div class="arena-timer-fill" id="rush-fill" style="background:var(--amber); width:100%"></div></div>
 
   <div class="rush-info-bar">
     <span class="rush-icon" id="rush-icon">🍎</span>
-    <span class="rush-label" id="rush-label">Cümleyi doğru sıraya diz</span>
+    <div style="flex:1">
+      <span class="rush-label" id="rush-label">Cümleyi doğru sıraya diz</span>
+      <div style="font-size:0.72rem;color:var(--text-3);margin-top:2px" id="rush-round">1/10</div>
+    </div>
   </div>
 
   <div class="sc-drop-zone" id="rush-drop" style="min-height:60px"></div>
@@ -474,7 +478,7 @@ class SentenceRush {
 
   <div class="rush-actions">
     <button class="sc-clear-btn" onclick="window._rush.clear()">↺ Sıfırla</button>
-    <button class="sc-check-btn" id="rush-check" onclick="window._rush.check()">✓ Gönder</button>
+    <button class="sc-check-btn" onclick="window._rush.check()">✓ Gönder</button>
   </div>
 
   <div class="arena-feedback" id="rush-feedback"></div>
@@ -482,26 +486,40 @@ class SentenceRush {
 
     window._rush=this;
     this._newSentence();
-    this._startGlobalTimer();
   }
 
-  _startGlobalTimer() {
+  _startTimer() {
+    this.timeLeft=20;
+    this._stopTimer();
+    const fill=document.getElementById('rush-fill');
+    const disp=document.getElementById('rush-time');
+    if(fill){ fill.style.width='100%'; fill.style.background='var(--amber)'; }
+    if(disp){ disp.textContent='20'; disp.style.color='#f59e0b'; }
+
     this.timer=setInterval(()=>{
       this.timeLeft--;
-      const fill=document.getElementById('rush-fill');
-      const disp=document.getElementById('rush-time');
-      if(fill) fill.style.width=(this.timeLeft/60*100)+'%';
-      if(disp) { disp.textContent=this.timeLeft; disp.style.color=this.timeLeft<15?'#f43f5e':'#f59e0b'; }
-      if(this.timeLeft<=0){clearInterval(this.timer); this._over(); }
+      if(fill){ fill.style.width=(this.timeLeft/20*100)+'%'; fill.style.background=this.timeLeft<7?'#f43f5e':'var(--amber)'; }
+      if(disp){ disp.textContent=this.timeLeft; disp.style.color=this.timeLeft<7?'#f43f5e':'#f59e0b'; }
+      if(this.timeLeft<=0){ this._stopTimer(); this._timeOut(); }
     },1000);
   }
 
+  _stopTimer() { if(this.timer){ clearInterval(this.timer); this.timer=null; } }
+
+  _timeOut() {
+    const correct=this.parts.map(p=>p.w).join(' ');
+    this._feedback(`⏱️ Süre doldu! Doğrusu: "${correct}"`, 'wrong');
+    setTimeout(()=>this._newSentence(), 2000);
+  }
+
   _newSentence() {
-    this.placed=[]; this.attempts=0;
+    if(this.round>=this.maxRound){ this._stopTimer(); this._over(); return; }
+    this.round++;
+    this.placed=[];
     this.sc=randScenario();
     const st={
       time: ['pres','past','fut'][Math.floor(Math.random()*3)],
-      flow: ['simp','cont','perf'][Math.floor(Math.random()*3)], // no perf_cont for speed
+      flow: ['simp','cont','perf'][Math.floor(Math.random()*3)],
       voice:'act',
       pol:  Math.random()>0.3?'aff':'neg',
     };
@@ -510,11 +528,14 @@ class SentenceRush {
 
     const icon=document.getElementById('rush-icon');
     const lbl =document.getElementById('rush-label');
+    const rnd =document.getElementById('rush-round');
     if(icon) icon.textContent=this.sc.icon;
-    if(lbl)  lbl.textContent =stateLabel(st);
+    if(lbl)  lbl.textContent=stateLabel(st);
+    if(rnd)  rnd.textContent=`${this.round}/${this.maxRound}`;
 
     this._renderPool();
     this._renderDrop();
+    this._startTimer();
   }
 
   _renderPool() {
@@ -566,15 +587,16 @@ class SentenceRush {
 
     const ok=correctWords.every((w,i)=>w===userWords[i]);
     if(ok){
+      this._stopTimer();
       this.solved++;
-      const bonus=20+Math.ceil(this.timeLeft/4);
+      const bonus=20+this.timeLeft*2;
       this.score+=bonus;
       document.getElementById('rush-solved').textContent=`✓ ${this.solved}`;
       document.getElementById('rush-score').textContent=this.score;
       const sh=document.getElementById('rush-shell');
       if(sh){sh.classList.add('flash-green');setTimeout(()=>sh.classList.remove('flash-green'),400);}
       this._feedback(`✅ +${bonus} puan! Sıradaki →`,'correct');
-      setTimeout(()=>this._newSentence(),800);
+      setTimeout(()=>this._newSentence(),900);
     } else {
       this.attempts++;
       const sh=document.getElementById('rush-shell');
