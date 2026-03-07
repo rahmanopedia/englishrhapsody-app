@@ -14,8 +14,8 @@ const QUANTUM_SCENARIOS = [
         past:['yedim','yemedim'], ppas:['yemiştim','yememiştim'],
         fut:['yiyeceğim','yemeyeceğim'] },
       pass:{ subj:'Bir elma', agent:'benim tarafımdan',
-        pres:['yenilir','yenilmez'], prg:['yeniyor','yenmiyor'],
-        past:['yendi','yenmedi'], ppas:['yenmişti','yenmemişti'],
+        pres:['yenilir','yenilmez'], prg:['yeniliyor','yenilmiyor'],
+        past:['yenildi','yenilmedi'], ppas:['yenilmişti','yenilmemişti'],
         fut:['yenilecek','yenilmeyecek'] }
     }
   },
@@ -202,9 +202,9 @@ const QUANTUM_SCENARIOS = [
     obj: {w:'the stars',      type:'pl'},
     trData:{
       act:{ subj:'Bilim insanları', obj:'yıldızları',
-        pres:['inceler','incelemez'], prg:['inceliyor','incelemiyor'],
-        past:['inceledi','incelemedi'], ppas:['incelemişti','incelememişti'],
-        fut:['inceleyecek','incelemeyecek'] },
+        pres:['incelerler','incelemezler'], prg:['inceliyorlar','incelemiyorlar'],
+        past:['incelediler','incelemediler'], ppas:['incelemişlerdi','incelememişlerdi'],
+        fut:['inceleyecekler','incelemeyecekler'] },
       pass:{ subj:'Yıldızlar', agent:'bilim insanları tarafından',
         pres:['incelenir','incelenmez'], prg:['inceleniyor','incelenmiyor'],
         past:['incelendi','incelenmedi'], ppas:['incelenmişti','incelenmemişti'],
