@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════════
-//  QUANTUM GAME CENTER v5.0 — Sentence Building Games
+//  QUANTUM GAME CENTER — Sentence Building Games
 // ════════════════════════════════════════════════════════════════
 
 const QUANTUM_SCENARIOS = [
@@ -8,7 +8,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'I',          type:'I',  obj_form:'me'        },
     verb:{v1:'eat',     v2:'ate',      v3:'eaten',    ving:'eating'    },
     obj: {w:'an apple',       type:'sg'},
-    tr:'Ben bir elma yerim.',
     trData:{
       act:{ subj:'Ben', obj:'bir elma',
         pres:['yerim','yemem'], prg:['yiyorum','yemiyorum'],
@@ -25,7 +24,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'The dog',    type:'sg', obj_form:'the dog'   },
     verb:{v1:'chase',   v2:'chased',   v3:'chased',   ving:'chasing'   },
     obj: {w:'the cat',        type:'sg'},
-    tr:'Köpek kediyi kovalar.',
     trData:{
       act:{ subj:'Köpek', obj:'kediyi',
         pres:['kovalar','kovamaz'], prg:['kovalıyor','kovalamıyor'],
@@ -42,7 +40,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'She',        type:'sg', obj_form:'her'       },
     verb:{v1:'write',   v2:'wrote',    v3:'written',  ving:'writing'   },
     obj: {w:'a letter',       type:'sg'},
-    tr:'O bir mektup yazar.',
     trData:{
       act:{ subj:'O', obj:'bir mektup',
         pres:['yazar','yazmaz'], prg:['yazıyor','yazmıyor'],
@@ -59,7 +56,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'They',       type:'pl', obj_form:'them'      },
     verb:{v1:'build',   v2:'built',    v3:'built',    ving:'building'  },
     obj: {w:'a bridge',       type:'sg'},
-    tr:'Onlar bir köprü inşa eder.',
     trData:{
       act:{ subj:'Onlar', obj:'bir köprü',
         pres:['inşa ederler','inşa etmezler'], prg:['inşa ediyorlar','inşa etmiyorlar'],
@@ -76,7 +72,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'The hacker', type:'sg', obj_form:'the hacker'},
     verb:{v1:'steal',   v2:'stole',    v3:'stolen',   ving:'stealing'  },
     obj: {w:'the files',      type:'pl'},
-    tr:'Hacker dosyaları çalar.',
     trData:{
       act:{ subj:'Hacker', obj:'dosyaları',
         pres:['çalar','çalmaz'], prg:['çalıyor','çalmıyor'],
@@ -93,7 +88,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'The chef',   type:'sg', obj_form:'the chef'  },
     verb:{v1:'cook',    v2:'cooked',   v3:'cooked',   ving:'cooking'   },
     obj: {w:'the meal',       type:'sg'},
-    tr:'Şef yemeği pişirir.',
     trData:{
       act:{ subj:'Şef', obj:'yemeği',
         pres:['pişirir','pişirmez'], prg:['pişiriyor','pişirmiyor'],
@@ -110,7 +104,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'We',         type:'pl', obj_form:'us'        },
     verb:{v1:'discover',v2:'discovered',v3:'discovered',ving:'discovering'},
     obj: {w:'a new planet',   type:'sg'},
-    tr:'Biz yeni bir gezegen keşfederiz.',
     trData:{
       act:{ subj:'Biz', obj:'yeni bir gezegen',
         pres:['keşfederiz','keşfetmeyiz'], prg:['keşfediyoruz','keşfetmiyoruz'],
@@ -127,7 +120,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'The robot',  type:'sg', obj_form:'the robot' },
     verb:{v1:'destroy', v2:'destroyed',v3:'destroyed',ving:'destroying' },
     obj: {w:'the city',       type:'sg'},
-    tr:'Robot şehri yok eder.',
     trData:{
       act:{ subj:'Robot', obj:'şehri',
         pres:['yok eder','yok etmez'], prg:['yok ediyor','yok etmiyor'],
@@ -144,7 +136,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'The wizard', type:'sg', obj_form:'the wizard'},
     verb:{v1:'cast',    v2:'cast',     v3:'cast',     ving:'casting'   },
     obj: {w:'a spell',        type:'sg'},
-    tr:'Büyücü bir büyü yapar.',
     trData:{
       act:{ subj:'Büyücü', obj:'bir büyü',
         pres:['yapar','yapmaz'], prg:['yapıyor','yapmıyor'],
@@ -161,7 +152,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'The dragon', type:'sg', obj_form:'the dragon'},
     verb:{v1:'burn',    v2:'burned',   v3:'burned',   ving:'burning'   },
     obj: {w:'the castle',     type:'sg'},
-    tr:'Ejderha kaleyi yakar.',
     trData:{
       act:{ subj:'Ejderha', obj:'kaleyi',
         pres:['yakar','yakmaz'], prg:['yakıyor','yakmıyor'],
@@ -178,7 +168,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'You',        type:'you',obj_form:'you'       },
     verb:{v1:'solve',   v2:'solved',   v3:'solved',   ving:'solving'   },
     obj: {w:'the mystery',    type:'sg'},
-    tr:'Sen gizemi çözersin.',
     trData:{
       act:{ subj:'Sen', obj:'gizemi',
         pres:['çözersin','çözmezsin'], prg:['çözüyorsun','çözmüyorsun'],
@@ -195,7 +184,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'The pilot',  type:'sg', obj_form:'the pilot' },
     verb:{v1:'land',    v2:'landed',   v3:'landed',   ving:'landing'   },
     obj: {w:'the spacecraft', type:'sg'},
-    tr:'Pilot uzay aracını indirir.',
     trData:{
       act:{ subj:'Pilot', obj:'uzay aracını',
         pres:['indirir','indirmez'], prg:['indiriyor','indirmiyor'],
@@ -212,7 +200,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'Scientists', type:'pl', obj_form:'scientists'},
     verb:{v1:'study',   v2:'studied',  v3:'studied',  ving:'studying'  },
     obj: {w:'the stars',      type:'pl'},
-    tr:'Bilim insanları yıldızları inceler.',
     trData:{
       act:{ subj:'Bilim insanları', obj:'yıldızları',
         pres:['inceler','incelemez'], prg:['inceliyor','incelemiyor'],
@@ -229,7 +216,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'The artist', type:'sg', obj_form:'the artist'},
     verb:{v1:'paint',   v2:'painted',  v3:'painted',  ving:'painting'  },
     obj: {w:'a masterpiece',  type:'sg'},
-    tr:'Sanatçı bir başyapıt boyar.',
     trData:{
       act:{ subj:'Sanatçı', obj:'bir başyapıt',
         pres:['boyar','boyamaz'], prg:['boyuyor','boyamıyor'],
@@ -246,7 +232,6 @@ const QUANTUM_SCENARIOS = [
     subj:{w:'The knight', type:'sg', obj_form:'the knight'},
     verb:{v1:'protect', v2:'protected',v3:'protected',ving:'protecting'},
     obj: {w:'the kingdom',    type:'sg'},
-    tr:'Şövalye krallığı korur.',
     trData:{
       act:{ subj:'Şövalye', obj:'krallığı',
         pres:['korur','korumaz'], prg:['koruyor','korumuyor'],
@@ -261,30 +246,30 @@ const QUANTUM_SCENARIOS = [
 ];
 
 const TR_LABELS = {
-  time:  { pres:'Şimdiki', past:'Geçmiş',      fut:'Gelecek'              },
-  flow:  { simp:'Basit',   cont:'Süregelen',    perf:'Tamamlanmış',  perf_cont:'Süreçsel' },
-  voice: { act:'Etken',    pass:'Edilgen'                                  },
-  pol:   { aff:'Olumlu',   neg:'Olumsuz',       que:'Soru'                 },
+  time:  { pres:'Şimdiki', past:'Geçmiş',     fut:'Gelecek'         },
+  flow:  { simp:'Basit',   cont:'Süregelen',   perf:'Tamamlanmış',   perf_cont:'Süreçsel' },
+  voice: { act:'Etken',    pass:'Edilgen'                            },
+  pol:   { aff:'Olumlu',   neg:'Olumsuz',      que:'Soru'            },
 };
 
-// ── Grammar Engine ──────────────────────────────────────────────
+// ── Grammar Engine ───────────────────────────────────────────────
 function generateSentence(sc, time, flow, voice, pol) {
-  let subj = voice === 'act' ? sc.subj : sc.obj;
-  let origSubj = sc.subj;
-  let stype = subj.type;
-  let isTsg  = !['I','you','we','they','pl'].includes(stype);
-  let isPl   = ['you','we','they','pl'].includes(stype);
+  const subj     = voice === 'act' ? sc.subj : sc.obj;
+  const origSubj = sc.subj;
+  const stype    = subj.type;
+  const isTsg    = !['I','you','we','they','pl'].includes(stype);
+  const isPl     = ['you','we','they','pl'].includes(stype);
 
-  let be_p  = stype==='I' ? 'am' : (isPl ? 'are' : 'is');
-  let be_pa = isPl ? 'were' : 'was';
-  let hv    = (stype==='I'||isPl) ? 'have' : 'has';
+  const be_p  = stype==='I' ? 'am' : (isPl ? 'are' : 'is');
+  const be_pa = isPl ? 'were' : 'was';
+  const hv    = (stype==='I'||isPl) ? 'have' : 'has';
 
-  let {v1,v2,v3,ving} = sc.verb;
+  const {v1,v2,v3,ving} = sc.verb;
   let vs = v1;
   if (isTsg) {
-    if (v1.endsWith('y') && !['a','e','i','o','u'].includes(v1[v1.length-2])) vs = v1.slice(0,-1)+'ies';
-    else if (v1.match(/(ch|sh|s|x|z|o)$/)) vs = v1+'es';
-    else vs = v1+'s';
+    if      (v1.endsWith('y') && !'aeiou'.includes(v1[v1.length-2])) vs = v1.slice(0,-1)+'ies';
+    else if (v1.match(/(ch|sh|s|x|z|o)$/))                           vs = v1+'es';
+    else                                                               vs = v1+'s';
   }
 
   let aux=[], mv='';
@@ -317,17 +302,15 @@ function generateSentence(sc, time, flow, voice, pol) {
     else if (time==='fut' &&flow==='perf_cont') { aux=['will','have','been','being']; mv=v3; }
   }
 
-  if (pol==='neg') {
-    if (aux.length>0) {
-      if (aux[0]==='will') aux[0]="won't";
-      else if (aux[0]==='am') aux.splice(1,0,'not');
-      else aux[0]=aux[0]+"n't";
-    }
+  if (pol==='neg' && aux.length>0) {
+    if      (aux[0]==='will') aux[0]="won't";
+    else if (aux[0]==='am')   aux.splice(1,0,'not');
+    else                      aux[0]=aux[0]+"n't";
   }
 
-  let parts=[];
-  if (pol==='que'&&aux.length>0) {
-    let fa=aux.shift();
+  const parts=[];
+  if (pol==='que' && aux.length>0) {
+    const fa=aux.shift();
     parts.push({w:fa[0].toUpperCase()+fa.slice(1), c:'aux'});
     parts.push({w:subj.w.toLowerCase(), c:'subj'});
   } else {
@@ -335,70 +318,50 @@ function generateSentence(sc, time, flow, voice, pol) {
   }
   aux.forEach(a=>parts.push({w:a,c:'aux'}));
   if (mv) parts.push({w:mv,c:'verb'});
+  const punct = pol==='que' ? '?' : '.';
   if (voice==='act') {
-    parts.push({w:sc.obj.w+(pol==='que'?'?':'.'), c:'obj'});
+    parts.push({w:sc.obj.w+punct, c:'obj'});
   } else {
-    let ag=origSubj.obj_form||origSubj.w.toLowerCase();
-    parts.push({w:`by ${ag}`+(pol==='que'?'?':'.'), c:'obj'});
+    const ag = origSubj.obj_form||origSubj.w.toLowerCase();
+    parts.push({w:`by ${ag}${punct}`, c:'obj'});
   }
   return parts;
 }
 
 // ── Turkish Translation Engine ───────────────────────────────────
 function trQueForm(verb) {
-  // Add question particle based on last vowel (vowel harmony)
   const vowelMap = {a:'mı',e:'mi',ı:'mı',i:'mi',o:'mu',ö:'mü',u:'mu',ü:'mü'};
-  for (let i = verb.length-1; i >= 0; i--) {
-    if (vowelMap[verb[i]]) return verb + ' ' + vowelMap[verb[i]] + '?';
+  for (let i=verb.length-1; i>=0; i--) {
+    if (vowelMap[verb[i]]) return verb+' '+vowelMap[verb[i]]+'?';
   }
-  return verb + ' mi?';
+  return verb+' mi?';
 }
 
 function generateTurkishTranslation(sc, time, flow, voice, pol) {
   const d = sc.trData;
-  if (!d) return sc.tr || '—';
+  if (!d) return '—';
+  const side = d[voice];
 
-  const side = d[voice]; // d.act or d.pass
-
-  // Map time+flow to verb category
   let cat;
-  if      (time==='pres' && flow==='simp')                         cat = 'pres';
-  else if (flow==='cont')                                          cat = 'prg';
-  else if (time==='pres' && (flow==='perf'||flow==='perf_cont'))   cat = 'past';
-  else if (time==='past' && flow==='simp')                         cat = 'past';
-  else if (time==='past' && (flow==='perf'||flow==='perf_cont'))   cat = 'ppas';
-  else if (time==='fut')                                           cat = 'fut';
-  else                                                             cat = 'pres';
+  if      (time==='pres' && flow==='simp')                        cat='pres';
+  else if (flow==='cont')                                         cat='prg';
+  else if (time==='pres' && (flow==='perf'||flow==='perf_cont'))  cat='past';
+  else if (time==='past' && flow==='simp')                        cat='past';
+  else if (time==='past' && (flow==='perf'||flow==='perf_cont'))  cat='ppas';
+  else if (time==='fut')                                          cat='fut';
+  else                                                            cat='pres';
 
-  const pair = side[cat]; // [aff_form, neg_form]
-  const affVerb = pair[0];
-  const negVerb = pair[1];
+  const [affVerb, negVerb] = side[cat];
+  const verb = pol==='neg' ? negVerb : affVerb;
 
-  let verb = pol === 'neg' ? negVerb : affVerb;
-
-  let sentence;
-  if (pol === 'que') {
-    sentence = voice === 'act'
+  if (pol==='que') {
+    return voice==='act'
       ? `${side.subj} ${side.obj} ${trQueForm(affVerb)}`
       : `${side.subj} ${side.agent} ${trQueForm(affVerb)}`;
-  } else {
-    sentence = voice === 'act'
-      ? `${side.subj} ${side.obj} ${verb}.`
-      : `${side.subj} ${side.agent} ${verb}.`;
   }
-
-  return sentence;
-}
-
-function randState() {
-  const times=['pres','past','fut'], flows=['simp','cont','perf','perf_cont'],
-        voices=['act','pass'], pols=['aff','neg','que'];
-  return {
-    time:  times [Math.floor(Math.random()*times.length)],
-    flow:  flows [Math.floor(Math.random()*flows.length)],
-    voice: voices[Math.floor(Math.random()*voices.length)],
-    pol:   pols  [Math.floor(Math.random()*pols.length)],
-  };
+  return voice==='act'
+    ? `${side.subj} ${side.obj} ${verb}.`
+    : `${side.subj} ${side.agent} ${verb}.`;
 }
 
 function stateLabel(s) {
@@ -406,16 +369,14 @@ function stateLabel(s) {
 }
 
 function shuffle(arr) { return [...arr].sort(()=>Math.random()-0.5); }
-
 function randScenario() { return QUANTUM_SCENARIOS[Math.floor(Math.random()*QUANTUM_SCENARIOS.length)]; }
 
-// ── Meaning Card ────────────────────────────────────────────────
+// ── Meaning Card ─────────────────────────────────────────────────
 function showMeaningCard(shellId, parts, tr, tenseLabel) {
   const shell = document.getElementById(shellId);
   if (!shell) return;
   const old = shell.querySelector('.meaning-card');
   if (old) old.remove();
-
   const card = document.createElement('div');
   card.className = 'meaning-card';
   card.innerHTML = `
@@ -424,35 +385,40 @@ function showMeaningCard(shellId, parts, tr, tenseLabel) {
     <div class="mc-tr">${tr}</div>
     <div class="mc-tense">${tenseLabel}</div>`;
   shell.appendChild(card);
-  requestAnimationFrame(() => card.classList.add('mc-show'));
+  requestAnimationFrame(()=>card.classList.add('mc-show'));
 }
 
-// ── Main Hub ────────────────────────────────────────────────────
+function clearMeaningCard(shellId) {
+  const card = document.getElementById(shellId)?.querySelector('.meaning-card');
+  if (card) card.remove();
+}
+
+// ── Main Hub ─────────────────────────────────────────────────────
 class QuantumMode {
   constructor(app) { this.app=app; this.root=null; }
 
   init(root) { this.root=root; window._qmode=this; this.renderHub(); }
   destroy()  { this.root.innerHTML=''; }
   addXP(n)   { if(this.app?.addXP) this.app.addXP(n); }
-  confetti(o){ if(typeof confetti==='function') confetti({particleCount:160,spread:90,origin:{y:0.6},colors:['#00d4ff','#7c3aed','#ec4899'],...o}); }
+  confetti() { if(typeof confetti==='function') confetti({particleCount:160,spread:90,origin:{y:0.6},colors:['#00d4ff','#7c3aed','#ec4899']}); }
 
   renderHub() {
-    const wins   = localStorage.getItem('q_wins')   ||'0';
-    const best   = localStorage.getItem('q_best')   ||'—';
-    const bosses = localStorage.getItem('q_bosses') ||'0';
+    const wins  = localStorage.getItem('q_wins')  || '0';
+    const best  = localStorage.getItem('q_best')  || '—';
+    const games = localStorage.getItem('q_games') || '0';
 
     this.root.innerHTML = `
 <div class="qhub-shell">
   <div class="qhub-header">
     <div class="qhub-logo">⚛️</div>
     <h1 class="qhub-title">QUANTUM GAME CENTER</h1>
-    <p class="qhub-sub">4 farklı cümle kurma oyunu ile gramer ustası ol</p>
+    <p class="qhub-sub">2 farklı cümle kurma oyunu ile gramer ustası ol</p>
   </div>
 
   <div class="qhub-stats-bar">
     <div class="qhs-item"><span class="qhs-val">${wins}</span><span class="qhs-lbl">Zafer</span></div>
     <div class="qhs-item"><span class="qhs-val cyan">${best}</span><span class="qhs-lbl">En İyi Skor</span></div>
-    <div class="qhs-item"><span class="qhs-val violet">${bosses}</span><span class="qhs-lbl">Boss Yenildi</span></div>
+    <div class="qhs-item"><span class="qhs-val violet">${games}</span><span class="qhs-lbl">Oynanan</span></div>
   </div>
 
   <div class="qhub-grid">
@@ -501,12 +467,15 @@ class QuantumMode {
 
   recordBest(score) {
     const prev = parseInt(localStorage.getItem('q_best')||'0');
-    if (score>prev) localStorage.setItem('q_best',String(score));
+    if (score>prev) localStorage.setItem('q_best', String(score));
   }
 
   recordWin() {
-    const w=parseInt(localStorage.getItem('q_wins')||'0')+1;
-    localStorage.setItem('q_wins',w);
+    localStorage.setItem('q_wins', parseInt(localStorage.getItem('q_wins')||'0')+1);
+  }
+
+  recordGame() {
+    localStorage.setItem('q_games', parseInt(localStorage.getItem('q_games')||'0')+1);
   }
 }
 
@@ -538,7 +507,7 @@ class SentenceRush {
     </div>
   </div>
 
-  <div class="arena-timer-bar"><div class="arena-timer-fill" id="rush-fill" style="background:var(--amber); width:100%"></div></div>
+  <div class="arena-timer-bar"><div class="arena-timer-fill" id="rush-fill" style="background:var(--amber);width:100%"></div></div>
 
   <div class="rush-info-bar">
     <span class="rush-icon" id="rush-icon">🍎</span>
@@ -549,7 +518,6 @@ class SentenceRush {
   </div>
 
   <div class="sc-drop-zone" id="rush-drop" style="min-height:60px"></div>
-
   <div class="sc-word-pool" id="rush-pool"></div>
 
   <div class="rush-actions">
@@ -565,13 +533,11 @@ class SentenceRush {
   }
 
   _startTimer() {
-    this.timeLeft=20;
-    this._stopTimer();
+    this.timeLeft=20; this._stopTimer();
     const fill=document.getElementById('rush-fill');
     const disp=document.getElementById('rush-time');
     if(fill){ fill.style.width='100%'; fill.style.background='var(--amber)'; }
     if(disp){ disp.textContent='20'; disp.style.color='#f59e0b'; }
-
     this.timer=setInterval(()=>{
       this.timeLeft--;
       if(fill){ fill.style.width=(this.timeLeft/20*100)+'%'; fill.style.background=this.timeLeft<7?'#f43f5e':'var(--amber)'; }
@@ -583,33 +549,30 @@ class SentenceRush {
   _stopTimer() { if(this.timer){ clearInterval(this.timer); this.timer=null; } }
 
   _timeOut() {
-    this._feedback(`⏱️ Süre doldu!`, 'wrong');
-    const tr = generateTurkishTranslation(this.sc, this.st.time, this.st.flow, this.st.voice, this.st.pol);
-    showMeaningCard('rush-shell', this.parts, tr, stateLabel(this.st));
-    setTimeout(()=>this._newSentence(), 2800);
+    this._feedback('⏱️ Süre doldu!','wrong');
+    const tr=generateTurkishTranslation(this.sc,this.st.time,this.st.flow,this.st.voice,this.st.pol);
+    showMeaningCard('rush-shell',this.parts,tr,stateLabel(this.st));
+    setTimeout(()=>this._newSentence(),2800);
   }
 
   _newSentence() {
     if(this.round>=this.maxRound){ this._stopTimer(); this._over(); return; }
     this.round++;
     this.placed=[];
+    clearMeaningCard('rush-shell');
     this.sc=randScenario();
-    const st={
+    this.st={
       time: ['pres','past','fut'][Math.floor(Math.random()*3)],
       flow: ['simp','cont','perf'][Math.floor(Math.random()*3)],
       voice:'act',
       pol:  Math.random()>0.3?'aff':'neg',
     };
-    this.st=st;
-    this.parts=generateSentence(this.sc,st.time,st.flow,st.voice,st.pol);
-    this.remaining=shuffle(this.parts.map((p,i)=>({w:p.w.replace(/[?.]/g,''),c:p.c,i})));
+    this.parts=generateSentence(this.sc,this.st.time,this.st.flow,this.st.voice,this.st.pol);
+    this.remaining=shuffle(this.parts.map(p=>({w:p.w.replace(/[?.]/g,''),c:p.c})));
 
-    const icon=document.getElementById('rush-icon');
-    const lbl =document.getElementById('rush-label');
-    const rnd =document.getElementById('rush-round');
-    if(icon) icon.textContent=this.sc.icon;
-    if(lbl)  lbl.textContent=stateLabel(st);
-    if(rnd)  rnd.textContent=`${this.round}/${this.maxRound}`;
+    document.getElementById('rush-icon').textContent=this.sc.icon;
+    document.getElementById('rush-label').textContent=stateLabel(this.st);
+    document.getElementById('rush-round').textContent=`${this.round}/${this.maxRound}`;
 
     this._renderPool();
     this._renderDrop();
@@ -658,11 +621,9 @@ class SentenceRush {
   check() {
     const correctWords=this.parts.map(p=>p.w.replace(/[?.]/g,'').toLowerCase());
     const userWords=this.placed.map(w=>w.w.toLowerCase());
-
     if(userWords.length!==correctWords.length){
       this._feedback('⚠️ Tüm kelimeleri kullan!','warn'); return;
     }
-
     const ok=correctWords.every((w,i)=>w===userWords[i]);
     if(ok){
       this._stopTimer();
@@ -674,13 +635,13 @@ class SentenceRush {
       const sh=document.getElementById('rush-shell');
       if(sh){sh.classList.add('flash-green');setTimeout(()=>sh.classList.remove('flash-green'),400);}
       this._feedback(`✅ +${bonus} puan!`,'correct');
-      const tr = generateTurkishTranslation(this.sc, this.st.time, this.st.flow, this.st.voice, this.st.pol);
-      showMeaningCard('rush-shell', this.parts, tr, stateLabel(this.st));
+      const tr=generateTurkishTranslation(this.sc,this.st.time,this.st.flow,this.st.voice,this.st.pol);
+      showMeaningCard('rush-shell',this.parts,tr,stateLabel(this.st));
       setTimeout(()=>this._newSentence(),2500);
     } else {
       const sh=document.getElementById('rush-shell');
       if(sh){sh.classList.add('shake');setTimeout(()=>sh.classList.remove('shake'),400);}
-      this._feedback(`❌ Yanlış sıra! Tekrar dene.`,'wrong');
+      this._feedback('❌ Yanlış sıra! Tekrar dene.','wrong');
     }
   }
 
@@ -692,14 +653,16 @@ class SentenceRush {
   }
 
   _over(){
+    this.qm.recordGame();
     this.qm.recordBest(this.score);
-    if(this.solved>=5){ this.qm.recordWin(); this.qm.addXP(this.solved*20); this.qm.confetti(); }
-    this.root.innerHTML=_resultHTML('⚡','Sentence Rush',this.solved>=3,this.score,`${this.solved} cümle çözüldü`,this.solved*20,'rush');
+    const won=this.solved>=5;
+    if(won){ this.qm.recordWin(); this.qm.addXP(this.solved*20); this.qm.confetti(); }
+    this.root.innerHTML=_resultHTML('⚡','Sentence Rush',won,this.score,`${this.solved}/10 cümle çözüldü`,this.solved*20,'rush');
   }
 }
 
 // ════════════════════════════════════════════════════════════════
-//  GAME 3 — SENTENCE SCRAMBLE (color-zone enhanced)
+//  GAME 2 — SENTENCE SCRAMBLE (color-coded)
 // ════════════════════════════════════════════════════════════════
 class SentenceScramble {
   constructor(qm) {
@@ -709,13 +672,14 @@ class SentenceScramble {
     this.placed=[]; this.remaining=[];
     this.parts=[]; this.sc=null; this.st=null;
     this.timer=null; this.timeLeft=30;
+    this._busy=false; // prevents double-submit during feedback delay
   }
 
   start() {
     this.root.innerHTML=`
 <div class="qgame-shell" id="ss-shell">
   <div class="qgame-topbar">
-    <button class="qback-btn" onclick="window._qmode.backToHub()">← Hub</button>
+    <button class="qback-btn" onclick="window._ss._stopTimer(); window._qmode.backToHub();">← Hub</button>
     <div class="qgame-topbar-center">
       <span class="qtb-label">Round</span>
       <span class="qtb-val" id="ss-round">1/8</span>
@@ -745,7 +709,6 @@ class SentenceScramble {
   </div>
 
   <div class="sc-drop-zone" id="ss-drop"></div>
-
   <div class="sc-word-pool" id="ss-pool"></div>
 
   <div class="sc-controls">
@@ -761,24 +724,26 @@ class SentenceScramble {
   }
 
   _newRound() {
-    if(this.round>=this.maxRound){this._over(true);return;}
+    if(this.round>=this.maxRound){ this._over(true); return; }
     this.round++;
-    this.placed=[]; this.sc=randScenario();
-    const st={
+    this.placed=[];
+    this._busy=false;
+    clearMeaningCard('ss-shell');
+    this.sc=randScenario();
+    this.st={
       time:  ['pres','past','fut'][Math.floor(Math.random()*3)],
       flow:  ['simp','cont','perf','perf_cont'][Math.floor(Math.random()*4)],
       voice: Math.random()>0.4?'act':'pass',
       pol:   Math.random()>0.3?'aff':'neg',
     };
-    this.st=st;
-    this.parts=generateSentence(this.sc,st.time,st.flow,st.voice,st.pol);
-    this.remaining=shuffle(this.parts.map((p,i)=>({w:p.w.replace(/[?.]/g,''),c:p.c,i})));
+    this.parts=generateSentence(this.sc,this.st.time,this.st.flow,this.st.voice,this.st.pol);
+    this.remaining=shuffle(this.parts.map(p=>({w:p.w.replace(/[?.]/g,''),c:p.c})));
 
     document.getElementById('ss-round').textContent=`${this.round}/${this.maxRound}`;
     document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
     document.getElementById('ss-score').textContent=this.score;
     document.getElementById('ss-icon').textContent=this.sc.icon;
-    document.getElementById('ss-state').textContent=stateLabel(st);
+    document.getElementById('ss-state').textContent=stateLabel(this.st);
 
     this._renderPool(); this._renderDrop();
     this._startTimer();
@@ -792,6 +757,7 @@ class SentenceScramble {
     ).join('');
     el.querySelectorAll('.sc-word-chip').forEach(btn=>{
       btn.onclick=()=>{
+        if(this._busy)return;
         const i=parseInt(btn.dataset.i);
         this.placed.push(this.remaining[i]);
         this.remaining.splice(i,1);
@@ -803,12 +769,13 @@ class SentenceScramble {
   _renderDrop() {
     const el=document.getElementById('ss-drop');
     if(!el)return;
-    if(!this.placed.length){el.innerHTML='<div class="sc-dz-placeholder">Kelimelere tıkla, cümleyi kur →</div>';return;}
+    if(!this.placed.length){ el.innerHTML='<div class="sc-dz-placeholder">Kelimelere tıkla, cümleyi kur →</div>'; return; }
     el.innerHTML=this.placed.map((w,i)=>
       `<button class="sc-placed-chip c-${w.c}" data-i="${i}">${w.w}</button>`
     ).join('');
     el.querySelectorAll('.sc-placed-chip').forEach(btn=>{
       btn.onclick=()=>{
+        if(this._busy)return;
         const i=parseInt(btn.dataset.i);
         this.remaining.push(this.placed[i]);
         this.placed.splice(i,1);
@@ -818,18 +785,22 @@ class SentenceScramble {
   }
 
   clear() {
+    if(this._busy)return;
     this.remaining=[...this.remaining,...this.placed];
     this.placed=[];
     this._renderPool(); this._renderDrop();
   }
 
   check() {
+    if(this._busy)return;
     const correct=this.parts.map(p=>p.w.replace(/[?.]/g,'').toLowerCase());
     const user=this.placed.map(w=>w.w.toLowerCase());
-    if(user.length!==correct.length){this._feedback('⚠️ Tüm kelimeleri kullan!','warn');return;}
+    if(user.length!==correct.length){ this._feedback('⚠️ Tüm kelimeleri kullan!','warn'); return; }
+
     this._stopTimer();
     const ok=correct.every((w,i)=>w===user[i]);
-    const tr = generateTurkishTranslation(this.sc, this.st.time, this.st.flow, this.st.voice, this.st.pol);
+    const tr=generateTurkishTranslation(this.sc,this.st.time,this.st.flow,this.st.voice,this.st.pol);
+
     if(ok){
       const bonus=25+Math.ceil(this.timeLeft*2);
       this.score+=bonus;
@@ -837,17 +808,24 @@ class SentenceScramble {
       const sh=document.getElementById('ss-shell');
       if(sh){sh.classList.add('flash-green');setTimeout(()=>sh.classList.remove('flash-green'),500);}
       document.getElementById('ss-score').textContent=this.score;
-      showMeaningCard('ss-shell', this.parts, tr, stateLabel(this.st));
+      showMeaningCard('ss-shell',this.parts,tr,stateLabel(this.st));
+      this._busy=true;
       setTimeout(()=>this._newRound(),2800);
     } else {
       this.lives--;
-      this._feedback(`❌ Yanlış sıra! −1 can`, 'wrong');
+      this._feedback('❌ Yanlış sıra! −1 can','wrong');
       const sh=document.getElementById('ss-shell');
       if(sh){sh.classList.add('shake');setTimeout(()=>sh.classList.remove('shake'),500);}
       document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-      showMeaningCard('ss-shell', this.parts, tr, stateLabel(this.st));
-      if(this.lives<=0){setTimeout(()=>this._over(false),2800);return;}
-      setTimeout(()=>{this.clear();this._startTimer();},2800);
+      showMeaningCard('ss-shell',this.parts,tr,stateLabel(this.st));
+      this._busy=true;
+      if(this.lives<=0){ setTimeout(()=>this._over(false),2800); return; }
+      setTimeout(()=>{
+        clearMeaningCard('ss-shell');
+        this.clear();
+        this._busy=false;
+        this._startTimer();
+      },2800);
     }
   }
 
@@ -857,21 +835,22 @@ class SentenceScramble {
     const disp=document.getElementById('ss-time');
     this.timer=setInterval(()=>{
       this.timeLeft--;
-      if(fill){fill.style.width=(this.timeLeft/30*100)+'%';fill.style.background=this.timeLeft<10?'#f43f5e':'var(--green)';}
-      if(disp)disp.textContent=`${this.timeLeft}s`;
-      if(this.timeLeft<=0){this._stopTimer();this._timeOut();}
+      if(fill){ fill.style.width=(this.timeLeft/30*100)+'%'; fill.style.background=this.timeLeft<10?'#f43f5e':'var(--green)'; }
+      if(disp) disp.textContent=`${this.timeLeft}s`;
+      if(this.timeLeft<=0){ this._stopTimer(); this._timeOut(); }
     },1000);
   }
 
-  _stopTimer(){if(this.timer){clearInterval(this.timer);this.timer=null;}}
+  _stopTimer(){ if(this.timer){ clearInterval(this.timer); this.timer=null; } }
 
   _timeOut(){
     this.lives--;
-    this._feedback(`⏱️ Süre doldu! −1 can`, 'wrong');
+    this._feedback('⏱️ Süre doldu! −1 can','wrong');
     document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
-    const tr = generateTurkishTranslation(this.sc, this.st.time, this.st.flow, this.st.voice, this.st.pol);
-    showMeaningCard('ss-shell', this.parts, tr, stateLabel(this.st));
-    if(this.lives<=0){setTimeout(()=>this._over(false),2800);return;}
+    const tr=generateTurkishTranslation(this.sc,this.st.time,this.st.flow,this.st.voice,this.st.pol);
+    showMeaningCard('ss-shell',this.parts,tr,stateLabel(this.st));
+    this._busy=true;
+    if(this.lives<=0){ setTimeout(()=>this._over(false),2800); return; }
     setTimeout(()=>this._newRound(),2800);
   }
 
@@ -884,13 +863,14 @@ class SentenceScramble {
 
   _over(won) {
     this._stopTimer();
+    this.qm.recordGame();
     this.qm.recordBest(this.score);
-    if(won){this.qm.recordWin();this.qm.addXP(150);this.qm.confetti();}
+    if(won){ this.qm.recordWin(); this.qm.addXP(150); this.qm.confetti(); }
     this.root.innerHTML=_resultHTML('🧩','Sentence Scramble',won,this.score,`${this.maxRound} cümle`,won?150:0,'scramble');
   }
 }
 
-// ── Shared Result Screen ────────────────────────────────────────
+// ── Shared Result Screen ──────────────────────────────────────────
 function _resultHTML(icon,game,won,score,sub,xp,gameKey){
   return `
 <div class="qresult-shell">
