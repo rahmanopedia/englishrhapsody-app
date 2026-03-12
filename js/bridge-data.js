@@ -1198,6 +1198,185 @@ const BRIDGE_DATA = [
   cultural_insight:'"Bring myself" aktif bir çaba ve başarısızlık. Türkçe "içim geçmemek" daha pasif — içinden gelmiyor. "My conscience won\'t allow it" daha dramatik.',
   fluency_tip:'"I don\'t have the heart for it" (bunun için kalbim yok) çok güzel eşdeğer.'
 },
+
+/* ─── YENİ EKLENENLER (GENİŞLETME PAKETİ) ────────────────────── */
+
+/* ─── TEPKİ & İLETİŞİM ───────────────────────────────────────── */
+{
+  id:140, category:'sasirma',
+  tr:'Dilim tutuldu',
+  tags:['dilim tutuldu','konuşamadım','nutkum tutuldu','söyleyecek söz bulamadım'],
+  english_primary:"I was speechless",
+  alternatives:["I was at a loss for words","Cat got your tongue?"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Dilim tutuldu',tr_gloss:'my tongue was caught/held',en_fragment:'speechless',bridge_type:'transform',explanation:'Türkçe dil organının tutulması (fiziksel engel); İngilizce konuşma yetisinin kaybı (speech-less)'}
+  ],
+  cultural_insight:'"Cat got your tongue?" (Kedini dilini mi kaptı?) sessiz kalan birine sorulan klasik bir İngiliz deyimidir.',
+  fluency_tip:'"I don\'t know what to say" (Ne diyeceğimi bilemiyorum) her durumda kurtarıcıdır.'
+},
+{
+  id:141, category:'sosyal',
+  tr:'Lafı ağzımdan aldın',
+  tags:['lafı ağzımdan aldın','aynısını diyecektim','tam ben söyleyecektim','aklımı okudun'],
+  english_primary:"You took the words right out of my mouth",
+  alternatives:["I was just about to say that","Great minds think alike"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Lafı ağzımdan aldın',tr_gloss:'you took the word from my mouth',en_fragment:'took the words right out of my mouth',bridge_type:'direct',explanation:'Tam birebir metafor eşleşmesi! İki kültür de sözü fiziksel bir nesne gibi ağızdan alınabilir görüyor.'}
+  ],
+  cultural_insight:'Bu kadar net bir eşleşme nadirdir. "Great minds think alike" (Büyük zihinler benzer düşünür) ise şakacı bir övgü olarak eklenir.',
+  fluency_tip:'"Jinx!" (aynı anda aynı şeyi söyleyince) çocuksu ama eğlenceli bir tepki.'
+},
+{
+  id:142, category:'sosyal',
+  tr:'Kulak misafiri oldum',
+  tags:['kulak misafiri','duydum','istemeden duydum','kulak kabarttım'],
+  english_primary:"I couldn't help overhearing",
+  alternatives:["I happened to hear","I eavesdropped (kasıtlı)"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Kulak misafiri',tr_gloss:'ear guest',en_fragment:'overhearing',bridge_type:'transform',explanation:'Türkçe "misafir" diyerek kibarlaştırıyor (davetsiz ama nazik); İngilizce "over-hear" (üstten/fazla duymak) ile mekansal bir tanım yapıyor.'}
+  ],
+  cultural_insight:'Türkçe "misafir" metaforu eylemi masumlaştırır. İngilizcede "eavesdropping" (saçak altından dinlemek) genelde kaba/kasıtlıdır; "overhear" ise tesadüfidir.',
+  fluency_tip:'"Sorry to butt in, but..." (Araya girdiğim için üzgünüm ama...) söze girmek için kibar bir yol.'
+},
+
+/* ─── ZAMAN & PLANLAMA ───────────────────────────────────────── */
+{
+  id:150, category:'gunluk',
+  tr:'Zaman öldürüyorum',
+  tags:['zaman öldürüyorum','vakit geçiriyorum','oyalanıyorum','boş boş duruyorum'],
+  english_primary:"I'm killing time",
+  alternatives:["Just whiling away the time","Hanging around"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Zaman öldürüyorum',tr_gloss:'killing time',en_fragment:'killing time',bridge_type:'direct',explanation:'Birebir eşleşme. İki dil de zamanı canlı bir varlık gibi "öldürülebilir" görüyor.'}
+  ],
+  cultural_insight:'Modern yaşamda zaman bir düşman veya kaynak gibi görülür. "Wasting time" (zaman harcamak) negatif; "killing time" ise nötr bir bekleme eylemidir.',
+  fluency_tip:'"I have some time to kill" (Öldürecek biraz vaktim var) beklerken söylenebilir.'
+},
+{
+  id:151, category:'gunluk',
+  tr:'Ucu ucuna yetiştim',
+  tags:['ucu ucuna','son anda','kıl payı','zor yetiştim'],
+  english_primary:"I made it by the skin of my teeth",
+  alternatives:["I barely made it","It was a close call"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ucu ucuna',tr_gloss:'tip to tip',en_fragment:'skin of my teeth',bridge_type:'transform',explanation:'Türkçe iki ucun değmesi (mesafe); İngilizce dişin derisi (olmayan bir şey/imkansızlık sınırında) metaforu.'}
+  ],
+  cultural_insight:'"Skin of my teeth" İncil kökenli (Eyüp) çok eski bir deyim. Dişin derisi yoktur, yani "hiç pay kalmadı" demektir.',
+  fluency_tip:'"Cut it fine" (ince kesmek) zamanı çok dar kullanmak anlamında yaygındır.'
+},
+{
+  id:152, category:'yogunluk',
+  tr:'İki ayağım bir pabuca girdi',
+  tags:['iki ayağım bir pabuca','sıkıştım','telaşlandım','panik oldum'],
+  english_primary:"I was running around like a headless chicken",
+  alternatives:["I was in a mad rush","Everything happened at once"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İki ayağım bir pabuca',tr_gloss:'two feet in one shoe',en_fragment:'headless chicken',bridge_type:'transform',explanation:'Türkçe daralma/sıkışma metaforu (ayakkabı); İngilizce amaçsız/panik halindeki hareket (kafasız tavuk).'}
+  ],
+  cultural_insight:'Türkçe sıkışıklığı vurgular, İngilizce ise o sıkışıklığın yarattığı kaotik hareketi. "Headless chicken" çok görsel ve komik bir İngiliz deyimidir.',
+  fluency_tip:'"It was chaotic" veya "It was a madhouse" (tımarhane gibiydi) durumun karmaşasını anlatır.'
+},
+
+/* ─── DURUM & HİS ────────────────────────────────────────────── */
+{
+  id:160, category:'duygular',
+  tr:'İçime doğdu',
+  tags:['içime doğdu','hissettim','malum oldu','sezdim'],
+  english_primary:"I had a gut feeling",
+  alternatives:["I had a hunch","Something told me"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İçime doğdu',tr_gloss:'born into me',en_fragment:'gut feeling',bridge_type:'transform',explanation:'Türkçe bilginin içte doğması (ruhsal/kalbi); İngilizce bağırsağın hissetmesi (fiziksel içgüdü).'}
+  ],
+  cultural_insight:'Batı kültüründe "gut" (bağırsak/karın) içgüdünün merkezidir. Türkçede ise "iç" veya "kalp". "My gut tells me..." çok güvenilen bir histir.',
+  fluency_tip:'"I just knew it" (Sadece biliyordum) açıklayamadığınız bilgiler için.'
+},
+{
+  id:161, category:'duygular',
+  tr:'Gözümden düştü',
+  tags:['gözümden düştü','değerini yitirdi','soğudum','artık sevmiyorum'],
+  english_primary:"They fell from grace",
+  alternatives:["I lost all respect for them","They went down in my estimation"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Gözümden düştü',tr_gloss:'fell from my eye',en_fragment:'fell from grace',bridge_type:'transform',explanation:'Türkçe gözden (bakış alanından/değerden) düşmek; İngilizce lütuftan/kutsallıktan (grace) düşmek.'}
+  ],
+  cultural_insight:'"Fall from grace" dini kökenli (Cennetten kovulma). Günlük hayatta saygınlığını yitirenler için kullanılır. Türkçe göz metaforu daha kişiseldir.',
+  fluency_tip:'"You really let me down" (Beni hayal kırıklığına uğrattın) yüzüne söylerken daha uygundur.'
+},
+{
+  id:162, category:'duygular',
+  tr:'Kanım ısındı',
+  tags:['kanım ısındı','sevdim','yakın hissettim','sempati duydum'],
+  english_primary:"I warmed up to them",
+  alternatives:["We hit it off","I took a shine to them"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Kanım ısındı',tr_gloss:'my blood warmed',en_fragment:'warmed up to',bridge_type:'transform',explanation:'Türkçe kanın ısınması (biyolojik sempati); İngilizce genel ısınma (ilişki sıcaklığı). Isı metaforu ortak.'}
+  ],
+  cultural_insight:'"Warm up to" zamanla sevmek anlamı da taşır. "Hit it off" ise anında kaynaşmak demektir (frekans tutması).',
+  fluency_tip:'"We clicked" (tık diye oturduk/uyduk) anında anlaşmayı anlatır.'
+},
+{
+  id:163, category:'duygular',
+  tr:'Tadı kaçtı',
+  tags:['tadı kaçtı','keyfi kalmadı','bozuldu','eski tadı yok'],
+  english_primary:"It lost its charm",
+  alternatives:["It turned sour","The novelty wore off"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Tadı kaçtı',tr_gloss:'its taste fled',en_fragment:'lost its charm',bridge_type:'transform',explanation:'Türkçe tat/lezzet metaforu; İngilizce büyü/cazibe (charm) kaybı veya ekşime (sour).'}
+  ],
+  cultural_insight:'"The novelty wore off" (yeniliği aşındı/eskidi) bir şeye olan ilginin zamanla azalması için çok sık kullanılır.',
+  fluency_tip:'"It\'s not the same anymore" (Artık aynı değil) nostaljik bir hayal kırıklığı ifadesidir.'
+},
+
+/* ─── ÇABA & SONUÇ ───────────────────────────────────────────── */
+{
+  id:170, category:'basari',
+  tr:'İğneyle kuyu kazmak',
+  tags:['iğneyle kuyu','zor iş','sabır','imkansız gibi','didinmek'],
+  english_primary:"Doing it the hard way",
+  alternatives:["Like digging a hole with a spoon","An uphill battle"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İğneyle kuyu kazmak',tr_gloss:'digging a well with a needle',en_fragment:'hard way / uphill battle',bridge_type:'transform',explanation:'Türkçe mikro aletle makro iş yapma (sabır); İngilizce yokuş yukarı savaş (zorluk/direnç) metaforu.'}
+  ],
+  cultural_insight:'Türkçe deyim sabrı ve titizliği vurgular. İngilizce "uphill battle" ise görevin zorluğunu ve yoruculuğunu. "Sisyphus task" (Sisifos görevi) hiç bitmeyen işler için akademik bir tanımdır.',
+  fluency_tip:'"It\'s a grind" (öğütücü bir iş) çok çaba gerektiren sıkıcı süreçler için kullanılır.'
+},
+{
+  id:171, category:'basari',
+  tr:'Havanda su dövmek',
+  tags:['havanda su','boşa uğraşmak','nafile','sonuçsuz','boşuna'],
+  english_primary:"Beating a dead horse",
+  alternatives:["Spinning your wheels","Going around in circles"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Havanda su dövmek',tr_gloss:'pounding water in a mortar',en_fragment:'beating a dead horse',bridge_type:'transform',explanation:'Türkçe şekil almaz bir şeyi (su) dövmek; İngilizce tepki vermeyecek bir şeyi (ölü at) dövmek/sürmek.'}
+  ],
+  cultural_insight:'"Beating a dead horse" genellikle kapanmış bir konuyu tartışmaya devam etmek için kullanılır. "Spinning your wheels" (patinaj çekmek) ilerleyememek demektir.',
+  fluency_tip:'"We\'re getting nowhere" (Hiçbir yere varamıyoruz) toplantılarda çok işe yarar.'
+},
+{
+  id:172, category:'basari',
+  tr:'Çorbada tuzum olsun',
+  tags:['çorbada tuzum','katkı','yardım','küçük destek','ben de yardım edeyim'],
+  english_primary:"Do my bit",
+  alternatives:["Chip in","Make a contribution"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Çorbada tuzum',tr_gloss:'salt in the soup',en_fragment:'do my bit',bridge_type:'transform',explanation:'Türkçe lezzet verici küçük katkı (tuz); İngilizce küçük parça (bit/chip) sağlama.'}
+  ],
+  cultural_insight:'"Pitch in" veya "Chip in" genellikle para veya emek birleştirme durumlarında kullanılır. Kolektif çalışma kültürünün parçasıdır.',
+  fluency_tip:'"Every little helps" (Her küçük şey yardımcı olur) Tesco süpermarketinin sloganıydı, artık günlük dile yerleşti.'
+}
 ];
 
 /* ─── EŞLEŞME MOTORU ─────────────────────────────────────────── */
