@@ -1376,8 +1376,7 @@ const BRIDGE_DATA = [
   ],
   cultural_insight:'"Pitch in" veya "Chip in" genellikle para veya emek birleştirme durumlarında kullanılır. Kolektif çalışma kültürünün parçasıdır.',
   fluency_tip:'"Every little helps" (Her küçük şey yardımcı olur) Tesco süpermarketinin sloganıydı, artık günlük dile yerleşti.'
-}
-];
+},
 
 /* ─── İLİŞKİLER (200-250) ────────────────────────────────────── */
 {
@@ -1776,7 +1775,8 @@ const BRIDGE_DATA = [
   ],
   cultural_insight:'"Fend" (defend\'den gelir) kendini savunmak/geçindirmek. "Stand on your own two feet" bağımsızlık vurgular.',
   fluency_tip:'"You\'re on your own" (tek başınasın) bazen terk etme, bazen güçlendirme anlamında.'
-},
+}
+];
 
 /* ─── EŞLEŞME MOTORU ─────────────────────────────────────────── */
 function findBridgeMatch(inputRaw) {
