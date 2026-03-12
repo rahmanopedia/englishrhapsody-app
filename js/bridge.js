@@ -284,8 +284,8 @@ class BridgeModule {
 
       if (match) {
         // Tam/yakın eşleşme bulundu
-        this._renderResult(text, match);
-        this._updateFlowScore(match);
+        this._renderResult(text, match.entry);
+        this._updateFlowScore(match.entry);
         this.bridgeCount++;
         localStorage.setItem('bridge_count', this.bridgeCount);
         const statEl = this.el.querySelector('#bridge-stat-count');
