@@ -1,0 +1,127 @@
+{
+  "parameters": {
+    "multiplier_easy": {
+      "defaultValue": { "value": "1.0" },
+      "valueType": "NUMBER",
+      "description": "Okuma ve Kelime modülleri çarpanı"
+    },
+    "multiplier_medium": {
+      "defaultValue": { "value": "1.5" },
+      "valueType": "NUMBER",
+      "description": "Yazma, Dil Bilgisi ve Nexus çarpanı"
+    },
+    "multiplier_hard": {
+      "defaultValue": { "value": "2.0" },
+      "valueType": "NUMBER",
+      "description": "Konuşma ve Quantum çarpanı"
+    },
+    "xp_reading_correct": {
+      "defaultValue": { "value": "10" },
+      "valueType": "NUMBER"
+    },
+    "xp_reading_complete": {
+      "defaultValue": { "value": "50" },
+      "valueType": "NUMBER"
+    },
+    "xp_phantom_base": {
+      "defaultValue": { "value": "20" },
+      "valueType": "NUMBER"
+    },
+    "xp_grammar_rule": {
+      "defaultValue": { "value": "30" },
+      "valueType": "NUMBER"
+    },
+    "xp_quantum_win": {
+      "defaultValue": { "value": "100" },
+      "valueType": "NUMBER"
+    },
+    "xp_nexus_base": {
+      "defaultValue": { "value": "15" },
+      "valueType": "NUMBER"
+    },
+    "xp_speaking_max": {
+      "defaultValue": { "value": "80" },
+      "valueType": "NUMBER"
+    },
+    "xp_per_level": {
+      "defaultValue": { "value": "500" },
+      "valueType": "NUMBER"
+    },
+    "dailyXPGoal": {
+      "defaultValue": { "value": "100" },
+      "valueType": "NUMBER"
+    },
+    "maxStreakBonus": {
+      "defaultValue": { "value": "50" },
+      "valueType": "NUMBER"
+    },
+    "xp_speak_perfect": {
+      "defaultValue": { "value": "60" },
+      "valueType": "NUMBER"
+    },
+    "xp_speak_great": {
+      "defaultValue": { "value": "40" },
+      "valueType": "NUMBER"
+    },
+    "xp_speak_good": {
+      "defaultValue": { "value": "20" },
+      "valueType": "NUMBER"
+    },
+    "xp_speak_retry": {
+      "defaultValue": { "value": "5" },
+      "valueType": "NUMBER"
+    },
+    "feature_nexus_mode": {
+      "defaultValue": { "value": "true" },
+      "valueType": "BOOLEAN"
+    },
+    "feature_convo_mode": {
+      "defaultValue": { "value": "true" },
+      "valueType": "BOOLEAN"
+    },
+    "feature_confetti": {
+      "defaultValue": { "value": "true" },
+      "valueType": "BOOLEAN"
+    },
+    "feature_notifications": {
+      "defaultValue": { "value": "true" },
+      "valueType": "BOOLEAN"
+    },
+    "feature_speaking_ai": {
+      "defaultValue": { "value": "false" },
+      "valueType": "BOOLEAN"
+    },
+    "speaking_difficulty": {
+      "defaultValue": { "value": "easy" },
+      "valueType": "STRING"
+    },
+    "speaking_auto_advance_score": {
+      "defaultValue": { "value": "80" },
+      "valueType": "NUMBER"
+    },
+    "speaking_countdown_sec": {
+      "defaultValue": { "value": "3" },
+      "valueType": "NUMBER"
+    },
+    "srs_session_word_count": {
+      "defaultValue": { "value": "10" },
+      "valueType": "NUMBER"
+    },
+    "streak_warning_enabled": {
+      "defaultValue": { "value": "true" },
+      "valueType": "BOOLEAN"
+    },
+    "xp_reminder_enabled": {
+      "defaultValue": { "value": "true" },
+      "valueType": "BOOLEAN"
+    },
+    "reminder_hour": {
+      "defaultValue": { "value": "20" },
+      "valueType": "NUMBER"
+    },
+    "speaking_inactive_days": {
+      "defaultValue": { "value": "3" },
+      "valueType": "NUMBER"
+    }
+  }
+}

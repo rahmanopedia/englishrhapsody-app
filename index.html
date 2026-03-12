@@ -2,584 +2,972 @@
 <html lang="tr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.cloudfunctions.net wss://*.firebaseio.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com/recaptcha/; frame-src 'self' https://www.google.com/recaptcha/ https://englishrhapsody-78866.firebaseapp.com; object-src 'none'; base-uri 'self';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>English Rhapsody | İnteraktif Dil Akademisi</title>
-  
-  <!-- PWA & Mobile Optimization -->
+  <title>English Rhapsody | Synesthesia Edition</title>
+
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0b0c10">
+  <meta name="theme-color" content="#070a0f">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Rhapsody">
-  <link rel="apple-touch-icon" href="https://img.icons8.com/nolan/192/globe.png">
-  <meta name="mobile-web-app-capable" content="yes">
-  
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" href="https://img.icons8.com/nolan/192/graduation-cap.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/bridge.css">
+  <link rel="stylesheet" href="css/phantom.css">
+  <link rel="stylesheet" href="css/reading.css">
+  <link rel="stylesheet" href="css/speak.css">
+  <link rel="stylesheet" href="css/revolution.css">
+  <!-- App Check reCAPTCHA v3 -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6LfOLlMsAAAAAE4K1Xr0yVKAAp4FB6GSlacAdZKy" async defer></script>
 </head>
-<body>
-  <!-- Splash Screen -->
-  <div id="splash-screen" style="position:fixed; inset:0; background:#0b0c10; z-index:10000; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Outfit',sans-serif; color:white;">
-    <div style="font-size:2.5rem; font-weight:900; margin-bottom:20px;">English<span style="color:#00f3ff;"> Rhapsody</span></div>
-    <div class="spinner" style="width:40px; height:40px; border:4px solid rgba(0,243,255,0.1); border-top-color:#00f3ff; border-radius:50%; animation:spin 1s linear infinite;"></div>
-    <p style="margin-top:20px; color:#8b9bb4; font-weight:600;">Yükleniyor...</p>
-  </div>
-  <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+<body class="rank-1">
 
-  <!-- Onboarding Assessment Overlay -->
-  <div id="onboarding-overlay" style="display:none">
-    <div class="ob-bg-particles" id="ob-particles"></div>
-    <div class="ob-container">
-      <!-- Top bar: logo + skip -->
-      <div class="ob-topbar">
-        <div class="ob-logo">English<span> Rhapsody</span></div>
-        <button class="ob-skip-btn" onclick="app.skipOnboarding()">Atla →</button>
-      </div>
-      <!-- Progress bar -->
-      <div class="ob-progress-wrap" id="ob-progress-wrap" style="display:none">
-        <div class="ob-progress-bar" id="ob-progress-bar"></div>
-        <span class="ob-progress-label" id="ob-progress-label">1 / 5</span>
-      </div>
-      <!-- Dynamic screen -->
-      <div class="ob-screen" id="ob-screen"></div>
+<!-- ── Splash ─────────────────────────────────────────────── -->
+<div id="splash-screen">
+
+  <!-- Arka plan grid -->
+  <div class="sp-grid"></div>
+  <div class="sp-center-glow"></div>
+
+  <!-- Terminal (sağ üst) -->
+  <div class="sp-terminal">
+    <div class="sp-term-dots">
+      <span class="sp-dot sp-dot-r"></span>
+      <span class="sp-dot sp-dot-y"></span>
+      <span class="sp-dot sp-dot-g"></span>
+      <span class="sp-term-title">system_boot</span>
     </div>
+    <div class="sp-term-body" id="sp-term-body"></div>
   </div>
 
-  <canvas id="bg-canvas"></canvas>
-
-  <nav class="glass-nav">
-    <div class="logo">English<span class="neon-text"> Rhapsody</span></div>
-    <div class="nav-links desktop-only">
-      <button class="nav-btn active ripple" data-target="home">🚀 Ana Merkez</button>
-      <button class="nav-btn ripple" data-target="learn">🃏 Akıllı Kartlar</button>
-      <button class="nav-btn ripple" data-target="reading">📖 Okuma</button>
-      <button class="nav-btn ripple" data-target="analytics">📊 Gelişim</button>
-      <button class="nav-btn ripple" data-target="league">🏆 Lig</button>
-      <button class="nav-btn ripple" data-target="speak">🎙️ Konuşma</button>
+  <!-- Merkez logo -->
+  <div class="sp-center">
+    <div class="sp-brand">English<span> Rhapsody</span></div>
+    <div class="sp-lyre-wrap">
+      <svg class="sp-lyre-svg" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lyreG" x1="0" y1="0" x2="100" y2="115" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#00d4ff"/>
+            <stop offset="55%"  stop-color="#a78bfa"/>
+            <stop offset="100%" stop-color="#7c3aed"/>
+          </linearGradient>
+          <filter id="lyreGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="3.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <g filter="url(#lyreGlow)">
+          <!-- Sol kol -->
+          <path d="M24 20 Q9 45 24 70" stroke="url(#lyreG)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Sağ kol -->
+          <path d="M76 20 Q91 45 76 70" stroke="url(#lyreG)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Üst kemer -->
+          <path d="M24 20 Q50 8 76 20" stroke="url(#lyreG)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Alt taban -->
+          <rect x="38" y="70" width="24" height="7" rx="3.5" fill="url(#lyreG)"/>
+          <rect x="44" y="77" width="12" height="18" rx="2" fill="url(#lyreG)" opacity="0.55"/>
+          <!-- Teller -->
+          <line x1="36" y1="20" x2="41" y2="70" stroke="url(#lyreG)" stroke-width="1.2" opacity="0.65"/>
+          <line x1="45" y1="15" x2="47" y2="70" stroke="url(#lyreG)" stroke-width="1.2" opacity="0.65"/>
+          <line x1="55" y1="15" x2="53" y2="70" stroke="url(#lyreG)" stroke-width="1.2" opacity="0.65"/>
+          <line x1="64" y1="20" x2="59" y2="70" stroke="url(#lyreG)" stroke-width="1.2" opacity="0.65"/>
+          <!-- Orta çiçek -->
+          <circle cx="50" cy="44" r="11" fill="rgba(0,212,255,0.07)" stroke="url(#lyreG)" stroke-width="1.5"/>
+          <circle cx="50" cy="44" r="5"  fill="rgba(167,139,250,0.2)" stroke="url(#lyreG)" stroke-width="1"/>
+          <!-- Nota aksan -->
+          <text x="18" y="36" font-size="9" fill="#00d4ff" opacity="0.55">♫</text>
+          <text x="76" y="60" font-size="8" fill="#a78bfa" opacity="0.55">♪</text>
+        </g>
+      </svg>
     </div>
-    <div class="stats">
-      <button class="focus-btn ripple" onclick="app.toggleFocusMode()" title="Odak Modu">🧘</button>
-      <div class="stat-badge streak">🔥 <span id="streak-val">1</span></div>
-      <div class="stat-badge xp">⚡ <span id="xp-val">0</span> XP</div>
-      <div class="stat-badge lvl">🏆 Lv <span id="lvl-val">1</span></div>
-    </div>
-  </nav>
-
-  <!-- Mobile Bottom Nav -->
-  <div class="mobile-nav" style="overflow-x: auto; justify-content: flex-start; gap: 15px; padding: 0 15px;">
-    <button class="m-nav-btn active ripple" data-target="home">
-      <span class="m-icon">🏠</span>
-      <span class="m-label">Ana Merkez</span>
-    </button>
-    <button class="m-nav-btn ripple" data-target="learn">
-      <span class="m-icon">🃏</span>
-      <span class="m-label">Kartlar</span>
-    </button>
-    <button class="m-nav-btn ripple" data-target="reading">
-      <span class="m-icon">📖</span>
-      <span class="m-label">Okuma</span>
-    </button>
-    <button class="m-nav-btn ripple" data-target="analytics">
-      <span class="m-icon">📊</span>
-      <span class="m-label">Analiz</span>
-    </button>
-    <button class="m-nav-btn ripple" data-target="league">
-      <span class="m-icon">🏆</span>
-      <span class="m-label">Lig</span>
-    </button>
-    <button class="m-nav-btn ripple" data-target="speak">
-      <span class="m-icon">🎙️</span>
-      <span class="m-label">Konuşma</span>
-    </button>
+    <div class="sp-akademi">Dil Akademisi</div>
   </div>
 
-  <main id="app-content"></main>
-
-  <div id="toast-container"></div>
-  <div id="confetti-canvas-container" style="position:fixed; inset:0; pointer-events:none; z-index:10001;"></div>
-
-  <!-- External Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Templates -->
-  <template id="tpl-reading">
-    <div class="view-reading animate-in">
-      <div class="reading-header">
-        <h1>📖 Hikayeler & Bağlam</h1>
-        <p>Okuduğunu anlama ve boşluk doldurma (Cloze Deletion)</p>
-      </div>
-
-      <div class="reading-levels glass">
-        <button class="rd-level-btn active" onclick="app.setReadingLevel('Kolay', this)">Kolay</button>
-        <button class="rd-level-btn" onclick="app.setReadingLevel('Orta', this)">Orta</button>
-        <button class="rd-level-btn" onclick="app.setReadingLevel('İleri', this)">İleri</button>
-      </div>
-
-      <div id="reading-game-area" class="glass" style="margin-top: 20px; padding: 25px; border-radius: 20px; position: relative;">
-        <!-- JS renders active story here -->
+  <!-- Alt yükleme çubuğu -->
+  <div class="sp-bottom">
+    <div class="sp-spin"></div>
+    <div class="sp-bar-area">
+      <span class="sp-bar-lbl" id="sp-bar-lbl">MODÜLLER YÜKLENİYOR...</span>
+      <div class="sp-bar-track">
+        <div class="sp-bar-fill" id="sp-bar-fill" style="width:0%"></div>
       </div>
     </div>
-  </template>
-  <template id="tpl-analytics">
-    <div class="view-analytics animate-in">
-      <div class="analytics-header">
-        <h1>📊 Gelişim Analizi</h1>
-        <p>Öğrenme istatistiklerin ve hedef takibi</p>
+    <span class="sp-pct" id="sp-pct">0%</span>
+  </div>
+
+  <!-- Sağ alt köşe sparkle -->
+  <div class="sp-sparkle">✦</div>
+
+</div>
+
+<script src="js/splash.js"></script>
+
+<!-- ── Background canvas ──────────────────────────────────── -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- ── App Layout ─────────────────────────────────────────── -->
+<div class="layout">
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-logo">
+      <div class="logo-dot"></div>
+      <div class="logo-text">
+        <span class="logo-en">English</span><span class="logo-rh"> Rhapsody</span>
       </div>
-      
-      <div class="analytics-grid">
-        <div class="ana-card glass">
-          <h3>Öğrenme Isı Haritası</h3>
-          <div id="learning-heatmap" class="heatmap-container"></div>
+    </div>
+    <div class="header-stats">
+      <button id="auth-user-btn" class="auth-user-btn" data-action="auth-open" style="display:none" title="Hesap"></button>
+      <button class="theme-btn" data-action="open-theme-picker" title="Tema Seç">🎨</button>
+      <button class="focus-btn" data-action="toggle-focus-mode" title="Odak Modu">🧘</button>
+      <div class="stat-chip streak">🔥 <span id="hdr-streak">1</span></div>
+      <div class="stat-chip xp">⚡ <span id="hdr-xp">0</span> XP</div>
+      <div class="stat-chip level">🏆 Lv <span id="hdr-level">1</span></div>
+    </div>
+  </header>
+
+  <!-- Sidebar Tab (shown when sidebar is closed) -->
+  <div class="sidebar-tab" id="sidebar-tab">
+    <span class="st-dot"></span>
+    <span class="st-dot"></span>
+    <span class="st-arrow"></span>
+    <span class="st-dot"></span>
+    <span class="st-dot"></span>
+  </div>
+
+  <!-- Sidebar (desktop) -->
+  <aside class="sidebar">
+    <nav id="sidebar-nav">
+      <a class="nav-item active" data-target="home">
+        <span class="nav-icon">🏠</span> Ana Merkez
+      </a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" data-target="learn">
+        <span class="nav-icon">🌀</span> Sinestezi Lab
+      </a>
+      <a class="nav-item" data-target="reading">
+        <span class="nav-icon">📖</span> Okuma
+      </a>
+      <a class="nav-item" data-target="speak">
+        <span class="nav-icon">🎙️</span> Konuşma Lab
+      </a>
+      <a class="nav-item" data-target="bridge">
+        <span class="nav-icon">🌉</span> Köprü
+      </a>
+      <a class="nav-item" data-target="nexus">
+        <span class="nav-icon">✨</span> Nexus Mod
+      </a>
+      <a class="nav-item" data-target="quantum">
+        <span class="nav-icon">⚛️</span> Kuantum Modu
+      </a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" data-target="analytics">
+        <span class="nav-icon">📊</span> Analitik
+      </a>
+      <a class="nav-item" data-target="leaderboard">
+        <span class="nav-icon">🏆</span> Sıralama
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sf-user">
+        <div class="sf-icon" id="sf-rank-icon">🌱</div>
+        <div class="sf-info">
+          <div class="sf-rank" id="sf-rank-name">Çırak</div>
+          <div class="sf-level" id="sf-level-txt">Level 1</div>
+          <div class="sf-bar"><div class="sf-bar-fill" id="sf-xp-fill" style="width:0%"></div></div>
         </div>
-        <div class="ana-card glass">
-          <h3>Kategori Başarısı</h3>
-          <canvas id="category-chart"></canvas>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-content animate-in" id="main-content"></main>
+</div>
+
+<!-- Mobile bottom nav -->
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="m-nav-item active" data-target="home">
+    <span class="m-icon">🏠</span>
+    <span>Merkez</span>
+  </button>
+  <button class="m-nav-item" data-target="learn">
+    <span class="m-icon">🌀</span>
+    <span>Sinestezi</span>
+  </button>
+  <button class="m-nav-item" data-target="reading">
+    <span class="m-icon">📖</span>
+    <span>Okuma</span>
+  </button>
+  <button class="m-nav-item" data-target="speak">
+    <span class="m-icon">🎙️</span>
+    <span>Konuşma</span>
+  </button>
+  <button class="m-nav-item" data-target="bridge">
+    <span class="m-icon">🌉</span>
+    <span>Köprü</span>
+  </button>
+  <button class="m-nav-item" data-target="nexus">
+    <span class="m-icon">✨</span>
+    <span>Nexus</span>
+  </button>
+  <button class="m-nav-item" data-target="quantum">
+    <span class="m-icon">⚛️</span>
+    <span>Kuantum</span>
+  </button>
+  <button class="m-nav-item" data-target="leaderboard">
+    <span class="m-icon">🏆</span>
+    <span>Sıralama</span>
+  </button>
+</nav>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<!-- ── Auth Modal ──────────────────────────────────────────── -->
+<div id="auth-modal" style="display:none" data-action="auth-modal-backdrop">
+  <div class="auth-box">
+
+    <!-- Sol panel: marka & özellikler -->
+    <div class="auth-left">
+      <div class="auth-left-glow"></div>
+      <div class="auth-left-inner">
+        <div class="auth-lyre-wrap">
+          <svg viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="alyreG" x1="0" y1="0" x2="100" y2="115" gradientUnits="userSpaceOnUse">
+                <stop offset="0%"   stop-color="#00d4ff"/>
+                <stop offset="55%"  stop-color="#a78bfa"/>
+                <stop offset="100%" stop-color="#7c3aed"/>
+              </linearGradient>
+              <filter id="alyreGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <g filter="url(#alyreGlow)">
+              <path d="M24 20 Q9 45 24 70"  stroke="url(#alyreG)" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M76 20 Q91 45 76 70" stroke="url(#alyreG)" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M24 20 Q50 8 76 20"  stroke="url(#alyreG)" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <rect x="38" y="70" width="24" height="7" rx="3.5" fill="url(#alyreG)"/>
+              <rect x="44" y="77" width="12" height="18" rx="2" fill="url(#alyreG)" opacity="0.55"/>
+              <line x1="36" y1="20" x2="41" y2="70" stroke="url(#alyreG)" stroke-width="1.2" opacity="0.6"/>
+              <line x1="45" y1="15" x2="47" y2="70" stroke="url(#alyreG)" stroke-width="1.2" opacity="0.6"/>
+              <line x1="55" y1="15" x2="53" y2="70" stroke="url(#alyreG)" stroke-width="1.2" opacity="0.6"/>
+              <line x1="64" y1="20" x2="59" y2="70" stroke="url(#alyreG)" stroke-width="1.2" opacity="0.6"/>
+              <circle cx="50" cy="44" r="11" fill="rgba(0,212,255,0.07)" stroke="url(#alyreG)" stroke-width="1.5"/>
+              <circle cx="50" cy="44" r="5"  fill="rgba(167,139,250,0.2)" stroke="url(#alyreG)" stroke-width="1"/>
+              <text x="18" y="36" font-size="9" fill="#00d4ff" opacity="0.5">♫</text>
+              <text x="76" y="60" font-size="8" fill="#a78bfa" opacity="0.5">♪</text>
+            </g>
+          </svg>
+        </div>
+        <div class="auth-brand">English<span> Rhapsody</span></div>
+        <div class="auth-brand-sub">Dil Akademisi</div>
+        <div class="auth-feats">
+          <div class="auth-feat"><span class="af-icon">⚡</span><span>XP kazanarak seviye atla</span></div>
+          <div class="auth-feat"><span class="af-icon">🏆</span><span>Liderlik tablosunda yüksel</span></div>
+          <div class="auth-feat"><span class="af-icon">🎙️</span><span>Okuma ve konuşma modları</span></div>
+          <div class="auth-feat"><span class="af-icon">☁️</span><span>İlerleme buluta kaydedilsin</span></div>
         </div>
       </div>
     </div>
-  </template>
 
-  <template id="tpl-league">
-    <div class="view-league animate-in">
-      <div class="league-header">
-        <h1>🏆 Haftalık Lig</h1>
-        <div class="league-badge-container">
-          <div class="league-badge" id="current-league-icon">💎</div>
+    <!-- Sağ panel: form -->
+    <div class="auth-right">
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button id="auth-tab-login"  class="auth-tab active" data-action="auth-switch-tab" data-tab="login">Giriş Yap</button>
+        <button id="auth-tab-signup" class="auth-tab"        data-action="auth-switch-tab" data-tab="signup">Kayıt Ol</button>
+      </div>
+
+      <!-- Error -->
+      <div id="auth-error" class="auth-error-msg" style="display:none"></div>
+
+      <!-- Login Form -->
+      <form id="auth-form-login" class="auth-form" data-action="auth-submit-login" style="display:flex">
+        <div class="auth-field">
+          <div class="auth-input-wrap">
+            <span class="auth-ico">✉️</span>
+            <input id="auth-email" type="email" class="auth-input" placeholder="E-posta adresin" required autocomplete="email">
+          </div>
+        </div>
+        <div class="auth-field">
+          <div class="auth-input-wrap">
+            <span class="auth-ico">🔒</span>
+            <input id="auth-pass" type="password" class="auth-input" placeholder="Şifren" required autocomplete="current-password">
+          </div>
+        </div>
+        <div class="auth-remember-row">
+          <label class="auth-remember">
+            <input type="checkbox" id="auth-remember" checked>
+            <span>Beni hatırla</span>
+          </label>
+          <button type="button" class="auth-forgot" data-action="auth-show-reset">Şifremi unuttum</button>
+        </div>
+        <button id="login-btn" type="submit" class="auth-submit-btn">Giriş Yap</button>
+        <div class="auth-divider"><span>veya</span></div>
+        <button type="button" id="google-btn-login" class="auth-google-btn" data-action="auth-google">
+          <svg width="18" height="18" viewBox="0 0 48 48" style="flex-shrink:0"><path fill="#FFC107" d="M43.6 20H24v8h11.3C33.9 33 29.4 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 2.9l5.7-5.6C34 5.8 29.2 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c11 0 19.7-7.3 19.7-20 0-1.3-.1-2.7-.4-4z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 15.3 18.9 12 24 12c3 0 5.8 1.1 7.9 2.9l5.7-5.6C34 5.8 29.2 4 24 4 16.3 4 9.6 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.8 13.5-4.7l-6.2-5.2C29.4 36 26.8 37 24 37c-5.4 0-9.9-3.1-11.3-7.6L6 33.8C9.2 39.7 16.1 44 24 44z"/><path fill="#1976D2" d="M43.6 20H24v8h11.3c-.8 2.1-2.2 3.9-3.9 5.2l6.2 5.2C41.4 35.4 44 30.1 44 24c0-1.3-.1-2.7-.4-4z"/></svg>
+          Google ile Giriş Yap
+        </button>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="auth-form-signup" class="auth-form" data-action="auth-submit-signup" style="display:none">
+        <div class="auth-field">
+          <div class="auth-input-wrap">
+            <span class="auth-ico">👤</span>
+            <input id="auth-name" type="text" class="auth-input" placeholder="Adın (isteğe bağlı)" autocomplete="name">
+          </div>
+        </div>
+        <div class="auth-field">
+          <div class="auth-input-wrap">
+            <span class="auth-ico">✉️</span>
+            <input id="auth-email-reg" type="email" class="auth-input" placeholder="E-posta adresin" required autocomplete="email">
+          </div>
+        </div>
+        <div class="auth-field">
+          <div class="auth-input-wrap">
+            <span class="auth-ico">🔒</span>
+            <input id="auth-pass-reg" type="password" class="auth-input" placeholder="Şifre (en az 6 karakter)" required autocomplete="new-password">
+          </div>
+        </div>
+        <div class="auth-field">
+          <div class="auth-input-wrap">
+            <span class="auth-ico">🔑</span>
+            <input id="auth-pass-reg2" type="password" class="auth-input" placeholder="Şifreyi tekrarla" required autocomplete="new-password">
+          </div>
+        </div>
+        <button id="signup-btn" type="submit" class="auth-submit-btn">Hesap Oluştur</button>
+        <div class="auth-divider"><span>veya</span></div>
+        <button type="button" id="google-btn-signup" class="auth-google-btn" data-action="auth-google">
+          <svg width="18" height="18" viewBox="0 0 48 48" style="flex-shrink:0"><path fill="#FFC107" d="M43.6 20H24v8h11.3C33.9 33 29.4 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 2.9l5.7-5.6C34 5.8 29.2 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c11 0 19.7-7.3 19.7-20 0-1.3-.1-2.7-.4-4z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 15.3 18.9 12 24 12c3 0 5.8 1.1 7.9 2.9l5.7-5.6C34 5.8 29.2 4 24 4 16.3 4 9.6 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.8 13.5-4.7l-6.2-5.2C29.4 36 26.8 37 24 37c-5.4 0-9.9-3.1-11.3-7.6L6 33.8C9.2 39.7 16.1 44 24 44z"/><path fill="#1976D2" d="M43.6 20H24v8h11.3c-.8 2.1-2.2 3.9-3.9 5.2l6.2 5.2C41.4 35.4 44 30.1 44 24c0-1.3-.1-2.7-.4-4z"/></svg>
+          Google ile Kayıt Ol
+        </button>
+      </form>
+
+      <!-- Reset Form -->
+      <form id="auth-form-reset" class="auth-form" data-action="auth-submit-reset" style="display:none">
+        <p class="auth-reset-hint">E-posta adresini gir, şifre sıfırlama bağlantısı gönderelim.</p>
+        <div class="auth-field">
+          <div class="auth-input-wrap">
+            <span class="auth-ico">✉️</span>
+            <input id="auth-reset-email" type="email" class="auth-input" placeholder="E-posta adresin" required>
+          </div>
+        </div>
+        <button id="reset-btn" type="submit" class="auth-submit-btn">Sıfırlama Gönder</button>
+        <button type="button" class="auth-forgot" data-action="auth-switch-tab" data-tab="login">← Giriş yap</button>
+      </form>
+
+      <!-- Hesap paneli (giriş yapıldığında) -->
+      <div id="auth-account-panel" class="auth-account-panel" style="display:none">
+        <div class="auth-account-info">
+          <div class="auth-account-avatar" id="auth-panel-avatar">?</div>
           <div>
-            <h2 id="current-league-name">Elmas Ligi</h2>
-            <p>Bitime: <span id="league-timer">2g 4s</span></p>
+            <div class="auth-account-name"  id="auth-panel-name">—</div>
+            <div class="auth-account-email" id="auth-panel-email">—</div>
+          </div>
+        </div>
+        <button class="auth-logout-btn" data-action="auth-logout">🚪 Çıkış Yap</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Templates ──────────────────────────────────────────── -->
+
+<!-- Home -->
+<template id="tpl-home">
+<div class="home-grid animate-in">
+
+  <!-- ── Hero ────────────────────────────────────── -->
+  <div class="home-hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-greeting" id="home-greeting">🌅 Günaydın!</div>
+        <div class="hero-name" id="home-name">İngilizce öğrenimine devam et</div>
+        <div class="hero-meta">
+          <span class="hero-date" id="home-date"></span>
+          <div class="accent-btns">
+            <button class="accent-btn" id="acc-us" data-action="set-accent" data-accent="en-US">🇺🇸 US</button>
+            <button class="accent-btn" id="acc-gb" data-action="set-accent" data-accent="en-GB">🇬🇧 UK</button>
           </div>
         </div>
       </div>
-      
-      <div class="league-list glass" id="league-list-container">
-        <!-- JS dynamic render -->
+      <div class="hero-right">
+        <div class="hero-rank" id="hero-rank">
+          <div class="hero-rank-ring"></div>
+          <div class="hero-rank-icon" id="rank-icon">🌱</div>
+          <div class="hero-rank-name" id="rank-name">Çırak</div>
+          <div class="hero-rank-level" id="rank-level">Level 1</div>
+        </div>
       </div>
     </div>
-  </template>
-  <template id="tpl-home">
-    <div class="view-home animate-in">
 
-      <!-- Greeting Banner -->
-      <div class="home-greeting">
-        <div class="greeting-header">
-          <span id="home-greeting-text">🌟 Hoş geldin!</span>
-          <span id="home-date"></span>
-        </div>
-        <div class="home-rank-badge" id="home-rank-badge">
-          <span class="rank-icon" id="rank-icon">🌱</span>
-          <span class="rank-name" id="rank-name">Çırak</span>
-        </div>
-        <div class="accent-selector">
-          <button class="accent-btn" onclick="app.setVoiceAccent('en-US')">🇺🇸 US</button>
-          <button class="accent-btn" onclick="app.setVoiceAccent('en-GB')">🇬🇧 UK</button>
-        </div>
+    <div class="hero-stats-bar">
+      <div class="hstat">
+        <span class="hstat-val cyan" id="home-words">0</span>
+        <span class="hstat-lbl">Kelime</span>
       </div>
-
-      <!-- Quick Stats Row -->
-      <div class="home-stats-row">
-        <div class="hs-card">
-          <span class="hs-val" id="hs-mastered">0</span>
-          <span class="hs-label">Kelime</span>
-        </div>
-        <div class="hs-card hs-streak">
-          <span class="hs-val" id="hs-streak">🔥1</span>
-          <span class="hs-label">Gün Serisi</span>
-        </div>
-        <div class="hs-card hs-xp">
-          <span class="hs-val" id="hs-xp">0</span>
-          <span class="hs-label">Lv <span id="hs-lvl">1</span> XP</span>
-        </div>
+      <div class="hstat-div"></div>
+      <div class="hstat">
+        <span class="hstat-val violet" id="home-xp">0</span>
+        <span class="hstat-lbl">XP</span>
       </div>
+      <div class="hstat-div"></div>
+      <div class="hstat">
+        <span class="hstat-val amber" id="home-streak">🔥1</span>
+        <span class="hstat-lbl">Seri</span>
+      </div>
+      <div class="hstat-div"></div>
+      <div class="hstat">
+        <span class="hstat-val green" id="home-acc">0%</span>
+        <span class="hstat-lbl">Başarı</span>
+      </div>
+    </div>
 
-      <!-- Word of the Day -->
-      <div class="home-wod glass">
-        <div class="wod-content">
+    <div class="hero-bottom-line"></div>
+  </div>
+
+  <!-- ── Progress + Streak ────────────────────────── -->
+  <div class="home-progress-card">
+    <div class="home-progress-col">
+      <div class="prog-row">
+        <span class="lvl">⚡ Level <span id="home-lvl">1</span></span>
+        <span class="remain" id="xp-remain">500 XP kaldı</span>
+      </div>
+      <div class="progress-track" style="height:7px;margin:8px 0 14px">
+        <div class="progress-fill" id="xp-bar" style="width:0%"></div>
+      </div>
+      <div class="prog-row">
+        <span class="prog-label" id="daily-goal-label">🎯 Günlük Hedef</span>
+        <span class="prog-label" id="daily-goal-pct">0/100 XP</span>
+      </div>
+      <div class="progress-track" style="height:6px;margin-top:8px">
+        <div class="progress-fill" id="daily-goal-bar" style="width:0%;background:linear-gradient(90deg,var(--cyan),var(--violet))"></div>
+      </div>
+    </div>
+    <div class="home-streak-col">
+      <span class="prog-label" style="margin-bottom:10px;display:block">📅 Son 7 Gün</span>
+      <div class="streak-row" id="streak-cal"></div>
+    </div>
+  </div>
+
+  <!-- ── Daily Missions ───────────────────────────── -->
+  <div class="missions-card">
+    <div class="missions-header">
+      <span class="missions-title">🎯 Günlük Görevler</span>
+      <span class="missions-reset" id="missions-reset-label"></span>
+    </div>
+    <div id="missions-list"></div>
+  </div>
+
+  <!-- ── WoD + Colloc ─────────────────────────────── -->
+  <div class="home-mid-row">
+    <div class="wod-card">
+      <div class="wod-left">
+        <div class="wod-icon" id="wod-icon">🌌</div>
+        <div class="wod-text">
           <div class="wod-label">⭐ Günün Kelimesi</div>
-          <div class="wod-en" id="wod-en">—</div>
+          <div class="wod-word" id="wod-word">—</div>
           <div class="wod-ipa" id="wod-ipa"></div>
           <div class="wod-tr" id="wod-tr"></div>
         </div>
-        <button class="wod-speak" onclick="app.speakWord(document.getElementById('wod-en').innerText)">🔊 Dinle</button>
       </div>
-
-      <!-- XP Level Bar -->
-      <div class="home-xp-bar glass">
-        <div class="xp-bar-info">
-          <span>⚡ Level <span id="home-lvl-display">1</span></span>
-          <span id="xp-to-go">100 XP kaldı</span>
-        </div>
-        <div class="progress-bar-wrap">
-          <div class="progress-bar" id="home-progress" style="width: 0%"></div>
-        </div>
-      </div>
-
-      <!-- Action Cards -->
-      <div class="dashboard-grid">
-        <div class="dash-card glass" onclick="app.navigate('learn')">
-          <div class="d-icon">🧠</div>
-          <h3>Görsel Hafıza</h3>
-          <p>Yeni kelimeleri 3D kartlar ve sesli telaffuzlarla öğren.</p>
-          <div class="dc-progress-row">
-            <div class="dc-progress-bar-wrap"><div class="dc-progress-bar" id="dc-words-bar" style="width:0%"></div></div>
-            <span class="dc-pct" id="dc-words-pct">0%</span>
-          </div>
-        </div>
-        <div class="dash-card glass" onclick="app.navigate('speak')">
-          <div class="d-icon">🎙️</div>
-          <h3>AI Konuşma Koçu</h3>
-          <p>Mikrofonu aç ve konuş. Yapay zeka telaffuzunu puanlasın.</p>
-          <div class="dc-progress-row">
-            <span class="dc-speak-hint" id="dc-speak-hint">Bugün dene →</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Category Progress -->
-      <div class="home-cats glass">
-        <div class="home-cats-title">📂 Kategori İlerlemesi</div>
-        <div id="home-cat-bars"></div>
-      </div>
-
+      <button class="wod-speak-btn" data-action="wod-speak" title="Dinle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      </button>
     </div>
-  </template>
+    <div class="colloc-tip-card" id="colloc-tip-card"></div>
+  </div>
 
-  <template id="tpl-learn">
-    <div class="view-learn animate-in">
-
-      <!-- SETUP SCREEN -->
-      <div id="learn-setup" class="learn-setup-wrapper">
-        <div class="setup-hero">
-          <div class="setup-hero-icon">🧠</div>
-          <h2>Görsel Hafıza Merkezi</h2>
-          <p class="setup-hero-sub">Kategori seç, mod belirle ve öğrenmeye başla!</p>
-        </div>
-        <div class="setup-body glass">
-          <div class="setup-cols">
-            <div class="setup-col">
-              <div class="setup-section-label">📂 Kategori &amp; Ustalık</div>
-              <div id="learn-categories" class="cat-btns cat-btns-grid"></div>
-            </div>
-            <div class="setup-col">
-              <div class="setup-section-label">🎮 Oyun Modu</div>
-              <div class="setup-mode-cards">
-                <div class="mode-card" onclick="app.startLearnSession('normal')">
-                  <span class="mode-icon">🧘</span>
-                  <strong>Standart</strong>
-                  <small>Kendi hızında, rahat öğren</small>
-                </div>
-                <div class="mode-card" onclick="app.startLearnSession('timed')">
-                  <span class="mode-icon">⏱️</span>
-                  <strong>Zamana Karşı</strong>
-                  <small>45 saniye, hızlı düşün!</small>
-                </div>
-                <div class="mode-card mode-card-pink mobile-only" onclick="app.startVisualMatch()">
-                  <span class="mode-icon">🎮</span>
-                  <strong>Resim Bulmaca</strong>
-                  <small>Doğru resmi seç</small>
-                </div>
-                <div class="mode-card mode-card-green" onclick="app.startSpellingQuiz()">
-                  <span class="mode-icon">✍️</span>
-                  <strong>Yazım Testi</strong>
-                  <small>Türkçeden İngilizceyi yaz</small>
-                </div>
-              </div>
-              <div class="setup-section-label" style="margin-top:20px">🎤 Sesli Kontrol</div>
-              <div class="voice-toggle-wrap">
-                <button id="btn-voice-nav" class="btn outline tiny" onclick="app.toggleVoiceNav()">🎤 Sesli Kontrol: KAPALI</button>
-                <span class="hint-text">"Flip", "Easy", "Hard" komutları</span>
-              </div>
-            </div>
-          </div>
-        </div>
+  <!-- ── Action Cards ─────────────────────────────── -->
+  <div class="actions-grid">
+    <div class="action-card cards" data-action="navigate" data-target="learn">
+      <div class="ac-glow"></div>
+      <div class="ac-icon">🌀</div>
+      <div class="ac-due-wrap">
+        <h3>Sinestezi Lab</h3>
+        <span class="ac-due-badge" id="ac-due-badge" style="display:none">0</span>
       </div>
-
-      <!-- GAME SCREEN -->
-      <div id="learn-game" style="display:none" class="learn-game-wrapper">
-
-        <div class="game-topbar glass">
-          <button class="topbar-back" onclick="app.setupLearnView()">← Geri</button>
-          <div class="topbar-center">
-            <h2 id="learn-title">Görsel Hafıza</h2>
-            <div class="session-bar-wrap"><div class="session-bar" id="session-progress" style="width:0%"></div></div>
-          </div>
-          <div class="topbar-right">
-            <div id="timer-display" class="timer-badge" style="display:none">⏳ <span id="time-val">45</span>s</div>
-            <span class="card-counter" id="card-counter">1 / 15</span>
-          </div>
-        </div>
-
-        <div class="game-layout">
-          <div id="flashcard-area" class="flashcard-section">
-            <div class="swipe-indicator swipe-left-indicator">😓 ZOR</div>
-            <div class="swipe-indicator swipe-right-indicator">😎 KOLAY</div>
-            <div class="scene" id="card-scene">
-              <div class="flashcard" id="flashcard" onclick="app.flipCard()">
-                <div class="card-face front">
-                  <div class="card-category" id="c-cat">Doğa</div>
-                  <div class="card-image-wrap" id="c-img-container">
-                    <img id="c-img" src="" alt="word visual">
-                    <div class="card-icon-overlay" id="c-icon">🌊</div>
-                  </div>
-                  <h1 class="card-word" id="c-en">Word</h1>
-                  <div class="card-ipa" id="c-ipa">/wɜːrd/</div>
-                  <div class="card-controls">
-                    <button class="btn-icon" onclick="event.stopPropagation(); app.speakWord(document.getElementById('c-en').innerText)">🔊 Telaffuz</button>
-                  </div>
-                  <div class="flip-hint">Detaylar için tıkla ↕</div>
-                </div>
-                <div class="card-face back">
-                  <h1 class="card-tr" id="c-tr">Kelime</h1>
-                  <div class="card-ex-wrap">
-                    <p class="ex-label">Örnek Cümle</p>
-                    <div class="card-ex" id="c-ex">"This is an example sentence."</div>
-                  </div>
-                  <div class="action-btns">
-                    <button class="btn fail" onclick="event.stopPropagation(); app.answerCard(false)">😓 Zorlandım</button>
-                    <button class="btn pass" onclick="event.stopPropagation(); app.answerCard(true)">😎 Kolaydı</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swipe-hint-bar mobile-only">
-              <span>← Kaydır: Zor</span>
-              <span>Kolay: Sağa →</span>
-            </div>
-            <div class="kb-hint desktop-only">⌨️ <b>Boşluk</b> (Çevir) &nbsp;•&nbsp; <b>←</b> (Zor) &nbsp;•&nbsp; <b>→</b> (Kolay)</div>
-          </div>
-
-          <div class="game-sidebar desktop-only">
-            <div class="sidebar-card glass">
-              <div class="sidebar-title">📊 Oturum İstatistikleri</div>
-              <div class="sidebar-stats">
-                <div class="s-stat correct"><span class="s-stat-val" id="sb-correct">0</span><label>Kolay</label></div>
-                <div class="s-stat wrong"><span class="s-stat-val" id="sb-wrong">0</span><label>Zor</label></div>
-              </div>
-            </div>
-            <div class="sidebar-card glass">
-              <div class="sidebar-title">💡 Klavye Kısayolları</div>
-              <ul class="sidebar-tips">
-                <li>🖱️ Karta tıkla → çevir</li>
-                <li>→ Kolay (Arrow Right)</li>
-                <li>← Zor (Arrow Left)</li>
-                <li>Boşluk → kart çevir</li>
-              </ul>
-            </div>
-            <div class="sidebar-card glass">
-              <div class="sidebar-title">📌 Kategori</div>
-              <div id="sb-category" class="sb-category-name">Tüm Kelimeler</div>
-            </div>
-          </div>
-        </div>
-
-        <div id="visual-match-area" style="display:none" class="vm-wrapper">
-          <div class="vm-layout">
-            <div class="vm-question">
-              <p class="vm-label">Doğru resmi seç:</p>
-              <h1 id="vm-word" class="vm-target-word">Target</h1>
-              <button class="btn-icon vm-speak-btn" onclick="app.speakWord(document.getElementById('vm-word').innerText)">🔊 Dinle</button>
-            </div>
-            <div class="vm-grid" id="vm-grid"></div>
-          </div>
-          <div class="game-sidebar desktop-only">
-            <div class="sidebar-card glass">
-              <div class="sidebar-title">📊 Bulmaca Skoru</div>
-              <div class="sidebar-stats">
-                <div class="s-stat correct"><span class="s-stat-val" id="vm-sb-correct">0</span><label>Doğru</label></div>
-                <div class="s-stat wrong"><span class="s-stat-val" id="vm-sb-wrong">0</span><label>Yanlış</label></div>
-              </div>
-            </div>
-            <div class="sidebar-card glass">
-              <div class="sidebar-title">🎯 Nasıl Oynanır?</div>
-              <ul class="sidebar-tips">
-                <li>🖼️ Resme tıklayarak seç</li>
-                <li>✅ Doğru: +30 XP</li>
-                <li>❌ Yanlış: +5 XP</li>
-                <li>📈 Ustalık güncellenir</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
+      <p class="ac-desc">Kelime hafıza tekniği</p>
+      <div class="progress-track" style="margin-top:auto">
+        <div class="progress-fill" id="ac-words-bar" style="width:0%"></div>
       </div>
-
-      <!-- SPELLING QUIZ AREA -->
-      <div id="spelling-quiz-area" style="display:none" class="sq-wrapper">
-        <div class="sq-layout">
-          <div class="sq-main glass">
-            <div class="sq-clue-row">
-              <span class="sq-icon" id="sq-icon">🌌</span>
-              <div class="sq-clue-text">
-                <div class="sq-tr" id="sq-tr">—</div>
-                <div class="sq-ex" id="sq-ex"></div>
-              </div>
-              <button class="btn-icon sq-hint-btn" id="sq-hint-btn" onclick="app.showSpellingHint()">💡 İpucu</button>
-            </div>
-            <div class="sq-letters-row" id="sq-letters"></div>
-            <div class="sq-input-row">
-              <input type="text" id="sq-input" class="sq-input"
-                placeholder="İngilizce yaz..."
-                autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
-                onkeydown="app.handleSpellingKey(event)">
-              <button class="sq-submit-btn" onclick="app.checkSpellingAnswer()">Kontrol →</button>
-            </div>
-            <div class="sq-result" id="sq-result"></div>
-            <div class="sq-actions" id="sq-actions" style="display:none">
-              <button class="sq-btn-listen" onclick="app.speakWord(document.getElementById('sq-answer').dataset.word)">🔊 Dinle</button>
-              <button class="sq-btn-next" onclick="app.nextSpelling()">Sonraki →</button>
-            </div>
-            <div class="sq-kb-hint desktop-only">⌨️ <b>Enter</b> — Kontrol et &nbsp;•&nbsp; Doğruysa otomatik ilerler</div>
-          </div>
-          <div class="game-sidebar desktop-only">
-            <div class="sidebar-card glass">
-              <div class="sidebar-title">📊 Yazım Skoru</div>
-              <div class="sidebar-stats">
-                <div class="s-stat correct"><span class="s-stat-val" id="sq-sb-correct">0</span><label>Doğru</label></div>
-                <div class="s-stat wrong"><span class="s-stat-val" id="sq-sb-wrong">0</span><label>Yanlış</label></div>
-              </div>
-            </div>
-            <div class="sidebar-card glass">
-              <div class="sidebar-title">🎯 Nasıl Oynanır?</div>
-              <ul class="sidebar-tips">
-                <li>🇹🇷 Türkçeyi gör</li>
-                <li>✍️ İngilizceyi yaz</li>
-                <li>✅ Doğru: +40 XP</li>
-                <li>💡 İpucu: ilk harf</li>
-                <li>📈 Ustalık güncellenir</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- FINISH SCREEN -->
-      <div id="learn-finish" class="glass finish-card" style="display:none">
-        <div class="d-icon" id="finish-icon">🏁</div>
-        <h2 id="finish-title">Harika Bir Set!</h2>
-        <div id="finish-stats" class="finish-stats"></div>
-        <div id="failed-words-wrap" class="failed-list" style="display:none">
-          <p>Tekrar Etmen Gerekenler:</p>
-          <ul id="failed-words-list"></ul>
-        </div>
-        <div class="finish-actions">
-          <button class="btn pulse-neon" onclick="app.setupLearnView()">🔄 Tekrar Oyna</button>
-          <button class="btn outline" onclick="app.navigate('home')">🏠 Ana Merkez</button>
-        </div>
-      </div>
-
+      <div class="ac-pct-row"><span id="ac-words-pct">0%</span> tamamlandı</div>
+      <div class="ac-arrow">→</div>
     </div>
-  </template>
+    <div class="action-card speak" data-action="navigate" data-target="speak">
+      <div class="ac-glow"></div>
+      <div class="ac-icon">🎙️</div>
+      <h3>Konuşma Lab</h3>
+      <p class="ac-desc">Telaffuz & konuşma pratiği</p>
+      <div class="ac-hint" id="ac-speak-hint">Bugün dene →</div>
+      <div class="ac-arrow">→</div>
+    </div>
+    <div class="action-card reading" data-action="navigate" data-target="reading">
+      <div class="ac-glow"></div>
+      <div class="ac-icon">📖</div>
+      <h3>Okuma Atölyesi</h3>
+      <p class="ac-desc">Okuma anlama becerileri</p>
+      <div class="ac-hint">60 hikaye, 3 seviye</div>
+      <div class="ac-arrow">→</div>
+    </div>
+    <div class="action-card nexus" data-action="navigate" data-target="nexus">
+      <div class="ac-glow"></div>
+      <div class="ac-icon">✨</div>
+      <h3>Nexus Mod</h3>
+      <p class="ac-desc">Deyimler & phrasal verbs</p>
+      <div class="ac-hint">Phrasal Verbs 🚀</div>
+      <div class="ac-arrow">→</div>
+    </div>
+  </div>
 
-  <template id="tpl-speak">
-    <div class="view-speak animate-in">
+</div>
+</template>
 
-      <div class="speak-header">
-        <div class="speak-title-wrap">
-          <h2 class="speak-title">🎙️ AI Telaffuz Laboratuvarı</h2>
-          <p class="speak-sub">Cümleyi yüksek sesle oku — AI kelime kelime analiz etsin</p>
-        </div>
-        <div class="diff-tabs">
-          <button class="diff-tab active" data-diff="easy"   onclick="app.setDifficulty('easy', this)">🌱 Başlangıç</button>
-          <button class="diff-tab"        data-diff="medium" onclick="app.setDifficulty('medium', this)">📚 Orta</button>
-          <button class="diff-tab"        data-diff="hard"   onclick="app.setDifficulty('hard', this)">🔥 İleri</button>
-        </div>
-      </div>
+<!-- Learn: Sinestezi v5.0 -->
+<template id="tpl-learn">
+<div class="animate-in synesthesia-wrapper">
 
-      <div class="speak-layout">
+  <!-- Topbar -->
+  <div class="synth-topbar">
+    <button class="synth-exit-btn" data-action="navigate" data-target="home">← Merkez</button>
+    <div class="synth-progress-wrap" id="synth-progress-wrap" style="display:none">
+      <span class="synth-counter" id="synth-counter">1/10</span>
+      <div class="synth-prog-track"><div class="synth-prog-fill" id="synth-prog-fill" style="width:0%"></div></div>
+    </div>
+    <div class="synth-topbar-right">
+      <span class="synth-mode-ind" id="synth-mode-indicator" style="display:none"></span>
+      <span class="synth-combo-badge" id="synth-combo" style="display:none">🔥 ×<span id="synth-combo-val">1</span></span>
+      <span class="synth-score-chip" id="synth-score">0 XP</span>
+    </div>
+  </div>
 
-        <!-- Main panel -->
-        <div class="speak-main glass">
+  <!-- Intro Screen -->
+  <div class="synth-intro" id="synth-intro">
+    <div class="synth-icon-main">🌀</div>
+    <h1 class="synth-title">SİNESTEZİ <span class="synth-version-badge">v7.0</span></h1>
+    <p class="synth-subtitle">Nöral Öğrenme Matrisi — Çok Modlu İmmersyon</p>
 
-          <div class="speak-progress-row">
-            <span class="speak-counter" id="speak-counter">1 / 10</span>
-            <div class="speak-prog-bar"><div class="speak-prog-fill" id="speak-prog-fill" style="width:10%"></div></div>
-            <button class="speak-skip-btn" onclick="app.nextSpeakChallenge()" title="Atla">⏭</button>
-          </div>
+    <div class="synth-rules">
+      <div class="rule-item"><span>1</span> <strong>YAZMA</strong>: Her harf kendi renginde parlar — gerçek sinestezi deneyimi.</div>
+      <div class="rule-item"><span>2</span> <strong>BAĞLAM</strong>: Kelimeleri cümle içindeki boşluklara yerleştirerek öğren.</div>
+      <div class="rule-item"><span>3</span> Hız bonusu: Ne kadar hızlı o kadar <strong style="color:var(--amber)">+XP</strong>. Kombo: 5× = 2×, 10× = 3× XP.</div>
+    </div>
 
-          <div class="sentence-card" id="sentence-card">
-            <div class="sentence-words" id="sentence-words"></div>
-          </div>
-
-          <div class="speak-wave" id="speak-wave"></div>
-
-          <div class="speak-controls-row">
-            <button class="speak-side-btn" onclick="app.speakCurrentSentence()">
-              <span>🔊</span><small>Dinle</small>
-            </button>
-            <button class="speak-rec-btn" id="btn-record" onclick="app.toggleRecord()">
-              <span id="rec-icon">🎤</span>
-              <small id="rec-label">Konuş</small>
-            </button>
-            <button class="speak-side-btn" onclick="app.retrySpeakChallenge()">
-              <span>🔄</span><small>Tekrar</small>
-            </button>
-          </div>
-
-          <div class="speak-transcript" id="s-result"></div>
-
-          <div class="speak-score" id="s-score" style="display:none">
-            <div class="score-ring-wrap">
-              <svg class="score-svg" viewBox="0 0 120 120">
-                <circle class="score-track" cx="60" cy="60" r="50"/>
-                <circle class="score-arc"   cx="60" cy="60" r="50" id="score-arc"/>
-              </svg>
-              <div class="score-center">
-                <span class="score-num" id="s-score-val">0</span>
-                <span class="score-pct">%</span>
-              </div>
-            </div>
-            <div class="score-detail">
-              <p class="score-feedback" id="s-feedback"></p>
-              <div class="word-breakdown" id="word-breakdown"></div>
-              <div class="score-btns">
-                <button class="btn-retry-speak" onclick="app.retrySpeakChallenge()">🔄 Tekrar</button>
-                <button class="btn-next-speak"  onclick="app.nextSpeakChallenge()">Sonraki →</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="speak-kb-hint desktop-only">⌨️ <b>Boşluk</b> — Kaydet / Durdur</div>
-        </div>
-
-        <!-- Sidebar (desktop only) -->
-        <div class="speak-sidebar desktop-only">
-          <div class="sidebar-card glass">
-            <div class="sidebar-title">📊 Oturum</div>
-            <div class="speak-session-stats" id="speak-session-stats">
-              <div class="ss-stat"><span class="ss-val" id="ss-best">—</span><label>En İyi</label></div>
-              <div class="ss-stat"><span class="ss-val" id="ss-avg">—</span><label>Ortalama</label></div>
-              <div class="ss-stat"><span class="ss-val" id="ss-total">0</span><label>Deneme</label></div>
-            </div>
-          </div>
-          <div class="sidebar-card glass">
-            <div class="sidebar-title">📋 Son Denemeler</div>
-            <div class="speak-history" id="speak-history">
-              <p class="sh-empty">Henüz deneme yok</p>
-            </div>
-          </div>
-          <div class="sidebar-card glass">
-            <div class="sidebar-title">⚙️ Seçenekler</div>
-            <label class="speak-toggle-label">
-              <input type="checkbox" id="auto-advance" onchange="app.toggleAutoAdvance(this.checked)">
-              <span>Otomatik ilerle (80%+)</span>
-            </label>
-          </div>
-        </div>
-
+    <!-- Mode Picker -->
+    <div class="synth-mode-picker">
+      <span class="sp-label">Mod Seçimi</span>
+      <div class="synth-mode-cards">
+        <button class="synth-mode-card" data-action="set-synth-mode" data-mode="spell">
+          <span class="smc-icon">⌨️</span>
+          <span class="smc-name">YAZMA</span>
+          <span class="smc-desc">20 XP / kelime</span>
+        </button>
+        <button class="synth-mode-card active" data-action="set-synth-mode" data-mode="mix">
+          <span class="smc-icon">🌀</span>
+          <span class="smc-name">KARMA</span>
+          <span class="smc-desc">Rastgele mod</span>
+        </button>
+        <button class="synth-mode-card" data-action="set-synth-mode" data-mode="speed">
+          <span class="smc-icon">⚡</span>
+          <span class="smc-name">ZAMANA KARŞI</span>
+          <span class="smc-desc">Hızlı ol, 30 XP!</span>
+        </button>
+        <button class="synth-mode-card" data-action="set-synth-mode" data-mode="phantom">
+          <span class="smc-icon">🌫️</span>
+          <span class="smc-name">HAYALET</span>
+          <span class="smc-desc">Görünmez mürekkep · 40 XP</span>
+        </button>
       </div>
     </div>
-  </template>
 
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js').catch(err => console.log('SW error:', err));
-      });
-    }
-  </script>
+    <div class="synth-session-picker">
+      <span class="sp-label">Oturum Uzunluğu</span>
+      <div class="sp-btns">
+        <button class="sp-btn" data-action="set-synth-len" data-len="5">5 kelime</button>
+        <button class="sp-btn active" data-action="set-synth-len" data-len="10">10 kelime</button>
+        <button class="sp-btn" data-action="set-synth-len" data-len="20">20 kelime</button>
+      </div>
+    </div>
+
+    <button class="synth-start-btn" data-action="start-synesthesia">BAĞLANTIYI KUR</button>
+  </div>
+
+  <!-- Chamber -->
+  <div class="synth-chamber" id="synth-chamber" style="display:none">
+
+    <div class="synth-bg-particles"></div>
+
+    <!-- Pause Overlay -->
+    <div class="synth-pause-overlay" id="synth-pause-overlay" style="display:none">
+      <div class="synth-pause-card">
+        <div class="synth-pause-icon">⏸</div>
+        <h2 class="synth-pause-title">DURAKLADI</h2>
+        <p class="synth-pause-sub">Hazır olunca devam et</p>
+        <button class="synth-pause-resume-btn" data-action="resume-synesthesia">▶ DEVAM ET</button>
+        <button class="synth-pause-exit-btn" data-action="navigate" data-target="home">Ana Menüye Dön</button>
+      </div>
+    </div>
+
+    <!-- Word Info -->
+    <div class="synth-target-area">
+      <div class="synth-word-meta" id="synth-word-meta">
+        <span class="synth-word-icon" id="synth-word-icon"></span>
+        <span class="synth-cefr-badge" id="synth-cefr-badge"></span>
+        <span class="synth-cat-badge" id="synth-cat-badge"></span>
+      </div>
+      <div class="synth-target-tr" id="synth-tr" style="display:block"></div>
+      
+      <!-- Context Mode UI (v7.0) -->
+      <div id="synth-context-area" style="display:none; font-size:1.6rem; font-weight:600; text-align:center; max-width:600px; line-height:1.6; color:var(--text-1); margin-top:10px; background:rgba(255,255,255,0.03); padding:20px; border-radius:20px; border:1px solid var(--border)"></div>
+      
+      <div id="synth-ex" style="opacity:0;transition:opacity 0.6s ease;font-style:italic;color:var(--text-3);margin-top:8px;font-size:0.9rem;max-width:460px;text-align:center;line-height:1.6"></div>
+      <div class="synth-hint-used" id="synth-hint-used" style="display:none">💡 <span id="synth-hints-count">0</span> ipucu kullanıldı</div>
+    </div>
+
+    <!-- Core Orb -->
+    <div class="synth-core-container">
+      <div class="synth-ripple" id="synth-ripple"></div>
+      <div class="synth-core" id="synth-core"><div class="synth-core-inner"></div></div>
+      <svg class="synth-progress-svg" width="220" height="220" viewBox="0 0 100 100" style="position:absolute;transform:rotate(-90deg);pointer-events:none">
+        <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
+        <circle id="synth-progress-ring" cx="50" cy="50" r="48" fill="none" stroke="var(--cyan)" stroke-width="2" stroke-dasharray="301.44" stroke-dashoffset="301.44" style="transition:stroke-dashoffset 0.35s ease,stroke 0.4s"/>
+      </svg>
+      <!-- Speed Timer Ring -->
+      <svg id="synth-speed-timer" width="250" height="250" viewBox="0 0 100 100" style="position:absolute;transform:rotate(-90deg);pointer-events:none;display:none">
+        <circle id="synth-speed-arc" cx="50" cy="50" r="46" fill="none" stroke="rgba(245,158,11,0.55)" stroke-width="1.8" stroke-dasharray="289.02" stroke-dashoffset="0" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Letter Display (YAZMA modu) -->
+    <div class="synth-input-area" id="synth-input-display"></div>
+
+    <!-- Choice Grid (SEÇME modu) -->
+    <div class="synth-choice-grid" id="synth-choice-area" style="display:none"></div>
+
+    <!-- Speed Bonus Flash -->
+    <div class="synth-speed-bonus" id="synth-speed-bonus" style="display:none"></div>
+
+    <!-- Controls -->
+    <div class="synth-hint-action">
+      <button class="synth-hint-btn" id="synth-hint-listen-btn" data-action="play-synth-hint" title="Okunuşu dinle">🔊 Dinle</button>
+      <button class="synth-pause-btn" data-action="pause-synesthesia" title="Duraklat (Esc)">⏸</button>
+      <button class="synth-skip-btn" data-action="skip-synth-word" title="Bilemedim, geç">Bilmiyorum ⏭</button>
+    </div>
+
+    <!-- Virtual Keyboard (mobile/touch) -->
+    <div class="synth-vkb" id="synth-vkb" style="display:none"></div>
+
+  </div>
+</div>
+</template>
+
+<!-- Reading -->
+<template id="tpl-reading">
+<div class="animate-in reading-workshop-container">
+  <div class="reading-header">
+    <div class="rh-top">
+      <div class="rh-left">
+        <div class="rh-left-icon">📖</div>
+        <div class="rh-left-text">
+          <h1>Okuma Atölyesi</h1>
+          <p>Kelimeleri bağlamda hisset, metinle öğren.</p>
+        </div>
+      </div>
+      <div class="rh-right">
+        <div class="reading-mode-toggle">
+          <button class="rm-btn active" id="btn-mode-read" data-action="set-reading-mode" data-mode="read">📚 Okuma</button>
+          <button class="rm-btn" id="btn-mode-quiz" data-action="set-reading-mode" data-mode="quiz">🧩 Egzersiz</button>
+        </div>
+        <button class="btn btn-primary btn-play-audio" id="btn-play-story" data-action="play-story">
+          <span class="audio-icon">🎧</span> Sesli Dinle
+        </button>
+      </div>
+    </div>
+    <div class="rh-bottom">
+      <div class="level-tabs">
+        <button class="level-tab active" data-action="set-reading-level" data-level="Kolay">🌱 Kolay</button>
+        <button class="level-tab" data-action="set-reading-level" data-level="Orta">📚 Orta</button>
+        <button class="level-tab" data-action="set-reading-level" data-level="İleri">🔥 İleri</button>
+        <button class="shuffle-tab" id="btn-shuffle" data-action="toggle-shuffle" title="Hikayeleri rastgele sırala">🔀 Karıştır</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="story-wrapper" id="story-area"></div>
+</div>
+</template>
+
+<!-- Speaking -->
+<template id="tpl-speak">
+<div class="animate-in speak-container">
+
+  <div class="lab-header">
+    <div class="lh-top">
+      <div class="lab-header-icon">🎙️</div>
+      <div>
+        <h1>Konuşma Lab</h1>
+        <p class="lab-subtitle">AI destekli konuşma koçunuz — 2 güçlü mod</p>
+      </div>
+    </div>
+    <div class="lh-bottom">
+      <div class="lab-mode-tabs">
+        <button class="lab-mode-tab active" data-mode="classic" data-action="set-speak-mode">
+          <span class="lmt-icon">🎯</span><span class="lmt-name">Telaffuz</span>
+        </button>
+        <button class="lab-mode-tab" data-mode="convo" data-action="set-speak-mode">
+          <span class="lmt-icon">🤖</span><span class="lmt-name">AI Sohbet</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASSIC MODE -->
+  <div class="speak-mode-panel active" id="speak-panel-classic">
+    <div class="diff-tabs">
+      <button class="diff-tab active" data-diff="easy" data-action="set-speak-diff">🌱 Başlangıç</button>
+      <button class="diff-tab" data-diff="medium" data-action="set-speak-diff">📚 Orta</button>
+      <button class="diff-tab" data-diff="hard" data-action="set-speak-diff">🔥 İleri</button>
+    </div>
+    <div class="speak-layout">
+      <div class="speak-main">
+        <div class="speak-progress-row">
+          <span class="speak-counter" id="speak-counter">1/100</span>
+          <div class="speak-prog-bar"><div class="speak-prog-fill" id="speak-prog-fill" style="width:1%"></div></div>
+          <button class="speak-skip-btn" data-action="next-speak" title="Atla">⏭</button>
+        </div>
+        <div class="speak-toggles-row">
+          <label class="shadow-toggle" title="Gölge Modu: AI okuduktan sonra otomatik dinler">
+            <input type="checkbox" id="shadow-mode" data-action="toggle-shadow-mode">
+            <span class="shadow-slider"></span>
+            <small>Gölge Modu</small>
+          </label>
+          <label class="shadow-toggle" title="Karışık Mod: Cümleleri rastgele sırayla getirir">
+            <input type="checkbox" id="shuffle-mode" data-action="toggle-shuffle-mode">
+            <span class="shadow-slider"></span>
+            <small>Karıştır</small>
+          </label>
+        </div>
+        <div class="sentence-card">
+          <div class="sentence-words" id="sentence-words"></div>
+        </div>
+        <div class="waveform" id="waveform"></div>
+        <div class="speak-controls">
+          <button class="speak-side-btn" data-action="speak-sentence"><span>🔊</span><small>Dinle</small></button>
+          <button class="speak-side-btn" data-action="speak-sentence-slow"><span>🐢</span><small>Yavaş</small></button>
+          <button class="speak-rec-btn" id="rec-btn" data-action="toggle-record">
+            <span id="rec-icon">🎤</span>
+            <small id="rec-label">Konuş</small>
+          </button>
+          <button class="speak-side-btn" id="btn-playback" data-action="play-last-recording" style="display:none; border-color:var(--violet); color:var(--violet)">
+            <span>🎧</span><small>Seni Dinle</small>
+          </button>
+          <button class="speak-side-btn" data-action="retry-speak"><span>🔄</span><small>Tekrar</small></button>
+        </div>
+        <div id="speak-transcript" style="text-align:center;color:var(--text-2);font-size:0.9rem;min-height:28px;margin-bottom:12px"></div>
+        <div id="score-panel" style="display:none" class="score-panel">
+          <div class="score-ring-wrap">
+            <svg class="score-svg" viewBox="0 0 120 120">
+              <circle class="score-track" cx="60" cy="60" r="50"/>
+              <circle class="score-arc" cx="60" cy="60" r="50" id="score-arc"/>
+            </svg>
+            <div class="score-center">
+              <span class="score-num" id="score-num">0</span>
+              <span class="score-pct">%</span>
+            </div>
+          </div>
+          <div class="score-detail">
+            <p class="score-feedback" id="score-feedback"></p>
+            <div class="word-breakdown" id="word-breakdown"></div>
+            <div class="ipa-hint-panel" id="ipa-hint-panel"></div>
+            <div class="score-btns">
+              <button class="btn btn-ghost btn-sm" data-action="retry-speak">🔄 Tekrar</button>
+              <button class="btn btn-primary btn-sm" data-action="next-speak">Sonraki →</button>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:0.72rem;color:var(--text-3);margin-top:12px" class="desktop-only">
+          ⌨️ <strong>Boşluk</strong> — Kaydet / Durdur
+        </div>
+      </div>
+      <div class="game-sidebar desktop-only">
+        <div class="sidebar-panel">
+          <div class="sidebar-panel-title">📊 Oturum</div>
+          <div class="session-stats">
+            <div class="ss-stat correct"><span class="ss-val" id="sp-best">—</span><div class="ss-label">En İyi</div></div>
+            <div class="ss-stat"><span class="ss-val" id="sp-avg">—</span><div class="ss-label">Ortalama</div></div>
+          </div>
+          <div style="text-align:center;margin-top:10px;font-size:0.8rem;color:var(--text-3)"><span id="sp-total">0</span> deneme</div>
+        </div>
+        <div class="sidebar-panel">
+          <div class="sidebar-panel-title">📋 Son Denemeler</div>
+          <div id="speak-history"><p style="font-size:0.8rem;color:var(--text-3)">Henüz deneme yok</p></div>
+        </div>
+        <div class="sidebar-panel">
+          <div class="sidebar-panel-title">⚙️ Ayarlar</div>
+          <label style="display:flex;align-items:center;gap:10px;font-size:0.82rem;cursor:pointer">
+            <input type="checkbox" id="auto-advance" data-action="toggle-auto-advance">
+            <span style="color:var(--text-2)">Otomatik ilerle (80%+)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI CONVERSATION PANEL -->
+  <div class="speak-mode-panel" id="speak-panel-convo">
+    <div id="convo-content"></div>
+  </div>
+
+</div>
+</template>
+
+<!-- Analytics -->
+<template id="tpl-analytics">
+<div class="animate-in" style="padding:24px 16px 100px; max-width:860px; margin:0 auto;">
+
+  <div style="margin-bottom:24px;">
+    <h1 style="font-size:1.7rem;font-weight:900;color:#fff;margin:0 0 4px;">📊 Analitik</h1>
+    <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin:0;">İlerleme özeti ve istatistiklerin</p>
+  </div>
+
+  <!-- Stat satırı -->
+  <div class="analytics-stat-row">
+    <div class="ana-stat">
+      <div class="ana-stat-val" id="an-words">—</div>
+      <div class="ana-stat-label">Öğrenilen Kelime</div>
+    </div>
+    <div class="ana-stat">
+      <div class="ana-stat-val" id="an-sessions">—</div>
+      <div class="ana-stat-label">Toplam Oturum</div>
+    </div>
+    <div class="ana-stat">
+      <div class="ana-stat-val" id="an-streak">—</div>
+      <div class="ana-stat-label">🔥 Günlük Seri</div>
+    </div>
+    <div class="ana-stat">
+      <div class="ana-stat-val" id="an-acc">—</div>
+      <div class="ana-stat-label">Doğruluk Oranı</div>
+    </div>
+    <div class="ana-stat">
+      <div class="ana-stat-val" id="an-due">—</div>
+      <div class="ana-stat-label">📚 Tekrar Bekleyen</div>
+    </div>
+  </div>
+
+  <div class="analytics-grid">
+
+    <!-- Aktivite Haritası -->
+    <div class="card card-full">
+      <div class="card-title">📅 Son 90 Gün Aktivitesi</div>
+      <div id="heatmap-grid" class="heatmap-grid" style="margin-top:12px;"></div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:10px;font-size:0.72rem;color:rgba(255,255,255,0.35);">
+        <span>Az</span>
+        <div style="width:12px;height:12px;border-radius:3px;background:rgba(255,255,255,0.04);"></div>
+        <div class="hm-cell l1" style="width:12px;height:12px;border-radius:3px;"></div>
+        <div class="hm-cell l2" style="width:12px;height:12px;border-radius:3px;"></div>
+        <div class="hm-cell l3" style="width:12px;height:12px;border-radius:3px;"></div>
+        <span>Çok</span>
+      </div>
+    </div>
+
+    <!-- Haftalık XP -->
+    <div class="card card-full">
+      <div class="card-title">📊 Son 7 Gün XP</div>
+      <canvas id="week-chart" style="margin-top:12px;max-height:180px;"></canvas>
+    </div>
+
+    <!-- Kategori Radar -->
+    <div class="card">
+      <div class="card-title">🗂️ Kategori Ustalığı</div>
+      <canvas id="cat-chart" style="margin-top:12px;"></canvas>
+    </div>
+
+    <!-- CEFR Bar -->
+    <div class="card">
+      <div class="card-title">📈 CEFR Seviye Dağılımı</div>
+      <canvas id="cefr-chart" style="margin-top:12px;"></canvas>
+    </div>
+
+    <!-- Başarımlar -->
+    <div class="card card-full">
+      <div class="card-title">🏅 Başarımlar</div>
+      <div id="badges-grid" class="badges-grid" style="margin-top:16px;"></div>
+    </div>
+
+  </div>
+</div>
+</template>
+
+<!-- Nexus: Phrasal Verb Mod -->
+<template id="tpl-nexus">
+<div class="animate-in nexus-shell" id="nexus-root"></div>
+</template>
+
+<!-- Quantum: Multidimensional Grammar Engine -->
+<template id="tpl-quantum">
+<div class="animate-in" id="quantum-root" style="width:100%;min-height:100%;"></div>
+</template>
+
+<!-- Leaderboard -->
+<template id="tpl-leaderboard">
+<div class="animate-in" id="leaderboard-root" style="width:100%;min-height:100%;"></div>
+</template>
+
+<!-- Köprü — Kavramsal Dil Dönüşüm Stüdyosu -->
+<template id="tpl-bridge">
+<div class="animate-in" id="bridge-root" style="width:100%;min-height:100%;"></div>
+</template>
+
+<!-- External Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+
+<!-- Firebase Core -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<!-- Firebase Extended Services -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-remote-config-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check-compat.js"></script>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/notification-settings.js"></script>
+<script src="js/remote-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/conversations.js"></script>
+<script src="js/data.js"></script>
+<script src="js/phantom.js"></script>
+<script src="js/nexus.js"></script>
+<script name="quantum-script" src="js/quantum.js?v=1.0.51"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/bridge-data.js"></script>
+<script src="js/bridge.js"></script>
+<script src="js/app.js"></script>
+<script src="js/phrasal_verbs_ext.js"></script>
+
+<script src="js/sw-register.js"></script>
 </body>
 </html>

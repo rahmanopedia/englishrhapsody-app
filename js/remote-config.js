@@ -1,0 +1,212 @@
+/* ================================================================
+   ENGLISH RHAPSODY — Firebase Remote Config Manager
+   Uygulama ayarlarini Firebase console'dan uzaktan yonet
+
+   Firebase Console → Remote Config → Asagidaki parametreleri ekle:
+     dailyXPGoal                Number   100
+     maxStreakBonus              Number   50
+     speakingDifficulty         String   "easy"
+     feature_speaking_ai        Boolean  false
+     feature_notifications      Boolean  true
+     xp_per_level               Number   500
+     speaking_auto_advance_score Number  80
+     feature_nexus_mode         Boolean  true
+     feature_convo_mode         Boolean  true
+     feature_confetti           Boolean  true
+   ================================================================ */
+
+class RemoteConfigManager {
+  constructor() {
+    this._rc = null;
+
+    // Local defaults — Remote Config'den cekilemediginde fallback
+    this._defaults = {
+      dailyXPGoal:                 100,
+      maxStreakBonus:               50,
+      speakingDifficulty:          'easy',
+      feature_speaking_ai:         false,
+      feature_notifications:       true,
+      xp_per_level:                500,
+      speaking_auto_advance_score: 80,
+      feature_nexus_mode:          true,
+      feature_convo_mode:          true,
+      feature_confetti:            true,
+      // Zorluk carpanlari
+      multiplier_easy:             1.0,
+      multiplier_medium:           1.5,
+      multiplier_hard:             2.0,
+      xp_reading_correct:          10,
+      xp_reading_complete:         50,
+      xp_phantom_base:             20,
+      xp_grammar_rule:             30,
+      xp_quantum_win:              100,
+      xp_nexus_base:               15,
+      xp_speaking_max:             80,
+      speaking_countdown_sec:      3,
+      srs_session_word_count:      10,
+      xp_speak_perfect:            60,
+      xp_speak_great:              40,
+      xp_speak_good:               20,
+      xp_speak_retry:              5,
+      streak_warning_enabled:      true,
+      xp_reminder_enabled:         true,
+      reminder_hour:               20,
+      speaking_inactive_days:      3,
+    };
+  }
+
+  async init() {
+    if (!window._firebaseConfigured) {
+      this._applyFlags(this._defaults);
+      return;
+    }
+    try {
+      this._rc = firebase.remoteConfig();
+      this._rc.settings = {
+        minimumFetchIntervalMillis: 3_600_000,
+        fetchTimeoutMillis:         10_000,
+      };
+      this._rc.defaultConfig = {
+        dailyXPGoal:                 String(this._defaults.dailyXPGoal),
+        maxStreakBonus:               String(this._defaults.maxStreakBonus),
+        speakingDifficulty:          this._defaults.speakingDifficulty,
+        feature_speaking_ai:         String(this._defaults.feature_speaking_ai),
+        feature_notifications:       String(this._defaults.feature_notifications),
+        xp_per_level:                String(this._defaults.xp_per_level),
+        speaking_auto_advance_score: String(this._defaults.speaking_auto_advance_score),
+        feature_nexus_mode:          String(this._defaults.feature_nexus_mode),
+        feature_convo_mode:          String(this._defaults.feature_convo_mode),
+        feature_confetti:            String(this._defaults.feature_confetti),
+        multiplier_easy:             String(this._defaults.multiplier_easy),
+        multiplier_medium:           String(this._defaults.multiplier_medium),
+        multiplier_hard:             String(this._defaults.multiplier_hard),
+        xp_reading_correct:          String(this._defaults.xp_reading_correct),
+        xp_reading_complete:         String(this._defaults.xp_reading_complete),
+        xp_phantom_base:             String(this._defaults.xp_phantom_base),
+        xp_grammar_rule:             String(this._defaults.xp_grammar_rule),
+        xp_quantum_win:              String(this._defaults.xp_quantum_win),
+        xp_nexus_base:               String(this._defaults.xp_nexus_base),
+        xp_speaking_max:             String(this._defaults.xp_speaking_max),
+        speaking_countdown_sec:      String(this._defaults.speaking_countdown_sec),
+        srs_session_word_count:      String(this._defaults.srs_session_word_count),
+        xp_speak_perfect:            String(this._defaults.xp_speak_perfect),
+        xp_speak_great:              String(this._defaults.xp_speak_great),
+        xp_speak_good:               String(this._defaults.xp_speak_good),
+        xp_speak_retry:              String(this._defaults.xp_speak_retry),
+        streak_warning_enabled:      String(this._defaults.streak_warning_enabled),
+        xp_reminder_enabled:         String(this._defaults.xp_reminder_enabled),
+        reminder_hour:               String(this._defaults.reminder_hour),
+        speaking_inactive_days:      String(this._defaults.speaking_inactive_days),
+      };
+      await this._rc.fetchAndActivate();
+      console.info('[RemoteConfig] Initialized');
+    } catch (e) {
+      console.warn('[RemoteConfig] Fetch basarisiz, defaults kullaniliyor:', e.message);
+    }
+    this._applyFlags(this._buildFlags());
+  }
+
+  // ── Internal ───────────────────────────────────────────────
+
+  _raw(key) {
+    if (!this._rc) return String(this._defaults[key] ?? '');
+    try {
+      const v = this._rc.getValue(key).asString();
+      return v !== '' ? v : String(this._defaults[key] ?? '');
+    } catch {
+      return String(this._defaults[key] ?? '');
+    }
+  }
+
+  _bool(key) {
+    const v = this._raw(key).toLowerCase();
+    return v === 'true' || v === '1';
+  }
+
+  _buildFlags() {
+    return {
+      dailyXPGoal:                 Number(this._raw('dailyXPGoal'))                 || this._defaults.dailyXPGoal,
+      maxStreakBonus:               Number(this._raw('maxStreakBonus'))               || this._defaults.maxStreakBonus,
+      speakingDifficulty:          this._raw('speakingDifficulty')                  || this._defaults.speakingDifficulty,
+      feature_speaking_ai:         this._bool('feature_speaking_ai'),
+      feature_notifications:       this._bool('feature_notifications'),
+      xp_per_level:                Number(this._raw('xp_per_level'))                || this._defaults.xp_per_level,
+      speaking_auto_advance_score: Number(this._raw('speaking_auto_advance_score')) || this._defaults.speaking_auto_advance_score,
+      feature_nexus_mode:          this._bool('feature_nexus_mode'),
+      feature_convo_mode:          this._bool('feature_convo_mode'),
+      feature_confetti:            this._bool('feature_confetti'),
+      multiplier_easy:             Number(this._raw('multiplier_easy'))             || this._defaults.multiplier_easy,
+      multiplier_medium:           Number(this._raw('multiplier_medium'))           || this._defaults.multiplier_medium,
+      multiplier_hard:             Number(this._raw('multiplier_hard'))             || this._defaults.multiplier_hard,
+      xp_reading_correct:          Number(this._raw('xp_reading_correct'))     || this._defaults.xp_reading_correct,
+      xp_reading_complete:         Number(this._raw('xp_reading_complete'))    || this._defaults.xp_reading_complete,
+      xp_phantom_base:             Number(this._raw('xp_phantom_base'))        || this._defaults.xp_phantom_base,
+      xp_grammar_rule:             Number(this._raw('xp_grammar_rule'))        || this._defaults.xp_grammar_rule,
+      xp_quantum_win:              Number(this._raw('xp_quantum_win'))         || this._defaults.xp_quantum_win,
+      xp_nexus_base:               Number(this._raw('xp_nexus_base'))          || this._defaults.xp_nexus_base,
+      xp_speaking_max:             Number(this._raw('xp_speaking_max'))        || this._defaults.xp_speaking_max,
+      speaking_countdown_sec:      Number(this._raw('speaking_countdown_sec')) || this._defaults.speaking_countdown_sec,
+      srs_session_word_count:      Number(this._raw('srs_session_word_count')) || this._defaults.srs_session_word_count,
+      xp_speak_perfect:            Number(this._raw('xp_speak_perfect'))          || this._defaults.xp_speak_perfect,
+      xp_speak_great:              Number(this._raw('xp_speak_great'))            || this._defaults.xp_speak_great,
+      xp_speak_good:               Number(this._raw('xp_speak_good'))             || this._defaults.xp_speak_good,
+      xp_speak_retry:              Number(this._raw('xp_speak_retry'))            || this._defaults.xp_speak_retry,
+      streak_warning_enabled:      this._bool('streak_warning_enabled'),
+      xp_reminder_enabled:         this._bool('xp_reminder_enabled'),
+      reminder_hour:               Number(this._raw('reminder_hour'))             || this._defaults.reminder_hour,
+      speaking_inactive_days:      Number(this._raw('speaking_inactive_days'))    || this._defaults.speaking_inactive_days,
+    };
+  }
+
+  _applyFlags(flags) {
+    window.remoteFlags = Object.assign({}, flags);
+  }
+
+  // ── Public Getters ─────────────────────────────────────────
+
+  get dailyXPGoal()               { return window.remoteFlags?.dailyXPGoal                ?? this._defaults.dailyXPGoal; }
+  get maxStreakBonus()             { return window.remoteFlags?.maxStreakBonus              ?? this._defaults.maxStreakBonus; }
+  get speakingDifficulty()        { return window.remoteFlags?.speakingDifficulty          ?? this._defaults.speakingDifficulty; }
+  get xpPerLevel()                { return window.remoteFlags?.xp_per_level               ?? this._defaults.xp_per_level; }
+  get speakingAutoAdvanceScore()  { return window.remoteFlags?.speaking_auto_advance_score ?? this._defaults.speaking_auto_advance_score; }
+
+  feature(flag) {
+    return window.remoteFlags?.[flag] ?? this._defaults[flag] ?? true;
+  }
+}
+
+// Defaults hemen yaz — init() bitmeden remoteFlags erisebilir olsun
+window.remoteFlags = {
+  dailyXPGoal:                 100,
+  maxStreakBonus:               50,
+  speakingDifficulty:          'easy',
+  feature_speaking_ai:         false,
+  feature_notifications:       true,
+  xp_per_level:                500,
+  speaking_auto_advance_score: 80,
+  feature_nexus_mode:          true,
+  feature_convo_mode:          true,
+  feature_confetti:            true,
+  multiplier_easy:             1.0,
+  multiplier_medium:           1.5,
+  multiplier_hard:             2.0,
+  xp_reading_correct:          10,
+  xp_reading_complete:         50,
+  xp_phantom_base:             20,
+  xp_grammar_rule:             30,
+  xp_quantum_win:              100,
+  xp_nexus_base:               15,
+  xp_speaking_max:             80,
+  speaking_countdown_sec:      3,
+  srs_session_word_count:      10,
+  xp_speak_perfect:            60,
+  xp_speak_great:              40,
+  xp_speak_good:               20,
+  xp_speak_retry:              5,
+  streak_warning_enabled:      true,
+  xp_reminder_enabled:         true,
+  reminder_hour:               20,
+  speaking_inactive_days:      3,
+};
+
+window.remoteConfigManager = new RemoteConfigManager();
