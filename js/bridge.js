@@ -14,6 +14,8 @@ class BridgeModule {
     this.currentData= null;
     this.saved      = false;
     this.activeCategory = null;
+    this.searchQuery    = '';
+    this.explorerPage   = 1;
 
     this.EXAMPLES = [
       'Canım sıkıldı',
@@ -114,6 +116,7 @@ class BridgeModule {
               maxlength="400" rows="5"></textarea>
             <div class="bridge-textarea-footer">
               <span class="bridge-char-count" id="bridge-char-count">0 / 400</span>
+              <span class="bridge-kbd-hint">Ctrl+Enter</span>
               <div class="bridge-examples" id="bridge-examples">${examplePills}</div>
             </div>
           </div>
@@ -165,11 +168,15 @@ class BridgeModule {
               <span class="bridge-collection-count">${typeof BRIDGE_DATA !== 'undefined' ? BRIDGE_DATA.length : 0}+ ifade</span>
             </div>
           </div>
+          <input class="bridge-search-input" id="bridge-search-input"
+            placeholder="🔍  İfade ara… (Türkçe veya İngilizce)"
+            value="${this.searchQuery}" autocomplete="off" spellcheck="false">
           <div class="bridge-cat-tabs" id="bridge-cat-tabs">
             <button class="bridge-cat-tab active" data-cat="">✨ Tümü</button>
             ${categoryTabs}
           </div>
           <div class="bridge-explorer-grid" id="bridge-explorer-grid"></div>
+          <div id="bridge-explorer-footer"></div>
         </div>
 
         <!-- Koleksiyon -->
@@ -210,7 +217,12 @@ class BridgeModule {
     const trigger = this.el.querySelector('#bridge-trigger-btn');
     trigger?.addEventListener('click', () => {
       const text = ta?.value.trim();
-      if (!text) { ta?.focus(); return; }
+      if (!text) {
+        ta?.classList.add('shake');
+        ta?.addEventListener('animationend', () => ta.classList.remove('shake'), { once: true });
+        ta?.focus();
+        return;
+      }
       this._analyze(text);
     });
 
@@ -229,6 +241,14 @@ class BridgeModule {
       this.el.querySelectorAll('.bridge-cat-tab').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       this.activeCategory = btn.dataset.cat || null;
+      this.explorerPage = 1;
+      this._renderExplorer(this.activeCategory);
+    });
+
+    // Explorer arama
+    this.el.querySelector('#bridge-search-input')?.addEventListener('input', e => {
+      this.searchQuery = e.target.value;
+      this.explorerPage = 1;
       this._renderExplorer(this.activeCategory);
     });
 
@@ -385,6 +405,17 @@ class BridgeModule {
       `;
     }
 
+    // Alt itemlara tıklanınca panoya kopyala
+    content?.querySelectorAll('.bridge-alt-item').forEach(el => {
+      el.addEventListener('click', () => {
+        navigator.clipboard?.writeText(el.textContent.trim()).catch(() => {});
+        const orig = el.textContent;
+        el.textContent = '✓ Kopyalandı';
+        el.style.color = '#34d399';
+        setTimeout(() => { el.textContent = orig; el.style.color = ''; }, 1200);
+      });
+    });
+
     this._renderBridgeCards(data.bridges || []);
     this._renderInsight(data.cultural_insight, data.fluency_tip);
     this._renderSaveBtn();
@@ -455,17 +486,36 @@ class BridgeModule {
 
   /* ── Kategori Gezgini ────────────────────────────────────────── */
   _renderExplorer(categoryId) {
-    const grid = this.el.querySelector('#bridge-explorer-grid');
+    const grid   = this.el.querySelector('#bridge-explorer-grid');
+    const footer = this.el.querySelector('#bridge-explorer-footer');
     if (!grid || typeof BRIDGE_DATA === 'undefined') return;
 
-    const entries = categoryId
-      ? BRIDGE_DATA.filter(e => e.category === categoryId)
-      : BRIDGE_DATA.slice(0, 24); // Tümü seçiliyken ilk 24 ifade
+    const PAGE_SIZE = 24;
 
-    if (!entries.length) {
-      grid.innerHTML = '<div style="color:var(--text-3);font-size:0.82rem;padding:12px">Bu kategoride ifade bulunamadı.</div>';
+    // Kategori filtresi
+    let pool = categoryId
+      ? BRIDGE_DATA.filter(e => e.category === categoryId)
+      : BRIDGE_DATA;
+
+    // Arama filtresi
+    const q = this.searchQuery.trim().toLowerCase();
+    if (q) {
+      pool = pool.filter(e =>
+        e.tr.toLowerCase().includes(q) ||
+        (e.english_primary || '').toLowerCase().includes(q)
+      );
+    }
+
+    if (!pool.length) {
+      grid.innerHTML = '<div style="color:var(--text-3);font-size:0.82rem;padding:12px">Sonuç bulunamadı.</div>';
+      if (footer) footer.innerHTML = '';
       return;
     }
+
+    // Sayfalama — arama veya kategori aktifse tümünü göster
+    const showAll = !!(q || categoryId);
+    const entries = showAll ? pool : pool.slice(0, this.explorerPage * PAGE_SIZE);
+    const remaining = pool.length - entries.length;
 
     grid.innerHTML = entries.map(entry => {
       const typeDots = (entry.bridges || []).map(b =>
@@ -488,13 +538,11 @@ class BridgeModule {
         const id    = parseInt(card.dataset.id);
         const entry = BRIDGE_DATA.find(e => e.id === id);
         if (!entry) return;
-        // Textarea'ya yaz ve analiz et
         const ta = this.el.querySelector('#bridge-textarea');
         const cc = this.el.querySelector('#bridge-char-count');
         if (ta) {
           ta.value = entry.tr;
           if (cc) cc.textContent = `${entry.tr.length} / 400`;
-          // Scroll to workspace
           this.el.querySelector('#bridge-workspace')?.scrollIntoView({ behavior:'smooth', block:'center' });
         }
         this._renderResult(entry.tr, entry);
@@ -505,6 +553,19 @@ class BridgeModule {
         if (statEl) statEl.textContent = this.bridgeCount;
       });
     });
+
+    // Daha Fazla Göster butonu
+    if (footer) {
+      if (remaining > 0) {
+        footer.innerHTML = `<button class="bridge-load-more" id="bridge-load-more">Daha Fazla Göster <span>${remaining} ifade daha</span></button>`;
+        footer.querySelector('#bridge-load-more').addEventListener('click', () => {
+          this.explorerPage++;
+          this._renderExplorer(this.activeCategory);
+        });
+      } else {
+        footer.innerHTML = '';
+      }
+    }
   }
 
   /* ── Kültürel Bilgi ─────────────────────────────────────────── */
@@ -657,16 +718,39 @@ class BridgeModule {
               ${item.fluency_tip ? `<p class="bridge-fluency-tip">💡 ${item.fluency_tip}</p>` : ''}
             </div>
           </div>` : ''}
-        <button class="bridge-save-btn saved" style="margin-top:16px;width:100%" id="modal-delete-btn">
+        <button class="bridge-save-btn" style="margin-top:16px;width:100%" id="modal-load-btn">
+          <span>↗</span> Çalışma Alanına Yükle
+        </button>
+        <button class="bridge-save-btn saved" style="margin-top:8px;width:100%" id="modal-delete-btn">
           <span>🗑</span> Koleksiyondan Sil
         </button>
       </div>
     `;
 
+    const closeOverlay = () => {
+      overlay.remove();
+      document.removeEventListener('keydown', escHandler);
+    };
+    const escHandler = (e) => { if (e.key === 'Escape') closeOverlay(); };
+    document.addEventListener('keydown', escHandler);
+
+    overlay.querySelector('#modal-load-btn').addEventListener('click', () => {
+      const ta = this.el.querySelector('#bridge-textarea');
+      const cc = this.el.querySelector('#bridge-char-count');
+      if (ta) {
+        ta.value = item.originalTR || item.tr || '';
+        if (cc) cc.textContent = `${ta.value.length} / 400`;
+        this._renderResult(item.originalTR || item.tr, item);
+        this._updateFlowScore(item);
+        this.el.querySelector('#bridge-workspace')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      closeOverlay();
+    });
+
     overlay.querySelector('#modal-delete-btn').addEventListener('click', () => {
       this.collection = this.collection.filter(c => c.id !== item.id);
       localStorage.setItem('bridge_collection', JSON.stringify(this.collection));
-      overlay.remove();
+      closeOverlay();
       this._renderCollection();
       const s1 = this.el.querySelector('#bridge-stat-coll');
       const s2 = this.el.querySelector('#coll-count-badge');
@@ -674,8 +758,8 @@ class BridgeModule {
       if (s2) s2.textContent = this.collection.length;
     });
 
-    overlay.querySelector('.bridge-modal-close').addEventListener('click', () => overlay.remove());
-    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+    overlay.querySelector('.bridge-modal-close').addEventListener('click', closeOverlay);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeOverlay(); });
     document.body.appendChild(overlay);
   }
 

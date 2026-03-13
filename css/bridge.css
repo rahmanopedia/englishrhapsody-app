@@ -148,6 +148,12 @@
   display: flex; align-items: center; justify-content: space-between;
 }
 .bridge-char-count { font-size: 0.7rem; color: rgba(251,191,36,0.4); }
+.bridge-kbd-hint {
+  font-size: 0.62rem; color: rgba(251,191,36,0.3);
+  border: 1px solid rgba(251,191,36,0.15); border-radius: 4px;
+  padding: 1px 5px; font-family: monospace; letter-spacing: 0.02em;
+  white-space: nowrap;
+}
 .bridge-examples {
   display: flex; gap: 6px; flex-wrap: wrap;
 }
@@ -161,6 +167,16 @@
   color: #fbbf24; border-color: rgba(251,191,36,0.5);
   background: rgba(251,191,36,0.07);
 }
+
+/* ── Textarea Shake Animasyonu ───────────────────────────────── */
+@keyframes bridge-shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+.bridge-textarea.shake { animation: bridge-shake 0.4s ease; }
 
 /* ── Orta Köprü Tetikleyici ──────────────────────────────────── */
 .bridge-trigger-col {
@@ -510,6 +526,42 @@
 
 /* SVG Defs inline için */
 .bridge-svg-defs { position: absolute; width: 0; height: 0; }
+
+/* ── Explorer Arama Girişi ───────────────────────────────────── */
+.bridge-search-input {
+  display: block; width: 100%; box-sizing: border-box;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px; padding: 9px 14px;
+  color: #f1f5f9; font-size: 0.82rem; font-family: inherit;
+  outline: none; transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 12px;
+}
+.bridge-search-input:focus {
+  border-color: rgba(245,158,11,0.35);
+  background: rgba(245,158,11,0.04);
+}
+.bridge-search-input::placeholder { color: rgba(255,255,255,0.2); }
+
+/* ── Daha Fazla Göster Butonu ────────────────────────────────── */
+.bridge-load-more {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; margin-top: 10px; padding: 9px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; color: var(--text-3);
+  font-size: 0.75rem; font-weight: 600; cursor: pointer;
+  transition: all 0.18s ease;
+}
+.bridge-load-more:hover {
+  background: rgba(245,158,11,0.07);
+  border-color: rgba(245,158,11,0.25);
+  color: #fbbf24;
+}
+.bridge-load-more span {
+  font-size: 0.68rem; opacity: 0.6;
+  background: rgba(255,255,255,0.06); border-radius: 20px; padding: 1px 7px;
+}
 
 /* ── Kategori Sekmeleri ──────────────────────────────────────── */
 .bridge-explorer-section {
