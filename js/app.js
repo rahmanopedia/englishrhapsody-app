@@ -4908,8 +4908,38 @@ class App {
         </div>`)
       .join('');
     const ipaPanel = document.getElementById('ipa-hint-panel');
-    if (ipaPanel) { ipaPanel.innerHTML = missedIpa ? `<div class="ipa-hint-label">🎯 Telaffuzunu Geliştir:</div><div class="ipa-hints-grid">${missedIpa}</div>` : ''; }
-    this.audio.play(score >= 75 ? 'success' : score >= 40 ? 'pop' : 'click');
+    if (ipaPanel) {
+      if (missedIpa.length > 0) {
+        const cards = missedIpa.map(wd => {
+          // Simple syllable simulation (visual only)
+          const sylls = wd.en.match(/.{1,3}/g) || [wd.en]; 
+          const syllHtml = sylls.map((s,i) => `<span class="ipa-syll ${i===0?'stress':''}">${s}</span>`).join('');
+
+          return `
+          <div class="ipa-card" onclick="window._app.speech.speak('${wd.en.replace(/'/g,"\\\\'")}', 0.8)">
+            <div class="ipa-word-row">
+              <span class="ipa-word">${wd.en}</span>
+              <span class="ipa-spelling">${wd.ipa || '/.../'}</span>
+            </div>
+            <div class="ipa-syllables">${syllHtml}</div>
+            <div class="ipa-actions">
+              <button class="ipa-btn play" onclick="event.stopPropagation(); window._app.speech.speak('${wd.en.replace(/'/g,"\\\\'")}', 1.0)">
+                <span>🔊</span> Normal
+              </button>
+              <button class="ipa-btn slow" onclick="event.stopPropagation(); window._app.speech.speak('${wd.en.replace(/'/g,"\\\\'")}', 0.5)">
+                <span>🐢</span> Yavaş
+              </button>
+            </div>
+          </div>`;
+        }).join('');
+
+        ipaPanel.innerHTML = `
+          <div class="ipa-hint-label">🎯 Telaffuz Stüdyosu</div>
+          <div class="ipa-hints-grid">${cards}</div>`;
+      } else {
+        ipaPanel.innerHTML = '';
+      }
+    }    this.audio.play(score >= 75 ? 'success' : score >= 40 ? 'pop' : 'click');
     window.analyticsManager?.speakingAttempt(score, this.state.get('accent'));
     this.addXP(xp, 'hard');
     if (score === 100) {
