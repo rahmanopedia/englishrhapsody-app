@@ -5909,3 +5909,205 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .mission-val{font-size:0.75rem;color:rgba(255,255,255,0.35);flex-shrink:0;white-space:nowrap;}
 .mission-done .mission-name{color:var(--green);}
 .mission-done .mission-fill{background:var(--green);}
+
+/* ── Speaking Lab V2 ────────────────────────────────────────── */
+.convo-chat-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(13, 17, 23, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.convo-chat-header {
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ccb-back {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ccb-back:hover { background: rgba(255,255,255,0.05); border-color: var(--cyan); color: var(--cyan); }
+
+.cch-info { flex: 1; display: flex; align-items: center; gap: 10px; }
+.cch-emoji { font-size: 1.5rem; }
+.cch-title { display: block; font-weight: 700; font-size: 1rem; color: #fff; }
+.cch-level { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+.convo-chat {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+
+/* Chat Bubbles */
+.convo-bubble {
+  max-width: 85%;
+  padding: 14px 18px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  position: relative;
+  animation: bubbleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.bubble-bot {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  border-bottom-left-radius: 4px;
+  border: 1px solid rgba(0, 212, 255, 0.15);
+}
+
+.bubble-user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--violet), #7c3aed);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+
+.bubble-tr {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 6px;
+  opacity: 0.6;
+  font-style: italic;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 4px;
+}
+
+/* User Area */
+.convo-user-area {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.user-prompt-card {
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px dashed rgba(0, 212, 255, 0.3);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+}
+
+.upc-hint { color: var(--cyan); font-weight: 600; margin-bottom: 12px; font-size: 0.9rem; }
+
+.mic-btn-wrap {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto;
+}
+
+.convo-mic-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  color: #fff;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+  transition: transform 0.2s;
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+}
+
+.convo-mic-btn:active { transform: scale(0.92); }
+.convo-mic-btn.recording {
+  background: var(--rose);
+  box-shadow: 0 8px 25px rgba(244, 63, 94, 0.4);
+  animation: micPulse 1.5s infinite;
+}
+
+@keyframes micPulse {
+  0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(244, 63, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+}
+
+.convo-scene-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.csc-badge { font-size: 0.7rem; font-weight: 800; color: var(--amber); text-transform: uppercase; margin-bottom: 8px; }
+.csc-name { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.csc-role { font-size: 0.85rem; color: var(--text-3); }
+
+/* Waveform inside chat */
+.convo-wave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 30px;
+  margin-top: 10px;
+}
+.convo-wave-bar {
+  width: 3px;
+  height: 100%;
+  background: var(--cyan);
+  border-radius: 2px;
+  transform: scaleY(var(--s, 0.3));
+  transition: transform 0.1s;
+}
+
+/* Finish Screen */
+.convo-finish-card {
+  padding: 32px;
+  text-align: center;
+  animation: fadeIn 0.5s ease both;
+}
+.cf-score-circle {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 24px;
+  position: relative;
+}
+.cf-score-val {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cf-score-num { font-size: 2.5rem; font-weight: 900; line-height: 1; }
+.cf-score-pct { font-size: 1rem; opacity: 0.6; }
+

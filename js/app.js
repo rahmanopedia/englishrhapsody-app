@@ -5081,7 +5081,7 @@ class App {
     el.innerHTML = `
       <div class="convo-chat-wrap">
         <div class="convo-chat-header">
-          <button class="ccb-back" data-action="render-convo-levels" title="Geri">←</button>
+          <button class="ccb-back" onclick="window._app.setSpeakMode('convo', this)" title="Geri">←</button>
           <div class="cch-info">
             <span class="cch-emoji">${scenario.emoji || '💬'}</span>
             <div class="cch-text">
@@ -5094,7 +5094,6 @@ class App {
             <span class="cch-progress" id="cch-progress">0 / ${userTurns}</span>
           </div>
         </div>
-        <div class="cch-progbar"><div class="cch-progbar-fill" id="cch-progbar-fill" style="width:0%"></div></div>
         <div class="convo-chat" id="convo-chat"></div>
         <div class="convo-user-area" id="convo-user-area"></div>
       </div>`;
