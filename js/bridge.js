@@ -1371,7 +1371,6 @@ class BridgeModule {
     show();
   }
 
-  /* ── Koleksiyon Detay Modal SR butonları ──────────────────────── */
-  _showDetail(item) {
-    const overlay = document.createElement('div');
-    overlay.className = 'bridge-modal-overlay';
+}
+
+window.BridgeModule = BridgeModule;
