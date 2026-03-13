@@ -2481,7 +2481,7 @@ var BRIDGE_DATA = [
   id:608, category: 'duygular',
   tr: 'Can attı',
   tags:['can attı','çok istedi','sabırsızlandı','istekli'],
-  english_primary:"To be dying to do something",
+  english_primary:"Was dying to do it",
   alternatives:["Eager to","Can't wait to"],
   register: 'informal',
   bridges:[
@@ -2624,8 +2624,8 @@ var BRIDGE_DATA = [
   id:619, category: 'yogunluk',
   tr: 'Eli ayağına dolaştı',
   tags:['eli ayağına dolaşmak','panik','telaş','hata yapmak'],
-  english_primary:"To be in a muddle",
-  alternatives:["To get flustered","All over the place"],
+  english_primary:"Was in a muddle",
+  alternatives:["Got flustered","All over the place"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Dolaşmak',tr_gloss: 'to get tangled',en_fragment: 'muddle / flustered',bridge_type: 'transform',explanation: 'Türkçe uzuvların karışması; İngilizce zihinsel karmaşa/bulanıklık'}
@@ -2676,7 +2676,7 @@ var BRIDGE_DATA = [
   id:623, category: 'duygular',
   tr: 'İçine doğdu',
   tags:['içine doğmak','hissetmek','sezmek','malum olmak'],
-  english_primary:"To have a hunch",
+  english_primary:"Had a hunch",
   alternatives:["A gut feeling","Instinct told me"],
   register: 'informal',
   bridges:[
@@ -2741,7 +2741,7 @@ var BRIDGE_DATA = [
   id:628, category: 'sosyal',
   tr: 'İçten pazarlıklı çıktı',
   tags:['içten pazarlıklı','sinsi','gizli niyetli','hesapçı'],
-  english_primary:"To have an ulterior motive",
+  english_primary:"Had an ulterior motive",
   alternatives:["Two-faced","Devious"],
   register: 'neutral',
   bridges:[
@@ -2977,7 +2977,7 @@ var BRIDGE_DATA = [
   id:715, category: 'duygular',
   tr: 'İçi içine sığmadı',
   tags:['içi içine sığmamak','çok heyecanlı','mutlu','sabırsız'],
-  english_primary:"To be bursting with excitement",
+  english_primary:"Was bursting with excitement",
   alternatives:["Can't contain oneself","Full of beans"],
   register: 'informal',
   bridges:[
@@ -2990,7 +2990,7 @@ var BRIDGE_DATA = [
   id:716, category: 'yogunluk',
   tr: 'Başını kaşıyacak vakti yok',
   tags:['başını kaşıyacak vakit','çok meşgul','yogun','nefes alamıyor'],
-  english_primary:"To be run off one's feet",
+  english_primary:"Was run off their feet",
   alternatives:["Extremely busy","Doesn't have a spare second"],
   register: 'informal',
   bridges:[
@@ -3120,7 +3120,7 @@ var BRIDGE_DATA = [
   id:726, category: 'sosyal',
   tr: 'Ağız birliği etti',
   tags:['ağız birliği','anlaşmak','aynı şeyi söylemek','sözleşmek'],
-  english_primary:"To be on the same page",
+  english_primary:"Were on the same page",
   alternatives:["Sing from the same hymn sheet","In cahoots (negatif)"],
   register: 'neutral',
   bridges:[
@@ -3133,7 +3133,7 @@ var BRIDGE_DATA = [
   id:727, category: 'duygular',
   tr: 'Yüreği ağzına geldi',
   tags:['yüreği ağzına gelmek','çok korkmak','ani şok','heyecan'],
-  english_primary:"To have one's heart in one's mouth",
+  english_primary:"Had their heart in their mouth",
   alternatives:["Scared out of one's wits","Jumped out of my skin"],
   register: 'informal',
   bridges:[
@@ -3146,7 +3146,7 @@ var BRIDGE_DATA = [
   id:728, category: 'yogunluk',
   tr: 'İpin ucunu kaçırdı',
   tags:['ipin ucunu kaçırmak','kontrolü kaybetmek','aşırıya kaçmak','yönetememek'],
-  english_primary:"To lose track of things",
+  english_primary:"Lost track of things",
   alternatives:["Let things get out of hand","Go overboard"],
   register: 'informal',
   bridges:[
@@ -3172,8 +3172,8 @@ var BRIDGE_DATA = [
   id:730, category: 'basari',
   tr: 'Alnının akıyla çıktı',
   tags:['alnının akıyla','başarıyla bitirmek','onuruyla başarmak','temiz'],
-  english_primary:"To pass with flying colors",
-  alternatives:["To do someone proud","To come out on top"],
+  english_primary:"Passed with flying colors",
+  alternatives:["Did them proud","Came out on top"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Alın aklığı',tr_gloss: 'whiteness of the forehead',en_fragment: 'flying colors',bridge_type: 'transform',explanation: 'Türkçe onur/temizlik (ak alın); İngilizce denizcilikteki zafer bayrakları (flying colors) metaforu'}
@@ -3187,8 +3187,8 @@ var BRIDGE_DATA = [
   id:831, category: 'gunluk',
   tr: 'Kabak tadı verdi',
   tags:['kabak tadı','bıktırdı','uzadı','sıkıcı oldu'],
-  english_primary:"To become tedious",
-  alternatives:["To get old","Overstay its welcome"],
+  english_primary:"Got tedious",
+  alternatives:["Got old quickly","Overstay its welcome"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Kabak',tr_gloss: 'zucchini / squash',en_fragment: 'tedious / old',bridge_type: 'transform',explanation: 'Türkçe tatsız bir sebze (kabak) metaforu; İngilizce eskime veya sıkıcılık kavramı'}
@@ -3201,7 +3201,7 @@ var BRIDGE_DATA = [
   tr: 'Ağız tadıyla',
   tags:['ağız tadıyla','huzurla','keyifle','sorunsuz'],
   english_primary:"In peace and quiet",
-  alternatives:["To one's heart's content","Enjoyably"],
+  alternatives:["Enjoyed it to the fullest","Enjoyably"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Ağız tadı',tr_gloss: 'taste of the mouth',en_fragment: 'peace and quiet',bridge_type: 'transform',explanation: 'Türkçe lezzet (tat) metaforu; İngilizce sessizlik ve huzur (peace/quiet) metaforu'}
@@ -3213,8 +3213,8 @@ var BRIDGE_DATA = [
   id:833, category: 'duygular',
   tr: 'Burnundan geldi',
   tags:['burnundan gelmek','pişman olmak','zehir olmak','mutsuz'],
-  english_primary:"To pay dearly for it",
-  alternatives:["To regret it bitterly","It backfired"],
+  english_primary:"Paid dearly for it",
+  alternatives:["Regretted it bitterly","It backfired"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Burnundan',tr_gloss: 'from the nose',en_fragment: 'pay dearly',bridge_type: 'transform',explanation: 'Türkçe fiziksel bir "geri çıkış" (burun) metaforu; İngilizce bedel ödeme (pay) metaforu'}
@@ -3226,8 +3226,8 @@ var BRIDGE_DATA = [
   id:834, category: 'yogunluk',
   tr: 'Canını dişine taktı',
   tags:['canını dişine takmak','çok çabalamak','özveri','gayret'],
-  english_primary:"To work one's fingers to the bone",
-  alternatives:["To give it everything you've got","To strain every nerve"],
+  english_primary:"Worked their fingers to the bone",
+  alternatives:["Gave it everything","Strained every nerve"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Diş',tr_gloss: 'tooth',en_fragment: 'bone',bridge_type: 'transform',explanation: 'Türkçe diş (dayanıklılık); İngilizce kemik (aşırı çalışma sonu) metaforu'}
@@ -3239,8 +3239,8 @@ var BRIDGE_DATA = [
   id:835, category: 'deyimler',
   tr: 'Ekmeğine yağ sürdü',
   tags:['ekmeğine yağ sürmek','işine yaramak','fayda sağlamak','istemeden yardım'],
-  english_primary:"To play into someone's hands",
-  alternatives:["To give someone an advantage","To work in someone's favor"],
+  english_primary:"Played right into their hands",
+  alternatives:["Gave them an advantage","Worked in their favor"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Ekmek/Yağ',tr_gloss: 'bread and butter',en_fragment: 'hands',bridge_type: 'transform',explanation: 'Türkçe gıda/lezzet artırma; İngilizce kontrolün/avantajın ellere (hands) geçmesi metaforu'}
@@ -3266,7 +3266,7 @@ var BRIDGE_DATA = [
   tr: 'Kanı dondu',
   tags:['kanı donmak','dehşet','korku','şok'],
   english_primary:"Their blood ran cold",
-  alternatives:["To be chilled to the bone","Frozen with fear"],
+  alternatives:["Was chilled to the bone","Frozen with fear"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Kan',tr_gloss: 'blood',en_fragment: 'blood',bridge_type: 'direct',explanation: 'Kan ve sıcaklık değişimi metaforu korku için her iki dilde de ortaktır'}
@@ -3278,8 +3278,8 @@ var BRIDGE_DATA = [
   id:838, category: 'basari',
   tr: 'Önünü kesti',
   tags:['önünü kesmek','engel olmak','durdurmak','sabotaj'],
-  english_primary:"To stand in someone's way",
-  alternatives:["To block someone","To thwart someone's plans"],
+  english_primary:"Stood in their way",
+  alternatives:["Blocked their path","Thwarted their plans"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Önünü kesti',tr_gloss: 'to cut the front',en_fragment: 'stand in the way',bridge_type: 'direct',explanation: 'Yol/mekan engeli metaforu engelleme için iki dilde de aynıdır'}
@@ -3291,8 +3291,8 @@ var BRIDGE_DATA = [
   id:839, category: 'gunluk',
   tr: 'Göz ardı etti',
   tags:['göz ardı','ihmal','görmezden gelmek','unurmamak'],
-  english_primary:"To overlook",
-  alternatives:["To turn a blind eye","To ignore"],
+  english_primary:"Overlooked it",
+  alternatives:["Turned a blind eye","Ignored it"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Göz ardı',tr_gloss: 'behind the eye',en_fragment: 'over-look',bridge_type: 'transform',explanation: 'Türkçe görüşün "arkasına" atma; İngilizce görüşün "üstünden" bakma (görmeme) metaforu'}
@@ -3317,7 +3317,7 @@ var BRIDGE_DATA = [
   id:841, category: 'duygular',
   tr: 'İçi cız etti',
   tags:['içi cız etmek','üzülmek','acıma','şefkat'],
-  english_primary:"To feel a pang of guilt/sadness",
+  english_primary:"Felt a pang of guilt",
   alternatives:["My heart went out to them","It tugged at my heartstrings"],
   register: 'informal',
   bridges:[
@@ -3330,7 +3330,7 @@ var BRIDGE_DATA = [
   id:842, category: 'yogunluk',
   tr: 'İşi başından aşkın',
   tags:['işi başından aşkın','çok meşgul','yetişemiyor','boğulmuş'],
-  english_primary:"To be snowed under",
+  english_primary:"Was snowed under",
   alternatives:["Up to one's eyeballs in work","Swamped"],
   register: 'informal',
   bridges:[
@@ -3369,8 +3369,8 @@ var BRIDGE_DATA = [
   id:845, category: 'gunluk',
   tr: 'Lafı ağzında geveledi',
   tags:['lafı gevelemek','doğrudan söylememek','çekinmek','belirsiz'],
-  english_primary:"To mumble / To hem and haw",
-  alternatives:["Not to give a straight answer","To beat around the bush"],
+  english_primary:"Mumbled and hemmed and hawed",
+  alternatives:["Didn't give a straight answer","Beat around the bush"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Gevelemek',tr_gloss: 'to chew (words)',en_fragment: 'hem and haw',bridge_type: 'transform',explanation: 'Türkçe çiğneme (geveleme) hareketi; İngilizce öksürme/ses çıkarma (hem/haw) sesleri'}
@@ -3382,8 +3382,8 @@ var BRIDGE_DATA = [
   id:846, category: 'sosyal',
   tr: 'Arası bozuldu',
   tags:['arası bozulmak','küsmek','kavga','uzaklaşmak'],
-  english_primary:"To have a falling out",
-  alternatives:["To be on bad terms","To drift apart"],
+  english_primary:"Had a falling out",
+  alternatives:["Was on bad terms","Drifted apart"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Arası bozuldu',tr_gloss: 'the between got broken',en_fragment: 'falling out',bridge_type: 'transform',explanation: 'Türkçe mekanik bozulma; İngilizce yerçekimi/düşme (falling) metaforu'}
@@ -3395,8 +3395,8 @@ var BRIDGE_DATA = [
   id:847, category: 'duygular',
   tr: 'İçi yandı',
   tags:['içi yanmak','çok üzülmek','acı çekmek','hasret'],
-  english_primary:"To be grief-stricken",
-  alternatives:["To have a heavy heart","Burning with sorrow"],
+  english_primary:"Was grief-stricken",
+  alternatives:["Had a heavy heart","Burning with sorrow"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Yanmak',tr_gloss: 'burning',en_fragment: 'burning / grief',bridge_type: 'direct',explanation: 'Acının ısı/ateş (burning) metaforuyla anlatılması iki dilde de ortaktır'}
@@ -3434,8 +3434,8 @@ var BRIDGE_DATA = [
   id:850, category: 'basari',
   tr: 'Zirveye oynadı',
   tags:['zirveye oynamak','en iyisi olmak','hedef büyük','başarı odaklı'],
-  english_primary:"To aim for the top",
-  alternatives:["To reach for the stars","To be at the top of one's game"],
+  english_primary:"Aimed for the top",
+  alternatives:["Reached for the stars","Was at the top of their game"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Zirve',tr_gloss: 'peak / summit',en_fragment: 'top / stars',bridge_type: 'direct',explanation: 'Yükseklik metaforu başarı hedefi için her iki dilde de aynıdır'}
@@ -3473,7 +3473,7 @@ var BRIDGE_DATA = [
   id:853, category: 'duygular',
   tr: 'Dudağı uçukladı',
   tags:['dudağı uçuklamak','çok şaşırmak','korkmak','şok'],
-  english_primary:"To be flabbergasted",
+  english_primary:"Was flabbergasted",
   alternatives:["Taken aback","Speechless"],
   register: 'informal',
   bridges:[
@@ -3486,8 +3486,8 @@ var BRIDGE_DATA = [
   id:854, category: 'yogunluk',
   tr: 'Burnundan soluyordu',
   tags:['burnundan solumak','çok kızgın','öfkeli','patlamaya hazır'],
-  english_primary:"To be fuming",
-  alternatives:["To see red","To be livid"],
+  english_primary:"Was fuming",
+  alternatives:["Saw red","Was livid"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Burun',tr_gloss: 'nose',en_fragment: 'fume',bridge_type: 'transform',explanation: 'Türkçe sert nefes; İngilizce duman (fume) metaforu'}
@@ -3512,7 +3512,7 @@ var BRIDGE_DATA = [
   id:856, category: 'basari',
   tr: 'Kendi ayakları üzerinde durdu',
   tags:['kendi ayakları üzerinde','bağımsız','özgür','başarılı'],
-  english_primary:"To stand on one's own two feet",
+  english_primary:"Stood on their own two feet",
   alternatives:["Be independent","Self-sufficient"],
   register: 'neutral',
   bridges:[
@@ -3551,7 +3551,7 @@ var BRIDGE_DATA = [
   id:859, category: 'duygular',
   tr: 'İçi içine sığmadı',
   tags:['içi içine sığmamak','çok heyecanlı','mutlu','sabırsız'],
-  english_primary:"To be bursting with excitement",
+  english_primary:"Was bursting with excitement",
   alternatives:["Can't contain oneself","Full of beans"],
   register: 'informal',
   bridges:[
@@ -3564,7 +3564,7 @@ var BRIDGE_DATA = [
   id:860, category: 'yogunluk',
   tr: 'Başını kaşıyacak vakti yok',
   tags:['başını kaşıyacak vakit','çok meşgul','yogun','nefes alamıyor'],
-  english_primary:"To be run off one's feet",
+  english_primary:"Was run off their feet",
   alternatives:["Extremely busy","Doesn't have a spare second"],
   register: 'informal',
   bridges:[
@@ -3577,7 +3577,7 @@ var BRIDGE_DATA = [
   id:861, category: 'sasirma',
   tr: 'Dudak büktü',
   tags:['dudak bükmek','beğenmedi','küçümsedi','önemsemedi'],
-  english_primary:"To turn up one's nose at something",
+  english_primary:"Turned their nose up at it",
   alternatives:["Look down on","Wasn't impressed"],
   register: 'neutral',
   bridges:[
@@ -3616,7 +3616,7 @@ var BRIDGE_DATA = [
   id:864, category: 'sosyal',
   tr: 'Güler yüzlüydü',
   tags:['güler yüzlü','neşeli','pozitif','canayakın'],
-  english_primary:"To have a sunny disposition",
+  english_primary:"Had a sunny disposition",
   alternatives:["Cheerful","Friendly"],
   register: 'neutral',
   bridges:[
@@ -3694,7 +3694,7 @@ var BRIDGE_DATA = [
   id:870, category: 'sosyal',
   tr: 'Ağız birliği etti',
   tags:['ağız birliği','anlaşmak','aynı şeyi söylemek','sözleşmek'],
-  english_primary:"To be on the same page",
+  english_primary:"Were on the same page",
   alternatives:["Sing from the same hymn sheet","In cahoots (negatif)"],
   register: 'neutral',
   bridges:[
@@ -3707,7 +3707,7 @@ var BRIDGE_DATA = [
   id:871, category: 'duygular',
   tr: 'Yüreği ağzına geldi',
   tags:['yüreği ağzına gelmek','çok korkmak','ani şok','heyecan'],
-  english_primary:"To have one's heart in one's mouth",
+  english_primary:"Had their heart in their mouth",
   alternatives:["Scared out of one's wits","Jumped out of my skin"],
   register: 'informal',
   bridges:[
@@ -3720,7 +3720,7 @@ var BRIDGE_DATA = [
   id:872, category: 'yogunluk',
   tr: 'İpin ucunu kaçırdı',
   tags:['ipin ucunu kaçırmak','kontrolü kaybetmek','aşırıya kaçmak','yönetememek'],
-  english_primary:"To lose track of things",
+  english_primary:"Lost track of things",
   alternatives:["Let things get out of hand","Go overboard"],
   register: 'informal',
   bridges:[
@@ -3733,7 +3733,7 @@ var BRIDGE_DATA = [
   id:873, category: 'sasirma',
   tr: 'Ağzı bir karış açık kaldı',
   tags:['ağzı bir karış açık','şaşırdı','dondu','hayret'],
-  english_primary:"To be flabbergasted",
+  english_primary:"Was flabbergasted",
   alternatives:["Jaw dropped","Stunned"],
   register: 'informal',
   bridges:[
@@ -3746,8 +3746,8 @@ var BRIDGE_DATA = [
   id:874, category: 'basari',
   tr: 'Alnının akıyla çıktı',
   tags:['alnının akıyla','başarıyla bitirmek','onuruyla başarmak','temiz'],
-  english_primary:"To pass with flying colors",
-  alternatives:["To do someone proud","To come out on top"],
+  english_primary:"Passed with flying colors",
+  alternatives:["Did them proud","Came out on top"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Alın aklığı',tr_gloss: 'whiteness of the forehead',en_fragment: 'flying colors',bridge_type: 'transform',explanation: 'Türkçe onur/temizlik (ak alın); İngilizce denizcilikteki zafer bayrakları (flying colors) metaforu'}
@@ -3798,8 +3798,8 @@ var BRIDGE_DATA = [
   id:878, category: 'yogunluk',
   tr: 'Zaman öldürdü',
   tags:['zaman öldürmek','vakit geçirmek','oyalanmak','boş durmak'],
-  english_primary:"To kill time",
-  alternatives:["To while away the time","Hanging around"],
+  english_primary:"Killed time",
+  alternatives:["Whiled away the time","Hanging around"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Zaman öldürdü',tr_gloss: 'to kill time',en_fragment: 'kill time',bridge_type: 'direct',explanation: 'Zamanın "öldürülmesi" (tüketilmesi) metaforu her iki dilde de birebir aynıdır'}
@@ -3840,7 +3840,7 @@ var BRIDGE_DATA = [
   tr: 'İnce eleyip sık dokudu',
   tags:['titiz','detaycı','dikkatli','kılı kırk yarmak'],
   english_primary:"Go over it with a fine-tooth comb",
-  alternatives:["To be fastidious","To nitpick"],
+  alternatives:["Was fastidious","Nitpicked"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'İnce eleyip',tr_gloss: 'sifting finely',en_fragment: 'fine-tooth comb',bridge_type: 'transform',explanation: 'Türkçe un/eleme; İngilizce ince dişli tarak (temizlik) metaforu'}
@@ -3865,8 +3865,8 @@ var BRIDGE_DATA = [
   id:902, category: 'sosyal',
   tr: 'Aramıza soğukluk girdi',
   tags:['soğukluk','mesafe','küslük','eskisi gibi değil'],
-  english_primary:"To be on thin ice with someone",
-  alternatives:["To have a chilly relationship","To drift apart"],
+  english_primary:"Was on thin ice",
+  alternatives:["Had a chilly relationship","Drifted apart"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Soğukluk',tr_gloss: 'coldness',en_fragment: 'chilly / ice',bridge_type: 'direct',explanation: 'Soğukluk/buz metaforu bozulan ilişkiler için evrensel bir ısı düşüşü sembolüdür'}
@@ -3891,8 +3891,8 @@ var BRIDGE_DATA = [
   id:904, category: 'yogunluk',
   tr: 'İşleri yoluna koydu',
   tags:['yoluna koymak','düzeltmek','halletmek','organize etmek'],
-  english_primary:"To get things sorted",
-  alternatives:["To get back on track","To straighten things out"],
+  english_primary:"Got things sorted",
+  alternatives:["Got back on track","Straightened things out"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Yoluna koymak',tr_gloss: 'to put on the road/track',en_fragment: 'back on track',bridge_type: 'direct',explanation: 'Yol/iz (track) metaforu işlerin düzene girmesi için her iki dilde de aynıdır'}
@@ -3904,8 +3904,8 @@ var BRIDGE_DATA = [
   id:905, category: 'deyimler',
   tr: 'Ateşle oynadı',
   tags:['ateşle oynamak','tehlike','risk','uyarı'],
-  english_primary:"To play with fire",
-  alternatives:["To walk on thin ice","To court disaster"],
+  english_primary:"Played with fire",
+  alternatives:["Walked on thin ice","Courted disaster"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Ateşle oynadı',tr_gloss: 'playing with fire',en_fragment: 'playing with fire',bridge_type: 'direct',explanation: 'Tehlikeli bir eylem için ateş metaforu her iki dilde de birebir aynıdır'}
@@ -3930,8 +3930,8 @@ var BRIDGE_DATA = [
   id:907, category: 'sosyal',
   tr: 'İstifini bozmadı',
   tags:['istifini bozmamak','sakin','soğukkanlı','etkilenmemek'],
-  english_primary:"To keep one's cool",
-  alternatives:["To not bat an eyelid","To remain unruffled"],
+  english_primary:"Kept their cool",
+  alternatives:["Didn't bat an eyelid","Remained unruffled"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'İstifini bozmadı',tr_gloss: 'not to break one\'s arrangement',en_fragment: 'keep one\'s cool / not bat an eyelid',bridge_type: 'transform',explanation: 'Türkçe düzenin/duruşun bozulmaması; İngilizce ısının korunması (cool) veya göz kırpmama metaforu'}
@@ -3943,8 +3943,8 @@ var BRIDGE_DATA = [
   id:908, category: 'duygular',
   tr: 'Ağzının payını verdi',
   tags:['ağzının payını vermek','susturmak','had bildirmek','cevap vermek'],
-  english_primary:"To put someone in their place",
-  alternatives:["To give someone a piece of one's mind","To shut someone down"],
+  english_primary:"Put them in their place",
+  alternatives:["Gave them a piece of their mind","Shut them down"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Ağzının payı',tr_gloss: 'share of the mouth',en_fragment: 'put in their place',bridge_type: 'transform',explanation: 'Türkçe ağza odaklı bir ders/pay verme; İngilizce kişinin sosyal yerini (limitini) hatırlatma metaforu'}
@@ -3956,8 +3956,8 @@ var BRIDGE_DATA = [
   id:909, category: 'basari',
   tr: 'Emeği geçti',
   tags:['emeği geçmek','katkı sağlamak','yardım etmek','payı olmak'],
-  english_primary:"To have a hand in something",
-  alternatives:["To contribute","To play a part"],
+  english_primary:"Had a hand in it",
+  alternatives:["Contributed to it","Played a part"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Emek',tr_gloss: 'effort',en_fragment: 'hand',bridge_type: 'transform',explanation: 'Türkçe doğrudan eylem (emek); İngilizce vücut organı (el/hand) metaforu üzerinden katkı anlatılır'}
@@ -4008,7 +4008,7 @@ var BRIDGE_DATA = [
   id:913, category: 'yogunluk',
   tr: 'İpin ucunu kaçırdı',
   tags:['ipin ucunu kaçırmak','kontrolü kaybetmek','aşırıya kaçmak','yönetememek'],
-  english_primary:"To lose track of things",
+  english_primary:"Lost track of things",
   alternatives:["Let things get out of hand","Go overboard"],
   register: 'informal',
   bridges:[
@@ -4021,7 +4021,7 @@ var BRIDGE_DATA = [
   id:914, category: 'sasirma',
   tr: 'Ağzı bir karış açık kaldı',
   tags:['ağzı bir karış açık','şaşırdı','dondu','hayret'],
-  english_primary:"To be flabbergasted",
+  english_primary:"Was flabbergasted",
   alternatives:["Jaw dropped","Stunned"],
   register: 'informal',
   bridges:[
@@ -4034,8 +4034,8 @@ var BRIDGE_DATA = [
   id:915, category: 'basari',
   tr: 'Alnının akıyla çıktı',
   tags:['alnının akıyla','başarıyla bitirmek','onuruyla başarmak','temiz'],
-  english_primary:"To pass with flying colors",
-  alternatives:["To do someone proud","To come out on top"],
+  english_primary:"Passed with flying colors",
+  alternatives:["Did them proud","Came out on top"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Alın aklığı',tr_gloss: 'whiteness of the forehead',en_fragment: 'flying colors',bridge_type: 'transform',explanation: 'Türkçe onur/temizlik (ak alın); İngilizce denizcilikteki zafer bayrakları (flying colors) metaforu'}
@@ -4073,8 +4073,8 @@ var BRIDGE_DATA = [
   id:918, category: 'sosyal',
   tr: 'Ağzından bal damlıyor',
   tags:['ağzından bal damlamak','güzel konuşmak','müjde','tatlı dil'],
-  english_primary:"To have a silver tongue",
-  alternatives:["To be a smooth talker","To speak very sweetly"],
+  english_primary:"Had a silver tongue",
+  alternatives:["Was a smooth talker","Spoke very sweetly"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Bal damlamak',tr_gloss: 'honey dripping',en_fragment: 'silver tongue',bridge_type: 'transform',explanation: 'Türkçe doğal tatlılık (bal); İngilizce değerli metal (gümüş) metaforu üzerinden güzel konuşma'}
@@ -4086,8 +4086,8 @@ var BRIDGE_DATA = [
   id:919, category: 'duygular',
   tr: 'Ağzından çıkanı kulağı duymadı',
   tags:['ne dediğini bilmemek','öfkeli','düşüncesizce konuşmak','kontrolsüz'],
-  english_primary:"To not know what one is saying",
-  alternatives:["To talk nonsense","To lose control of one's tongue"],
+  english_primary:"Didn't know what they were saying",
+  alternatives:["Talked nonsense","Lost control of their tongue"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Ağzından çıkan',tr_gloss: 'what comes out of mouth',en_fragment: 'what one is saying',bridge_type: 'direct',explanation: 'Konuşma eylemi iki dilde de benzer; Türkçe kulak/kontrol eksikliğini vurgular'}
@@ -4099,8 +4099,8 @@ var BRIDGE_DATA = [
   id:920, category: 'yogunluk',
   tr: 'Ağzından girip burnundan çıktı',
   tags:['ikna etmek','kandırmak','etkilemek','ısrar etmek'],
-  english_primary:"To talk someone into something",
-  alternatives:["To twist someone's arm","To sway someone"],
+  english_primary:"Talked them into it",
+  alternatives:["Twisted their arm","Swayed them"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Ağzından/Burnundan',tr_gloss: 'from mouth/to nose',en_fragment: 'talk someone into',bridge_type: 'transform',explanation: 'Türkçe tüm kanallardan müdahale metaforu; İngilizce birinin "kolunu bükme" (zorlama/ikna) metaforu'}
@@ -4113,7 +4113,7 @@ var BRIDGE_DATA = [
   tr: 'Ağzını bıçak açmadı',
   tags:['ağzını bıçak açmamak','hiç konuşmamak','üzgün','sessiz'],
   english_primary:"Tight-lipped",
-  alternatives:["To not say a word","To be silent as a grave"],
+  alternatives:["Didn't say a word","Was silent as a grave"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Bıçak açmamak',tr_gloss: 'not even a knife opens (mouth)',en_fragment: 'tight-lipped',bridge_type: 'transform',explanation: 'Türkçe ağzın kilitlenmişliği; İngilizce dudakların sıkılığı metaforu'}
@@ -4125,7 +4125,7 @@ var BRIDGE_DATA = [
   id:922, category: 'basari',
   tr: 'Ağzıyla kuş tutsa yaranamaz',
   tags:['ağzıyla kuş tutsa','ne yapsa boş','yetersiz','takdir edilmeyen'],
-  english_primary:"To move heaven and earth to no avail",
+  english_primary:"Moved heaven and earth to no avail",
   alternatives:["No matter what they do","It won't be enough"],
   register: 'informal',
   bridges:[
@@ -4138,8 +4138,8 @@ var BRIDGE_DATA = [
   id:923, category: 'gunluk',
   tr: 'Başı sıkıştı',
   tags:['başı sıkışmak','zor durumda kalmak','yardıma ihtiyacı olmak','sıkıntı'],
-  english_primary:"To be in a tight spot",
-  alternatives:["To be in a fix","To be hard-pressed"],
+  english_primary:"Was in a tight spot",
+  alternatives:["Was in a fix","Was hard-pressed"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Başın sıkışması',tr_gloss: 'head getting squeezed',en_fragment: 'tight spot',bridge_type: 'direct',explanation: 'Her iki dilde de zor durumlar "sıkışıklık/dar alan" metaforuyla anlatılır'}
@@ -4151,8 +4151,8 @@ var BRIDGE_DATA = [
   id:924, category: 'sosyal',
   tr: 'Başına gelen pişmiş tavuğun başına gelmedi',
   tags:['pişmiş tavuk','çok talihsizlik','üst üste gelen sorunlar','felaket'],
-  english_primary:"To have a string of bad luck",
-  alternatives:["To go through the wringer","Everything went wrong"],
+  english_primary:"Had a string of bad luck",
+  alternatives:["Went through the wringer","Everything went wrong"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Pişmiş tavuk',tr_gloss: 'cooked chicken',en_fragment: 'wringer / bad luck',bridge_type: 'transform',explanation: 'Türkçe absürt bir talihsizlik metaforu; İngilizce çamaşır merdanesinden (zorluk) geçme metaforu'}
@@ -4177,8 +4177,8 @@ var BRIDGE_DATA = [
   id:926, category: 'yogunluk',
   tr: 'Başını kaldırmadı',
   tags:['başını kaldırmamak','çok çalışmak','odaklanmak','aralıksız'],
-  english_primary:"To have one's head down",
-  alternatives:["To be buried in work","To work non-stop"],
+  english_primary:"Had their head down",
+  alternatives:["Was buried in work","Worked non-stop"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Başını kaldırmadı',tr_gloss: 'not lifting the head',en_fragment: 'head down / buried',bridge_type: 'direct',explanation: 'Çalışma anındaki fiziksel duruş (başın eğik olması) her iki dilde de aynıdır'}
@@ -4190,8 +4190,8 @@ var BRIDGE_DATA = [
   id:927, category: 'sasirma',
   tr: 'Başını sardı',
   tags:['başına iş açmak','sorun yaratmak','uğraşmak','dert'],
-  english_primary:"To land oneself in trouble",
-  alternatives:["To get into a mess","To open a can of worms"],
+  english_primary:"Landed in trouble",
+  alternatives:["Got into a mess","Opened a can of worms"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Başını sardı',tr_gloss: 'to wrap around the head',en_fragment: 'land in trouble',bridge_type: 'transform',explanation: 'Türkçe sorunun başa "dolandığı" (sarmak) metaforu; İngilizce bir yere "inmek/konmak" (land) metaforu'}
@@ -4203,8 +4203,8 @@ var BRIDGE_DATA = [
   id:928, category: 'basari',
   tr: 'Başının tacı yaptı',
   tags:['başının tacı','çok değer vermek','baş üstünde tutmak','saygı'],
-  english_primary:"To put someone on a pedestal",
-  alternatives:["To treat with utmost respect","To treasure someone"],
+  english_primary:"Put them on a pedestal",
+  alternatives:["Treated with utmost respect","Treasured them"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Başının tacı',tr_gloss: 'crown of the head',en_fragment: 'pedestal',bridge_type: 'transform',explanation: 'Türkçe taç (hükümdarlık/değer); İngilizce kaide/heykel (yükseklik/kutsallık) metaforu'}
@@ -4244,8 +4244,8 @@ var BRIDGE_DATA = [
   id:951, category: 'deyimler',
   tr: 'İki ayağını bir pabuca soktu',
   tags:['sıkıştırmak','telaşlandırmak','zorlamak','acele ettirmek'],
-  english_primary:"To rush someone",
-  alternatives:["To put pressure on someone","To hassle someone"],
+  english_primary:"Rushed them",
+  alternatives:["Put pressure on them","Hassled them"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'İki ayak bir pabuç',tr_gloss: 'two feet in one shoe',en_fragment: 'rush / pressure',bridge_type: 'transform',explanation: 'Türkçe dar alan/sıkışma; İngilizce doğrudan hız/baskı metaforu'}
@@ -4270,8 +4270,8 @@ var BRIDGE_DATA = [
   id:953, category: 'sosyal',
   tr: 'Yüzüne gözüne bulaştırdı',
   tags:['başaramamak','rezil olmak','hata yapmak','beceremedi'],
-  english_primary:"To make a mess of it",
-  alternatives:["To mess up","To botch it"],
+  english_primary:"Made a mess of it",
+  alternatives:["Messed it up","Botched it"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Yüzüne gözüne',tr_gloss: 'face and eye',en_fragment: 'make a mess',bridge_type: 'transform',explanation: 'Türkçe kirlenmenin (bulaşma) yüze/göze sıçraması; İngilizce karmaşa (mess) veya özensiz iş (botch) metaforu'}
@@ -4283,8 +4283,8 @@ var BRIDGE_DATA = [
   id:954, category: 'duygular',
   tr: 'İçi cız etti',
   tags:['içi cız etmek','üzülmek','acıma','şefkat'],
-  english_primary:"To feel a pang of sadness",
-  alternatives:["To have a heavy heart","Heart sinks"],
+  english_primary:"Felt a pang of sadness",
+  alternatives:["Had a heavy heart","Heart sinks"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Cız',tr_gloss: 'sizzling sound',en_fragment: 'pang',bridge_type: 'transform',explanation: 'Türkçe yanma sesi; İngilizce ani keskin acı (pang) metaforu'}
@@ -4296,8 +4296,8 @@ var BRIDGE_DATA = [
   id:955, category: 'yogunluk',
   tr: 'Eli boş döndü',
   tags:['eli boş dönmek','başarısız olmak','kazançsız','yetersiz'],
-  english_primary:"To come away empty-handed",
-  alternatives:["To return with nothing","To fail in one's mission"],
+  english_primary:"Came away empty-handed",
+  alternatives:["Returned with nothing","Failed their mission"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Eli boş',tr_gloss: 'empty hand',en_fragment: 'empty-handed',bridge_type: 'direct',explanation: 'Tam birebir eşleşme! Başarısızlığı boş eller üzerinden anlatmak her iki dilde de aynıdır'}
@@ -4309,8 +4309,8 @@ var BRIDGE_DATA = [
   id:956, category: 'sasirma',
   tr: 'Gözden kaçırdı',
   tags:['gözden kaçırmak','fark etmemek','hata','ihmal'],
-  english_primary:"To miss / To overlook",
-  alternatives:["To let something slip","To fail to notice"],
+  english_primary:"Missed it / Overlooked it",
+  alternatives:["Let it slip","Failed to notice"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Gözden kaçırdı',tr_gloss: 'missing from the eye',en_fragment: 'overlook / miss',bridge_type: 'direct',explanation: 'Görüş alanının "kaçırılması" metaforu hata/ihmal için iki dilde de aynıdır'}
@@ -4323,7 +4323,7 @@ var BRIDGE_DATA = [
   tr: 'Alın teri döktü',
   tags:['alın teri','çok çalışmak','çaba','emek'],
   english_primary:"Sweat of one's brow",
-  alternatives:["To work hard","To put in the effort"],
+  alternatives:["Worked hard","Put in the effort"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Alın teri',tr_gloss: 'sweat of the forehead',en_fragment: 'sweat of one\'s brow',bridge_type: 'direct',explanation: 'Tam birebir eşleşme! Çok çalışmanın fiziksel sonucu (alın teri/brow sweat) her iki dilde de aynıdır'}
@@ -4362,7 +4362,7 @@ var BRIDGE_DATA = [
   tr: 'İçi parçalandı',
   tags:['içi parçalanmak','çok üzülmek','merhamet','acı'],
   english_primary:"Heart is breaking",
-  alternatives:["To be heartbroken","To feel devastated"],
+  alternatives:["Was heartbroken","Felt devastated"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'İçi parçalandı',tr_gloss: 'inside being torn apart',en_fragment: 'heart is breaking',bridge_type: 'direct',explanation: 'Duygusal yıkımın fiziksel parçalanma metaforuyla anlatılması iki dilde de aynıdır'}
@@ -4400,8 +4400,8 @@ var BRIDGE_DATA = [
   id:963, category: 'basari',
   tr: 'Elinden geleni yaptı',
   tags:['elinden geleni yapmak','çabalamak','gayret','limit'],
-  english_primary:"To do one's best",
-  alternatives:["To go the extra mile","To give it your all"],
+  english_primary:"Did their best",
+  alternatives:["Went the extra mile","Gave it their all"],
   register: 'neutral',
   bridges:[
     {tr_fragment: 'Elinden geleni',tr_gloss: 'what comes from the hand',en_fragment: 'do one\'s best',bridge_type: 'transform',explanation: 'Türkçe yetenek/kapasite (elden gelen); İngilizce en iyi sonuç (best) metaforu'}
@@ -4439,8 +4439,8 @@ var BRIDGE_DATA = [
   id:966, category: 'duygular',
   tr: 'Kanı kaynadı',
   tags:['kanı kaynamak','sevmek','sıcaklık','anında enerji'],
-  english_primary:"To warm to someone",
-  alternatives:["To take an instant liking","To hit it off"],
+  english_primary:"Warmed to them",
+  alternatives:["Took an instant liking","Hit it off"],
   register: 'informal',
   bridges:[
     {tr_fragment: 'Kanı kaynadı',tr_gloss: 'blood boiling (with liking)',en_fragment: 'warm to someone',bridge_type: 'direct',explanation: 'Isı/sıcaklık metaforu anında sevgi/sempati için iki dilde de aynıdır'}
