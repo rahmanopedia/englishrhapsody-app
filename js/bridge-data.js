@@ -8556,3 +8556,101 @@ var BRIDGE_DATA = [
     "fluency_tip": "\"I really warmed to him the moment we met.\" (Tanıştığımız an ona kanım kaynadı/ısındı.)"
   }
 ];
+function findBridgeMatch(inputRaw) {
+  const input = inputRaw.toLowerCase()
+    .replace(/[.,!?;:()"]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const inputWords = input.split(' ').filter(w => w.length > 1);
+
+  let best = null;
+  let bestScore = 0;
+
+  BRIDGE_DATA.forEach(function(entry) {
+    let score = 0;
+
+    // 1. Tam eşleşme (en yüksek puan)
+    if (entry.tr.toLowerCase() === inputRaw.toLowerCase()) {
+      score = 100;
+    } else {
+      // 2. Girdi, ifadeyi içeriyor mu?
+      if (input.includes(entry.tr.toLowerCase())) {
+        score = 90;
+      } else {
+        // 3. Tag eşleşmesi
+        const matchedTags = entry.tags.filter(function(tag) {
+          return input.includes(tag.toLowerCase());
+        });
+        if (matchedTags.length > 0) {
+          score = Math.round((matchedTags.length / entry.tags.length) * 70) + 10;
+        } else {
+          // 4. Kelime düzeyinde örtüşme
+          const entryWords = entry.tr.toLowerCase().split(' ');
+          const overlap = inputWords.filter(function(w) {
+            return entryWords.some(function(ew) {
+              return ew.includes(w) || w.includes(ew);
+            });
+          });
+          if (overlap.length > 0) {
+            score = Math.round((overlap.length / Math.max(inputWords.length, entryWords.length)) * 40);
+          }
+        }
+      }
+    }
+
+    if (score > bestScore) {
+      bestScore = score;
+      best = entry;
+    }
+  });
+
+  // Eşik değer: en az 15 puan
+  return bestScore >= 15 ? { entry: best, confidence: bestScore } : null;
+}
+
+function getTopMatches(inputRaw, count) {
+  count = count || 3;
+  const input = inputRaw.toLowerCase().replace(/[.,!?;:()"]/g, ' ').trim();
+  const inputWords = input.split(' ').filter(function(w) { return w.length > 1; });
+
+  const scored = BRIDGE_DATA.map(function(entry) {
+    let score = 0;
+    if (entry.tr.toLowerCase() === inputRaw.toLowerCase()) {
+      score = 100;
+    } else if (input.includes(entry.tr.toLowerCase())) {
+      score = 85;
+    } else {
+      const matchedTags = entry.tags.filter(function(tag) {
+        return input.includes(tag.toLowerCase());
+      });
+      if (matchedTags.length > 0) {
+        score = Math.round((matchedTags.length / entry.tags.length) * 70) + 10;
+      } else {
+        const entryWords = entry.tr.toLowerCase().split(' ');
+        const overlap = inputWords.filter(function(w) {
+          return entryWords.some(function(ew) { return ew.includes(w) || w.includes(ew); });
+        });
+        if (overlap.length > 0) {
+          score = Math.round((overlap.length / Math.max(inputWords.length, entryWords.length)) * 40);
+        }
+      }
+    }
+    return { entry: entry, score: score };
+  });
+
+  return scored
+    .filter(function(s) { return s.score >= 10; })
+    .sort(function(a, b) { return b.score - a.score; })
+    .slice(0, count)
+    .map(function(s) { return s.entry; });
+}
+
+function getByCategory(categoryId) {
+  return BRIDGE_DATA.filter(function(e) { return e.category === categoryId; });
+}
+
+function getRandomEntries(count) {
+  const shuffled = BRIDGE_DATA.slice().sort(function() { return Math.random() - 0.5; });
+  return shuffled.slice(0, count || 5);
+}
