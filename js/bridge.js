@@ -13,9 +13,17 @@ class BridgeModule {
     this.bridgeCount= parseInt(localStorage.getItem('bridge_count') || '0');
     this.currentData= null;
     this.saved      = false;
-    this.activeCategory = null;
-    this.searchQuery    = '';
-    this.explorerPage   = 1;
+    this.activeCategory  = null;
+    this.activeTypeFilter= null;
+    this.searchQuery     = '';
+    this.explorerPage    = 1;
+    this.searchHistory   = JSON.parse(localStorage.getItem('bridge_search_history') || '[]');
+    this.collectionTags  = JSON.parse(localStorage.getItem('bridge_coll_tags') || '{}');
+    this.activeTagFilter = null;
+    this.srData          = JSON.parse(localStorage.getItem('bridge_sr_data') || '{}');
+    this.streakData      = JSON.parse(localStorage.getItem('bridge_streak') || '{"count":0,"lastDate":""}');
+    this.dailyDone       = JSON.parse(localStorage.getItem('bridge_daily_done') || '[]');
+    this.onboarded       = localStorage.getItem('bridge_onboarded') === '1';
 
     this.EXAMPLES = [
       'Canım sıkıldı',
@@ -97,6 +105,13 @@ class BridgeModule {
               <div class="bridge-stat-val" id="bridge-stat-coll">${this.collection.length}</div>
               <div class="bridge-stat-lbl">Koleksiyon</div>
             </div>
+            <div class="bridge-stat bridge-stat--streak" title="Günlük seri">
+              <div class="bridge-stat-val" id="bridge-stat-streak">${this.streakData.count}</div>
+              <div class="bridge-stat-lbl">🔥 Seri</div>
+            </div>
+            <button class="bridge-header-btn" id="bridge-quiz-btn" title="Sınav Modu">📝</button>
+            <button class="bridge-header-btn" id="bridge-daily-btn" title="Günlük Pratik">📅</button>
+            <button class="bridge-header-btn" id="bridge-stats-btn" title="İstatistikler">📊</button>
           </div>
         </div>
 
@@ -111,9 +126,12 @@ class BridgeModule {
               <div class="bridge-panel-label-dot"></div>
               Türkçe Düşünce
             </div>
-            <textarea class="bridge-textarea" id="bridge-textarea"
-              placeholder="Türkçe düşünceni yaz... Günlük dil, slang, deyimler, her şey."
-              maxlength="400" rows="5"></textarea>
+            <div class="bridge-textarea-wrap">
+              <textarea class="bridge-textarea" id="bridge-textarea"
+                placeholder="Türkçe düşünceni yaz... Günlük dil, slang, deyimler, her şey."
+                maxlength="400" rows="5"></textarea>
+              <div class="bridge-history-dropdown" id="bridge-history-dropdown" style="display:none"></div>
+            </div>
             <div class="bridge-textarea-footer">
               <span class="bridge-char-count" id="bridge-char-count">0 / 400</span>
               <span class="bridge-kbd-hint">Ctrl+Enter</span>
@@ -171,6 +189,12 @@ class BridgeModule {
           <input class="bridge-search-input" id="bridge-search-input"
             placeholder="🔍  İfade ara… (Türkçe veya İngilizce)"
             value="${this.searchQuery}" autocomplete="off" spellcheck="false">
+          <div class="bridge-type-filters" id="bridge-type-filters">
+            <button class="bridge-type-chip ${!this.activeTypeFilter ? 'active' : ''}" data-type="">Tümü</button>
+            ${Object.entries(this.BRIDGE_META).map(([t, m]) =>
+              `<button class="bridge-type-chip btype-chip-${t} ${this.activeTypeFilter === t ? 'active' : ''}" data-type="${t}">${m.label}</button>`
+            ).join('')}
+          </div>
           <div class="bridge-cat-tabs" id="bridge-cat-tabs">
             <button class="bridge-cat-tab active" data-cat="">✨ Tümü</button>
             ${categoryTabs}
@@ -188,6 +212,7 @@ class BridgeModule {
             </div>
             ${this.collection.length ? '<button class="bridge-collection-clear" id="bridge-coll-clear">Temizle</button>' : ''}
           </div>
+          <div class="bridge-tag-filter-row" id="bridge-tag-filter-row"></div>
           <div class="bridge-collection-grid" id="bridge-coll-grid"></div>
         </div>
       </div>
@@ -252,6 +277,32 @@ class BridgeModule {
       this._renderExplorer(this.activeCategory);
     });
 
+    // Arama geçmişi — textarea focus
+    ta?.addEventListener('focus', () => this._showSearchHistory());
+    ta?.addEventListener('input', () => {
+      if (!ta.value.trim()) this._showSearchHistory();
+      else this._hideSearchHistory();
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('#bridge-tr-panel')) this._hideSearchHistory();
+    });
+
+    // Tip filtresi
+    this.el.querySelector('#bridge-type-filters')?.addEventListener('click', e => {
+      const btn = e.target.closest('.bridge-type-chip');
+      if (!btn) return;
+      this.el.querySelectorAll('.bridge-type-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      this.activeTypeFilter = btn.dataset.type || null;
+      this.explorerPage = 1;
+      this._renderExplorer(this.activeCategory);
+    });
+
+    // Header butonları
+    this.el.querySelector('#bridge-quiz-btn')?.addEventListener('click', () => this._showQuiz());
+    this.el.querySelector('#bridge-daily-btn')?.addEventListener('click', () => this._showDaily());
+    this.el.querySelector('#bridge-stats-btn')?.addEventListener('click', () => this._showStats());
+
     // Koleksiyon temizle
     this.el.querySelector('#bridge-coll-clear')?.addEventListener('click', () => {
       if (confirm('Koleksiyonun tüm köprüleri silinecek. Emin misin?')) {
@@ -266,6 +317,9 @@ class BridgeModule {
         if (clearBtn) clearBtn.remove();
       }
     });
+
+    // Onboarding
+    if (!this.onboarded) setTimeout(() => this._startOnboarding(), 800);
   }
 
   /* ── Statik Veritabanı Araması ────────────────────────────── */
@@ -310,6 +364,8 @@ class BridgeModule {
         localStorage.setItem('bridge_count', this.bridgeCount);
         const statEl = this.el.querySelector('#bridge-stat-count');
         if (statEl) statEl.textContent = this.bridgeCount;
+        this._addToSearchHistory(text);
+        this._updateStreak();
       } else {
         // Kısmi eşleşmeler ara
         const topMatches = getTopMatches(text, 3);
@@ -395,14 +451,24 @@ class BridgeModule {
       ).join('');
 
       content.innerHTML = `
-        <div class="bridge-primary-en">"${data.english_primary}"</div>
+        <div class="bridge-primary-row">
+          <div class="bridge-primary-en">"${data.english_primary}"</div>
+          <button class="bridge-speak-btn" id="bridge-speak-btn" title="Telaffuz et">🔊</button>
+          <button class="bridge-share-btn" id="bridge-share-btn" title="Paylaş">↗</button>
+        </div>
         <span class="bridge-register-badge ${regClass}">${regLabel}</span>
         ${data.alternatives?.length ? `
           <div class="bridge-alternatives">
-            <div class="bridge-alt-label">Alternatifler</div>
+            <div class="bridge-alt-label">Alternatifler <span style="opacity:0.5;font-size:0.6rem">(tıkla → kopyala)</span></div>
             ${altItems}
           </div>` : ''}
       `;
+      content.querySelector('#bridge-speak-btn')?.addEventListener('click', () => {
+        this._speak(data.english_primary);
+      });
+      content.querySelector('#bridge-share-btn')?.addEventListener('click', () => {
+        this._shareCard(originalTR, data);
+      });
     }
 
     // Alt itemlara tıklanınca panoya kopyala
@@ -503,6 +569,13 @@ class BridgeModule {
       pool = pool.filter(e =>
         e.tr.toLowerCase().includes(q) ||
         (e.english_primary || '').toLowerCase().includes(q)
+      );
+    }
+
+    // Tip filtresi
+    if (this.activeTypeFilter) {
+      pool = pool.filter(e =>
+        (e.bridges || []).some(b => b.bridge_type === this.activeTypeFilter)
       );
     }
 
@@ -621,9 +694,15 @@ class BridgeModule {
     if (!this.currentData || this.saved) return;
 
     const btn = this.el.querySelector('#bridge-save-btn');
-    this.collection.unshift({ ...this.currentData, id: Date.now() });
+    const tag = prompt('Etiket ekle (isteğe bağlı — örn: iş, sınav, günlük):', '') || '';
+    const itemId = Date.now();
+    this.collection.unshift({ ...this.currentData, id: itemId, tag: tag.trim() });
     if (this.collection.length > 50) this.collection.pop();
     localStorage.setItem('bridge_collection', JSON.stringify(this.collection));
+    if (tag.trim()) {
+      this.collectionTags[itemId] = tag.trim();
+      localStorage.setItem('bridge_coll_tags', JSON.stringify(this.collectionTags));
+    }
     this.saved = true;
 
     if (btn) {
@@ -645,7 +724,31 @@ class BridgeModule {
     const grid = this.el.querySelector('#bridge-coll-grid');
     if (!grid) return;
 
-    if (!this.collection.length) {
+    // Etiket filtre satırı
+    const tagRow = this.el.querySelector('#bridge-tag-filter-row');
+    if (tagRow) {
+      const allTags = [...new Set(this.collection.map(c => c.tag).filter(Boolean))];
+      if (allTags.length) {
+        tagRow.innerHTML = `
+          <button class="bridge-tag-chip ${!this.activeTagFilter ? 'active' : ''}" data-tag="">Tümü</button>
+          ${allTags.map(t => `<button class="bridge-tag-chip ${this.activeTagFilter === t ? 'active' : ''}" data-tag="${t}">${t}</button>`).join('')}
+        `;
+        tagRow.querySelectorAll('.bridge-tag-chip').forEach(btn => {
+          btn.addEventListener('click', () => {
+            this.activeTagFilter = btn.dataset.tag || null;
+            this._renderCollection();
+          });
+        });
+      } else {
+        tagRow.innerHTML = '';
+      }
+    }
+
+    let items = this.activeTagFilter
+      ? this.collection.filter(c => c.tag === this.activeTagFilter)
+      : this.collection;
+
+    if (!items.length) {
       grid.innerHTML = `
         <div class="bridge-empty-coll" style="grid-column:1/-1">
           <div class="bridge-empty-coll-icon">🌉</div>
@@ -654,17 +757,29 @@ class BridgeModule {
       return;
     }
 
-    grid.innerHTML = this.collection.map(item => {
+    // SR: bugün tekrar edilmesi gerekenler önce
+    const today = new Date().toDateString();
+    items = [...items].sort((a, b) => {
+      const aDue = this._isSRDue(a.id, today);
+      const bDue = this._isSRDue(b.id, today);
+      return (bDue ? 1 : 0) - (aDue ? 1 : 0);
+    });
+
+    grid.innerHTML = items.map(item => {
       const date = new Date(item.savedAt || item.id).toLocaleDateString('tr-TR', { day:'numeric', month:'short' });
       const typeDots = (item.bridges || []).map(b =>
         `<div class="bridge-coll-type-dot ${b.bridge_type || 'direct'}"></div>`
       ).join('');
+      const isDue = this._isSRDue(item.id, today);
+      const tagBadge = item.tag ? `<span class="bridge-coll-tag">${item.tag}</span>` : '';
       return `
-        <div class="bridge-coll-card" data-id="${item.id}">
+        <div class="bridge-coll-card ${isDue ? 'sr-due' : ''}" data-id="${item.id}">
+          ${isDue ? '<div class="bridge-sr-indicator" title="Bugün tekrar zamanı!">↺</div>' : ''}
           <div class="bridge-coll-tr">${item.originalTR || ''}</div>
           <div class="bridge-coll-en">"${item.english_primary || ''}"</div>
           <div class="bridge-coll-meta">
             <span class="bridge-coll-date">${date}</span>
+            ${tagBadge}
             <div class="bridge-coll-bridges">${typeDots}</div>
           </div>
         </div>`;
@@ -718,7 +833,16 @@ class BridgeModule {
               ${item.fluency_tip ? `<p class="bridge-fluency-tip">💡 ${item.fluency_tip}</p>` : ''}
             </div>
           </div>` : ''}
-        <button class="bridge-save-btn" style="margin-top:16px;width:100%" id="modal-load-btn">
+        <button class="bridge-save-btn" style="margin-top:16px;width:100%" id="modal-speak-btn">
+          <span>🔊</span> Telaffuz Et
+        </button>
+        <div class="bridge-sr-buttons" id="modal-sr-btns" style="display:flex;gap:8px;margin-top:8px">
+          <div style="font-size:0.65rem;color:var(--text-3);width:100%;text-align:center;margin-bottom:2px">Tekrar planla:</div>
+          <button class="bridge-sr-btn sr-again"  data-diff="again"  style="flex:1">↺ Tekrar</button>
+          <button class="bridge-sr-btn sr-hard"   data-diff="hard"   style="flex:1">😓 Zor</button>
+          <button class="bridge-sr-btn sr-easy"   data-diff="easy"   style="flex:1">😊 Kolay</button>
+        </div>
+        <button class="bridge-save-btn" style="margin-top:8px;width:100%" id="modal-load-btn">
           <span>↗</span> Çalışma Alanına Yükle
         </button>
         <button class="bridge-save-btn saved" style="margin-top:8px;width:100%" id="modal-delete-btn">
@@ -733,6 +857,23 @@ class BridgeModule {
     };
     const escHandler = (e) => { if (e.key === 'Escape') closeOverlay(); };
     document.addEventListener('keydown', escHandler);
+
+    overlay.querySelector('#modal-speak-btn')?.addEventListener('click', () => {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        const utt = new SpeechSynthesisUtterance(item.english_primary);
+        utt.lang = 'en-US'; utt.rate = 0.9;
+        window.speechSynthesis.speak(utt);
+      }
+    });
+
+    overlay.querySelectorAll('.bridge-sr-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this._updateSR(item.id, btn.dataset.diff);
+        const row = overlay.querySelector('#modal-sr-btns');
+        if (row) row.innerHTML = '<div style="font-size:0.75rem;color:#34d399;text-align:center;padding:6px">✓ Tekrar planı güncellendi</div>';
+      });
+    });
 
     overlay.querySelector('#modal-load-btn').addEventListener('click', () => {
       const ta = this.el.querySelector('#bridge-textarea');
@@ -793,6 +934,444 @@ class BridgeModule {
     this.currentData = null;
     this.saved = false;
   }
-}
 
-window.BridgeModule = BridgeModule;
+  /* ── Ses Telaffuzu ────────────────────────────────────────────── */
+  _speak(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'en-US';
+    utt.rate = 0.9;
+    const btn = this.el.querySelector('#bridge-speak-btn');
+    if (btn) { btn.textContent = '🔊'; btn.classList.add('speaking'); }
+    utt.onend = () => { if (btn) { btn.textContent = '🔊'; btn.classList.remove('speaking'); } };
+    window.speechSynthesis.speak(utt);
+  }
+
+  /* ── Paylaşım Kartı ───────────────────────────────────────────── */
+  _shareCard(tr, data) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 800; canvas.height = 420;
+    const ctx = canvas.getContext('2d');
+
+    // Arka plan
+    const bg = ctx.createLinearGradient(0, 0, 800, 420);
+    bg.addColorStop(0, '#060d1b');
+    bg.addColorStop(1, '#0d1829');
+    ctx.fillStyle = bg;
+    ctx.roundRect(0, 0, 800, 420, 24);
+    ctx.fill();
+
+    // Üst şerit
+    const stripe = ctx.createLinearGradient(0, 0, 800, 0);
+    stripe.addColorStop(0, '#f59e0b');
+    stripe.addColorStop(1, '#0ea5e9');
+    ctx.fillStyle = stripe;
+    ctx.fillRect(0, 0, 800, 5);
+
+    // Logo metin
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 18px system-ui, sans-serif';
+    ctx.fillText('🌉 KÖPRÜ', 36, 46);
+
+    // TR metin
+    ctx.fillStyle = '#fbbf24';
+    ctx.font = '20px system-ui, sans-serif';
+    ctx.fillText(tr, 36, 110);
+
+    // Ok
+    ctx.fillStyle = '#4b5563';
+    ctx.font = '28px system-ui, sans-serif';
+    ctx.fillText('↓', 36, 165);
+
+    // EN metin
+    ctx.fillStyle = '#7dd3fc';
+    ctx.font = 'bold 32px system-ui, sans-serif';
+    const en = `"${data.english_primary}"`;
+    ctx.fillText(en, 36, 220);
+
+    // Insight (kısa)
+    if (data.cultural_insight) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '15px system-ui, sans-serif';
+      const words = data.cultural_insight.split(' ');
+      let line = '', y = 290;
+      for (const w of words) {
+        const test = line + w + ' ';
+        if (ctx.measureText(test).width > 720 && line) {
+          ctx.fillText(line, 36, y); line = w + ' '; y += 22;
+          if (y > 360) break;
+        } else { line = test; }
+      }
+      if (y <= 360) ctx.fillText(line, 36, y);
+    }
+
+    // Alt bant
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    ctx.fillRect(0, 385, 800, 35);
+    ctx.fillStyle = '#4b5563';
+    ctx.font = '13px system-ui, sans-serif';
+    ctx.fillText('English Rhapsody · Kavramsal Dil Dönüşüm Stüdyosu', 36, 408);
+
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `kopru-${Date.now()}.png`; a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  /* ── Arama Geçmişi ────────────────────────────────────────────── */
+  _addToSearchHistory(text) {
+    this.searchHistory = [text, ...this.searchHistory.filter(h => h !== text)].slice(0, 10);
+    localStorage.setItem('bridge_search_history', JSON.stringify(this.searchHistory));
+  }
+
+  _showSearchHistory() {
+    const dd = this.el.querySelector('#bridge-history-dropdown');
+    const ta = this.el.querySelector('#bridge-textarea');
+    if (!dd || !this.searchHistory.length) return;
+    dd.innerHTML = this.searchHistory.map(h =>
+      `<button class="bridge-history-item" data-h="${h}">${h}</button>`
+    ).join('');
+    dd.style.display = 'block';
+    dd.querySelectorAll('.bridge-history-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (ta) {
+          ta.value = btn.dataset.h;
+          const cc = this.el.querySelector('#bridge-char-count');
+          if (cc) cc.textContent = `${ta.value.length} / 400`;
+          this._hideSearchHistory();
+          this._analyze(btn.dataset.h);
+        }
+      });
+    });
+  }
+
+  _hideSearchHistory() {
+    const dd = this.el.querySelector('#bridge-history-dropdown');
+    if (dd) dd.style.display = 'none';
+  }
+
+  /* ── Spaced Repetition ────────────────────────────────────────── */
+  _isSRDue(itemId, todayStr) {
+    const sr = this.srData[itemId];
+    if (!sr) return false;
+    return sr.nextReview === todayStr || new Date(sr.nextReview) < new Date(todayStr);
+  }
+
+  _updateSR(itemId, difficulty) {
+    const today = new Date();
+    const sr = this.srData[itemId] || { interval: 1, ease: 2.5, repetitions: 0 };
+    if (difficulty === 'easy') {
+      sr.interval = Math.round(sr.interval * sr.ease);
+      sr.ease = Math.min(2.5, sr.ease + 0.15);
+      sr.repetitions++;
+    } else if (difficulty === 'hard') {
+      sr.interval = Math.max(1, Math.round(sr.interval * 1.2));
+      sr.ease = Math.max(1.3, sr.ease - 0.2);
+    } else {
+      sr.interval = 1; sr.ease = Math.max(1.3, sr.ease - 0.3); sr.repetitions = 0;
+    }
+    const next = new Date(today);
+    next.setDate(next.getDate() + sr.interval);
+    sr.nextReview = next.toDateString();
+    this.srData[itemId] = sr;
+    localStorage.setItem('bridge_sr_data', JSON.stringify(this.srData));
+    this._renderCollection();
+  }
+
+  /* ── Streak ───────────────────────────────────────────────────── */
+  _updateStreak() {
+    const today = new Date().toDateString();
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    if (this.streakData.lastDate === today) return;
+    if (this.streakData.lastDate === yesterday) {
+      this.streakData.count++;
+    } else if (this.streakData.lastDate !== today) {
+      this.streakData.count = 1;
+    }
+    this.streakData.lastDate = today;
+    localStorage.setItem('bridge_streak', JSON.stringify(this.streakData));
+    const el = this.el.querySelector('#bridge-stat-streak');
+    if (el) el.textContent = this.streakData.count;
+  }
+
+  /* ── Sınav Modu ───────────────────────────────────────────────── */
+  _showQuiz() {
+    if (typeof BRIDGE_DATA === 'undefined' || !BRIDGE_DATA.length) return;
+    const pool = [...BRIDGE_DATA].sort(() => Math.random() - 0.5).slice(0, 10);
+    let idx = 0, score = 0;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'bridge-modal-overlay';
+
+    const render = () => {
+      if (idx >= pool.length) {
+        overlay.innerHTML = `
+          <div class="bridge-modal bridge-quiz-modal">
+            <button class="bridge-modal-close" id="qclose">✕</button>
+            <div class="bridge-quiz-score-screen">
+              <div class="bridge-quiz-score-emoji">${score >= 8 ? '🏆' : score >= 5 ? '⭐' : '📚'}</div>
+              <div class="bridge-quiz-score-val">${score} / ${pool.length}</div>
+              <div class="bridge-quiz-score-lbl">${score >= 8 ? 'Harika!' : score >= 5 ? 'İyi iş!' : 'Daha fazla pratik yap!'}</div>
+              <button class="bridge-save-btn" id="qretry" style="margin-top:20px">Tekrar Dene</button>
+            </div>
+          </div>`;
+        overlay.querySelector('#qclose').addEventListener('click', () => { overlay.remove(); document.removeEventListener('keydown', escH); });
+        overlay.querySelector('#qretry').addEventListener('click', () => { overlay.remove(); document.removeEventListener('keydown', escH); this._showQuiz(); });
+        return;
+      }
+
+      const q = pool[idx];
+      const wrongPool = BRIDGE_DATA.filter(e => e.id !== q.id);
+      const wrongs = wrongPool.sort(() => Math.random() - 0.5).slice(0, 3).map(e => e.english_primary);
+      const options = [...wrongs, q.english_primary].sort(() => Math.random() - 0.5);
+
+      overlay.innerHTML = `
+        <div class="bridge-modal bridge-quiz-modal">
+          <button class="bridge-modal-close" id="qclose">✕</button>
+          <div class="bridge-quiz-progress">
+            <div class="bridge-quiz-progress-fill" style="width:${(idx/pool.length)*100}%"></div>
+          </div>
+          <div class="bridge-quiz-counter">${idx + 1} / ${pool.length}</div>
+          <div class="bridge-quiz-question">${q.tr}</div>
+          <div class="bridge-quiz-options">
+            ${options.map(o => `<button class="bridge-quiz-opt" data-ans="${o}">${o}</button>`).join('')}
+          </div>
+          <div class="bridge-quiz-feedback" id="qfeedback"></div>
+        </div>`;
+
+      overlay.querySelector('#qclose').addEventListener('click', () => { overlay.remove(); document.removeEventListener('keydown', escH); });
+      overlay.querySelectorAll('.bridge-quiz-opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const correct = btn.dataset.ans === q.english_primary;
+          if (correct) { score++; btn.classList.add('correct'); }
+          else {
+            btn.classList.add('wrong');
+            overlay.querySelectorAll('.bridge-quiz-opt').forEach(b => {
+              if (b.dataset.ans === q.english_primary) b.classList.add('correct');
+            });
+          }
+          overlay.querySelectorAll('.bridge-quiz-opt').forEach(b => b.disabled = true);
+          const fb = overlay.querySelector('#qfeedback');
+          if (fb) fb.innerHTML = correct
+            ? `<span style="color:#34d399">✓ Doğru!</span>`
+            : `<span style="color:#f87171">✗ Doğru cevap: "${q.english_primary}"</span>`;
+          setTimeout(() => { idx++; render(); }, 1200);
+        });
+      });
+    };
+
+    const escH = e => { if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', escH); } };
+    document.addEventListener('keydown', escH);
+    document.body.appendChild(overlay);
+    render();
+  }
+
+  /* ── Günlük Pratik ────────────────────────────────────────────── */
+  _showDaily() {
+    if (typeof BRIDGE_DATA === 'undefined') return;
+    const today = new Date().toDateString();
+
+    // Bugünkü 5 kart (seed = tarih)
+    const seed = new Date().getDate() + new Date().getMonth() * 31;
+    const dailyPool = [...BRIDGE_DATA]
+      .filter((_, i) => i % 2 === seed % 2)
+      .slice(seed % 20, (seed % 20) + 5);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'bridge-modal-overlay';
+
+    const doneToday = this.dailyDone.filter(d => d.date === today).map(d => d.id);
+    const remaining = dailyPool.filter(e => !doneToday.includes(e.id));
+
+    overlay.innerHTML = `
+      <div class="bridge-modal bridge-daily-modal">
+        <button class="bridge-modal-close" id="dclose">✕</button>
+        <div class="bridge-daily-header">
+          <div class="bridge-daily-title">📅 Günlük Pratik</div>
+          <div class="bridge-daily-date">${new Date().toLocaleDateString('tr-TR', { weekday:'long', day:'numeric', month:'long' })}</div>
+          <div class="bridge-daily-progress-row">
+            <div class="bridge-daily-bar">
+              <div class="bridge-daily-bar-fill" style="width:${(doneToday.length/dailyPool.length)*100}%"></div>
+            </div>
+            <span class="bridge-daily-frac">${doneToday.length}/${dailyPool.length}</span>
+          </div>
+        </div>
+        <div class="bridge-daily-cards">
+          ${dailyPool.map(e => {
+            const done = doneToday.includes(e.id);
+            return `
+              <div class="bridge-daily-card ${done ? 'done' : ''}" data-id="${e.id}">
+                <div class="bridge-daily-card-tr">${e.tr}</div>
+                <div class="bridge-daily-card-en">${done ? `"${e.english_primary}"` : '—'}</div>
+                ${done ? '<div class="bridge-daily-check">✓</div>' : '<button class="bridge-daily-reveal">Göster</button>'}
+              </div>`;
+          }).join('')}
+        </div>
+        ${remaining.length === 0 ? `<div class="bridge-daily-complete">🎉 Bugünkü pratik tamamlandı! Seri: ${this.streakData.count} gün 🔥</div>` : ''}
+      </div>`;
+
+    overlay.querySelector('#dclose').addEventListener('click', () => { overlay.remove(); document.removeEventListener('keydown', escH); });
+
+    overlay.querySelectorAll('.bridge-daily-reveal').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.bridge-daily-card');
+        const id   = parseInt(card.dataset.id);
+        const entry = BRIDGE_DATA.find(e => e.id === id);
+        if (!entry) return;
+        card.querySelector('.bridge-daily-card-en').textContent = `"${entry.english_primary}"`;
+        btn.remove();
+        const check = document.createElement('div');
+        check.className = 'bridge-daily-check'; check.textContent = '✓';
+        card.appendChild(check);
+        card.classList.add('done');
+        this.dailyDone.push({ id, date: today });
+        localStorage.setItem('bridge_daily_done', JSON.stringify(this.dailyDone));
+        this._updateStreak();
+        // progress bar güncelle
+        const newDone = this.dailyDone.filter(d => d.date === today).length;
+        const fill = overlay.querySelector('.bridge-daily-bar-fill');
+        const frac = overlay.querySelector('.bridge-daily-frac');
+        if (fill) fill.style.width = `${(newDone / dailyPool.length) * 100}%`;
+        if (frac) frac.textContent = `${newDone}/${dailyPool.length}`;
+        if (newDone === dailyPool.length) {
+          const existing = overlay.querySelector('.bridge-daily-complete');
+          if (!existing) {
+            const msg = document.createElement('div');
+            msg.className = 'bridge-daily-complete';
+            msg.textContent = `🎉 Bugünkü pratik tamamlandı! Seri: ${this.streakData.count} gün 🔥`;
+            overlay.querySelector('.bridge-daily-modal').appendChild(msg);
+          }
+        }
+      });
+    });
+
+    const escH = e => { if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', escH); } };
+    document.addEventListener('keydown', escH);
+    overlay.addEventListener('click', e => { if (e.target === overlay) { overlay.remove(); document.removeEventListener('keydown', escH); } });
+    document.body.appendChild(overlay);
+  }
+
+  /* ── İstatistikler ────────────────────────────────────────────── */
+  _showStats() {
+    const catCounts = {};
+    const typeCounts = { direct: 0, transform: 0, multiply: 0, disappear: 0, emerge: 0 };
+
+    this.collection.forEach(item => {
+      const cat = item.category || 'other';
+      catCounts[cat] = (catCounts[cat] || 0) + 1;
+      (item.bridges || []).forEach(b => {
+        if (typeCounts[b.bridge_type] !== undefined) typeCounts[b.bridge_type]++;
+      });
+    });
+
+    const maxType = Math.max(...Object.values(typeCounts), 1);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'bridge-modal-overlay';
+    overlay.innerHTML = `
+      <div class="bridge-modal bridge-stats-modal">
+        <button class="bridge-modal-close" id="sclose">✕</button>
+        <div class="bridge-stats-title">📊 İstatistiklerim</div>
+        <div class="bridge-stats-grid">
+          <div class="bridge-stats-card">
+            <div class="bridge-stats-val">${this.bridgeCount}</div>
+            <div class="bridge-stats-lbl">Toplam Köprü</div>
+          </div>
+          <div class="bridge-stats-card">
+            <div class="bridge-stats-val">${this.collection.length}</div>
+            <div class="bridge-stats-lbl">Koleksiyon</div>
+          </div>
+          <div class="bridge-stats-card">
+            <div class="bridge-stats-val">${this.streakData.count}</div>
+            <div class="bridge-stats-lbl">🔥 Seri</div>
+          </div>
+          <div class="bridge-stats-card">
+            <div class="bridge-stats-val">${Math.round(this.flowScore)}%</div>
+            <div class="bridge-stats-lbl">Akış Skoru</div>
+          </div>
+        </div>
+        <div class="bridge-stats-section-title">Köprü Tipleri Dağılımı</div>
+        <div class="bridge-stats-bars">
+          ${Object.entries(typeCounts).map(([t, n]) => {
+            const meta = this.BRIDGE_META[t];
+            const pct = Math.round((n / maxType) * 100);
+            return `
+              <div class="bridge-stats-bar-row">
+                <div class="bridge-stats-bar-lbl">${meta.label}</div>
+                <div class="bridge-stats-bar-track">
+                  <div class="bridge-stats-bar-fill" style="width:${pct}%;background:${meta.color}"></div>
+                </div>
+                <div class="bridge-stats-bar-num">${n}</div>
+              </div>`;
+          }).join('')}
+        </div>
+        <div class="bridge-stats-section-title">Arama Geçmişi</div>
+        <div class="bridge-stats-history">
+          ${this.searchHistory.length
+            ? this.searchHistory.map(h => `<span class="bridge-stats-hist-item">${h}</span>`).join('')
+            : '<span style="color:var(--text-3);font-size:0.8rem">Henüz arama yapılmadı.</span>'}
+        </div>
+      </div>`;
+
+    overlay.querySelector('#sclose').addEventListener('click', () => { overlay.remove(); document.removeEventListener('keydown', escH); });
+    overlay.addEventListener('click', e => { if (e.target === overlay) { overlay.remove(); document.removeEventListener('keydown', escH); } });
+    const escH = e => { if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', escH); } };
+    document.addEventListener('keydown', escH);
+    document.body.appendChild(overlay);
+  }
+
+  /* ── Onboarding Turu ──────────────────────────────────────────── */
+  _startOnboarding() {
+    const steps = [
+      { sel: '#bridge-textarea',     title: 'Türkçe yaz',        text: 'Günlük bir ifade, deyim veya düşünce yaz.' },
+      { sel: '#bridge-trigger-btn',  title: 'Köprü Kur',         text: 'Bu butona bas (veya Ctrl+Enter). Kavramsal dönüşüm başlar.' },
+      { sel: '#bridge-cards-section',title: 'Köprü Kartları',     text: 'Her kart bir kavram bağlantısını gösterir. Tıklayınca açıklamayı görürsün.' },
+      { sel: '#bridge-save-area',    title: 'Koleksiyona Ekle',   text: 'Beğendiklerini koleksiyonuna ekle, etiketle.' },
+      { sel: '.bridge-explorer-section', title: 'Keşfet',         text: '250+ ifadeyi kategorilere göre veya arama ile keşfet.' },
+    ];
+    let step = 0;
+
+    const tip = document.createElement('div');
+    tip.className = 'bridge-onboard-tip';
+    document.body.appendChild(tip);
+
+    const show = () => {
+      const s = steps[step];
+      const target = this.el.querySelector(s.sel);
+      if (!target) { next(); return; }
+      const r = target.getBoundingClientRect();
+      tip.innerHTML = `
+        <div class="bridge-onboard-title">${s.title}</div>
+        <div class="bridge-onboard-text">${s.text}</div>
+        <div class="bridge-onboard-footer">
+          <span>${step + 1} / ${steps.length}</span>
+          <button class="bridge-onboard-next">${step < steps.length - 1 ? 'İleri →' : 'Tamam!'}</button>
+        </div>`;
+      const top = r.bottom + window.scrollY + 10;
+      const left = Math.min(r.left, window.innerWidth - 260);
+      tip.style.cssText = `display:block;top:${top}px;left:${Math.max(8, left)}px`;
+      tip.querySelector('.bridge-onboard-next').addEventListener('click', next);
+      target.classList.add('bridge-onboard-highlight');
+    };
+
+    const next = () => {
+      const s = steps[step];
+      this.el.querySelector(s.sel)?.classList.remove('bridge-onboard-highlight');
+      step++;
+      if (step >= steps.length) {
+        tip.remove();
+        this.onboarded = true;
+        localStorage.setItem('bridge_onboarded', '1');
+      } else { show(); }
+    };
+
+    show();
+  }
+
+  /* ── Koleksiyon Detay Modal SR butonları ──────────────────────── */
+  _showDetail(item) {
+    const overlay = document.createElement('div');
+    overlay.className = 'bridge-modal-overlay';
