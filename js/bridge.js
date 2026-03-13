@@ -160,6 +160,14 @@ class BridgeModule {
           </div>
         </div>
 
+        <!-- Kategori Filtresi -->
+        <div class="bridge-cat-filter-bar" id="bridge-cat-filter-bar">
+          <button class="bridge-cat-chip ${!this.activeCategory ? 'active' : ''}" data-cat="">✨ Tümü</button>
+          ${(typeof BRIDGE_CATEGORIES !== 'undefined' ? BRIDGE_CATEGORIES : []).map(cat =>
+            `<button class="bridge-cat-chip ${this.activeCategory === cat.id ? 'active' : ''}" data-cat="${cat.id}">${cat.icon} ${cat.label}</button>`
+          ).join('')}
+        </div>
+
         <!-- Akış Skoru -->
         <div class="bridge-flow-bar">
           <span class="bridge-flow-label">Akış Skoru</span>
@@ -178,30 +186,6 @@ class BridgeModule {
         <!-- Kaydet -->
         <div id="bridge-save-area"></div>
 
-        <!-- Kategori Gezgini -->
-        <div class="bridge-explorer-section">
-          <div class="bridge-collection-header">
-            <div class="bridge-collection-title">
-              Keşfet
-              <span class="bridge-collection-count">${typeof BRIDGE_DATA !== 'undefined' ? BRIDGE_DATA.length : 0}+ ifade</span>
-            </div>
-          </div>
-          <input class="bridge-search-input" id="bridge-search-input"
-            placeholder="🔍  İfade ara… (Türkçe veya İngilizce)"
-            value="${this.searchQuery}" autocomplete="off" spellcheck="false">
-          <div class="bridge-type-filters" id="bridge-type-filters">
-            <button class="bridge-type-chip ${!this.activeTypeFilter ? 'active' : ''}" data-type="">Tümü</button>
-            ${Object.entries(this.BRIDGE_META).map(([t, m]) =>
-              `<button class="bridge-type-chip btype-chip-${t} ${this.activeTypeFilter === t ? 'active' : ''}" data-type="${t}">${m.label}</button>`
-            ).join('')}
-          </div>
-          <div class="bridge-cat-tabs" id="bridge-cat-tabs">
-            <button class="bridge-cat-tab active" data-cat="">✨ Tümü</button>
-            ${categoryTabs}
-          </div>
-          <div class="bridge-explorer-grid" id="bridge-explorer-grid"></div>
-          <div id="bridge-explorer-footer"></div>
-        </div>
 
         <!-- Koleksiyon -->
         <div class="bridge-collection-section">
@@ -219,7 +203,6 @@ class BridgeModule {
     `;
 
     this._bindEvents();
-    this._renderExplorer(null);
     this._renderCollection();
   }
 
@@ -238,13 +221,17 @@ class BridgeModule {
       });
     });
 
-    // Köprü Kur butonu — her basışta rastgele ifade
+    // Köprü Kur butonu — seçili kategoriden rastgele ifade
     const trigger = this.el.querySelector('#bridge-trigger-btn');
     trigger?.addEventListener('click', () => {
       if (typeof BRIDGE_DATA !== 'undefined' && BRIDGE_DATA.length) {
+        const pool = this.activeCategory
+          ? BRIDGE_DATA.filter(e => e.category === this.activeCategory)
+          : BRIDGE_DATA;
+        const src = pool.length ? pool : BRIDGE_DATA;
         let pick;
-        do { pick = BRIDGE_DATA[Math.floor(Math.random() * BRIDGE_DATA.length)]; }
-        while (this._lastRandom === pick.id && BRIDGE_DATA.length > 1);
+        do { pick = src[Math.floor(Math.random() * src.length)]; }
+        while (this._lastRandom === pick.id && src.length > 1);
         this._lastRandom = pick.id;
         if (ta) {
           ta.value = pick.tr;
@@ -263,22 +250,13 @@ class BridgeModule {
       }
     });
 
-    // Kategori sekmeleri
-    this.el.querySelector('#bridge-cat-tabs')?.addEventListener('click', e => {
-      const btn = e.target.closest('.bridge-cat-tab');
+    // Kategori filtre çipleri
+    this.el.querySelector('#bridge-cat-filter-bar')?.addEventListener('click', e => {
+      const btn = e.target.closest('.bridge-cat-chip');
       if (!btn) return;
-      this.el.querySelectorAll('.bridge-cat-tab').forEach(b => b.classList.remove('active'));
+      this.el.querySelectorAll('.bridge-cat-chip').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       this.activeCategory = btn.dataset.cat || null;
-      this.explorerPage = 1;
-      this._renderExplorer(this.activeCategory);
-    });
-
-    // Explorer arama
-    this.el.querySelector('#bridge-search-input')?.addEventListener('input', e => {
-      this.searchQuery = e.target.value;
-      this.explorerPage = 1;
-      this._renderExplorer(this.activeCategory);
     });
 
     // Arama geçmişi — textarea focus
@@ -289,17 +267,6 @@ class BridgeModule {
     });
     document.addEventListener('click', e => {
       if (!e.target.closest('#bridge-tr-panel')) this._hideSearchHistory();
-    });
-
-    // Tip filtresi
-    this.el.querySelector('#bridge-type-filters')?.addEventListener('click', e => {
-      const btn = e.target.closest('.bridge-type-chip');
-      if (!btn) return;
-      this.el.querySelectorAll('.bridge-type-chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      this.activeTypeFilter = btn.dataset.type || null;
-      this.explorerPage = 1;
-      this._renderExplorer(this.activeCategory);
     });
 
     // Header butonları
