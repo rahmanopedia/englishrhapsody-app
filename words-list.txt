@@ -1,1887 +1,976 @@
-apple|apple|elma
-book|book|kitap
-car|car|araba
-door|door|kapı
-family|family|aile
-house|house|ev
-key|key|anahtar
-money|money|para
-name|name|isim
-phone|phone|telefon
-school|school|okul
-table|table|masa
-welcome|welcome|hoş geldiniz / karşılamak
-p_welcome_to|welcome to|-e hoş geldiniz
-p_thank_you|thank you|teşekkür ederim
-p_good_morning|good morning|günaydın
-p_a_lot_of|a lot of|birçok / çok fazla
-water|water|su
-window|window|pencere
-day|day|gün
-night|night|gece
-morning|morning|sabah
-friend|friend|arkadaş
-room|room|oda
-city|city|şehir
-child|child|çocuk
-man|man|adam
-woman|woman|kadın
-year|year|yıl
-life|life|hayat
-dog|dog|köpek
-cat|cat|kedi
-fish|fish|balık
-bird|bird|kuş
-horse|horse|at
-cow|cow|inek
-rabbit|rabbit|tavşan
-lion|lion|aslan
-elephant|elephant|fil
-butterfly|butterfly|kelebek
-sun|sun|güneş
-tree|tree|ağaç
-rain|rain|yağmur
-flower|flower|çiçek
-mountain|mountain|dağ
-cloud|cloud|bulut
-sea|sea|deniz
-sky|sky|gökyüzü
-river|river|nehir
-wind|wind|rüzgar
-bread|bread|ekmek
-milk|milk|süt
-egg|egg|yumurta
-meat|meat|et
-fruit|fruit|meyve
-rice|rice|pirinç
-sugar|sugar|şeker
-salt|salt|tuz
-coffee|coffee|kahve
-tea|tea|çay
-juice|juice|meyve suyu
-cake|cake|kek
-soup|soup|çorba
-cheese|cheese|peynir
-butter|butter|tereyağı
-red|red|kırmızı
-blue|blue|mavi
-green|green|yeşil
-white|white|beyaz
-black|black|siyah
-big|big|büyük
-small|small|küçük
-new|new|yeni
-old|old|eski/yaşlı
-hot|hot|sıcak
-cold|cold|soğuk
-fast|fast|hızlı
-slow|slow|yavaş
-good|good|iyi
-bad|bad|kötü
-eat|eat|yemek yemek
-drink|drink|içmek
-sleep|sleep|uyumak
-run|run|koşmak
-walk|walk|yürümek
-read|read|okumak
-write|write|yazmak
-play|play|oynamak
-work|work|çalışmak
-help|help|yardım etmek
-buy|buy|satın almak
-open|open|açmak
-close|close|kapatmak
-give|give|vermek
-take|take|almak
-happy|happy|mutlu
-sad|sad|üzgün
-angry|angry|kızgın
-tired|tired|yorgun
-hungry|hungry|aç
-afraid|afraid|korkmuş
-excited|excited|heyecanlı
-bored|bored|sıkılmış
-surprised|surprised|şaşırmış
-proud|proud|gururlu
-bathroom|bathroom|banyo
-bedroom|bedroom|yatak odası
-kitchen|kitchen|mutfak
-garden|garden|bahçe
-clean|clean|temiz/temizlemek
-dirty|dirty|kirli
-heavy|heavy|ağır
-light|light|hafif/ışık
-loud|loud|gürültülü
-quiet|quiet|sessiz
-expensive|expensive|pahalı
-cheap|cheap|ucuz
-difficult|difficult|zor
-easy|easy|kolay
-correct|correct|doğru
-wrong|wrong|yanlış
-same|same|aynı
-different|different|farklı
-free|free|özgür/ücretsiz
-travel|travel|seyahat etmek
-ticket|ticket|bilet
-passport|passport|pasaport
-luggage|luggage|bagaj
-hotel|hotel|otel
-flight|flight|uçuş
-destination|destination|varış yeri
-map|map|harita
-tour|tour|tur
-vacation|vacation|tatil
-trip|trip|gezi
-guide|guide|rehber
-customs|customs|gümrük
-reservation|reservation|rezervasyon
-job|job|iş
-company|company|şirket
-meeting|meeting|toplantı
-email|email|e-posta
-report|report|rapor
-project|project|proje
-deadline|deadline|son teslim tarihi
-salary|salary|maaş
-manager|manager|yönetici
-team|team|ekip
-customer|customer|müşteri
-product|product|ürün
+_aberration|aberration|sapma
+abject|abject|sefil
+abrogate|abrogate|iptal etmek
+abstemious|abstemious|nefsine hakim
+abstruse|abstruse|anlaşılması güç
+accede|accede|razı olmak
+accolade|accolade|övgü
+acerbic|acerbic|sert (dil/tavır)
+acquiesce|acquiesce|boyun eğmek
+acrimonious|acrimonious|hırçın
+acumen|acumen|sezgi
+adroit|adroit|becerikli
+adulation|adulation|aşırı övgü
+adulterate|adulterate|kalitesini bozmak
+aesthetic|aesthetic|estetik
+affable|affable|cana yakın
+affinity|affinity|benzerlik/yakınlık
+aggrandize|aggrandize|yüceltmek
+alacrity|alacrity|çabukluk/isteklilik
+alias|alias|takma ad
+allay|allay|yatıştırmak
+alleviate|alleviate|hafifletmek
+aloof|aloof|mesafeli
+altruism|altruism|özgecilik
+amalgamate|amalgamate|birleştirmek
+ambiguous|ambiguous|belirsiz
+ambivalent|ambivalent|çelişkili duyguları olan
+ameliorate|ameliorate|iyileştirmek
+amenable|amenable|uygun/uysal
+amorphous|amorphous|biçimsiz
+anachronism|anachronism|zaman aşımı
+analogous|analogous|paralel/benzer
+anarchy|anarchy|anarşi
+anathema|anathema|lanetli şey
+ancillary|ancillary|yardımcı
+animosity|animosity|düşmanlık
+anomaly|anomaly|anomali
+antediluvian|antediluvian|Nuh Tufanı öncesi/çok eski
+antipathy|antipathy|nefret
+antithesis|antithesis|antitez
+aplomb|aplomb|özgüven
+apocryphal|apocryphal|uydurma
+apogee|apogee|zirve
+apostate|apostate|dinden dönen/dönek
+apotheosis|apotheosis|tanrılaştırma/ideal örnek
+apposite|apposite|yerinde/uygun
+apprise|apprise|bilgilendirmek
+approbation|approbation|onay
+appropriate|appropriate|el koymak/uygun
+arcane|arcane|gizemli/esrarengiz
+archetype|archetype|arkotip/ilk örnek
+ardent|ardent|ateşli/tutkulu
+arduous|arduous|zahmetli/güç
+artless|artless|saf/doğal
+ascetic|ascetic|çileci
+asperity|asperity|sertlik/huysuzluk
+aspersion|aspersion|iftira
+assiduous|assiduous|gayretli/titiz
+assuage|assuage|yatıştırmak
+astute|astute|akıllı/uyanık
+atavism|atavism|atadan kalma özellik/hortlama
+atrophy|atrophy|körelmek/zayıflamak
+attenuate|attenuate|zayıflatmak/inceltmek
+audacious|audacious|cüretkar/küstah
+augment|augment|artırmak/çoğaltmak
+augury|augury|kehanet/belirti
+august|august|saygın/heybetli
+austere|austere|sert/sade/mütevazı
+autonomous|autonomous|özerk/bağımsız
+avarice|avarice|açgözlülük
+aver|aver|iddia etmek/doğrulamak
+avocation|avocation|hobi/ek iş
+avuncular|avuncular|amca/dayı gibi/babacan
+axiom|axiom|aksiyom/belit
+bacchanalian|bacchanalian|içkili eğlenceye dair
+banal|banal|sıradan/basit
+banter|banter|şakalaşmak
+baroque|baroque|barok/aşırı süslü
+beleaguer|beleaguer|kuşatmak/darlamak
+belie|belie|yanıltmak/yalanlamak
+bellicose|bellicose|kavgacı/savaşçıl
+belligerent|belligerent|saldırgan/çatışan
+beneficent|beneficent|hayırsever/faydalı
+benign|benign|iyi huylu/zararsız
+berate|berate|azarlamak
+bereft|bereft|mahrum/yoksun
+blandishment|blandishment|tatlı sözle kandırma
+blase|blase|hayattan bıkmış/kanıksamış
+bolster|bolster|desteklemek
+bombastic|bombastic|şatafatlı (dil)
+boorish|boorish|kaba/yontulmamış
+bovine|bovine|inek gibi/hantal/donuk
+brazen|brazen|yüzsüz/arsız
+broach|broach|konuyu açmak
+bucolic|bucolic|pastoral/kırsal
+burgeon|burgeon|filizlenmek/hızla gelişmek
+burnish|burnish|parlatmak
+buttress|buttress|desteklemek/payanda
+cacophonous|cacophonous|ahenksiz/kulak tırmalayan
+cadge|cadge|otlanmak/bedavaya getirmek
+cajole|cajole|tatlı dille ikna etmek
+calumny|calumny|iftira
+canard|canard|asparagas haber
+canon|canon|kanon/kural/standart
+cant|cant|samimiyetsiz dindar konuşma/argolu dil
+cantankerous|cantankerous|huysuz/aksi
+capricious|capricious|maymun iştahlı/değişken
+captious|captious|kusur bulan/titiz
+carnal|carnal|bedensel/şehvani
+castigate|castigate|cezalandırmak/şiddetle eleştirmek
+catalyst|catalyst|katalizör
+categorical|categorical|kesin/şüphe götürmez
+catharsis|catharsis|katarsis/arınma
+caustic|caustic|yakıcı/iğneleyici
+celestial|celestial|göksel
+censure|censure|kınama/eleştiri
+centrifugal|centrifugal|merkezkaç
+centripetal|centripetal|merkezcil
+chagrin|chagrin|hüsran/hayal kırıklığı
+charlatan|charlatan|şarlatan/yalancı
+chary|chary|ihtiyatlı/çekingen
+chasten|chasten|terbiye etmek/had bildirmek
+chauvinism|chauvinism|şovenizm/aşırı milliyetçilik
+chicanery|chicanery|hile/düzenbazlık
+chimerical|chimerical|hayali/kuruntu
+choleric|choleric|öfkeli/asabi
+churlish|churlish|kaba/nezaketsiz
+circuitous|circuitous|dolaylı/uzun (yol)
+clandestine|clandestine|gizli/saklı
+cloying|cloying|iç bayıltıcı (tatlılık)
+coalesce|coalesce|birleşmek
+coda|coda|koda/sonuç bölümü
+cogent|cogent|ikna edici/mantıklı
+collusion|collusion|gizli anlaşma/danışıklı dövüş
+commensurate|commensurate|orantılı
+compendium|compendium|özet/katalog
+complaisant|complaisant|nazik/uyumlu
+compunction|compunction|pişmanlık/vicdan azabı
+conciliate|conciliate|gönlünü almak/barıştırmak
+concomitant|concomitant|beraberinde gelen/eşlik eden
+condone|condone|göz yummak/affetmek
+connoisseur|connoisseur|eksper/uzman (sanat/tat)
+connote|connote|çağrıştırmak
+conspicuous|conspicuous|göze çarpan/belirgin
+contumacious|contumacious|asi/dik başlı
+conundrum|conundrum|bilmece/çözülmesi zor sorun
+conversant|conversant|aşina/bilgili
+convivial|convivial|şen şakrak/sosyal
+convoluted|convoluted|karmaşık/dolanbaçlı
+copious|copious|bol/çok miktarda
+artificial_intelligence|artificial intelligence|yapay zeka
+machine_learning|machine learning|makine öğrenmesi
+deep_learning|deep learning|derin öğrenme
+neural_network|neural network|sinir ağı
+big_data|big data|büyük veri
+data_mining|data mining|veri madenciliği
+internet_of_things|internet of things|nesnelerin interneti
+smart_device|smart device|akıllı cihaz
+cloud_computing|cloud computing|bulut bilişim
+edge_computing|edge computing|uç bilişim
+virtual_reality|virtual reality|sanal gerçeklik
+augmented_reality|augmented reality|artırılmış gerçeklik
+mixed_reality|mixed reality|karma gerçeklik
+cryptocurrency|cryptocurrency|kripto para
+blockchain|blockchain|blok zinciri
+bitcoin|bitcoin|bitcoin
+ethereum|ethereum|ethereum
+smart_contract|smart contract|akıllı sözleşme
+nfts|nfts|nitelikli fikri tapu
+metaverse|metaverse|metaevren
+quantum_computing|quantum computing|kuantum bilişim
+cybersecurity|cybersecurity|siber güvenlik
+hacker|hacker|hacker/bilgisayar korsanı
+firewall|firewall|güvenlik duvarı
+encryption|encryption|şifreleme
+malware|malware|kötü amaçlı yazılım
+ransomware|ransomware|fidye yazılımı
+phishing|phishing|oltalama
+biometrics|biometrics|biyometri
+facial_recognition|facial recognition|yüz tanıma
+automation|automation|otomasyon
+robotics|robotics|robotik
+drone|drone|dron/insansız hava aracı
+nanotechnology|nanotechnology|nanoteknoloji
+biotechnology|biotechnology|biyoteknoloji
+fintech|fintech|finansal teknoloji
+edtech|edtech|eğitim teknolojisi
+healthtech|healthtech|sağlık teknolojisi
+saas|saas|yazılım hizmeti
+paas|paas|platform hizmeti
+iaas|iaas|altyapı hizmeti
+serverless|serverless|sunucusuz
+api|api|uygulama programlama arayüzü
+ui|ui|kullanıcı arayüzü
+ux|ux|kullanıcı deneyimi
+frontend|frontend|ön uç
+backend|backend|arka uç
+full_stack|full stack|tam yığın
+devops|devops|yazılım geliştirme ve operasyon
+agile|agile|çevik (yöntem)
+scrum|scrum|scrum (çalışma yöntemi)
+kanban|kanban|kanban (iş akışı yönetimi)
+sprint|sprint|sprint (yazılım dönemi)
+backlog|backlog|iş listesi
+bug|bug|hata (yazılım)
+patch|patch|yama (yazılım)
+version|version|sürüm
+repository|repository|depo (kod)
+commit|commit|işlemek (kod)
+branch|branch|dal (kod)
+merge|merge|birleştirmek (kod)
+pull_request|pull request|çekme isteği
+ci_cd|ci/cd|sürekli entegrasyon ve dağıtım
+container|container|konteyner (yazılım)
+orchestration|orchestration|orkestrasyon (yazılım)
+scalability|scalability|ölçeklenebilirlik
+latency|latency|gecikme süresi
+bandwidth|bandwidth|bant genişliği
+throughput|throughput|iş çıkarma kapasitesi
+encryption_1|encryption|şifreleme
+decryption|decryption|şifre çözme
+hashing|hashing|hashing (veri özeti)
+load_balancer|load balancer|yük dengeleyici
+proxy|proxy|vekil sunucu
+vpn|vpn|sanal özel ağ
+firewall_1|firewall|güvenlik duvarı
+ids_ips|ids/ips|saldırı tespit ve engelleme sistemi
+endpoint|endpoint|uç nokta
+microservices|microservices|mikro hizmetler
+monolith|monolith|monolit (tek parça yazılım)
+legacy_system|legacy system|eski sistem
+technical_debt|technical debt|teknik borç
+refactoring|refactoring|yeniden yapılandırma (kod)
+deployment|deployment|dağıtım/yayına alma
+production|production|üretim/canlı ortam
+staging|staging|hazırlık ortamı
+sandbox|sandbox|kum havuzu/deneme ortamı
+virtual_machine|virtual machine|sanal makine
+hypervisor|hypervisor|hipervizör
+snapshot|snapshot|anlık görüntü
+backup|backup|yedekleme
+disaster_recovery|disaster recovery|felaket kurtarma
+high_availability|high availability|yüksek erişilebilirlik
+uptime|uptime|çalışma süresi
+downtime|downtime|kapalı kalma süresi
+latency_1|latency|gecikme süresi
+package_manager|package manager|paket yöneticisi
+dependency|dependency|bağımlılık (yazılım)
+framework|framework|çerçeve (yazılım)
+library|library|kütüphane (yazılım)
+open_source|open source|açık kaynak
+proprietary_software|proprietary software|özel yazılım
+saas_1|saas|yazılım hizmeti
+multi_factor_authentication|multi-factor authentication|çok faktörlü kimlik doğrulama
+single_sign_on|single sign-on|tekli oturum açma
+encryption_key|encryption key|şifreleme anahtarı
+digital_signature|digital signature|dijital imza
+ssl_tls|ssl/tls|güvenli soket katmanı
+token|token|belirteç
+jwt|jwt|json web token
+oauth|oauth|oauth (yetkilendirme)
+api_key|api key|api anahtarı
+webhook|webhook|web kancası
+rest_api|rest api|rest api
+graphql|graphql|graphql
+websocket|websocket|websocket
+responsive_design|responsive design|duyarlı tasarım
+wireframe|wireframe|taslak çizim
+prototype|prototype|prototip
+mockup|mockup|maket/taslak
+ide|ide|bütünleşik geliştirme ortamı
+vcs|vcs|sürüm kontrol sistemi
+git|git|git (sürüm kontrolü)
+github|github|github
+bitbucket|bitbucket|bitbucket
+gitlab|gitlab|gitlab
+agile_manifesto|agile manifesto|çevik bildiri
+standup_meeting|standup meeting|ayaküstü toplantı
+retrospective|retrospective|retrospektif/geçmişe bakış
+velocity|velocity|hız (yazılım)
+burn_down_chart|burn down chart|kalan iş grafiği
+user_story|user story|kullanıcı hikayesi
+acceptance_criteria|acceptance criteria|kabul kriterleri
+mvp|mvp|minimum uygulanabilir ürün
+ab_testing|ab testing|a/b testi
+conversion_rate|conversion rate|dönüşüm oranı
+churn_rate|churn rate|kayıp oranı (müşteri)
+scalability_1|scalability|ölçeklenebilirlik
+horizontal_scaling|horizontal scaling|yatay ölçekleme
+vertical_scaling|vertical scaling|dikey ölçekleme
+high_performance|high performance|yüksek performans
+latency_2|latency|gecikme süresi
+concurrency|concurrency|aynı anda çalışma
+parallelism|parallelism|paralellik
+thread|thread|iş parçacığı
+deadlock|deadlock|çıkmaz/kilitlenme
+race_condition|race condition|yarış durumu (yazılım)
+mutex|mutex|karşılıklı dışlama (yazılım)
+semaphore|semaphore|semafor (yazılım)
+asynchronous|asynchronous|asenkron/eşzamansız
+inflation|inflation|enflasyon
+deflation|deflation|deflasyon
+recession|recession|resesyon/ekonomik durgunluk
+depression|depression|depresyon/büyük çöküş
+gdp|gdp|gsyh (gayri safi yurtiçi hasıla)
+interest_rate|interest rate|faiz oranı
+monetary_policy|monetary policy|para politikası
+fiscal_policy|fiscal policy|maliye politikası
+deficit|deficit|açık (bütçe)
+surplus|surplus|fazla (bütçe)
+liquidity|liquidity|likidite/nakit akışı
+asset|asset|varlık/aktif
+liability|liability|yükümlülük/pasif
+equity|equity|özsermaye/hakkaniyet
+dividends|dividends|kar payı/temettü
+shareholder|shareholder|hissedar
+stock_market|stock market|borsa
+bull_market|bull market|boğa piyasası (yükselen)
+bear_market|bear market|ayı piyasası (düşen)
+portfolio|portfolio|portföy
+diversification|diversification|çeşitlendirme
+leverage|leverage|kaldıraç
+arbitrage|arbitrage|arbitraj (fiyat farkından kar)
+commodity|commodity|emtia/ticari mal
+derivatives|derivatives|türev araçlar
+hedge_fund|hedge fund|serbest fon/riskten korunma fonu
+insider_trading|insider trading|içeriden öğrenenlerin ticareti
+mortgage|mortgage|ipotekli konut kredisi
+foreclosure|foreclosure|rehinli malın satışı/icra
+bankruptcy|bankruptcy|iflas
+insolvency|insolvency|borçlarını ödeyememe
+merger|merger|birleşme (şirket)
+acquisition|acquisition|satın alma (şirket)
+monopoly|monopoly|tekel
+oligopoly|oligopoly|oligopol (az sayıda satıcı)
+cartel|cartel|kartel
+protectionism|protectionism|korumacılık
+tariff|tariff|gümrük vergisi
+quota|quota|kota
+embargo|embargo|ambargo
+sanctions|sanctions|yaptırımlar
+austerity|austerity|kemer sıkma (ekonomik)
+privatization|privatization|özelleştirme
+nationalization|nationalization|devletleştirme
+subsidy|subsidy|sübvansiyon/maddi yardım
+stimulus|stimulus|teşvik/canlandırma
+bailout|bailout|kurtarma (finansal)
+microeconomics|microeconomics|mikroekonomi
+macroeconomics|macroeconomics|makroekonomi
+opportunity_cost|opportunity cost|fırsat maliyeti
+comparative_advantage|comparative advantage|karşılaştırmalı üstünlük
+supply_and_demand|supply and demand|arz ve talep
+equilibrium|equilibrium|denge
+elasticity|elasticity|esneklik
+utility|utility|fayda
+marginal|marginal|marjinal/sınırdaki
+externality|externality|dışsallık
+public_good|public good|kamu malı
+free_rider|free rider|bedavacı
+asymmetric_information|asymmetric information|asimetrik bilgi
+adverse_selection|adverse selection|ters seçim
+moral_hazard|moral hazard|ahlaki tehlike
+game_theory|game theory|oyun teorisi
+nash_equilibrium|nash equilibrium|nash dengesi
+behavioral_economics|behavioral economics|davranışsal ekonomi
+nudge|nudge|dürtme/hafifçe itme
+human_capital|human capital|beşeri sermaye
+social_capital|social capital|sosyal sermaye
+intellectual_property|intellectual property|fikri mülkiyet
+patent|patent|patent
+trademark|trademark|ticari marka
+copyright|copyright|telif hakkı
+royalty|royalty|telif ücreti/rödovans
+outsourcing|outsourcing|dış kaynak kullanımı
+offshoring|offshoring|offshoring/işi yurt dışına taşıma
+globalization|globalization|küreselleşme
+trade_barrier|trade barrier|ticaret engeli
+free_trade|free trade|serbest ticaret
+fair_trade|fair trade|adil ticaret
+protectionism_1|protectionism|korumacılık
+sovereign_debt|sovereign debt|egemen borç/devlet borcu
+debt_restructuring|debt restructuring|borç yapılandırması
+credit_rating|credit rating|kredi notu
+default|default|temerrüt/borcu ödeyememe
+bond|bond|tahvil
+yield|yield|getiri/verim
+maturity|maturity|vade
+liquidity_1|liquidity|likidite/nakit akışı
+capital_gain|capital gain|sermaye kazancı
+capital_loss|capital loss|sermaye kaybı
+volatility|volatility|volatilite/oynaklık
+speculation|speculation|spekülasyon
+arbitrage_1|arbitrage|arbitraj
+hedging|hedging|riskten korunma
+derivative|derivative|türev araç
+futures|futures|vadeli işlemler
+options|options|opsiyonlar
+swap|swap|takas (finansal)
+leverage_1|leverage|kaldıraç
+underwriting|underwriting|sigorta altına alma/taahhüt etme
+ipo|ipo|halka arz
+blue_chip|blue chip|mavi çipli (güvenilir şirket)
+index_fund|index fund|endeks fonu
+etf|etf|borsa yatırım fonu
+mutual_fund|mutual fund|yatırım fonu
+pension_fund|pension fund|emeklilik fonu
+sovereign_wealth_fund|sovereign wealth fund|ulusal varlık fonu
+capitalism|capitalism|kapitalizm
+socialism|socialism|sosyalizm
+communism|communism|komünizm
+mixed_economy|mixed economy|karma ekonomi
+command_economy|command economy|komuta ekonomisi
+market_economy|market economy|piyasa ekonomisi
+laissez_faire|laissez-faire|bırakınız yapsınlar
+mercantilism|mercantilism|merkantilizm
+globalization_1|globalization|küreselleşme
+outsourcing_1|outsourcing|dış kaynak kullanımı
+offshoring_1|offshoring|offshoring
+brain_drain|brain drain|beyin göçü
+foreign_direct_investment|foreign direct investment|doğrudan yabancı yatırım
+remittance|remittance|havale (yurt dışından gönderilen para)
+microfinance|microfinance|mikrofinans
+sustainability|sustainability|sürdürülebilirlik
+circular_economy|circular economy|döngüsel ekonomi
+green_economy|green economy|yeşil ekonomi
+shadow_economy|shadow economy|kayıt dışı ekonomi
+black_market|black market|karaborsa
+money_laundering|money laundering|para aklama
+tax_evasion|tax evasion|vergi kaçırma
+tax_haven|tax haven|vergi cenneti
+inequality|inequality|eşitsizlik
+gini_coefficient|gini coefficient|gini katsayısı
+poverty_line|poverty line|yoksulluk sınırı
+standard_of_living|standard of living|yaşam standardı
+cost_of_living|cost of living|yaşam maliyeti
+purchasing_power|purchasing power|satın alma gücü
+ppp|ppp|sagp (satın alma gücü paritesi)
+human_development_index|human development index|insani gelişme endeksi
+universal_basic_income|universal basic income|evrensel temel gelir
+accountant|accountant|muhasebeci
+architect|architect|mimar
+artist|artist|sanatçı
+astronaut|astronaut|astronot
+attorney|attorney|avukat
+baker|baker|fırıncı
+barber|barber|berber
+bartender|bartender|barmen
+biologist|biologist|biyolog
+blacksmith|blacksmith|demirci
+butcher|butcher|kasap
+carpenter|carpenter|marangoz
+chef|chef|şef/aşçıbaşı
+chemist|chemist|kimyager
+clerk|clerk|tezgahtar/memur
+coach|coach|koç/antrenör
+dentist|dentist|diş hekimi
+detective|detective|dedektif
 doctor|doctor|doktor
+driver|driver|şoför
+economist|economist|ekonomist
+editor|editor|editör
+electrician|electrician|elektrikçi
+engineer|engineer|mühendis
+farmer|farmer|çiftçi
+firefighter|firefighter|itfaiyeci
+fisherman|fisherman|balıkçı
+florist|florist|çiçekçi
+gardener|gardener|bahçıvan
+geologist|geologist|jeolog
+hairdresser|hairdresser|kuaför
+historian|historian|tarihçi
+journalist|journalist|gazeteci
+judge|judge|hakim
+librarian|librarian|kütüphaneci
+mechanic|mechanic|tamirci
+model|model|model
+musician|musician|müzisyen
 nurse|nurse|hemşire
-medicine|medicine|ilaç
-hospital|hospital|hastane
-sick|sick|hasta
-pain|pain|ağrı
-fever|fever|ateş
-cough|cough|öksürük
-headache|headache|baş ağrısı
-exercise|exercise|egzersiz
-diet|diet|diyet
-computer|computer|bilgisayar
-internet|internet|internet
-message|message|mesaj
-camera|camera|kamera
-battery|battery|pil/batarya
-screen|screen|ekran
-password|password|şifre
-app|app|uygulama
-website|website|web sitesi
-university|university|üniversite
-student|student|öğrenci
+optician|optician|gözlükçü
+painter|painter|ressam/boyacı
+pharmacist|pharmacist|eczacı
+photographer|photographer|fotoğrafçı
+pilot|pilot|pilot
+plumber|plumber|tesisatçı
+policeman|policeman|polis memuru
+politician|politician|politikacı
+postman|postman|postacı
+professor|professor|profesör
+psychologist|psychologist|psikolog
+receptionist|receptionist|resepsiyonist
+sailor|sailor|denizci
+scientist|scientist|bilim insanı
+secretary|secretary|sekreter
+soldier|soldier|asker
+surgeon|surgeon|cerrah
+tailor|tailor|terzi
 teacher|teacher|öğretmen
-lesson|lesson|ders
-homework|homework|ödev
-exam|exam|sınav
-grade|grade|not
-language|language|dil
-practice|practice|pratik yapmak
-question|question|soru
-answer|answer|cevap
-mistake|mistake|hata
-learn|learn|öğrenmek
-neighbor|neighbor|komşu
-parent|parent|ebeveyn
-husband|husband|koca
-wife|wife|eş/hanım
-brother|brother|erkek kardeş
-sister|sister|kız kardeş
-cousin|cousin|kuzen
-weekend|weekend|hafta sonu
-holiday|holiday|tatil
-birthday|birthday|doğum günü
-wedding|wedding|düğün
-party|party|parti
-gift|gift|hediye
-sport|sport|spor
-swimming|swimming|yüzme
-music|music|müzik
-dance|dance|dans etmek
-sing|sing|şarkı söylemek
-draw|draw|çizmek
-cook|cook|pişirmek
-film|film|film
-game|game|oyun
-story|story|hikaye
+technician|technician|teknisyen
+translator|translator|tercüman
+veterinary|veterinary|veteriner
+waiter|waiter|garson
+writer|writer|yazar
+zoologist|zoologist|zoolog
+web_developer|web developer|web geliştiricisi
+data_scientist|data scientist|veri bilimci
+marketing_manager|marketing manager|pazarlama müdürü
+sales_representative|sales representative|satış temsilcisi
+customer_service_agent|customer service agent|müşteri hizmetleri temsilcisi
+human_resources_manager|human resources manager|insan kaynakları müdürü
+project_manager|project manager|proje yöneticisi
+financial_advisor|financial advisor|finansal danışman
+real_estate_agent|real estate agent|emlakçı
+social_media_manager|social media manager|sosyal medya yöneticisi
+graphic_designer|graphic designer|grafik tasarımcı
+copywriter|copywriter|reklam yazarı
+ux_designer|ux designer|ux tasarımcı
+content_creator|content creator|içerik üreticisi
+event_planner|event planner|etkinlik planlayıcısı
+travel_agent|travel agent|seyahat acentesi
+flight_attendant|flight attendant|kabin memuru
+chef_de_cuisine|chef de cuisine|mutfak şefi
+sommelier|sommelier|sommelier/şarap uzmanı
+fitness_instructor|fitness instructor|fitness eğitmeni
+physiotherapist|physiotherapist|fizyoterapist
+occupational_therapist|occupational therapist|ergoterapist
+speech_therapist|speech therapist|konuşma terapisti
+paramedic|paramedic|paramedik
+radiologist|radiologist|radyolog
+anesthesiologist|anesthesiologist|anestezi uzmanı
+electrician_1|electrician|elektrikçi
+plumber_1|plumber|tesisatçı
+hvac_technician|hvac technician|hvac teknisyeni
+welder|welder|kaynakçı
+machinist|machinist|makinist/makine operatörü
+carpenter_1|carpenter|marangoz
+mason|mason|duvar ustası
+roofer|roofer|çatı ustası
+surveyor|surveyor|haritacı/kadastrocu
+landscaper|landscaper|peyzaj mimarı/bahçıvan
+garbage_collector|garbage collector|çöpçü
+janitor|janitor|kapıcı/hademe
+security_guard|security guard|güvenlik görevlisi
+bouncer|bouncer|fedai
+bodyguard|bodyguard|koruma
+librarian_1|librarian|kütüphaneci
+curator|curator|küratör/müze müdürü
+archivist|archivist|arşivci
+translator_1|translator|tercüman
+interpreter|interpreter|tercüman (sözlü)
+subtitler|subtitler|altyazı çevirmeni
+voice_actor|voice actor|seslendirme sanatçısı
+news_anchor|news anchor|haber bülteni sunucusu
+meteorologist|meteorologist|meteorolog
+clergyman|clergyman|din adamı
+missionary|missionary|misyoner
+philosopher|philosopher|filozof
+sociologist|sociologist|sosyolog
+anthropologist|anthropologist|antropolog
+archaeologist|archaeologist|arkeolog
+paleontologist|paleontologist|paleontolog
+astronomer|astronomer|astronom
+physicist|physicist|fizikçi
+mathematician|mathematician|matematikçi
+statistician|statistician|istatistikçi
+actuary|actuary|aktüer/sigorta istatistikçisi
+underwriter|underwriter|sigorta risk uzmanı
+broker|broker|komisyoncu/borsacı
+trader|trader|tüccar/borsacı
+cashier|cashier|kasiyer
+teller|teller|banka veznedarı
+loan_officer|loan officer|kredi memuru
+notary|notary|noter
+clerk_of_court|clerk of court|mahkeme katibi
+bailiff|bailiff|icra memuru/mübaşir
+paralegal|paralegal|hukuk asistanı
+prosecutor|prosecutor|savcı
+defense_lawyer|defense lawyer|savunma avukatı
+barrister|barrister|dava vekili
+solicitor|solicitor|hukuk müşaviri
+legal_counsel|legal counsel|hukuk danışmanı
+diplomat|diplomat|diplomat
+ambassador|ambassador|büyükelçi
+consul|consul|konsolos
+apartment|apartment|daire
+house|house|ev
+kitchen|kitchen|mutfak
+bedroom|bedroom|yatak odası
+bathroom|bathroom|banyo
+living_room|living room|oturma odası
+dining_room|dining room|yemek odası
+garden|garden|bahçe
+garage|garage|garaj
+balcony|balcony|balkon
+roof|roof|çatı
+wall|wall|duvar
+floor|floor|yer/zemin
+ceiling|ceiling|tavan
+window|window|pencere
+door|door|kapı
+stairs|stairs|merdiven
+furniture|furniture|mobilya
+table|table|masa
+chair|chair|sandalye
+sofa|sofa|kanepe
+bed|bed|yatak
+wardrobe|wardrobe|elbise dolabı
+desk|desk|çalışma masası
+shelf|shelf|raf
+carpet|carpet|halı
+curtain|curtain|perde
+mirror|mirror|ayna
+lamp|lamp|lamba
+clock|clock|saat
+television|television|televizyon
+radio|radio|radyo
+computer|computer|bilgisayar
+refrigerator|refrigerator|buzdolabı
+freezer|freezer|derin dondurucu
+oven|oven|fırın
+microwave|microwave|mikrodalga fırın
+dishwasher|dishwasher|bulaşık makinesi
+washing_machine|washing machine|çamaşır makinesi
+vacuum_cleaner|vacuum cleaner|elektrikli süpürge
+iron|iron|ütü
+toaster|toaster|ekmek kızartma makinesi
+kettle|kettle|çaydanlık/su ısıtıcısı
+plate|plate|tabak
+bowl|bowl|kase
+cup|cup|fincan/kupa
+glass|glass|bardak
+knife|knife|bıçak
+fork|fork|çatal
+spoon|spoon|kaşık
+pan|pan|tava
+pot|pot|tencere
+blanket|blanket|battaniye
+pillow|pillow|yastık
+sheet|sheet|çarşaf
+towel|towel|havlu
+soap|soap|sabun
+shampoo|shampoo|şampuan
+toothbrush|toothbrush|diş fırçası
+toothpaste|toothpaste|diş macunu
+shaving_cream|shaving cream|tıraş köpüğü
+razor|razor|tıraş bıçağı
+comb|comb|tarak
+hairbrush|hairbrush|saç fırçası
+mirror_1|mirror|ayna
+makeup|makeup|makyaj
+perfume|perfume|parfüm
+clothes|clothes|giysiler
+shirt|shirt|gömlek
+trousers|trousers|pantolon
+dress|dress|elbise
+skirt|skirt|etek
+jacket|jacket|ceket
+coat|coat|palto/kaban
+shoes|shoes|ayakkabı
+socks|socks|çorap
+underwear|underwear|iç çamaşırı
+hat|hat|şapka
+gloves|gloves|eldiven
+scarf|scarf|atkı
+belt|belt|kemer
+tie|tie|kravat
+watch|watch|saat (kol)
+jewelry|jewelry|mücevher
+glasses|glasses|gözlük
+wallet|wallet|cüzdan
+bag|bag|çanta
+key|key|anahtar
+phone|phone|telefon
 newspaper|newspaper|gazete
-weather|weather|hava durumu
-street|street|sokak
-bank|bank|banka
+magazine|magazine|dergi
+book|book|kitap
+pen|pen|kalem (tükenmez)
+pencil|pencil|kalem (kurşun)
+paper|paper|kağıt
+envelope|envelope|zarf
+stamp|stamp|pul
+letter|letter|mektup
+package|package|paket/koli
+money|money|para
+wallet_1|wallet|cüzdan
+credit_card|credit card|kredi kartı
+receipt|receipt|makbuz/fiş
+shopping|shopping|alışveriş
 market|market|pazar/market
+supermarket|supermarket|süpermarket
+bakery|bakery|fırın
+butcher_1|butcher|kasap
+pharmacy|pharmacy|eczane
+hospital|hospital|hastane
+doctor_1|doctor|doktor
+dentist_1|dentist|diş hekimi
+school|school|okul
+university|university|üniversite
+library_1|library|kütüphane
+park|park|park
+street|street|sokak/cadde
+road|road|yol
+bus|bus|otobüs
+train|train|tren
+taxi|taxi|taksi
+bicycle|bicycle|bisiklet
+car|car|araba
+airplane|airplane|uçak
+airport|airport|havaalanı
+station|station|istasyon
+hotel|hotel|otel
 restaurant|restaurant|restoran
-airport|airport|havalimanı
-library|library|kütüphane
-software|software|yazılım
-hardware|hardware|donanım
-network|network|ağ
-database|database|veritabanı
-digital|digital|dijital
-download|download|indirmek
-upload|upload|yüklemek
-device|device|cihaz
-robot|robot|robot
-artificial|artificial|yapay
-wireless|wireless|kablosuz
-update|update|güncellemek
-science|science|bilim
-research|research|araştırma
-experiment|experiment|deney
-discovery|discovery|keşif
-theory|theory|teori
-evidence|evidence|kanıt
-laboratory|laboratory|laboratuvar
-energy|energy|enerji
-gravity|gravity|yerçekimi
-biology|biology|biyoloji
-chemistry|chemistry|kimya
-physics|physics|fizik
-evolution|evolution|evrim
-temperature|temperature|sıcaklık
+cafe|cafe|kafe
+cinema|cinema|sinema
+theater|theater|tiyatro
+museum|museum|müze
+bank|bank|banka
+post_office|post office|postane
+church|church|kilise
+mosque|mosque|cami
+synagogue|synagogue|havra/sinagog
+temple|temple|tapınak
+holiday|holiday|tatil
+weather|weather|hava durumu
+sun|sun|güneş
+rain|rain|yağmur
+snow|snow|kar
+wind|wind|rüzgar
+cloud|cloud|bulut
+sky|sky|gökyüzü
+star|star|yıldız
+moon|moon|ay
+continent|continent|kıta
+country|country|ülke
+ocean|ocean|okyanus
+sea|sea|deniz
+river|river|nehir
+lake|lake|göl
+mountain|mountain|dağ
+hill|hill|tepe
+valley|valley|vadi
+desert|desert|çöl
+island|island|ada
+peninsula|peninsula|yarımada
+archipelago|archipelago|takımada
+bay|bay|körfez
+gulf|gulf|körfez (büyük)
+strait|strait|boğaz (su)
+canal|canal|kanal
+cape|cape|burun (coğrafi)
+plain|plain|ova/düzlük
+plateau|plateau|plato/yayla
+forest|forest|orman
+jungle|jungle|balta girmemiş orman
+savanna|savanna|savan
+tundra|tundra|tundra
+glacier|glacier|buzul
+volcano|volcano|volkan
+earthquake|earthquake|deprem
+tsunami|tsunami|tsunami
+hurricane|hurricane|kasırga
+tornado|tornado|hortum/tornado
+climate|climate|iklim
+atmosphere|atmosphere|atmosfer
+equator|equator|ekvator
+latitude|latitude|enlem
+longitude|longitude|boylam
+hemisphere|hemisphere|yarımküre
+poles|poles|kutuplar
+arctic|arctic|arktik/kuzey kutbu bölgesi
+antarctic|antarctic|antarktik/güney kutbu bölgesi
+region|region|bölge
+territory|territory|toprak/bölge
+border|border|sınır
+boundary|boundary|sınır/limit
+coast|coast|sahil
+shore|shore|kıyı
+beach|beach|plaj
+delta|delta|delta
+estuary|estuary|nehir ağzı
+lagoon|lagoon|lagün/deniz kulağı
+reef|reef|resif
+fjord|fjord|fiyort
+canyon|canyon|kanyon
+gorge|gorge|dar boğaz/kanyon
+cliff|cliff|uçurum
+cave|cave|mağara
+marsh|marsh|bataklık
+swamp|swamp|bataklık (ormanlı)
+prairie|prairie|çayır/bozkır
+steppe|steppe|bozkır/step
+highland|highland|yayla/yüksek bölge
+lowland|lowland|alçak bölge/ova
+metropolis|metropolis|metropol
+suburb|suburb|varoş/banliyö
+outskirts|outskirts|kenar mahalleler/dış kesimler
+rural|rural|kırsal
+urban|urban|kentsel
+settlement|settlement|yerleşim yeri
+village|village|köy
+town|town|kasaba
+city|city|şehir
+capital|capital|başkent
+province|province|eyalet/vilayet
+state|state|eyalet/devlet
+latitude_1|latitude|enlem
+longitude_1|longitude|boylam
+altimeter|altimeter|altimetre/irtifa ölçer
+altitude|altitude|irtifa/yükseklik
+elevation|elevation|yükseklik/rakım
+horizon|horizon|ufuk
+landscape|landscape|manzara/peyzaj
+scenery|scenery|manzara/doğa görünümü
+topography|topography|topoğrafya
+cartography|cartography|haritacılık
+atlas|atlas|atlas
+globe|globe|yer küre
+compass|compass|pusula
+north|north|kuzey
+south|south|güney
+east|east|doğu
+west|west|batı
+equinox|equinox|ekinoks
+solstice|solstice|gün dönümü
+tide|tide|gelgit
+current|current|akıntı
+erosion|erosion|erozyon/aşınma
+sediment|sediment|tortu/çökelti
+stratum|stratum|tabaka/katman
+tectonics|tectonics|tektonik
+fault|fault|fay (hattı)
+epicenter|epicenter|merkez üssü
+aftershock|aftershock|artçı sarsıntı
+magma|magma|magma
+lava|lava|lav
+geyser|geyser|gayzer
+hot_spring|hot spring|kaplıca
+basin|basin|havza/leğen
+tributary|tributary|yan kol (nehir)
+confluence|confluence|birleşim yeri (nehirler)
+mouth|mouth|nehir ağzı
+source|source|kaynak (nehir)
+upstream|upstream|akıntıya karşı/yukarı akış
+downstream|downstream|akıntı yönünde/aşağı akış
+dam|dam|baraj
+reservoir|reservoir|rezervuar/su deposu
+canal_1|canal|kanal
+irrigation|irrigation|sulama
+agriculture|agriculture|tarım
+cultivation|cultivation|ekim/dikim
+harvest|harvest|hasat
+livestock|livestock|hayvan sürüsü/besi hayvanları
+natural_resources|natural resources|doğal kaynaklar
+mineral|mineral|mineral
+petroleum|petroleum|petrol
+natural_gas|natural gas|doğal gaz
+renewable_energy|renewable energy|yenilenebilir enerji
+solar_power|solar power|güneş enerjisi
+wind_power|wind power|rüzgar enerjisi
+hydroelectric|hydroelectric|hidroelektrik
+geothermal|geothermal|jeotermal
+biofuel|biofuel|biyoyakıt
+deforestation|deforestation|ormansızlaşma
+biodiversity|biodiversity|biyoçeşitlilik
+ecosystem|ecosystem|ekosistem
+habitat|habitat|habitat/doğal ortam
 environment|environment|çevre
 pollution|pollution|kirlilik
-climate|climate|iklim
-forest|forest|orman
-ocean|ocean|okyanus
-species|species|tür
-wildlife|wildlife|vahşi yaşam
-recycle|recycle|geri dönüştürmek
-renewable|renewable|yenilenebilir
-carbon|carbon|karbon
-ecosystem|ecosystem|ekosistem
-drought|drought|kuraklık
-flood|flood|sel
-earthquake|earthquake|deprem
-economy|economy|ekonomi
-investment|investment|yatırım
-profit|profit|kâr
-industry|industry|sanayi
-competition|competition|rekabet
-strategy|strategy|strateji
-marketing|marketing|pazarlama
-negotiation|negotiation|müzakere
-budget|budget|bütçe
-finance|finance|finans
-trade|trade|ticaret
-contract|contract|sözleşme
-revenue|revenue|gelir
-treatment|treatment|tedavi
-surgery|surgery|ameliyat
-therapy|therapy|terapi
-diagnosis|diagnosis|teşhis
-symptom|symptom|belirti
-vaccine|vaccine|aşı
-nutrition|nutrition|beslenme
-vitamin|vitamin|vitamin
-protein|protein|protein
-prevention|prevention|önleme
-allergy|allergy|alerji
-community|community|topluluk
-culture|culture|kültür
-tradition|tradition|gelenek
-religion|religion|din
-government|government|hükümet
-democracy|democracy|demokrasi
-freedom|freedom|özgürlük
-equality|equality|eşitlik
-justice|justice|adalet
-leadership|leadership|liderlik
-responsibility|responsibility|sorumluluk
-citizen|citizen|vatandaş
-poverty|poverty|yoksulluk
-volunteer|volunteer|gönüllü
-charity|charity|yardım kuruluşu
-conversation|conversation|konuşma
-discuss|discuss|tartışmak
-debate|debate|tartışma
-persuade|persuade|ikna etmek
-describe|describe|tanımlamak
-explain|explain|açıklamak
-presentation|presentation|sunum
-interview|interview|mülakat
-painting|painting|tablo/resim
-sculpture|sculpture|heykel
-literature|literature|edebiyat
-theater|theater|tiyatro
-instrument|instrument|enstrüman
-audience|audience|seyirci
-creativity|creativity|yaratıcılık
-confidence|confidence|özgüven
-courage|courage|cesaret
-patience|patience|sabır
-wisdom|wisdom|bilgelik
-motivation|motivation|motivasyon
-inspiration|inspiration|ilham
-frustration|frustration|hayal kırıklığı
-anxiety|anxiety|kaygı
-compassion|compassion|şefkat
-gratitude|gratitude|minnettarlık
-respect|respect|saygı
-honesty|honesty|dürüstlük
-ambition|ambition|hırs/hedef
-determination|determination|kararlılık
-empathy|empathy|empati
-stress|stress|stres
-focus|focus|odaklanmak
-actual|actual|gerçek, asıl
-eventually|eventually|sonunda, nihayet
-sensible|sensible|mantıklı, makul
-sensitive|sensitive|hassas, duyarlı
-sympathetic|sympathetic|cana yakın, ilgili
-analysis|analysis|analiz
-hypothesis|hypothesis|hipotez
-methodology|methodology|metodoloji
-conclusion|conclusion|sonuç
-perspective|perspective|bakış açısı
-concept|concept|kavram
-principle|principle|ilke
-framework|framework|çerçeve
-interpretation|interpretation|yorum
-evaluation|evaluation|değerlendirme
-abstract|abstract|özet/soyut
-objective|objective|nesnel/hedef
-subjective|subjective|öznel
-empirical|empirical|ampirik
-theoretical|theoretical|teorik
-significant|significant|önemli
-relevant|relevant|ilgili
-context|context|bağlam
-implication|implication|sonuç/anlam
-correlation|correlation|korelasyon
-entrepreneur|entrepreneur|girişimci
-innovation|innovation|yenilik
-disruption|disruption|yıkıcı değişim
-efficiency|efficiency|verimlilik
-productivity|productivity|üretkenlik
-sustainability|sustainability|sürdürülebilirlik
-corporate|corporate|kurumsal
-strategic|strategic|stratejik
-stakeholder|stakeholder|paydaş
-optimize|optimize|optimize etmek
-agile|agile|çevik
-scalable|scalable|ölçeklenebilir
-merger|merger|birleşme
-acquisition|acquisition|satın alma
-compliance|compliance|uyum
-governance|governance|yönetim
-psychology|psychology|psikoloji
-behavior|behavior|davranış
-cognitive|cognitive|bilişsel
-subconscious|subconscious|bilinçaltı
-perception|perception|algı
-personality|personality|kişilik
-resilience|resilience|dayanıklılık
-bias|bias|önyargı
-trauma|trauma|travma
-mindset|mindset|zihniyet
-habit|habit|alışkanlık
-philosophy|philosophy|felsefe
-ethics|ethics|etik
-moral|moral|ahlaki
-consciousness|consciousness|bilinç
-existence|existence|varoluş
-identity|identity|kimlik
-constitution|constitution|anayasa
-legislation|legislation|mevzuat
-parliament|parliament|parlamento
-election|election|seçim
-policy|policy|politika
-reform|reform|reform
-treaty|treaty|antlaşma
-diplomacy|diplomacy|diplomasi
-sovereignty|sovereignty|egemenlik
-corruption|corruption|yolsuzluk
-protest|protest|protesto
-narrative|narrative|anlatı
-metaphor|metaphor|metafor
-symbolism|symbolism|sembolizm
-irony|irony|ironi
-genre|genre|tür
-theme|theme|tema
-protagonist|protagonist|başkahraman
-conflict|conflict|çatışma
-imagery|imagery|imgelem
-poetry|poetry|şiir
-plot|plot|olay örgüsü
-dialogue|dialogue|diyalog
-urbanization|urbanization|kentleşme
+global_warming|global warming|küresel ısınma
+ozone_layer|ozone layer|ozon tabakası
+greenhouse_effect|greenhouse effect|sera etkisi
+carbon_footprint|carbon footprint|karbon ayak izi
+conservation|conservation|koruma (doğa)
+preservation|preservation|muhafaza/koruma
+endangered|endangered|nesli tükenmekte olan
+extinct|extinct|nesli tükenmiş
 migration|migration|göç
-globalization|globalization|küreselleşme
-inequality|inequality|eşitsizlik
-diversity|diversity|çeşitlilik
-stereotype|stereotype|kalıp yargı
-discrimination|discrimination|ayrımcılık
-tolerance|tolerance|hoşgörü
-heritage|heritage|miras
-refugee|refugee|mülteci
-ideology|ideology|ideoloji
-capitalism|capitalism|kapitalizm
-inflation|inflation|enflasyon
-recession|recession|durgunluk
-welfare|welfare|refah
-monopoly|monopoly|tekel
-deficit|deficit|açık/bütçe açığı
-dividend|dividend|temettü
-subsidy|subsidy|sübvansiyon
-tariff|tariff|tarife/gümrük vergisi
-epistemology|epistemology|bilgi teorisi
-ontology|ontology|varlıkbilim
-paradigm|paradigm|paradigma
-dialectics|dialectics|diyalektik
-discourse|discourse|söylem
-hermeneutics|hermeneutics|yorumbilim
-semantics|semantics|anlambilim
-pragmatics|pragmatics|edimbilim
-semiotics|semiotics|göstergebilim
-postmodernism|postmodernism|postmodernizm
-structuralism|structuralism|yapısalcılık
-deconstruction|deconstruction|yapısöküm
-relativism|relativism|görecilik
-determinism|determinism|belirlenimcilik
-empiricism|empiricism|deneycilik
-rationalism|rationalism|usçuluk
-aesthetics|aesthetics|estetik
-transcendence|transcendence|aşkınlık
-hegemony|hegemony|hegemonya
-autonomy|autonomy|özerklik
-entrepreneurship|entrepreneurship|girişimcilik
-synergy|synergy|sinerji
-pragmatic|pragmatic|pragmatik
-iterative|iterative|yinelemeli
-holistic|holistic|bütüncül
-transparency|transparency|şeffaflık
-accountability|accountability|hesap verebilirlik
-litigation|litigation|dava
-arbitration|arbitration|tahkim
-monopoly_c1|divestiture|elden çıkarma
-restructuring|restructuring|yeniden yapılanma
-quantum|quantum|kuantum
-relativity|relativity|görelilik
-photosynthesis|photosynthesis|fotosentez
-mitochondria|mitochondria|mitokondri
-thermodynamics|thermodynamics|termodinamik
-chromosome|chromosome|kromozom
-metabolism|metabolism|metabolizma
-catalyst|catalyst|katalizör
-entropy|entropy|entropi
-equilibrium|equilibrium|denge
-nucleus|nucleus|çekirdek
-mutation|mutation|mutasyon
-genome|genome|genom
-neuroscience|neuroscience|sinirbilim
-algorithm|algorithm|algoritma
-cybersecurity|cybersecurity|siber güvenlik
-neuroplasticity|neuroplasticity|nöroplastisite
-metacognition|metacognition|üstbiliş
-self_efficacy|self-efficacy|öz yeterlilik
-conformity|conformity|uyum/uymak
-introspection|introspection|iç gözlem
-narcissism|narcissism|narsisizm
-intuition|intuition|sezgi
-postmodern|postmodern|postmodern
-avant_garde|avant-garde|öncü/avangart
-contemporary|contemporary|çağdaş
-iconography|iconography|ikonografi
-juxtaposition|juxtaposition|yan yana getirme
-indigenous|indigenous|yerli
-artifact|artifact|eser
-rhetoric|rhetoric|retorik
-propaganda|propaganda|propaganda
-sovereignty_c1|jurisdiction|yargı yetkisi
-genocide|genocide|soykırım
-imperialism|imperialism|emperyalizm
-colonialism|colonialism|sömürgecilik
-secularism|secularism|laiklik
-philanthropy|philanthropy|hayırseverlik
-consortium|consortium|konsorsiyum
-arbitrage|arbitrage|arbitraj
-depreciation|depreciation|amortisman/değer kaybı
-cryptocurrency|cryptocurrency|kripto para
-blockchain|blockchain|blokzincir
-automation|automation|otomasyon
-biometric|biometric|biyometrik
-geopolitics|geopolitics|jeopolitik
-oligarchy|oligarchy|oligarşi
-solipsism|solipsism|solipsizm
-circumlocution|circumlocution|dolambaçlı söylem
-malapropism|malapropism|kelime yanılması
-pleonasm|pleonasm|gereksiz tekrar
-synecdoche|synecdoche|sinekdoş
-metonymy|metonymy|metonimi
-hyperbole|hyperbole|abartma
-litotes|litotes|küçümseme sanatı
-euphemism|euphemism|örtmece
-verisimilitude|verisimilitude|gerçekçilik
-intertextuality|intertextuality|metinlerarasılık
-palimpsest|palimpsest|palimpsest
-catharsis|catharsis|katarsis
-anagnorisis|anagnorisis|anagnorizis
-hamartia|hamartia|trajik kusur
-hubris|hubris|kibir/gurur
-pathos|pathos|pathos/acıma duygusu
-aporia|aporia|aporia/çıkmaz
-bioluminescence|bioluminescence|biyolüminesans
-photovoltaic|photovoltaic|fotovoltaik
-epigenetics|epigenetics|epigenetik
-proteomics|proteomics|proteomik
-neurogenesis|neurogenesis|nörojenez
-crystallography|crystallography|kristalografi
-nanotechnology|nanotechnology|nanoteknoloji
-teleological|teleological|teleolojik
-eschatological|eschatological|eskatolojik
-dialectical|dialectical|diyalektik
-ontological|ontological|ontolojik
-ekphrasis|ekphrasis|ekfrasis
-apophasis|apophasis|apofaz
-peripatetic|peripatetic|gezgin/dolaşımcı
-prolix|prolix|uzun soluklu/söz kalabalığı
-laconic|laconic|az sözcükle anlatılan
-sycophancy|sycophancy|dalkavukluk
-perfidious|perfidious|hain
-ephemeral|ephemeral|geçici/fani
-propitious|propitious|elverişli/müsait
-loquacious|loquacious|çok konuşkan
-perspicacious|perspicacious|keskin görüşlü
-first|first|birinci/ilk
-nervous|nervous|gergin/heyecanlı
-dress|dress|elbise
-bus|bus|otobüs
-office|office|ofis
-boss|boss|patron
-team|team|takım/ekip
-pocket|pocket|cep
-birthday|birthday|doğum günü
-balloon|balloon|balon
-vegetable|vegetable|sebze
-market|market|market/pazar
-fresh|fresh|taze
-teacher|teacher|öğretmen
-shower|shower|duş
-breakfast|breakfast|kahvaltı
-orange|orange|turuncu/portakal
-healthy|healthy|sağlıklı
-restaurant|restaurant|restoran
-menu|menu|menü
-pasta|pasta|makarna
-salad|salad|salata
-park|park|park
-kite|kite|uçurtma
-interview|interview|mülakat/röportaj
-manager|manager|müdür/yönetici
-skill|skill|beceri/yetenek
-flight|flight|uçuş
-cancelled|cancelled|iptal edildi
-accommodation|accommodation|konaklama
-business|business|iş/işletme
-product|product|ürün
-diet|diet|diyet/beslenme
-nutrition|nutrition|beslenme
-disease|disease|hastalık
-tradition|tradition|gelenek
-customs|customs|adetler/gümrük
-apartment|apartment|daire
-account|account|hesap
-project|project|proje
-community|community|topluluk
-authority|authority|otorite/yetkili
-temperature|temperature|sıcaklık
-medication|medication|ilaç
-report|report|rapor
-wedding|wedding|düğün
-invitation|invitation|davet/davetiye
-intelligence|intelligence|zeka
-ethical|ethical|etik/ahlaki
-society|society|toplum
-renewable|renewable|yenilenebilir
-emissions|emissions|salınım/emisyon
-implications|implications|sonuçlar/etkiler
-authenticity|authenticity|özgünlük/sahicilik
-negotiations|negotiations|müzakereler
-breakthrough|breakthrough|buluş/atılım
-unemployment|unemployment|işsizlik
-algorithms|algorithms|algoritmalar
-first|first|birinci/ilk
-nervous|nervous|gergin/heyecanlı
-dress|dress|elbise
-bus|bus|otobüs
-office|office|ofis
-boss|boss|patron
-team|team|takım/ekip
-pocket|pocket|cep
-birthday|birthday|doğum günü
-balloon|balloon|balon
-vegetable|vegetable|sebze
-market|market|market/pazar
-fresh|fresh|taze
-teacher|teacher|öğretmen
-shower|shower|duş
-breakfast|breakfast|kahvaltı
-orange|orange|turuncu/portakal
-healthy|healthy|sağlıklı
-restaurant|restaurant|restoran
-menu|menu|menü
-pasta|pasta|makarna
-salad|salad|salata
-park|park|park
-kite|kite|uçurtma
-interview|interview|mülakat/röportaj
-manager|manager|müdür/yönetici
-skill|skill|beceri/yetenek
-flight|flight|uçuş
-cancelled|cancelled|iptal edildi
-accommodation|accommodation|konaklama
-business|business|iş/işletme
-product|product|ürün
-diet|diet|diyet/beslenme
-nutrition|nutrition|beslenme
-disease|disease|hastalık
-tradition|tradition|gelenek
-customs|customs|adetler/gümrük
-apartment|apartment|daire
-account|account|hesap
-project|project|proje
-community|community|topluluk
-authority|authority|otorite/yetkili
-temperature|temperature|sıcaklık
-medication|medication|ilaç
-report|report|rapor
-wedding|wedding|düğün
-invitation|invitation|davet/davetiye
-intelligence|intelligence|zeka
-ethical|ethical|etik/ahlaki
-society|society|toplum
-renewable|renewable|yenilenebilir
-emissions|emissions|salınım/emisyon
-implications|implications|sonuçlar/etkiler
-authenticity|authenticity|özgünlük/sahicilik
-negotiations|negotiations|müzakereler
-breakthrough|breakthrough|buluş/atılım
-unemployment|unemployment|işsizlik
-algorithms|algorithms|algoritmalar
-v_wore|wore|giydi (wear)
-v_took|took|aldı/götürdü (take)
-v_found|found|buldu (find)
-v_sang|sang|şarkı söyledi (sing)
-v_felt|felt|hissetti (feel)
-v_made|made|yaptı (make)
-v_told|told|söyledi/anlattı (tell)
-v_went|went|gitti (go)
-v_ate|ate|yedi (eat)
-v_drank|drank|içti (drink)
-v_woke|woke|uyandı (wake)
-v_smiled|smiled|gülümsedi (smile)
-v_baked|baked|pişirdi (bake)
-v_said|said|dedi/söyledi (say)
-exhilarating|exhilarating|heyecan verici
-meticulous|meticulous|titiz/özenli
-adversity|adversity|zorluk/sıkıntı
-ambiguous|ambiguity|belirsizlik
-collaborate|collaborate|iş birliği yapmak
-consensus|consensus|fikir birliği
-detrimental|detrimental|zararlı
-exacerbate|exacerbate|kötüleştirmek
-imperative|imperative|zorunlu/şart
-obsolete|obsolete|modası geçmiş/eskimiş
-pervasive|pervasive|yaygın/her tarafa yayılmış
-resilient|resilient|dirençli/kendini çabuk toplayan
-sustainability|sustainability|sürdürülebilirlik
-vibrant|vibrant|canlı/hareketli
-unprecedented|unprecedented|eşi benzeri görülmemiş
-eloquent|eloquent|güzel konuşan/etkili
-foster|foster|teşvik etmek/büyütmek
-scrutiny|scrutiny|dikkatli inceleme
-transition|transition|geçiş
-abundance|abundance|bolluk
-paradox|paradox|çelişki/paradoks
-mitigate|mitigate|hafifletmek/azaltmak
-innovative|innovative|yenilikçi
-diligent|diligent|çalışkan/gayretli
-p_a_lot_of|a lot of|birçok / çok fazla
-p_each_other|each other|birbirini / birbirine
-p_due_to|due to|-den dolayı / nedeniyle
-p_as_well_as|as well as|yanı sıra / hem de
-p_rather_than|rather than|-den ziyade / yerine
-p_instead_of|instead of|yerine
-p_linked_to|linked to|ile bağlantılı
-p_interested_in|interested in|ilgili / ilgi duymak
-p_known_for|known for|ile tanınan / bilinir
-p_researching_the|researching the|araştırma yapmak
-p_preparing_for|preparing for|hazırlanıyor
-love|love|sevmek/aşk
-works|works|çalışır (work)
-reads|reads|okur (read)
-bright|bright|parlak
-football|football|futbol
-drinks|drinks|içer (drink)
-sleeping|sleeping|uyuyor (sleep)
-hair|hair|saç
-want|want|istemek
-nice|nice|hoş/güzel
-drives|drives|sürer (drive)
-baby|baby|bebek
-buys|buys|satın alır (buy)
-watch|watch|izlemek/saat
-lunch|lunch|öğle yemeği
-noon|noon|öğle vakti
-writes|writes|yazar (write)
-plays|plays|oynar/çalar (play)
-sunny|sunny|güneşli
-basketball|basketball|basketbol
-apples|apples|elmalar
-color|color|renk
-speaks|speaks|konuşur (speak)
-tomorrow|tomorrow|yarın
-dreams|dreams|rüyalar/hayaller
-playing|playing|oynuyor/çalıyor (play)
-reading|reading|okuma (read)
-brothers|brothers|erkek kardeşler
-person|person|kişi/insan
-crying|crying|ağlıyor (cry)
-pizza|pizza|pizza
-wearing|wearing|giyiyor (wear)
-hat|hat|şapka
-stop|stop|durmak/durak
-funny|funny|komik
-guy|guy|adam/tip
-coat|coat|palto/mont
-buying|buying|satın alma (buy)
-cooking|cooking|pişirme (cook)
-watching|watching|izleme (watch)
-movie|movie|film
-smile|smile|gülümseme
-london|London|Londra
-forever|forever|sonsuza dek
-calm|calm|sakin
-carrying|carrying|taşıyor (carry)
-glasses|glasses|gözlük/bardaklar
-wallet|wallet|cüzdan
-world|world|dünya
-style|style|stil/tarz
-kids|kids|çocuklar
-taking|taking|alma/çekme (take)
-photo|photo|fotoğraf
-smiling|smiling|gülümsüyor (smile)
-drinking|drinking|içiyor (drink)
-riding|riding|sürüyor (ride)
-bike|bike|bisiklet
-exploring|exploring|keşfediyor (explore)
-lost|lost|kayıp/kaybolmuş
-checking|checking|kontrol ediyor (check)
-sending|sending|gönderiyor (send)
-talking|talking|konuşuyor (talk)
-beautifully|beautifully|güzelce
-piano|piano|piyano
-dancing|dancing|dans etme
-looks|looks|görünüyor (look)
-hero|hero|kahraman
-father|father|baba
-things|things|şeyler
-growing|growing|büyüyor (grow)
-flies|flies|uçar (fly)
-enjoying|enjoying|keyif alıyor (enjoy)
-finished|finished|bitmiş/bitirdi
-wise|wise|bilge
-young|young|genç
-boy|boy|erkek çocuk
-beings|beings|varlıklar
-pedagogical|pedagogical|pedagojik/eğitsel
-anthropogenic|anthropogenic|insan kaynaklı
-commodification|commodification|metalaştırma
-neuroscientific|neuroscientific|nörobilimsel
-inextricably|inextricably|ayrılmaz bir şekilde
-dichotomy|dichotomy|ikilem/ayrım
-existentialism|existentialism|varoluşçuluk
-articulated|articulated|dile getirdi (articulate)
-proliferation|proliferation|yayılma/çogalma
-necessitates|necessitates|gerektirir (necessitate)
-idm_piece_of_cake|piece of cake|çocuk oyuncağı / çok kolay
-idm_as_soon_as|as soon as|yapar yapmaz / olur olmaz
-idm_by_the_way|by the way|bu arada / yeri gelmişken
-idm_of_course|of course|elbette / tabii ki
-idm_in_order_to|in order to|mak/mek için
-idm_instead_of|instead of|yerine
-idm_on_time|on time|tam vaktinde
-idm_at_the_end|at the end|sonunda
-idm_next_to|next to|yanında
-idm_because_of|because of|yüzünden / nedeniyle
-idm_even_though|even though|-e rağmen
-idm_in_fact|in fact|aslında / gerçekte
-idm_step_by_step|step by step|adım adım
-idm_day_by_day|day by day|günden güne
-idm_good_at|good at|-de iyi olmak
-idm_proud_of|proud of|gurur duymak
-idm_give_up|give up|pes etmek / bırakmak
-idm_look_forward_to|look forward to|dört gözle beklemek
-early|early|erken
-tall|tall|uzun (boy)
-mr|Mr|Bay
-get|get|almak/elde etmek
-every|every|her
-next|next|sonraki
-today|today|bugün
-make|make|yapmak
-one|one|bir
-around|around|etrafında
-after|after|sonra
-though|though|-e rağmen/gerçi
-ten|ten|on
-making|making|yapma
-such|such|böyle/bunun gibi
-dr|Dr|Doktor
-once|once|bir zamanlar/bir kez
-short|short|kısa
-having|having|sahip olma
-believe|believe|inanmak
-coming|coming|gelen/gelmekte olan
-should|should|-meli/-malı (tavsiye)
-likes|likes|sever (like)
-sees|sees|görür (see)
-sometimes|sometimes|bazen
-little|little|küçük
-running|running|koşma
-makes|makes|yapar (make)
-gives|gives|verir (give)
-takes|takes|alır/götürür (take)
-three|three|üç
-emily|Emily|Emily (isim)
-luna|Luna|Luna (isim)
-walked|walked|yürüdü
-called|called|seslendi/çağırdı
-mark|Mark|Mark (isim)
-yellow|yellow|sarı
-runs|runs|koşar (run)
-eats|eats|yer (eat)
-go|go|gitmek
-lisa|Lisa|Lisa (isim)
-look|look|bakmak
-yesterday|yesterday|dün
-much|much|çok/fazla
-which|which|hangi/ki o
-evolves|evolves|evrimleşir/gelişir
-lot|lot|çok
-john|John|John (isim)
-off|off|kapalı/uzaklaşmış
-demanding|demanding|talepkar/zorlu
-stoicism|Stoicism|Stoacılık
-crispr|CRISPR|CRISPR (Gen düzenleme)
-gene|gene|gen
-editing|editing|düzenleme
-hereditary|hereditary|kalıtsal/soydan geçen
-dna|DNA|DNA
-sequences|sequences|dizilimler/sıralar
-two|two|iki
-might|might|-ebilir (olasılık)
-pv_went_to|went to|gitti (go to)
-pv_look_at|look at|bakmak
-pv_tries_on|tries on|üzerinde dener (try on)
-pv_waking_up|waking up|uyanmak (wake up)
-pv_paid_off|paid off|karşılığını verdi
-pv_led_to|led to|yol açtı (lead to)
-pv_refers_to|refers to|kasteder/atıfta bulunur (refer to)
-pv_clashes_with|clashes with|ile çatışır (clash with)
-pv_aim_to|aim to|hedeflemek
-pv_fail_to|fail to|başarısız olmak
-pv_climbed_up|climbed up|tırmandı
-pv_walked_into|walked into|içeri yürüdü
-pv_lives_in|lives in|yaşar
-pv_goes_for|goes for|-e gider (amacına)
-pv_arrived_at|arrived at|vardı (mekana)
-pv_answered_with|answered with|ile cevapladı
-pv_provided_with|provided with|temin etti/sağladı
-raining|raining|yağıyor (rain)
-cup|cup|fincan/kupa
-diverse|diverse|çeşitli/farklı
-strong|strong|güçlü
-dinner|dinner|akşam yemeği
-years|years|yıllar
-seen|seen|görülmüş/gördü (see)
-rapid|rapid|hızlı/ani
-face|face|yüz/surat
-grass|grass|çimen
-walking|walking|yürüme (walk)
-bottle|bottle|şişe
-bake|bake|fırında pişirmek
-mixed|mixed|karıştırdı (mix)
-everything|everything|her şey
-twenty|twenty|yirmi
-cookies|cookies|kurabiyeler
-ready|ready|hazır
-wonderful|wonderful|harika/muhteşem
-organized|organized|düzenledi (organize)
-children|children|çocuklar
-huge|huge|kocaman/dev
-leaves|leaves|yapraklar
-stretching|stretching|uzatma/esneme (stretch)
-neck|neck|boyun
-monkeys|monkeys|maymunlar
-jumping|jumping|zıplama (jump)
-suddenly|suddenly|aniden
-heard|heard|duydu (hear)
-soft|soft|yumuşak/hafif
-sitting|sitting|oturuyor (sit)
-branch|branch|dal
-looking|looking|bakıyor/görünüyor (look)
-climbed|climbed|tırmandı (climb)
-saved|saved|kurtardı (save)
-quickly|quickly|hızlıca
-swim|swim|yüzmek
-collect|collect|toplamak
-afternoon|afternoon|öğleden sonra
-cream|cream|krema
-watches|watches|izler (watch)
-needs|needs|ihtiyacı var (need)
-tries|tries|deniyor (try)
-finds|finds|bulur (find)
-fits|fits|uyar (fit)
-perfectly|perfectly|mükemmel bir şekilde
-pays|pays|öder (pay)
-store|store|mağaza/dükkan
-feeling|feeling|hissederek (feel)
-tech|tech|teknoloji (kısaltma)
-constantly|constantly|sürekli olarak
-releasing|releasing|piyasaya sürme (release)
-devices|devices|cihazlar
-bought|bought|satın aldı (buy)
-incredible|incredible|inanılmaz/müthiş
-better|better|daha iyi
-quite|quite|oldukça
-hesitate|hesitate|tereddüt etmek
-initially|initially|başlangıçta
-latest|latest|en son/en yeni
-spending|spending|harcama (spend)
-learning|learning|öğrenme
-acoustic|acoustic|akustik
-fingers|fingers|parmaklar
-hurt|hurt|acımak/incinmek
-sounds|sounds|sesler
-online|online|çevrimiçi
-practiced|practiced|pratik yaptı (practice)
-basic|basic|temel/basit
-evening|evening|akşam
-smoothly|smoothly|pürüzsüzce/akıcı bir şekilde
-paid|paid|ödedi (pay)/karşılığını verdi
-started|started|başladı (start)
-encourage|encourage|teşvik etmek
-completely|completely|tamamen
-household|household|ev halkı/hane
-creates|creates|yaratır (create)
-massive|massive|devasa/çok büyük
-escape|escape|kaçmak/kurtulmak
-busy|busy|meşgul/yoğun
-group|group|grup
-mountains|mountains|dağlar
-packed|packed|paketledi (pack)
-snacks|snacks|atıştırmalıklar
-trail|trail|patika/iz
-physically|physically|fiziksel olarak
-kept|kept|tuttu/korudu (keep)
-cool|cool|serin
-reached|reached|ulaştı (reach)
-panoramic|panoramic|panoramik
-absolutely|absolutely|kesinlikle/tamamen
-brought|brought|getirdi (bring)
-closer|closer|daha yakın
-struggle|struggle|çabalamak/zorlanmak
-change|change|değiştirmek
-waking|waking|uyanma (wake)
-hour|hour|saat
-preparing|preparing|hazırlama (prepare)
-own|own|kendi
-instead|instead|yerine
-ordering|ordering|sipariş verme (order)
-resist|resist|direnmek
-sweet|sweet|tatlı
-soon|soon|yakında/kısa süre sonra
-noticed|noticed|fark etti (notice)
-increase|increase|artış
-media|media|medya
-vital|vital|hayati/çok önemli
-sanctuary|sanctuary|sığınak/tapınak
-study|study|çalışmak/ders çalışmak
-vast|vast|uçsuz bucaksız/çok geniş
-classic|classic|klasik
-helpful|helpful|yardımsever
-visitors|visitors|ziyaretçiler
-finding|finding|bulma (find)
-exact|exact|tam/kesin
-need|need|ihtiyaç duymak
-ancient|ancient|antik/eski
-greek|greek|Yunan
-emphasizes|emphasizes|vurgular (emphasize)
-development|development|gelişim
-self|self|kendi/öz
-control|control|kontrol
-means|means|araç/yöntem
-overcoming|overcoming|üstesinden gelme (overcome)
-destructive|destructive|yıkıcı
-core|core|çekirdek/temel
-external|external|dış/harici
-accepting|accepting|kabul etme (accept)
-universe|universe|evren
-practitioners|practitioners|uygulayıcılar
-seek|seek|aramak/peşinde koşmak
-state|state|durum/hal
-grace|grace|zarafet/lütuf
-proving|proving|kanıtlama (prove)
-historical|historical|tarihsel
-led|led|yol açtı/yönetti (lead)
-medical|medical|tıbbi
-example|example|örnek
-eradicate|eradicate|kökünü kazımak
-precisely|precisely|kesinlikle/tam olarak
-immense|immense|muazzam/uçsuz bucaksız
-power|power|güç
-brings|brings|getirir (bring)
-regarding|regarding|hakkında/ilişkin
-genetic|genetic|genetik
-stringent|stringent|sıkı/katı
-fostering|fostering|teşvik etme/büyütme
-balancing|balancing|dengeleme
-progress|progress|ilerleme
-ultimate|ultimate|nihai/en son
-presence|presence|varlık/mevcudiyet
-constitutes|constitutes|oluşturur/teşkil eder
-severe|severe|şiddetli/ciddi
-microscopic|microscopic|mikroskobik
-synthetic|synthetic|sentetik/yapay
-infiltrated|infiltrated|sızdı/içine işledi
-deepest|deepest|en derin
-highest|highest|en yüksek
-reveal|reveal|ortaya çıkarmak/açığa vurmak
-marine|marine|deniz/denizle ilgili
-ingest|ingest|yutmak/mideye indirmek
-particles|particles|parçacıklar
-food|food|yiyecek/gıda
-chain|chain|zincir
-remain|remain|kalmak/sürdürmek
-largely|largely|büyük ölçüde
-necessitating|necessitating|gerektiren
-urgent|urgent|acil
-invisible|invisible|görünmez
-refers|refers|kasteder/atıfta bulunur
-experienced|experienced|deneyimlendi (experience)
-someone|someone|biri/birisi
-holds|holds|tutar/sahiptir (hold)
-beliefs|beliefs|inançlar
-confronted|confronted|karşılaşıldığında/yüzleşildiğinde
-clashes|clashes|çatışır (clash)
-employ|employ|kullanmak/işe almak
-mechanisms|mechanisms|mekanizmalar
-reduce|reduce|azaltmak
-entirely|entirely|tamamen
-conflicting|conflicting|çelişen
-understanding|understanding|anlama
-crucial|crucial|çok önemli/kritik
-analyzing|analyzing|analiz etme
-political|political|siyasi/politik
-undergoing|undergoing|geçiriyor (undergo)
-towards|towards|-e doğru
-architects|architects|mimarlar
-biomimicry|biomimicry|biyotaklit
-creating|creating|yaratma (create)
-structures|structures|yapılar
-biological|biological|biyolojik
-processes|processes|süreçler
-regulate|regulate|düzenlemek
-manage|manage|yönetmek
-efficiently|efficiently|verimli bir şekilde
-use|use|kullanım/kullanmak
-materials|materials|malzemeler
-integration|integration|entegrasyon/bütünleşme
-vertical|vertical|dikey
-aim|aim|amaç/hedeflemek
-ensures|ensures|sağlar/garanti eder (ensure)
-pleasing|pleasing|memnun edici/hoş
-environmentally|environmentally|çevresel olarak
-widespread|widespread|yaygın/geniş çaplı
-manufacturing|manufacturing|üretim/imalat
-fundamentally|fundamentally|temel olarak/kökten
-labor|labor|iş/emek/işgücü
-technologies|technologies|teknolojiler
-exponentially|exponentially|katlanarak
-operational|operational|operasyonel/işletme
-render|render|-mesine neden olmak/kılmak
-manual|manual|el ile yapılan/manuel
-economists|economists|ekonomistler
-warn|warn|uyarmak
-income|income|gelir
-fail|fail|başarısız olmak/yapamamak
-implement|implement|uygulamak/yerine getirmek
+abstract|abstract|soyut
+concrete|concrete|somut/beton
+accidental|accidental|tesadüfen/kazara
+deliberate|deliberate|kasıtlı/planlı
 adequate|adequate|yeterli
-programs|programs|programlar
-proactive|proactive|proaktif/önceden harekete geçen
-involving|involving|içeren (involve)
-universal|universal|evrensel
-nets|nets|ağlar
-neg_could_not|could not|-ebilmedi / yapamadı
-neg_does_not|does not|yapmaz / etmez
-neg_did_not|did not|yapmadı / etmedi
-neg_was_not|was not|değildi (geçmiş)
-neg_were_not|were not|değildiler (geçmiş)
-neg_is_not|is not|değildir
-neg_am_not|am not|değilim
-neg_are_not|are not|değiller / değilsiniz
-neg_cannot|cannot|yapamaz / edemez
-neg_do_not|do not|yapma / etme
-neg_will_not|will not|yapmayacak / etmeyecek
-neg_would_not|would not|yapmazdı / etmezdi
-neg_should_not|should not|yapmamalı
-neg_must_not|must not|yapmamalı (yasak)
-i|I|ben
-you|you|sen/siz
-he|he|o (erkek)
-she|she|o (kadın)
-it|it|o (cansız/hayvan)
-we|we|biz
-they|they|onlar
-me|me|beni/bana
-him|him|onu/ona (erkek)
-her|her|onu/ona/onun (kadın)
-us|us|bizi/bize
-them|them|onları/onlara
-my|my|benim
-your|your|senin/sizin
-his|his|onun (erkek)
-its|its|onun (cansız)
-our|our|bizim
-their|their|onların
-the|the|belirli nesne/kişi eki
-a|a|bir (ünsüz)
-an|an|bir (ünlü)
-all|all|hepsi/tümü
-some|some|bazı/biraz
-any|any|hiç/herhangi
-many|many|birçok
-more|more|daha fazla
-most|most|en çok/çoğu
-this|this|bu
-that|that|şu/o
-these|these|bunlar
-those|those|şunlar
-in|in|içinde/içeri
-on|on|üzerinde/üzerine
-at|at|-de/-da
-to|to|-e/-a (yönelme)
-of|of|-ın/-in (aitlik)
-with|with|ile
-from|from|-den/-dan
-by|by|tarafından/yanında
-for|for|için
-about|about|hakkında
-under|under|altında
-over|over|üzerinden/fazla
-into|into|içine doğru
-through|through|içinden/vasıtasıyla
-during|during|esnasında/boyunca
-without|without|-sız/-siz
-and|and|ve
-or|or|veya
-but|but|ama/fakat
-because|because|çünkü
-so|so|bu yüzden/çok
-if|if|eğer
-when|when|olduğu zaman/ne zaman
-while|while|iken (bir şey olurken)
-as|as|olarak/gibi/iken
-than|than|-den/dan (kıyaslama)
-however|however|bununla birlikte/ancak
-furthermore|furthermore|ayrıca/dahası
-is|is|-dır/-dir (be)
-am|am|-ım/-im (be)
-are|are|-dırlar/-sınız (be)
-was|was|idi (is/am geçmiş)
-were|were|idiler (are geçmiş)
-be|be|olmak
-been|been|olmuş (be)
-being|being|olma/varlık
-do|do|yapmak
-does|does|yapar (do)
-did|did|yaptı (do)
-have|have|sahip olmak
-has|has|sahiptir (have)
-had|had|sahipti (have geçmiş)
-can|can|-ebilmek
-could|could|-ebilirdi
-will|will|-ecek/-acak
-would|would|-erdi/-ardı
-must|must|-meli/-malı (zorunluluk)
-not|not|değil
-no|no|hayır
-yes|yes|evet
-very|very|çok
-too|too|çok (aşırı) / de, da
-often|often|sık sık
-always|always|her zaman
-never|never|asla
-now|now|şimdi
-then|then|daha sonra/o zaman
-where|where|nerede/nereye
-how|how|nasıl
-who|who|kim
-what|what|ne
-why|why|neden
-up|up|yukarı
-down|down|aşağı
-only|only|sadece
-even|even|bile/hatta
-just|just|sadece/az önce
-also|also|ayrıca
-pv_woke_up|woke up|uyandı (wake up)
-pv_looked_in|looked in|içine baktı (look in)
-pv_looked_under|looked under|altına baktı (look under)
-pv_looked_behind|looked behind|arkasına baktı (look behind)
-pv_looked_inside|looked inside|içine baktı (look inside)
-pv_put_on|put on|giymek/takmak
-pv_puts_on|puts on|giyer (put on)
-pv_went_down|went down|indi/battı (go down)
-pv_listened_to|listened to|-i dinledi (listen to)
-pv_prepared_for|prepared for|-e hazırlandı
-pv_due_to|due to|-den dolayı/nedeniyle
-pv_impact_on|impact on|-e etkisi
-pv_responsible_for|responsible for|-den sorumlu
-pv_separating_from|separating from|-den ayırma
-pv_succeed_in|succeed in|-de başarılı olmak
-pv_grapple_with|grapple with|-ile boğuşmak/mücadele etmek
-pv_confined_to|confined to|-e sınırlı/mahkum
-pv_potential_for|potential for|-potansiyeli
-pv_prioritizes_over|prioritizes over|-e tercih etmek/önceliklendirmek
-pv_pressure_on|pressure on|-e baskı
-pv_results_in|results in|-ile sonuçlanır
-pv_worry_about|worry about|-hakkında endişelenmek
-pv_moving_toward|moving toward|-e doğru ilerleme
-pv_away_from|away from|-den uzağa
-pv_believe_in|believe in|-e inanmak
-pv_foster_a|foster a|teşvik etmek/büyütmek
-cultural|cultural|kültürel
-programme|programme|program
-students|students|öğrenciler
-countries|countries|ülkeler
-shared|shared|paylaştı (share)
-stories|stories|hikayeler
-cooked|cooked|pişirdi (cook)
-homelands|homelands|vatanlar/ana yurtlar
-discussed|discussed|tartıştı (discuss)
-atmosphere|atmosphere|atmosfer/hava
-helped|helped|yardım etti (help)
-build|build|inşa etmek/kurmak
-friendships|friendships|arkadaşlıklar
-mutual|mutual|karşılıklı/ortak
-part|part|parça/bölüm
-event|event|etkinlik/olay
-values|values|değerler
-great|great|harika/büyük
-organizers|organizers|organizatörler
-hope|hope|umut etmek
-continues|continues|devam eder (continue)
-rate|rate|oran/hız
-profound|profound|derin/esaslı
-dilemmas|dilemmas|ikilemler
-confined|confined|sınırlandırılmış
-fiction|fiction|kurgu
-primary|primary|birincil/temel
-revolves|revolves|döner (revolve)
-systems|systems|sistemler
-especially|especially|özellikle
-consequences|consequences|sonuçlar
-critical|critical|kritik/eleştirel
-fields|fields|alanlar
-law|law|hukuk/yasa
-nature|nature|doğa/yapı
-existing|existing|mevcut
-left|left|sol/bırakılmış
-unchecked|unchecked|kontrol edilmemiş
-human|human|insan
-technology|technology|teknoloji
-remains|remains|kalır (remain)
-force|force|güç/zorlamak
-certain|certain|belirli/emin
-becoming|becoming|haline gelme
-promoting|promoting|teşvik etme (promote)
-safety|safety|güvenlik
-standards|standards|standartlar
-offers|offers|sunar (offer)
-potential|potential|potansiyel
-demands|demands|talepler/gerektirir
-oversight|oversight|gözetim/ihmal
-suggests|suggests|önerir/gösterir (suggest)
-immediate|immediate|acil/anında
-leading|leading|önde gelen/yol açan
-environmental|environmental|çevresel
-governments|governments|hükümetler
-policies|policies|politikalar
-strict|strict|katı/sert
-greenhouse|greenhouse|sera
-effect|effect|etki
-preservation|preservation|koruma
-long|long|uzun
-term|term|terim/dönem
-planet|planet|gezegen
-economic|economic|ekonomik
-requires|requires|gerektirir (require)
-planning|planning|planlama
-cooperation|cooperation|iş birliği
-pressure|pressure|baskı
-natural|natural|doğal
-failing|failing|başarısız olma (fail)
-act|act|eylem/davranmak
-potentially|potentially|potansiyel olarak
-sparked|sparked|tetikledi (spark)
-era|era|çağ/devir
-scientific|scientific|bilimsel
-private|private|özel
-corporations|corporations|kurumlar/şirketler
-national|national|ulusal
-agencies|agencies|ajanslar/kurumlar
-missions|missions|görevler
-increasingly|increasingly|giderek artan bir şekilde
-establishment|establishment|kuruluş/tesis
-bases|bases|üsler
-celestial|celestial|göksel
-bodies|bodies|vücutlar/cisimler
-raise|raise|artırmak/yükseltmek
-benefits|benefits|faydalar
-fairly|fairly|oldukça/adilce
-final|final|final/son
-risks|risks|riskler
-lead|lead|öncülük etmek/yol açmak
-outcomes|outcomes|sonuçlar
-modern|modern|modern
-consumers|consumers|tüketiciler
-daily|daily|günlük
-lives|lives|hayatlar
-choice|choice|seçim
-generally|generally|genellikle
-positive|positive|pozitif
-value|value|değer
-decision|decision|karar
-results|results|sonuçlar
-individuals|individuals|bireyler
-worry|worry|endişelenmek
-cost|cost|maliyet/tutar
-actually|actually|aslında
-feel|feel|hissetmek
-decisions|decisions|kararlar
-people|people|insanlar
-moving|moving|taşınma/hareket etme
-lifestyle|lifestyle|yaşam tarzı
-constant|constant|sabit/sürekli
-reducing|reducing|azaltma (reduce)
-number|number|numara/sayı
-choices|choices|seçimler
-populations|populations|nüfuslar
-centers|centers|merkezler
-design|design|tasarım
-achieve|achieve|başarmak
-true|true|doğru/gerçek
-spaces|spaces|alanlar/boşluklar
-public|public|halka açık/kamu
-fabric|fabric|kumaş/yapı
-areas|areas|alanlar/bölgeler
-crises|crises|krizler
-decades|decades|on yıllar
-planners|planners|planlamacılar
-scientists|scientists|bilim insanları
-effects|effects|etkiler
-heat|heat|ısı/sıcaklık
-islands|islands|adalar
-thinking|thinking|düşünme
-away|away|uzak/uzakta
-models|models|modeller
-creation|creation|yaratılış/oluşturma
-communities|communities|topluluklar
-quality|quality|kalite
-residents|residents|sakinler/oturanlar
-protecting|protecting|koruma (protect)
-global|global|küresel/dünya çapında
-workforce|workforce|iş gücü
-toward|toward|-e doğru
-companies|companies|şirketler
-realized|realized|fark etti/gerçekleştirdi (realize)
-employees|employees|çalışanlar
-highly|highly|yüksek derecede
-present|present|mevcut/şimdiki/hediye
-traditional|traditional|geleneksel
-shift|shift|değişim/vites
-increased|increased|artmış (increase)
-significantly|significantly|önemli ölçüde
-reduced|reduced|azalmış (reduce)
-time|time|zaman/vakit
-unique|unique|benzersiz/eşsiz
-social|social|sosyal
-difficulty|difficulty|zorluk
-separating|separating|ayırma (separate)
-personal|personal|kişisel
-teams|teams|ekipler
-effectively|effectively|etkili bir şekilde
-using|using|kullanma (use)
-maintain|maintain|sürdürmek/bakım yapmak
-high|high|yüksek
-level|level|seviye
-among|among|arasında (çokluk)
-experts|experts|uzmanlar
-become|become|olmak/haline gelmek
-permanent|permanent|kalıcı
-near|near|yakın
-advised|advised|tavsiye etti (advise)
-adopt|adopt|benimsemek/evlat edinmek
-approach|approach|yaklaşım
-suggested|suggested|önerdi (suggest)
-eating|eating|yeme (eat)
-balanced|balanced|dengeli
-full|full|dolu/tam
-exercising|exercising|egzersiz yapma
-least|least|en az
-thirty|thirty|otuz
-explained|explained|açıkladı (explain)
-reduces|reduces|azaltır (reduce)
-risk|risk|risk
-chronic|chronic|kronik/müzmin
-staying|staying|kalma (stay)
-maintaining|maintaining|sürdürme/koruma (maintain)
-both|both|her ikisi
-physical|physical|fiziksel
-mental|mental|zihinsel
-emphasized|emphasized|vurguladı (emphasize)
-importance|importance|önem
-explaining|explaining|açıklama (explain)
-helps|helps|yardım eder (help)
-brain|brain|beyin
-properly|properly|düzgün bir şekilde
-allows|allows|izin verir (allow)
-body|body|vücut/beden
-following|following|takip eden/izleyen
-plan|plan|plan
-expect|expect|ummak/beklemek
-improvement|improvement|iyileşme/gelişim
-overall|overall|genel/tüm
-levels|levels|seviyeler
-interesting|interesting|ilginç
-animals|animals|hayvanlar
-listened|listened|dinledi (listen)
-sound|sound|ses
-later|later|sonra/daha sonra
-watched|watched|izledi (watch)
-stayed|stayed|kaldı (stay)
-lap|lap|diz/kucak
-minutes|minutes|dakikalar
-prepared|prepared|hazır/hazırlanmış
-history|history|tarih
-recent|recent|son/yakın zamandaki
-projects|projects|projeler
-greeted|greeted|selamladı (greet)
-warmly|warmly|sıcak bir şekilde
-several|several|birkaç/çeşitli
-questions|questions|sorular
-previous|previous|önceki
-experience|experience|deneyim/tecrübe
-technical|technical|teknik
-answered|answered|cevapladı (answer)
-demonstrated|demonstrated|gösterdi/kanıtladı (demonstrate)
-ability|ability|yetenek
-sense|sense|his/duyu
-preparation|preparation|hazırlık
-clear|clear|net/açık
-end|end|son
-discovered|discovered|keşfetti (discover)
-due|due|nedeniyle/beklenen
-conditions|conditions|koşullar/şartlar
-unexpected|unexpected|beklenmedik
-plans|plans|planlar
-way|way|yol/yöntem
-impact|impact|etki
-tight|tight|sıkı/dar
-schedule|schedule|program/takvim
-airline|airline|havayolu
-delay|delay|gecikme
-provided|provided|sağladı/temin etti (provide)
-nearby|nearby|yakınlarda
-despite|despite|rağmen
-initial|initial|ilk/başlangıçtaki
-remained|remained|kaldı/sürdürdü (remain)
-explore|explore|keşfetmek/gezinmek
-visited|visited|ziyaret etti (visit)
-local|local|yerel
-enjoyed|enjoyed|keyif aldı (enjoy)
-meal|meal|öğün/yemek
-period|period|dönem/süre
-between|between|arasında
-cities|cities|şehirler
-best|best|en iyi
-wanted|wanted|istedi (want)
-save|save|kaydetmek/biriktirmek/kurtarmak
-arrived|arrived|vardı/ulaştı (arrive)
-saw|saw|gördü (see)
-glass|glass|cam/bardak
-windows|windows|pencereler
-worked|worked|çalıştı (work)
-hard|hard|zor/sert/sıkı
-met|met|tanıştı/buluştu (meet)
-colleagues|colleagues|iş arkadaşları
-find|find|bulmak
-looked|looked|baktı (look)
-wooden|wooden|ahşap/tahtadan
-behind|behind|arkasında
-inside|inside|içinde
-asked|asked|sordu (ask)
-himself|himself|kendisi (erkek)
-remembered|remembered|hatırladı (remember)
-jacket|jacket|ceket
-something|something|bir şey
-finally|finally|sonunda
-bit|bit|biraz/parça
-glad|glad|memnun/mutlu
-keys|keys|anahtarlar
-locked|locked|kilitledi (lock)
-ran|ran|koştu (run)
-special|special|özel
-decorated|decorated|süsledi (decorate)
-large|large|büyük/geniş
-living|living|yaşayan/oturma (room)
-colorful|colorful|renkli
-beautiful|beautiful|güzel
-mother|mother|anne
-spent|spent|harcadı/geçirdi (spend)
-baking|baking|pişirme/fırınlama
-chocolate|chocolate|çikolata
-together|together|birlikte
-received|received|aldı/teslim aldı (receive)
-friends|friends|arkadaşlar
-including|including|dahil/dahil olmak üzere
-space|space|uzay/alan
-cute|cute|sevimli
-like|like|gibi/beğenmek
-thanked|thanked|teşekkür etti (thank)
-everyone|everyone|herkes
-lives|lives|yaşar (live)
-puts|puts|koyar (put)
-goes|goes|gider (go)
-outside|outside|dışarıda
-enjoy|enjoy|keyfini çıkarmak
-air|air|hava
-loves|loves|seviyor (love)
-see|see|görmek
-hidden|hidden|gizli/saklı
-thick|thick|kalın/yoğun
-bushes|bushes|çalılar
-secret|secret|gizli/sır
-singing|singing|şarkı söyleme
-flying|flying|uçma
-decided|decided|karar verdi (decide)
-keep|keep|tutmak/saklamak/devam etmek
-visit|visit|ziyaret etmek
-became|became|oldu (become)
-favorite|favorite|en sevilen/favori
-maria|Maria|Maria (isim)
-center|center|merkez
-prepare|prepare|hazırlamak
-yogurt|yogurt|yoğurt
-miller|Miller|Miller (soyisim)
-tom|Tom|Tom (isim)
-anna|Anna|Anna (isim)
-tenth|tenth|onuncu
-kitchen|kitchen|mutfak
-mary|Mary|Mary (isim)
-ben|Ben|Ben (isim)
-television|television|televizyon
-david|David|David (isim)
-sophie|Sophie|Sophie (isim)
-museum|museum|müze
-carlos|Carlos|Carlos (isim)
-kim|Kim|Kim (isim)
-sarah|Sarah|Sarah (isim)
-james|James|James (isim)
-maya|Maya|Maya (isim)
-lily|Lily|Lily (isim)
-ensure|ensure|emin olmak/sağlamak
-researching|researching|araştırma yapmak
-praised|praised|övüldü
-foster|foster|teşvik etmek/büyütmek
-reconcile|reconcile|uzlaştırmak
-evolve|evolve|gelişmek/evrimleşmek
-grapple|grapple|mücadele etmek/boğuşmak
-produce|produce|üretmek
-threatens|threatens|tehdit eder
-establish|establish|kurmak
-promote|promote|teşvik etmek/tanıtmak
-prevent|prevent|önlemek
-rise|rise|yükselmek
-implementing|implementing|uygulama
-prioritizes|prioritizes|önceliklendirir
-collaborate|collaborate|iş birliği yapmak
-extraction|extraction|çıkarma
-autonomous|autonomous|otonom/özerk
-unintended|unintended|istenmeyen
-detrimental|detrimental|zararlı
-pervasive|pervasive|yaygın
-algorithmic|algorithmic|algoritmik
-robust|robust|güçlü/sağlam
-systemic|systemic|sistemsel
-catastrophic|catastrophic|felaket düzeyinde
-worldwide|worldwide|dünya çapında
-renewable|renewable|yenilenebilir
-sustainable|sustainable|sürdürülebilir
-financial|financial|finansal
-multilateral|multilateral|çok taraflı
+inadequate|inadequate|yetersiz
+adventurous|adventurous|maceracı
+aggressive|aggressive|saldırgan
 ambitious|ambitious|hırslı/iddialı
+ancient|ancient|antik/çok eski
+anonymous|anonymous|isimsiz/anonim
+apparent|apparent|aşikar/görünür
+appropriate_1|appropriate|uygun
+artificial|artificial|yapay
+awkward|awkward|garip/beceriksiz/zor
+basic|basic|temel
+brilliant|brilliant|parlak/harika/zeki
+calm|calm|sakin
+capable|capable|yetenekli/muktedir
+careful|careful|dikkatli
+careless|careless|dikkatsiz
+casual|casual|gündelik/sıradan
+central|central|merkezi
+certain|certain|emin/kesin
+chaotic|chaotic|kaotik
+cheerful|cheerful|neşeli
+classic|classic|klasik
+clever|clever|zeki/akıllı
+common|common|yaygın/ortak
 complex|complex|karmaşık
-lunar|lunar|ay ile ilgili
-planetary|planetary|gezegen ile ilgili
-legal|legal|yasal
-minimalist|minimalist|minimalist
-urban|urban|kentsel
-complete|complete|tam/eksiksiz
-efficient|efficient|verimli
-ecological|ecological|ekolojik
-ensuring|ensuring|garanti etmek/sağlamak
-rejected|rejected|reddedildi
-seeking|seeking|arayışında olma
-integrate|integrate|entegre etmek
-address|address|ele almak/çözmek
-alleviate|alleviate|hafifletmek
-vibrant|vibrant|canlı/vibrant
-productive|productive|üretken
+confident|confident|kendinden emin
+confused|confused|kafası karışmış
+conscious|conscious|bilinçli
+constant|constant|sürekli/sabit
+content|content|memnun/içerik
+cool|cool|serin/havalı
+correct|correct|doğru
+courageous|courageous|cesur
+creative|creative|yaratıcı
+critical|critical|kritik/eleştirel
+crucial|crucial|çok önemli/hayati
+curious|curious|meraklı
+dangerous|dangerous|tehlikeli
+deadly|deadly|ölümcül
+decent|decent|edepli/uygun/fena değil
+deep|deep|derin
+delicate|delicate|hassas/narin
+delicious|delicious|lezzetli
+dependent|dependent|bağımlı
+desperate|desperate|çaresiz/umutsuz
+different|different|farklı
+difficult|difficult|zor
 diligent|diligent|gayretli/çalışkan
-tangible|tangible|somut/elle tutulur
-infrastructure|infrastructure|altyapı
-reimagining|reimagining|yeniden hayal etme
-necessitates|necessitates|gerektirir
-urbanization|urbanization|şehirleşme
-beauty|beauty|güzellik
-fragile|fragile|kırılgan
-humanity|humanity|insanlık
-acceleration|acceleration|hızlanma
-exploration|exploration|keşif
-geopolitical|geopolitical|jeopolitik
-breakthroughs|breakthroughs|buluşlar/atılımlar
-contamination|contamination|kirlenme
-frontier|frontier|sınır
-overwhelmed|overwhelmed|bunaltılmış/boğulmuş
-perceived|perceived|algılanan
-paralysis|paralysis|felç
-phenomenon|phenomenon|olgu/fenomen
-dissatisfaction|dissatisfaction|memnuniyetsizlik
-inhibit|inhibit|engellemek
-burden|burden|yük
-scrutiny|scrutiny|inceleme/denetim
-footprint|footprint|ayak izi
-biodiversity|biodiversity|biyoçeşitlilik
-regulations|regulations|düzenlemeler/kurallar
-intervention|intervention|müdahale
-consensus|consensus|fikir birliği/uzlaşı
-unprecedented|unprecedented|eşi görülmemiş
-innovative|innovative|yenilikçi
-meticulously|meticulously|titizlikle
-impression|impression|izlenim
-corporate|corporate|kurumsal
-friendly|friendly|dost canlısı
-building|building|bina
-exciting|exciting|heyecan verici
-healthy|healthy|sağlıklı
-nervous|nervous|gergin
-room|room|oda
-fridge|fridge|buzdolabı
-pocket|pocket|cep
-metal|metal|metal
-birthday|birthday|doğum günü
-balloons|balloons|balonlar
-flowers|flowers|çiçekler
-kitchen|kitchen|mutfak
-song|song|şarkı
-presents|presents|hediyeler
-book|book|kitap
-toy|toy|oyuncak
-princess|princess|prenses
-surprise|surprise|sürpriz
-house|house|ev
-garden|garden|bahçe
-shoes|shoes|ayakkabı
-fresh|fresh|taze
-trees|trees|ağaçlar
-door|door|kapı
-birds|birds|kuşlar
-butterflies|butterflies|kelebekler
-place|place|yer
-books|books|kitaplar
-relax|relax|rahatlamak
-home|home|ev
-warm|warm|sıcak/ılık
-peaceful|peaceful|huzurlu
-film|film|film
-cat|cat|kedi
-sleepy|sleepy|uykulu
-cloudy|cloudy|bulutlu
-skills|skills|beceriler
-confidence|confidence|güven
-team|team|ekip
-achievement|achievement|başarı
-communication|communication|iletişim
-position|position|konum/iş pozisyonu
-growth|growth|büyüme
-flight|flight|uçuş
-cancelled|cancelled|iptal edildi
-snow|snow|kar
-responsible|responsible|sorumlu
-voucher|voucher|kupon
-delicious|delicious|lezzetli
-advantages|advantages|avantajlar
-flexibility|flexibility|esneklik
-commuting|commuting|işe gidip gelme
-challenges|challenges|zorluklar
-isolation|isolation|yalnızlık
-tools|tools|araçlar
-industries|industries|endüstriler
-nutrition|nutrition|beslenme
-diseases|diseases|hastalıklar
-recover|recover|iyileşmek
-traditions|traditions|gelenekler
-customs|customs|adetler
-differences|differences|farklılıklar
-discrepancies|discrepancies|çelişkiler/farklılıklar
-accountability|accountability|hesap verebilirlik
-inequalities|inequalities|eşitsizlikler
-emissions|emissions|emisyonlar
-ecosystems|ecosystems|ekosistemler
-implications|implications|sonuçlar
-conundrums|conundrums|bilmeceler
-tensions|tensions|gerilimler
-building|building|bina
-friendly|friendly|dost canlısı
-kind|kind|kibar/nazik
-exciting|exciting|heyecan verici
-worried|worried|endişeli
-fridge|fridge|buzdolabı
-metal|metal|metal
-late|late|geç
-balloons|balloons|balonlar
-flowers|flowers|çiçekler
-song|song|şarkı
-presents|presents|hediyeler
-toy|toy|oyuncak
-princess|princess|prenses
-surprise|surprise|sürpriz
-shoes|shoes|ayakkabı
-trees|trees|ağaçlar
-birds|birds|kuşlar
-butterflies|butterflies|kelebekler
-place|place|yer/mekan
-books|books|kitaplar
-relax|relax|rahatlamak
-home|home|ev
-warm|warm|sıcak/ılık
-peaceful|peaceful|huzurlu
-television|television|televizyon
-sleepy|sleepy|uykulu
-cloudy|cloudy|bulutlu
-impression|impression|izlenim
-challenging|challenging|zorlayıcı
-skills|skills|beceriler
-achievement|achievement|başarı
-communication|communication|iletişim
-optimistic|optimistic|iyimser
-position|position|konum/pozisyon
-growth|growth|büyüme
-snow|snow|kar
-challenge|challenge|zorluk/meydan okuma
-responsible|responsible|sorumlu
-voucher|voucher|kupon/fiş
-stay|stay|kalmak/konaklama
-museum|museum|müze
-delicious|delicious|lezzetli
-remote|remote|uzak/uzaktan
-productive|productive|üretken
-advantages|advantages|avantajlar
-flexibility|flexibility|esneklik
-commuting|commuting|işe gidip gelme
-challenges|challenges|zorluklar
-isolation|isolation|izolasyon/yalnızlık
-succeed|succeed|başarmak
-tools|tools|araçlar
-hybrid|hybrid|melez/karma
-standard|standard|standart/ölçü
-industries|industries|endüstriler
-future|future|gelecek
-patient|patient|hasta (isim)/sabırlı (sıfat)
-health|health|sağlık
-vegetables|vegetables|sebzeler
-diseases|diseases|hastalıklar
-active|active|aktif/hareketli
-well-being|well-being|esenlik/refah
-function|function|işlev/fonksiyon
-recover|recover|iyileşmek/kurtarmak
-exchange|exchange|değişim/takas
-traditions|traditions|gelenekler
-dishes|dishes|yemekler/bulaşıklar
-understand|understand|anlamak
-perspectives|perspectives|bakış açıları
-international|international|uluslararası
-differences|differences|farklılıklar
-success|success|başarı
-discrepancies|discrepancies|çelişkiler/tutarsızlıklar
-concern|concern|endişe/ilgi
-unintended|unintended|kasıtsız/istenmeyen
-algorithmic|algorithmic|algoritmik
-inequalities|inequalities|eşitsizlikler
-intervention|intervention|müdahale
-temperatures|temperatures|sıcaklıklar
-regulations|regulations|düzenlemeler/kurallar
-biodiversity|biodiversity|biyoçeşitlilik
-ecosystems|ecosystems|ekosistemler
-model|model|model
-profits|profits|kârlar
-resources|resources|kaynaklar
-humanity|humanity|insanlık
-acceleration|acceleration|hızlanma/ivme
-exploration|exploration|keşif
-geopolitical|geopolitical|jeopolitik
-breakthroughs|breakthroughs|buluşlar/atılımlar
-extraction|extraction|çıkarma
-legal|legal|yasal/hukuki
-conundrums|conundrums|bilmeceler/zor sorular
-contamination|contamination|kirlenme
-frontier|frontier|sınır
-tensions|tensions|gerilimler
-overwhelmed|overwhelmed|bunaltılmış/boğulmuş
-aspect|aspect|yön/açı
-perceived|perceived|algılanan
-alternatives|alternatives|alternatifler
-paralysis|paralysis|felç
-phenomenon|phenomenon|olgu/fenomen
-dissatisfaction|dissatisfaction|memnuniyetsizlik
-selection|selection|seçim
-opportunity|opportunity|fırsat
-inhibit|inhibit|engellemek
-minimalist|minimalist|minimalist/sade
-burden|burden|yük
-necessitates|necessitates|gerektirir
-reimagining|reimagining|yeniden hayal etme
-infrastructure|infrastructure|altyapı
-architectural|architectural|mimarî
-integrate|integrate|entegre etmek/bütünleştirmek
-transit|transit|ulaşım/transit
-address|address|ele almak/adres
-footprint|footprint|ayak izi
-ecological|ecological|ekolojik
-alleviate|alleviate|hafifletmek/yatıştırmak
-comprehensive|comprehensive|kapsamlı/geniş çaplı
-discrepancy|discrepancy|çelişki/farklılık
-envisage|envisage|öngörmek/hayal etmek
-fluctuate|fluctuate|dalgalanmak/değişmek
-imminent|imminent|yakın/eli kulağında
-juxtapose|juxtapose|yan yana koymak
-leverage|leverage|avantaj sağlamak/kaldıraç
-ostensibly|ostensibly|görünüşte
-prevalent|prevalent|yaygın
-reconcile|reconcile|uzlaştırmak/barıştırmak
-sporadic|sporadic|ara sıra olan/düzensiz
-tangible|tangible|somut/elle tutulur
-unilateral|unilateral|tek taraflı
-vicarious|vicarious|dolaylı (başkası aracılığıyla)
-warrant|warrant|haklı çıkarmak/garanti
-zealous|zealous|hevesli/gayretli
-pinnacle|pinnacle|zirve/doruk noktası
-nuanced|nuance|nüans/ince ayrıntı
-intrinsic|intrinsic|içsel/asıl
-epitome|epitome|özet/en iyi örnek
-conundrum|conundrum|bilmece/zor soru
-bequeath|bequeath|miras bırakmak
-aesthetic|aesthetic|estetik
+dirty|dirty|kirli
+disappointed|disappointed|hayal kırıklığına uğramış
+diverse|diverse|çeşitli/farklı
+dramatic|dramatic|dramatik/çarpıcı
+dry|dry|kuru
+eager|eager|istekli/sabırsız
+early|early|erken
+easy|easy|kolay
+efficient|efficient|verimli/etkili
+elderly|elderly|yaşlı
+elegant|elegant|zarif/şık
+emotional|emotional|duygusal
+empty|empty|boş
+energetic|energetic|enerjik
+enormous|enormous|devasa/kocaman
+enthusiastic|enthusiastic|hevesli
+equal|equal|eşit
+essential|essential|temel/gerekli
+even|even|bile/çift/düz
+exact|exact|kesin/tam
+excellent|excellent|mükemmel
+excited|excited|heyecanlı
+expensive|expensive|pahalı
+experienced|experienced|deneyimli
+external|external|harici/dış
+extreme|extreme|aşırı/uç
+fair|fair|adil/orta/panayır
+faithful|faithful|sadık
+false|false|yanlış/sahte
+familiar|familiar|tanıdık/aşina
+famous|famous|ünlü
+fantastic|fantastic|harika/fantezi
+far|far|uzak
+fast|fast|hızlı
+fat|fat|şişman/yağ
+fatal|fatal|ölümcül
+favorite|favorite|favori/en sevilen
+feeble|feeble|zayıf/güçsüz
+feminine|feminine|dişil/kadınsı
+fierce|fierce|şiddetli/vahşi
+final|final|final/son
+fine|fine|iyi/ince/ceza
+firm|firm|sıkı/firma
+fit|fit|formda/uygun
+flat|flat|düz/daire
+flexible|flexible|esnek
+fluent|fluent|akıcı
