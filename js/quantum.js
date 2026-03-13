@@ -2140,11 +2140,23 @@ function _trConjugate(verb, subjType, time) {
     return verb;
   }
 
-  // -di / -ti (geçmiş zaman)
-  if (verb.match(/[dt][ıiiuü]$/) || verb.match(/[dt][ıiiuü][sh]tu$/)) {
-    if (isBen) return verb + 'm';
-    if (isSen) return verb + 'n';
-    if (isBiz) return verb + 'k';
+  // -di / -ti (geçmiş zaman) veya -miş / -miş
+  if (verb.match(/[dt][ıiiuü]$/) || verb.match(/[dt][ıiiuü]r$/) || verb.match(/[mın]ış$/) || verb.match(/[min]iş$/) || verb.match(/[mun]uş$/) || verb.match(/[mün]üş$/)) {
+    if (isBen) {
+      if (verb.endsWith('ış') || verb.endsWith('uş')) return verb + 'um';
+      if (verb.endsWith('iş') || verb.endsWith('üş')) return verb + 'im';
+      return verb + 'm';
+    }
+    if (isSen) {
+      if (verb.endsWith('ış') || verb.endsWith('uş')) return verb + 'sun';
+      if (verb.endsWith('iş') || verb.endsWith('üş')) return verb + 'sin';
+      return verb + 'n';
+    }
+    if (isBiz) {
+      if (verb.endsWith('ış') || verb.endsWith('uş')) return verb + 'uz';
+      if (verb.endsWith('iş') || verb.endsWith('üş')) return verb + 'iz';
+      return verb + 'k';
+    }
     if (isOnlar) return verb + 'lar';
     return verb;
   }
@@ -2198,7 +2210,7 @@ function generateTurkishTranslation(sc, time, flow, voice, pol) {
   let verb;
   if      (time==='pres' && flow==='simp')       verb = side.pres[pi];
   else if (time==='pres' && flow==='cont')       verb = side.prg[pi];
-  else if (time==='pres' && flow==='perf')       verb = toMiş(side.ppas[pi]);
+  else if (time==='pres' && flow==='perf')       verb = side.past[pi]; // Have read -> Okudu/Okudum
   else if (time==='pres' && flow==='perf_cont')  verb = side.prg[pi] + ' olmuş';
   else if (time==='past' && flow==='simp')       verb = side.past[pi];
   else if (time==='past' && flow==='cont')       verb = toPastCont(side.prg[pi]);
