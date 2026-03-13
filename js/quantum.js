@@ -2091,6 +2091,76 @@ function generateSentence(sc, time, flow, voice, pol) {
 }
 
 // ── Turkish Translation Engine ───────────────────────────────────
+function _trConjugate(verb, subjType, time) {
+  if (!verb) return '';
+  const lastVowel = (v) => {
+    const vowels = v.match(/[aeıioöuü]/g);
+    return vowels ? vowels[vowels.length - 1] : 'a';
+  };
+  const harmony = (v) => {
+    const lv = lastVowel(v);
+    if ('ae'.includes(lv)) return 'e';
+    if ('ıi'.includes(lv)) return 'i';
+    if ('ou'.includes(lv)) return 'u';
+    return 'ü';
+  };
+  const harmony4 = (v) => {
+    const lv = lastVowel(v);
+    if ('aı'.includes(lv)) return 'ı';
+    if ('ei'.includes(lv)) return 'i';
+    if ('ou'.includes(lv)) return 'u';
+    return 'ü';
+  };
+
+  const isBen = subjType === 'I';
+  const isSen = subjType === 'you';
+  const isBiz = subjType === 'we';
+  const isSiz = subjType === 'you_pl'; // hypothetical
+  const isOnlar = subjType === 'they' || subjType === 'pl';
+
+  // -yor (şimdiki zaman) özel durum
+  if (verb.endsWith('yor') || verb.includes('yordu')) {
+    if (isBen) return verb + (verb.includes('yordu') ? 'dum' : 'um');
+    if (isSen) return verb + (verb.includes('yordu') ? 'dun' : 'sun');
+    if (isBiz) return verb + (verb.includes('yordu') ? 'duk' : 'uz');
+    if (isOnlar) return verb + 'lar';
+    return verb;
+  }
+
+  // -ecek / -acak (gelecek zaman) özel durum
+  if (verb.endsWith('ecek') || verb.endsWith('acak')) {
+    let base = verb;
+    if (isBen || isBiz) {
+      base = verb.slice(0, -1) + 'ğ'; // yumuşama: içecek -> içeceği-
+    }
+    if (isBen) return base + (base.endsWith('ğ') ? (harmony4(base) === 'i' ? 'im' : 'ım') : '');
+    if (isSen) return verb + (harmony4(verb) === 'i' ? 'sin' : 'sın');
+    if (isBiz) return base + (base.endsWith('ğ') ? (harmony4(base) === 'i' ? 'iz' : 'ız') : '');
+    if (isOnlar) return verb + 'lar';
+    return verb;
+  }
+
+  // -di / -ti (geçmiş zaman)
+  if (verb.match(/[dt][ıiiuü]$/) || verb.match(/[dt][ıiiuü][sh]tu$/)) {
+    if (isBen) return verb + 'm';
+    if (isSen) return verb + 'n';
+    if (isBiz) return verb + 'k';
+    if (isOnlar) return verb + 'lar';
+    return verb;
+  }
+
+  // Geniş zaman (-r, -ar, -er)
+  if (verb.match(/[ae]r$/) || verb.endsWith('z')) {
+    if (isBen) return verb + (verb.endsWith('z') ? 'um' : (harmony4(verb) === 'i' ? 'im' : 'ım'));
+    if (isSen) return verb + (harmony4(verb) === 'i' ? 'sin' : 'sın');
+    if (isBiz) return verb + (verb.endsWith('z') ? 'uz' : (harmony4(verb) === 'i' ? 'iz' : 'ız'));
+    if (isOnlar) return verb + 'lar';
+    return verb;
+  }
+
+  return verb;
+}
+
 function trQueForm(verb) {
   const vowelMap = {a:'mı',e:'mi',ı:'mı',i:'mi',o:'mu',ö:'mü',u:'mu',ü:'mü'};
   for (let i=verb.length-1; i>=0; i--) {
@@ -2104,44 +2174,52 @@ function generateTurkishTranslation(sc, time, flow, voice, pol) {
   if (!d) return '—';
   const side = d[voice];
   const pi = pol === 'neg' ? 1 : 0; // polarity index
+  const subjType = voice === 'act' ? sc.subj.type : sc.obj.type;
+
+  let trSubj = side.subj;
+  if (voice === 'act') {
+    if (sc.subj.type === 'I') trSubj = 'Ben';
+    else if (sc.subj.type === 'you') trSubj = 'Sen';
+    else if (sc.subj.type === 'we') trSubj = 'Biz';
+    else if (sc.subj.type === 'they') trSubj = 'Onlar';
+  }
 
   // ── Yardımcı: -mıştı/-mişti/-muştu/-müştü → -mış/-miş/-muş/-müş ──────────
   function toMiş(v) {
-    if (v.endsWith('mıştı'))   return v.slice(0,-2);   // yazmıştı   → yazmış
-    if (v.endsWith('mişti'))   return v.slice(0,-2);   // gitmişti   → gitmiş
-    if (v.endsWith('muştu'))   return v.slice(0,-2);   // oluşmuştu  → oluşmuş
-    if (v.endsWith('müştü'))   return v.slice(0,-2);   // görmüştü   → görmüş
-    if (v.endsWith('lerdi'))   return v.slice(0,-2);   // etmişlerdi → etmişler
-    if (v.endsWith('lardı'))   return v.slice(0,-2);   // etmişlardı → etmişlar
+    if (v.endsWith('mıştı'))   return v.slice(0,-2);
+    if (v.endsWith('mişti'))   return v.slice(0,-2);
+    if (v.endsWith('muştu'))   return v.slice(0,-2);
+    if (v.endsWith('müştü'))   return v.slice(0,-2);
     return v;
   }
 
-  // ── Yardımcı: şimdiki zaman → geçmiş süregelen (-yor → -yordu) ───────────
-  // -yor ile biten fiillerde geçmiş zaman eki daima -du'dur (ör: yapıyordu)
   function toPastCont(v) { return v + 'du'; }
 
   let verb;
-  if      (time==='pres' && flow==='simp')       verb = side.pres[pi];               // yapar / yapmaz
-  else if (time==='pres' && flow==='cont')       verb = side.prg[pi];                // yapıyor / yapmıyor
-  else if (time==='pres' && flow==='perf')       verb = toMiş(side.ppas[pi]);        // yapmış / yapmamış
-  else if (time==='pres' && flow==='perf_cont')  verb = side.prg[pi] + ' olmuş';    // yapıyor olmuş
-  else if (time==='past' && flow==='simp')       verb = side.past[pi];               // yaptı / yapmadı
-  else if (time==='past' && flow==='cont')       verb = toPastCont(side.prg[pi]);    // yapıyordu / yapmıyordu
-  else if (time==='past' && flow==='perf')       verb = side.ppas[pi];               // yapmıştı / yapmamıştı
-  else if (time==='past' && flow==='perf_cont')  verb = side.prg[pi] + ' olmuştu';  // yapıyor olmuştu
-  else if (time==='fut'  && flow==='simp')       verb = side.fut[pi];                // yapacak / yapmayacak
-  else if (time==='fut'  && flow==='cont')       verb = side.prg[pi] + ' olacak';   // yapıyor olacak
-  else if (time==='fut'  && flow==='perf')       verb = toMiş(side.ppas[pi]) + ' olacak';        // yapmış olacak
-  else if (time==='fut'  && flow==='perf_cont')  verb = side.prg[pi] + ' olmuş olacak';           // yapıyor olmuş olacak
+  if      (time==='pres' && flow==='simp')       verb = side.pres[pi];
+  else if (time==='pres' && flow==='cont')       verb = side.prg[pi];
+  else if (time==='pres' && flow==='perf')       verb = toMiş(side.ppas[pi]);
+  else if (time==='pres' && flow==='perf_cont')  verb = side.prg[pi] + ' olmuş';
+  else if (time==='past' && flow==='simp')       verb = side.past[pi];
+  else if (time==='past' && flow==='cont')       verb = toPastCont(side.prg[pi]);
+  else if (time==='past' && flow==='perf')       verb = side.ppas[pi];
+  else if (time==='past' && flow==='perf_cont')  verb = side.prg[pi] + ' olmuştu';
+  else if (time==='fut'  && flow==='simp')       verb = side.fut[pi];
+  else if (time==='fut'  && flow==='cont')       verb = side.prg[pi] + ' olacak';
+  else if (time==='fut'  && flow==='perf')       verb = toMiş(side.ppas[pi]) + ' olacak';
+  else if (time==='fut'  && flow==='perf_cont')  verb = side.prg[pi] + ' olmuş olacak';
   else                                           verb = side.pres[pi];
+
+  // Çekimle
+  verb = _trConjugate(verb, subjType, time);
 
   if (pol === 'que') {
     return voice === 'act'
-      ? `${side.subj} ${side.obj} ${trQueForm(side.pres[0])}?`
-      : `${side.subj} ${side.agent} ${trQueForm(side.pres[0])}?`;
+      ? `${trSubj} ${side.obj} ${trQueForm(verb)}`
+      : `${side.subj} ${side.agent} ${trQueForm(verb)}`;
   }
   return voice === 'act'
-    ? `${side.subj} ${side.obj} ${verb}.`
+    ? `${trSubj} ${side.obj} ${verb}.`
     : `${side.subj} ${side.agent} ${verb}.`;
 }
 
