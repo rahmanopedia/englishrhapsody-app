@@ -1775,6 +1775,2678 @@ const BRIDGE_DATA = [
   ],
   cultural_insight:'"Fend" (defend\'den gelir) kendini savunmak/geçindirmek. "Stand on your own two feet" bağımsızlık vurgular.',
   fluency_tip:'"You\'re on your own" (tek başınasın) bazen terk etme, bazen güçlendirme anlamında.'
+},
+
+/* ─── EKSTRA DEYİMLER (400-500) ──────────────────────────────── */
+{
+  id:400, category:'deyimler',
+  tr:'Eli mahkum',
+  tags:['eli mahkum','mecbur','başka şansı yok','çaresiz'],
+  english_primary:"Their hands are tied",
+  alternatives:["They have no choice","They're forced into it"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Eli mahkum',tr_gloss:'their hand is a prisoner',en_fragment:'hands are tied',bridge_type:'direct',explanation:'El kısıtlaması (mahkum/bağlı) metaforu iki dilde de mecburiyet için kullanılıyor'}
+  ],
+  cultural_insight:'İngilizcede "tied" (bağlı) daha fiziksel, Türkçede "mahkum" (hükümlü) daha hukuki/kaderci bir ton taşır.',
+  fluency_tip:'"I\'d help if I could, but my hands are tied" iş hayatında nazik bir ret için çok uygundur.'
+},
+{
+  id:401, category:'deyimler',
+  tr:'Canı burnunda',
+  tags:['canı burnunda','çok öfkeli','patlamak üzere','tahammülsüz'],
+  english_primary:"At the end of their tether",
+  alternatives:["Ready to snap","Losing their patience"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Canı burnunda',tr_gloss:'their soul is at their nose',en_fragment:'at the end of their tether',bridge_type:'transform',explanation:'Türkçe canın çıkış noktasına gelmesi; İngilizce hayvanın bağlı olduğu ipin (tether) sonuna gelmesi'}
+  ],
+  cultural_insight:'"Tether" bir hayvanın hareket alanını kısıtlayan iptir. Sonuna gelmek, artık sabrın bittiği noktadır.',
+  fluency_tip:'"I\'m at my wit\'s end" de çok benzer bir çaresizlik/sabrın sonu ifadesidir.'
+},
+{
+  id:402, category:'deyimler',
+  tr:'Kulağına küpe olsun',
+  tags:['kulağına küpe','unutma','ders olsun','nasihat'],
+  english_primary:"Let that be a lesson to you",
+  alternatives:["Bear that in mind","Take it to heart"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Kulağına küpe',tr_gloss:'earring for the ear',en_fragment:'lesson',bridge_type:'transform',explanation:'Türkçe kalıcı bir aksesuar (küpe) metaforu; İngilizce deneyimden ders çıkarma (lesson)'}
+  ],
+  cultural_insight:'Türkçe metafor çok görseldir — hiç çıkmayacak bir hatırlatıcı. İngilizce ise eğitici sürece (lesson) odaklanır.',
+  fluency_tip:'"A word to the wise" (bilgeye bir söz) de bir öğüt vermeden önce kullanılır.'
+},
+{
+  id:403, category:'deyimler',
+  tr:'Burnundan kıl aldırmıyor',
+  tags:['burnundan kıl aldırmıyor','kibirli','huysuz','eleştiri kabul etmez'],
+  english_primary:"On a high horse",
+  alternatives:["Too proud for their own good","Touchy"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Burnundan kıl',tr_gloss:'hair from the nose',en_fragment:'high horse',bridge_type:'transform',explanation:'Türkçe hassas bir fiziksel müdahale metaforu; İngilizce yüksek at (üstünlük) metaforu'}
+  ],
+  cultural_insight:'"High horse" ortaçağda soyluların bindiği büyük atlardan gelir. Türkçe deyim ise kişinin aşırı hassasiyetini ve kibrini vurgular.',
+  fluency_tip:'"Get off your high horse" birine kibrini bırakmasını söylemek için kullanılır.'
+},
+{
+  id:404, category:'deyimler',
+  tr:'İçli dışlı olmak',
+  tags:['içli dışlı','samimi','yakın','çok görüşen'],
+  english_primary:"As thick as thieves",
+  alternatives:["On very intimate terms","Hand in glove"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İçli dışlı',tr_gloss:'with inside and outside',en_fragment:'thick as thieves',bridge_type:'transform',explanation:'Türkçe derinlik/şeffaflık metaforu; İngilizce hırsızların suç ortaklığı (yoğunluk) metaforu'}
+  ],
+  cultural_insight:'"Thick as thieves" (hırsızlar kadar yoğun/yakın) suç ortağı gibi her şeyi paylaşanlar için kullanılır.',
+  fluency_tip:'"They\'ve become very close" en sade karşılığıdır.'
+},
+{
+  id:405, category:'deyimler',
+  tr:'Göz boyamak',
+  tags:['göz boyamak','kandırmak','aldatmak','gösteriş'],
+  english_primary:"Pull the wool over someone's eyes",
+  alternatives:["Window dressing (iş dünyasında)","Deceive"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Göz boyamak',tr_gloss:'to paint the eye',en_fragment:'pull the wool over eyes',bridge_type:'transform',explanation:'Türkçe boya ile görüşü kapatma; İngilizce yün (peruk) ile gözü örtme metaforu'}
+  ],
+  cultural_insight:'"Pull the wool" deyimi 18. yüzyıldaki büyük peruklardan gelir; peruğu aşağı çekip kişinin görmesini engellemek anlamındadır.',
+  fluency_tip:'"It\'s just for show" (sadece gösteriş için) de benzer bir durumu anlatır.'
+},
+{
+  id:406, category:'deyimler',
+  tr:'Lafı ağzına tıkadı',
+  tags:['lafı ağzına tıkadı','susturdu','konuşturmadı','sözünü kesti'],
+  english_primary:"Shut them down",
+  alternatives:["Cut them short","Silenced them"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Lafı ağzına tıkadı',tr_gloss:'stuffed the word into their mouth',en_fragment:'shut them down',bridge_type:'transform',explanation:'Türkçe fiziksel bir engelleme (tıkama) metaforu; İngilizce sistemi kapatma (shut down) metaforu'}
+  ],
+  cultural_insight:'İngilizce "shut down" modern ve teknolojik bir tona sahipken, Türkçe deyim daha fiziksel ve agresiftir.',
+  fluency_tip:'"Don\'t cut me off!" (sözümü kesme!) tartışmalarda sık kullanılır.'
+},
+{
+  id:407, category:'deyimler',
+  tr:'Kabuğuna çekilmek',
+  tags:['kabuğuna çekilmek','yalnız kalmak','sosyallikten kaçmak','içe dönmek'],
+  english_primary:"Retreat into one's shell",
+  alternatives:["Withdraw","Close oneself off"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Kabuğuna çekilmek',tr_gloss:'to withdraw into one\'s shell',en_fragment:'retreat into one\'s shell',bridge_type:'direct',explanation:'Kaplumbağa/salyangoz metaforu her iki dilde de izolasyon için aynıdır'}
+  ],
+  cultural_insight:'Evrensel bir metafor. "Shrinking violet" ise aşırı utangaç kişiler için kullanılan bir çiçektir.',
+  fluency_tip:'"They\'ve gone quiet lately" birinin kabuğuna çekildiğini anlatmanın doğal yoludur.'
+},
+{
+  id:408, category:'deyimler',
+  tr:'Kök söktürdü',
+  tags:['kök söktürdü','çok uğraştırdı','zorluk çıkardı','canından bezdirdi'],
+  english_primary:"Gave them a run for their money",
+  alternatives:["Made it extremely difficult","Put them through the wringer"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Kök söktürdü',tr_gloss:'made them pull out roots',en_fragment:'put through the wringer',bridge_type:'transform',explanation:'Türkçe tarımsal zorluk (kök sökmek); İngilizce çamaşır sıkma merdanesi (wringer) metaforu'}
+  ],
+  cultural_insight:'"Put through the wringer" (merdaneden geçirmek) birini aşırı zorlamak ve yıpratmak demektir.',
+  fluency_tip:'"They made life difficult for me" en basit ve net karşılıktır.'
+},
+{
+  id:409, category:'deyimler',
+  tr:'Tepesi attı',
+  tags:['tepesi attı','çok sinirlendi','fırladı','öfkelendi'],
+  english_primary:"Flipped their lid",
+  alternatives:["Lost their cool","Blew a fuse"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Tepesi attı',tr_gloss:'their top jumped/flipped',en_fragment:'flipped their lid',bridge_type:'direct',explanation:'Kapak/tepe atma metaforu her iki dilde de anlık öfke patlaması için aynıdır'}
+  ],
+  cultural_insight:'"Blow a fuse" (sigorta attırmak) elektriksel bir öfke metaforudur. Türkçe "tepe" ve İngilizce "lid" (kapak) aynı basınç etkisini anlatır.',
+  fluency_tip:'"They just snapped" (aniden koptu/patladı) çok doğal bir ifadedir.'
+},
+
+/* ─── SOSYAL & İLETİŞİM (410-430) ────────────────────────────── */
+{
+  id:410, category:'sosyal',
+  tr:'Ağzı laf yapıyor',
+  tags:['ağzı laf yapıyor','ikna edici','konuşkan','hitabeti güçlü'],
+  english_primary:"Gift of the gab",
+  alternatives:["Well-spoken","Articulate"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzı laf yapıyor',tr_gloss:'their mouth makes words',en_fragment:'gift of the gab',bridge_type:'transform',explanation:'Türkçe aktif üretim (laf yapmak); İngilizce "gab" (boş boğazlık/konuşma) yeteneği/hediyesi'}
+  ],
+  cultural_insight:'"Gift of the gab" (konuşma hediyesi) İrlanda kökenli bir deyimdir ve etkileyici konuşma yeteneğini anlatır.',
+  fluency_tip:'"They\'re a smooth talker" (pürüzsüz konuşuyor) biraz daha manipülatif bir ima taşıyabilir.'
+},
+{
+  id:411, category:'sosyal',
+  tr:'Laf aramızda',
+  tags:['laf aramızda','gizli','kimseye söyleme','aramızda kalsın'],
+  english_primary:"Between you and me",
+  alternatives:["Off the record","Just between us"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Laf aramızda',tr_gloss:'the word is between us',en_fragment:'between you and me',bridge_type:'direct',explanation:'Mekansal gizlilik metaforu (aramızda) her iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Off the record" gazetecilikten gelen bir terimdir. "Just between these four walls" (bu dört duvar arasında) daha dramatik bir gizlilik vurgusudur.',
+  fluency_tip:'"Don\'t breathe a word of this to anyone" (kimseye tek kelime bile sızdırma) çok güçlü bir uyarıdır.'
+},
+{
+  id:412, category:'sosyal',
+  tr:'Can ciğer kuzu sarması',
+  tags:['can ciğer','çok yakın dost','ayrılmaz ikili','samimi'],
+  english_primary:"Joined at the hip",
+  alternatives:["Inseparable","Thick as thieves"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Can ciğer',tr_gloss:'soul and liver',en_fragment:'joined at the hip',bridge_type:'transform',explanation:'Türkçe iç organ (can/ciğer) yakınlığı; İngilizce kalça (hip) hizasından yapışıklık metaforu'}
+  ],
+  cultural_insight:'Türkçede ciğer en yakın dostluğu temsil ederken, İngilizcede "joined at the hip" (kalçadan yapışık) ayrılmazlığı fiziksel olarak vurgular.',
+  fluency_tip:'"They do everything together" en doğal açıklamadır.'
+},
+{
+  id:413, category:'sosyal',
+  tr:'İçini dökmek',
+  tags:['içini dökmek','anlatmak','rahatlamak','paylaşmak'],
+  english_primary:"Pour one's heart out",
+  alternatives:["Get it off your chest","Open up"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçini dökmek',tr_gloss:'to pour out one\'s inside',en_fragment:'pour one\'s heart out',bridge_type:'direct',explanation:'Sıvı/dökme metaforu her iki dilde de duyguların paylaşımı için aynıdır'}
+  ],
+  cultural_insight:'"Get it off your chest" (göğsünden indir) bir rahatlama sağlar. "Pour out" ise daha yoğun bir paylaşımı anlatır.',
+  fluency_tip:'"I just needed someone to talk to" bu durumun ardındaki ihtiyacı özetler.'
+},
+{
+  id:414, category:'sosyal',
+  tr:'Üstüne varmak',
+  tags:['üstüne varmak','zorlamak','baskı yapmak','sıkıştırmak'],
+  english_primary:"Pressure someone",
+  alternatives:["Corner someone","Push someone too hard"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Üstüne varmak',tr_gloss:'to go upon someone',en_fragment:'push someone',bridge_type:'transform',explanation:'Türkçe yaklaşma/üzerine gitme (mesafe); İngilizce itme (push) metaforu'}
+  ],
+  cultural_insight:'"Cornered" (köşeye sıkışmış) hissetmek, üstüne varılan kişinin duygusunu anlatır.',
+  fluency_tip:'"Don\'t push them" veya "Give them some space" bu eyleme karşı verilen tavsiyelerdir.'
+},
+
+/* ─── DURUM & OLAY (431-450) ────────────────────────────────── */
+{
+  id:431, category:'gunluk',
+  tr:'Oldu bittiye getirdi',
+  tags:['oldu bitti','aceleye getir','emrivaki','çabucak halletti'],
+  english_primary:"Presented a fait accompli",
+  alternatives:["Rushed it through","Railroaded it"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Oldu bitti',tr_gloss:'it happened and finished',en_fragment:'fait accompli',bridge_type:'transform',explanation:'Türkçe zaman/bitiş vurgusu; İngilizce (Fransızca kökenli) "tamamlanmış gerçek" terimi'}
+  ],
+  cultural_insight:'"Fait accompli" geri dönüşü olmayan bir kararın oldu bittiye getirilmesidir. "Railroaded" ise birini bir şeye zorla sürüklemek demektir.',
+  fluency_tip:'"They didn\'t give me a choice" bu durumun sonucunu anlatır.'
+},
+{
+  id:432, category:'gunluk',
+  tr:'Eşek şakası',
+  tags:['eşek şakası','ağır şaka','kaba şaka','pratik şaka'],
+  english_primary:"Practical joke",
+  alternatives:["Prank","Horseplay"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Eşek şakası',tr_gloss:'donkey joke',en_fragment:'practical joke / horseplay',bridge_type:'transform',explanation:'Türkçe eşek (kabalık sembolü); İngilizce "practical" (uygulamalı) veya "horse" (at oyunu/kabalaşma) metaforu'}
+  ],
+  cultural_insight:'"Horseplay" kaba ve gürültülü fiziksel şakalaşmalar için kullanılır. "Prank" ise daha planlı şakalardır.',
+  fluency_tip:'"That went too far" (bu çok ileri gitti) ağır bir eşek şakasına verilen tepkidir.'
+},
+{
+  id:433, category:'gunluk',
+  tr:'Havadan sudan konuşmak',
+  tags:['havadan sudan','boş konuşma','sohbet','small talk'],
+  english_primary:"Small talk",
+  alternatives:["Make conversation","Chat about nothing in particular"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Havadan sudan',tr_gloss:'of air and water',en_fragment:'small talk',bridge_type:'transform',explanation:'Türkçe doğa unsurları (hava/su); İngilizce boyut (küçük/small) metaforu'}
+  ],
+  cultural_insight:'İngiliz kültüründe "small talk" sosyal bir zorunluluktur ve genellikle hava durumuyla başlar (Türkçe ile benzerlik!).',
+  fluency_tip:'"We were just making small talk" toplantı öncesi sohbetleri anlatır.'
+},
+{
+  id:434, category:'gunluk',
+  tr:'Gününü gün etmek',
+  tags:['gününü gün etmek','keyif sürmek','eğlenmek','hayatını yaşamak'],
+  english_primary:"Live it up",
+  alternatives:["Have the time of one's life","Make the most of the day"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Gününü gün etmek',tr_gloss:'to make one\'s day a day',en_fragment:'live it up',bridge_type:'transform',explanation:'Türkçe zamanı gerçek kılma (gün etmek); İngilizce hayatı "yukarıda" yaşama metaforu'}
+  ],
+  cultural_insight:'"Live it up" lüks ve eğlence dolu bir yaşamı anlatır. "Carpe diem" (gününü yakala) ise daha felsefi bir yaklaşımdır.',
+  fluency_tip:'"You only live once" (YOLO) bu yaşam tarzının popüler sloganıdır.'
+},
+{
+  id:435, category:'gunluk',
+  tr:'Dili damağı kurumuş',
+  tags:['dili damağı kurudu','çok susamış','susuzluk'],
+  english_primary:"Parched",
+  alternatives:["Spitting feathers (İngiltere)","Gasping for a drink"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Dili damağı kurumuş',tr_gloss:'tongue and palate dried',en_fragment:'parched',bridge_type:'transform',explanation:'Türkçe fiziksel betimleme; İngilizce "parch" (kavrulmuş toprak gibi kuruma) metaforu'}
+  ],
+  cultural_insight:'"Spitting feathers" (tüy tükürmek) ağzın o kadar kuru olduğunu ve tüy tükürüyormuş hissi verdiğini anlatır.',
+  fluency_tip:'"I\'m dying for a glass of water" çok susamışken söylenecek en doğal ifadedir.'
+},
+
+/* ─── ZİHİN & AKIL (451-470) ────────────────────────────────── */
+{
+  id:451, category:'duygular',
+  tr:'Aklı havada',
+  tags:['aklı havada','dalgın','hayalci','odaklanamayan'],
+  english_primary:"Head in the clouds",
+  alternatives:["Airhead (hakaretvari)","Spacey"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Aklı havada',tr_gloss:'mind in the air',en_fragment:'head in the clouds',bridge_type:'direct',explanation:'Hava/bulut (yükseklik/uzaklık) metaforu dalgınlık için iki dilde de aynıdır'}
+  ],
+  cultural_insight:'Evrensel bir metafor. "Grounded" (yere basan) ise bunun tam zıttıdır — gerçekçi kişi.',
+  fluency_tip:'"Earth to [Name]!" dalgın birinin dikkatini çekmek için kullanılır.'
+},
+{
+  id:452, category:'duygular',
+  tr:'Pirelenmek',
+  tags:['pirelenmek','şüphelenmek','huylanmak','tedirgin olmak'],
+  english_primary:"Smell a rat",
+  alternatives:["Suspect something is wrong","Get a bad vibe"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Pirelenmek',tr_gloss:'to be infested with fleas',en_fragment:'smell a rat',bridge_type:'transform',explanation:'Türkçe kaşıntı/huzursuzluk (pire); İngilizce koku/fare (rat) metaforu'}
+  ],
+  cultural_insight:'Her iki dil de şüpheyi küçük/zararlı hayvanlar üzerinden anlatır. "Fleas" (pireler) kişisel huzursuzluk; "Rat" (fare) dışsal bir tehlike/ihanet kokusu.',
+  fluency_tip:'"Something doesn\'t feel right" en yaygın sezgi ifadesidir.'
+},
+{
+  id:453, category:'duygular',
+  tr:'Şafak attı',
+  tags:['şafak attı','aniden anladı','jeton düştü','farkına vardı'],
+  english_primary:"The penny dropped",
+  alternatives:["It finally clicked","It dawned on me"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Şafak attı',tr_gloss:'the dawn broke (suddenly)',en_fragment:'the penny dropped',bridge_type:'transform',explanation:'Türkçe ışık/sabah (şafak) metaforu; İngilizce jeton (penny) düşme metaforu'}
+  ],
+  cultural_insight:'"The penny dropped" eski otomatlardan gelir; paranın düşmesiyle makinenin çalışması gibi anlayışın gelmesidir.',
+  fluency_tip:'"Lightbulb moment" (ampul anı) ani fikirler için harikadır.'
+},
+{
+  id:454, category:'duygular',
+  tr:'Kırk fırın ekmek yemesi lazım',
+  tags:['kırk fırın','tecrübesiz','daha çok yol var','yetersiz'],
+  english_primary:"A long way to go",
+  alternatives:["Still a greenhorn","Needs a lot more experience"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Kırk fırın ekmek',tr_gloss:'needs to eat forty ovens of bread',en_fragment:'a long way to go',bridge_type:'transform',explanation:'Türkçe gıda/büyüme metaforu; İngilizce mesafe/yol metaforu'}
+  ],
+  cultural_insight:'Türkçe deyim büyüme ve beslenme üzerinden olgunlaşmayı anlatırken, İngilizce bunu katedilecek bir yol olarak görür.',
+  fluency_tip:'"They\'re still learning the ropes" (hala ipleri/işi öğreniyor) daha profesyonel bir tondur.'
+},
+
+/* ─── YENİ EKLEMELER: GENİŞLETME PAKETİ 2 (500-600) ─────────── */
+{
+  id:500, category:'deyimler',
+  tr:'İçli dışlı',
+  tags:['içli dışlı','samimi','çok yakın','ayrılmaz'],
+  english_primary:"Inseparable",
+  alternatives:["Thick as thieves","Hand in glove"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İçli dışlı',tr_gloss:'with inside and outside',en_fragment:'inseparable',bridge_type:'transform',explanation:'Türkçe şeffaflık/yakınlık (iç ve dış bir); İngilizce ayrılmazlık (ayrılamaz)'}
+  ],
+  cultural_insight:'"Thick as thieves" çok yakın dostluğu biraz gizemli/suç ortağı gibi bir tonda anlatır.',
+  fluency_tip:'"They\'re always together" en basit ve yaygın karşılıktır.'
+},
+{
+  id:501, category:'gunluk',
+  tr:'Dile kolay',
+  tags:['dile kolay','kolay değil','söylemesi kolay','zor iş'],
+  english_primary:"Easier said than done",
+  alternatives:["It sounds simple, but it's not","Easier said than accomplished"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Dile kolay',tr_gloss:'easy for the tongue',en_fragment:'easier said than done',bridge_type:'direct',explanation:'Söyleme/dil metaforu iki dilde de zorluğu vurgulamak için aynıdır'}
+  ],
+  cultural_insight:'Evrensel bir gerçek: konuşmak (dil) kolaydır, yapmak (eylem) zordur. İngilizce bunu bir karşılaştırma olarak kurar.',
+  fluency_tip:'"That\'s easier said than done" bir tavsiyeye karşı verilen en klasik tepkidir.'
+},
+{
+  id:502, category:'sosyal',
+  tr:'Canı sağ olsun',
+  tags:['canı sağ olsun','önemli değil','affettim','boşver'],
+  english_primary:"No hard feelings",
+  alternatives:["Let it be","It doesn't matter"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Canı sağ olsun',tr_gloss:'may their soul be healthy',en_fragment:'no hard feelings',bridge_type:'transform',explanation:'Türkçe sağlık dileğiyle affetme; İngilizce kötü duygu yokluğu (hard feelings)'}
+  ],
+  cultural_insight:'Türkçede bir zarar gördüğümüzde bile kişinin sağlığına odaklanıp konuyu kapatmak çok derin bir kültürel tavırdır.',
+  fluency_tip:'"I bear no grudge" (kin beslemiyorum) daha resmi ve ağır bir karşılıktır.'
+},
+{
+  id:503, category:'duygular',
+  tr:'Gözlerim doldu',
+  tags:['gözlerim doldu','ağlamak üzere','duygulandım','hüzünlendim'],
+  english_primary:"I got choked up",
+  alternatives:["I welled up","I was on the verge of tears"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Gözlerim doldu',tr_gloss:'my eyes filled',en_fragment:'welled up / choked up',bridge_type:'transform',explanation:'Türkçe gözdeki su (dolma); İngilizce kuyudan su çıkması (well up) veya boğazın düğümlenmesi (choke up)'}
+  ],
+  cultural_insight:'"Choked up" fiziksel olarak konuşamama halini de içerir. "Welled up" ise gözlerin dolması metaforuna çok yakındır.',
+  fluency_tip:'"It was a tear-jerker" (gözyaşı çekici) çok duygusal filmler için kullanılır.'
+},
+{
+  id:504, category:'yogunluk',
+  tr:'Ağzıyla kuş tutsa da',
+  tags:['ağzıyla kuş tutsa','ne yapsa boş','yaranamaz','imkansız'],
+  english_primary:"No matter what they do",
+  alternatives:["Even if they moved mountains","It wouldn't make a difference"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzıyla kuş tutsa',tr_gloss:'even if they catch a bird with their mouth',en_fragment:'move mountains',bridge_type:'transform',explanation:'Türkçe imkansız/garip bir eylem; İngilizce devasa bir kütleyi hareket ettirme (dağları oynatmak)'}
+  ],
+  cultural_insight:'Türkçe deyim, birinin ne kadar "üstün" veya "garip" bir çaba sarf etse de sonucun değişmeyeceğini anlatır.',
+  fluency_tip:'"Nothing they do will satisfy me" durumun duygusal özetidir.'
+},
+{
+  id:505, category:'deyimler',
+  tr:'Başına buyruk',
+  tags:['başına buyruk','özgür','kendi bildiğini okur','inatçı'],
+  english_primary:"A law unto themselves",
+  alternatives:["Strong-willed","Independent-minded"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Başına buyruk',tr_gloss:'command of their own head',en_fragment:'a law unto themselves',bridge_type:'transform',explanation:'Türkçe kendi kafasından emir alma; İngilizce kendi başına bir "yasa" olma metaforu'}
+  ],
+  cultural_insight:'"A law unto themselves" (kendileri için bir yasa) kural tanımayan, sadece kendi kurallarıyla yaşayan kişiler için harika bir tanımdır.',
+  fluency_tip:'"They follow their own path" (kendi yolunu izler) daha pozitif bir tondur.'
+},
+{
+  id:506, category:'gunluk',
+  tr:'Şeytanın bacağını kırmak',
+  tags:['şeytanın bacağını','şansızlığı kırmak','başarmak','nihayet'],
+  english_primary:"Break the ice / Break the cycle",
+  alternatives:["Finally break through","A stroke of luck"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Şeytanın bacağını',tr_gloss:'to break the devil\'s leg',en_fragment:'break through',bridge_type:'transform',explanation:'Türkçe kötülüğü/engeli (şeytanın bacağı) fiziksel olarak kırma; İngilizce bariyeri aşma (break through)'}
+  ],
+  cultural_insight:'Şeytanın bacağını kırmak, uzun süren bir şanssızlığın aniden bitmesidir. İngilizcede "Break the jinx" (uğursuzluğu bozmak) tam karşılıktır.',
+  fluency_tip:'"I finally had a bit of luck" en sade ve doğal ifade.'
+},
+{
+  id:507, category:'sasirma',
+  tr:'Eli ayağına dolaştı',
+  tags:['eli ayağına','telaşlandı','panik','beceremedi'],
+  english_primary:"All fingers and thumbs",
+  alternatives:["Clumsy","Panic-stricken"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Eli ayağına dolaştı',tr_gloss:'hands and feet got tangled',en_fragment:'all fingers and thumbs',bridge_type:'transform',explanation:'Türkçe uzuvların birbirine karışması; İngilizce sadece başparmak ve parmaklardan oluşma (beceriksizlik) metaforu'}
+  ],
+  cultural_insight:'"All fingers and thumbs" bir şeyi el becerisiyle yapamama durumudur. Türkçe ise panik anındaki koordinasyon kaybını anlatır.',
+  fluency_tip:'"I was in such a rush that I couldn\'t do anything right" durumu açıklar.'
+},
+{
+  id:508, category:'sosyal',
+  tr:'İki elin kanda olsa da gel',
+  tags:['iki elin kanda','mutlaka gel','çok önemli','bekliyorum'],
+  english_primary:"No matter what, be there",
+  alternatives:["Drop everything and come","Make it your top priority"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İki elin kanda',tr_gloss:'even if your two hands are in blood',en_fragment:'drop everything',bridge_type:'transform',explanation:'Türkçe en uç durum/suç/kan hali (abartılı); İngilizce her şeyi bırakma (drop everything)'}
+  ],
+  cultural_insight:'Türkçe deyimdeki "kan" en büyük engeli veya suçluluk halini bile kapsayan bir sadakat vurgusudur.',
+  fluency_tip:'"This is non-negotiable" (bu tartışılamaz) iş ortamında "mutlaka yapılmalı" anlamında kullanılır.'
+},
+{
+  id:509, category:'duygular',
+  tr:'İçini ferah tut',
+  tags:['içini ferah tut','rahat ol','endişelenme','huzurlu ol'],
+  english_primary:"Rest assured",
+  alternatives:["Keep an open mind","Don't lose heart"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçini ferah tut',tr_gloss:'keep your inside spacious',en_fragment:'rest assured',bridge_type:'transform',explanation:'Türkçe mekansal genişlik (ferahlık); İngilizce emin olma/dinlenme (rest) metaforu'}
+  ],
+  cultural_insight:'"Rest assured" (garanti veriyorum, emin ol) birine güven verirken kullanılır. Türkçe "ferahlık" daha ruhsal bir huzuru anlatır.',
+  fluency_tip:'"Everything will be fine" en klasik teselli cümlesidir.'
+},
+{
+  id:510, category:'deyimler',
+  tr:'Kulağı delik',
+  tags:['kulağı delik','haber alan','her şeyi duyan','bilgili'],
+  english_primary:"Ear to the ground",
+  alternatives:["Well-informed","Connected"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Kulağı delik',tr_gloss:'ear with a hole',en_fragment:'ear to the ground',bridge_type:'transform',explanation:'Türkçe kalıcı bir hassasiyet (delik kulak); İngilizce yeri dinleme (iz sürme) metaforu'}
+  ],
+  cultural_insight:'"Ear to the ground" (kulağı yerde) bir haberin önceden veya gizlice duyulması için çaba göstermek demektir.',
+  fluency_tip:'"They always know what\'s going on before anyone else" durumu çok iyi özetler.'
+},
+{
+  id:511, category:'yogunluk',
+  tr:'Başından savdı',
+  tags:['başından savdı','umursamadı','yolladı','dinlemedi'],
+  english_primary:"Brushed them off",
+  alternatives:["Dismissed them","Paid them no mind"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Başından savdı',tr_gloss:'fended off from their head',en_fragment:'brushed off',bridge_type:'transform',explanation:'Türkçe uzaklaştırma/defetme; İngilizce toz gibi fırçalayıp atma (brush off) metaforu'}
+  ],
+  cultural_insight:'"Brush off" (fırçalamak) karşıdakini önemsiz bir toz parçası gibi görüp ciddiye almamaktır.',
+  fluency_tip:'"They didn\'t even listen to my proposal" (teklifimi dinlemediler bile) hayal kırıklığını anlatır.'
+},
+{
+  id:512, category:'sosyal',
+  tr:'İple çekiyorum',
+  tags:['iple çekiyorum','sabırsızım','bekliyorum','heyecanlıyım'],
+  english_primary:"I'm counting down the days",
+  alternatives:["I can't wait","I'm looking forward to it"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İple çekiyorum',tr_gloss:'pulling with a rope',en_fragment:'counting down the days',bridge_type:'transform',explanation:'Türkçe zamanı kendine çekme (aktif çaba); İngilizce günleri sayma (pasif bekleyiş)'}
+  ],
+  cultural_insight:'Türkçe deyimdeki "ip" zamanın sanki fiziksel bir nesne gibi yaklaşıp gelmesini isteme arzusudur.',
+  fluency_tip:'"I\'m so excited for the weekend" günlük hayatta en sık duyacağın versiyondur.'
+},
+{
+  id:513, category:'duygular',
+  tr:'Burnunda tütüyor',
+  tags:['burnunda tütüyor','çok özledi','hasret','yanıp tutuşuyor'],
+  english_primary:"I'm pining for it",
+  alternatives:["I miss it terribly","I'm homesick (vatan için)"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Burnunda tütüyor',tr_gloss:'smoking in the nose',en_fragment:'pining / longing',bridge_type:'transform',explanation:'Türkçe koku/duman (yakınlık) metaforu; İngilizce acı çekerek özleme (pine)'}
+  ],
+  cultural_insight:'"Pine for" (özlemle zayıf düşmek) çok derin bir hasardır. Türkçe deyimdeki koku/duman ise o kişinin hayalinin çok yakın olduğunu anlatır.',
+  fluency_tip:'"I really miss my mom\'s cooking" (annemin yemeklerini çok özledim) klasik bir örnek.'
+},
+{
+  id:514, category:'deyimler',
+  tr:'Astarı yüzünden pahalı',
+  tags:['astarı yüzünden pahalı','gereksiz masraf','değmez','pahalıya mal oldu'],
+  english_primary:"It costs more than it's worth",
+  alternatives:["A white elephant","Diminishing returns"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Astarı yüzünden',tr_gloss:'lining is more expensive than the face',en_fragment:'costs more than worth',bridge_type:'direct',explanation:'Kumaş/terzilik metaforu (astarı yüzünü geçti) vs. değer karşılaştırması'}
+  ],
+  cultural_insight:'"White elephant" (beyaz fil) bakımı kendinden pahalı olan, işe yaramayan mülkler için kullanılır.',
+  fluency_tip:'"It\'s not worth the effort" (çabaya değmez) en genel karşılıktır.'
+},
+{
+  id:515, category:'sasirma',
+  tr:'Dudağı uçukladı',
+  tags:['dudağı uçukladı','çok şaşırdı','korktu','şok oldu'],
+  english_primary:"They were flabbergasted",
+  alternatives:["Taken aback","Speechless"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Dudağı uçukladı',tr_gloss:'their lip had a cold sore',en_fragment:'flabbergasted',bridge_type:'transform',explanation:'Türkçe şokun fiziksel sonucu (uçuk); İngilizce şaşkınlığın ses yansıması (flabbergasted)'}
+  ],
+  cultural_insight:'Türkçe şaşkınlığın veya korkunun bedendeki (dudaktaki) izine odaklanırken, İngilizce kelimenin kendisiyle (flabbergasted) durumu abartır.',
+  fluency_tip:'"I was stunned" (sersemledim/dondum) kısa ve etkili bir karşılık.'
+},
+{
+  id:516, category:'gunluk',
+  tr:'Can damarından yakaladı',
+  tags:['can damarı','tam isabet','zayıf nokta','en önemli yer'],
+  english_primary:"Hit a nerve",
+  alternatives:["Hit the nail on the head","Targeted the weak spot"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Can damarı',tr_gloss:'life vein',en_fragment:'nerve',bridge_type:'direct',explanation:'Damar/sinir (vital organ) metaforu hassas noktayı bulmak için aynıdır'}
+  ],
+  cultural_insight:'"Hit a nerve" (sinire dokunmak) genellikle birini rahatsız edecek bir gerçeği söylemek demektir. "Hit the nail" ise doğru tespiti yapmaktır.',
+  fluency_tip:'"You really got me there" (beni oradan yakaladın/vurdun) tartışmalarda kullanılır.'
+},
+{
+  id:517, category:'yogunluk',
+  tr:'Havanda su dövmek',
+  tags:['havanda su dövmek','boşa uğraş','sonuçsuz','nafile'],
+  english_primary:"Beating a dead horse",
+  alternatives:["Spinning your wheels","Going in circles"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Havanda su dövmek',tr_gloss:'pounding water in a mortar',en_fragment:'beating a dead horse',bridge_type:'transform',explanation:'Türkçe suyun (şekil almaz) dövülmesi; İngilizce ölü atın (tepki vermez) sürülmeye çalışılması'}
+  ],
+  cultural_insight:'İki kültür de imkansız ve sonuçsuz bir eylemi fiziksel zorlama üzerinden anlatır.',
+  fluency_tip:'"We\'re getting nowhere with this" (bununla hiçbir yere varamıyoruz) iş ortamında çok işe yarar.'
+},
+{
+  id:518, category:'sosyal',
+  tr:'Burnundan soluyor',
+  tags:['burnundan soluyor','çok öfkeli','sinirli','patlamaya hazır'],
+  english_primary:"Fuming",
+  alternatives:["Seeing red","Losing their cool"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Burnundan soluyor',tr_gloss:'breathing through the nose',en_fragment:'fuming',bridge_type:'transform',explanation:'Türkçe hızlı/öfkeli nefes (boğa gibi); İngilizce dumanı tütme (fuming) metaforu'}
+  ],
+  cultural_insight:'"Fuming" (dumanı tüten) birinin içindeki öfke ateşinin dışa vurmasını anlatır. "Seeing red" ise tamamen öfkeyle kör olma hali.',
+  fluency_tip:'"Stay out of their way, they\'re fuming" (yolundan çekil, dumanı tütüyor/çok sinirli) iyi bir uyarıdır.'
+},
+{
+  id:519, category:'duygular',
+  tr:'İçim açıldı',
+  tags:['içim açıldı','ferahladım','mutlu oldum','güzelleşti'],
+  english_primary:"It brightened up my day",
+  alternatives:["I feel refreshed","My spirits were lifted"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçim açıldı',tr_gloss:'my inside opened up',en_fragment:'brightened up',bridge_type:'transform',explanation:'Türkçe ferahlık/açılma; İngilizce ışık/parlaklık (brighten) metaforu'}
+  ],
+  cultural_insight:'Türkçe darlığın gitmesine (açılma), İngilizce karanlığın gitmesine (ışık) odaklanır.',
+  fluency_tip:'"That really cheered me up" (bu beni gerçekten neşelendirdi) en doğal karşılık.'
+},
+{
+  id:520, category:'deyimler',
+  tr:'Ağzı kulaklarına varıyor',
+  tags:['ağzı kulaklarına','çok mutlu','gülüyor','seviniyor'],
+  english_primary:"Grinning from ear to ear",
+  alternatives:["Beaming with joy","Radiating happiness"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzı kulaklarına',tr_gloss:'mouth reaching to the ears',en_fragment:'grinning from ear to ear',bridge_type:'direct',explanation:'Tam birebir eşleşme! Mutluluktan gülümsemenin fiziksel boyutu her iki dilde de aynı'}
+  ],
+  cultural_insight:'Bu evrensel bir beden dili betimlemesidir. "Beaming" (ışık saçmak) ise mutluluğun nur gibi yayılmasını anlatır.',
+  fluency_tip:'"They look so happy" en sade ama bu deyimi kullanmak "fluency" (akıcılık) katar.'
+},
+
+/* ─── GENİŞLETME PAKETİ 3 (600-700) ─────────────────────────── */
+{
+  id:600, category:'sasirma',
+  tr:'Gözlerime inanamadım',
+  tags:['gözlerime inanamadım','şaşkınlık','inanılmaz','gördüm ama'],
+  english_primary:"I couldn't believe my eyes",
+  alternatives:["It was a sight to behold","I was stunned"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Gözlerime inanamadım',tr_gloss:'I couldn\'t believe my eyes',en_fragment:'couldn\'t believe my eyes',bridge_type:'direct',explanation:'Tam birebir eşleşme! İki dil de görme duyusuyla inanç arasındaki çatışmayı aynı anlatıyor'}
+  ],
+  cultural_insight:'Neredeyse her kültürde "görmek inanmaktır" (seeing is believing). Bu yüzden şaşkınlık gözler üzerinden anlatılır.',
+  fluency_tip:'"I had to double-check" (iki kez bakmam/kontrol etmem gerekti) şaşkınlığı anlatmanın pratik yolu.'
+},
+{
+  id:601, category:'gunluk',
+  tr:'İçim kıyıldı',
+  tags:['içim kıyıldı','acıktım','çok acıktım','mide kazınması'],
+  english_primary:"I'm famished",
+  alternatives:["My stomach is growling","I'm starving"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İçim kıyıldı',tr_gloss:'my inside was shredded',en_fragment:'famished / starving',bridge_type:'transform',explanation:'Türkçe fiziksel parçalanma (kıyılma) hissi; İngilizce açlıktan ölme (starving) metaforu'}
+  ],
+  cultural_insight:'"Famished" (aşırı aç) "famine" (kıtlık) kökenlidir. Türkçe "kıyılmak" ise daha çok midenin boşluktan gelen o garip hissini anlatır.',
+  fluency_tip:'"I could eat a horse!" (bir atı yiyebilirim!) çok yaygın bir açlık abartısıdır.'
+},
+{
+  id:602, category:'sosyal',
+  tr:'Hatırın kalmasın',
+  tags:['hatırın kalmasın','kırmamak için','senin için','ayıp olmasın'],
+  english_primary:"For old times' sake",
+  alternatives:["Just to please you","Out of respect for you"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Hatır',tr_gloss:'memory / respect / sake',en_fragment:'sake',bridge_type:'direct',explanation:'Hatır/sake (hatır için) kavramları iki dilde de sosyal borç ve saygıyı anlatır'}
+  ],
+  cultural_insight:'"For old times\' sake" (eski günlerin hatırına) geçmişteki dostluğa vurgu yapar. Türkçe "hatır" çok daha geniş bir "sosyal kredi" sistemidir.',
+  fluency_tip:'"Let\'s do it for the sake of peace" (huzur hatırına yapalım) tartışmaları bitirmek için kullanılır.'
+},
+{
+  id:603, category:'duygular',
+  tr:'Yerin dibine girdim',
+  tags:['yerin dibi','utandım','çok utandım','rezil oldum'],
+  english_primary:"I wanted the ground to swallow me up",
+  alternatives:["I was mortified","I felt so small"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Yerin dibine girdim',tr_gloss:'I entered the bottom of the ground',en_fragment:'ground to swallow me up',bridge_type:'direct',explanation:'Yerin içine saklanma isteği iki dilde de aşırı utanç için aynı metaforu kullanır'}
+  ],
+  cultural_insight:'Utancın en temel fiziksel arzusu: yok olmak. Her iki dil de bunu yerin altına girmek olarak görür.',
+  fluency_tip:'"I was so embarrassed, I just wanted to disappear" en doğal duygusal açıklama.'
+},
+{
+  id:604, category:'yogunluk',
+  tr:'Elim ayağım buz kesti',
+  tags:['elim ayağım buz kesti','korku','şok','donup kalma'],
+  english_primary:"I froze in my tracks",
+  alternatives:["I went cold all over","My blood ran cold"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Buz kesti',tr_gloss:'cut/became ice',en_fragment:'went cold / froze',bridge_type:'direct',explanation:'Korku veya şok anındaki soğuma/donma hissi evrenseldir'}
+  ],
+  cultural_insight:'"My blood ran cold" (kanım soğuk aktı) dehşet anları için klasik bir İngilizce deyimdir.',
+  fluency_tip:'"I stood there like a statue" (heykel gibi durdum) şok anındaki hareketsizliği anlatır.'
+},
+{
+  id:605, category:'deyimler',
+  tr:'Ağzına bir parmak bal çaldı',
+  tags:['ağzına bal çalmak','kandırmak','küçük vaat','oyalamak'],
+  english_primary:"Sugarcoat the pill",
+  alternatives:["Give someone a sweetener","Dangle a carrot"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Bal çalmak',tr_gloss:'to smear honey',en_fragment:'sugarcoat',bridge_type:'transform',explanation:'Türkçe doğrudan tatlı sürme; İngilizce hapın acısını şekerle örtme metaforu'}
+  ],
+  cultural_insight:'"Dangle a carrot" (havuç sallamak) birini bir ödüle koşturmak için oyalamak demektir. İkisi de geçici/aldatıcı tatlılık sunar.',
+  fluency_tip:'"Don\'t fall for it" (buna kanma) birinin "ağzına bal çalındığında" verilen uyarıdır.'
+},
+{
+  id:606, category:'gunluk',
+  tr:'İşi yokuşa sürüyor',
+  tags:['işi yokuşa sürmek','zorlaştırmak','engel çıkarmak','direnç'],
+  english_primary:"Making things difficult",
+  alternatives:["Being obstructive","Dragging their feet"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Yokuş',tr_gloss:'uphill slope',en_fragment:'dragging feet / obstructive',bridge_type:'transform',explanation:'Türkçe coğrafi zorluk (yokuş); İngilizce fiziksel direnç (ayak sürümek)'}
+  ],
+  cultural_insight:'"Dragging your feet" (ayaklarını sürümek) bir işi bilerek yavaşlatmak ve zorlaştırmak demektir.',
+  fluency_tip:'"Stop making excuses" (bahane üretmeyi bırak) yokuşa süren birine tepki olabilir.'
+},
+{
+  id:607, category:'sosyal',
+  tr:'Başa baş',
+  tags:['başa baş','eşit','denk','aynı seviyede'],
+  english_primary:"Neck and neck",
+  alternatives:["Evenly matched","On par"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Başa baş',tr_gloss:'head to head',en_fragment:'neck and neck',bridge_type:'direct',explanation:'Beden organı (kafa/boyun) yakınlığı üzerinden eşitlik metaforu'}
+  ],
+  cultural_insight:'"Neck and neck" at yarışlarından gelir. Atların boyun boyuna olması. Türkçe "başa baş" da benzer bir fiziksel yakınlığı anlatır.',
+  fluency_tip:'"The two teams are on par with each other" (iki takım birbirine denk) profesyonel bir tondur.'
+},
+{
+  id:608, category:'duygular',
+  tr:'Can attı',
+  tags:['can attı','çok istedi','sabırsızlandı','istekli'],
+  english_primary:"To be dying to do something",
+  alternatives:["Eager to","Can't wait to"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Can attı',tr_gloss:'threw their soul/life',en_fragment:'dying to',bridge_type:'transform',explanation:'Türkçe canını ortaya koyma (atma); İngilizce arzu uğruna ölme (dying) metaforu'}
+  ],
+  cultural_insight:'Aşırı istek her iki dilde de "can/yaşam" ile ilişkilendirilir. "I\'m dying to see the new movie" gibi.',
+  fluency_tip:'"I\'m really keen on..." (bir şeye çok hevesliyim) biraz daha İngiliz tarzıdır.'
+},
+{
+  id:609, category:'deyimler',
+  tr:'Bir taşla iki kuş',
+  tags:['bir taşla iki kuş','verim','çift kazanç','aynı anda'],
+  english_primary:"Kill two birds with one stone",
+  alternatives:["Two for the price of one","Double benefit"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Bir taşla iki kuş',tr_gloss:'two birds with one stone',en_fragment:'kill two birds with one stone',bridge_type:'direct',explanation:'Tam birebir eşleşme! Avcılık kökenli bu metafor her iki dilde de aynıdır'}
+  ],
+  cultural_insight:'Çok yaygın bir eşleşme. Verimliliğin evrensel sembolü haline gelmiştir.',
+  fluency_tip:'"It\'s a win-win situation" (kazan-kazan durumu) iş dünyasında bu deyimin modern karşılığıdır.'
+},
+{
+  id:610, category:'gunluk',
+  tr:'Havadan sudan',
+  tags:['havadan sudan','boş konuşma','sohbet','önemsiz'],
+  english_primary:"Small talk",
+  alternatives:["Chitchat","About nothing in particular"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Havadan sudan',tr_gloss:'from air and water',en_fragment:'small talk',bridge_type:'transform',explanation:'Türkçe doğa elementleri; İngilizce boyut (küçük) metaforu'}
+  ],
+  cultural_insight:'İlginçtir ki her iki kültürde de önemsiz konuşmalar doğa veya boyut ile küçültülür.',
+  fluency_tip:'"We were just shooting the breeze" (rüzgarı vuruyorduk/uçuruyorduk) çok samimi ve doğal bir Amerikan deyimidir.'
+},
+{
+  id:611, category:'sosyal',
+  tr:'Ağız aramak',
+  tags:['ağız aramak','bilgi sızdırmak','yoklamak','ipucu almak'],
+  english_primary:"Fish for information",
+  alternatives:["Sound someone out","Probe"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağız aramak',tr_gloss:'to search the mouth',en_fragment:'fish for',bridge_type:'transform',explanation:'Türkçe doğrudan konuşma organına odaklanır; İngilizce sabırla bilgi "yakalama" (balık tutma) metaforu kullanır'}
+  ],
+  cultural_insight:'"Sound someone out" (birini seslendirmek/yoklamak) birinin fikrini dolaylı yoldan öğrenmek için çok kullanılır.',
+  fluency_tip:'"I was just testing the waters" (suları test ediyordum) tepkiyi ölçmek için bir şeyler söylemek.'
+},
+{
+  id:612, category:'duygular',
+  tr:'İçine kapanık',
+  tags:['içine kapanık','utangaç','sessiz','sosyal değil'],
+  english_primary:"Withdrawn",
+  alternatives:["Introverted","Introvert"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçine kapanık',tr_gloss:'closed into oneself',en_fragment:'withdrawn',bridge_type:'direct',explanation:'Her iki dil de "kendine çekilme/kapanma" yönünü kullanır'}
+  ],
+  cultural_insight:'"Wallflower" (duvar çiçeği) partilerde kimseyle konuşmayan, kenarda duran kişiler için kullanılan tatlı bir deyimdir.',
+  fluency_tip:'"They keep to themselves" (kendi başlarına takılırlar) birini kırmadan içe kapanık olduğunu söyleme yoludur.'
+},
+{
+  id:613, category:'yogunluk',
+  tr:'Su gibi akıp geçti',
+  tags:['su gibi','hızlı','zaman geçti','çabucak'],
+  english_primary:"Time flies",
+  alternatives:["It went by in a flash","It was over before I knew it"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Su gibi',tr_gloss:'like water',en_fragment:'flies',bridge_type:'transform',explanation:'Türkçe zamanın sıvı gibi akışı (akışkanlık); İngilizce zamanın uçuşu (hız) metaforu'}
+  ],
+  cultural_insight:'Türkçe zamanı dere gibi görür, İngilizce ise kuş gibi. Her iki durumda da tutulamazlık vurgulanır.',
+  fluency_tip:'"How time flies!" (zaman nasıl da uçuyor!) en klasik zaman şikayeti.'
+},
+{
+  id:614, category:'sasirma',
+  tr:'Dili tutulmak',
+  tags:['dili tutulmak','konuşamamak','nutku tutulmak','şok'],
+  english_primary:"Tongue-tied",
+  alternatives:["Speechless","At a loss for words"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Dili tutulmak',tr_gloss:'tongue held',en_fragment:'tongue-tied',bridge_type:'direct',explanation:'Tam birebir eşleşme! Dilin bağlanması/tutulması her iki dilde de aynıdır'}
+  ],
+  cultural_insight:'Heyecan veya korkudan konuşamama hali. "Cat got your tongue?" ise konuşmayan birine sorulan şakacı sorudur.',
+  fluency_tip:'"I was so nervous, I got completely tongue-tied" sınav veya mülakat anıları için harikadır.'
+},
+{
+  id:615, category:'basari',
+  tr:'Turnayı gözünden vurdu',
+  tags:['turnayı gözünden vurmak','büyük başarı','şans','tam isabet'],
+  english_primary:"Hit the jackpot",
+  alternatives:["Hit the bullseye","Struck gold"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Turnayı gözünden',tr_gloss:'hit the crane in the eye',en_fragment:'hit the jackpot / struck gold',bridge_type:'transform',explanation:'Türkçe avcılık başarısı; İngilizce kumar (jackpot) veya madencilik (gold) başarısı'}
+  ],
+  cultural_insight:'"Hit the bullseye" (boğa gözünü vurmak) dart oyunundan gelir ve tam isabetli bir başarıyı anlatır.',
+  fluency_tip:'"You really hit the nail on the head" (çiviyi tam kafasından vurdun) doğru bir tespit yaptığında söylenir.'
+},
+{
+  id:616, category:'gunluk',
+  tr:'Kulak misafiri',
+  tags:['kulak misafiri','duydum','istemeden','dinleme'],
+  english_primary:"Eavesdrop (kasıtlı) / Overhear (tesadüf)",
+  alternatives:["Happened to hear","Caught a snippet of conversation"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Misafir',tr_gloss:'guest',en_fragment:'over-hear',bridge_type:'transform',explanation:'Türkçe "misafir" diyerek eylemi kibarlaştırır; İngilizce üstten duyma (over) metaforunu kullanır'}
+  ],
+  cultural_insight:'"Eavesdropping" saçak altından su damlamasını dinlemekten gelir. Genelde kaba bir eylemdir. "Overhear" ise tamamen masumdur.',
+  fluency_tip:'"I couldn\'t help overhearing..." (istemeden duydum ama...) söze girmenin en kibar yolu.'
+},
+{
+  id:617, category:'sosyal',
+  tr:'Can ciğer',
+  tags:['can ciğer','yakın dost','samimi','çok sevilen'],
+  english_primary:"Bosom buddies",
+  alternatives:["Besties","Close knit"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Can ciğer',tr_gloss:'soul and liver',en_fragment:'bosom buddies',bridge_type:'transform',explanation:'Türkçe iç organ yakınlığı; İngilizce göğüs/bağır (bosom) yakınlığı'}
+  ],
+  cultural_insight:'"Bosom" (göğüs) İngilizcede duyguların merkezidir. Türkçe "ciğer" ise en derin sevgi bağını temsil eder.',
+  fluency_tip:'"We\'re like family" (aile gibiyiz) dostluğu anlatmanın en güçlü yolu.'
+},
+{
+  id:618, category:'duygular',
+  tr:'İçi kan ağlamak',
+  tags:['içi kan ağlamak','çok üzülmek','belli etmemek','derin acı'],
+  english_primary:"Bleeding inside",
+  alternatives:["Heart is breaking silently","Pain behind the smile"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçi kan ağlamak',tr_gloss:'inside crying blood',en_fragment:'bleeding inside',bridge_type:'direct',explanation:'İçsel kanama/acı metaforu iki dilde de saklı derin acı için aynıdır'}
+  ],
+  cultural_insight:'Türkçe "kan ağlamak" çok daha dramatik bir ifadedir. İngilizcede "My heart bleeds for you" bazen alaycı (sahte acıma) olarak da kullanılabilir, dikkat!',
+  fluency_tip:'"I was hurting more than I let on" (gösterdiğimden daha çok acı çekiyordum) duygusal dürüstlük ifadesidir.'
+},
+{
+  id:619, category:'yogunluk',
+  tr:'Eli ayağına dolaşmak',
+  tags:['eli ayağına dolaşmak','panik','telaş','hata yapmak'],
+  english_primary:"To be in a muddle",
+  alternatives:["To get flustered","All over the place"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Dolaşmak',tr_gloss:'to get tangled',en_fragment:'muddle / flustered',bridge_type:'transform',explanation:'Türkçe uzuvların karışması; İngilizce zihinsel karmaşa/bulanıklık'}
+  ],
+  cultural_insight:'"Flustered" (telaşlı/şaşkın) özellikle baskı altında hata yapanlar için harika bir kelimedir.',
+  fluency_tip:'"Take a deep breath" (derin nefes al) eli ayağına dolaşan birine verilen en iyi tavsiyedir.'
+},
+{
+  id:620, category:'sasirma',
+  tr:'Nutku tutulmak',
+  tags:['nutku tutulmak','şaşırmak','konuşamamak','donup kalmak'],
+  english_primary:"Speechless",
+  alternatives:["Stunned into silence","Dumbstruck"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Nutku tutulmak',tr_gloss:'speech held',en_fragment:'speechless',bridge_type:'direct',explanation:'Konuşma yetisinin (nutuk/speech) fiziksel olarak engellenmesi'}
+  ],
+  cultural_insight:'"Dumbstruck" (aptallaşmış gibi vurulmuş) şokun zekayı bile anlık durdurmasını anlatır.',
+  fluency_tip:'"I didn\'t know what hit me" (bana ne çarptığını anlamadım) şaşkınlık sonrası tepki.'
+},
+{
+  id:621, category:'gunluk',
+  tr:'İpe un sermek',
+  tags:['ipe un sermek','bahane üretmek','istememek','zorlaştırmak'],
+  english_primary:"Making excuses",
+  alternatives:["Dragging one's feet","Creating obstacles"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İpe un sermek',tr_gloss:'to spread flour on a rope',en_fragment:'making excuses',bridge_type:'transform',explanation:'Türkçe imkansız bir eylemle bahane üretme; İngilizce sadece eylemin adı'}
+  ],
+  cultural_insight:'Türkçe deyim Nasreddin Hoca hikayesine dayanır ve absürt bir bahaneyi anlatır. İngilizcede "Cock and bull story" (horoz ve boğa hikayesi) uydurma bahaneler için kullanılır.',
+  fluency_tip:'"Don\'t give me that!" (bana bunu anlatma!) uydurma bir bahaneye karşı sert bir tepkidir.'
+},
+{
+  id:622, category:'sosyal',
+  tr:'Yüzsüz',
+  tags:['yüzsüz','utanmaz','çekinmez','arsız'],
+  english_primary:"Thick-skinned",
+  alternatives:["Shameless","Brazen"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Yüzsüz',tr_gloss:'faceless',en_fragment:'thick-skinned',bridge_type:'transform',explanation:'Türkçe onur organının (yüz) yokluğu; İngilizce derinin kalınlığı (etkilenmeme) metaforu'}
+  ],
+  cultural_insight:'"Thick-skinned" İngilizcede bazen eleştiriden etkilenmeyen (pozitif) anlamda da kullanılır. "Shameless" ise tamamen negatiftir.',
+  fluency_tip:'"How could they do that after everything?" (tüm olanlardan sonra bunu nasıl yapabildiler?) yüzsüzlük karşısında şaşkınlık sorusu.'
+},
+{
+  id:623, category:'duygular',
+  tr:'İçine doğmak',
+  tags:['içine doğmak','hissetmek','sezmek','malum olmak'],
+  english_primary:"To have a hunch",
+  alternatives:["A gut feeling","Instinct told me"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İçine doğmak',tr_gloss:'to be born into one\'s inside',en_fragment:'hunch / gut feeling',bridge_type:'transform',explanation:'Türkçe bilginin içte doğuşu; İngilizce fiziksel içgüdü (bağırsak/gut) veya kambur (hunch) metaforu'}
+  ],
+  cultural_insight:'"Gut feeling" Batı dünyasında mantık kadar güvenilen bir "karın" hissidir.',
+  fluency_tip:'"I had a sneaking suspicion" (gizli bir şüphem vardı) yavaş yavaş emin olduğun hisler için kullanılır.'
+},
+{
+  id:624, category:'yogunluk',
+  tr:'Başından aşmak',
+  tags:['başından aşmak','çok fazla','yetişememek','yoğunluk'],
+  english_primary:"Up to one's ears in it",
+  alternatives:["Overwhelmed","Buried in work"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Aşmak',tr_gloss:'to exceed/pass over',en_fragment:'up to ears',bridge_type:'transform',explanation:'Türkçe seviyenin kafayı geçmesi; İngilizce seviyenin kulaklara kadar gelmesi metaforu'}
+  ],
+  cultural_insight:'Her iki dilde de iş yükü bir su veya toprak yığını gibi görülür ve beden seviyesiyle ölçülür.',
+  fluency_tip:'"I\'m struggling to keep my head above water" (suyun üzerinde kalmaya çalışıyorum) yoğunlukla başa çıkma çabası.'
+},
+{
+  id:625, category:'sasirma',
+  tr:'Gözü dışarıda',
+  tags:['gözü dışarıda','sadakatsiz','hep fazlasını isteyen','doyumsuz'],
+  english_primary:"A wandering eye",
+  alternatives:["Looking for something else","Not content"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Gözü dışarıda',tr_gloss:'eye is outside',en_fragment:'wandering eye',bridge_type:'direct',explanation:'Gözün odak dışına (dışarı/gezintiye) çıkması iki dilde de sadakatsizlik metaforudur'}
+  ],
+  cultural_insight:'"Wandering eye" (gezen göz) genellikle ilişkilerde partnerinden başkasına bakanlar için kullanılır.',
+  fluency_tip:'"They\'re never satisfied with what they have" (ellerindekilerle asla yetinmezler) genel bir doyumsuzluk ifadesidir.'
+},
+{
+  id:626, category:'basari',
+  tr:'Havlu atmak',
+  tags:['havlu atmak','vazgeçmek','pes etmek','bitirmek'],
+  english_primary:"Throw in the towel",
+  alternatives:["Give up","Call it quits"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Havlu atmak',tr_gloss:'throwing the towel',en_fragment:'throw in the towel',bridge_type:'direct',explanation:'Birebir eşleşme! Boks kökenli pes etme metaforu evrenseldir'}
+  ],
+  cultural_insight:'Spor dünyasından dile yerleşmiş en güçlü metaforlardan biridir.',
+  fluency_tip:'"Never give up!" (asla pes etme!) en yaygın motivasyon cümlesidir.'
+},
+{
+  id:627, category:'gunluk',
+  tr:'Ağzı sıkı',
+  tags:['ağzı sıkı','sır saklayan','güvenilir','konuşmaz'],
+  english_primary:"Tight-lipped",
+  alternatives:["Keep a secret","Close-mouthed"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Ağzı sıkı',tr_gloss:'tight mouth',en_fragment:'tight-lipped',bridge_type:'direct',explanation:'Ağzın/dudakların sıkılığı metaforu iki dilde de sır saklamak için aynıdır'}
+  ],
+  cultural_insight:'"My lips are sealed" (dudaklarım mühürlü) sır saklayacağına dair verilen en güçlü sözdür.',
+  fluency_tip:'"You can trust me, I won\'t say a word" (bana güvenebilirsin, tek kelime etmem) güven verme cümlesidir.'
+},
+{
+  id:628, category:'sosyal',
+  tr:'İçten pazarlıklı',
+  tags:['içten pazarlıklı','sinsi','gizli niyetli','hesapçı'],
+  english_primary:"To have an ulterior motive",
+  alternatives:["Two-faced","Devious"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçten pazarlıklı',tr_gloss:'bargaining from inside',en_fragment:'ulterior motive',bridge_type:'transform',explanation:'Türkçe içsel ticaret/hesap metaforu; İngilizce gizli/arka plan amacı metaforu'}
+  ],
+  cultural_insight:'"Ulterior motive" (ötesindeki amaç) bir iyiliğin altında yatan bencil çıkarı anlatır.',
+  fluency_tip:'"What\'s the catch?" (işin bit yeniği/hilesi ne?) çok iyi görünen bir teklif karşısında sorulur.'
+},
+{
+  id:629, category:'duygular',
+  tr:'Dünya umurunda değil',
+  tags:['dünya umurunda değil','rahat','kaygısız','vurdumduymaz'],
+  english_primary:"Without a care in the world",
+  alternatives:["Happy-go-lucky","Indifferent"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Dünya umurunda değil',tr_gloss:'doesn\'t care about the world',en_fragment:'without a care in the world',bridge_type:'direct',explanation:'Dünya/care yokluğu metaforu kaygısızlık için neredeyse aynıdır'}
+  ],
+  cultural_insight:'"Happy-go-lucky" hayatı geldiği gibi yaşayan, her durumda mutlu olan kişiler için kullanılır.',
+  fluency_tip:'"I wish I could be that relaxed" (keşke ben de o kadar rahat olabilsem) bir özenme ifadesidir.'
+},
+{
+  id:630, category:'yogunluk',
+  tr:'Göz açtırmadı',
+  tags:['göz açtırmadı','fırsat vermedi','baskı yaptı','çok yoğundu'],
+  english_primary:"Didn't give them a moment's peace",
+  alternatives:["Kept them on their toes","Relentless"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Göz açtırmadı',tr_gloss:'didn\'t let open the eye',en_fragment:'kept on toes',bridge_type:'transform',explanation:'Türkçe görme/dikkat engeli; İngilizce ayak parmakları üzerinde tutma (sürekli tetikte olma) metaforu'}
+  ],
+  cultural_insight:'"Keep someone on their toes" (birini parmak uçlarında tutmak) onu sürekli çalışmaya veya hazır olmaya zorlamak demektir.',
+  fluency_tip:'"My boss is really keeping me on my toes lately" iş hayatında çok sık duyulur.'
+},
+
+/* ─── GENİŞLETME PAKETİ 4 (700-830) ─────────────────────────── */
+{
+  id:700, category:'gunluk',
+  tr:'Sağlık olsun',
+  tags:['sağlık olsun','önemli değil','canın sağolsun','boşver'],
+  english_primary:"It's not the end of the world",
+  alternatives:["Never mind","These things happen"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Sağlık olsun',tr_gloss:'may there be health',en_fragment:'not the end of the world',bridge_type:'transform',explanation:'Türkçe sağlığın her şeyden üstünlüğü; İngilizce olayın büyüklüğünün (kıyamet değil) reddi metaforu'}
+  ],
+  cultural_insight:'Türkçede kayıplar karşısında "sağlık olsun" diyerek teselli bulmak çok yaygındır. İngilizcede "It could be worse" (daha kötü olabilirdi) benzer bir teselli verir.',
+  fluency_tip:'"Don\'t let it get you down" (bunun seni üzmesine izin verme) harika bir teselli cümlesidir.'
+},
+{
+  id:701, category:'deyimler',
+  tr:'Ayıkla pirincin taşını',
+  tags:['ayıkla pirincin taşını','karışık iş','sorun','çıkmaza girdi'],
+  english_primary:"What a fine mess!",
+  alternatives:["A real can of worms","In a pickle"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ayıkla',tr_gloss:'sort out / clean',en_fragment:'mess / can of worms',bridge_type:'transform',explanation:'Türkçe gıdadaki (pirinç) zor ayıklanan madde; İngilizce solucan kutusu (can of worms) veya turşu (pickle) metaforu'}
+  ],
+  cultural_insight:'"A can of worms" açıldığında kontrol edilemeyen karmaşık sorunları anlatır. "In a pickle" ise sıkışık ve zor bir durumu.',
+  fluency_tip:'"We\'ve got a situation here" (bir durumumuz/sorunumuz var) iş hayatında kibarca sorun belirtme yoludur.'
+},
+{
+  id:702, category:'sosyal',
+  tr:'Ağzından çıkanı kulağı duymuyor',
+  tags:['ağzından çıkan','ne dediğini bilmiyor','öfkeli','düşüncesiz'],
+  english_primary:"They don't know what they're saying",
+  alternatives:["They're talking nonsense","They lost control of their tongue"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzından çıkan',tr_gloss:'what comes out of their mouth',en_fragment:'what they\'re saying',bridge_type:'direct',explanation:'Konuşma eylemi iki dilde de benzer; Türkçe kulak/duyma (kontrol) eksikliğini vurguluyor'}
+  ],
+  cultural_insight:'Türkçe deyim, kişinin öfke anında mantık kontrolünü tamamen kaybettiğini çok güzel bir fiziksel döngüyle (ağız-kulak) anlatır.',
+  fluency_tip:'"Think before you speak" (konuşmadan önce düşün) bu duruma verilen en iyi tavsiyedir.'
+},
+{
+  id:703, category:'duygular',
+  tr:'İçim rahat',
+  tags:['içim rahat','huzurluyum','vicdanım temiz','endişem yok'],
+  english_primary:"My mind is at ease",
+  alternatives:["I have a clear conscience","I can rest easy"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçim',tr_gloss:'my inside',en_fragment:'my mind',bridge_type:'transform',explanation:'Türkçe "iç" (ruh/kalp); İngilizce "mind" (zihin) merkezli huzur metaforu'}
+  ],
+  cultural_insight:'"Clear conscience" (temiz vicdan) etik bir huzuru anlatır. "At ease" ise genel bir rahatlık halidir.',
+  fluency_tip:'"I\'ve done my best, so I\'m at peace with it" (elimden geleni yaptım, bu yüzden huzurluyum) çok doğal bir ifade.'
+},
+{
+  id:704, category:'yogunluk',
+  tr:'Burnundan kıl aldırmamak',
+  tags:['burnundan kıl aldırmamak','kibirli','eleştiriye kapalı','gururlu'],
+  english_primary:"Too proud for one's own good",
+  alternatives:["High and mighty","Full of oneself"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Kıl aldırmamak',tr_gloss:'not letting a hair be taken',en_fragment:'proud / high and mighty',bridge_type:'transform',explanation:'Türkçe aşırı hassasiyet ve dokunulmazlık; İngilizce yükseklik (high) ve güç (mighty) metaforu'}
+  ],
+  cultural_insight:'"High and mighty" (yüksek ve güçlü) başkalarına üstten bakan kibirli kişiler için tam karşılıktır.',
+  fluency_tip:'"Don\'t take it so personally" (bunu bu kadar kişisel alma) bu tip kişilere verilen bir tavsiyedir.'
+},
+{
+  id:705, category:'sasirma',
+  tr:'Şaka gibi',
+  tags:['şaka gibi','inanılmaz','olamaz','gerçek mi'],
+  english_primary:"You've got to be joking",
+  alternatives:["Is this for real?","Unbelievable"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Şaka',tr_gloss:'joke',en_fragment:'joking',bridge_type:'direct',explanation:'İnanılmaz bir durumu şaka metaforuyla anlatmak her iki dilde de ortaktır'}
+  ],
+  cultural_insight:'"You\'re pulling my leg" (bacağımı çekiyorsun) şaka yaptığını veya kandırdığını söylemenin çok klasik bir İngilizce yoludur.',
+  fluency_tip:'"No way!" şaşkınlık anında en çok duyacağın tepkidir.'
+},
+{
+  id:706, category:'basari',
+  tr:'İğneyle kuyu kazmak',
+  tags:['iğneyle kuyu kazmak','zor iş','sabır isteyen','yavaş ama emin'],
+  english_primary:"Like looking for a needle in a haystack",
+  alternatives:["An uphill battle","Painstaking work"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İğne',tr_gloss:'needle',en_fragment:'needle',bridge_type:'direct',explanation:'İğne (küçüklük/detay) metaforu her iki dilde de zorluğa vurgu yapmak için kullanılır'}
+  ],
+  cultural_insight:'Türkçe deyim sabrı (kuyu kazmak), İngilizce deyim ise imkansızlığı (samanda iğne aramak) vurgular.',
+  fluency_tip:'"It\'s a slow process, but we\'re getting there" (yavaş bir süreç ama varıyoruz) motivasyon cümlesidir.'
+},
+{
+  id:707, category:'gunluk',
+  tr:'Vakit nakittir',
+  tags:['vakit nakittir','zaman değerli','acele et','zaman para'],
+  english_primary:"Time is money",
+  alternatives:["Don't waste time","Make every second count"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Vakit nakittir',tr_gloss:'time is cash',en_fragment:'time is money',bridge_type:'direct',explanation:'Tam birebir eşleşme! Zamanın ekonomik bir değer olduğu fikri evrenseldir'}
+  ],
+  cultural_insight:'Modern dünyanın en temel hız ve verimlilik sloganıdır.',
+  fluency_tip:'"We\'re on a tight schedule" (sıkışık bir takvimimiz var) iş hayatında çok yaygındır.'
+},
+{
+  id:708, category:'sosyal',
+  tr:'Gönlünü almak',
+  tags:['gönlünü almak','barışmak','özür dilemek','affettirmek'],
+  english_primary:"Make it up to someone",
+  alternatives:["Win someone over","Smooth things over"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Gönlünü',tr_gloss:'heart / soul',en_fragment:'make it up',bridge_type:'transform',explanation:'Türkçe kalbi "almak" (iyileştirmek); İngilizce durumu "telafi etmek" (make up) metaforu'}
+  ],
+  cultural_insight:'"Make it up to you" (sana telafi edeceğim) hatadan sonra yapılan jestleri anlatır.',
+  fluency_tip:'"Let me buy you lunch to make it up to you" (telafi için sana öğle yemeği ısmarlayayım) çok doğal.'
+},
+{
+  id:709, category:'duygular',
+  tr:'Canı burnunda',
+  tags:['canı burnunda','çok öfkeli','patlamak üzere','sinirli'],
+  english_primary:"About to lose it",
+  alternatives:["At breaking point","Fed up"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Canı burnunda',tr_gloss:'soul is at the nose',en_fragment:'breaking point',bridge_type:'transform',explanation:'Türkçe ruhun bedenden çıkma noktası; İngilizce fiziksel bir yapının kırılma noktası metaforu'}
+  ],
+  cultural_insight:'İki dilde de son raddeye gelme hali farklı fiziksel metaforlarla (beden vs. madde) anlatılır.',
+  fluency_tip:'"I\'ve had it up to here!" (buraya kadar geldi!) el hareketiyle sık kullanılan bir öfke ifadesidir.'
+},
+{
+  id:710, category:'yogunluk',
+  tr:'İş işten geçti',
+  tags:['iş işten geçti','geç kaldın','artık çok geç','fırsat kaçtı'],
+  english_primary:"That ship has sailed",
+  alternatives:["Missed the boat","Too little too late"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İş işten geçti',tr_gloss:'work passed from work',en_fragment:'ship has sailed',bridge_type:'transform',explanation:'Türkçe zamanın akışı; İngilizce geminin (fırsatın) limandan ayrılması metaforu'}
+  ],
+  cultural_insight:'"Missed the boat" ve "That ship has sailed" kaçırılan fırsatlar için en yaygın İngilizce deyimlerdir.',
+  fluency_tip:'"It\'s water under the bridge now" (artık köprü altındaki su — geçti bitti) olanları değiştiremeyeceğinizi anlatır.'
+},
+{
+  id:711, category:'sasirma',
+  tr:'Aklım durdu',
+  tags:['aklım durdu','şaşırdım','anlayamadım','şok'],
+  english_primary:"My mind went blank",
+  alternatives:["I'm at a loss","I can't process this"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Aklım durdu',tr_gloss:'my mind stopped',en_fragment:'mind went blank',bridge_type:'transform',explanation:'Türkçe makineleşmiş akılın durması; İngilizce ekranın/sayfanın beyazlaşması (boşluk) metaforu'}
+  ],
+  cultural_insight:'"Mind went blank" genellikle sınavda veya sahnede her şeyi unutmak anlamında da kullanılır.',
+  fluency_tip:'"I drew a blank" (boşluk çizdim/buldum) bir ismi veya bilgiyi hatırlayamadığında söylenir.'
+},
+{
+  id:712, category:'basari',
+  tr:'Kendi ayakları üzerinde durmak',
+  tags:['kendi ayakları üzerinde','bağımsız','özgür','başarılı'],
+  english_primary:"Stand on one's own two feet",
+  alternatives:["Be independent","Self-sufficient"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Kendi ayakları',tr_gloss:'own feet',en_fragment:'own two feet',bridge_type:'direct',explanation:'Tam birebir eşleşme! Bağımsızlık ve yetişkinlik metaforu beden dengesi üzerinden aynıdır'}
+  ],
+  cultural_insight:'Evrensel bir gelişim ve başarı sembolüdür.',
+  fluency_tip:'"They\'re finally standing on their own two feet" (nihayet kendi ayakları üzerinde duruyorlar) ekonomik bağımsızlık için sık kullanılır.'
+},
+{
+  id:713, category:'gunluk',
+  tr:'Laf olsun diye',
+  tags:['laf olsun','öylesine','ciddi değil','sohbet olsun'],
+  english_primary:"Just for the sake of it",
+  alternatives:["Just talking","For no particular reason"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Laf olsun',tr_gloss:'let there be word',en_fragment:'for the sake of it',bridge_type:'transform',explanation:'Türkçe konuşmanın varlığı için; İngilizce eylemin/nedenin hatırı için metaforu'}
+  ],
+  cultural_insight:'"Just for the sake of talking" (sadece konuşmuş olmak için) tam karşılıktır.',
+  fluency_tip:'"Don\'t take them seriously, they\'re just talking for the sake of it" (onları ciddiye alma, öylesine konuşuyorlar) iyi bir uyarıdır.'
+},
+{
+  id:714, category:'sosyal',
+  tr:'Arkasından konuşmak',
+  tags:['arkasından konuşmak','dedikodu','gıybet','ihanet'],
+  english_primary:"Talk behind someone's back",
+  alternatives:["Backstab (daha ağır)","Gossip"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Arkadan',tr_gloss:'behind',en_fragment:'behind someone\'s back',bridge_type:'direct',explanation:'Mekansal gizlilik (arka taraf) metaforu dedikodu için iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Backstabbing" (arkadan bıçaklama) sadece konuşmak değil, aktif bir ihaneti anlatır.',
+  fluency_tip:'"If you have something to say, say it to my face" (bir diyeceğin varsa yüzüme söyle) dedikoduya karşı en klasik tepkidir.'
+},
+{
+  id:715, category:'duygular',
+  tr:'İçi içine sığmamak',
+  tags:['içi içine sığmamak','çok heyecanlı','mutlu','sabırsız'],
+  english_primary:"To be bursting with excitement",
+  alternatives:["Can't contain oneself","Full of beans"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İçi içine sığmamak',tr_gloss:'inside doesn\'t fit inside',en_fragment:'bursting',bridge_type:'transform',explanation:'Türkçe hacimsel sığmama; İngilizce patlama (burst) metaforu'}
+  ],
+  cultural_insight:'"Full of beans" (fasulye dolu) özellikle çocuklar için "enerji dolu ve neşeli" anlamında çok tatlı bir deyimdir.',
+  fluency_tip:'"I\'m so excited I can\'t even sit still!" (o kadar heyecanlıyım ki yerimde duramıyorum) bu duyguyu anlatmanın doğal yoludur.'
+},
+{
+  id:716, category:'yogunluk',
+  tr:'Başını kaşıyacak vakti yok',
+  tags:['başını kaşıyacak vakit','çok meşgul','yogun','nefes alamıyor'],
+  english_primary:"To be run off one's feet",
+  alternatives:["Extremely busy","Doesn't have a spare second"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Başını kaşıyacak',tr_gloss:'to scratch the head',en_fragment:'run off feet',bridge_type:'transform',explanation:'Türkçe küçük bir kişisel eyleme bile vakit yokluğu; İngilizce çok koşuşturmaktan ayakların bitmesi metaforu'}
+  ],
+  cultural_insight:'"Run off my feet" (ayaklarımın feri gitti/koşmaktan bittim) özellikle hizmet sektöründe yoğun günü anlatmak için kullanılır.',
+  fluency_tip:'"I haven\'t had a moment to myself all day" (tüm gün kendime bir an bile ayıramadım) çok yaygın bir serzeniştir.'
+},
+{
+  id:717, category:'sasirma',
+  tr:'Dudak büktü',
+  tags:['dudak bükmek','beğenmedi','küçümsedi','önemsemedi'],
+  english_primary:"Turned up their nose at it",
+  alternatives:["Looked down on","Wasn't impressed"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Dudak',tr_gloss:'lip',en_fragment:'nose',bridge_type:'transform',explanation:'Türkçe dudak hareketi; İngilizce burun kıvırma (turn up the nose) hareketi üzerinden beğenmeme metaforu'}
+  ],
+  cultural_insight:'Her iki dil de beğenmemeyi yüzdeki mimikler üzerinden anlatır ama odak organları farklıdır.',
+  fluency_tip:'"They weren\'t exactly thrilled" (pek de heyecanlanmadılar) birinin bir şeyi beğenmediğini kibarca söyleme yoludur.'
+},
+{
+  id:718, category:'basari',
+  tr:'Emeklemekten yürümeye',
+  tags:['emeklemek','adım adım','başlangıç','gelişim'],
+  english_primary:"Learn to walk before you run",
+  alternatives:["Step by step","Start from scratch"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Emeklemek',tr_gloss:'crawling',en_fragment:'walk',bridge_type:'transform',explanation:'Gelişim evreleri metaforu; İngilizce yürüme ve koşma arasındaki aşamaya odaklanır'}
+  ],
+  cultural_insight:'"You have to crawl before you can walk" (yürümeden önce emeklemelisin) sabırlı gelişim için evrensel bir öğüttür.',
+  fluency_tip:'"Take it one step at a time" (adım adım ilerle) en çok duyacağın tavsiye cümlesidir.'
+},
+{
+  id:719, category:'gunluk',
+  tr:'Havalar nasıl olursa olsun',
+  tags:['havalar nasıl','fark etmez','her koşulda','her zaman'],
+  english_primary:"Come rain or shine",
+  alternatives:["Whatever the weather","In any case"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Havalar',tr_gloss:'weathers',en_fragment:'rain or shine',bridge_type:'direct',explanation:'Hava koşulları üzerinden "her durumda" anlamı yaratma metaforu ortaktır'}
+  ],
+  cultural_insight:'"Come rain or shine" (yağmur da yağsa güneş de açsa) bir söz verirken sadakati vurgulamak için çok kullanılır.',
+  fluency_tip:'"I\'ll be there, come rain or shine" (ne olursa olsun orada olacağım) güçlü bir sözdür.'
+},
+{
+  id:720, category:'sosyal',
+  tr:'Ağzı kulaklarında',
+  tags:['ağzı kulaklarında','çok mutlu','gülüyor','neşeli'],
+  english_primary:"Grinning like a Cheshire cat",
+  alternatives:["Beaming","Smiling from ear to ear"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzı kulaklarında',tr_gloss:'mouth at the ears',en_fragment:'smiling from ear to ear',bridge_type:'direct',explanation:'Gülümsemenin genişliği metaforu her iki dilde de birebir aynıdır'}
+  ],
+  cultural_insight:'"Cheshire cat" Alice Harikalar Diyarında\'ki hep gülen kediden gelir. "Ear to ear" ise en yaygın kullanılan versiyondur.',
+  fluency_tip:'"You look like you\'ve just won the lottery!" (lotoyu kazanmış gibi görünüyorsun!) çok mutlu birine söylenir.'
+},
+{
+  id:721, category:'duygular',
+  tr:'Canı sıkkın',
+  tags:['canı sıkkın','üzgün','keyifsiz','mutsuz'],
+  english_primary:"Down in the dumps",
+  alternatives:["Feeling blue","Out of sorts"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Canı sıkkın',tr_gloss:'soul is squeezed',en_fragment:'down in the dumps',bridge_type:'transform',explanation:'Türkçe içsel baskı; İngilizce çöplükte/aşağıda (down) olma metaforu'}
+  ],
+  cultural_insight:'"Feeling blue" (mavi hissetmek) caz müziğinden gelen bir hüzün metaforudur. "Down in the dumps" ise moralin çok bozuk olduğunu anlatır.',
+  fluency_tip:'"Are you okay? You seem a bit down today" (İyi misin? Bugün biraz moralsiz görünüyorsun) empati sorusudur.'
+},
+{
+  id:722, category:'yogunluk',
+  tr:'İğne atsan yere düşmez',
+  tags:['iğne atsan yere düşmez','çok kalabalık','tıklım tıklım','insan seli'],
+  english_primary:"Packed like sardines",
+  alternatives:["Wall-to-wall people","Bursting at the seams"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İğne',tr_gloss:'needle',en_fragment:'sardines',bridge_type:'transform',explanation:'Türkçe yer yokluğu (iğne bile düşmez); İngilizce konserve kutusundaki balıklar (sardalyalar) gibi sıkışıklık metaforu'}
+  ],
+  cultural_insight:'"Bursting at the seams" (dikişlerinden patlıyor) bir yerin kapasitesinden çok daha fazla dolu olduğunu anlatır.',
+  fluency_tip:'"The place was absolutely packed" (orda iğne atsan yere düşmezdi/tıklım tıklımdı) en sade karşılıktır.'
+},
+{
+  id:723, category:'sasirma',
+  tr:'Gözleri fal taşı gibi açıldı',
+  tags:['gözleri fal taşı','şaşırdı','şok oldu','hayret'],
+  english_primary:"Eyes popped out of their head",
+  alternatives:["Wide-eyed","Starring in amazement"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Fal taşı',tr_gloss:'fortune stone (large)',en_fragment:'popped out',bridge_type:'transform',explanation:'Türkçe gözün boyutu (taş gibi); İngilizce gözün yuvasından fırlaması (pop out) metaforu'}
+  ],
+  cultural_insight:'Aşırı şaşkınlık anındaki fiziksel göz büyümesini her iki dil de abartılı bir şekilde anlatır.',
+  fluency_tip:'"You should have seen the look on their face!" (yüzlerindeki ifadeyi görmeliydin!) şaşırtıcı bir olayı anlatırken kullanılır.'
+},
+{
+  id:724, category:'basari',
+  tr:'Tereyağından kıl çeker gibi',
+  tags:['tereyağından kıl çeker gibi','çok kolay','pürüzsüz','sorunsuz'],
+  english_primary:"Like a knife through butter",
+  alternatives:["A piece of cake","As easy as pie"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Tereyağı',tr_gloss:'butter',en_fragment:'butter',bridge_type:'direct',explanation:'Tereyağı/yağ metaforu pürüzsüzlük ve kolaylık için her iki dilde de birebir aynıdır'}
+  ],
+  cultural_insight:'"A piece of cake" (bir dilim kek) ve "Easy as pie" (turta kadar kolay) günlük hayatta en çok duyacağın "kolay" deyimleridir.',
+  fluency_tip:'"No problem at all, it was a breeze" (hiç sorun değil, çok kolaydı/meltem gibiydi) çok doğal bir cevaptır.'
+},
+{
+  id:725, category:'gunluk',
+  tr:'İçli dışlı olmak',
+  tags:['içli dışlı','çok samimi','yakın','her şeyi paylaşan'],
+  english_primary:"On very intimate terms",
+  alternatives:["Hand in glove","Thick as thieves"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçli dışlı',tr_gloss:'with inside and outside',en_fragment:'hand in glove',bridge_type:'transform',explanation:'Türkçe derinlik (iç ve dış bir); İngilizce eldiven ve elin uyumu (ayrılmazlık) metaforu'}
+  ],
+  cultural_insight:'"Hand in glove" (eldiven içinde el gibi) genellikle bir işbirliği veya çok yakın ilişkiyi anlatır.',
+  fluency_tip:'"They\'ve been inseparable lately" (son zamanlarda ayrılmaz oldular) arkadaşlıklar için çok uygundur.'
+},
+{
+  id:726, category:'sosyal',
+  tr:'Ağız birliği etmek',
+  tags:['ağız birliği','anlaşmak','aynı şeyi söylemek','sözleşmek'],
+  english_primary:"To be on the same page",
+  alternatives:["Sing from the same hymn sheet","In cahoots (negatif)"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Ağız birliği',tr_gloss:'unity of mouth',en_fragment:'same page',bridge_type:'transform',explanation:'Türkçe konuşma organının birliği; İngilizce bir kitabın/belgenin aynı sayfasında olma metaforu'}
+  ],
+  cultural_insight:'"On the same page" iş dünyasının en temel "anlaşma" deyimidir. "In cahoots" ise genellikle gizli ve kötü bir iş için anlaşmayı ima eder.',
+  fluency_tip:'"Let\'s make sure we\'re all on the same page before the meeting" toplantı öncesi çok kullanılır.'
+},
+{
+  id:727, category:'duygular',
+  tr:'Yüreği ağzına gelmek',
+  tags:['yüreği ağzına gelmek','çok korkmak','ani şok','heyecan'],
+  english_primary:"To have one's heart in one's mouth",
+  alternatives:["Scared out of one's wits","Jumped out of my skin"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Yüreği ağzına',tr_gloss:'heart in the mouth',en_fragment:'heart in one\'s mouth',bridge_type:'direct',explanation:'Tam birebir eşleşme! Korkudan kalbin yukarı çıkma hissi iki dilde de aynı metaforla anlatılır'}
+  ],
+  cultural_insight:'Bu nadir eşleşmelerden biridir. Korku veya aşırı heyecan anındaki fiziksel kalp çarpıntısı hissini anlatır.',
+  fluency_tip:'"My heart skipped a beat" (kalbim bir atışı atladı) heyecan veya hafif korku için harikadır.'
+},
+{
+  id:728, category:'yogunluk',
+  tr:'İpin ucunu kaçırmak',
+  tags:['ipin ucunu kaçırmak','kontrolü kaybetmek','aşırıya kaçmak','yönetememek'],
+  english_primary:"To lose track of things",
+  alternatives:["Let things get out of hand","Go overboard"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İpin ucu',tr_gloss:'end of the rope',en_fragment:'lose track / out of hand',bridge_type:'transform',explanation:'Türkçe tutulan bir nesnenin (ip) kaybı; İngilizce elden çıkma veya izi kaybetme metaforu'}
+  ],
+  cultural_insight:'"Go overboard" (gemiden dışarı atlamak) bir şeyi aşırı derecede yapmak, dozu kaçırmak demektir.',
+  fluency_tip:'"Sorry, I lost track of time" (üzgünüm, zamanın nasıl geçtiğini anlamadım/ipin ucunu kaçırdım) çok yaygın bir özürdür.'
+},
+{
+  id:729, category:'sasirma',
+  tr:'Ağzı bir karış açık kaldı',
+  tags:['ağzı bir karış açık','şaşırdı','dondu','hayret'],
+  english_primary:"Flabbergasted",
+  alternatives:["Jaw dropped","Stunned"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzı açık',tr_gloss:'mouth open',en_fragment:'jaw dropped',bridge_type:'direct',explanation:'Şaşkınlık anındaki ağız hareketi her iki dilde de benzerdir'}
+  ],
+  cultural_insight:'Türkçedeki "bir karış" ölçüsü abartıyı artırır. İngilizcede "flabbergasted" kelimesi şaşkınlığın en üst seviyesini anlatır.',
+  fluency_tip:'"I was totally speechless" (tamamen sözsüz kaldım) etkileyici bir olaydan sonra söylenir.'
+},
+{
+  id:730, category:'basari',
+  tr:'Alnının akıyla çıkmak',
+  tags:['alnının akıyla','başarıyla bitirmek','onuruyla başarmak','temiz'],
+  english_primary:"To pass with flying colors",
+  alternatives:["To do someone proud","To come out on top"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Alın aklığı',tr_gloss:'whiteness of the forehead',en_fragment:'flying colors',bridge_type:'transform',explanation:'Türkçe onur/temizlik (ak alın); İngilizce denizcilikteki zafer bayrakları (flying colors) metaforu'}
+  ],
+  cultural_insight:'"With flying colors" eski gemilerin savaştan zaferle dönerken bayraklarını dalgalandırmasından gelir. Türkçe ise kişinin onuruna (alnına) odaklanır.',
+  fluency_tip:'"She passed her driving test with flying colors!" (ehliyet sınavını başarıyla/alnının akıyla geçti!) klasik bir örnek.'
+},
+
+/* ─── GENİŞLETME PAKETİ 5 (831-950) ─────────────────────────── */
+{
+  id:831, category:'gunluk',
+  tr:'Kabak tadı verdi',
+  tags:['kabak tadı','bıktırdı','uzadı','sıkıcı oldu'],
+  english_primary:"To become tedious",
+  alternatives:["To get old","Overstay its welcome"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Kabak',tr_gloss:'zucchini / squash',en_fragment:'tedious / old',bridge_type:'transform',explanation:'Türkçe tatsız bir sebze (kabak) metaforu; İngilizce eskime veya sıkıcılık kavramı'}
+  ],
+  cultural_insight:'"Overstay its welcome" (karşılanma süresini aşmak) bir şeyin artık istenmediği, bıktırdığı noktayı çok güzel anlatır.',
+  fluency_tip:'"This joke is starting to get old" (bu şaka artık bayatlamaya/sıkmaya başladı) harika bir karşılıktır.'
+},
+{
+  id:832, category:'sosyal',
+  tr:'Ağız tadıyla',
+  tags:['ağız tadıyla','huzurla','keyifle','sorunsuz'],
+  english_primary:"In peace and quiet",
+  alternatives:["To one's heart's content","Enjoyably"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Ağız tadı',tr_gloss:'taste of the mouth',en_fragment:'peace and quiet',bridge_type:'transform',explanation:'Türkçe lezzet (tat) metaforu; İngilizce sessizlik ve huzur (peace/quiet) metaforu'}
+  ],
+  cultural_insight:'Türkçede huzur "tat" ile, İngilizcede ise "sessizlik" (quiet) ile eşleştirilir. "Ağız tadıyla bir yemek yiyemedik" gibi.',
+  fluency_tip:'"I just want to finish this in peace" (şunu huzurla/ağız tadıyla bitirmek istiyorum) çok doğal bir istektir.'
+},
+{
+  id:833, category:'duygular',
+  tr:'Burnundan gelmek',
+  tags:['burnundan gelmek','pişman olmak','zehir olmak','mutsuz'],
+  english_primary:"To pay dearly for it",
+  alternatives:["To regret it bitterly","It backfired"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Burnundan',tr_gloss:'from the nose',en_fragment:'pay dearly',bridge_type:'transform',explanation:'Türkçe fiziksel bir "geri çıkış" (burun) metaforu; İngilizce bedel ödeme (pay) metaforu'}
+  ],
+  cultural_insight:'"Pay dearly" (ağır bedel ödemek) bir keyfin sonradan çok büyük bir soruna dönüşmesini anlatır.',
+  fluency_tip:'"They made me regret even going there" (gittiğime pişman ettiler/burnumdan getirdiler) çok doğal bir serzeniştir.'
+},
+{
+  id:834, category:'yogunluk',
+  tr:'Canını dişine takmak',
+  tags:['canını dişine takmak','çok çabalamak','özveri','gayret'],
+  english_primary:"To work one's fingers to the bone",
+  alternatives:["To give it everything you've got","To strain every nerve"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Diş',tr_gloss:'tooth',en_fragment:'bone',bridge_type:'transform',explanation:'Türkçe diş (dayanıklılık); İngilizce kemik (aşırı çalışma sonu) metaforu'}
+  ],
+  cultural_insight:'"Work fingers to the bone" (parmakları kemiğine kadar çalıştırmak) aşırı fiziksel ve zihinsel çabayı anlatır.',
+  fluency_tip:'"I'm working my socks off!" (çoraplarımı çıkarana kadar — yani çok — çalışıyorum) daha samimi bir versiyondur.'
+},
+{
+  id:835, category:'deyimler',
+  tr:'Ekmeğine yağ sürmek',
+  tags:['ekmeğine yağ sürmek','işine yaramak','fayda sağlamak','istemeden yardım'],
+  english_primary:"To play into someone's hands",
+  alternatives:["To give someone an advantage","To work in someone's favor"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Ekmek/Yağ',tr_gloss:'bread and butter',en_fragment:'hands',bridge_type:'transform',explanation:'Türkçe gıda/lezzet artırma; İngilizce kontrolün/avantajın ellere (hands) geçmesi metaforu'}
+  ],
+  cultural_insight:'"Play into someone\'s hands" genellikle rakibinin işine yarayacak bir hata yapıldığında kullanılır.',
+  fluency_tip:'"By getting angry, you\'re just playing into their hands" (sinirlenerek onların ekmeğine yağ sürüyorsun) harika bir uyarıdır.'
+},
+{
+  id:836, category:'sosyal',
+  tr:'Ateş püskürüyor',
+  tags:['ateş püskürmek','çok öfkeli','kızgın','gazap'],
+  english_primary:"Breathing fire",
+  alternatives:["Incensed","Livid"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ateş püskürmek',tr_gloss:'spitting fire',en_fragment:'breathing fire',bridge_type:'direct',explanation:'Ejderha/ateş metaforu aşırı öfke için her iki dilde de birebir aynıdır'}
+  ],
+  cultural_insight:'Evrensel bir öfke sembolü. "Livid" ise öfkeden morarmış/solmuş anlamında çok güçlü bir sıfattır.',
+  fluency_tip:'"Watch out, the boss is breathing fire today" iş ortamında bir uyarı olabilir.'
+},
+{
+  id:837, category:'sasirma',
+  tr:'Kanı dondu',
+  tags:['kanı donmak','dehşet','korku','şok'],
+  english_primary:"Their blood ran cold",
+  alternatives:["To be chilled to the bone","Frozen with fear"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Kan',tr_gloss:'blood',en_fragment:'blood',bridge_type:'direct',explanation:'Kan ve sıcaklık değişimi metaforu korku için her iki dilde de ortaktır'}
+  ],
+  cultural_insight:'Korkunun vücut ısısını düşürmesi evrensel bir biyolojik gözlemdir. İngilizcede "blood ran cold" (kan soğuk aktı) şeklinde ifade edilir.',
+  fluency_tip:'"It was a blood-curdling scream" (kan donduran bir çığlık) korku hikayelerinde çok geçer.'
+},
+{
+  id:838, category:'basari',
+  tr:'Önünü kesmek',
+  tags:['önünü kesmek','engel olmak','durdurmak','sabotaj'],
+  english_primary:"To stand in someone's way",
+  alternatives:["To block someone","To thwart someone's plans"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Önünü kesmek',tr_gloss:'to cut the front',en_fragment:'stand in the way',bridge_type:'direct',explanation:'Yol/mekan engeli metaforu engelleme için iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Thwart" (boşa çıkarmak) daha resmi bir kelimedir. "Don\'t stand in my way" (yolumda durma/önümü kesme) bir kararlılık ifadesidir.',
+  fluency_tip:'"Nothing can stop me now" (beni artık hiçbir şey durduramaz) başarının önündeki engeller kalktığında söylenir.'
+},
+{
+  id:839, category:'gunluk',
+  tr:'Göz ardı etmek',
+  tags:['göz ardı','ihmal','görmezden gelmek','unurmamak'],
+  english_primary:"To overlook",
+  alternatives:["To turn a blind eye","To ignore"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Göz ardı',tr_gloss:'behind the eye',en_fragment:'over-look',bridge_type:'transform',explanation:'Türkçe görüşün "arkasına" atma; İngilizce görüşün "üstünden" bakma (görmeme) metaforu'}
+  ],
+  cultural_insight:'"Turn a blind eye" (kör gözünü dönmek) Amiral Nelson\'ın bir savaştaki hikayesinden gelir; bilerek görmezden gelmek demektir.',
+  fluency_tip:'"We can\'t afford to overlook this detail" (bu detayı göz ardı edemeyiz) profesyonel bir uyarıdır.'
+},
+{
+  id:840, category:'sosyal',
+  tr:'İpini koparmış',
+  tags:['ipini koparmış','başıboş','kontrolsüz','özgür ama kötü'],
+  english_primary:"A loose cannon",
+  alternatives:["Off the leash","Uncontrollable"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İp',tr_gloss:'rope',en_fragment:'cannon / leash',bridge_type:'transform',explanation:'Türkçe hayvan bağı (ip); İngilizce denizcilikteki tehlikeli serbest top (loose cannon) veya tasma (leash) metaforu'}
+  ],
+  cultural_insight:'"Loose cannon" (gevşek top) gemide bağı kopan ve sağa sola çarparak zarar veren toplardan gelir. Öngörülemeyen kişiler için kullanılır.',
+  fluency_tip:'"They\'re a bit of a loose cannon, so be careful" (biraz öngörülemez biri, dikkat et) sosyal bir uyarıdır.'
+},
+{
+  id:841, category:'duygular',
+  tr:'İçi cız etmek',
+  tags:['içi cız etmek','üzülmek','acıma','şefkat'],
+  english_primary:"To feel a pang of guilt/sadness",
+  alternatives:["My heart went out to them","It tugged at my heartstrings"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Cız',tr_gloss:'sizzling sound',en_fragment:'pang',bridge_type:'transform',explanation:'Türkçe yanma sesi; İngilizce ani keskin acı (pang) metaforu'}
+  ],
+  cultural_insight:'"My heart goes out to you" (kalbim sana gidiyor) birine taziye veya derin üzüntü bildirirken kullanılan en sıcak kalıptır.',
+  fluency_tip:'"I felt so sorry for him, my heart just sank" (onun için çok üzüldüm, içim cız etti/kalbim düştü) çok doğal.'
+},
+{
+  id:842, category:'yogunluk',
+  tr:'İşi başından aşkın',
+  tags:['işi başından aşkın','çok meşgul','yetişemiyor','boğulmuş'],
+  english_primary:"To be snowed under",
+  alternatives:["Up to one's eyeballs in work","Swamped"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Başından aşkın',tr_gloss:'exceeding the head',en_fragment:'snowed under',bridge_type:'transform',explanation:'Türkçe seviyenin kafayı geçmesi; İngilizce kar altında kalma (snowed under) metaforu'}
+  ],
+  cultural_insight:'"Snowed under" (kar altında kalmış) iş yükünün bir doğal afet gibi birikmesini anlatır. İngilizcede yoğunluk hep "gömülmek" ile ilişkilidir.',
+  fluency_tip:'"I\'d love to help, but I\'m absolutely snowed under right now" kibar bir "hayır" cevabıdır.'
+},
+{
+  id:843, category:'sasirma',
+  tr:'Ağzı açık kalmak',
+  tags:['ağzı açık','şaşkın','dondu','hayret'],
+  english_primary:"Left speechless",
+  alternatives:["Flabbergasted","Stunned"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Ağzı açık',tr_gloss:'mouth open',en_fragment:'speechless',bridge_type:'transform',explanation:'Şaşkınlığın fiziksel sonucu (ağız açılması) her iki dilde de benzerdir'}
+  ],
+  cultural_insight:'"Speechless" (sözsüz) şaşkınlığın en temel tanımıdır. "Stunned" (sersemlemiş) ise ani bir darbe almış gibi şaşırmaktır.',
+  fluency_tip:'"I was so shocked, I just stood there with my mouth open" durumu betimlemek için kullanılır.'
+},
+{
+  id:844, category:'basari',
+  tr:'Dikiş tutturamamak',
+  tags:['dikiş tutturamamak','başarısızlık','istikrarsız','tutunamadı'],
+  english_primary:"Can't seem to make it stick",
+  alternatives:["Fail to establish oneself","Inconsistent"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Dikiş',tr_gloss:'stitch',en_fragment:'stick',bridge_type:'transform',explanation:'Türkçe terzilik metaforu (dikiş); İngilizce yapışma (stick) metaforu — her ikisi de kalıcılık arayışıdır'}
+  ],
+  cultural_insight:'"Make it stick" (yapışmasını sağlamak) bir başarının veya kuralın kalıcı olması demektir. Türkçe "dikiş" metaforu daha zanaatkâr bir kökene sahiptir.',
+  fluency_tip:'"They\'ve tried many jobs but none of them stuck" (birçok iş denediler ama hiçbirinde dikiş tutturamadılar) klasik bir kullanım.'
+},
+{
+  id:845, category:'gunluk',
+  tr:'Lafı ağzında gevelemek',
+  tags:['lafı gevelemek','doğrudan söylememek','çekinmek','belirsiz'],
+  english_primary:"To mumble / To hem and haw",
+  alternatives:["Not to give a straight answer","To beat around the bush"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Gevelemek',tr_gloss:'to chew (words)',en_fragment:'hem and haw',bridge_type:'transform',explanation:'Türkçe çiğneme (geveleme) hareketi; İngilizce öksürme/ses çıkarma (hem/haw) sesleri'}
+  ],
+  cultural_insight:'"Hem and haw" kararsızlık anında çıkarılan seslerden türemiştir. Doğrudan cevap vermekten kaçınanlar için kullanılır.',
+  fluency_tip:'"Stop hemming and hawing and just tell me!" (lafı ağzında gevelemeyi bırak da söyle!) sabırsız bir tepkidir.'
+},
+{
+  id:846, category:'sosyal',
+  tr:'Arası bozulmak',
+  tags:['arası bozulmak','küsmek','kavga','uzaklaşmak'],
+  english_primary:"To have a falling out",
+  alternatives:["To be on bad terms","To drift apart"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Arası bozulmak',tr_gloss:'the between got broken',en_fragment:'falling out',bridge_type:'transform',explanation:'Türkçe mekanik bozulma; İngilizce yerçekimi/düşme (falling) metaforu'}
+  ],
+  cultural_insight:'"Drift apart" (ayrı sürüklenmek) kavga olmadan, zamanla uzaklaşan ilişkiler için kullanılır. "Falling out" daha çok bir tartışma sonrası olur.',
+  fluency_tip:'"We had a bit of a falling out over money" (para yüzünden aramız biraz bozuldu) yaygın bir açıklama.'
+},
+{
+  id:847, category:'duygular',
+  tr:'İçi yanmak',
+  tags:['içi yanmak','çok üzülmek','acı çekmek','hasret'],
+  english_primary:"To be grief-stricken",
+  alternatives:["To have a heavy heart","Burning with sorrow"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Yanmak',tr_gloss:'burning',en_fragment:'burning / grief',bridge_type:'direct',explanation:'Acının ısı/ateş (burning) metaforuyla anlatılması iki dilde de ortaktır'}
+  ],
+  cultural_insight:'Türkçede "içim yanıyor" çok derin bir feryattır. İngilizcede "My heart is heavy" (kalbim ağır) daha sessiz ve vakur bir üzüntüyü anlatır.',
+  fluency_tip:'"I\'m so sorry for your loss" (kaybınız için çok üzgünüm) en temel taziye cümlesidir.'
+},
+{
+  id:848, category:'yogunluk',
+  tr:'Eli kolu bağlı',
+  tags:['eli kolu bağlı','çaresiz','müdahale edemiyor','engelli'],
+  english_primary:"My hands are tied",
+  alternatives:["Powerless","Helpless"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Eli bağlı',tr_gloss:'hands tied',en_fragment:'hands are tied',bridge_type:'direct',explanation:'Tam birebir eşleşme! Çaresizlik metaforu fiziksel kısıtlama üzerinden aynıdır'}
+  ],
+  cultural_insight:'İş hayatında yetkisi olmayan ama yardım etmek isteyenlerin sığındığı evrensel bir deyimdir.',
+  fluency_tip:'"I wish I could help, but my hands are tied by the regulations" (yardım etmek isterdim ama kurallar elimi kolumu bağlıyor) profesyonel bir ifade.'
+},
+{
+  id:849, category:'sasirma',
+  tr:'Gözlerine inanamamak',
+  tags:['gözlerine inanamamak','şaşırmak','hayret','mucize'],
+  english_primary:"I couldn't believe my eyes",
+  alternatives:["Is this a dream?","Am I seeing things?"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Gözlerine inanamamak',tr_gloss:'I couldn\'t believe my eyes',en_fragment:'couldn\'t believe my eyes',bridge_type:'direct',explanation:'Tam birebir eşleşme! Görsel kanıt ve inanç çatışması her iki dilde de aynı anlatılır'}
+  ],
+  cultural_insight:'"Am I seeing things?" (bir şeyler mi görüyorum/hayal mi görüyorum?) gördüğünden şüphe duyduğunda sorulan bir sorudur.',
+  fluency_tip:'"I had to rub my eyes to make sure I wasn\'t dreaming" (rüya görmediğimden emin olmak için gözlerimi ovuşturmam gerekti) abartılı şaşkınlık.'
+},
+{
+  id:850, category:'basari',
+  tr:'Zirveye oynamak',
+  tags:['zirveye oynamak','en iyisi olmak','hedef büyük','başarı odaklı'],
+  english_primary:"To aim for the top",
+  alternatives:["To reach for the stars","To be at the top of one's game"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Zirve',tr_gloss:'peak / summit',en_fragment:'top / stars',bridge_type:'direct',explanation:'Yükseklik metaforu başarı hedefi için her iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Reach for the stars" (yıldızlara uzan) çok yüksek hedefleri olanlar için motivasyonel bir deyimdir.',
+  fluency_tip:'"You should always aim high" (daima yükseği hedeflemelisin) güzel bir kariyer tavsiyesidir.'
+},
+{
+  id:851, category:'gunluk',
+  tr:'Ağzı kulaklarına varmak',
+  tags:['ağzı kulaklarına','mutlu','gülümsemek','neşeli'],
+  english_primary:"Grinning from ear to ear",
+  alternatives:["Beaming with joy","Smiling broadly"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzı kulaklarına',tr_gloss:'mouth to the ears',en_fragment:'grinning from ear to ear',bridge_type:'direct',explanation:'Tam birebir eşleşme! Geniş gülümseme metaforu beden dili üzerinden aynıdır'}
+  ],
+  cultural_insight:'Evrensel bir mutluluk ifadesi. "Beaming" (ışık saçmak) ise mutluluğun yüzde parlamasını anlatır.',
+  fluency_tip:'"What are you so happy about? You\'re grinning from ear to ear!" arkadaşına sorabileceğin bir soru.'
+},
+{
+  id:852, category:'sosyal',
+  tr:'İçli dışlı',
+  tags:['içli dışlı','samimi','çok yakın','ayrılmaz'],
+  english_primary:"Inseparable",
+  alternatives:["Thick as thieves","Hand in glove"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İçli dışlı',tr_gloss:'with inside and outside',en_fragment:'inseparable',bridge_type:'transform',explanation:'Türkçe şeffaflık/yakınlık (iç ve dış bir); İngilizce ayrılmazlık (ayrılamaz)'}
+  ],
+  cultural_insight:'"Thick as thieves" çok yakın dostluğu biraz gizemli/suç ortağı gibi bir tonda anlatır.',
+  fluency_tip:'"They\'re always together" en basit ve yaygın karşılıktır.'
+},
+{
+  id:853, category:'duygular',
+  tr:'Dudağı uçuklamak',
+  tags:['dudağı uçuklamak','çok şaşırmak','korkmak','şok'],
+  english_primary:"To be flabbergasted",
+  alternatives:["Taken aback","Speechless"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Dudak',tr_gloss:'lip',en_fragment:'speechless',bridge_type:'transform',explanation:'Türkçe fiziksel sonuç (uçuk); İngilizce eylem yokluğu (sözsüz kalma)'}
+  ],
+  cultural_insight:'Türkçe şokun bedendeki (dudaktaki) izine odaklanırken, İngilizce kelimenin kendisiyle (flabbergasted) durumu abartır.',
+  fluency_tip:'"I was stunned" (sersemledim/dondum) kısa ve etkili bir karşılık.'
+},
+{
+  id:854, category:'yogunluk',
+  tr:'Burnundan solumak',
+  tags:['burnundan solumak','çok kızgın','öfkeli','patlamaya hazır'],
+  english_primary:"To be fuming",
+  alternatives:["To see red","To be livid"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Burun',tr_gloss:'nose',en_fragment:'fume',bridge_type:'transform',explanation:'Türkçe sert nefes; İngilizce duman (fume) metaforu'}
+  ],
+  cultural_insight:'"Fuming" (dumanı tüten) birinin içindeki öfke ateşinin dışa vurmasını anlatır. "Seeing red" ise tamamen öfkeyle kör olma hali.',
+  fluency_tip:'"Stay out of their way, they\'re fuming" (yolundan çekil, dumanı tütüyor/çok sinirli) iyi bir uyarıdır.'
+},
+{
+  id:855, category:'sasirma',
+  tr:'Nutku tutulmak',
+  tags:['nutku tutulmak','şaşırmak','konuşamamak','donup kalmak'],
+  english_primary:"Speechless",
+  alternatives:["Stunned into silence","Dumbstruck"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Nutku tutulmak',tr_gloss:'speech held',en_fragment:'speechless',bridge_type:'direct',explanation:'Konuşma yetisinin (nutuk/speech) fiziksel olarak engellenmesi'}
+  ],
+  cultural_insight:'"Dumbstruck" (aptallaşmış gibi vurulmuş) şokun zekayı bile anlık durdurmasını anlatır.',
+  fluency_tip:'"I didn\'t know what hit me" (bana ne çarptığını anlamadım) şaşkınlık sonrası tepki.'
+},
+{
+  id:856, category:'basari',
+  tr:'Kendi ayakları üzerinde durmak',
+  tags:['kendi ayakları üzerinde','bağımsız','özgür','başarılı'],
+  english_primary:"To stand on one's own two feet",
+  alternatives:["Be independent","Self-sufficient"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Kendi ayakları',tr_gloss:'own feet',en_fragment:'own two feet',bridge_type:'direct',explanation:'Tam birebir eşleşme! Bağımsızlık ve yetişkinlik metaforu beden dengesi üzerinden aynıdır'}
+  ],
+  cultural_insight:'Evrensel bir gelişim ve başarı sembolüdür.',
+  fluency_tip:'"They\'re finally standing on their own two feet" (nihayet kendi ayakları üzerinde duruyorlar) ekonomik bağımsızlık için sık kullanılır.'
+},
+{
+  id:857, category:'gunluk',
+  tr:'Laf olsun diye',
+  tags:['laf olsun','öylesine','ciddi değil','sohbet olsun'],
+  english_primary:"Just for the sake of it",
+  alternatives:["Just talking","For no particular reason"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Laf olsun',tr_gloss:'let there be word',en_fragment:'for the sake of it',bridge_type:'transform',explanation:'Türkçe konuşmanın varlığı için; İngilizce eylemin/nedenin hatırı için metaforu'}
+  ],
+  cultural_insight:'"Just for the sake of talking" (sadece konuşmuş olmak için) tam karşılıktır.',
+  fluency_tip:'"Don\'t take them seriously, they\'re just talking for the sake of it" (onları ciddiye alma, öylesine konuşuyorlar) iyi bir uyarıdır.'
+},
+{
+  id:858, category:'sosyal',
+  tr:'Arkasından konuşmak',
+  tags:['arkasından konuşmak','dedikodu','gıybet','ihanet'],
+  english_primary:"Talk behind someone's back",
+  alternatives:["Backstab (daha ağır)","Gossip"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Arkadan',tr_gloss:'behind',en_fragment:'behind someone\'s back',bridge_type:'direct',explanation:'Mekansal gizlilik (arka taraf) metaforu dedikodu için iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Backstabbing" (arkadan bıçaklama) sadece konuşmak değil, aktif bir ihaneti anlatır.',
+  fluency_tip:'"If you have something to say, say it to my face" (bir diyeceğin varsa yüzüme söyle) dedikoduya karşı en klasik tepkidir.'
+},
+{
+  id:859, category:'duygular',
+  tr:'İçi içine sığmamak',
+  tags:['içi içine sığmamak','çok heyecanlı','mutlu','sabırsız'],
+  english_primary:"To be bursting with excitement",
+  alternatives:["Can't contain oneself","Full of beans"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İçi içine sığmamak',tr_gloss:'inside doesn\'t fit inside',en_fragment:'bursting',bridge_type:'transform',explanation:'Türkçe hacimsel sığmama; İngilizce patlama (burst) metaforu'}
+  ],
+  cultural_insight:'"Full of beans" (fasulye dolu) özellikle çocuklar için "enerji dolu ve neşeli" anlamında çok tatlı bir deyimdir.',
+  fluency_tip:'"I\'m so excited I can\'t even sit still!" (o kadar heyecanlıyım ki yerimde duramıyorum) bu duyguyu anlatmanın doğal yoludur.'
+},
+{
+  id:860, category:'yogunluk',
+  tr:'Başını kaşıyacak vakti yok',
+  tags:['başını kaşıyacak vakit','çok meşgul','yogun','nefes alamıyor'],
+  english_primary:"To be run off one's feet",
+  alternatives:["Extremely busy","Doesn't have a spare second"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Başını kaşıyacak',tr_gloss:'to scratch the head',en_fragment:'run off feet',bridge_type:'transform',explanation:'Türkçe küçük bir kişisel eyleme bile vakit yokluğu; İngilizce çok koşuşturmaktan ayakların bitmesi metaforu'}
+  ],
+  cultural_insight:'"Run off my feet" (ayaklarımın feri gitti/koşmaktan bittim) özellikle hizmet sektöründe yoğun günü anlatmak için kullanılır.',
+  fluency_tip:'"I haven\'t had a moment to myself all day" (tüm gün kendime bir an bile ayıramadım) çok yaygın bir serzeniştir.'
+},
+{
+  id:861, category:'sasirma',
+  tr:'Dudak bükmek',
+  tags:['dudak bükmek','beğenmedi','küçümsedi','önemsemedi'],
+  english_primary:"To turn up one's nose at something",
+  alternatives:["Look down on","Wasn't impressed"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Dudak',tr_gloss:'lip',en_fragment:'nose',bridge_type:'transform',explanation:'Türkçe dudak hareketi; İngilizce burun kıvırma (turn up the nose) hareketi üzerinden beğenmeme metaforu'}
+  ],
+  cultural_insight:'Her iki dil de beğenmemeyi yüzdeki mimikler üzerinden anlatır ama odak organları farklıdır.',
+  fluency_tip:'"They weren\'t exactly thrilled" (pek de heyecanlanmadılar) birinin bir şeyi beğenmediğini kibarca söyleme yoludur.'
+},
+{
+  id:862, category:'basari',
+  tr:'Adım adım',
+  tags:['adım adım','yavaş yavaş','istikrar','gelişim'],
+  english_primary:"Step by step",
+  alternatives:["One step at a time","Gradually"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Adım adım',tr_gloss:'step by step',en_fragment:'step by step',bridge_type:'direct',explanation:'Tam birebir eşleşme! Süreç ve ilerleme metaforu yürüyüş üzerinden aynıdır'}
+  ],
+  cultural_insight:'Evrensel bir gelişim ilkesidir. "Rome wasn\'t built in a day" (Roma bir günde inşa edilmedi) sabrı vurgulayan harika bir İngiliz atasözüdür.',
+  fluency_tip:'"Let\'s just take it one step at a time" (haydi sadece adım adım ilerleyelim) sakinleştirici bir tavsiyedir.'
+},
+{
+  id:863, category:'gunluk',
+  tr:'Ne olursa olsun',
+  tags:['ne olursa olsun','fark etmez','her koşulda','her zaman'],
+  english_primary:"No matter what",
+  alternatives:["Come rain or shine","At any cost"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Ne olursa olsun',tr_gloss:'whatever happens',en_fragment:'no matter what',bridge_type:'direct',explanation:'Kararlılık ifadesi her iki dilde de koşulsuzluk üzerinden benzerdir'}
+  ],
+  cultural_insight:'"Come rain or shine" (yağmur da yağsa güneş de açsa) bir söz verirken sadakati vurgulamak için çok kullanılır.',
+  fluency_tip:'"I\'ll be there for you, no matter what" (ne olursa olsun senin için orada olacağım) en güven verici cümledir.'
+},
+{
+  id:864, category:'sosyal',
+  tr:'Güler yüzlü',
+  tags:['güler yüzlü','neşeli','pozitif','canayakın'],
+  english_primary:"To have a sunny disposition",
+  alternatives:["Cheerful","Friendly"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Güler yüz',tr_gloss:'laughing face',en_fragment:'sunny',bridge_type:'transform',explanation:'Türkçe eylem (gülme); İngilizce doğa (güneşli) metaforu'}
+  ],
+  cultural_insight:'İngilizcede karakter özellikleri sıklıkla hava durumuyla anlatılır. "Sunny" (güneşli) pozitif bir karakteri simgeler.',
+  fluency_tip:'"She always has a smile on her face" (yüzünde hep bir gülümseme var) bu durumu anlatmanın en sade yoludur.'
+},
+{
+  id:865, category:'duygular',
+  tr:'Canı burnunda',
+  tags:['canı burnunda','çok kızgın','patlamak üzere','tahammülsüz'],
+  english_primary:"At the end of one's tether",
+  alternatives:["About to snap","At breaking point"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Can',tr_gloss:'soul',en_fragment:'tether',bridge_type:'transform',explanation:'Türkçe ruhun çıkış noktası; İngilizce bağlı olduğu ipin (tether) sonu metaforu'}
+  ],
+  cultural_insight:'"Tether" bir hayvanın hareket alanını kısıtlayan iptir. Sonuna gelmek, artık sabrın bittiği noktadır.',
+  fluency_tip:'"I\'m at my wit\'s end!" (artık zekamın/sabrımın sonundayım!) çaresiz öfke anlarında söylenir.'
+},
+{
+  id:866, category:'yogunluk',
+  tr:'İğne atsan yere düşmez',
+  tags:['iğne atsan yere düşmez','kalabalık','tıklım tıklım','yoğun'],
+  english_primary:"Packed like sardines",
+  alternatives:["Wall-to-wall people","Full to capacity"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İğne',tr_gloss:'needle',en_fragment:'sardines',bridge_type:'transform',explanation:'Türkçe yer yokluğu (iğne bile düşmez); İngilizce konserve kutusundaki balıklar (sardalyalar) gibi sıkışıklık metaforu'}
+  ],
+  cultural_insight:'"Packed like sardines" (sardalya gibi paketlenmiş) toplu taşıma veya kalabalık etkinlikler için evrenseldir.',
+  fluency_tip:'"The concert was absolutely packed" (konser alanı tıklım tıklımdı) en sade karşılıktır.'
+},
+{
+  id:867, category:'sasirma',
+  tr:'Gözleri fal taşı gibi açıldı',
+  tags:['gözleri fal taşı','şaşırdı','şok oldu','hayret'],
+  english_primary:"Eyes popped out of one's head",
+  alternatives:["Wide-eyed","Staring in amazement"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Fal taşı',tr_gloss:'fortune stone (large)',en_fragment:'popped out',bridge_type:'transform',explanation:'Türkçe gözün boyutu (taş gibi); İngilizce gözün yuvasından fırlaması (pop out) metaforu'}
+  ],
+  cultural_insight:'Aşırı şaşkınlık anındaki fiziksel göz büyümesini her iki dil de abartılı bir şekilde anlatır.',
+  fluency_tip:'"You should have seen the look on their face!" (yüzlerindeki ifadeyi görmeliydin!) şaşırtıcı bir olayı anlatırken kullanılır.'
+},
+{
+  id:868, category:'basari',
+  tr:'Tereyağından kıl çeker gibi',
+  tags:['tereyağından kıl çeker gibi','çok kolay','pürüzsüz','sorunsuz'],
+  english_primary:"Like a knife through butter",
+  alternatives:["A piece of cake","As easy as pie"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Tereyağı',tr_gloss:'butter',en_fragment:'butter',bridge_type:'direct',explanation:'Tereyağı/yağ metaforu pürüzsüzlük ve kolaylık için her iki dilde de birebir aynıdır'}
+  ],
+  cultural_insight:'"A piece of cake" (bir dilim kek) ve "Easy as pie" (turta kadar kolay) günlük hayatta en çok duyacağın "kolay" deyimleridir.',
+  fluency_tip:'"No problem at all, it was a breeze" (hiç sorun değil, çok kolaydı/meltem gibiydi) çok doğal bir cevaptır.'
+},
+{
+  id:869, category:'gunluk',
+  tr:'İçli dışlı olmak',
+  tags:['içli dışlı','çok samimi','yakın','her şeyi paylaşan'],
+  english_primary:"On very intimate terms",
+  alternatives:["Hand in glove","Thick as thieves"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçli dışlı',tr_gloss:'with inside and outside',en_fragment:'hand in glove',bridge_type:'transform',explanation:'Türkçe derinlik (iç ve dış bir); İngilizce eldiven ve elin uyumu (ayrılmazlık) metaforu'}
+  ],
+  cultural_insight:'"Hand in glove" (eldiven içinde el gibi) genellikle bir işbirliği veya çok yakın ilişkiyi anlatır.',
+  fluency_tip:'"They\'ve been inseparable lately" (son zamanlarda ayrılmaz oldular) arkadaşlıklar için çok uygundur.'
+},
+{
+  id:870, category:'sosyal',
+  tr:'Ağız birliği etmek',
+  tags:['ağız birliği','anlaşmak','aynı şeyi söylemek','sözleşmek'],
+  english_primary:"To be on the same page",
+  alternatives:["Sing from the same hymn sheet","In cahoots (negatif)"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Ağız birliği',tr_gloss:'unity of mouth',en_fragment:'same page',bridge_type:'transform',explanation:'Türkçe konuşma organının birliği; İngilizce bir kitabın/belgenin aynı sayfasında olma metaforu'}
+  ],
+  cultural_insight:'"On the same page" iş dünyasının en temel "anlaşma" deyimidir. "In cahoots" ise genellikle gizli ve kötü bir iş için anlaşmayı ima eder.',
+  fluency_tip:'"Let\'s make sure we\'re all on the same page before the meeting" toplantı öncesi çok kullanılır.'
+},
+{
+  id:871, category:'duygular',
+  tr:'Yüreği ağzına gelmek',
+  tags:['yüreği ağzına gelmek','çok korkmak','ani şok','heyecan'],
+  english_primary:"To have one's heart in one's mouth",
+  alternatives:["Scared out of one's wits","Jumped out of my skin"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Yüreği ağzına',tr_gloss:'heart in the mouth',en_fragment:'heart in one\'s mouth',bridge_type:'direct',explanation:'Tam birebir eşleşme! Korkudan kalbin yukarı çıkma hissi iki dilde de aynı metaforla anlatılır'}
+  ],
+  cultural_insight:'Bu nadir eşleşmelerden biridir. Korku veya aşırı heyecan anındaki fiziksel kalp çarpıntısı hissini anlatır.',
+  fluency_tip:'"My heart skipped a beat" (kalbim bir atışı atladı) heyecan veya hafif korku için harikadır.'
+},
+{
+  id:872, category:'yogunluk',
+  tr:'İpin ucunu kaçırmak',
+  tags:['ipin ucunu kaçırmak','kontrolü kaybetmek','aşırıya kaçmak','yönetememek'],
+  english_primary:"To lose track of things",
+  alternatives:["Let things get out of hand","Go overboard"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İpin ucu',tr_gloss:'end of the rope',en_fragment:'lose track / out of hand',bridge_type:'transform',explanation:'Türkçe tutulan bir nesnenin (ip) kaybı; İngilizce elden çıkma veya izi kaybetme metaforu'}
+  ],
+  cultural_insight:'"Go overboard" (gemiden dışarı atlamak) bir şeyi aşırı derecede yapmak, dozu kaçırmak demektir.',
+  fluency_tip:'"Sorry, I lost track of time" (üzgünüm, zamanın nasıl geçtiğini anlamadım/ipin ucunu kaçırdım) çok yaygın bir özürdür.'
+},
+{
+  id:873, category:'sasirma',
+  tr:'Ağzı bir karış açık kalmak',
+  tags:['ağzı bir karış açık','şaşırdı','dondu','hayret'],
+  english_primary:"To be flabbergasted",
+  alternatives:["Jaw dropped","Stunned"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzı açık',tr_gloss:'mouth open',en_fragment:'jaw dropped',bridge_type:'direct',explanation:'Şaşkınlık anındaki ağız hareketi her iki dilde de benzerdir'}
+  ],
+  cultural_insight:'Türkçedeki "bir karış" ölçüsü abartıyı artırır. İngilizcede "flabbergasted" kelimesi şaşkınlığın en üst seviyesini anlatır.',
+  fluency_tip:'"I was totally speechless" (tamamen sözsüz kaldım) etkileyici bir olaydan sonra söylenir.'
+},
+{
+  id:874, category:'basari',
+  tr:'Alnının akıyla çıkmak',
+  tags:['alnının akıyla','başarıyla bitirmek','onuruyla başarmak','temiz'],
+  english_primary:"To pass with flying colors",
+  alternatives:["To do someone proud","To come out on top"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Alın aklığı',tr_gloss:'whiteness of the forehead',en_fragment:'flying colors',bridge_type:'transform',explanation:'Türkçe onur/temizlik (ak alın); İngilizce denizcilikteki zafer bayrakları (flying colors) metaforu'}
+  ],
+  cultural_insight:'"With flying colors" eski gemilerin savaştan zaferle dönerken bayraklarını dalgalandırmasından gelir. Türkçe ise kişinin onuruna (alnına) odaklanır.',
+  fluency_tip:'"She passed her driving test with flying colors!" (ehliyet sınavını başarıyla/alnının akıyla geçti!) klasik bir örnek.'
+},
+{
+  id:875, category:'gunluk',
+  tr:'Dünya küçük',
+  tags:['dünya küçük','rastlantı','karşılaşma','şaşırtıcı'],
+  english_primary:"It's a small world",
+  alternatives:["What a coincidence!","Small world, isn't it?"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Dünya küçük',tr_gloss:'world is small',en_fragment:'small world',bridge_type:'direct',explanation:'Beklenmedik karşılaşmalar için dünya boyutu metaforu her iki dilde de birebir aynıdır'}
+  ],
+  cultural_insight:'Evrensel bir klişe. "What are the odds?" (olasılıklar nedir? / ne büyük tesadüf!) de benzer durumlarda çok kullanılır.',
+  fluency_tip:'"I can\'t believe I ran into you here! Small world!" (Sana burada rastladığıma inanamıyorum! Dünya küçük!) en doğal selamlaşmadır.'
+},
+{
+  id:876, category:'sosyal',
+  tr:'Gözden ırak olan gönülden de ırak olur',
+  tags:['gözden ırak','uzaklık','unutmak','ilişki'],
+  english_primary:"Out of sight, out of mind",
+  alternatives:["Absence makes the heart grow fonder (ZIT ANLAM)","Forgotten"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Gözden ırak',tr_gloss:'far from the eye',en_fragment:'out of sight',bridge_type:'direct',explanation:'Görüş alanı dışı = zihin dışı eşleşmesi her iki dilde de neredeyse aynıdır'}
+  ],
+  cultural_insight:'"Absence makes the heart grow fonder" (Yokluk kalbi daha tutkulu yapar) bu deyimin tam zıttıdır. İki kültür de mesafe hakkında zıt görüşlere sahiptir.',
+  fluency_tip:'"I haven\'t thought about them in years. Out of sight, out of mind, I guess." (Yıllardır onları düşünmedim. Gözden ırak, gönülden ırak, sanırım.)'
+},
+{
+  id:877, category:'duygular',
+  tr:'İçi kan ağlamak',
+  tags:['içi kan ağlamak','çok üzgün','saklı acı','keder'],
+  english_primary:"Bleeding inside",
+  alternatives:["Heart is breaking silently","Pain behind the smile"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçi kan ağlamak',tr_gloss:'inside crying blood',en_fragment:'bleeding inside',bridge_type:'direct',explanation:'İçsel kanama/acı metaforu iki dilde de saklı derin acı için aynıdır'}
+  ],
+  cultural_insight:'Türkçe "kan ağlamak" çok daha dramatik bir ifadedir. İngilizcede "My heart bleeds for you" bazen alaycı (sahte acıma) olarak da kullanılabilir, dikkat!',
+  fluency_tip:'"I was hurting more than I let on" (gösterdiğimden daha çok acı çekiyordum) duygusal dürüstlük ifadesidir.'
+},
+{
+  id:878, category:'yogunluk',
+  tr:'Zaman öldürmek',
+  tags:['zaman öldürmek','vakit geçirmek','oyalanmak','boş durmak'],
+  english_primary:"To kill time",
+  alternatives:["To while away the time","Hanging around"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Zaman öldürmek',tr_gloss:'to kill time',en_fragment:'kill time',bridge_type:'direct',explanation:'Zamanın "öldürülmesi" (tüketilmesi) metaforu her iki dilde de birebir aynıdır'}
+  ],
+  cultural_insight:'Zamanı bir düşman veya kaynak gibi görüp onu "yok etme" eylemi modern dünyada evrenselleşmiştir.',
+  fluency_tip:'"I have an hour to kill before my train" (Trenimden önce öldürecek bir saatim var) beklemeyi anlatmak için çok yaygındır.'
+},
+{
+  id:879, category:'sasirma',
+  tr:'Gökten düşmüş gibi',
+  tags:['gökten düşmüş','aniden','şaşırtıcı','nereden geldi'],
+  english_primary:"Out of the blue",
+  alternatives:["Out of nowhere","Suddenly"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Gökten',tr_gloss:'from the sky',en_fragment:'blue (sky)',bridge_type:'direct',explanation:'Beklenmedik bir şeyin gökyüzünden (mavi) gelmesi metaforu ortaktır'}
+  ],
+  cultural_insight:'"Out of the blue" (mavilikten dışarı) bulutsuz bir havada aniden düşen yıldırım gibi şaşırtıcı olayları anlatır.',
+  fluency_tip:'"Then, out of the blue, she called me after three years!" (Sonra, aniden/durup dururken, üç yıl sonra beni aradı!)'
+},
+{
+  id:880, category:'basari',
+  tr:'İşin ehli',
+  tags:['işin ehli','usta','uzman','profesyonel'],
+  english_primary:"A master of one's craft",
+  alternatives:["An old hand","A pro"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İşin ehli',tr_gloss:'competent of the work',en_fragment:'master of craft',bridge_type:'direct',explanation:'Ustalık ve uzmanlık kavramı iki dilde de benzer zanaat metaforlarıyla anlatılır'}
+  ],
+  cultural_insight:'"An old hand" (eski bir el) bir işte çok tecrübeli ve deneyimli olan kişiler için kullanılan samimi bir deyimdir.',
+  fluency_tip:'"If you want it done right, ask him. He\'s an old hand at this." (Eğer doğru yapılmasını istiyorsan ona sor. O bu işin eskisidir/ehlidir.)'
+},
+
+/* ─── FİNAL GENİŞLETME (900-950) ────────────────────────────── */
+{
+  id:900, category:'deyimler',
+  tr:'İnce eleyip sık dokumak',
+  tags:['titiz','detaycı','dikkatli','kılı kırk yarmak'],
+  english_primary:"Go over it with a fine-tooth comb",
+  alternatives:["To be fastidious","To nitpick"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İnce eleyip',tr_gloss:'sifting finely',en_fragment:'fine-tooth comb',bridge_type:'transform',explanation:'Türkçe un/eleme; İngilizce ince dişli tarak (temizlik) metaforu'}
+  ],
+  cultural_insight:'Her iki dil de aşırı titizliği küçük parçaları/ayrıntıları ayıran bir alet (elek/tarak) üzerinden anlatır.',
+  fluency_tip:'"We need to go over the contract with a fine-tooth comb before signing it." (Sözleşmeyi imzalamadan önce çok titiz/ince eleyip sık dokuyarak incelemeliyiz.)'
+},
+{
+  id:901, category:'gunluk',
+  tr:'Sözümü geri alıyorum',
+  tags:['sözümü geri aldım','yanlış anlama','özür','iptal'],
+  english_primary:"I take it back",
+  alternatives:["I stand corrected","Forget what I said"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Geri alıyorum',tr_gloss:'I am taking back',en_fragment:'take it back',bridge_type:'direct',explanation:'Sözün fiziksel bir nesne gibi "geri alınması" metaforu her iki dilde de birebir aynıdır'}
+  ],
+  cultural_insight:'"I stand corrected" (düzeltilmiş olarak duruyorum) bir hatayı kabul etmenin daha resmi ve nazik bir yoludur.',
+  fluency_tip:'"Wait, I take that back. I just realized I was wrong." (Bekle, sözümü geri alıyorum. Az önce yanıldığımı fark ettim.)'
+},
+{
+  id:902, category:'sosyal',
+  tr:'Aramıza soğukluk girdi',
+  tags:['soğukluk','mesafe','küslük','eskisi gibi değil'],
+  english_primary:"To be on thin ice with someone",
+  alternatives:["To have a chilly relationship","To drift apart"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Soğukluk',tr_gloss:'coldness',en_fragment:'chilly / ice',bridge_type:'direct',explanation:'Soğukluk/buz metaforu bozulan ilişkiler için evrensel bir ısı düşüşü sembolüdür'}
+  ],
+  cultural_insight:'"On thin ice" (ince buz üzerinde) birinin sabrını taşırmak üzere olduğunu ve tehlikede olduğunu anlatır.',
+  fluency_tip:'"There\'s been some tension between us lately." (Son zamanlarda aramızda biraz gerginlik/soğukluk var.)'
+},
+{
+  id:903, category:'duygular',
+  tr:'İçim karardı',
+  tags:['içim karardı','hüzün','karamsarlık','mutsuzluk'],
+  english_primary:"I feel gloomy",
+  alternatives:["I'm in a dark mood","It's weighing on me"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçim karardı',tr_gloss:'my inside got dark',en_fragment:'gloomy / dark mood',bridge_type:'direct',explanation:'Karanlık/ışık yokluğu metaforu üzüntü için her iki dilde de ortaktır'}
+  ],
+  cultural_insight:'"Gloomy" (kasvetli) hem hava durumu hem de ruh hali için kullanılır. Türkçe "kararmak" ise daha içsel ve anlık bir çöküşü anlatır.',
+  fluency_tip:'"This movie is so depressing, it\'s making me feel gloomy." (Bu film çok bunaltıcı, içimi karartıyor.)'
+},
+{
+  id:904, category:'yogunluk',
+  tr:'İşleri yoluna koymak',
+  tags:['yoluna koymak','düzeltmek','halletmek','organize etmek'],
+  english_primary:"To get things sorted",
+  alternatives:["To get back on track","To straighten things out"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Yoluna koymak',tr_gloss:'to put on the road/track',en_fragment:'back on track',bridge_type:'direct',explanation:'Yol/iz (track) metaforu işlerin düzene girmesi için her iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Straighten out" (düzeltmek) karmaşık bir durumu bir ipi düzeltir gibi halletmeyi anlatır.',
+  fluency_tip:'"It took a while, but we finally got everything sorted out." (Biraz sürdü ama sonunda her şeyi yoluna koyduk/hallettik.)'
+},
+{
+  id:905, category:'deyimler',
+  tr:'Ateşle oynamak',
+  tags:['ateşle oynamak','tehlike','risk','uyarı'],
+  english_primary:"To play with fire",
+  alternatives:["To walk on thin ice","To court disaster"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Ateşle oynamak',tr_gloss:'playing with fire',en_fragment:'playing with fire',bridge_type:'direct',explanation:'Tehlikeli bir eylem için ateş metaforu her iki dilde de birebir aynıdır'}
+  ],
+  cultural_insight:'Evrensel bir metafor. "Court disaster" (felaketle flört etmek) daha edebi bir risk uyarısıdır.',
+  fluency_tip:'"Don\'t mess with him, you\'re playing with fire." (Onunla uğraşma, ateşle oynuyorsun.)'
+},
+{
+  id:906, category:'gunluk',
+  tr:'Başüstüne',
+  tags:['başüstüne','tamam','emredersiniz','kabul'],
+  english_primary:"Consider it done",
+  alternatives:["Will do","At your service"],
+  register:'formal',
+  bridges:[
+    {tr_fragment:'Başüstüne',tr_gloss:'on my head',en_fragment:'consider it done',bridge_type:'transform',explanation:'Türkçe başın üzerinde taşıma (saygı); İngilizce eylemin bitmiş kabul edilmesi (verimlilik) metaforu'}
+  ],
+  cultural_insight:'"Will do" (yapacağım/yaparım) günlük hayatta en sık duyacağın "başüstüne/tamam" cevabıdır.',
+  fluency_tip:'"Can you send that email?" - "Consider it done!" (O e-postayı atar mısın? - Başüstüne/Atılmış bil!)'
+},
+{
+  id:907, category:'sosyal',
+  tr:'İstifini bozmamak',
+  tags:['istifini bozmamak','sakin','soğukkanlı','etkilenmemek'],
+  english_primary:"To keep one's cool",
+  alternatives:["To not bat an eyelid","To remain unruffled"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İstifini bozmamak',tr_gloss:'not to break one\'s arrangement',en_fragment:'keep one\'s cool / not bat an eyelid',bridge_type:'transform',explanation:'Türkçe düzenin/duruşun bozulmaması; İngilizce ısının korunması (cool) veya göz kırpmama metaforu'}
+  ],
+  cultural_insight:'"Not bat an eyelid" (göz kapağını bile oynatmamak) en sarsıcı olaylar karşısında bile tepki vermeyenler için kullanılır.',
+  fluency_tip:'"Even when the alarm went off, he didn\'t bat an eyelid." (Alarm çaldığında bile istifini bozmadı/gözünü bile kırpmadı.)'
+},
+{
+  id:908, category:'duygular',
+  tr:'Ağzının payını vermek',
+  tags:['ağzının payını vermek','susturmak','had bildirmek','cevap vermek'],
+  english_primary:"To put someone in their place",
+  alternatives:["To give someone a piece of one's mind","To shut someone down"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzının payı',tr_gloss:'share of the mouth',en_fragment:'put in their place',bridge_type:'transform',explanation:'Türkçe ağza odaklı bir ders/pay verme; İngilizce kişinin sosyal yerini (limitini) hatırlatma metaforu'}
+  ],
+  cultural_insight:'"Give someone a piece of my mind" (aklımdan bir parça vermek) birine çok sinirlenip ona haddini bildirmek demektir.',
+  fluency_tip:'"He was so rude that I finally had to put him in his place." (O kadar kaba davranıyordu ki sonunda ağzının payını vermem gerekti.)'
+},
+{
+  id:909, category:'basari',
+  tr:'Emeği geçmek',
+  tags:['emeği geçmek','katkı sağlamak','yardım etmek','payı olmak'],
+  english_primary:"To have a hand in something",
+  alternatives:["To contribute","To play a part"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Emek',tr_gloss:'effort',en_fragment:'hand',bridge_type:'transform',explanation:'Türkçe doğrudan eylem (emek); İngilizce vücut organı (el/hand) metaforu üzerinden katkı anlatılır'}
+  ],
+  cultural_insight:'"To have a hand in it" (işte eli olmak) bir başarının veya olayın gerçekleşmesinde payı olmak demektir.',
+  fluency_tip:'"Many people had a hand in the success of this project." (Bu projenin başarısında birçok kişinin emeği geçti.)'
+},
+{
+  id:910, category:'gunluk',
+  tr:'Laf aramızda',
+  tags:['laf aramızda','gizli','kimseye söyleme','sır'],
+  english_primary:"Just between us",
+  alternatives:["Off the record","Keep it under your hat"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Laf aramızda',tr_gloss:'word is between us',en_fragment:'just between us',bridge_type:'direct',explanation:'Mekansal gizlilik metaforu her iki dilde de "aramızda" (between us) olarak aynıdır'}
+  ],
+  cultural_insight:'"Keep it under your hat" (şapkanın altında tut) bir sırrı saklamanın çok klasik ve renkli bir İngilizce yoludur.',
+  fluency_tip:'"Off the record, I think he\'s going to resign." (Laf aramızda/kayıt dışı, bence istifa edecek.)'
+},
+{
+  id:911, category:'sosyal',
+  tr:'İçli dışlı',
+  tags:['içli dışlı','çok samimi','yakın','her şeyi paylaşan'],
+  english_primary:"On very intimate terms",
+  alternatives:["Hand in glove","Thick as thieves"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçli dışlı',tr_gloss:'with inside and outside',en_fragment:'hand in glove',bridge_type:'transform',explanation:'Türkçe derinlik (iç ve dış bir); İngilizce eldiven ve elin uyumu (ayrılmazlık) metaforu'}
+  ],
+  cultural_insight:'"Hand in glove" (eldiven içinde el gibi) genellikle bir işbirliği veya çok yakın ilişkiyi anlatır.',
+  fluency_tip:'"They\'ve been inseparable lately" (son zamanlarda ayrılmaz oldular) arkadaşlıklar için çok uygundur.'
+},
+{
+  id:912, category:'duygular',
+  tr:'Dünya umurunda değil',
+  tags:['dünya umurunda değil','rahat','kaygısız','vurdumduymaz'],
+  english_primary:"Without a care in the world",
+  alternatives:["Happy-go-lucky","Indifferent"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Dünya umurunda değil',tr_gloss:'doesn\'t care about the world',en_fragment:'without a care in the world',bridge_type:'direct',explanation:'Dünya/care yokluğu metaforu kaygısızlık için neredeyse aynıdır'}
+  ],
+  cultural_insight:'"Happy-go-lucky" hayatı geldiği gibi yaşayan, her durumda mutlu olan kişiler için kullanılır.',
+  fluency_tip:'"I wish I could be that relaxed" (keşke ben de o kadar rahat olabilsem) bir özenme ifadesidir.'
+},
+{
+  id:913, category:'yogunluk',
+  tr:'İpin ucunu kaçırmak',
+  tags:['ipin ucunu kaçırmak','kontrolü kaybetmek','aşırıya kaçmak','yönetememek'],
+  english_primary:"To lose track of things",
+  alternatives:["Let things get out of hand","Go overboard"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İpin ucu',tr_gloss:'end of the rope',en_fragment:'lose track / out of hand',bridge_type:'transform',explanation:'Türkçe tutulan bir nesnenin (ip) kaybı; İngilizce elden çıkma veya izi kaybetme metaforu'}
+  ],
+  cultural_insight:'"Go overboard" (gemiden dışarı atlamak) bir şeyi aşırı derecede yapmak, dozu kaçırmak demektir.',
+  fluency_tip:'"Sorry, I lost track of time" (üzgünüm, zamanın nasıl geçtiğini anlamadım/ipin ucunu kaçırdım) çok yaygın bir özürdür.'
+},
+{
+  id:914, category:'sasirma',
+  tr:'Ağzı bir karış açık kalmak',
+  tags:['ağzı bir karış açık','şaşırdı','dondu','hayret'],
+  english_primary:"To be flabbergasted",
+  alternatives:["Jaw dropped","Stunned"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzı açık',tr_gloss:'mouth open',en_fragment:'jaw dropped',bridge_type:'direct',explanation:'Şaşkınlık anındaki ağız hareketi her iki dilde de benzerdir'}
+  ],
+  cultural_insight:'Türkçedeki "bir karış" ölçüsü abartıyı artırır. İngilizcede "flabbergasted" kelimesi şaşkınlığın en üst seviyesini anlatır.',
+  fluency_tip:'"I was totally speechless" (tamamen sözsüz kaldım) etkileyici bir olaydan sonra söylenir.'
+},
+{
+  id:915, category:'basari',
+  tr:'Alnının akıyla çıkmak',
+  tags:['alnının akıyla','başarıyla bitirmek','onuruyla başarmak','temiz'],
+  english_primary:"To pass with flying colors",
+  alternatives:["To do someone proud","To come out on top"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Alın aklığı',tr_gloss:'whiteness of the forehead',en_fragment:'flying colors',bridge_type:'transform',explanation:'Türkçe onur/temizlik (ak alın); İngilizce denizcilikteki zafer bayrakları (flying colors) metaforu'}
+  ],
+  cultural_insight:'"With flying colors" eski gemilerin savaştan zaferle dönerken bayraklarını dalgalandırmasından gelir. Türkçe ise kişinin onuruna (alnına) odaklanır.',
+  fluency_tip:'"She passed her driving test with flying colors!" (ehliyet sınavını başarıyla/alnının akıyla geçti!) klasik bir örnek.'
+},
+{
+  id:916, category:'gunluk',
+  tr:'Ağzı kulaklarına varmak',
+  tags:['ağzı kulaklarına','çok mutlu','gülmek','neşeli'],
+  english_primary:"Grinning from ear to ear",
+  alternatives:["Smiling broadly","Beaming"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzı kulaklarına',tr_gloss:'mouth to ears',en_fragment:'grinning from ear to ear',bridge_type:'direct',explanation:'Geniş gülümseme metaforu iki dilde de beden dili üzerinden aynıdır'}
+  ],
+  cultural_insight:'Mutluluğun en temel fiziksel ifadesidir. "Beaming" (ışık saçmak) mutluluğun parlamasını anlatır.',
+  fluency_tip:'"He has been grinning from ear to ear since he got the news." (Haberi aldığından beri ağzı kulaklarına varıyor.)'
+},
+{
+  id:917, category:'deyimler',
+  tr:'Ağzı laf yapmak',
+  tags:['ağzı laf yapmak','konuşkan','ikna edici','hitabeti güçlü'],
+  english_primary:"Gift of the gab",
+  alternatives:["Silver-tongued","Articulate"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Laf yapmak',tr_gloss:'to make words',en_fragment:'gift of the gab',bridge_type:'transform',explanation:'Türkçe konuşma üretimi; İngilizce konuşma yeteneği (gab) hediyesi metaforu'}
+  ],
+  cultural_insight:'"Gift of the gab" etkileyici konuşma yeteneğini anlatır. "Silver-tongued" (gümüş dilli) ise ikna edici ve zarif konuşanlar içindir.',
+  fluency_tip:'"To be a successful salesperson, you need the gift of the gab." (Başarılı bir satışçı olmak için ağzının laf yapması/konuşma yeteneğinin olması gerekir.)'
+},
+{
+  id:918, category:'sosyal',
+  tr:'Ağzından bal damlamak',
+  tags:['ağzından bal damlamak','güzel konuşmak','müjde','tatlı dil'],
+  english_primary:"To have a silver tongue",
+  alternatives:["To be a smooth talker","To speak very sweetly"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Bal damlamak',tr_gloss:'honey dripping',en_fragment:'silver tongue',bridge_type:'transform',explanation:'Türkçe doğal tatlılık (bal); İngilizce değerli metal (gümüş) metaforu üzerinden güzel konuşma'}
+  ],
+  cultural_insight:'Türkçe deyim tatlılığa (bal) vurgu yaparken, İngilizce deyim değerli ve parlayan bir dile (gümüş) odaklanır.',
+  fluency_tip:'"When he speaks, it\'s like honey dripping from his mouth; he has a real silver tongue." (Konuştuğunda ağzından bal damlıyor; gerçekten gümüş dilli/güzel konuşan biri.)'
+},
+{
+  id:919, category:'duygular',
+  tr:'Ağzından çıkanı kulağı duymamak',
+  tags:['ne dediğini bilmemek','öfkeli','düşüncesizce konuşmak','kontrolsüz'],
+  english_primary:"To not know what one is saying",
+  alternatives:["To talk nonsense","To lose control of one's tongue"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzından çıkan',tr_gloss:'what comes out of mouth',en_fragment:'what one is saying',bridge_type:'direct',explanation:'Konuşma eylemi iki dilde de benzer; Türkçe kulak/kontrol eksikliğini vurgular'}
+  ],
+  cultural_insight:'Türkçede öfke anında ağız ile kulak arasındaki mantık bağının koptuğu harika bir fiziksel döngüyle anlatılır.',
+  fluency_tip:'"He was so angry that he didn\'t know what he was saying." (O kadar kızgındı ki ağzından çıkanı kulağı duymuyordu/ne dediğini bilmiyordu.)'
+},
+{
+  id:920, category:'yogunluk',
+  tr:'Ağzından girip burnundan çıkmak',
+  tags:['ikna etmek','kandırmak','etkilemek','ısrar etmek'],
+  english_primary:"To talk someone into something",
+  alternatives:["To twist someone's arm","To sway someone"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Ağzından/Burnundan',tr_gloss:'from mouth/to nose',en_fragment:'talk someone into',bridge_type:'transform',explanation:'Türkçe tüm kanallardan müdahale metaforu; İngilizce birinin "kolunu bükme" (zorlama/ikna) metaforu'}
+  ],
+  cultural_insight:'"Twist someone\'s arm" (birinin kolunu bükmek) birini bir şeyi yapması için ikna etmek veya zorlamak demektir.',
+  fluency_tip:'"I didn\'t want to go, but they talked me into it." (Gitmek istemiyordum ama ağzımdan girip burnumdan çıktılar/beni ikna ettiler.)'
+},
+{
+  id:921, category:'sasirma',
+  tr:'Ağzını bıçak açmamak',
+  tags:['ağzını bıçak açmamak','hiç konuşmamak','üzgün','sessiz'],
+  english_primary:"Tight-lipped",
+  alternatives:["To not say a word","To be silent as a grave"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Bıçak açmamak',tr_gloss:'not even a knife opens (mouth)',en_fragment:'tight-lipped',bridge_type:'transform',explanation:'Türkçe ağzın kilitlenmişliği; İngilizce dudakların sıkılığı metaforu'}
+  ],
+  cultural_insight:'"Silent as a grave" (mezar gibi sessiz) tamamen sessiz kalma halini çok güçlü ve dramatik bir şekilde anlatır.',
+  fluency_tip:'"She has been tight-lipped about the secret ever since." (O zamandan beri sır hakkında ağzını bıçak açmıyor/tek kelime etmiyor.)'
+},
+{
+  id:922, category:'basari',
+  tr:'Ağzıyla kuş tutsa yaranamaz',
+  tags:['ağzıyla kuş tutsa','ne yapsa boş','yetersiz','takdir edilmeyen'],
+  english_primary:"To move heaven and earth to no avail",
+  alternatives:["No matter what they do","It won't be enough"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Kuş tutmak',tr_gloss:'to catch a bird with mouth',en_fragment:'move heaven and earth',bridge_type:'transform',explanation:'Türkçe imkansız/garip bir eylem; İngilizce göğü ve yeri oynatma (devasa çaba) metaforu'}
+  ],
+  cultural_insight:'Türkçe deyim, ne kadar "üstün" veya "sıra dışı" bir çaba gösterilirse gösterilsin takdir edilmeyeceğini anlatır.',
+  fluency_tip:'"I feel like I could move heaven and earth and still not satisfy my boss." (Gökleri ve yeri oynatsam bile — yani ne yapsam da — patronumu tatmin edemeyecekmişim gibi hissediyorum.)'
+},
+{
+  id:923, category:'gunluk',
+  tr:'Başı sıkışmak',
+  tags:['başı sıkışmak','zor durumda kalmak','yardıma ihtiyacı olmak','sıkıntı'],
+  english_primary:"To be in a tight spot",
+  alternatives:["To be in a fix","To be hard-pressed"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Başın sıkışması',tr_gloss:'head getting squeezed',en_fragment:'tight spot',bridge_type:'direct',explanation:'Her iki dilde de zor durumlar "sıkışıklık/dar alan" metaforuyla anlatılır'}
+  ],
+  cultural_insight:'"In a fix" (zor durumda) genellikle çözülmesi gereken karmaşık bir sorun için kullanılır.',
+  fluency_tip:'"If you ever find yourself in a tight spot, don\'t hesitate to call me." (Eğer başın sıkışırsa/zor durumda kalırsan beni aramaktan çekinme.)'
+},
+{
+  id:924, category:'sosyal',
+  tr:'Başına gelen pişmiş tavuğun başına gelmedi',
+  tags:['pişmiş tavuk','çok talihsizlik','üst üste gelen sorunlar','felaket'],
+  english_primary:"To have a string of bad luck",
+  alternatives:["To go through the wringer","Everything went wrong"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Pişmiş tavuk',tr_gloss:'cooked chicken',en_fragment:'wringer / bad luck',bridge_type:'transform',explanation:'Türkçe absürt bir talihsizlik metaforu; İngilizce çamaşır merdanesinden (zorluk) geçme metaforu'}
+  ],
+  cultural_insight:'Türkçe deyim, talihsizliklerin ne kadar "imkansız" ve "üst üste" olduğunu esprili ve acı bir dille anlatır.',
+  fluency_tip:'"Lately, I\'ve really been through the wringer." (Son zamanlarda gerçekten çok zor şeylerden geçtim/başıma gelenler pişmiş tavuğun başına gelmedi.)'
+},
+{
+  id:925, category:'duygular',
+  tr:'Başına talih kuşu kondu',
+  tags:['talih kuşu','büyük şans','beklenmedik kazanç','piyango'],
+  english_primary:"A stroke of luck",
+  alternatives:["A windfall","Hit the jackpot"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Talih kuşu',tr_gloss:'bird of fortune',en_fragment:'stroke of luck / windfall',bridge_type:'transform',explanation:'Türkçe kuş (kader) metaforu; İngilizce ani darbe (stroke) veya rüzgarla düşen meyve (windfall) metaforu'}
+  ],
+  cultural_insight:'"Windfall" (rüzgar düşürmesi) rüzgarın ağaçtan düşürdüğü meyveler gibi, zahmetsizce kazanılan parayı/şansı anlatır.',
+  fluency_tip:'"Winning the lottery was a real windfall for the family." (Piyangoyu kazanmak aile için gerçek bir talih kuşu/beklenmedik kazanç oldu.)'
+},
+{
+  id:926, category:'yogunluk',
+  tr:'Başını kaldırmamak',
+  tags:['başını kaldırmamak','çok çalışmak','odaklanmak','aralıksız'],
+  english_primary:"To have one's head down",
+  alternatives:["To be buried in work","To work non-stop"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Başını kaldırmamak',tr_gloss:'not lifting the head',en_fragment:'head down / buried',bridge_type:'direct',explanation:'Çalışma anındaki fiziksel duruş (başın eğik olması) her iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Buried in work" (işe gömülmüş) yoğunluğun kişinin tüm görüş alanını kapattığını anlatır.',
+  fluency_tip:'"They\'ve had their heads down all week trying to finish the report." (Raporu bitirmek için tüm hafta başlarını kaldırmadan/odaklanarak çalıştılar.)'
+},
+{
+  id:927, category:'sasirma',
+  tr:'Başını sarmak',
+  tags:['başına iş açmak','sorun yaratmak','uğraşmak','dert'],
+  english_primary:"To land oneself in trouble",
+  alternatives:["To get into a mess","To open a can of worms"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Başını sarmak',tr_gloss:'to wrap around the head',en_fragment:'land in trouble',bridge_type:'transform',explanation:'Türkçe sorunun başa "dolandığı" (sarmak) metaforu; İngilizce bir yere "inmek/konmak" (land) metaforu'}
+  ],
+  cultural_insight:'"Open a can of worms" (solucan kutusu açmak) bir kez başladığında durdurulması zor olan karmaşık bir dert açmak demektir.',
+  fluency_tip:'"I think we just opened a can of worms with this decision." (Bence bu kararla başımıza büyük bir dert açtık/iş sardık.)'
+},
+{
+  id:928, category:'basari',
+  tr:'Başının tacı yapmak',
+  tags:['başının tacı','çok değer vermek','baş üstünde tutmak','saygı'],
+  english_primary:"To put someone on a pedestal",
+  alternatives:["To treat with utmost respect","To treasure someone"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Başının tacı',tr_gloss:'crown of the head',en_fragment:'pedestal',bridge_type:'transform',explanation:'Türkçe taç (hükümdarlık/değer); İngilizce kaide/heykel (yükseklik/kutsallık) metaforu'}
+  ],
+  cultural_insight:'Her iki dil de değerli görülen kişiyi fiziksel olarak "yukarıda" bir yere (taç/kaide) yerleştirir.',
+  fluency_tip:'"They really put their grandmother on a pedestal." (Büyükannelerini gerçekten başlarının tacı yapıyorlar/ona çok değer veriyorlar.)'
+},
+{
+  id:929, category:'gunluk',
+  tr:'Baştan aşağı',
+  tags:['baştan aşağı','tamamen','komple','her yeriyle'],
+  english_primary:"From top to bottom",
+  alternatives:["From head to toe","Through and through"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Baştan aşağı',tr_gloss:'from head to bottom',en_fragment:'top to bottom / head to toe',bridge_type:'direct',explanation:'Bütünlük ifadesi vücut veya yükseklik üzerinden her iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"From head to toe" (baştan ayağa) genellikle giyim veya fiziksel durumlar için kullanılır. "Through and through" ise karakter özellikleri için (tamamen) kullanılır.',
+  fluency_tip:'"They cleaned the house from top to bottom." (Evi baştan aşağı/dip bucak temizlediler.)'
+},
+{
+  id:930, category:'sosyal',
+  tr:'Baştan savma',
+  tags:['baştan savma','özensiz','üstünkörü','dikkat etmeden'],
+  english_primary:"Half-baked",
+  alternatives:["Slipshod","Careless"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Baştan savma',tr_gloss:'fending off from head',en_fragment:'half-baked',bridge_type:'transform',explanation:'Türkçe hızla uzaklaştırma; İngilizce gıda (yarı pişmiş) metaforu üzerinden özensizlik'}
+  ],
+  cultural_insight:'"Half-baked" (yarı pişmiş) tam olgunlaşmamış, yeterince düşünülmemiş fikirler veya özensiz işler için kullanılır.',
+  fluency_tip:'"That was a half-baked plan and it was doomed to fail." (O baştan savma/yeterince düşünülmemiş bir plandı ve başarısız olmaya mahkumdu.)'
+},
+
+/* ─── FİNAL EKLEME (951-966) ────────────────────────────────── */
+{
+  id:951, category:'deyimler',
+  tr:'İki ayağını bir pabuca sokmak',
+  tags:['sıkıştırmak','telaşlandırmak','zorlamak','acele ettirmek'],
+  english_primary:"To rush someone",
+  alternatives:["To put pressure on someone","To hassle someone"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'İki ayak bir pabuç',tr_gloss:'two feet in one shoe',en_fragment:'rush / pressure',bridge_type:'transform',explanation:'Türkçe dar alan/sıkışma; İngilizce doğrudan hız/baskı metaforu'}
+  ],
+  cultural_insight:'Türkçe deyim dar ayakkabı (fiziksel sıkışıklık) üzerinden telaşı ve baskıyı çok görsel anlatır.',
+  fluency_tip:'"Don\'t rush me, I can\'t think clearly!" (beni acele ettirme/iki ayağımı bir pabuca sokma, net düşünemiyorum!)'
+},
+{
+  id:952, category:'gunluk',
+  tr:'Sağır sultan bile duydu',
+  tags:['herkes duydu','gizli kalmadı','aşikar','biliniyor'],
+  english_primary:"Common knowledge",
+  alternatives:["It's public knowledge","Everyone and their brother knows"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Sağır sultan',tr_gloss:'deaf sultan',en_fragment:'everyone knows',bridge_type:'transform',explanation:'Türkçe en duymayacak kişinin (sağır sultan) bile duyması; İngilizce "herkes ve kardeşi" (geniş kitle) metaforu'}
+  ],
+  cultural_insight:'"Everyone and their brother" (herkes ve kardeşi) bir haberin ne kadar yayıldığını ve artık kimse için sürpriz olmadığını anlatır.',
+  fluency_tip:'"You\'re just finding out? Everyone and their brother already knows about the secret!"'
+},
+{
+  id:953, category:'sosyal',
+  tr:'Yüzüne gözüne bulaştırmak',
+  tags:['başaramamak','rezil olmak','hata yapmak','beceremedi'],
+  english_primary:"To make a mess of it",
+  alternatives:["To mess up","To botch it"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Yüzüne gözüne',tr_gloss:'face and eye',en_fragment:'make a mess',bridge_type:'transform',explanation:'Türkçe kirlenmenin (bulaşma) yüze/göze sıçraması; İngilizce karmaşa (mess) veya özensiz iş (botch) metaforu'}
+  ],
+  cultural_insight:'"Botch" (berbat etmek) genellikle teknik bir işi yanlış yapmak için kullanılır. "Mess up" ise daha genel bir hata/başarısızlık ifadesidir.',
+  fluency_tip:'"I tried to fix the car myself but I really made a mess of it." (Arabayı kendim tamir etmeye çalıştım ama yüzüme gözüme bulaştırdım.)'
+},
+{
+  id:954, category:'duygular',
+  tr:'İçi cız etmek',
+  tags:['içi cız etmek','üzülmek','acıma','şefkat'],
+  english_primary:"To feel a pang of sadness",
+  alternatives:["To have a heavy heart","Heart sinks"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Cız',tr_gloss:'sizzling sound',en_fragment:'pang',bridge_type:'transform',explanation:'Türkçe yanma sesi; İngilizce ani keskin acı (pang) metaforu'}
+  ],
+  cultural_insight:'Türkçe deyim merhametin içteki sıcak/acı etkisini anlatırken, İngilizce "pang" ani bir duygu dalgasını betimler.',
+  fluency_tip:'"My heart just sank when I saw the stray dog in the rain." (Yağmurda o sokak köpeğini görünce içim cız etti/kalbim düştü.)'
+},
+{
+  id:955, category:'yogunluk',
+  tr:'Eli boş dönmek',
+  tags:['eli boş dönmek','başarısız olmak','kazançsız','yetersiz'],
+  english_primary:"To come away empty-handed",
+  alternatives:["To return with nothing","To fail in one's mission"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Eli boş',tr_gloss:'empty hand',en_fragment:'empty-handed',bridge_type:'direct',explanation:'Tam birebir eşleşme! Başarısızlığı boş eller üzerinden anlatmak her iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Empty-handed" (eli boş) sadece somut bir şey için değil, bir anlaşma veya mülakat sonucu için de kullanılır.',
+  fluency_tip:'"I went to the store for bread but they were all out, so I came away empty-handed." (Ekmek için dükkana gittim ama bitmişti, eli boş döndüm.)'
+},
+{
+  id:956, category:'sasirma',
+  tr:'Gözden kaçırmak',
+  tags:['gözden kaçırmak','fark etmemek','hata','ihmal'],
+  english_primary:"To miss / To overlook",
+  alternatives:["To let something slip","To fail to notice"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Gözden kaçırmak',tr_gloss:'missing from the eye',en_fragment:'overlook / miss',bridge_type:'direct',explanation:'Görüş alanının "kaçırılması" metaforu hata/ihmal için iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Let something slip" (bir şeyin kayıp gitmesine izin vermek) daha çok bir sırrı ağızdan kaçırmak veya bir fırsatı yitirmek için kullanılır.',
+  fluency_tip:'"I\'m sorry, I must have overlooked that email." (Üzgünüm, o e-postayı gözden kaçırmış olmalıyım.)'
+},
+{
+  id:957, category:'basari',
+  tr:'Alın teri dökmek',
+  tags:['alın teri','çok çalışmak','çaba','emek'],
+  english_primary:"Sweat of one's brow",
+  alternatives:["To work hard","To put in the effort"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Alın teri',tr_gloss:'sweat of the forehead',en_fragment:'sweat of one\'s brow',bridge_type:'direct',explanation:'Tam birebir eşleşme! Çok çalışmanın fiziksel sonucu (alın teri/brow sweat) her iki dilde de aynıdır'}
+  ],
+  cultural_insight:'Emeğin ve dürüst kazancın en temel evrensel sembolüdür.',
+  fluency_tip:'"Everything I have was earned by the sweat of my brow." (Sahip olduğum her şeyi alnımın teriyle kazandım.)'
+},
+{
+  id:958, category:'gunluk',
+  tr:'Boş ver',
+  tags:['boş ver','önemseme','unut gitsin','aldırma'],
+  english_primary:"Never mind",
+  alternatives:["Forget about it","Let it go"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Boş ver',tr_gloss:'give empty',en_fragment:'never mind',bridge_type:'transform',explanation:'Türkçe nesneyi/durumu boşluğa bırakma; İngilizce zihnin (mind) asla (never) takılmaması metaforu'}
+  ],
+  cultural_insight:'"Never mind" (önemi yok/zihnini yorma) konuyu kapatmak için en sık kullanılan İngilizce kalıptır.',
+  fluency_tip:'"Oh, I forgot what I was going to say... never mind!"'
+},
+{
+  id:959, category:'sosyal',
+  tr:'Ağız tadı',
+  tags:['ağız tadı','huzur','keyif','mutluluk'],
+  english_primary:"Peace and quiet",
+  alternatives:["Harmony","Happiness"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Ağız tadı',tr_gloss:'taste of the mouth',en_fragment:'peace / harmony',bridge_type:'transform',explanation:'Türkçe lezzet (tat); İngilizce huzur/uyum (peace/harmony) metaforu'}
+  ],
+  cultural_insight:'Türkçede aile içi huzur "ağız tadı" (yemek lezzeti) ile anlatılırken, İngilizcede "harmony" (uyum) veya "peace" (huzur) tercih edilir.',
+  fluency_tip:'"We just want some peace and quiet in this house!" (Bu evde biraz ağız tadı/huzur istiyoruz!)'
+},
+{
+  id:960, category:'duygular',
+  tr:'İçi parçalanmak',
+  tags:['içi parçalanmak','çok üzülmek','merhamet','acı'],
+  english_primary:"Heart is breaking",
+  alternatives:["To be heartbroken","To feel devastated"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'İçi parçalanmak',tr_gloss:'inside being torn apart',en_fragment:'heart is breaking',bridge_type:'direct',explanation:'Duygusal yıkımın fiziksel parçalanma metaforuyla anlatılması iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Devastated" (harap olmuş) en ağır hüzün ve yıkım anları için kullanılan en güçlü sıfattır.',
+  fluency_tip:'"It broke my heart to see them so sad." (Onları o kadar üzgün görmek içimi parçaladı/kalbimi kırdı.)'
+},
+{
+  id:961, category:'yogunluk',
+  tr:'Başını sokacak bir yer',
+  tags:['başını sokacak yer','ev','barınak','küçük bir yuva'],
+  english_primary:"A roof over one's head",
+  alternatives:["Somewhere to stay","A place to call home"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Başını sokacak',tr_gloss:'place to put the head',en_fragment:'roof over head',bridge_type:'direct',explanation:'Barınma ihtiyacının baş/çatı üzerinden anlatılması iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"A roof over my head" (başımın üstünde bir çatı) en temel barınma şükranını veya ihtiyacını anlatır.',
+  fluency_tip:'"As long as I have a roof over my head, I\'m happy." (Başımı sokacak bir yerim/çatım olduğu sürece mutluyum.)'
+},
+{
+  id:962, category:'sasirma',
+  tr:'Jeton düştü',
+  tags:['jeton düştü','nihayet anladı','farkına vardı','çözdü'],
+  english_primary:"The penny dropped",
+  alternatives:["Finally clicked","It dawned on me"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Jeton düştü',tr_gloss:'token dropped',en_fragment:'penny dropped',bridge_type:'direct',explanation:'Otomat/para (penny/jeton) düşme metaforu anlayışın gelmesi için iki dilde de aynıdır'}
+  ],
+  cultural_insight:'Her iki dilde de bir şeyin anlaşıldığı o "aydınlanma" anını para düşme sesiyle anlatır.',
+  fluency_tip:'"It took a while, but finally the penny dropped!" (Biraz sürdü ama sonunda jeton düştü!)'
+},
+{
+  id:963, category:'basari',
+  tr:'Elinden geleni yapmak',
+  tags:['elinden geleni yapmak','çabalamak','gayret','limit'],
+  english_primary:"To do one's best",
+  alternatives:["To go the extra mile","To give it your all"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Elinden geleni',tr_gloss:'what comes from the hand',en_fragment:'do one\'s best',bridge_type:'transform',explanation:'Türkçe yetenek/kapasite (elden gelen); İngilizce en iyi sonuç (best) metaforu'}
+  ],
+  cultural_insight:'"Go the extra mile" (fazladan bir mil gitmek) beklenenden daha fazlasını yapmak demektir.',
+  fluency_tip:'"I don\'t care if we win or lose, as long as we do our best." (Kazanıp kaybetmemiz umurumda değil, yeter ki elimizden geleni yapalım.)'
+},
+{
+  id:964, category:'gunluk',
+  tr:'Üstüne bir bardak soğuk su iç',
+  tags:['soğuk su iç','vazgeç','kaybettin','umudu kes'],
+  english_primary:"Kiss it goodbye",
+  alternatives:["Wave goodbye to it","Forget about ever getting it back"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Soğuk su',tr_gloss:'cold water',en_fragment:'kiss it goodbye',bridge_type:'transform',explanation:'Türkçe sindirme/soğutma (su); İngilizce vedalaşma (öpmek) metaforu'}
+  ],
+  cultural_insight:'"Kiss it goodbye" (onunla öpüşerek vedalaş) bir şeyi bir daha asla göremeyeceğin/alamayacağın anlamına gelir.',
+  fluency_tip:'"If you lend him money, you can just kiss it goodbye!" (Ona borç verirsen üstüne bir bardak soğuk su iç!)'
+},
+{
+  id:965, category:'sosyal',
+  tr:'Dost kara günde belli olur',
+  tags:['dost','kara gün','sadakat','yardım'],
+  english_primary:"A friend in need is a friend indeed",
+  alternatives:["Friends are for the bad times","True friends stand by you"],
+  register:'neutral',
+  bridges:[
+    {tr_fragment:'Kara gün',tr_gloss:'black day',en_fragment:'friend in need',bridge_type:'transform',explanation:'Türkçe kötü zamanın rengi (kara); İngilizce "ihtiyaç duyulan an" (need) metaforu'}
+  ],
+  cultural_insight:'Sadakat her iki dilde de zor zamanlar üzerinden test edilir.',
+  fluency_tip:'"You really helped me out when I was struggling. A friend in need is a friend indeed."'
+},
+{
+  id:966, category:'duygular',
+  tr:'Kanı kaynamak',
+  tags:['kanı kaynamak','sevmek','sıcaklık','anında enerji'],
+  english_primary:"To warm to someone",
+  alternatives:["To take an instant liking","To hit it off"],
+  register:'informal',
+  bridges:[
+    {tr_fragment:'Kanı kaynamak',tr_gloss:'blood boiling (with liking)',en_fragment:'warm to someone',bridge_type:'direct',explanation:'Isı/sıcaklık metaforu anında sevgi/sempati için iki dilde de aynıdır'}
+  ],
+  cultural_insight:'"Hit it off" (anında kaynaşmak) iki kişinin ilk tanışmada çok iyi anlaşması demektir. Türkçe "kan kaynaması" daha biyolojik bir sıcaklıktır.',
+  fluency_tip:'"I really warmed to him the moment we met." (Tanıştığımız an ona kanım kaynadı/ısındı.)'
 }
 ];
 
