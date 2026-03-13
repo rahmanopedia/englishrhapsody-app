@@ -243,9 +243,15 @@ class BridgeModule {
     trigger?.addEventListener('click', () => {
       const text = ta?.value.trim();
       if (!text) {
-        ta?.classList.add('shake');
-        ta?.addEventListener('animationend', () => ta.classList.remove('shake'), { once: true });
-        ta?.focus();
+        // Boşsa rastgele bir ifade yükle
+        if (typeof BRIDGE_DATA !== 'undefined' && BRIDGE_DATA.length) {
+          let pick;
+          do { pick = BRIDGE_DATA[Math.floor(Math.random() * BRIDGE_DATA.length)]; }
+          while (this._lastRandom === pick.id && BRIDGE_DATA.length > 1);
+          this._lastRandom = pick.id;
+          if (ta) { ta.value = pick.tr; const cc = this.el.querySelector('#bridge-char-count'); if (cc) cc.textContent = `${pick.tr.length} / 400`; }
+          this._analyze(pick.tr);
+        }
         return;
       }
       this._analyze(text);
