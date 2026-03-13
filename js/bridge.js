@@ -238,23 +238,21 @@ class BridgeModule {
       });
     });
 
-    // Köprü Kur butonu
+    // Köprü Kur butonu — her basışta rastgele ifade
     const trigger = this.el.querySelector('#bridge-trigger-btn');
     trigger?.addEventListener('click', () => {
-      const text = ta?.value.trim();
-      if (!text) {
-        // Boşsa rastgele bir ifade yükle
-        if (typeof BRIDGE_DATA !== 'undefined' && BRIDGE_DATA.length) {
-          let pick;
-          do { pick = BRIDGE_DATA[Math.floor(Math.random() * BRIDGE_DATA.length)]; }
-          while (this._lastRandom === pick.id && BRIDGE_DATA.length > 1);
-          this._lastRandom = pick.id;
-          if (ta) { ta.value = pick.tr; const cc = this.el.querySelector('#bridge-char-count'); if (cc) cc.textContent = `${pick.tr.length} / 400`; }
-          this._analyze(pick.tr);
+      if (typeof BRIDGE_DATA !== 'undefined' && BRIDGE_DATA.length) {
+        let pick;
+        do { pick = BRIDGE_DATA[Math.floor(Math.random() * BRIDGE_DATA.length)]; }
+        while (this._lastRandom === pick.id && BRIDGE_DATA.length > 1);
+        this._lastRandom = pick.id;
+        if (ta) {
+          ta.value = pick.tr;
+          const cc = this.el.querySelector('#bridge-char-count');
+          if (cc) cc.textContent = `${pick.tr.length} / 400`;
         }
-        return;
+        this._analyze(pick.tr);
       }
-      this._analyze(text);
     });
 
     // Ctrl+Enter ile tetikleme
