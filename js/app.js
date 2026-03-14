@@ -3292,7 +3292,7 @@ class App {
     const hintEl = document.getElementById('synth-hint-used');
     if (iconEl) iconEl.textContent = word.icon || '📚';
     if (cefrEl) { cefrEl.textContent = word.level || 'A1'; cefrEl.className = `synth-cefr-badge lvl-${word.level || 'A1'}`; }
-    if (catEl)  catEl.textContent  = word.cat || '';
+    if (catEl)  catEl.textContent  = word.cat || 'Kelime';
     if (hintEl) hintEl.style.display = 'none';
 
     UI.setEl('synth-tr', word.tr);
