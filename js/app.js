@@ -2635,7 +2635,7 @@ class App {
             window.authUI?.open();
           }
         }, 620);
-      }, 350);
+      }, 800);
     }
   }
 

@@ -12,7 +12,7 @@ window._splashStart = Date.now();
     { t:'> status()',                                  cls:'sp-cmd' },
     { t:'All systems nominal. Environment ready.',     cls:'sp-info'},
   ];
-  
+
   var body = document.getElementById('sp-term-body');
   var fill = document.getElementById('sp-bar-fill');
   var pct  = document.getElementById('sp-pct');
@@ -20,28 +20,28 @@ window._splashStart = Date.now();
   var currentLine = 0;
   function processNext() {
     if (currentLine >= lines.length) return;
-    
+
     var line = lines[currentLine];
     var el = document.createElement('div');
     el.className = 'sp-term-line ' + line.cls;
     if(body) body.appendChild(el);
-    
+
     var j = 0;
     var speed = line.cls === 'sp-ok' ? 12 : 20;
-    
+
     var iv = setInterval(function(){
       el.textContent = line.t.slice(0, ++j);
       if(body) body.scrollTop = body.scrollHeight;
-      
+
       if(j >= line.t.length){
         clearInterval(iv);
         currentLine++;
-        
+
         // Progress update
         var p = Math.round((currentLine / lines.length) * 100);
         if(fill) fill.style.width = p + '%';
         if(pct)  pct.textContent  = p + '%';
-        
+
         if (currentLine === lines.length) {
           var cur = document.createElement('span');
           cur.className = 'sp-cursor';
