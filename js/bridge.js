@@ -81,7 +81,7 @@ class BridgeModule {
           <linearGradient id="grad-transform" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%"   stop-color="#f59e0b"/>
             <stop offset="50%"  stop-color="#a78bfa"/>
-            <stop offset="100%" stop-color="#0ea5e9"/>
+            <stop offset="100%" stop-color="#00d4ff"/>
           </linearGradient>
         </defs>
       </svg>
@@ -305,7 +305,7 @@ class BridgeModule {
 
     // Kısa yükleme efekti
     btn.classList.add('loading');
-    btn.textContent = '⟳';
+    btn.disabled = true;
     this._clearResult();
 
     const loadEl = document.createElement('div');
@@ -321,7 +321,7 @@ class BridgeModule {
     // Statik arama — kısa gecikme ile UX için
     setTimeout(() => {
       btn.classList.remove('loading');
-      btn.textContent = '🌉';
+      btn.disabled = false;
       document.getElementById('bridge-loading')?.remove();
 
       if (typeof findBridgeMatch !== 'function') {
@@ -363,7 +363,7 @@ class BridgeModule {
       content.innerHTML = `
         <div style="padding:12px 0;width:100%">
           <div style="font-size:1.5rem;margin-bottom:8px">🔍</div>
-          <div style="font-weight:700;color:#f1f5f9;margin-bottom:6px">Bu ifade veritabanında yok</div>
+          <div style="font-weight:700;color:var(--text-1);margin-bottom:6px">Bu ifade veritabanında yok</div>
           <div style="color:var(--text-3);font-size:0.82rem;line-height:1.5">
             "<em>${text}</em>" için hazır köprü analizi bulunamadı.<br>
             Aşağıdan benzer ifadeleri keşfedebilirsin.
@@ -388,7 +388,7 @@ class BridgeModule {
       ).join('');
       content.innerHTML = `
         <div style="padding:12px 0;width:100%">
-          <div style="font-weight:700;color:#f1f5f9;margin-bottom:6px">🌉 Benzer ifadeler</div>
+          <div style="font-weight:700;color:var(--text-1);margin-bottom:6px">Benzer ifadeler</div>
           <div style="color:var(--text-3);font-size:0.82rem;margin-bottom:12px">
             "<em>${text}</em>" için tam eşleşme bulunamadı. Bunları dene:
           </div>
@@ -682,7 +682,7 @@ class BridgeModule {
 
     if (btn) {
       btn.classList.add('saved');
-      btn.innerHTML = '<span>✓</span> Koleksiyona Eklendi';
+      btn.textContent = '✓ Koleksiyona Eklendi';
       btn.disabled = true;
     }
 
@@ -805,24 +805,18 @@ class BridgeModule {
             <div class="bridge-insight-body">
               <div class="bridge-insight-label">Kültürel Not</div>
               <p class="bridge-insight-text">${item.cultural_insight}</p>
-              ${item.fluency_tip ? `<p class="bridge-fluency-tip">💡 ${item.fluency_tip}</p>` : ''}
+              ${item.fluency_tip ? `<p class="bridge-fluency-tip">${item.fluency_tip}</p>` : ''}
             </div>
           </div>` : ''}
-        <button class="bridge-save-btn" style="margin-top:16px;width:100%" id="modal-speak-btn">
-          <span>🔊</span> Telaffuz Et
-        </button>
-        <div class="bridge-sr-buttons" id="modal-sr-btns" style="display:flex;gap:8px;margin-top:8px">
-          <div style="font-size:0.65rem;color:var(--text-3);width:100%;text-align:center;margin-bottom:2px">Tekrar planla:</div>
-          <button class="bridge-sr-btn sr-again"  data-diff="again"  style="flex:1">↺ Tekrar</button>
-          <button class="bridge-sr-btn sr-hard"   data-diff="hard"   style="flex:1">😓 Zor</button>
-          <button class="bridge-sr-btn sr-easy"   data-diff="easy"   style="flex:1">😊 Kolay</button>
+        <button class="bridge-modal-action-btn" id="modal-speak-btn">🔊 Telaffuz Et</button>
+        <div class="bridge-sr-buttons" id="modal-sr-btns">
+          <div class="bridge-sr-label">Tekrar planla:</div>
+          <button class="bridge-sr-btn sr-again" data-diff="again">↺ Tekrar</button>
+          <button class="bridge-sr-btn sr-hard"  data-diff="hard">😓 Zor</button>
+          <button class="bridge-sr-btn sr-easy"  data-diff="easy">😊 Kolay</button>
         </div>
-        <button class="bridge-save-btn" style="margin-top:8px;width:100%" id="modal-load-btn">
-          <span>↗</span> Çalışma Alanına Yükle
-        </button>
-        <button class="bridge-save-btn saved" style="margin-top:8px;width:100%" id="modal-delete-btn">
-          <span>🗑</span> Koleksiyondan Sil
-        </button>
+        <button class="bridge-modal-action-btn" id="modal-load-btn">↗ Çalışma Alanına Yükle</button>
+        <button class="bridge-modal-action-btn bridge-modal-action-btn--danger" id="modal-delete-btn">🗑 Koleksiyondan Sil</button>
       </div>
     `;
 
@@ -846,7 +840,7 @@ class BridgeModule {
       btn.addEventListener('click', () => {
         this._updateSR(item.id, btn.dataset.diff);
         const row = overlay.querySelector('#modal-sr-btns');
-        if (row) row.innerHTML = '<div style="font-size:0.75rem;color:#34d399;text-align:center;padding:6px">✓ Tekrar planı güncellendi</div>';
+        if (row) row.innerHTML = '<div class="bridge-sr-done">✓ Tekrar planı güncellendi</div>';
       });
     });
 
@@ -940,7 +934,7 @@ class BridgeModule {
     // Üst şerit
     const stripe = ctx.createLinearGradient(0, 0, 800, 0);
     stripe.addColorStop(0, '#f59e0b');
-    stripe.addColorStop(1, '#0ea5e9');
+    stripe.addColorStop(1, '#00d4ff');
     ctx.fillStyle = stripe;
     ctx.fillRect(0, 0, 800, 5);
 
@@ -960,7 +954,7 @@ class BridgeModule {
     ctx.fillText('↓', 36, 165);
 
     // EN metin
-    ctx.fillStyle = '#7dd3fc';
+    ctx.fillStyle = '#00d4ff';
     ctx.font = 'bold 32px system-ui, sans-serif';
     const en = `"${data.english_primary}"`;
     ctx.fillText(en, 36, 220);
