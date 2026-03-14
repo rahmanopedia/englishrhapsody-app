@@ -3293,12 +3293,16 @@ class App {
     if (iconEl) iconEl.textContent = word.icon || '📚';
     if (cefrEl) { cefrEl.textContent = word.level || 'A1'; cefrEl.className = `synth-cefr-badge lvl-${word.level || 'A1'}`; }
     
-    // Kategori bilgisini (Kelime, Phrasal Verb vb.) daha az görünür yapıyoruz veya siliyoruz
-    if (catEl)  catEl.textContent  = ''; 
-    if (hintEl) hintEl.style.display = 'none';
+    // ANA GÖSTERGE: En üstteki büyük başlığa Türkçe anlamı basıyoruz
+    if (catEl) {
+      catEl.textContent = word.tr || '';
+      catEl.style.fontSize = '1.8rem';
+      catEl.style.fontWeight = '800';
+      catEl.style.display = 'block';
+    }
 
-    // ANA GÖSTERGE: Türkçe anlam (En üstte bu görünecek)
-    UI.setEl('synth-tr', word.tr);
+    // Alt kısımdaki synth-tr alanını gizleyebiliriz çünkü artık en üstte yazıyor
+    UI.setEl('synth-tr', '');
 
     // Example sentence — delayed fade-in
     const exEl = document.getElementById('synth-ex');
