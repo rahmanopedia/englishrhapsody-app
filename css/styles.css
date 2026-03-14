@@ -6332,3 +6332,120 @@ body.rank-6 { --theme-accent: #ff9d00; }
   border-color: rgba(244, 63, 94, 0.2) !important; 
   text-decoration: line-through !important; text-decoration-color: rgba(244, 63, 94, 0.5) !important;
 }
+
+/* ¦¦ Layout & Grid Fixes for Screen Fitting ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ */
+.main-content {
+  max-width: 100% !important;
+  width: auto !important;
+  overflow-x: hidden !important;
+  padding: 16px 20px !important;
+}
+
+.actions-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  gap: 12px !important;
+}
+
+.home-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
+.hero-stats-bar {
+  flex-wrap: wrap !important;
+  height: auto !important;
+  padding: 12px !important;
+  gap: 10px !important;
+}
+
+.hstat {
+  flex: 1 1 120px !important;
+  min-width: 100px !important;
+}
+
+.hstat-div { display: none !important; }
+
+/* Sinestezi Modes */
+.synth-mode-cards {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+}
+
+.synth-intro {
+  max-width: 100% !important;
+  padding: 0 16px !important;
+}
+
+/* Ensure no horizontal scroll on mobile */
+@media (max-width: 768px) {
+  .sidebar { display: none !important; }
+  .layout { grid-template-columns: 1fr !important; }
+  .main-content { padding: 12px 12px 80px !important; }
+  .actions-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important; }
+}
+
+/* ¦¦ Super Screen Fit (Zero Overflow) ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ */
+:root {
+  --sidebar-w: 200px !important; /* Even more compact */
+}
+
+.layout {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+.main-content {
+  flex: 1 !important;
+  padding: 12px 16px !important;
+  margin-left: 0 !important; /* Sidebar is fixed, but we'll handle the overlap */
+  transition: padding-left 0.4s ease !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+body:not(.sidebar-closed) .main-content {
+  padding-left: calc(var(--sidebar-w) + 16px) !important;
+}
+
+/* Force grids to wrap early */
+.actions-grid {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+  width: 100% !important;
+}
+
+.home-grid {
+  gap: 12px !important;
+}
+
+.home-hero {
+  padding: 16px 20px 0 !important;
+  border-radius: 16px !important;
+}
+
+.hero-stats-bar {
+  padding: 8px !important;
+  font-size: 0.85rem !important;
+}
+
+.hstat-val { font-size: 1.1rem !important; }
+
+/* Scale down on small desktops */
+@media (max-width: 1200px) {
+  html { font-size: 14px; }
+  .actions-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; }
+}
+
+/* Tablet / Large Mobile */
+@media (max-width: 1024px) {
+  body:not(.sidebar-closed) .main-content { padding-left: 16px !important; } /* Sidebar covers content on small screens or we hide it */
+}
+
+/* Ensure cards don't have fixed widths */
+.action-card, .module-card, .ipa-card {
+  min-width: 0 !important;
+  width: 100% !important;
+}
