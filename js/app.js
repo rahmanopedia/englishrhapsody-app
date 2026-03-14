@@ -5510,7 +5510,7 @@ class App {
 
   _THEMES = [
     { id: 'nebula',   icon: '🌌', name: 'Nebula',   desc: 'Kozmik karanlık — derin uzay',     starColor: '#00d4ff' },
-    { id: 'aurora',   icon: '🌤️', name: 'Aurora',   desc: 'Kuzey ışıkları — açık mod',       starColor: '#00c4b4' },
+    { id: 'magma',    icon: '🌋', name: 'Magma',    desc: 'Volkanik derinlik — kor kırmızı',  starColor: '#ef4444' },
     { id: 'sakura',   icon: '🌸', name: 'Sakura',   desc: 'Kiraz çiçeği — sıcak karanlık',   starColor: '#f472b6' },
     { id: 'obsidian', icon: '⚫', name: 'Obsidian', desc: 'Saf siyah lüks — altın aksanlar', starColor: '#d4a843' },
   ];
@@ -5521,7 +5521,7 @@ class App {
   }
 
   setTheme(id, silent = false) {
-    const valid = ['nebula','aurora','sakura','obsidian'];
+    const valid = ['nebula','magma','sakura','obsidian'];
     if (!valid.includes(id)) id = 'nebula';
     document.body.classList.remove(...valid.map(t => `theme-${t}`));
     if (id !== 'nebula') document.body.classList.add(`theme-${id}`);
@@ -5577,7 +5577,7 @@ class App {
   _themeSwatches(id) {
     const map = {
       nebula:   ['#00d4ff','#7c3aed','#f59e0b','#10b981'],
-      aurora:   ['#00a496','#6d28d9','#d97706','#059669'],
+      magma:    ['#ef4444','#f97316','#fbbf24','#22c55e'],
       sakura:   ['#f472b6','#c084fc','#fbbf24','#4ade80'],
       obsidian: ['#d4a843','#c8b87a','#f5d076','#4a9e6f'],
     };
