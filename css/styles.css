@@ -6449,3 +6449,30 @@ body:not(.sidebar-closed) .main-content {
   min-width: 0 !important;
   width: 100% !important;
 }
+
+/* ¦¦ Aesthetic Fix for Action Cards ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ */
+.actions-grid {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important; /* Don't stretch cards to fill */
+  justify-content: center !important; /* Center cards if they don't fill the row */
+  gap: 20px !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
+.action-card {
+  max-width: 320px !important; /* Prevent excessive width */
+  height: 200px !important;    /* Uniform height for a cleaner look */
+  margin: 0 auto !important;
+  aspect-ratio: auto !important;
+}
+
+/* Fix for home grid centering */
+.home-grid {
+  align-items: center !important;
+}
+
+.home-progress-card, .missions-card, .home-mid-row {
+  width: 100% !important;
+  max-width: 1000px !important; /* Keep center content focused */
+  margin: 0 auto !important;
+}
