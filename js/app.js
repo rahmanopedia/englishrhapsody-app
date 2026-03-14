@@ -3128,12 +3128,27 @@ class App {
     this.session.synthPaused = false;
   }
 
+  _setSynthCEFR(cefr, btn) {
+    this._synthCEFRFilter = cefr;
+    const btns = document.querySelectorAll('[data-action="set-synth-cefr"]');
+    btns.forEach(b => b.classList.toggle('active', b === btn));
+    this.audio.play('tick');
+  }
+
   startSynesthesia() {
     if (this._synthModeConfig === 'phantom') {
       const wrapper = document.querySelector('.synesthesia-wrapper');
       if (!wrapper) return;
       document.getElementById('synth-intro').style.display = 'none';
       window.phantomMod = new PhantomMode(this);
+      
+      // Pass the CEFR filter to phantomMod
+      if (this._synthCEFRFilter && this._synthCEFRFilter !== 'all') {
+        window.phantomMod.cefrFilter = [this._synthCEFRFilter];
+      } else {
+        window.phantomMod.cefrFilter = [];
+      }
+
       window.phantomMod.init(wrapper);
       return;
     }
@@ -3141,10 +3156,20 @@ class App {
     this.session.synthActive = true;
     const len = this._synthSessionLen || (window.remoteFlags?.srs_session_word_count ?? 10);
 
+    // Filter words by CEFR if selected
+    let sourcePool = WORDS;
+    if (this._synthCEFRFilter && this._synthCEFRFilter !== 'all') {
+      sourcePool = WORDS.filter(w => w.level === this._synthCEFRFilter);
+      if (sourcePool.length === 0) {
+        UI.toast(`${this._synthCEFRFilter} seviyesinde kelime bulunamadı.`);
+        sourcePool = WORDS;
+      }
+    }
+
     // SRS-prioritized pool: due words first, then fill with random
     const mastery = this.state.get('mastery');
-    const due = SRS.getDue(WORDS, mastery);
-    const notDue = WORDS.filter(w => !due.includes(w)).sort(() => Math.random() - 0.5);
+    const due = SRS.getDue(sourcePool, mastery);
+    const notDue = sourcePool.filter(w => !due.includes(w)).sort(() => Math.random() - 0.5);
     const shuffledDue = [...due].sort(() => Math.random() - 0.5);
     this.session.learnPool = [...shuffledDue, ...notDue].slice(0, len);
 
@@ -5708,7 +5733,9 @@ class App {
           case 'wod-speak':         this.speakWord(document.getElementById('wod-word')?.textContent || ''); return;
           case 'set-synth-mode':    this._setSynthMode(actionEl.dataset.mode, actionEl); return;
           case 'set-synth-len':     this._setSynthLen(parseInt(actionEl.dataset.len), actionEl); return;
+          case 'set-synth-cefr':    this._setSynthCEFR(actionEl.dataset.cefr, actionEl); return;
           case 'start-synesthesia': this.startSynesthesia(); return;
+
           case 'resume-synesthesia':this.resumeSynesthesia(); return;
           case 'pause-synesthesia': this._pauseSynesthesia(); return;
           case 'play-synth-hint':   this.playSynthHint(); return;
