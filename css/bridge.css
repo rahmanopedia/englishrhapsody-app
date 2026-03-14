@@ -457,6 +457,56 @@
   border-left: 2px solid rgba(0,212,255,0.35);
 }
 
+/* ── Gerçek Kullanım ─────────────────────────────────────────── */
+.bridge-context-card {
+  margin: 12px 24px 0;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid rgba(0,212,255,0.15);
+  border-left: 2px solid rgba(0,212,255,0.4);
+  display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start;
+  opacity: 0; animation: bcard-in 0.5s ease 0.28s forwards;
+}
+.bridge-context-icon { font-size: 13px; padding-top: 2px; line-height: 1; }
+.bridge-context-body { display: flex; flex-direction: column; gap: 4px; }
+.bridge-context-label {
+  font-size: 0.58rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.14em; color: #00d4ff; margin-bottom: 4px;
+}
+.bridge-context-sentence {
+  font-size: 0.8rem; color: var(--text-1); line-height: 1.55; font-style: italic;
+}
+.bridge-context-register {
+  font-size: 0.68rem; color: var(--text-3); margin-top: 3px;
+}
+
+/* ── Çeviri Tuzağı ───────────────────────────────────────────── */
+.bridge-error-card {
+  margin: 12px 24px 0;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  background: rgba(239,68,68,0.04);
+  border: 1px solid rgba(239,68,68,0.15);
+  border-left: 2px solid rgba(239,68,68,0.4);
+  display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start;
+  opacity: 0; animation: bcard-in 0.5s ease 0.34s forwards;
+}
+.bridge-error-icon { font-size: 13px; padding-top: 2px; line-height: 1; }
+.bridge-error-body { display: flex; flex-direction: column; gap: 4px; }
+.bridge-error-label {
+  font-size: 0.58rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.14em; color: #f87171; margin-bottom: 5px;
+}
+.bridge-error-row {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  font-size: 0.76rem; line-height: 1.5;
+}
+.bridge-error-wrong { color: #f87171; }
+.bridge-error-sep   { color: var(--text-3); }
+.bridge-error-right { color: #34d399; }
+.bridge-error-note  { font-size: 0.69rem; color: var(--text-3); margin-top: 4px; }
+
 /* ── Kaydet ──────────────────────────────────────────────────── */
 .bridge-save-btn {
   margin: 10px 24px 0;
@@ -846,7 +896,8 @@
   .bridge-legend { padding: 8px 16px; }
   .bridge-cat-filter-bar { padding: 14px 16px 0; }
   .bridge-cards-section, .bridge-explorer-section, .bridge-collection-section { padding: 0 16px; margin-left: 0; margin-right: 0; }
-  .bridge-insight, .bridge-flow-bar { margin-left: 16px; margin-right: 16px; }
+  .bridge-insight, .bridge-flow-bar,
+  .bridge-context-card, .bridge-error-card { margin-left: 16px; margin-right: 16px; }
   .bridge-save-btn { margin-left: 16px; margin-right: 16px; width: calc(100% - 32px); }
   .bridge-collection-section { margin: 20px 16px 0; }
   .bridge-stats-grid { grid-template-columns: repeat(2,1fr); }

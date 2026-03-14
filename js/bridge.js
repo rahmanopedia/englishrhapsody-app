@@ -186,6 +186,10 @@ class BridgeModule {
         <!-- Köprü Kartları Alanı -->
         <div class="bridge-cards-section" id="bridge-cards-section"></div>
 
+        <!-- Gerçek Kullanım & Çeviri Tuzağı -->
+        <div id="bridge-context-area"></div>
+        <div id="bridge-error-area"></div>
+
         <!-- Kültürel Bilgi -->
         <div id="bridge-insight-area"></div>
 
@@ -458,6 +462,8 @@ class BridgeModule {
     });
 
     this._renderBridgeCards(data.bridges || []);
+    this._renderContext(data);
+    this._renderCommonError(data);
     this._renderInsight(data.cultural_insight, data.fluency_tip);
     this._renderSaveBtn();
   }
@@ -523,6 +529,62 @@ class BridgeModule {
     }
 
     return `<svg class="bridge-svg-line" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${paths}</svg>`;
+  }
+
+  /* ── Gerçek Kullanım ─────────────────────────────────────────── */
+  _renderContext(data) {
+    const area = this.el.querySelector('#bridge-context-area');
+    if (!area) return;
+
+    const tip = data.fluency_tip || '';
+    const quoteMatch = tip.match(/'([^']{10,})'/);
+    const sentence = quoteMatch ? quoteMatch[1] : data.english_primary;
+
+    const registerCtx = {
+      informal: 'Günlük sohbet · arkadaş ortamı',
+      formal:   'Resmi ortam · iş yazışması',
+      neutral:  'Her ortamda kullanılabilir'
+    }[data.register || 'neutral'] || 'Her ortamda kullanılabilir';
+
+    area.innerHTML = `
+      <div class="bridge-context-card">
+        <div class="bridge-context-icon">💬</div>
+        <div class="bridge-context-body">
+          <div class="bridge-context-label">Gerçek Kullanım</div>
+          <div class="bridge-context-sentence">"${sentence}"</div>
+          <div class="bridge-context-register">${registerCtx}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  /* ── Çeviri Tuzağı ───────────────────────────────────────────── */
+  _renderCommonError(data) {
+    const area = this.el.querySelector('#bridge-error-area');
+    if (!area) return;
+
+    const nonDirect = (data.bridges || []).filter(b =>
+      b.bridge_type && b.bridge_type !== 'direct'
+    );
+    if (!nonDirect.length) { area.innerHTML = ''; return; }
+
+    const bridge = nonDirect[0];
+    const trap = bridge.tr_gloss;
+
+    area.innerHTML = `
+      <div class="bridge-error-card">
+        <div class="bridge-error-icon">⚡</div>
+        <div class="bridge-error-body">
+          <div class="bridge-error-label">Çeviri Tuzağı</div>
+          <div class="bridge-error-row">
+            <span class="bridge-error-wrong">❌ "${trap}"</span>
+            <span class="bridge-error-sep">→</span>
+            <span class="bridge-error-right">✅ "${data.english_primary}"</span>
+          </div>
+          <div class="bridge-error-note">Kelimesi kelimesine çeviri İngilizcede doğal gelmiyor.</div>
+        </div>
+      </div>
+    `;
   }
 
   /* ── Kategori Gezgini ────────────────────────────────────────── */
@@ -893,13 +955,17 @@ class BridgeModule {
     const placeholder = this.el.querySelector('#bridge-placeholder');
     const content     = this.el.querySelector('#bridge-result-content');
     const cards       = this.el.querySelector('#bridge-cards-section');
+    const contextArea = this.el.querySelector('#bridge-context-area');
+    const errorArea   = this.el.querySelector('#bridge-error-area');
     const insight     = this.el.querySelector('#bridge-insight-area');
     const saveArea    = this.el.querySelector('#bridge-save-area');
-    if (placeholder) { placeholder.style.display = 'flex'; }
-    if (content)     { content.style.display = 'none'; content.innerHTML = ''; }
-    if (cards)       { cards.innerHTML = ''; }
-    if (insight)     { insight.innerHTML = ''; }
-    if (saveArea)    { saveArea.innerHTML = ''; }
+    if (placeholder)  { placeholder.style.display = 'flex'; }
+    if (content)      { content.style.display = 'none'; content.innerHTML = ''; }
+    if (cards)        { cards.innerHTML = ''; }
+    if (contextArea)  { contextArea.innerHTML = ''; }
+    if (errorArea)    { errorArea.innerHTML = ''; }
+    if (insight)      { insight.innerHTML = ''; }
+    if (saveArea)     { saveArea.innerHTML = ''; }
     this.currentData = null;
     this.saved = false;
   }
