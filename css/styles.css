@@ -562,6 +562,29 @@ body.sidebar-closed .sidebar-tab {
   font-family: inherit;
 }
 
+/* ── Matrix rain canvas ─── */
+#sp-matrix {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Merkez karartma — "English Rhapsody" logo net görünsün */
+.sp-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(
+    ellipse 52% 58% at 50% 44%,
+    rgba(7,19,30,0.82) 0%,
+    rgba(7,19,30,0.50) 42%,
+    rgba(7,19,30,0.12) 68%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
 /* Arka plan grid çizgileri */
 .sp-grid {
   position: absolute;
@@ -606,6 +629,7 @@ body.sidebar-closed .sidebar-tab {
   position: absolute;
   top: 28px; right: 32px;
   width: 360px;
+  z-index: 6;
   background: rgba(0,10,18,0.85);
   border: 1px solid rgba(0,212,255,0.15);
   border-radius: 10px;
@@ -681,6 +705,7 @@ body.sidebar-closed .sidebar-tab {
 .sp-center {
   position: absolute;
   top: 50%; left: 50%;
+  z-index: 5;
   transform: translate(-50%, -52%);
   display: flex;
   flex-direction: column;
@@ -731,6 +756,7 @@ body.sidebar-closed .sidebar-tab {
 .sp-bottom {
   position: absolute;
   bottom: 32px; left: 50%;
+  z-index: 5;
   transform: translateX(-50%);
   width: min(500px, 90vw);
   display: flex;
@@ -793,6 +819,7 @@ body.sidebar-closed .sidebar-tab {
 .sp-sparkle {
   position: absolute;
   bottom: 28px; right: 32px;
+  z-index: 5;
   font-size: 1.4rem;
   color: rgba(0,212,255,0.4);
   animation: spSparkle 2s ease-in-out infinite;
