@@ -3364,6 +3364,9 @@ class App {
       if (listenBtn)  listenBtn.style.display  = '';
       // Build letter blanks with synesthetic colors
       if (display) {
+        const wlen = word.en.length;
+        const sizeClass = wlen > 25 ? 'word-xxl' : wlen > 20 ? 'word-xl' : wlen > 15 ? 'word-lg' : wlen > 10 ? 'word-md' : '';
+        display.className = sizeClass ? `synth-input-area ${sizeClass}` : 'synth-input-area';
         display.innerHTML = word.en.split('').map((ch, i) =>
           ch === ' '
             ? `<span data-idx="${i}" data-ch=" " class="synth-space-slot">⎵</span>`
