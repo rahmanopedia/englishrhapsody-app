@@ -5038,7 +5038,6 @@ class App {
   _renderConvoLevels() {
     const el = document.getElementById('convo-content');
     if (!el) return;
-    const mastery   = this.state.get('mastery') || {};
     const completed = this.state.get('convoCompleted') || {};
     const counts = {
       easy:   CONVERSATIONS.filter(c => c.level === 'easy').length,
@@ -5046,9 +5045,9 @@ class App {
       hard:   CONVERSATIONS.filter(c => c.level === 'hard').length,
     };
     const done = {
-      easy:   completed.easy   || 0,
-      medium: completed.medium || 0,
-      hard:   completed.hard   || 0,
+      easy:   CONVERSATIONS.filter(c => c.level === 'easy'   && completed[c.id]).length,
+      medium: CONVERSATIONS.filter(c => c.level === 'medium' && completed[c.id]).length,
+      hard:   CONVERSATIONS.filter(c => c.level === 'hard'   && completed[c.id]).length,
     };
     const lvls = [
       { key:'easy',   icon:'🌱', name:'Başlangıç', color:'var(--green)',  glow:'rgba(16,185,129,0.12)',
@@ -5134,7 +5133,6 @@ class App {
   _convoShowScene(scenario) {
     const chat = document.getElementById('convo-chat');
     if (!chat) return;
-    const roleMap = { easy:'👤 Sen', medium:'👤 Sen', hard:'👤 Sen' };
     const d = document.createElement('div');
     d.className = 'convo-scene-card';
     d.innerHTML = `
@@ -5166,9 +5164,7 @@ class App {
       const userTurns     = scenario.turns.filter(t => t.role === 'user' || t.userHint).length;
       const doneUserTurns = scenario.turns.slice(0, turnIdx).filter(t => t.role === 'user' || t.userHint).length;
       const prog = document.getElementById('cch-progress');
-      const fill = document.getElementById('cch-progbar-fill');
       if (prog) prog.textContent = `${doneUserTurns} / ${userTurns}`;
-      if (fill) fill.style.width = `${userTurns ? (doneUserTurns / userTurns) * 100 : 0}%`;
       this._convoShowUserPrompt(turn);
     }
   }
@@ -5208,8 +5204,8 @@ class App {
   _convoAddUserBubble(text, score) {
     const chat = document.getElementById('convo-chat');
     if (!chat) return;
-    const color = score >= 80 ? 'var(--green)' : score >= 50 ? 'var(--amber)' : 'var(--rose)';
-    const label = score >= 80 ? 'Harika' : score >= 50 ? 'İyi' : 'Tekrar et';
+    const color = score >= 80 ? 'var(--green)' : score >= 65 ? 'var(--amber)' : 'var(--rose)';
+    const label = score >= 80 ? 'Harika' : score >= 65 ? 'İyi' : 'Tekrar et';
     const d = document.createElement('div');
     d.className = 'convo-bubble user';
     d.innerHTML = `
@@ -5293,6 +5289,7 @@ class App {
     this._convoAddUserBubble(raw, score);
     this.session.convo.score += score;
     this.session.convo.total++;
+    this.session.convo.lastTurnScore = score;
     (this.session.convo.turnLog = this.session.convo.turnLog || []).push({ score });
 
     // Show expected with keyword highlights + optional retry
@@ -5317,10 +5314,12 @@ class App {
             : `<div class="cp-xp-chip">+${xpGain} XP</div>`
           }
         </div>`;
-      // Update live XP in header
-      this.session.convo.sessionXP = (this.session.convo.sessionXP || 0) + xpGain;
-      const xpEl = document.getElementById('cch-xp');
-      if (xpEl) xpEl.textContent = `${this.session.convo.sessionXP} XP`;
+      // Update live XP in header — only for passing turns (keeps header in sync with final award)
+      if (score >= 65) {
+        this.session.convo.sessionXP = (this.session.convo.sessionXP || 0) + xpGain;
+        const xpEl = document.getElementById('cch-xp');
+        if (xpEl) xpEl.textContent = `${this.session.convo.sessionXP} XP`;
+      }
     } else if (area) {
       area.innerHTML = '';
     }
@@ -5336,8 +5335,11 @@ class App {
 
   _convoRetry() {
     const turn = this.session.convo.scenario.turns[this.session.convo.turnIdx];
-    this.session.convo.total--; // don't count the failed attempt in average
-    this.session.convo.score -= this.session.convo.score > 0 ? Math.min(65, this.session.convo.score) : 0;
+    const lastScore = this.session.convo.lastTurnScore || 0;
+    this.session.convo.score -= lastScore;
+    this.session.convo.total--;
+    this.session.convo.turnLog.pop(); // başarısız denemeyi breakdown'dan çıkar
+    this.session.convo.lastTurnScore = 0;
     this._convoShowUserPrompt(turn, true);
   }
 
