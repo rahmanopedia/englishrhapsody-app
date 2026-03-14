@@ -5146,15 +5146,23 @@ class App {
   }
 
   _convoNextTurn() {
-    const { scenario, turnIdx } = this.session.convo;
+    const { scenario, turnIdx, lastUserText } = this.session.convo;
     const turn = scenario.turns[turnIdx];
     if (!turn) { this._convoFinish(); return; }
 
     const isBot = turn.role === 'bot' || !!turn.bot;
     if (isBot) {
-      const text  = turn.text || turn.bot;
-      const tr    = turn.tr || '';
-      const delay = Math.min(2800, 900 + text.length * 28); // scale to message length
+      let text = turn.text || turn.bot;
+      let tr   = turn.tr || '';
+
+      // If bot has variations (array), pick the most context-relevant one
+      if (Array.isArray(text)) {
+        text = this._getDynamicBotResponse(text, lastUserText, turn.tr);
+        // tr might also be an array matching text, or we can use a generic one
+        if (Array.isArray(tr)) tr = tr[text._idx] || tr[0];
+      }
+
+      const delay = Math.min(2800, 900 + text.length * 28);
       this._convoShowTyping();
       setTimeout(() => {
         this._convoHideTyping();
@@ -5170,6 +5178,22 @@ class App {
       if (prog) prog.textContent = `${doneUserTurns} / ${userTurns}`;
       this._convoShowUserPrompt(turn);
     }
+  }
+
+  // Simple heuristic to pick a response based on keywords in user input
+  _getDynamicBotResponse(variations, userText, translations) {
+    if (!userText) return variations[0];
+    const ut = userText.toLowerCase();
+    
+    // Logic to select variation:
+    // 0: Neutral/Default, 1: Positive/Agreeing, 2: Negative/Concerned/Questioning (if provided)
+    let idx = 0;
+    if (ut.includes('yes') || ut.includes('sure') || ut.includes('okay') || ut.includes('great')) idx = 1;
+    if (ut.includes('no') || ut.includes('not') || ut.includes('sorry') || ut.includes('problem')) idx = Math.min(2, variations.length - 1);
+    
+    const selected = variations[idx] || variations[0];
+    selected._idx = idx; // meta for translation sync
+    return selected;
   }
 
   _convoShowTyping() {
