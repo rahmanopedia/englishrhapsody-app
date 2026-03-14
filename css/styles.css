@@ -6378,3 +6378,51 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .stat-item { flex: 1 1 40%; }
 }
 
+
+/* ¦¦ Layout Fix for Side Column ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ */
+.home-col-side {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+}
+
+.colloc-card-v2 {
+  background: rgba(255,255,255,0.025) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-radius: 24px !important;
+  padding: 24px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.colloc-tip-label {
+  font-size: 0.65rem !important;
+  font-weight: 900 !important;
+  color: var(--violet) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  margin-bottom: 12px !important;
+}
+
+.colloc-phrase {
+  font-size: 1.4rem !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  margin-bottom: 8px !important;
+}
+
+.colloc-tr {
+  font-size: 1rem !important;
+  color: var(--text-2) !important;
+  font-weight: 500 !important;
+}
+
+.colloc-warn {
+  margin-top: 12px !important;
+  padding: 8px 12px !important;
+  background: rgba(244, 63, 94, 0.1) !important;
+  border-radius: 8px !important;
+  font-size: 0.8rem !important;
+  color: var(--rose) !important;
+}
+
