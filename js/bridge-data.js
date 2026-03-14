@@ -9129,7 +9129,736 @@ var BRIDGE_DATA = [
 {id:1463,category:'gunluk',tr:'Başına buyruk',tags:['bas','buyruk','ozgur'],english_primary:"Independent",alternatives:["Maverick","Self-willed"],register:'neutral',bridges:[{tr_fragment:'Başına',tr_gloss:'to head',en_fragment:'self',bridge_type:'transform',explanation:'Baş -> kendi'},{tr_fragment:'buyruk',tr_gloss:'order',en_fragment:'willed',bridge_type:'transform',explanation:'Buyruk -> irade'}],cultural_insight:'Kimseden emir almayan.',fluency_tip:'"She\'s a very independent spirit."'},
 {id:1464,category:'gunluk',tr:'Canla başla',tags:['can','bas','calismak','gayret'],english_primary:"Heart and soul",alternatives:["Tooth and nail","With all one's might"],register:'neutral',bridges:[{tr_fragment:'Canla',tr_gloss:'with soul',en_fragment:'heart',bridge_type:'direct',explanation:'Can = heart/soul'},{tr_fragment:'başla',tr_gloss:'with head',en_fragment:'soul',bridge_type:'transform',explanation:'Baş -> bütünlük'}],cultural_insight:'Tüm gücüyle çalışmak.',fluency_tip:'"He put his heart and soul into this project."'},
 {id:1465,category:'gunluk',tr:'Çantada keklik',tags:['canta','keklik','kolay','garanti'],english_primary:"In the bag",alternatives:["Sure thing","Done deal"],register:'informal',bridges:[{tr_fragment:'Çantada',tr_gloss:'in bag',en_fragment:'in bag',bridge_type:'direct',explanation:'Çanta = bag'},{tr_fragment:'keklik',tr_gloss:'partridge',en_fragment:'it',bridge_type:'drop',explanation:'Keklik (av) -> kazanılmış şey'}],cultural_insight:'Garanti görülmek. Birebir benzerlik.',fluency_tip:'"The election is in the bag."'},
-{id:1466,category:'gunluk',tr:'Dişini sıkmak',tags:['dis','sik','sabir','dayanmak'],english_primary:"Grin and bear it",alternatives:["Bite the bullet","Tough it out"],register:'idiom',bridges:[{tr_fragment:'Dişini',tr_gloss:'tooth',en_fragment:'grin',bridge_type:'cultural',explanation:'Diş sıkmak (acıya dayanmak) -> sırıtıp katlanmak'},{tr_fragment:'sıkmak',tr_gloss:'clench',en_fragment:'bear',bridge_type:'transform',explanation:'Sıkmak -> taşımak'}],cultural_insight:'Zorluğa sabretmek.',fluency_tip:'"You just have to grin and bear it for now."'}
+{id:1466,category:'gunluk',tr:'Dişini sıkmak',tags:['dis','sik','sabir','dayanmak'],english_primary:"Grin and bear it",alternatives:["Bite the bullet","Tough it out"],register:'idiom',bridges:[{tr_fragment:'Dişini',tr_gloss:'tooth',en_fragment:'grin',bridge_type:'cultural',explanation:'Diş sıkmak (acıya dayanmak) -> sırıtıp katlanmak'},{tr_fragment:'sıkmak',tr_gloss:'clench',en_fragment:'bear',bridge_type:'transform',explanation:'Sıkmak -> taşımak'}],cultural_insight:'Zorluğa sabretmek.',fluency_tip:'"You just have to grin and bear it for now."'},
+
+  /* ──────────────────────────────────────────────────────────────
+     YORGUNLUK — Genişletilmiş (id 2001–2020)
+     ────────────────────────────────────────────────────────────── */
+  {
+    "id": 2001, "category": "yorgunluk",
+    "tr": "Yorgun düştüm",
+    "tags": ["yorgun","düştüm","düş","bit","tüken","yıkıl"],
+    "english_primary": "I'm worn out",
+    "alternatives": ["I'm exhausted","I'm dead tired","I'm wiped out"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Yorgun", "tr_gloss": "tired/weary", "en_fragment": "worn", "bridge_type": "direct", "explanation": "Yorgun → worn: Her iki dilde de yorgunluk kavramı." },
+      { "tr_fragment": "düştüm", "tr_gloss": "I fell / I collapsed", "en_fragment": "out", "bridge_type": "transform", "explanation": "Düşmek (fiziksel düşüş) → 'out': Türkçede çöküş; İngilizcede yıpranma/kullanılmışlık." }
+    ],
+    "cultural_insight": "Türkçede yorgunluk fiziksel bir çöküş ('düşmek') olarak betimlenir. İngilizcede 'worn out' ise bir kumaşın yıpranması gibi — insan nesne gibi aşınmıştır.",
+    "fluency_tip": "\"I'm completely worn out after that presentation\" diyebilirsin.",
+    "context_sentences": ["I'm completely worn out after three back-to-back shifts.", "She looked worn out from caring for the kids all week."]
+  },
+  {
+    "id": 2002, "category": "yorgunluk",
+    "tr": "Gözlerimi açamıyorum",
+    "tags": ["göz","aç","uyku","uyuşuk","mahmur","uyanamıyorum"],
+    "english_primary": "I can barely keep my eyes open",
+    "alternatives": ["I'm fighting to stay awake","I'm nodding off","I'm half asleep"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Gözlerimi açamıyorum", "tr_gloss": "I can't open my eyes", "en_fragment": "can barely keep my eyes open", "bridge_type": "transform", "explanation": "Açmak (open) ↔ keep open: Türkçede olumsuz/edilgen; İngilizcede aktif bir mücadele gerektirir." }
+    ],
+    "cultural_insight": "İki dilde de gözler yorgunluğun metaforu. Yön farklı: Türkçede 'açamamak', İngilizcede 'açık tutmak için mücadele etmek'.",
+    "fluency_tip": "\"I can barely keep my eyes open — I need an espresso\" diyebilirsin.",
+    "context_sentences": ["I can barely keep my eyes open during this lecture.", "After the night shift, he could barely keep his eyes open on the commute home."]
+  },
+  {
+    "id": 2003, "category": "yorgunluk",
+    "tr": "Gece gözümü kırpmadım",
+    "tags": ["gece","göz","kırp","uyku","uyuyamadım","uykusuz","sabaha kadar"],
+    "english_primary": "I didn't sleep a wink",
+    "alternatives": ["I was up all night","I couldn't get a wink of sleep"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "gözümü kırpmadım", "tr_gloss": "I didn't blink my eye", "en_fragment": "didn't sleep a wink", "bridge_type": "transform", "explanation": "Göz kırpmamak → wink: Her iki dil de gözü referans alır ama İngilizcede 'wink' anlık bir uyku kıvılcımıdır." }
+    ],
+    "cultural_insight": "'A wink of sleep' anlık bir uyku demektir. Türkçe 'kırpmamak' da göz hareketsizliğini betimler — ortak beden metaforu.",
+    "fluency_tip": "\"I didn't sleep a wink last night — the baby was crying non-stop\" diyebilirsin.",
+    "context_sentences": ["I didn't sleep a wink with all that noise outside.", "She didn't sleep a wink before the big interview."]
+  },
+  {
+    "id": 2004, "category": "yorgunluk",
+    "tr": "Ayakta duramıyorum neredeyse",
+    "tags": ["ayak","dur","tutun","derman","yorgun","bitkin"],
+    "english_primary": "I'm dead on my feet",
+    "alternatives": ["I'm running on fumes","I'm completely wiped out"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Ayakta duramıyorum", "tr_gloss": "I can barely stand", "en_fragment": "dead on my feet", "bridge_type": "transform", "explanation": "Ayakta duramama → ayakta ölmek: İngilizcede 'dead' tükenmişliği dramatize eder." },
+      { "tr_fragment": "neredeyse", "tr_gloss": "almost / barely", "en_fragment": "dead", "bridge_type": "disappear", "explanation": "'Neredeyse' sınırı İngilizcede 'dead' ile tam tükenmişe dönüşür — sınır kaybolur." }
+    ],
+    "cultural_insight": "Türkçede sınır ('neredeyse') korunurken İngilizcede 'dead on my feet' mutlak tükenmişliği anlatır.",
+    "fluency_tip": "\"After the double shift, I'm dead on my feet\" diyebilirsin.",
+    "context_sentences": ["After working a double shift, she was dead on her feet.", "By the end of the hike, everyone was dead on their feet."]
+  },
+  {
+    "id": 2005, "category": "yorgunluk",
+    "tr": "Dermanım kalmadı",
+    "tags": ["derman","güç","tüken","bit","enerji","takât"],
+    "english_primary": "I've got nothing left in the tank",
+    "alternatives": ["I'm running on empty","I've burnt out completely"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Derman", "tr_gloss": "strength / remedy / vitality", "en_fragment": "tank", "bridge_type": "transform", "explanation": "'Derman' (güç, çare) → tank (yakıt deposu): Türkçede tıp/klasik metafor, İngilizcede araç metaforu." },
+      { "tr_fragment": "kalmadı", "tr_gloss": "none remained", "en_fragment": "nothing left", "bridge_type": "direct", "explanation": "Kalmamak → nothing left: Aynı anlam, farklı sözdizimi." }
+    ],
+    "cultural_insight": "'Derman' eski Türkçede hem güç hem çare anlamına gelir. 'Nothing left in the tank' ise spor/araç imgesidir.",
+    "fluency_tip": "\"I've got nothing left in the tank — need a real holiday\" diyebilirsin.",
+    "context_sentences": ["After the final exams, I've got nothing left in the tank.", "The team played brilliantly but had nothing left in the tank at the end."]
+  },
+  {
+    "id": 2006, "category": "yorgunluk",
+    "tr": "Kafam çalışmıyor",
+    "tags": ["kafa","çalış","düşün","beyin","odaklan","konsantre"],
+    "english_primary": "My brain has switched off",
+    "alternatives": ["I can't think straight","My mind has gone blank"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Kafam", "tr_gloss": "my head", "en_fragment": "my brain", "bridge_type": "direct", "explanation": "Kafa/beyin → brain: Düşünme merkezi." },
+      { "tr_fragment": "çalışmıyor", "tr_gloss": "isn't working", "en_fragment": "switched off", "bridge_type": "transform", "explanation": "Çalışmamak → switched off: Türkçede makine metaforu; İngilizcede modern elektrik anahtarı metaforu." }
+    ],
+    "cultural_insight": "Türkçede beyin 'çalışır' ya da 'çalışmaz' — mekanik bir imgedir. İngilizcede 'switched off' elektronik çağın ürünü.",
+    "fluency_tip": "\"My brain has completely switched off — ask me tomorrow\" diyebilirsin.",
+    "context_sentences": ["After six hours of debugging, my brain has completely switched off.", "Don't ask me to decide anything now — my brain has switched off."]
+  },
+  {
+    "id": 2007, "category": "yorgunluk",
+    "tr": "Bitik hissediyorum",
+    "tags": ["bitik","bit","tüken","derman","hisset","çökmek"],
+    "english_primary": "I'm completely drained",
+    "alternatives": ["I'm burnt out","I'm zapped","I'm spent"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Bitik", "tr_gloss": "finished / done for", "en_fragment": "drained", "bridge_type": "transform", "explanation": "Bitmek (to end) → drained (boşaltılmış): Türkçede varlık sona erer; İngilizcede enerji boşaltılır." }
+    ],
+    "cultural_insight": "'Drained' kelimesi bir şeyin içinin boşaltılması görüntüsünü çağrıştırır — sanki kişinin içindeki enerji akar gibi çekilmiş.",
+    "fluency_tip": "\"I'm completely drained — that conversation took it all out of me\" diyebilirsin.",
+    "context_sentences": ["I'm completely drained after that emotional conversation.", "Caring for others all day leaves me totally drained by evening."]
+  },
+  {
+    "id": 2008, "category": "yorgunluk",
+    "tr": "Kendimi sürükleyerek çalışıyorum",
+    "tags": ["sürükle","zorluk","çalış","zor","ağır","motivasyon"],
+    "english_primary": "I'm dragging myself through the day",
+    "alternatives": ["I'm barely getting through","I'm crawling through the day"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "sürükleyerek", "tr_gloss": "by dragging", "en_fragment": "dragging myself", "bridge_type": "direct", "explanation": "Sürüklemek → drag: İki dilde de aynı fiziksel hareket metaforu." },
+      { "tr_fragment": "çalışıyorum", "tr_gloss": "I'm working", "en_fragment": "through the day", "bridge_type": "transform", "explanation": "Çalışmak → through the day: İngilizce günü de geçilmesi gereken bir engel yapar." }
+    ],
+    "cultural_insight": "İki dilde ortak sürükleme metaforu. İngilizcede 'through the day' zamanı da bir engel haline getirir.",
+    "fluency_tip": "\"Just dragging myself through the day — need the weekend\" diyebilirsin.",
+    "context_sentences": ["After the sleepless night, I was dragging myself through the day.", "She's been dragging herself through the day all week."]
+  },
+  {
+    "id": 2009, "category": "yorgunluk",
+    "tr": "Uyku borcum var",
+    "tags": ["uyku","borç","birikmek","eksik","dinlen","uykusuz"],
+    "english_primary": "I've built up a sleep debt",
+    "alternatives": ["I'm severely sleep-deprived","I've been running on no sleep"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Uyku borcu", "tr_gloss": "sleep debt", "en_fragment": "sleep debt", "bridge_type": "direct", "explanation": "Sleep debt kavramı her iki dilde de aynı — bilimsel bir terim." },
+      { "tr_fragment": "var", "tr_gloss": "there is / I have", "en_fragment": "I've built up", "bridge_type": "transform", "explanation": "'Var' varlık belirtir; 'built up' birikme sürecini aktif olarak vurgular." }
+    ],
+    "cultural_insight": "'Sleep debt' WHO terminolojisinden gündelik dile geçmiş bir kavram. Borcun uyku fazlasıyla tam ödenip ödenmeyeceği bilimsel olarak tartışmalıdır.",
+    "fluency_tip": "\"I've built up a massive sleep debt this week — need ten hours minimum\" diyebilirsin.",
+    "context_sentences": ["Working nights has built up quite a sleep debt for me.", "You can't really pay back a sleep debt just by sleeping in on weekends."]
+  },
+  {
+    "id": 2010, "category": "yorgunluk",
+    "tr": "Pil bitti",
+    "tags": ["pil","bit","şarj","enerji","tüken","doldurmak"],
+    "english_primary": "My battery is dead",
+    "alternatives": ["I'm running on low","I'm out of juice","I need to recharge"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Pil", "tr_gloss": "battery", "en_fragment": "battery", "bridge_type": "direct", "explanation": "Pil = battery — teknoloji metaforu her iki dilde de aynı." },
+      { "tr_fragment": "bitti", "tr_gloss": "it ended / it's gone", "en_fragment": "dead", "bridge_type": "transform", "explanation": "Bitmek (to end) → dead: Türkçede nesne biter; İngilizcede ölür — daha dramatik." }
+    ],
+    "cultural_insight": "Modern teknoloji dili her iki kültürü de şekillendiriyor. 'Battery is dead' artık hem nesneler hem insanlar için kullanılıyor.",
+    "fluency_tip": "\"Sorry I missed your call — my battery died\" ya da kişi için \"I'm absolutely dead — need to recharge\" diyebilirsin.",
+    "context_sentences": ["My phone battery is dead and I can't find a charger.", "\"I'm done for today — completely dead, need to recharge.\""]
+  },
+  {
+    "id": 2011, "category": "yorgunluk",
+    "tr": "Kendime gelemiyorum",
+    "tags": ["kendim","gel","toparlan","iyileş","tüken","topla"],
+    "english_primary": "I can't seem to bounce back",
+    "alternatives": ["I can't snap out of it","I haven't recovered yet","I can't get back on track"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Kendime gelemiyorum", "tr_gloss": "I can't come back to myself", "en_fragment": "can't bounce back", "bridge_type": "transform", "explanation": "Kendine gelmek (return to oneself) → bounce back: Türkçede öze dönüş; İngilizcede elastikiyet/yaylanma metaforu." }
+    ],
+    "cultural_insight": "Türkçe 'kendine gelmek' kişinin özüne dönmesini ima eder. İngilizce 'bounce back' yaylanma gibi aktif, enerjik bir toparlanmayı betimler.",
+    "fluency_tip": "\"I'm still tired from last week — I just can't bounce back\" diyebilirsin.",
+    "context_sentences": ["After the illness, she couldn't seem to bounce back for weeks.", "I don't know why I can't bounce back — maybe I need a real break."]
+  },
+  {
+    "id": 2012, "category": "yorgunluk",
+    "tr": "Mecalsiz kaldım",
+    "tags": ["mecal","güç","derman","enerji","zayıf","takât"],
+    "english_primary": "I'm running on empty",
+    "alternatives": ["I'm completely zapped","I've got no energy left","I'm out of steam"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Mecalsiz", "tr_gloss": "without strength / enfeebled", "en_fragment": "running on empty", "bridge_type": "transform", "explanation": "'Mecal' (Arapça köken — güç, tâkat) → empty tank: Klasik Türkçe sözcük, modern yakıt metaforuyla karşılaşıyor." },
+      { "tr_fragment": "kaldım", "tr_gloss": "I was left / I remained", "en_fragment": "running", "bridge_type": "transform", "explanation": "Kalmak (pasif kalış) → running: Türkçede edilgen bırakılış; İngilizcede aktif ama boş devam." }
+    ],
+    "cultural_insight": "'Mecal' sözcüğü derin yorgunluğu anlatır — sadece fiziksel değil, ruhsal güçsüzlük de. 'Running on empty' ise araç metaforuyla gündelik İngilizce.",
+    "fluency_tip": "\"I'm absolutely running on empty — haven't eaten since morning\" diyebilirsin.",
+    "context_sentences": ["By Friday afternoon, I'm always running on empty.", "After three weeks of overtime, the whole team was running on empty."]
+  },
+  {
+    "id": 2013, "category": "yorgunluk",
+    "tr": "Gözlerim kapanıyor",
+    "tags": ["göz","kapa","uyu","uyuşuk","uyku","sarkmak"],
+    "english_primary": "My eyes are drooping",
+    "alternatives": ["I'm nodding off","I'm falling asleep where I stand"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Gözlerim kapanıyor", "tr_gloss": "my eyes are closing", "en_fragment": "eyes are drooping", "bridge_type": "transform", "explanation": "Kapanmak (to close/shut) → drooping (sarkma): Türkçede kapı gibi kapanır; İngilizcede ağırlaşarak sarkar." }
+    ],
+    "cultural_insight": "Her iki dilde gözler üzerinden uyku gelir. İngilizce 'droop' daha görsel — ağırlaşan göz kapakları imgesi.",
+    "fluency_tip": "\"My eyes are drooping — I really need to go to bed\" diyebilirsin.",
+    "context_sentences": ["His eyes were drooping during the evening meeting.", "I could feel my eyes drooping after the second hour of the lecture."]
+  },
+  {
+    "id": 2014, "category": "yorgunluk",
+    "tr": "Tükenmiş hissediyorum",
+    "tags": ["tüken","bit","yorgun","çökmek","derman","sendrom"],
+    "english_primary": "I'm burnt out",
+    "alternatives": ["I've hit a wall","I'm completely fried","I'm running on fumes"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Tükenmiş", "tr_gloss": "depleted / used up / exhausted", "en_fragment": "burnt out", "bridge_type": "transform", "explanation": "Tükenmek (depleted) → burnt out (yanıp kül olmuş): Türkçede eksiklik; İngilizcede yanma/yıkım metaforu." }
+    ],
+    "cultural_insight": "'Burnout' WHO tarafından tıbbi bir kavram olarak tanınmıştır. Türkçe 'tükenmişlik sendromu' da aynı kavramı karşılar — diller burada buluşuyor.",
+    "fluency_tip": "\"I'm completely burnt out — I need at least a week off\" diyebilirsin.",
+    "context_sentences": ["After two years of non-stop work, she was completely burnt out.", "Burnout is real — if you ignore the signs, recovery takes much longer."]
+  },
+  {
+    "id": 2015, "category": "yorgunluk",
+    "tr": "Mola vermem lazım",
+    "tags": ["mola","ver","dinlen","dur","nefes","ara"],
+    "english_primary": "I need to recharge",
+    "alternatives": ["I need a breather","I need to step back","I need some downtime"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Mola vermek", "tr_gloss": "to give a break", "en_fragment": "recharge", "bridge_type": "transform", "explanation": "Mola vermek (duruş) → recharge (şarj etmek): Türkçede duraklama; İngilizcede enerji yenileme metaforu." }
+    ],
+    "cultural_insight": "'Recharge' modern teknoloji dilinden gelen bir metafor. 'Breather' ise nefes almakla ilişkili daha eski bir ifade — iki çağ bir arada.",
+    "fluency_tip": "\"I really need to recharge this weekend — no plans, just rest\" diyebilirsin.",
+    "context_sentences": ["I need to recharge before the next phase of the project.", "Taking a walk at lunch helps me recharge for the afternoon."]
+  },
+  {
+    "id": 2016, "category": "yorgunluk",
+    "tr": "Beyin yorgunluğu yaşıyorum",
+    "tags": ["beyin","yorgunluk","zihin","mental","tüken","odak","konsantrasyon"],
+    "english_primary": "I'm mentally exhausted",
+    "alternatives": ["I've got serious brain fog","I'm cognitively drained"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Beyin yorgunluğu", "tr_gloss": "brain fatigue", "en_fragment": "mentally exhausted", "bridge_type": "transform", "explanation": "'Beyin yorgunluğu' organ-merkezli; 'mentally exhausted' soyut zihin kavramını kullanır." }
+    ],
+    "cultural_insight": "'Brain fog' İngilizcede hem tıbbi hem gündelik bir terim — bulanık düşünme hali. 'Beyin yorgunluğu' daha doğrudan fiziksel bir anlam taşır.",
+    "fluency_tip": "\"I've got serious brain fog today — can't focus on anything\" diyebilirsin.",
+    "context_sentences": ["After the intense project sprint, I'm mentally exhausted and need a break.", "Brain fog is real — I've been mentally exhausted for days now."]
+  },
+  {
+    "id": 2017, "category": "yorgunluk",
+    "tr": "Uyuya kaldım",
+    "tags": ["uyu","kal","dal","farkında","uyuya","istem"],
+    "english_primary": "I dozed off",
+    "alternatives": ["I drifted off","I fell asleep without realizing","I nodded off"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Uyuya kaldım", "tr_gloss": "I was left sleeping / stayed asleep", "en_fragment": "dozed off", "bridge_type": "transform", "explanation": "Uyuya kalmak (pasif kalış) → doze off (aktif kayma): Türkçede farkındasız bırakılma; İngilizcede sürüklenme." }
+    ],
+    "cultural_insight": "'Doze off' ve 'drift off' uykunun yumuşak, farkında olmadan gelmesini anlatır. Türkçe 'kalmak' beklenmedikliği ve kontrolü kaybetmeyi çağrıştırır.",
+    "fluency_tip": "\"I dozed off on the bus and missed my stop\" diyebilirsin.",
+    "context_sentences": ["I dozed off during the film and woke up at the credits.", "She dozed off at her desk after lunch — classic post-meal slump."]
+  },
+  {
+    "id": 2018, "category": "yorgunluk",
+    "tr": "Sabaha kadar çalıştım",
+    "tags": ["sabah","gece","çalış","gece boyunca","uykusuz","bütün gece"],
+    "english_primary": "I pulled an all-nighter",
+    "alternatives": ["I worked through the night","I was up all night"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Sabaha kadar", "tr_gloss": "until morning", "en_fragment": "all-nighter", "bridge_type": "transform", "explanation": "Sabaha kadar (zaman noktası) → all-nighter (bir gecelik iş): Türkçede bitiş anı; İngilizcede bütün gece tek paket olarak." }
+    ],
+    "cultural_insight": "'Pull an all-nighter' öğrenci ve startup kültüründe yaygın bir ifade — gecenin tamamını çekerek çalışmak.",
+    "fluency_tip": "\"I pulled an all-nighter to finish the proposal\" diyebilirsin.",
+    "context_sentences": ["I pulled an all-nighter and submitted the report at 6 AM.", "She pulled an all-nighter before the final exam — not ideal, but it worked."]
+  },
+  {
+    "id": 2019, "category": "yorgunluk",
+    "tr": "Koltuktan kalkamıyorum",
+    "tags": ["koltuk","kalk","ağır","uyuşuk","otur","dinlen"],
+    "english_primary": "I'm glued to the sofa",
+    "alternatives": ["I can't get off the couch","I'm couch-locked","I've melted into the couch"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Koltuktan kalkamıyorum", "tr_gloss": "I can't get up from the armchair", "en_fragment": "glued to the sofa", "bridge_type": "transform", "explanation": "Kalkamamak (inability to rise) → glued (yapışmak): Türkçede fiziksel yetersizlik; İngilizcede yapışkanlık metaforu çok daha güçlü." }
+    ],
+    "cultural_insight": "'Glued to the sofa' görsel ve karikatürist bir ifade — yapıştırılmış gibi kıpırdayamayan biri.",
+    "fluency_tip": "\"I'm completely glued to the sofa today — zero motivation to move\" diyebilirsin.",
+    "context_sentences": ["After a week of back-to-back meetings, she was just glued to the sofa.", "I was so tired on Sunday I couldn't get off the couch all day."]
+  },
+  {
+    "id": 2020, "category": "yorgunluk",
+    "tr": "Tek gözümle uyudum",
+    "tags": ["göz","uyu","dikkat","yarım","uyku","tetikte"],
+    "english_primary": "I slept with one eye open",
+    "alternatives": ["I barely slept","I couldn't fully relax"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Tek gözümle uyudum", "tr_gloss": "I slept with one eye", "en_fragment": "slept with one eye open", "bridge_type": "direct", "explanation": "İki dilde de birebir aynı metafor — dikkatli, tetikde uyku." }
+    ],
+    "cultural_insight": "Bu ifade evrensel bir metafor — her iki dil de tetikte/yarım uyuyan birini tek gözle ifade eder. Genellikle stres veya kaygı nedeniyle tam uyuyamama anlatır.",
+    "fluency_tip": "\"I slept with one eye open all night — the storm was too loud\" diyebilirsin.",
+    "context_sentences": ["With the baby in the next room, I slept with one eye open all night.", "He always sleeps with one eye open before a big presentation."]
+  },
+
+  /* ──────────────────────────────────────────────────────────────
+     DEYİMLER — Genişletilmiş (id 2021–2035)
+     ────────────────────────────────────────────────────────────── */
+  {
+    "id": 2021, "category": "deyimler",
+    "tr": "Devede kulak",
+    "tags": ["deve","kulak","küçük","önemsiz","az"],
+    "english_primary": "A drop in the ocean",
+    "alternatives": ["A drop in the bucket","A mere fraction"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Devede kulak", "tr_gloss": "an ear on a camel", "en_fragment": "a drop in the ocean", "bridge_type": "transform", "explanation": "Dev bir hayvana oranla küçücük kulak → dev okyanus içinde tek damla: İki dil de devasa/küçük oranını anlatır, ama imgeler farklı." }
+    ],
+    "cultural_insight": "Türkçe çöl hayvanından yola çıkarken İngilizce okyanus imgesi kullanır. İkisi de küçüklüğü abartılı bir büyüklüğe oranla anlatır.",
+    "fluency_tip": "\"Our donation is just a drop in the ocean compared to what's needed\" diyebilirsin.",
+    "context_sentences": ["The government's aid was a drop in the ocean for the affected communities.", "One person's effort feels like a drop in the ocean, but it matters."]
+  },
+  {
+    "id": 2022, "category": "deyimler",
+    "tr": "Ağzından baklayı çıkarmak",
+    "tags": ["ağız","bakla","çıkar","söyle","itiraf","sır"],
+    "english_primary": "Spill the beans",
+    "alternatives": ["Let the cat out of the bag","Come clean","Reveal the secret"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Ağzından", "tr_gloss": "from one's mouth", "en_fragment": "spill", "bridge_type": "transform", "explanation": "Ağızdan çıkarmak → dökmek/dağıtmak: İkisi de gizlinin ortaya saçılmasını anlatır." },
+      { "tr_fragment": "baklayı", "tr_gloss": "the fava bean", "en_fragment": "the beans", "bridge_type": "transform", "explanation": "Bakla (eski oy sayım geleneği) → beans: Her iki kültürde fasulye/baklagil gizli sır metaforu olarak kullanılmış." }
+    ],
+    "cultural_insight": "Türkçede 'bakla' eski Yunan oylamasından gelir — renkli taşlarla/baklalarla oy kullanılırdı. İngilizcede de benzer bir köken teorisi var.",
+    "fluency_tip": "\"Come on, spill the beans — what happened at the meeting?\" diyebilirsin.",
+    "context_sentences": ["She finally spilled the beans about the surprise party.", "Don't spill the beans before the announcement — it's still a secret."]
+  },
+  {
+    "id": 2023, "category": "deyimler",
+    "tr": "Kıl payı kurtulmak",
+    "tags": ["kıl","pay","kurtar","az","kaç","sıyrıl"],
+    "english_primary": "Escape by the skin of your teeth",
+    "alternatives": ["Have a narrow escape","Barely make it","Squeak by"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Kıl payı", "tr_gloss": "by a hair's breadth", "en_fragment": "by the skin of your teeth", "bridge_type": "transform", "explanation": "Kıl kalınlığı (hair) → diş derisi (skin of teeth): Her iki dil de vücuttan alınan çok ince bir şeyle olağanüstü küçük bir marjı anlatır." }
+    ],
+    "cultural_insight": "'Skin of your teeth' İncil'deki Eyüp kitabından gelir. 'Kıl payı' ise kılın inceliğini ölçü birimi olarak kullanır. Ortak tema: minimum farkla kurtuluş.",
+    "fluency_tip": "\"I escaped by the skin of my teeth — the train doors closed right behind me\" diyebilirsin.",
+    "context_sentences": ["She escaped by the skin of her teeth — one more second and she'd have missed the flight.", "He passed the exam by the skin of his teeth with 51%."]
+  },
+  {
+    "id": 2024, "category": "deyimler",
+    "tr": "Daldan dala konmak",
+    "tags": ["dal","kon","atla","geç","değiş","kararsız"],
+    "english_primary": "Jump from one thing to another",
+    "alternatives": ["Flit from branch to branch","Never settle","Be all over the place"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Daldan dala konmak", "tr_gloss": "to perch from branch to branch", "en_fragment": "jump from one thing to another", "bridge_type": "disappear", "explanation": "Kuş imgesi Türkçede korunur; İngilizcede metafor kaybolur ve soyut 'jump from one thing to another' kullanılır." }
+    ],
+    "cultural_insight": "Türkçedeki kuş imgesi kararsızlığı ve yerleşememeyi güzel bir doğa tablosuyla anlatır. İngilizcede 'all over the place' daha yaygın gündelik ifadedir.",
+    "fluency_tip": "\"He's always jumping from one project to another — nothing ever gets finished\" diyebilirsin.",
+    "context_sentences": ["She jumps from one hobby to another without ever mastering any.", "Stop jumping from one thing to another and focus on finishing what you started."]
+  },
+  {
+    "id": 2025, "category": "deyimler",
+    "tr": "Söz uçar yazı kalır",
+    "tags": ["söz","uç","yazı","kal","belge","ispat"],
+    "english_primary": "Words fly, writing remains",
+    "alternatives": ["Get it in writing","Put it on paper","Verbal agreements don't count"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Söz uçar", "tr_gloss": "words fly away", "en_fragment": "words fly", "bridge_type": "direct", "explanation": "Doğrudan çeviri mümkün — uçma metaforu her iki dilde aynı." },
+      { "tr_fragment": "yazı kalır", "tr_gloss": "writing remains", "en_fragment": "writing remains", "bridge_type": "direct", "explanation": "Kalıcılık ifadesi her iki dilde birebir örtüşür." }
+    ],
+    "cultural_insight": "Latince 'Verba volant, scripta manent' bu ifadenin köküdür — hem Türkçeye hem İngilizceye geçmiştir. Evrensel bir bilgelik.",
+    "fluency_tip": "\"Make sure you get the agreement in writing — words fly, writing remains\" diyebilirsin.",
+    "context_sentences": ["Always get your contracts in writing — words fly, writing remains.", "He promised it verbally, but remember: words fly, writing remains."]
+  },
+  {
+    "id": 2026, "category": "deyimler",
+    "tr": "İki taşı bir arada kaynatmak",
+    "tags": ["taş","kaynat","iki","bir arada","verimli","aynı anda"],
+    "english_primary": "Kill two birds with one stone",
+    "alternatives": ["Hit two targets at once","Get two things done in one go"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "İki taşı bir arada kaynatmak", "tr_gloss": "boil two stones together", "en_fragment": "kill two birds with one stone", "bridge_type": "transform", "explanation": "Taş + kaynatmak (ısı metaforu) → kuş + taş atmak (av metaforu): İki farklı kültürel eylem, aynı anlam: tek hamlede iki iş." }
+    ],
+    "cultural_insight": "Türkçe metafor mutfaktan (kaynatmak), İngilizce avdan (bird hunting) gelir. İkisi de kaynak kültürün günlük hayatını yansıtır.",
+    "fluency_tip": "\"I'll stop by the grocery store on my way to the gym — kill two birds with one stone\" diyebilirsin.",
+    "context_sentences": ["I'll do the meeting in person — kill two birds with one stone since I need to pick up the documents anyway.", "She killed two birds with one stone by doing her research at the library and returning books."]
+  },
+  {
+    "id": 2027, "category": "deyimler",
+    "tr": "Göz yummak",
+    "tags": ["göz","yum","görmemek","izin","hoşgörü","geçiştir"],
+    "english_primary": "Turn a blind eye",
+    "alternatives": ["Look the other way","Overlook","Pretend not to notice"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Göz yummak", "tr_gloss": "to close one's eye", "en_fragment": "turn a blind eye", "bridge_type": "transform", "explanation": "Gözü yummak (kapatmak) → kör göz çevirmek: Türkçede göz kapanır; İngilizcede kör bir göz kasıtlı olarak döndürülür." }
+    ],
+    "cultural_insight": "'Turn a blind eye' Amiral Nelson'dan gelir — savaşta teleskopu kör gözüne tuttuğu anlatılır. Türkçe daha evrensel bir göz kapatma imgesi.",
+    "fluency_tip": "\"The manager turned a blind eye to the team's minor violations\" diyebilirsin.",
+    "context_sentences": ["She turned a blind eye to her colleague's constant lateness.", "We can't keep turning a blind eye to these issues — they need to be addressed."]
+  },
+  {
+    "id": 2028, "category": "deyimler",
+    "tr": "Parmak ısırmak",
+    "tags": ["parmak","ısır","hayret","şaşır","etkilendim","inanamıyorum"],
+    "english_primary": "Mind-blowing",
+    "alternatives": ["Jaw-dropping","Absolutely incredible","Blow your mind"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Parmak ısırmak", "tr_gloss": "to bite one's finger", "en_fragment": "mind-blowing", "bridge_type": "disappear", "explanation": "Parmak ısırma fiziksel hayranlık jesti → zihin patlatma: Türkçe beden; İngilizce tamamen bilişsel metafor. Fizik kaybolur." }
+    ],
+    "cultural_insight": "Türkçe 'parmak ısırmak' somut bir beden hareketi — şaşkınlıktan parmağı ısırmak. İngilizce 'mind-blowing' ise soyut bir patlama imgesidir.",
+    "fluency_tip": "\"That magic trick was absolutely mind-blowing\" diyebilirsin.",
+    "context_sentences": ["The view from the top was mind-blowing — I couldn't speak.", "Her performance was mind-blowing — the audience gave a standing ovation."]
+  },
+  {
+    "id": 2029, "category": "deyimler",
+    "tr": "Palabracı",
+    "tags": ["palavra","palabracı","laf","övün","boş","yalan"],
+    "english_primary": "Full of hot air",
+    "alternatives": ["A blowhard","All talk and no action","A windbag"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Palabracı", "tr_gloss": "one who talks nonsense / boaster", "en_fragment": "full of hot air", "bridge_type": "transform", "explanation": "'Palavra' (Portekizce köken — boş laf) → hot air (sıcak hava): Her iki dil de ağızdan çıkan boş hava/nefes metaforunu kullanır." }
+    ],
+    "cultural_insight": "'Palavra' Portekizce kökenli olup Türkçeye geçmiştir. 'Hot air' İngilizcede boş, şişirilmiş konuşmayı anlatır — şişen bir balon gibi.",
+    "fluency_tip": "\"Don't listen to him — he's full of hot air\" diyebilirsin.",
+    "context_sentences": ["The politician was full of hot air — no concrete plans, just empty promises.", "She's all talk and no action — completely full of hot air."]
+  },
+  {
+    "id": 2030, "category": "deyimler",
+    "tr": "Göbek atmak",
+    "tags": ["göbek","at","dans","eğlen","coşku","kutla"],
+    "english_primary": "Let your hair down",
+    "alternatives": ["Kick back and relax","Cut loose","Have a ball"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Göbek atmak", "tr_gloss": "to throw one's belly", "en_fragment": "let your hair down", "bridge_type": "transform", "explanation": "Göbek atma (karın dansı hareketi) → saçları serbest bırakmak: İki dil de beden üzerinden özgürlüğü/coşkuyu anlatır ama farklı bedenlere odaklanır." }
+    ],
+    "cultural_insight": "'Göbek atmak' Türkçede karın dansını/coşkuyu çağrıştırır. İngilizcede 'let your hair down' saçları topuzdan çözüp serbest bırakmaktır — toplumsal kısıtlamalardan kurtuluş.",
+    "fluency_tip": "\"Come on, let your hair down — it's the weekend!\" diyebilirsin.",
+    "context_sentences": ["After months of hard work, they finally let their hair down at the company party.", "It's Friday night — let your hair down and forget about work for a bit."]
+  },
+  {
+    "id": 2031, "category": "deyimler",
+    "tr": "El altından iş çevirmek",
+    "tags": ["el","alt","iş","gizli","dolaylı","fısıltı","arka"],
+    "english_primary": "Pull strings behind the scenes",
+    "alternatives": ["Work under the table","Pull strings","Operate in the shadows"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "El altından", "tr_gloss": "from under the hand", "en_fragment": "behind the scenes", "bridge_type": "transform", "explanation": "El altı (gizli, el geçmez) → sahne arkası: İkisi de görünmezliği anlatır; Türkçe fiziksel saklanma, İngilizce tiyatro metaforu." },
+      { "tr_fragment": "iş çevirmek", "tr_gloss": "to turn/spin work", "en_fragment": "pull strings", "bridge_type": "transform", "explanation": "İş çevirmek (manipüle etmek) → ip çekmek: İkisi de gizlice yönlendirmeyi anlatır." }
+    ],
+    "cultural_insight": "'Pull strings' kukla oyununu çağrıştırır — görünmez ipleri çeken birisi. Türkçe 'el altından' daha fiziksel ve gizli bir dokunuşu ima eder.",
+    "fluency_tip": "\"He pulled strings behind the scenes to get the contract\" diyebilirsin.",
+    "context_sentences": ["She pulled strings behind the scenes to make sure the project was approved.", "Things like this rarely happen openly — it's all done behind the scenes."]
+  },
+  {
+    "id": 2032, "category": "deyimler",
+    "tr": "Çuvaldızı kendine batırmak",
+    "tags": ["çuvaldız","iğne","kendine","batr","özeleştiri","dürüst"],
+    "english_primary": "Look in the mirror",
+    "alternatives": ["Take a hard look at yourself","Practice self-reflection","Physician, heal thyself"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Çuvaldızı kendine batırmak", "tr_gloss": "to poke the coarse needle into oneself", "en_fragment": "look in the mirror", "bridge_type": "transform", "explanation": "Kendine iğne batırmak (acı verici öz-eleştiri) → aynaya bakmak: Türkçede fiziksel acı; İngilizcede görsel yüzleşme." }
+    ],
+    "cultural_insight": "Türkçe özgün deyim bir çuval iğnesinin acısıyla özeleştiriyi birleştirir — güçlü bir imgedir. İngilizce 'mirror' daha nazik ama etkili.",
+    "fluency_tip": "\"Before criticizing others, take a good look in the mirror\" diyebilirsin.",
+    "context_sentences": ["He always finds fault in others but never looks in the mirror.", "Before judging your team, take a good look in the mirror — are you leading them well?"]
+  },
+  {
+    "id": 2033, "category": "deyimler",
+    "tr": "İşi gücü bırakmak",
+    "tags": ["iş","bırak","uğraş","vazgeç","her şey","durur"],
+    "english_primary": "Drop everything",
+    "alternatives": ["Put everything on hold","Stop what you're doing","Down tools"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "İşi gücü bırakmak", "tr_gloss": "to leave one's work and occupation", "en_fragment": "drop everything", "bridge_type": "transform", "explanation": "İş ve güç (iki farklı kelime) → everything (tek kelime): Türkçede çiftleme vurgu yapar; İngilizce 'everything' ile toplar." }
+    ],
+    "cultural_insight": "Türkçede 'iş + güç' çiftlemesi tüm uğraşları kapsar. 'Down tools' İngilizcede iş bırakma grevini de çağrıştırabilir.",
+    "fluency_tip": "\"Drop everything and come — it's an emergency\" diyebilirsin.",
+    "context_sentences": ["She dropped everything when she heard her mother was in hospital.", "When a client calls in crisis, we're expected to drop everything and respond."]
+  },
+  {
+    "id": 2034, "category": "deyimler",
+    "tr": "Yüzü kızarmak",
+    "tags": ["yüz","kızar","utan","mahcup","ar","rezil"],
+    "english_primary": "To go red in the face",
+    "alternatives": ["To blush","To be red-faced","To flush with embarrassment"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Yüzü kızarmak", "tr_gloss": "one's face reddening", "en_fragment": "go red in the face", "bridge_type": "direct", "explanation": "Yüzün kızarması → go red: Her iki dil de utanç veya öfkede yüzün kızarması fiziksel tepkisini kullanır." }
+    ],
+    "cultural_insight": "Utanç kızarması evrensel — hem Türkçe hem İngilizce aynı fizyolojik tepkiyi deyimleştirir. 'Red-faced' İngilizcede utancın yanı sıra öfkeyi de anlatabilir.",
+    "fluency_tip": "\"She went red in the face when they called her name out loud\" diyebilirsin.",
+    "context_sentences": ["He went red in the face when his mistake was pointed out in front of everyone.", "She blushed and went red in the face — it was obvious she was embarrassed."]
+  },
+  {
+    "id": 2035, "category": "deyimler",
+    "tr": "Derdi ne?",
+    "tags": ["dert","ne","sorun","problem","ne istiyor","şikâyet"],
+    "english_primary": "What's their problem?",
+    "alternatives": ["What's eating them?","What's got into them?","What's their deal?"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Derdi", "tr_gloss": "their trouble / their ailment", "en_fragment": "problem", "bridge_type": "transform", "explanation": "'Dert' (ağır, kronik sorun/acı) → 'problem': Türkçe daha derin bir sıkıntıyı ima eder; İngilizce daha nötr." },
+      { "tr_fragment": "ne?", "tr_gloss": "what?", "en_fragment": "what's their", "bridge_type": "multiply", "explanation": "Tek 'ne?' sorusu → 'what's their' + 'problem': İngilizce özne ve fiil ekler." }
+    ],
+    "cultural_insight": "'What's eating them?' daha derin ve sempatik; 'What's their problem?' ise daha agresif bir ifadedir. 'Dert' Türkçede her ikisini de karşılayabilir.",
+    "fluency_tip": "\"What's their problem today — they've been cold all morning\" diyebilirsin.",
+    "context_sentences": ["What's their problem? They've been rude to everyone all day.", "I don't know what's got into her — she seemed fine yesterday."]
+  },
+
+  /* ──────────────────────────────────────────────────────────────
+     BAŞARI & BAŞARISIZLIK — Genişletilmiş (id 2036–2045)
+     ────────────────────────────────────────────────────────────── */
+  {
+    "id": 2036, "category": "basari",
+    "tr": "Alın teri dökmek",
+    "tags": ["alın","ter","dök","çalış","emek","mücadele"],
+    "english_primary": "Sweat blood",
+    "alternatives": ["Put in the hard yards","Work tooth and nail","Bust your gut"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Alın teri", "tr_gloss": "forehead sweat", "en_fragment": "sweat blood", "bridge_type": "transform", "explanation": "Alın teri (onurlu emek, sıradan ter) → kan terlemek: İngilizcede aşırı çabanın vurgusu 'ter' yerine 'kan'la yapılır." }
+    ],
+    "cultural_insight": "Türkçede 'alın teri' dürüst ve onurlu emeki simgeler — toplumsal saygınlığı olan bir ifade. İngilizce 'sweat blood' çok daha aşırı bir yoğunluğu anlatır.",
+    "fluency_tip": "\"They sweated blood to get this project off the ground\" diyebilirsin.",
+    "context_sentences": ["She sweated blood to build her business from nothing.", "You can see they sweated blood over every detail of this design."]
+  },
+  {
+    "id": 2037, "category": "basari",
+    "tr": "Sıfırdan başlamak",
+    "tags": ["sıfır","başla","yeni","baştan","taban","temel"],
+    "english_primary": "Start from scratch",
+    "alternatives": ["Start from zero","Build from the ground up","Begin anew"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Sıfırdan", "tr_gloss": "from zero", "en_fragment": "from scratch", "bridge_type": "transform", "explanation": "Sıfır (rakam) → scratch (çizgi): Türkçede matematiksel başlangıç; İngilizce at yarışında başlangıç çizgisinden gelir." }
+    ],
+    "cultural_insight": "'Scratch' at yarışında en arkadan başlayan atın çizgisini ifade eder. 'Sıfır' ise matematiksel — her ikisi de en başı anlatır.",
+    "fluency_tip": "\"We had to scrap everything and start from scratch\" diyebilirsin.",
+    "context_sentences": ["After the flood damaged the shop, they had to start from scratch.", "She started from scratch at 40 and built a successful business."]
+  },
+  {
+    "id": 2038, "category": "basari",
+    "tr": "Zirveye çıkmak",
+    "tags": ["zirve","çık","başarı","en üst","ulaş","doruk"],
+    "english_primary": "Rise to the top",
+    "alternatives": ["Reach the pinnacle","Make it to the top","Climb to the summit"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Zirveye çıkmak", "tr_gloss": "to reach the peak/summit", "en_fragment": "rise to the top", "bridge_type": "transform", "explanation": "Zirve (dağ doruk noktası) → top (üst): İkisi de hiyerarşinin en üstünü anlatır ama Türkçe daha coğrafi bir imge kullanır." }
+    ],
+    "cultural_insight": "Dağ metaforu evrensel. 'Rise' İngilizcede yavaş ve organik bir yükselişi; 'climb' ise çaba gerektiren bir tırmanışı anlatır.",
+    "fluency_tip": "\"She rose to the top through sheer determination\" diyebilirsin.",
+    "context_sentences": ["He rose to the top of his field within a decade.", "Rising to the top requires talent, hard work, and a little bit of luck."]
+  },
+  {
+    "id": 2039, "category": "basari",
+    "tr": "İşi yoluna koymak",
+    "tags": ["iş","yol","koy","düzelt","çöz","hallettim"],
+    "english_primary": "Get things sorted",
+    "alternatives": ["Get things on track","Set things right","Sort it out"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Yola koymak", "tr_gloss": "to put on the road", "en_fragment": "get things on track", "bridge_type": "transform", "explanation": "Yol metaforu → track (ray/yol): Her iki dil de düzeni yol/rota imgesiyle anlatır." }
+    ],
+    "cultural_insight": "'Sort out' İngilizcede hem düzeltmek hem çözmek anlamına gelir. 'Get on track' raylı sistemden gelen bir metafora referans verir.",
+    "fluency_tip": "\"Give me a week and I'll get everything sorted\" diyebilirsin.",
+    "context_sentences": ["It took a month but we finally got things sorted after the merger.", "Let me get this sorted before we move on to the next phase."]
+  },
+  {
+    "id": 2040, "category": "basari",
+    "tr": "Çubuğu fazla esnetmek",
+    "tags": ["çubuk","esnet","aşır","sınır","abart","fazla"],
+    "english_primary": "Push the envelope",
+    "alternatives": ["Go too far","Push the boundaries","Take it to the limit"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Çubuğu esnetmek", "tr_gloss": "to stretch the stick/bar", "en_fragment": "push the envelope", "bridge_type": "transform", "explanation": "Esnek çubuk (fiziksel sınır testi) → zarf itmek (test uçuş terminolojisi): İkisi de sınırı zorlamayı anlatır, imgeler tamamen farklı." }
+    ],
+    "cultural_insight": "'Push the envelope' WWII test pilotlarından gelir — uçağın hız/irtifa zarfını zorlamak. Türkçe metafor fiziksel esneme/büküm imgesiyle sınırı test eder.",
+    "fluency_tip": "\"We need to push the envelope if we want to stay ahead of the competition\" diyebilirsin.",
+    "context_sentences": ["The new design really pushes the envelope in terms of user experience.", "She always pushes the envelope — that's why her campaigns are so memorable."]
+  },
+  {
+    "id": 2041, "category": "basari",
+    "tr": "Gol atmak",
+    "tags": ["gol","at","başar","hedef","kazandım","başarıldı"],
+    "english_primary": "Score a goal",
+    "alternatives": ["Nail it","Hit the mark","Achieve the target"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Gol atmak", "tr_gloss": "to throw/score a goal", "en_fragment": "score a goal", "bridge_type": "direct", "explanation": "Gol atmak = score a goal: Spor dili olarak birebir örtüşür — metafor olarak da aynı şekilde kullanılır." }
+    ],
+    "cultural_insight": "Futbol metaforu evrensel. Her iki dilde de 'gol atmak/score a goal' somut başarıyı anlatır. Gündelik hayata da taşınır.",
+    "fluency_tip": "\"We really scored a goal with that client presentation\" diyebilirsin.",
+    "context_sentences": ["The team scored a goal with their new marketing strategy.", "She really scored a goal by landing that major account."]
+  },
+  {
+    "id": 2042, "category": "basari",
+    "tr": "Çıtayı yükseltmek",
+    "tags": ["çıta","yükselt","standart","beklenti","hedef","ölçü"],
+    "english_primary": "Raise the bar",
+    "alternatives": ["Set a higher standard","Up the ante","Raise the stakes"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Çıtayı yükseltmek", "tr_gloss": "to raise the bar/lath", "en_fragment": "raise the bar", "bridge_type": "direct", "explanation": "Çıta = bar (atlamada kullanılan çubuk): İki dilde de yüksek atlama imgesi — neredeyse birebir." }
+    ],
+    "cultural_insight": "Her iki dil yüksek atlama sporundaki 'çıta/bar' imgesiyle beklenti/standardı anlatır. Evrensel bir spor metaforu.",
+    "fluency_tip": "\"Their first album raised the bar for the whole genre\" diyebilirsin.",
+    "context_sentences": ["This product has really raised the bar in terms of design and performance.", "Her work raises the bar for everyone else on the team."]
+  },
+  {
+    "id": 2043, "category": "basari",
+    "tr": "Büyük balık küçük gölde",
+    "tags": ["balık","göl","büyük","küçük","lider","önemli"],
+    "english_primary": "Big fish in a small pond",
+    "alternatives": ["Top of the local league","A large fish in a small sea"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Büyük balık", "tr_gloss": "big fish", "en_fragment": "big fish", "bridge_type": "direct", "explanation": "Birebir çeviri mümkün." },
+      { "tr_fragment": "küçük gölde", "tr_gloss": "in a small lake", "en_fragment": "in a small pond", "bridge_type": "direct", "explanation": "Göl ≈ pond: Küçük bir su ortamı metaforu her iki dilde de aynı." }
+    ],
+    "cultural_insight": "Bu metafor evrenseldir — her iki kültür de balık/su imgesiyle sınırlı bir alandaki büyüklüğü anlatır.",
+    "fluency_tip": "\"He's a big fish in a small pond — he should try a bigger market\" diyebilirsin.",
+    "context_sentences": ["She was a big fish in a small pond at her local firm, but struggled in the big city.", "Sometimes it's better to be a big fish in a small pond than a small fish in the ocean."]
+  },
+  {
+    "id": 2044, "category": "basari",
+    "tr": "Fırsatı tepetaklak etmek",
+    "tags": ["fırsat","tepetaklak","kaçır","berbat","mahvet","çöker"],
+    "english_primary": "Blow the opportunity",
+    "alternatives": ["Miss the boat","Fumble the chance","Squander the opportunity"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Fırsatı tepetaklak etmek", "tr_gloss": "to flip the opportunity upside down", "en_fragment": "blow the opportunity", "bridge_type": "transform", "explanation": "Tepetaklak etmek (devirip bozmak) → blow (patlatmak, berbat etmek): Her iki dil de fırsatın yok edilmesini anlatır ama imgeler farklı." }
+    ],
+    "cultural_insight": "'Blow' İngilizcede hem patlatmak hem mahvetmek anlamına gelir. 'Miss the boat' ise zamanlama hatası olarak ayrı bir metafordur.",
+    "fluency_tip": "\"Don't blow this opportunity — it might not come again\" diyebilirsin.",
+    "context_sentences": ["He completely blew the opportunity by arriving late to the interview.", "Don't blow this chance — prepare properly and give it your all."]
+  },
+  {
+    "id": 2045, "category": "basari",
+    "tr": "Elmas gibi parlamak",
+    "tags": ["elmas","parla","parlak","başarı","göze çarp","dikkat"],
+    "english_primary": "Shine like a diamond",
+    "alternatives": ["Stand out from the crowd","Be a cut above","Outshine everyone"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Elmas gibi parlamak", "tr_gloss": "to shine like a diamond", "en_fragment": "shine like a diamond", "bridge_type": "direct", "explanation": "Birebir aynı metafor — evrensel bir değerli taş imgesi." }
+    ],
+    "cultural_insight": "Elmas/diamond metaforu evrensel. Her kültürde değerli taşlar çoğunlukla mükemmelliği ve parlaklığı simgeler.",
+    "fluency_tip": "\"She really shone like a diamond in that presentation\" diyebilirsin.",
+    "context_sentences": ["In a room full of talented people, she still managed to shine like a diamond.", "His work ethic makes him shine like a diamond among his peers."]
+  },
+
+  /* ──────────────────────────────────────────────────────────────
+     ŞAŞIRMA & TEPKİ — Genişletilmiş (id 2046–2050)
+     ────────────────────────────────────────────────────────────── */
+  {
+    "id": 2046, "category": "sasirma",
+    "tr": "Ağzım açık kaldı",
+    "tags": ["ağız","aç","şaşır","hayret","donup","inanamıyorum"],
+    "english_primary": "My jaw dropped",
+    "alternatives": ["I was left speechless","I was gobsmacked","I couldn't believe my eyes"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Ağzım açık kaldı", "tr_gloss": "my mouth stayed open", "en_fragment": "my jaw dropped", "bridge_type": "transform", "explanation": "Ağzın açık kalması (pasif) → çenenin düşmesi (aktif): Türkçede donup kalma; İngilizcede düşme hareketiyle şaşkınlık." }
+    ],
+    "cultural_insight": "İki dil de ağız/çene üzerinden şaşkınlığı anlatır. Türkçede ağız açık kalır; İngilizcede çene düşer — hareket yönü farklı.",
+    "fluency_tip": "\"My jaw literally dropped when I saw the price\" diyebilirsin.",
+    "context_sentences": ["My jaw dropped when I saw the final result — I couldn't believe it.", "The audience's jaws dropped when the magician revealed the trick."]
+  },
+  {
+    "id": 2047, "category": "sasirma",
+    "tr": "Yere geçtim",
+    "tags": ["yer","geç","utan","mahcup","rezil","yok olmak"],
+    "english_primary": "I wanted the ground to swallow me up",
+    "alternatives": ["I was mortified","I could have died of embarrassment","I wished I could disappear"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Yere geçtim", "tr_gloss": "I sank into the ground", "en_fragment": "wanted the ground to swallow me up", "bridge_type": "transform", "explanation": "Yere geçmek (kişi yerin içine girer) → yerin yutması (yer kişiyi yutar): Türkçede aktif geçiş; İngilizcede edilgen yutulma. Aynı yer metaforu, farklı yönler." }
+    ],
+    "cultural_insight": "Her iki dil de derin utancı yerin içine girmek isteme olarak ifade eder — evrensel bir utanç tepkisi.",
+    "fluency_tip": "\"I wanted the ground to swallow me up when they called out my wrong answer\" diyebilirsin.",
+    "context_sentences": ["I wanted the ground to swallow me up when I called the manager by the wrong name.", "She spilled coffee on the CEO's shirt and just wanted the ground to swallow her up."]
+  },
+  {
+    "id": 2048, "category": "sasirma",
+    "tr": "Gözlerime inanamadım",
+    "tags": ["göz","inan","şaşır","hayret","görüntü","gerçek mi"],
+    "english_primary": "I couldn't believe my eyes",
+    "alternatives": ["I had to do a double take","I rubbed my eyes in disbelief"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Gözlerime inanamadım", "tr_gloss": "I couldn't believe my eyes", "en_fragment": "couldn't believe my eyes", "bridge_type": "direct", "explanation": "Birebir aynı ifade — iki dil de görme duyusu üzerinden şaşkınlığı anlatır." }
+    ],
+    "cultural_insight": "Bu ifade evrensel bir metafor. Gözlere inanmamak — görme organının aktardığı bilginin kabul edilememesi. Her kültürde benzer kullanım.",
+    "fluency_tip": "\"I couldn't believe my eyes when I saw the transformation\" diyebilirsin.",
+    "context_sentences": ["I couldn't believe my eyes when the underdog team won the championship.", "She couldn't believe her eyes — the renovation had completely transformed the space."]
+  },
+  {
+    "id": 2049, "category": "sasirma",
+    "tr": "Yerinde donup kaldım",
+    "tags": ["don","kal","yerinde","şok","hareket","tepki","durmak"],
+    "english_primary": "I was frozen to the spot",
+    "alternatives": ["I was rooted to the spot","I froze up","I was paralyzed with shock"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Donup kaldım", "tr_gloss": "I froze and stayed", "en_fragment": "frozen to the spot", "bridge_type": "direct", "explanation": "Donup kalmak = frozen to the spot: Her iki dil de şok anında hareket edememe halini donmak üzerinden anlatır." }
+    ],
+    "cultural_insight": "Şok ve donma metaforu evrensel bir fizyolojik tepkiyi yansıtır — fight-or-flight tepkisinde 'freeze' modu. Her iki dil bunu donmakla ifade eder.",
+    "fluency_tip": "\"I was frozen to the spot when I heard the news\" diyebilirsin.",
+    "context_sentences": ["She was frozen to the spot when the car ran the red light right in front of her.", "I was frozen to the spot — I didn't know whether to run or stay."]
+  },
+  {
+    "id": 2050, "category": "sasirma",
+    "tr": "Şoke oldum",
+    "tags": ["şok","ol","şaşır","duygu","beklenmedik","hayret"],
+    "english_primary": "I was blown away",
+    "alternatives": ["I was shocked","I was stunned","It blew my mind"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Şoke oldum", "tr_gloss": "I was shocked / electrocuted metaphorically", "en_fragment": "blown away", "bridge_type": "transform", "explanation": "'Şok' (elektrik/etki) → blown away (uçup gitmek): Türkçe elektrik etkisini; İngilizce şiddetli rüzgarla savrulan birini çağrıştırır." }
+    ],
+    "cultural_insight": "'Blown away' pozitif de olabilir, negatif de. 'Şok' ise genellikle ani ve güçlü etkiyi anlatır — olumlu veya olumsuz.",
+    "fluency_tip": "\"I was absolutely blown away by the performance\" diyebilirsin.",
+    "context_sentences": ["I was blown away by how much the city had changed in just five years.", "The team was blown away by the standing ovation they received."]
+  }
 ];
 function findBridgeMatch(inputRaw) {
   const input = inputRaw.toLowerCase()

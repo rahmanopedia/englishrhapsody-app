@@ -186,6 +186,10 @@ class BridgeModule {
         <!-- Köprü Kartları Alanı -->
         <div class="bridge-cards-section" id="bridge-cards-section"></div>
 
+        <!-- Gerçek Kullanım & Çeviri Tuzağı -->
+        <div id="bridge-context-area"></div>
+        <div id="bridge-error-area"></div>
+
         <!-- Kültürel Bilgi -->
         <div id="bridge-insight-area"></div>
 
@@ -434,7 +438,7 @@ class BridgeModule {
         <span class="bridge-register-badge ${regClass}">${regLabel}</span>
         ${data.alternatives?.length ? `
           <div class="bridge-alternatives">
-            <div class="bridge-alt-label">Alternatifler <span style="opacity:0.5;font-size:0.6rem">(tıkla → kopyala)</span></div>
+            <div class="bridge-alt-label">Ton Seçenekleri <span style="opacity:0.5;font-size:0.6rem">(tıkla → kopyala)</span></div>
             ${altItems}
           </div>` : ''}
       `;
@@ -452,12 +456,14 @@ class BridgeModule {
         navigator.clipboard?.writeText(el.textContent.trim()).catch(() => {});
         const orig = el.textContent;
         el.textContent = '✓ Kopyalandı';
-        el.style.color = '#34d399';
+        el.style.color = 'var(--green)';
         setTimeout(() => { el.textContent = orig; el.style.color = ''; }, 1200);
       });
     });
 
     this._renderBridgeCards(data.bridges || []);
+    this._renderContext(data);
+    this._renderCommonError(data);
     this._renderInsight(data.cultural_insight, data.fluency_tip);
     this._renderSaveBtn();
   }
@@ -523,6 +529,80 @@ class BridgeModule {
     }
 
     return `<svg class="bridge-svg-line" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${paths}</svg>`;
+  }
+
+  /* ── Gerçek Kullanım ────────────────────────────────────────── */
+  _renderContext(data) {
+    const area = this.el.querySelector('#bridge-context-area');
+    if (!area) return;
+
+    const sentences = [];
+    if (data.fluency_tip) {
+      const matches = [...data.fluency_tip.matchAll(/"([^"]+)"/g)];
+      matches.forEach(m => { if (m[1] && m[1].length > 5) sentences.push(m[1]); });
+    }
+    if (data.context_sentences) {
+      data.context_sentences.forEach(s => { if (!sentences.includes(s)) sentences.push(s); });
+    }
+
+    if (!sentences.length) { area.innerHTML = ''; return; }
+
+    area.innerHTML = `
+      <div class="bridge-feature-card">
+        <div class="bridge-feature-label">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M2 8h8M2 12h10"/></svg>
+          Gerçek Kullanım
+        </div>
+        ${sentences.map(s => `
+          <div class="bridge-ctx-item">
+            <div class="bridge-ctx-quote">"${s}"</div>
+            <button class="bridge-ctx-play" data-text="${s.replace(/"/g, '&quot;')}" title="Dinle">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3L3 5H1v6h2l2 2V3z"/><path d="M9 5.5a4 4 0 0 1 0 5"/><path d="M12 3a7 7 0 0 1 0 10"/></svg>
+            </button>
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+    area.querySelectorAll('.bridge-ctx-play').forEach(btn => {
+      btn.addEventListener('click', () => this._speak(btn.dataset.text));
+    });
+  }
+
+  /* ── Çeviri Tuzağı ──────────────────────────────────────────── */
+  _renderCommonError(data) {
+    const area = this.el.querySelector('#bridge-error-area');
+    if (!area) return;
+
+    const nonDirect = (data.bridges || []).filter(b => b.bridge_type !== 'direct');
+    if (!nonDirect.length) { area.innerHTML = ''; return; }
+
+    const literal = (data.bridges || [])
+      .map(b => b.tr_gloss || b.tr_fragment)
+      .filter(Boolean)
+      .join(' / ');
+
+    if (!literal) { area.innerHTML = ''; return; }
+
+    area.innerHTML = `
+      <div class="bridge-feature-card bridge-error-card">
+        <div class="bridge-feature-label">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5M8 11v.5"/></svg>
+          Çeviri Tuzağı
+        </div>
+        <div class="bridge-trap-row">
+          <div class="bridge-trap-wrong">
+            <span class="bridge-trap-x">✕</span>
+            <span class="bridge-trap-text">"${literal}"</span>
+          </div>
+          <div class="bridge-trap-sep">→</div>
+          <div class="bridge-trap-right">
+            <span class="bridge-trap-check">✓</span>
+            <span class="bridge-trap-text">"${data.english_primary}"</span>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   /* ── Kategori Gezgini ────────────────────────────────────────── */
@@ -637,12 +717,19 @@ class BridgeModule {
     const area = this.el.querySelector('#bridge-save-area');
     if (!area) return;
     area.innerHTML = `
+      <button class="bridge-shadow-btn" id="bridge-shadow-btn">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/><path d="M10 6v4l2.5 2.5"/></svg>
+        Gölgeleme Pratiği
+      </button>
       <button class="bridge-save-btn" id="bridge-save-btn">
         Koleksiyona Kaydet
       </button>
     `;
     area.querySelector('#bridge-save-btn').addEventListener('click', () => {
       this._saveToCollection();
+    });
+    area.querySelector('#bridge-shadow-btn').addEventListener('click', () => {
+      if (this.currentData) this._startShadowing(this.currentData);
     });
   }
 
@@ -893,13 +980,17 @@ class BridgeModule {
     const placeholder = this.el.querySelector('#bridge-placeholder');
     const content     = this.el.querySelector('#bridge-result-content');
     const cards       = this.el.querySelector('#bridge-cards-section');
+    const contextArea = this.el.querySelector('#bridge-context-area');
+    const errorArea   = this.el.querySelector('#bridge-error-area');
     const insight     = this.el.querySelector('#bridge-insight-area');
     const saveArea    = this.el.querySelector('#bridge-save-area');
-    if (placeholder) { placeholder.style.display = 'flex'; }
-    if (content)     { content.style.display = 'none'; content.innerHTML = ''; }
-    if (cards)       { cards.innerHTML = ''; }
-    if (insight)     { insight.innerHTML = ''; }
-    if (saveArea)    { saveArea.innerHTML = ''; }
+    if (placeholder)  { placeholder.style.display = 'flex'; }
+    if (content)      { content.style.display = 'none'; content.innerHTML = ''; }
+    if (cards)        { cards.innerHTML = ''; }
+    if (contextArea)  { contextArea.innerHTML = ''; }
+    if (errorArea)    { errorArea.innerHTML = ''; }
+    if (insight)      { insight.innerHTML = ''; }
+    if (saveArea)     { saveArea.innerHTML = ''; }
     this.currentData = null;
     this.saved = false;
   }
@@ -1277,6 +1368,37 @@ class BridgeModule {
               </div>`;
           }).join('')}
         </div>
+        <div class="bridge-stats-section-title">Kategori Dağılımı</div>
+        <div class="bridge-stats-bars">
+          ${(typeof BRIDGE_CATEGORIES !== 'undefined' ? BRIDGE_CATEGORIES : []).map(cat => {
+            const n = catCounts[cat.id] || 0;
+            const maxC = Math.max(...(typeof BRIDGE_CATEGORIES !== 'undefined' ? BRIDGE_CATEGORIES : []).map(c => catCounts[c.id] || 0), 1);
+            const pct = Math.round((n / maxC) * 100);
+            return `
+              <div class="bridge-stats-bar-row">
+                <div class="bridge-stats-bar-lbl">${cat.icon} ${cat.label}</div>
+                <div class="bridge-stats-bar-track">
+                  <div class="bridge-stats-bar-fill" style="width:${pct}%;background:rgba(var(--a1-rgb),0.75)"></div>
+                </div>
+                <div class="bridge-stats-bar-num">${n}</div>
+              </div>`;
+          }).join('')}
+        </div>
+        ${(() => {
+          const weak = (typeof BRIDGE_CATEGORIES !== 'undefined' ? BRIDGE_CATEGORIES : []).filter(c => !(catCounts[c.id]));
+          const srDue = this.collection.filter(item => this._isSRDue(item.id, new Date().toDateString())).length;
+          return `
+            ${weak.length ? `
+              <div class="bridge-stats-section-title">Zayıf Noktalar — Hiç çalışılmadı</div>
+              <div class="bridge-stats-weak-row">
+                ${weak.map(c => `<span class="bridge-stats-weak-chip">${c.icon} ${c.label}</span>`).join('')}
+              </div>` : ''}
+            ${srDue > 0 ? `
+              <div class="bridge-stats-due-banner">
+                <span class="bridge-stats-due-n">${srDue}</span> ifade bugün tekrar zamanı ↓
+              </div>` : ''}
+          `;
+        })()}
         <div class="bridge-stats-section-title">Arama Geçmişi</div>
         <div class="bridge-stats-history">
           ${this.searchHistory.length
@@ -1290,6 +1412,86 @@ class BridgeModule {
     const escH = e => { if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', escH); } };
     document.addEventListener('keydown', escH);
     document.body.appendChild(overlay);
+  }
+
+  /* ── Gölgeleme Modu ─────────────────────────────────────────── */
+  _startShadowing(data) {
+    const phrase = data.english_primary || '';
+    if (!phrase || !window.speechSynthesis) return;
+
+    const WEAK = new Set(['the','a','an','to','of','in','on','at','by','for','with','and','or','but','i','you','he','she','it','we','they','is','am','are','was','were','be','been','do','does','did','have','has','had','will','would','shall','should','may','might','can','could','m','re','ve','ll','s','t','d','my','your','his','her','its','our','their','me','him','us','them','this','that']);
+
+    const stressedHTML = phrase.split(' ').map(w => {
+      const clean = w.toLowerCase().replace(/[^a-z']/g, '');
+      return `<span class="sh-word ${WEAK.has(clean) ? 'sh-weak' : 'sh-strong'}">${w}</span>`;
+    }).join(' ');
+
+    const ROUNDS = 3;
+    let cancelled = false;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'bridge-shadow-overlay';
+    overlay.innerHTML = `
+      <div class="bridge-shadow-panel">
+        <button class="bridge-shadow-close" id="sh-close">✕</button>
+        <div class="bridge-shadow-mode-label">Gölgeleme Modu</div>
+        <div class="bridge-shadow-tr">${data.tr || ''}</div>
+        <div class="bridge-shadow-phrase" id="sh-phrase">${stressedHTML}</div>
+        <div class="bridge-shadow-status" id="sh-status">Hazırlanıyor…</div>
+        <div class="bridge-shadow-dots" id="sh-dots">
+          ${Array.from({length: ROUNDS}, (_, i) => `<div class="sh-dot" id="sh-dot-${i}"></div>`).join('')}
+        </div>
+        <div class="bridge-shadow-hint" id="sh-hint">Kalın kelimeler vurgulu — onlara odaklan</div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const close = () => {
+      cancelled = true;
+      window.speechSynthesis.cancel();
+      overlay.remove();
+    };
+    overlay.querySelector('#sh-close').addEventListener('click', close);
+    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+
+    const doRound = (round) => {
+      if (cancelled || !overlay.isConnected) return;
+      const dot     = overlay.querySelector(`#sh-dot-${round}`);
+      const status  = overlay.querySelector('#sh-status');
+      const hint    = overlay.querySelector('#sh-hint');
+      const phraseEl= overlay.querySelector('#sh-phrase');
+
+      if (dot) dot.classList.add('active');
+      if (status) status.textContent = '▶ Dinliyorsun…';
+      if (hint) hint.textContent = 'Dikkatle dinle, ritmi hisset';
+      if (phraseEl) phraseEl.classList.add('speaking');
+
+      const utt = new SpeechSynthesisUtterance(phrase);
+      utt.lang = 'en-US'; utt.rate = 0.8;
+
+      utt.onend = () => {
+        if (!overlay.isConnected) return;
+        if (phraseEl) phraseEl.classList.remove('speaking');
+        if (dot) { dot.classList.remove('active'); dot.classList.add('done'); }
+        if (status) status.textContent = '🎙 Şimdi sen tekrar et!';
+        if (hint) hint.textContent = `Tur ${round + 1} / ${ROUNDS}  —  Sesli söyle`;
+
+        setTimeout(() => {
+          if (cancelled || !overlay.isConnected) return;
+          if (round + 1 < ROUNDS) {
+            doRound(round + 1);
+          } else {
+            if (status) status.textContent = '✓ Harika pratik!';
+            if (hint) hint.textContent = 'Bu ifadeyi koleksiyona eklemeyi unutma.';
+            setTimeout(() => { if (overlay.isConnected) close(); }, 2500);
+          }
+        }, 3500);
+      };
+
+      window.speechSynthesis.speak(utt);
+    };
+
+    setTimeout(() => doRound(0), 400);
   }
 
 }

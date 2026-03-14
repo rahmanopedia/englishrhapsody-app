@@ -3,16 +3,46 @@
    Uygulama ayarlarini Firebase console'dan uzaktan yonet
 
    Firebase Console → Remote Config → Asagidaki parametreleri ekle:
-     dailyXPGoal                Number   100
-     maxStreakBonus              Number   50
+
+   ── XP Değerleri ─────────────────────────────────────────────
+     xp_per_level               Number   500
+     xp_reading_correct         Number   10
+     xp_reading_complete        Number   50
+     xp_phantom_base            Number   20
+     xp_grammar_rule            Number   30
+     xp_quantum_win             Number   100
+     xp_nexus_base              Number   15
+     xp_speaking_max            Number   80
+     xp_speak_perfect           Number   60
+     xp_speak_great             Number   40
+     xp_speak_good              Number   20
+     xp_speak_retry             Number   5
+
+   ── Çarpanlar ────────────────────────────────────────────────
+     multiplier_easy            Number   1.0
+     multiplier_medium          Number   1.5
+     multiplier_hard            Number   2.0
+     maxStreakBonus             Number   50
+
+   ── Konuşma / Çalışma ────────────────────────────────────────
      speakingDifficulty         String   "easy"
+     speaking_auto_advance_score Number  80
+     speaking_countdown_sec     Number   3
+     speaking_inactive_days     Number   3
+     srs_session_word_count     Number   10
+     dailyXPGoal                Number   100
+
+   ── Özellik Bayrakları ────────────────────────────────────────
      feature_speaking_ai        Boolean  false
      feature_notifications      Boolean  true
-     xp_per_level               Number   500
-     speaking_auto_advance_score Number  80
      feature_nexus_mode         Boolean  true
      feature_convo_mode         Boolean  true
      feature_confetti           Boolean  true
+
+   ── Bildirim ─────────────────────────────────────────────────
+     streak_warning_enabled     Boolean  true
+     xp_reminder_enabled        Boolean  true
+     reminder_hour              Number   20
    ================================================================ */
 
 class RemoteConfigManager {
