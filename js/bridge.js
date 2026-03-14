@@ -289,8 +289,6 @@ class BridgeModule {
       }
     });
 
-    // Onboarding
-    if (!this.onboarded) setTimeout(() => this._startOnboarding(), 800);
   }
 
   /* ── Statik Veritabanı Araması ────────────────────────────── */
@@ -1292,54 +1290,6 @@ class BridgeModule {
     const escH = e => { if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', escH); } };
     document.addEventListener('keydown', escH);
     document.body.appendChild(overlay);
-  }
-
-  /* ── Onboarding Turu ──────────────────────────────────────────── */
-  _startOnboarding() {
-    const steps = [
-      { sel: '#bridge-textarea',     title: 'Türkçe yaz',        text: 'Günlük bir ifade, deyim veya düşünce yaz.' },
-      { sel: '#bridge-trigger-btn',  title: 'Köprü Kur',         text: 'Bu butona bas (veya Ctrl+Enter). Kavramsal dönüşüm başlar.' },
-      { sel: '#bridge-cards-section',title: 'Köprü Kartları',     text: 'Her kart bir kavram bağlantısını gösterir. Tıklayınca açıklamayı görürsün.' },
-      { sel: '#bridge-save-area',    title: 'Koleksiyona Ekle',   text: 'Beğendiklerini koleksiyonuna ekle, etiketle.' },
-      { sel: '.bridge-explorer-section', title: 'Keşfet',         text: '250+ ifadeyi kategorilere göre veya arama ile keşfet.' },
-    ];
-    let step = 0;
-
-    const tip = document.createElement('div');
-    tip.className = 'bridge-onboard-tip';
-    document.body.appendChild(tip);
-
-    const show = () => {
-      const s = steps[step];
-      const target = this.el.querySelector(s.sel);
-      if (!target) { next(); return; }
-      const r = target.getBoundingClientRect();
-      tip.innerHTML = `
-        <div class="bridge-onboard-title">${s.title}</div>
-        <div class="bridge-onboard-text">${s.text}</div>
-        <div class="bridge-onboard-footer">
-          <span>${step + 1} / ${steps.length}</span>
-          <button class="bridge-onboard-next">${step < steps.length - 1 ? 'İleri →' : 'Tamam!'}</button>
-        </div>`;
-      const top = r.bottom + window.scrollY + 10;
-      const left = Math.min(r.left, window.innerWidth - 260);
-      tip.style.cssText = `display:block;top:${top}px;left:${Math.max(8, left)}px`;
-      tip.querySelector('.bridge-onboard-next').addEventListener('click', next);
-      target.classList.add('bridge-onboard-highlight');
-    };
-
-    const next = () => {
-      const s = steps[step];
-      this.el.querySelector(s.sel)?.classList.remove('bridge-onboard-highlight');
-      step++;
-      if (step >= steps.length) {
-        tip.remove();
-        this.onboarded = true;
-        localStorage.setItem('bridge_onboarded', '1');
-      } else { show(); }
-    };
-
-    show();
   }
 
 }
