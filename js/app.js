@@ -2571,6 +2571,7 @@ class App {
     this.state   = new StateManager();
     this.audio   = new AudioEngine();
     this.speech  = new SpeechEngine(this.state.get('accent'));
+    this.readingEngine = new ReadingEngine(this);
 
     // Session-level (not persisted)
     this.session = {
@@ -4149,8 +4150,7 @@ class App {
       ).join('');
     } else {
       // READ MODE
-      const plainText = story.text.replace(/\{([^}]+)\}/g, '$1');
-      html = this._markupText(plainText, 'story-word');
+      html = this.readingEngine.markupStory(story);
     }
 
     container.innerHTML = `
@@ -5958,6 +5958,20 @@ class App {
       // Delegated: speak button (cb-replay, speak-btn class)
       const speakBtn = e.target.closest('.speak-btn');
       if (speakBtn) { app.speech.speak(speakBtn.dataset.text, 0.88); return; }
+
+      // Delegated: v2 reading annotations
+      const swV2 = e.target.closest('.sw-v2');
+      if (swV2) {
+        const annId = swV2.dataset.annId;
+        const level = app.state.get('readingLevel');
+        const storyIdx = app._getStoryIndex();
+        const stories = STORIES.filter(s => s.level === level);
+        const story = stories[storyIdx];
+        if (story && story.annotations && story.annotations[annId]) {
+          app.readingEngine.handleAnnotationClick(story.annotations[annId], swV2, e);
+        }
+        return;
+      }
 
       // Delegated: word/phrase click targets (story-vocab, sw spans)
       const storyVocab = e.target.closest('.story-vocab');

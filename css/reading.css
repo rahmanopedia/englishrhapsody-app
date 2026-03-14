@@ -1,0 +1,153 @@
+/* Reading Workshop v2 - Modern Annotation Styles */
+
+.sw-v2 {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
+    border-radius: 4px;
+    padding: 0 2px;
+    display: inline-block;
+}
+
+.sw-v2:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Annotation Type Colors (Subtle underlines) */
+.ann-type-word { border-bottom-color: rgba(29, 78, 216, 0.4); }
+.ann-type-phrasal_verb { border-bottom-color: rgba(8, 145, 178, 0.5); }
+.ann-type-idiom { border-bottom-color: rgba(124, 62, 237, 0.5); }
+.ann-type-collocation { border-bottom-color: rgba(6, 95, 70, 0.5); }
+.ann-type-noun_phrase { border-bottom-color: rgba(190, 24, 93, 0.5); }
+.ann-type-grammar_structure { border-bottom-color: rgba(180, 83, 9, 0.5); }
+.ann-type-relative_clause { border-bottom-color: rgba(67, 56, 202, 0.5); }
+.ann-type-verb_phrase { border-bottom-color: rgba(3, 105, 161, 0.5); }
+.ann-type-prepositional_phrase { border-bottom-color: rgba(71, 85, 105, 0.5); }
+
+.sw-v2.ann-active {
+    background: var(--cyan-glow, rgba(0, 212, 255, 0.2)) !important;
+    border-bottom-color: var(--cyan, #00d4ff) !important;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+}
+
+/* Annotation Popup */
+.ann-popup {
+    position: absolute;
+    z-index: 10000;
+    width: 280px;
+    background: #1a1d23;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    color: #e2e8f0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    pointer-events: auto;
+}
+
+.ann-popup-header {
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ann-type-badge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 99px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #fff;
+}
+
+.ann-popup-close {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.ann-popup-close:hover {
+    color: #fff;
+}
+
+.ann-popup-body {
+    padding: 16px;
+}
+
+.ann-surface {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.ann-meaning {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cyan, #00d4ff);
+    margin-bottom: 12px;
+}
+
+.ann-explanation {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #94a3b8;
+    margin-bottom: 16px;
+}
+
+.ann-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 12px 0;
+}
+
+.ann-example-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.ann-example-en {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #cbd5e1;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.ann-example-tr {
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* Animations */
+.animate-pop {
+    animation: annPopIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes annPopIn {
+    from { opacity: 0; transform: scale(0.9) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Story Content Specifics */
+.story-text {
+    line-height: 2;
+    font-size: 1.15rem;
+}
+
+.story-text p {
+    margin-bottom: 1.5rem;
+}
