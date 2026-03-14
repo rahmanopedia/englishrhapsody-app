@@ -2596,23 +2596,25 @@ class App {
   async _boot() {
     window._splashActive = true;
 
-    // Firebase başlat
-    if (window.authManager) {
-      await window.authManager.init();
-    }
-    if (window._firebaseConfigured) {
-      window.storageManager?.init();
-      window.analyticsManager?.init();
-      window.notificationsManager?.init();
-      if (window.remoteConfigManager) await window.remoteConfigManager.init();
-    }
-    this._applyRemoteFlags();
+    // Firebase — animasyonla paralel çalıştır
+    const firebaseReady = (async () => {
+      if (window.authManager) await window.authManager.init();
+      if (window._firebaseConfigured) {
+        window.storageManager?.init();
+        window.analyticsManager?.init();
+        window.notificationsManager?.init();
+        if (window.remoteConfigManager) await window.remoteConfigManager.init();
+      }
+      this._applyRemoteFlags();
+    })();
 
-    // Animasyon %100'e ulaşana kadar VE en az 1s daha bekle
-    const elapsed = Date.now() - (window._splashStart || Date.now());
-    const minDelay = new Promise(resolve => setTimeout(resolve, Math.max(1000, 7000 - elapsed)));
-    await Promise.all([window._splashAnimDone || Promise.resolve(), minDelay]);
+    // Animasyon %100'e ulaşana kadar VE Firebase bitene kadar bekle
+    await Promise.all([
+      window._splashAnimDone || Promise.resolve(),
+      firebaseReady
+    ]);
 
+    // "HAZIR." yaz, 2 saniye göster, sonra kapat
     const splash  = document.getElementById('splash-screen');
     const barFill = document.getElementById('sp-bar-fill');
     const barPct  = document.getElementById('sp-pct');
@@ -2621,20 +2623,18 @@ class App {
       if (barFill) barFill.style.width = '100%';
       if (barPct)  barPct.textContent  = '100%';
       if (barLbl)  barLbl.textContent  = 'HAZIR.';
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      splash.style.transition = 'opacity 0.6s';
+      splash.style.opacity = '0';
       setTimeout(() => {
-        splash.style.transition = 'opacity 0.6s';
-        splash.style.opacity = '0';
-        setTimeout(() => {
-          splash.remove();
-          window._splashActive = false;
-          // Kullanıcı giriş yapmışsa home'a git, yapmamışsa giriş ekranı göster
-          if (window.authManager?.isLoggedIn) {
-            this.navigate('home');
-          } else {
-            window.authUI?.open();
-          }
-        }, 620);
-      }, 800);
+        splash.remove();
+        window._splashActive = false;
+        if (window.authManager?.isLoggedIn) {
+          this.navigate('home');
+        } else {
+          window.authUI?.open();
+        }
+      }, 620);
     }
   }
 
