@@ -52,8 +52,8 @@
   --radius: var(--radius-md);
   --shadow: var(--glass-shadow);
   
-  --sidebar-w: 260px; /* Wider, more breathable sidebar */
-  --nav-h: 64px;
+  --sidebar-w: 220px; /* Compact sidebar */
+  --nav-h: 54px;
 }
 
 /* ── Global Reset & Body Overhaul ───────────────────────────── */
