@@ -2602,19 +2602,36 @@ class App {
 
     // Firebase — animasyonla paralel çalıştır
     const firebaseReady = (async () => {
-      if (window.authManager) await window.authManager.init();
-      if (window._firebaseConfigured) {
-        window.storageManager?.init();
-        window.analyticsManager?.init();
-        window.notificationsManager?.init();
-        if (window.remoteConfigManager) await window.remoteConfigManager.init();
+      try {
+        // 10 saniyelik emniyet zaman aşımı
+        const timeout = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Firebase timeout')), 10000)
+        );
+
+        await Promise.race([
+          (async () => {
+            if (window.authManager) await window.authManager.init();
+            if (window._firebaseConfigured) {
+              window.storageManager?.init();
+              window.analyticsManager?.init();
+              window.notificationsManager?.init();
+              if (window.remoteConfigManager) await window.remoteConfigManager.init();
+            }
+            this._applyRemoteFlags();
+          })(),
+          timeout
+        ]);
+      } catch (e) {
+        console.warn('[App] Boot timeout veya hata — misafir moduna geçiliyor:', e);
       }
-      this._applyRemoteFlags();
     })();
 
     // Animasyon %100'e ulaşana kadar VE Firebase bitene kadar bekle
+    // Splash için 10 saniyelik bir emniyet süresi ekliyoruz
+    const splashTimeout = new Promise(resolve => setTimeout(resolve, 10000));
+    
     await Promise.all([
-      window._splashAnimDone || Promise.resolve(),
+      Promise.race([window._splashAnimDone || Promise.resolve(), splashTimeout]),
       firebaseReady
     ]);
 
