@@ -35,15 +35,27 @@
   border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
   gap: 12px;
+  position: relative;
+}
+.bridge-header::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--br-tr) 25%, var(--violet) 50%, var(--br-en) 75%, transparent 100%);
+  opacity: 0.7;
 }
 .bridge-header-left { display: flex; align-items: center; gap: 14px; }
 
 .bridge-logo {
   width: 44px; height: 44px; border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--br-tr), var(--br-en));
+  background: linear-gradient(135deg, var(--br-tr), var(--violet) 55%, var(--br-en));
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px; flex-shrink: 0;
-  box-shadow: 0 0 20px rgba(245,158,11,0.2), 0 0 20px rgba(0,212,255,0.15);
+  flex-shrink: 0;
+  box-shadow: 0 0 22px rgba(245,158,11,0.22), 0 0 22px rgba(0,212,255,0.16);
+}
+.bridge-lm {
+  font-size: 1.35rem; font-weight: 900; color: #fff;
+  letter-spacing: -0.02em; line-height: 1;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.35);
 }
 
 .bridge-title-block h1 {
@@ -81,7 +93,7 @@
 .bridge-header-btn {
   width: 36px; height: 36px; border-radius: var(--radius-sm);
   background: var(--bg-card); border: 1px solid var(--border);
-  cursor: pointer; font-size: 15px; flex-shrink: 0;
+  cursor: pointer; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.2s; color: var(--text-2);
 }
@@ -90,7 +102,9 @@
   border-color: var(--border-hover);
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
+  color: var(--text-1);
 }
+.bhb-icon { width: 15px; height: 15px; }
 
 /* ── Legend ───────────────────────────────────────────────────── */
 .bridge-legend {
@@ -225,12 +239,13 @@
 .bridge-trigger-btn {
   width: 48px; height: 48px; border-radius: 50%; border: none;
   background: linear-gradient(135deg, var(--br-tr), var(--violet), var(--br-en));
-  cursor: pointer; font-size: 20px; flex-shrink: 0;
+  cursor: pointer; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   position: relative; z-index: 3;
   transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
   box-shadow: 0 4px 20px rgba(245,158,11,0.2), 0 4px 20px rgba(0,212,255,0.15);
 }
+.bridge-trig-svg { width: 22px; height: 22px; color: #fff; }
 .bridge-trigger-btn:hover {
   transform: scale(1.12);
   box-shadow: 0 8px 30px rgba(245,158,11,0.35), 0 8px 30px rgba(0,212,255,0.2);
@@ -245,11 +260,25 @@
 /* ── Sonuç Paneli ────────────────────────────────────────────── */
 .bridge-result-placeholder {
   flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 10px;
-  opacity: 0.25;
+  align-items: center; justify-content: center; gap: 14px;
+  opacity: 0.35;
 }
-.bridge-result-placeholder-icon { font-size: 30px; }
-.bridge-result-placeholder p { font-size: 0.76rem; color: var(--text-3); text-align: center; line-height: 1.6; }
+.bridge-ph-visual {
+  display: flex; align-items: center; gap: 10px;
+}
+.bridge-ph-tr {
+  font-size: 0.75rem; font-weight: 900; letter-spacing: 0.12em;
+  color: var(--br-tr);
+}
+.bridge-ph-en {
+  font-size: 0.75rem; font-weight: 900; letter-spacing: 0.12em;
+  color: var(--br-en);
+}
+.bridge-ph-line {
+  width: 30px; height: 1px;
+  background: linear-gradient(90deg, var(--br-tr), var(--br-en));
+}
+.bridge-result-placeholder p { font-size: 0.72rem; color: var(--text-3); text-align: center; line-height: 1.7; }
 .bridge-result-content { flex: 1; display: flex; flex-direction: column; gap: 12px; }
 
 .bridge-primary-row { display: flex; align-items: flex-start; gap: 8px; }
@@ -414,30 +443,35 @@
   display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start;
   opacity: 0; animation: bcard-in 0.5s ease 0.4s forwards;
 }
-.bridge-insight-icon { font-size: 18px; padding-top: 2px; }
+.bridge-insight-icon { font-size: 14px; padding-top: 2px; color: #a78bfa; line-height: 1; }
 .bridge-insight-label {
   font-size: 0.58rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.14em; color: #a78bfa; margin-bottom: 5px;
 }
 .bridge-insight-text { font-size: 0.78rem; color: var(--text-2); line-height: 1.65; margin: 0 0 6px; }
-.bridge-fluency-tip  { font-size: 0.73rem; color: var(--text-2); line-height: 1.5; margin: 0; }
+.bridge-fluency-tip  {
+  font-size: 0.73rem; color: var(--text-2); line-height: 1.5; margin: 0;
+  padding: 7px 10px; border-radius: var(--radius-sm);
+  background: rgba(0,212,255,0.04); border: 1px solid rgba(0,212,255,0.1);
+  border-left: 2px solid rgba(0,212,255,0.35);
+}
 
 /* ── Kaydet ──────────────────────────────────────────────────── */
 .bridge-save-btn {
   margin: 10px 24px 0;
   width: calc(100% - 48px);
-  padding: 11px; border-radius: var(--radius);
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text-2); font-size: 0.8rem; font-weight: 600;
-  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px;
-  transition: all 0.2s;
+  padding: 12px; border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(0,212,255,0.05));
+  border: 1px solid rgba(245,158,11,0.2);
+  color: var(--text-1); font-size: 0.82rem; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.22s;
 }
 .bridge-save-btn:hover {
-  background: var(--bg-elevated);
-  border-color: rgba(245,158,11,0.35);
-  color: #fbbf24;
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, rgba(245,158,11,0.14), rgba(0,212,255,0.09));
+  border-color: rgba(245,158,11,0.4);
+  box-shadow: 0 4px 20px rgba(245,158,11,0.1);
   transform: translateY(-1px);
 }
 .bridge-save-btn.saved {

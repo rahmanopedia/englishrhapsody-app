@@ -90,7 +90,7 @@ class BridgeModule {
         <!-- Header -->
         <div class="bridge-header">
           <div class="bridge-header-left">
-            <div class="bridge-logo">🌉</div>
+            <div class="bridge-logo"><span class="bridge-lm">K</span></div>
             <div class="bridge-title-block">
               <h1>KÖPRÜ</h1>
               <p>Çeviri değil, dönüşüm</p>
@@ -109,9 +109,9 @@ class BridgeModule {
               <div class="bridge-stat-val" id="bridge-stat-streak">${this.streakData.count}</div>
               <div class="bridge-stat-lbl">🔥 Seri</div>
             </div>
-            <button class="bridge-header-btn" id="bridge-quiz-btn" title="Sınav Modu">📝</button>
-            <button class="bridge-header-btn" id="bridge-daily-btn" title="Günlük Pratik">📅</button>
-            <button class="bridge-header-btn" id="bridge-stats-btn" title="İstatistikler">📊</button>
+            <button class="bridge-header-btn" id="bridge-quiz-btn" title="Sınav Modu"><svg class="bhb-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="M8 10.5v.5"/><path d="M8 5.5c0-.9.7-1.5 1.5-1.5S11 4.6 11 5.5c0 1.2-1.5 1.5-1.5 3"/></svg></button>
+            <button class="bridge-header-btn" id="bridge-daily-btn" title="Günlük Pratik"><svg class="bhb-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1.5v3M11 1.5v3M2 7h12"/></svg></button>
+            <button class="bridge-header-btn" id="bridge-stats-btn" title="İstatistikler"><svg class="bhb-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13V9M7 13V5M12 13V8"/></svg></button>
           </div>
         </div>
 
@@ -142,7 +142,9 @@ class BridgeModule {
           <!-- Orta Tetikleyici -->
           <div class="bridge-trigger-col">
             <div class="bridge-trigger-line"></div>
-            <button class="bridge-trigger-btn" id="bridge-trigger-btn" title="Köprü Kur">🌉</button>
+            <button class="bridge-trigger-btn" id="bridge-trigger-btn" title="Köprü Kur">
+              <svg class="bridge-trig-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+            </button>
             <div class="bridge-trigger-line"></div>
           </div>
 
@@ -153,8 +155,12 @@ class BridgeModule {
               İngilizce Karşılık
             </div>
             <div class="bridge-result-placeholder" id="bridge-placeholder">
-              <div class="bridge-result-placeholder-icon">✦</div>
-              <p>Türkçe yaz, köprü butonuna bas.<br>Kavramsal dönüşümü izle.</p>
+              <div class="bridge-ph-visual">
+                <span class="bridge-ph-tr">TR</span>
+                <div class="bridge-ph-line"></div>
+                <span class="bridge-ph-en">EN</span>
+              </div>
+              <p>Türkçe yaz, köprü kur.</p>
             </div>
             <div class="bridge-result-content" id="bridge-result-content" style="display:none"></div>
           </div>
@@ -616,11 +622,11 @@ class BridgeModule {
     if (!area || (!insight && !tip)) return;
     area.innerHTML = `
       <div class="bridge-insight">
-        <div class="bridge-insight-icon">🔭</div>
+        <div class="bridge-insight-icon">◈</div>
         <div class="bridge-insight-body">
           <div class="bridge-insight-label">Kültürel & Dilbilimsel Not</div>
           ${insight ? `<p class="bridge-insight-text">${insight}</p>` : ''}
-          ${tip ? `<p class="bridge-fluency-tip">💡 ${tip}</p>` : ''}
+          ${tip ? `<p class="bridge-fluency-tip">${tip}</p>` : ''}
         </div>
       </div>
     `;
@@ -632,7 +638,7 @@ class BridgeModule {
     if (!area) return;
     area.innerHTML = `
       <button class="bridge-save-btn" id="bridge-save-btn">
-        <span>🔖</span> Koleksiyona Ekle
+        Koleksiyona Kaydet
       </button>
     `;
     area.querySelector('#bridge-save-btn').addEventListener('click', () => {
@@ -795,7 +801,7 @@ class BridgeModule {
         ${bridgeRows}
         ${item.cultural_insight ? `
           <div class="bridge-insight" style="margin:16px 0 0">
-            <div class="bridge-insight-icon">🔭</div>
+            <div class="bridge-insight-icon">◈</div>
             <div class="bridge-insight-body">
               <div class="bridge-insight-label">Kültürel Not</div>
               <p class="bridge-insight-text">${item.cultural_insight}</p>
