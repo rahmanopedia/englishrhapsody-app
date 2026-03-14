@@ -1,4 +1,5 @@
 window._splashStart = Date.now();
+window._splashAnimDone = new Promise(function(resolve){ window._splashAnimResolve = resolve; });
 (function(){
   var lines = [
     { t:'> system_boot --target=linguistics --arch=neural', cls:'sp-cmd' },
@@ -47,6 +48,7 @@ window._splashStart = Date.now();
           cur.className = 'sp-cursor';
           cur.textContent = '▮';
           if(body) body.appendChild(cur);
+          if(window._splashAnimResolve) window._splashAnimResolve();
         } else {
           // Next line after random delay
           setTimeout(processNext, 150 + Math.random() * 300);

@@ -2608,9 +2608,10 @@ class App {
     }
     this._applyRemoteFlags();
 
-    // Firebase bittikten sonra: toplam sayfa yükünden 9s, en az 4s daha bekle
+    // Animasyon %100'e ulaşana kadar VE en az 1s daha bekle
     const elapsed = Date.now() - (window._splashStart || Date.now());
-    await new Promise(resolve => setTimeout(resolve, Math.max(4000, 9000 - elapsed)));
+    const minDelay = new Promise(resolve => setTimeout(resolve, Math.max(1000, 7000 - elapsed)));
+    await Promise.all([window._splashAnimDone || Promise.resolve(), minDelay]);
 
     const splash  = document.getElementById('splash-screen');
     const barFill = document.getElementById('sp-bar-fill');
