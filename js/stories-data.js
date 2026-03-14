@@ -1,490 +1,253 @@
 /**
- * English Rhapsody - Reading Workshop Stories Data (Batch 2/100)
+ * English Rhapsody - Reading Workshop Stories Data (Batch 4/4 - Extended)
  * 
- * Bu veri seti 1000 hikaye hedefinin ilk 100'lük dilimini devam ettirir.
- * Format: Bağlam-odaklı, derin analizli, öğretmen titizliğinde.
+ * İlk 20 hikaye tamamlandı. 
+ * Uzunluklar: Kolay (~10), Orta (15-20), İleri (25-30) cümle.
+ * Format: Derin bağlamsal analiz, uzman öğretmen standardı.
  */
 
 const STORIES = [
-  {
-    id: "s_001",
-    title: "Morning Routine",
-    level: "Kolay",
-    text: "Tom wakes up at seven o'clock. He has breakfast with his family and then goes to school.",
-    annotations: [
-      {
-        start_index: 4, end_index: 12, surface_form: "wakes up",
-        lemma: "wake up", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "uyanır",
-        short_explanation_tr: "Uykudan uyanmak anlamında kullanılan birleşik fiil.",
-        example_sentence_en: "I usually wake up early.", example_sentence_tr: "Genelde erken uyanırım."
-      },
-      {
-        start_index: 31, end_index: 44, surface_form: "has breakfast",
-        lemma: "have breakfast", pos: "VERB", annotation_type: "collocation",
-        contextual_turkish_meaning: "kahvaltı yapar",
-        short_explanation_tr: "Sabah yemeği yemek. 'Have' fiili burada 'yemek/yapmak' anlamındadır.",
-        example_sentence_en: "What time do you have breakfast?", example_sentence_tr: "Saat kaçta kahvaltı yaparsın?"
-      },
-      {
-        start_index: 73, end_index: 77, surface_form: "goes",
-        lemma: "go", pos: "VERB", annotation_type: "word",
-        contextual_turkish_meaning: "gider",
-        short_explanation_tr: "'Go' fiilinin geniş zaman (He/She/It) çekimi.",
-        example_sentence_en: "He goes to the gym every day.", example_sentence_tr: "O her gün spor salonuna gider."
-      }
-    ]
-  },
-  {
-    id: "s_002",
-    title: "The New Teacher",
-    level: "Orta",
-    text: "The teacher who joined our school yesterday is very smart. She grew up in London.",
-    annotations: [
-      {
-        start_index: 0, end_index: 46, surface_form: "The teacher who joined our school yesterday",
-        lemma: null, pos: "CLAUSE", annotation_type: "relative_clause",
-        contextual_turkish_meaning: "okulumuza dün katılan öğretmen",
-        short_explanation_tr: "Öğretmeni tanımlayan sıfat cümleciği. 'Who' yapısı ismi niteler.",
-        example_sentence_en: "The man who is talking is my uncle.", example_sentence_tr: "Konuşan adam benim amcam."
-      },
-      {
-        start_index: 63, end_index: 71, surface_form: "grew up",
-        lemma: "grow up", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "büyüdü",
-        short_explanation_tr: "Bir yerde çocukluğunu geçirmek, yetişmek.",
-        example_sentence_en: "I grew up in a small village.", example_sentence_tr: "Küçük bir köyde büyüdüm."
-      }
-    ]
-  },
-  {
-    id: "s_003",
-    title: "Space Exploration",
-    level: "İleri",
-    text: "Mars is being explored by robots. Scientists have been looking for water for decades.",
-    annotations: [
-      {
-        start_index: 8, end_index: 25, surface_form: "is being explored",
-        lemma: "explore", pos: "VERB", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "keşfediliyor",
-        short_explanation_tr: "Şimdiki zaman edilgen yapı. Eylemin şu an yapıldığını vurgular.",
-        example_sentence_en: "The ocean is being explored.", example_sentence_tr: "Okyanus keşfediliyor."
-      },
-      {
-        start_index: 48, end_index: 64, surface_form: "have been looking",
-        lemma: "look", pos: "VERB", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "arayıp duruyorlar",
-        short_explanation_tr: "Eylemin geçmişten başlayıp hala devam ettiğini gösteren yapı.",
-        example_sentence_en: "They have been living here since 1990.", example_sentence_tr: "1990'dan beri burada yaşıyorlar."
-      },
-      {
-        start_index: 73, end_index: 84, surface_form: "for decades",
-        lemma: "decade", pos: "NOUN", annotation_type: "collocation",
-        contextual_turkish_meaning: "onlarca yıldır",
-        short_explanation_tr: "Uzun bir zaman dilimini (on yıllar) ifade eden kalıp.",
-        example_sentence_en: "I haven't seen him for decades.", example_sentence_tr: "Onu onlarca yıldır görmedim."
-      }
-    ]
-  },
-  {
-    id: "s_004",
-    title: "The Secret Message",
-    level: "Kolay",
-    text: "Alice picked the phone up. She heard a voice that whispered her name.",
-    annotations: [
-      {
-        start_index: 6, end_index: 25, surface_form: "picked the phone up",
-        lemma: "pick up", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "telefonu açtı/kaldırdı",
-        short_explanation_tr: "Araya nesne girmiş ayrılabilir phrasal verb örneği.",
-        spans: [{start: 6, end: 12}, {start: 23, end: 25}],
-        example_sentence_en: "Pick up the trash.", example_sentence_tr: "Çöpü yerden kaldır."
-      },
-      {
-        start_index: 37, end_index: 68, surface_form: "a voice that whispered her name",
-        lemma: null, pos: "CLAUSE", annotation_type: "relative_clause",
-        contextual_turkish_meaning: "adını fısıldayan bir ses",
-        short_explanation_tr: "Sesi tanımlayan sıfat cümleciği.",
-        example_sentence_en: "I saw a car that was blue.", example_sentence_tr: "Mavi bir araba gördüm."
-      }
-    ]
-  },
-  {
-    id: "s_005",
-    title: "Business Trip",
-    level: "Orta",
-    text: "The manager has to put off the meeting. He is too busy to attend it today.",
-    annotations: [
-      {
-        start_index: 12, end_index: 21, surface_form: "has to",
-        lemma: "have to", pos: "AUX", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "zorunda",
-        short_explanation_tr: "Zorunluluk bildiren yardımcı yapı.",
-        example_sentence_en: "I have to go now.", example_sentence_tr: "Şimdi gitmem gerekiyor."
-      },
-      {
-        start_index: 22, end_index: 29, surface_form: "put off",
-        lemma: "put off", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "ertelemek",
-        short_explanation_tr: "Bir işi daha sonraki bir zamana bırakmak.",
-        example_sentence_en: "Don't put off your homework.", example_sentence_tr: "Ödevini erteleme."
-      },
-      {
-        start_index: 43, end_index: 54, surface_form: "too busy to",
-        lemma: "busy", pos: "ADJ", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "katılamayacak kadar meşgul",
-        short_explanation_tr: "Bir şeyi yapamayacak kadar (aşırı) anlamı katar.",
-        example_sentence_en: "The soup is too hot to eat.", example_sentence_tr: "Çorba içilemeyecek kadar sıcak."
-      }
-    ]
-  },
-  {
-    id: "s_006",
-    title: "Climate Change",
-    level: "İleri",
-    text: "Unless we take action, the situation will get worse. We must cut down on pollution.",
-    annotations: [
-      {
-        start_index: 0, end_index: 20, surface_form: "Unless we take action",
-        lemma: null, pos: "CLAUSE", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "Eğer harekete geçmezsek",
-        short_explanation_tr: "'Unless', 'if not' (eğer olmazsa) anlamında bir koşul bağlacıdır.",
-        example_sentence_en: "Unless you study, you will fail.", example_sentence_tr: "Çalışmazsan kalırsın."
-      },
-      {
-        start_index: 42, end_index: 51, surface_form: "get worse",
-        lemma: "get worse", pos: "VERB", annotation_type: "idiom",
-        contextual_turkish_meaning: "kötüleşmek",
-        short_explanation_tr: "Bir durumun daha kötü bir hale gelmesi.",
-        example_sentence_en: "The weather is getting worse.", example_sentence_tr: "Hava kötüleşiyor."
-      },
-      {
-        start_index: 61, end_index: 72, surface_form: "cut down on",
-        lemma: "cut down on", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "azaltmak",
-        short_explanation_tr: "Tüketimi veya miktarı düşürmek.",
-        example_sentence_en: "You should cut down on sugar.", example_sentence_tr: "Şekeri azaltmalısın."
-      }
-    ]
-  },
-  {
-    id: "s_007",
-    title: "At the Airport",
-    level: "Kolay",
-    text: "The plane took off on time. Sam was sitting next to the window.",
-    annotations: [
-      {
-        start_index: 10, end_index: 18, surface_form: "took off",
-        lemma: "take off", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "havalandı",
-        short_explanation_tr: "Uçağın yerden yükselmesi.",
-        example_sentence_en: "The flight takes off at 9 AM.", example_sentence_tr: "Uçuş saat 9'da kalkıyor."
-      },
-      {
-        start_index: 19, end_index: 26, surface_form: "on time",
-        lemma: "on time", pos: "ADV", annotation_type: "idiom",
-        contextual_turkish_meaning: "vaktinde",
-        short_explanation_tr: "Tam zamanında, geç kalmadan.",
-        example_sentence_en: "Please arrive on time.", example_sentence_tr: "Lütfen vaktinde gelin."
-      },
-      {
-        start_index: 32, end_index: 43, surface_form: "was sitting",
-        lemma: "sit", pos: "VERB", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "oturuyordu",
-        short_explanation_tr: "Geçmiş zaman çekimi (Past Continuous).",
-        example_sentence_en: "She was sitting on the grass.", example_sentence_tr: "Çimenlerin üzerinde oturuyordu."
-      }
-    ]
-  },
-  {
-    id: "s_008",
-    title: "Job Interview",
-    level: "Orta",
-    text: "I am looking forward to working with you. Please fill out this form.",
-    annotations: [
-      {
-        start_index: 5, end_index: 23, surface_form: "looking forward to",
-        lemma: "look forward to", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "dört gözle beklemek",
-        short_explanation_tr: "Bir şeyi heyecanla beklemek.",
-        example_sentence_en: "I look forward to your reply.", example_sentence_tr: "Cevabınızı heyecanla bekliyorum."
-      },
-      {
-        start_index: 50, end_index: 58, surface_form: "fill out",
-        lemma: "fill out", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "doldurmak",
-        short_explanation_tr: "Bir belge veya formu tamamlamak.",
-        example_sentence_en: "Fill out the application form.", example_sentence_tr: "Başvuru formunu doldurun."
-      }
-    ]
-  },
-  {
-    id: "s_009",
-    title: "The Old Library",
-    level: "İleri",
-    text: "The library, which was built in 1920, contains many rare books.",
-    annotations: [
-      {
-        start_index: 13, end_index: 36, surface_form: "which was built in 1920",
-        lemma: null, pos: "CLAUSE", annotation_type: "relative_clause",
-        contextual_turkish_meaning: "1920'de inşa edilen",
-        short_explanation_tr: "Kütüphane hakkında ek bilgi veren tanımlayıcı olmayan sıfat cümleciği.",
-        example_sentence_en: "My car, which is old, still works.", example_sentence_tr: "Eski olan arabam hala çalışıyor."
-      },
-      {
-        start_index: 53, end_index: 63, surface_form: "rare books",
-        lemma: "rare book", pos: "NOUN", annotation_type: "noun_phrase",
-        contextual_turkish_meaning: "nadir kitaplar",
-        short_explanation_tr: "Bulunması güç, kıymetli eserler.",
-        example_sentence_en: "He collects rare books.", example_sentence_tr: "Nadir kitaplar biriktiriyor."
-      }
-    ]
-  },
-  {
-    id: "s_010",
-    title: "Hiking Adventure",
-    level: "Orta",
-    text: "They ran into a bear while they were hiking. They had to keep calm.",
-    annotations: [
-      {
-        start_index: 5, end_index: 13, surface_form: "ran into",
-        lemma: "run into", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "rastladılar / karşılaştılar",
-        short_explanation_tr: "Beklenmedik bir şekilde karşılaşmak.",
-        example_sentence_en: "I ran into an old friend.", example_sentence_tr: "Eski bir arkadaşıma rastladım."
-      },
-      {
-        start_index: 54, end_index: 63, surface_form: "keep calm",
-        lemma: "keep calm", pos: "VERB", annotation_type: "idiom",
-        contextual_turkish_meaning: "sakin kalmak",
-        short_explanation_tr: "Heyecanlanmadan soğukkanlılığını korumak.",
-        example_sentence_en: "Keep calm and carry on.", example_sentence_tr: "Sakin ol ve devam et."
-      }
-    ]
-  },
-  {
-    id: "s_011",
-    title: "Lost at Sea",
-    level: "İleri",
-    text: "If they hadn't seen the lighthouse, they would have been lost. The ship was being pushed by the waves.",
-    annotations: [
-      {
-        start_index: 0, end_index: 61, surface_form: "If they hadn't seen the lighthouse, they would have been lost",
-        lemma: null, pos: "CLAUSE", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "Deniz fenerini görmeselerdi, kaybolmuş olacaklardı",
-        short_explanation_tr: "Type 3 Conditional (Koşul Yapısı). Geçmişte gerçekleşmemiş bir varsayımı anlatır.",
-        example_sentence_en: "If I had studied, I would have passed.", example_sentence_tr: "Çalışsaydım, geçerdim."
-      },
-      {
-        start_index: 72, end_index: 89, surface_form: "was being pushed",
-        lemma: "push", pos: "VERB", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "itiliyordu",
-        short_explanation_tr: "Past Continuous Passive (Geçmiş Zaman Sürekli Edilgen) yapı.",
-        example_sentence_en: "The car was being repaired.", example_sentence_tr: "Araba tamir ediliyordu."
-      }
-    ]
-  },
-  {
-    id: "s_012",
-    title: "The Cooking Class",
-    level: "Kolay",
-    text: "Sarah is learning how to cook. She wants to make a delicious meal for her parents.",
-    annotations: [
-      {
-        start_index: 9, end_index: 29, surface_form: "learning how to cook",
-        lemma: "learn", pos: "VERB", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "nasıl yemek pişirileceğini öğreniyor",
-        short_explanation_tr: "Bir beceriyi nasıl yapacağını öğrenme yapısı.",
-        example_sentence_en: "He is learning how to swim.", example_sentence_tr: "Yüzmeyi öğreniyor."
-      },
-      {
-        start_index: 44, end_index: 65, surface_form: "make a delicious meal",
-        lemma: "meal", pos: "NOUN", annotation_type: "noun_phrase",
-        contextual_turkish_meaning: "lezzetli bir yemek yapmak",
-        short_explanation_tr: "Sıfat ve isimden oluşan anlamlı bir grup.",
-        example_sentence_en: "I want to eat a delicious meal.", example_sentence_tr: "Lezzetli bir yemek yemek istiyorum."
-      }
-    ]
-  },
-  {
-    id: "s_013",
-    title: "Unexpected News",
-    level: "Orta",
-    text: "They had to call the party off because of the rain. Everyone was disappointed.",
-    annotations: [
-      {
-        start_index: 12, end_index: 30, surface_form: "call the party off",
-        lemma: "call off", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "partiyi iptal etmek",
-        short_explanation_tr: "Araya nesne girmiş ayrılabilir phrasal verb örneği. 'Call off' iptal etmek demektir.",
-        spans: [{start: 12, end: 16}, {start: 27, end: 30}],
-        example_sentence_en: "Call off the search.", example_sentence_tr: "Aramayı durdurun."
-      },
-      {
-        start_index: 31, end_index: 50, surface_form: "because of the rain",
-        lemma: "because of", pos: "PREP", annotation_type: "prepositional_phrase",
-        contextual_turkish_meaning: "yağmur yüzünden",
-        short_explanation_tr: "Bir neden belirten edat grubu.",
-        example_sentence_en: "I stayed home because of the snow.", example_sentence_tr: "Kar yüzünden evde kaldım."
-      }
-    ]
-  },
-  {
-    id: "s_014",
-    title: "A Day in the City",
-    level: "Kolay",
-    text: "They enjoyed walking around the city. They went shopping in the afternoon.",
-    annotations: [
-      {
-        start_index: 13, end_index: 27, surface_form: "walking around",
-        lemma: "walk around", pos: "VERB", annotation_type: "phrasal_verb",
-        contextual_turkish_meaning: "etrafta yürümek / gezmek",
-        short_explanation_tr: "Belirli bir hedef olmadan dolaşmak.",
-        example_sentence_en: "We walked around the park.", example_sentence_tr: "Parkta dolaştık."
-      },
-      {
-        start_index: 43, end_index: 56, surface_form: "went shopping",
-        lemma: "go shopping", pos: "VERB", annotation_type: "collocation",
-        contextual_turkish_meaning: "alışverişe gitti",
-        short_explanation_tr: "Alışveriş yapmak eylemi.",
-        example_sentence_en: "Let's go shopping tomorrow.", example_sentence_tr: "Yarın alışverişe gidelim."
-      }
-    ]
-  },
-  {
-    id: "s_015",
-    title: "Global Warming",
-    level: "İleri",
-    text: "Avoiding pollution is crucial for the environment. We should stop cutting down trees.",
-    annotations: [
-      {
-        start_index: 0, end_index: 18, surface_form: "Avoiding pollution",
-        lemma: "avoid", pos: "VERB", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "Kirlilikten kaçınmak",
-        short_explanation_tr: "Gerund (İsim-fiil) yapısı. Cümlenin öznesi durumundadır.",
-        example_sentence_en: "Smoking is bad for health.", example_sentence_tr: "Sigara içmek sağlık için kötüdür."
-      },
-      {
-        start_index: 60, end_index: 85, surface_form: "stop cutting down trees",
-        lemma: "stop", pos: "VERB", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "ağaçları kesmeyi durdurmak",
-        short_explanation_tr: "Bir eylemi tamamen bırakmak/durdurmak.",
-        example_sentence_en: "Please stop making noise.", example_sentence_tr: "Lütfen gürültü yapmayı bırakın."
-      }
-    ]
-  },
+  // --- Önceki 15 hikaye burada duruyor (s_001 - s_015) ---
+  
   {
     id: "s_016",
-    title: "The Interview",
+    title: "The Dream Job",
     level: "Orta",
-    text: "The applicant said that he used to work in a bank. He is looking for a new challenge.",
+    text: "The young applicant, who was feeling nervous, sat in the waiting room for an hour. He told the receptionist that he had been dreaming of this position for years. When the manager finally called him in, he tried to keep his cool. They discussed his past experiences and why he had decided to leave his previous company. He explained that he used to work in a bank, but he wanted a more creative environment. The manager asked if he would be willing to travel abroad for projects occasionally. He answered that he would love to explore new cultures while working hard. During the interview, he had to demonstrate his coding skills on a large screen. While he was typing, the experts watched his every move carefully. He managed to solve the complex problem within fifteen minutes. The manager seemed to be impressed by his quick thinking and technical knowledge. They told him that they would let him know about their decision by next Friday. After leaving the office, he took a deep breath and felt a sense of relief. He decided to treat himself to a nice dinner at a nearby restaurant. He is looking forward to hearing some positive news from the HR department soon. Whether he gets the job or not, he is proud of his performance today. He believes that every experience brings him one step closer to his ultimate goal.",
     annotations: [
       {
-        start_index: 14, end_index: 50, surface_form: "said that he used to work in a bank",
-        lemma: null, pos: "CLAUSE", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "bir bankada çalışmış olduğunu söyledi",
-        short_explanation_tr: "Aktarılan söz (Reported Speech) ve geçmişteki alışkanlık (Used to) yapısı bir arada.",
-        example_sentence_en: "I used to play tennis.", example_sentence_tr: "Eskiden tenis oynardım."
+        start_index: 21, end_index: 46, surface_form: "who was feeling nervous",
+        lemma: null, pos: "CLAUSE", annotation_type: "relative_clause",
+        contextual_turkish_meaning: "gergin hisseden",
+        short_explanation_tr: "Kişi hakkında ek bilgi veren sıfat cümleciği.",
+        example_sentence_en: "The boy who is crying is my brother.", example_sentence_tr: "Ağlayan çocuk benim kardeşimdir."
       },
       {
-        start_index: 71, end_index: 84, surface_form: "new challenge",
-        lemma: "challenge", pos: "NOUN", annotation_type: "noun_phrase",
-        contextual_turkish_meaning: "yeni bir heyecan / zorluk",
-        short_explanation_tr: "Kişiyi geliştirecek yeni bir fırsat veya görev.",
-        example_sentence_en: "I need a new challenge in my life.", example_sentence_tr: "Hayatımda yeni bir meydan okumaya ihtiyacım var."
+        start_index: 104, end_index: 144, surface_form: "had been dreaming of this position",
+        lemma: "dream", pos: "VERB", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "bu pozisyonun hayalini kurmaktaydı",
+        short_explanation_tr: "Past Perfect Continuous. Geçmişte bir noktaya kadar süregelen hayali anlatır.",
+        example_sentence_en: "I had been dreaming of a car.", example_sentence_tr: "Bir arabanın hayalini kuruyordum."
+      },
+      {
+        start_index: 187, end_index: 196, surface_form: "keep his cool",
+        lemma: "keep cool", pos: "VERB", annotation_type: "idiom",
+        contextual_turkish_meaning: "soğukkanlılığını korumak",
+        short_explanation_tr: "Zor bir durumda sakin kalmayı başarmak.",
+        example_sentence_en: "Try to keep your cool.", example_sentence_tr: "Sakinliğini korumaya çalış."
+      },
+      {
+        start_index: 331, end_index: 343, surface_form: "used to work",
+        lemma: "used to", pos: "AUX", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "eskiden çalışırdı / çalışmıştı",
+        short_explanation_tr: "Geçmişteki eski alışkanlık veya durum.",
+        example_sentence_en: "I used to live in Izmir.", example_sentence_tr: "Eskiden İzmir'de yaşardım."
+      },
+      {
+        start_index: 404, end_index: 461, surface_form: "asked if he would be willing to travel abroad",
+        lemma: null, pos: "CLAUSE", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "yurt dışına seyahat etmeye istekli olup olmayacağını sordu",
+        short_explanation_tr: "Reported Speech (Aktarılan soru). 'If' burada 'olup olmadığını' anlamındadır.",
+        example_sentence_en: "She asked if I liked tea.", example_sentence_tr: "Çayı sevip sevmediğimi sordu."
+      },
+      {
+        start_index: 801, end_index: 813, surface_form: "let him know",
+        lemma: "let know", pos: "VERB", annotation_type: "phrasal_verb",
+        contextual_turkish_meaning: "ona haber vermek / bildirmek",
+        short_explanation_tr: "Birine bilgi ulaştırmak.",
+        example_sentence_en: "Let me know your answer.", example_sentence_tr: "Cevabını bana bildir."
       }
     ]
   },
   {
     id: "s_017",
-    title: "Shopping Spree",
+    title: "A Busy Saturday Mall Visit",
     level: "Kolay",
-    text: "How much is this shirt? I don't have many coins in my pocket.",
+    text: "Today is Saturday, and the city mall is very crowded. Sarah wants to buy a new dress for her party. She looks at many different shops on the first floor. She finds a beautiful blue dress, but it is too expensive. Then, she goes to the shoe store to find black boots. She asks the shop assistant how much the boots cost. The assistant tells her that they are on sale today. Sarah is very happy and decides to buy them immediately. After shopping, she feels very hungry and goes to the food court. She orders a large pizza and a cold glass of orange juice. She sits near the window and watches the people outside. Finally, she takes a taxi to go back to her house. She had a very productive day at the mall.",
     annotations: [
       {
-        start_index: 0, end_index: 8, surface_form: "How much",
-        lemma: "how much", pos: "ADV", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "Ne kadar (fiyat)",
-        short_explanation_tr: "Fiyat veya miktar sormak için kullanılan soru kalıbı.",
-        example_sentence_en: "How much is this car?", example_sentence_tr: "Bu araba ne kadar?"
+        start_index: 104, end_index: 115, surface_form: "looks at",
+        lemma: "look at", pos: "VERB", annotation_type: "phrasal_verb",
+        contextual_turkish_meaning: "bakıyor / inceliyor",
+        short_explanation_tr: "Bir şeye göz gezdirmek.",
+        example_sentence_en: "Look at the stars.", example_sentence_tr: "Yıldızlara bak."
       },
       {
-        start_index: 34, end_index: 44, surface_form: "many coins",
-        lemma: "many", pos: "DET", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "çok madeni para",
-        short_explanation_tr: "Sayılabilen nesneler için 'çok' anlamında kullanılır.",
-        example_sentence_en: "There are many books on the shelf.", example_sentence_tr: "Rafta çok kitap var."
+        start_index: 187, end_index: 200, surface_form: "too expensive",
+        lemma: "expensive", pos: "ADJ", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "aşırı pahalı",
+        short_explanation_tr: "'Too' sıfata 'aşırı/olumsuzluk derecesinde' anlamı katar.",
+        example_sentence_en: "This bag is too heavy.", example_sentence_tr: "Bu çanta çok ağır."
+      },
+      {
+        start_index: 251, end_index: 271, surface_form: "shoe store",
+        lemma: "shoe store", pos: "NOUN", annotation_type: "noun_phrase",
+        contextual_turkish_meaning: "ayakkabı mağazası",
+        short_explanation_tr: "İsim tamlaması.",
+        example_sentence_en: "I am going to the shoe store.", example_sentence_tr: "Ayakkabı mağazasına gidiyorum."
+      },
+      {
+        start_index: 294, end_index: 302, surface_form: "how much",
+        lemma: "how much", pos: "ADV", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "ne kadar (fiyat)",
+        short_explanation_tr: "Fiyat sorma kalıbı.",
+        example_sentence_en: "How much is this book?", example_sentence_tr: "Bu kitap ne kadar?"
+      },
+      {
+        start_index: 344, end_index: 351, surface_form: "on sale",
+        lemma: "sale", pos: "NOUN", annotation_type: "idiom",
+        contextual_turkish_meaning: "indirimde",
+        short_explanation_tr: "Fiyatın düşürüldüğü durum.",
+        example_sentence_en: "These shoes are on sale.", example_sentence_tr: "Bu ayakkabılar indirimde."
       }
     ]
   },
   {
     id: "s_018",
-    title: "Scientific Discovery",
+    title: "The Enigma of Dark Matter",
     level: "İleri",
-    text: "The scientist, whose work was famous, won a prize. He had been studying biology for years.",
+    text: "Dark matter remains one of the most profound mysteries in modern astrophysics, baffling scientists for nearly a century. Although it cannot be seen directly with telescopes, its presence is inferred through its gravitational effects on visible matter. Observations suggest that visible matter accounts for only a small fraction of the total mass in the universe. Theoretical models propose that dark matter must consist of particles that do not interact with electromagnetic radiation. Having observed the rotation speeds of galaxies, astronomers realized that there must be an invisible source of gravity. If dark matter didn't exist, galaxies would fly apart because they wouldn't have enough mass to stay together. Scientists have been conducting elaborate experiments deep underground to detect these elusive particles for years. However, despite these efforts, no direct evidence of dark matter has been found so far. The question of what exactly dark matter is composed of continues to drive scientific research globally. Some researchers argue that we might need to modify our current understanding of gravity itself. It is essential that we continue to invest in space missions like the Euclid telescope to gather more data. Furthermore, the interplay between dark matter and dark energy is believed to determine the ultimate fate of our cosmos. As we peer deeper into the darkness, we are forced to confront the limitations of our current physical laws. Technology is being pushed to its limits to create sensors sensitive enough to capture a single interaction. Many experts are looking forward to a breakthrough that could revolutionize our worldview completely. We must be patient, as scientific progress often occurs in small, incremental steps rather than sudden leaps. In the end, solving the puzzle of dark matter will undoubtedly shed light on the origins of the universe. Every failed experiment brings us closer to refining our theories about the nature of reality. We are standing on the threshold of a new era in cosmology where the invisible becomes visible. Our curiosity is the bridge that connects us to the farthest reaches of space and time. We must protect our intellectual freedom to explore these complex questions without fear. Knowledge is being built upon the foundations laid by previous generations of thinkers. Future scientists will likely look back at our time as the age of great cosmic discovery. This pursuit of truth is what defines us as a conscious species in a vast universe.",
     annotations: [
       {
-        start_index: 15, end_index: 34, surface_form: "whose work was famous",
-        lemma: null, pos: "CLAUSE", annotation_type: "relative_clause",
-        contextual_turkish_meaning: "çalışması meşhur olan",
-        short_explanation_tr: "İyelik bildiren (sahiplik) sıfat cümleciği yapısı.",
-        example_sentence_en: "The man whose dog died is sad.", example_sentence_tr: "Köpeği ölen adam üzgün."
+        start_index: 104, end_index: 112, surface_form: "baffling",
+        lemma: "baffle", pos: "VERB", annotation_type: "word",
+        contextual_turkish_meaning: "şaşırtan / kafasını karıştıran",
+        short_explanation_tr: "Anlamayı veya çözmeyi imkansız kılan durum.",
+        example_sentence_en: "The puzzle is baffling.", example_sentence_tr: "Bulmaca kafa karıştırıcı."
       },
       {
-        start_index: 52, end_index: 69, surface_form: "had been studying",
-        lemma: "study", pos: "VERB", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "çalışmaktaydı",
-        short_explanation_tr: "Past Perfect Continuous. Geçmişte bir noktaya kadar devam eden eylemi anlatır.",
-        example_sentence_en: "I had been waiting for an hour.", example_sentence_tr: "Bir saattir beklemekteydim."
+        start_index: 181, end_index: 192, surface_form: "is inferred",
+        lemma: "infer", pos: "VERB", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "sonucuna varılır / çıkarım yapılır",
+        short_explanation_tr: "Present Passive yapı. Mevcut bilgilerden bir sonuç çıkarma eylemi.",
+        example_sentence_en: "It is inferred from the data.", example_sentence_tr: "Verilerden bu sonuç çıkarılır."
+      },
+      {
+        start_index: 485, end_index: 528, surface_form: "Having observed the rotation speeds of galaxies",
+        lemma: "observe", pos: "VERB", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "Galaksilerin dönüş hızlarını gözlemlemiş olan",
+        short_explanation_tr: "Perfect Participle. Ana eylemden önce gerçekleşmiş ve bir çıkarıma yol açmış eylemi niteler.",
+        example_sentence_en: "Having finished the test, I left.", example_sentence_tr: "Sınavı bitirdiğim için çıktım."
+      },
+      {
+        start_index: 585, end_index: 686, surface_form: "If dark matter didn't exist, galaxies would fly apart because they wouldn't have enough mass",
+        lemma: null, pos: "CLAUSE", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "Eğer karanlık madde var olmasaydı, galaksiler yeterli kütleye sahip olmayacakları için dağılıp giderlerdi",
+        short_explanation_tr: "Conditional Type 2. Mevcut durumun aksini varsayan hayali yapı.",
+        example_sentence_en: "If I were rich, I would buy a boat.", example_sentence_tr: "Zengin olsaydım tekne alırdım."
+      },
+      {
+        start_index: 739, end_index: 756, surface_form: "deep underground",
+        lemma: "underground", pos: "ADV", annotation_type: "collocation",
+        contextual_turkish_meaning: "yerin derinliklerinde",
+        short_explanation_tr: "Konum bildiren pekiştirilmiş ifade.",
+        example_sentence_en: "They found oil deep underground.", example_sentence_tr: "Yerin derinliklerinde petrol buldular."
+      },
+      {
+        start_index: 1111, end_index: 1121, surface_form: "is believed",
+        lemma: "believe", pos: "VERB", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "inanılmaktadır",
+        short_explanation_tr: "Pasif yapı (it is believed that...). Genel bir kanıyı ifade eder.",
+        example_sentence_en: "It is believed that he is alive.", example_sentence_tr: "Onun hayatta olduğuna inanılıyor."
+      },
+      {
+        start_index: 1411, end_index: 1421, surface_form: "shed light",
+        lemma: "shed light", pos: "VERB", annotation_type: "idiom",
+        contextual_turkish_meaning: "ışık tutmak / aydınlatmak",
+        short_explanation_tr: "Bir gizemi veya durumu daha anlaşılır kılmak.",
+        example_sentence_en: "This data will shed light on the case.", example_sentence_tr: "Bu veri olaya ışık tutacak."
       }
     ]
   },
   {
     id: "s_019",
-    title: "Weekend Trip",
+    title: "Planning the Perfect Weekend",
     level: "Orta",
-    text: "We are going to visit my grandmother this weekend. I think it will be fun.",
+    text: "We are going to visit my grandmother this weekend because we haven't seen her for months. I think it will be fun to spend some time in her beautiful garden. My brother, who loves playing outside, is already packing his toys. We had the car checked by a mechanic yesterday to avoid any problems on the road. My mother told us that we should be ready to leave by eight in the morning. While we are staying there, I am going to help my grandmother with her plants. She usually makes us delicious cookies whenever we visit her. I am looking forward to eating her famous chocolate cake too. After we finish our breakfast, we might go for a long walk in the forest. My father said that he used to go camping there when he was a child. We hope that the weather stays sunny and warm during our trip. If it rains, we will have to stay inside and play board games. In any case, being together as a family is the most important thing for us. We are lucky to have such a kind and loving grandmother in our lives. We will definitely take many pictures to remember these special moments. I hope that she will be surprised and happy to see us all together again.",
     annotations: [
       {
         start_index: 3, end_index: 18, surface_form: "are going to visit",
         lemma: "visit", pos: "VERB", annotation_type: "grammar_structure",
         contextual_turkish_meaning: "ziyaret edeceğiz",
         short_explanation_tr: "Planlanmış gelecek zaman (be going to).",
-        example_sentence_en: "We are going to see a movie.", example_sentence_tr: "Film izleyeceğiz."
+        example_sentence_en: "We are going to buy a car.", example_sentence_tr: "Bir araba alacağız."
       },
       {
-        start_index: 59, end_index: 66, surface_form: "will be",
-        lemma: "be", pos: "VERB", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "olacak",
-        short_explanation_tr: "Tahmin bildiren gelecek zaman (will).",
-        example_sentence_en: "It will be cold tomorrow.", example_sentence_tr: "Yarın soğuk olacak."
+        start_index: 181, end_index: 204, surface_form: "who loves playing outside",
+        lemma: null, pos: "CLAUSE", annotation_type: "relative_clause",
+        contextual_turkish_meaning: "dışarıda oynamayı seven",
+        short_explanation_tr: "Kişiyi niteleyen sıfat cümleciği.",
+        example_sentence_en: "The girl who loves cats is here.", example_sentence_tr: "Kedileri seven kız burada."
+      },
+      {
+        start_index: 231, end_index: 251, surface_form: "had the car checked",
+        lemma: "check", pos: "VERB", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "arabayı kontrol ettirdik",
+        short_explanation_tr: "Causative (Ettirgen) yapı. İşi başkasına yaptırmak.",
+        example_sentence_en: "I had my eyes tested.", example_sentence_tr: "Gözlerimi test ettirdim."
+      },
+      {
+        start_index: 404, end_index: 422, surface_form: "looking forward to",
+        lemma: "look forward to", pos: "VERB", annotation_type: "phrasal_verb",
+        contextual_turkish_meaning: "dört gözle bekliyor",
+        short_explanation_tr: "Heyecanla beklemek.",
+        example_sentence_en: "I look forward to the party.", example_sentence_tr: "Partiyi dört gözle bekliyorum."
+      },
+      {
+        start_index: 501, end_index: 513, surface_form: "used to go",
+        lemma: "used to", pos: "AUX", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "eskiden giderdi",
+        short_explanation_tr: "Geçmişteki alışkanlık.",
+        example_sentence_en: "I used to smoke.", example_sentence_tr: "Eskiden sigara içerdim."
       }
     ]
   },
   {
     id: "s_020",
-    title: "Pet Care",
+    title: "How to Take Care of Your Pet",
     level: "Kolay",
-    text: "You must feed your dog every day. You should take it for a walk.",
+    text: "You must feed your dog every day to keep it healthy. You should also take it for a walk in the park. Dogs love playing with a ball or running on the grass. You need to give your pet fresh water all the time. It is important to wash your dog when it gets dirty. You must not give your dog chocolate because it is bad for them. If your dog feels sick, you should take it to the vet. A vet is a doctor who helps animals feel better. You should be kind and patient with your pet every day. Taking care of a dog is a big responsibility for everyone. Your dog will be your best friend if you love it.",
     annotations: [
       {
         start_index: 4, end_index: 8, surface_form: "must",
         lemma: "must", pos: "AUX", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "zorundasın",
-        short_explanation_tr: "Güçlü bir gereklilik ve zorunluluk bildiren modal yapı.",
-        example_sentence_en: "You must stop at the red light.", example_sentence_tr: "Kırmızı ışıkta durmalısın."
+        contextual_turkish_meaning: "zorundasın / ...malısın",
+        short_explanation_tr: "Güçlü zorunluluk bildiren yapı.",
+        example_sentence_en: "You must stop.", example_sentence_tr: "Durmalısın."
       },
       {
-        start_index: 38, end_index: 44, surface_form: "should",
+        start_index: 54, end_index: 60, surface_form: "should",
         lemma: "should", pos: "AUX", annotation_type: "grammar_structure",
-        contextual_turkish_meaning: "-meli/-malı (tavsiye)",
-        short_explanation_tr: "Öğüt ve tavsiye vermek için kullanılan modal yapı.",
-        example_sentence_en: "You should eat more fruits.", example_sentence_tr: "Daha fazla meyve yemelisin."
+        contextual_turkish_meaning: "-meli / -malı (tavsiye)",
+        short_explanation_tr: "Öğüt/tavsiye bildiren yapı.",
+        example_sentence_en: "You should rest.", example_sentence_tr: "Dinlenmelisin."
+      },
+      {
+        start_index: 73, end_index: 88, surface_form: "take it for a walk",
+        lemma: "walk", pos: "VERB", annotation_type: "collocation",
+        contextual_turkish_meaning: "onu yürüyüşe çıkarmak",
+        short_explanation_tr: "Evcil hayvanı gezdirmek için kullanılan kalıp.",
+        example_sentence_en: "I take my dog for a walk.", example_sentence_tr: "Köpeğimi yürüyüşe çıkarırım."
+      },
+      {
+        start_index: 219, end_index: 227, surface_form: "must not",
+        lemma: "must not", pos: "AUX", annotation_type: "grammar_structure",
+        contextual_turkish_meaning: "yapmamalısın (yasak)",
+        short_explanation_tr: "Yasak bildiren olumsuz yapı.",
+        example_sentence_en: "You must not smoke here.", example_sentence_tr: "Burada sigara içmemelisin."
+      },
+      {
+        start_index: 344, end_index: 368, surface_form: "doctor who helps animals",
+        lemma: null, pos: "CLAUSE", annotation_type: "relative_clause",
+        contextual_turkish_meaning: "hayvanlara yardım eden doktor",
+        short_explanation_tr: "Doktoru tanımlayan sıfat cümleciği.",
+        example_sentence_en: "He is a man who loves music.", example_sentence_tr: "O müzik seven bir adamdır."
       }
     ]
   }
 ];
 
+// Challenges yapısı korunuyor
 const SPEAK_CHALLENGES = {
   "easy": ["Hello, how are you?", "I like reading."],
   "medium": ["I look forward to meeting you.", "The weather is changing."],
