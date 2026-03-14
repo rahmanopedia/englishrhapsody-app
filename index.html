@@ -391,154 +391,142 @@
 
 <!-- Home -->
 <template id="tpl-home">
-<div class="home-grid animate-in">
+<div class="home-container animate-in">
 
-  <!-- ── Hero ────────────────────────────────────── -->
-  <div class="home-hero">
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-    <div class="hero-orb hero-orb-3"></div>
+  <!-- 1. Karşılama & Seviye (Kompakt) -->
+  <header class="home-welcome">
+    <div class="hw-left">
+      <h1 id="home-greeting">🌅 Günaydın!</h1>
+      <p id="home-name">Öğrenme yolculuğuna devam et</p>
+    </div>
+    <div class="hw-right">
+      <div class="rank-badge-new">
+        <span id="rank-icon">🌱</span>
+        <div class="rank-info">
+          <span id="rank-name">Çırak</span>
+          <small id="rank-level">Level 1</small>
+        </div>
+      </div>
+    </div>
+  </header>
 
-    <div class="hero-inner">
-      <div class="hero-left">
-        <div class="hero-greeting" id="home-greeting">🌅 Günaydın!</div>
-        <div class="hero-name" id="home-name">İngilizce öğrenimine devam et</div>
-        <div class="hero-meta">
-          <span class="hero-date" id="home-date"></span>
-          <div class="accent-btns">
-            <button class="accent-btn" id="acc-us" data-action="set-accent" data-accent="en-US">🇺🇸 US</button>
-            <button class="accent-btn" id="acc-gb" data-action="set-accent" data-accent="en-GB">🇬🇧 UK</button>
+  <!-- 2. Hızlı İstatistikler (Şerit) -->
+  <section class="home-stats-strip">
+    <div class="stat-item">
+      <label>Kelime</label>
+      <span id="home-words">0</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <label>Toplam XP</label>
+      <span id="home-xp">0</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <label>Seri</label>
+      <span id="home-streak">🔥 1</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <label>Başarı</label>
+      <span id="home-acc">0%</span>
+    </div>
+  </section>
+
+  <!-- 3. Ana İçerik Izgarası -->
+  <div class="home-main-grid">
+    
+    <!-- Sol: İlerleme & Görevler -->
+    <div class="home-col-main">
+      <div class="home-card-new">
+        <div class="hc-head">🚀 Genel İlerleme</div>
+        <div class="prog-group">
+          <div class="prog-label-row">
+            <span>Level <span id="home-lvl">1</span></span>
+            <small id="xp-remain">500 XP kaldı</small>
           </div>
+          <div class="p-bar-track"><div class="p-bar-fill" id="xp-bar" style="width:0%"></div></div>
+        </div>
+        <div class="prog-group">
+          <div class="prog-label-row">
+            <span>Günlük Hedef</span>
+            <small id="daily-goal-pct">0/100 XP</small>
+          </div>
+          <div class="p-bar-track"><div class="p-bar-fill" id="daily-goal-bar" style="width:0%"></div></div>
         </div>
       </div>
-      <div class="hero-right">
-        <div class="hero-rank" id="hero-rank">
-          <div class="hero-rank-ring"></div>
-          <div class="hero-rank-icon" id="rank-icon">🌱</div>
-          <div class="hero-rank-name" id="rank-name">Çırak</div>
-          <div class="hero-rank-level" id="rank-level">Level 1</div>
+
+      <div class="home-card-new">
+        <div class="hc-head">🎯 Günlük Görevler</div>
+        <div id="missions-list" class="m-list-compact"></div>
+      </div>
+    </div>
+
+    <!-- Sağ: Günün İçeriği -->
+    <div class="home-col-side">
+      <div class="wod-card-v2" data-action="navigate" data-target="learn">
+        <div class="wod-v2-label">GÜNÜN KELİMESİ</div>
+        <div class="wod-v2-main">
+          <span id="wod-word" class="wod-v2-word">—</span>
+          <span id="wod-ipa" class="wod-v2-ipa"></span>
+        </div>
+        <div id="wod-tr" class="wod-v2-tr"></div>
+        <div class="wod-v2-btn">Hemen Öğren →</div>
+      </div>
+
+      <div id="colloc-tip-card" class="colloc-card-v2"></div>
+    </div>
+
+  </div>
+
+  <!-- 4. Mod Seçimi (Aksiyonlar) -->
+  <section class="home-actions-section">
+    <h2 class="section-label">Laboratuvar Modları</h2>
+    <div class="actions-grid-new">
+      <div class="action-tile" data-action="navigate" data-target="learn">
+        <span class="at-icon">🌀</span>
+        <div class="at-text">
+          <span class="at-title">Sinestezi</span>
+          <span class="at-desc">Hafıza Labı</span>
+        </div>
+      </div>
+      <div class="action-tile" data-action="navigate" data-target="speak">
+        <span class="at-icon">🎙️</span>
+        <div class="at-text">
+          <span class="at-title">Konuşma</span>
+          <span class="at-desc">Telaffuz</span>
+        </div>
+      </div>
+      <div class="action-tile" data-action="navigate" data-target="reading">
+        <span class="at-icon">📖</span>
+        <div class="at-text">
+          <span class="at-title">Okuma</span>
+          <span class="at-desc">Hikayeler</span>
+        </div>
+      </div>
+      <div class="action-tile" data-action="navigate" data-target="bridge">
+        <span class="at-icon">🌉</span>
+        <div class="at-text">
+          <span class="at-title">Köprü</span>
+          <span class="at-desc">Deyimler</span>
+        </div>
+      </div>
+      <div class="action-tile" data-action="navigate" data-target="quantum">
+        <span class="at-icon">⚛️</span>
+        <div class="at-text">
+          <span class="at-title">Kuantum</span>
+          <span class="at-desc">Gramer</span>
+        </div>
+      </div>
+      <div class="action-tile" data-action="navigate" data-target="nexus">
+        <span class="at-icon">✨</span>
+        <div class="at-text">
+          <span class="at-title">Nexus</span>
+          <span class="at-desc">Soru-Cevap</span>
         </div>
       </div>
     </div>
-
-    <div class="hero-stats-bar">
-      <div class="hstat">
-        <span class="hstat-val cyan" id="home-words">0</span>
-        <span class="hstat-lbl">Kelime</span>
-      </div>
-      <div class="hstat-div"></div>
-      <div class="hstat">
-        <span class="hstat-val violet" id="home-xp">0</span>
-        <span class="hstat-lbl">XP</span>
-      </div>
-      <div class="hstat-div"></div>
-      <div class="hstat">
-        <span class="hstat-val amber" id="home-streak">🔥1</span>
-        <span class="hstat-lbl">Seri</span>
-      </div>
-      <div class="hstat-div"></div>
-      <div class="hstat">
-        <span class="hstat-val green" id="home-acc">0%</span>
-        <span class="hstat-lbl">Başarı</span>
-      </div>
-    </div>
-
-    <div class="hero-bottom-line"></div>
-  </div>
-
-  <!-- ── Progress + Streak ────────────────────────── -->
-  <div class="home-progress-card">
-    <div class="home-progress-col">
-      <div class="prog-row">
-        <span class="lvl">⚡ Level <span id="home-lvl">1</span></span>
-        <span class="remain" id="xp-remain">500 XP kaldı</span>
-      </div>
-      <div class="progress-track" style="height:7px;margin:8px 0 14px">
-        <div class="progress-fill" id="xp-bar" style="width:0%"></div>
-      </div>
-      <div class="prog-row">
-        <span class="prog-label" id="daily-goal-label">🎯 Günlük Hedef</span>
-        <span class="prog-label" id="daily-goal-pct">0/100 XP</span>
-      </div>
-      <div class="progress-track" style="height:6px;margin-top:8px">
-        <div class="progress-fill" id="daily-goal-bar" style="width:0%;background:linear-gradient(90deg,var(--cyan),var(--violet))"></div>
-      </div>
-    </div>
-    <div class="home-streak-col">
-      <span class="prog-label" style="margin-bottom:10px;display:block">📅 Son 7 Gün</span>
-      <div class="streak-row" id="streak-cal"></div>
-    </div>
-  </div>
-
-  <!-- ── Daily Missions ───────────────────────────── -->
-  <div class="missions-card">
-    <div class="missions-header">
-      <span class="missions-title">🎯 Günlük Görevler</span>
-      <span class="missions-reset" id="missions-reset-label"></span>
-    </div>
-    <div id="missions-list"></div>
-  </div>
-
-  <!-- ── WoD + Colloc ─────────────────────────────── -->
-  <div class="home-mid-row">
-    <div class="wod-card">
-      <div class="wod-left">
-        <div class="wod-icon" id="wod-icon">🌌</div>
-        <div class="wod-text">
-          <div class="wod-label">⭐ Günün Kelimesi</div>
-          <div class="wod-word" id="wod-word">—</div>
-          <div class="wod-ipa" id="wod-ipa"></div>
-          <div class="wod-tr" id="wod-tr"></div>
-        </div>
-      </div>
-      <button class="wod-speak-btn" data-action="wod-speak" title="Dinle">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-      </button>
-    </div>
-    <div class="colloc-tip-card" id="colloc-tip-card"></div>
-  </div>
-
-  <!-- ── Action Cards ─────────────────────────────── -->
-  <div class="actions-grid">
-    <div class="action-card cards" data-action="navigate" data-target="learn">
-      <div class="ac-glow"></div>
-      <div class="ac-icon">🌀</div>
-      <div class="ac-due-wrap">
-        <h3>Sinestezi Lab</h3>
-        <span class="ac-due-badge" id="ac-due-badge" style="display:none">0</span>
-      </div>
-      <p class="ac-desc">Kelime hafıza tekniği</p>
-      <div class="progress-track" style="margin-top:auto">
-        <div class="progress-fill" id="ac-words-bar" style="width:0%"></div>
-      </div>
-      <div class="ac-pct-row"><span id="ac-words-pct">0%</span> tamamlandı</div>
-      <div class="ac-arrow">→</div>
-    </div>
-    <div class="action-card speak" data-action="navigate" data-target="speak">
-      <div class="ac-glow"></div>
-      <div class="ac-icon">🎙️</div>
-      <h3>Konuşma Lab</h3>
-      <p class="ac-desc">Telaffuz & konuşma pratiği</p>
-      <div class="ac-hint" id="ac-speak-hint">Bugün dene →</div>
-      <div class="ac-arrow">→</div>
-    </div>
-    <div class="action-card reading" data-action="navigate" data-target="reading">
-      <div class="ac-glow"></div>
-      <div class="ac-icon">📖</div>
-      <h3>Okuma Atölyesi</h3>
-      <p class="ac-desc">Okuma anlama becerileri</p>
-      <div class="ac-hint">60 hikaye, 3 seviye</div>
-      <div class="ac-arrow">→</div>
-    </div>
-    <div class="action-card nexus" data-action="navigate" data-target="nexus">
-      <div class="ac-glow"></div>
-      <div class="ac-icon">✨</div>
-      <h3>Nexus Mod</h3>
-      <p class="ac-desc">Deyimler & phrasal verbs</p>
-      <div class="ac-hint">Phrasal Verbs 🚀</div>
-      <div class="ac-arrow">→</div>
-    </div>
-  </div>
+  </section>
 
 </div>
 </template>
