@@ -2594,10 +2594,7 @@ class App {
   }
 
   async _boot() {
-    // Sayfa yüklendiği andan itibaren tam 5 saniye splash göster
     window._splashActive = true;
-    const elapsed  = Date.now() - (window._splashStart || Date.now());
-    const minWait  = new Promise(resolve => setTimeout(resolve, Math.max(6000, 9000 - elapsed)));
 
     // Firebase başlat
     if (window.authManager) {
@@ -2611,8 +2608,9 @@ class App {
     }
     this._applyRemoteFlags();
 
-    // Firebase erken biterse 5 saniyeyi tamamla
-    await minWait;
+    // Firebase bittikten sonra: toplam sayfa yükünden 9s, en az 4s daha bekle
+    const elapsed = Date.now() - (window._splashStart || Date.now());
+    await new Promise(resolve => setTimeout(resolve, Math.max(4000, 9000 - elapsed)));
 
     const splash  = document.getElementById('splash-screen');
     const barFill = document.getElementById('sp-bar-fill');
