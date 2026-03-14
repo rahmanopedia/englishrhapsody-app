@@ -2834,7 +2834,7 @@ class App {
     let newlyUnlocked = false;
 
     const stats = {
-      xp: this.state.get('xp') + (this.state.get('level') - 1) * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL),
+      xp: this.state.get('xp') + (this.state.get('level') * (this.state.get('level') - 1) / 2) * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL),
       level: this.state.get('level'),
       streak: this.state.get('streak'),
       words: Object.values(this.state.get('mastery') || {}).filter(m => (m.score || 0) >= 3).length,
