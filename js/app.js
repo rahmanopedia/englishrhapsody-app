@@ -2352,6 +2352,9 @@ class StateManager {
       history:    {},     // { 'YYYY-MM-DD': xp }
       sessionsToday: 0,
       missionsDate: '',
+      convoCompleted: {},        // { scenarioId: { avg, ts } }
+      readingMode:   'read',     // 'read' | 'shadow' | 'quiz'
+      _lastMilestoneCelebrated: 0,
     };
   }
 
