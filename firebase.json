@@ -16,6 +16,9 @@
   "firestore": {
     "rules": "firestore.rules"
   },
+  "remoteconfig": {
+    "template": "remote_config.json"
+  },
   "hosting": {
     "public": ".",
     "ignore": [
