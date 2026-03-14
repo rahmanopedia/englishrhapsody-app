@@ -4233,6 +4233,53 @@ class App {
       return;
     }
 
+    // ── Context-aware multi-word phrase detection ──
+    // When user clicks a word, check surrounding words to find phrasal verbs/idioms in PHRASE_DICT
+    if (element) {
+      const _ctxCont = element.closest('.story-text, .reading-text, .activity-text, .text-body') || element.parentElement;
+      if (_ctxCont) {
+        const _ctxW = Array.from(_ctxCont.querySelectorAll('.story-word, .sw'));
+        const _ctxI = _ctxW.indexOf(element);
+        if (_ctxI >= 0) {
+          const _gw = i => _ctxW[i] ? (_ctxW[i].dataset.word || _ctxW[i].textContent.trim().toLowerCase().replace(/[^a-z'-]/g,'')) : null;
+          const _c0=_gw(_ctxI), _p1=_gw(_ctxI-1), _p2=_gw(_ctxI-2), _n1=_gw(_ctxI+1), _n2=_gw(_ctxI+2);
+          const _ctx=[];
+          if(_p1&&_c0) _ctx.push(_p1+' '+_c0);
+          if(_c0&&_n1) _ctx.push(_c0+' '+_n1);
+          if(_p2&&_p1&&_c0) _ctx.push(_p2+' '+_p1+' '+_c0);
+          if(_p1&&_c0&&_n1) _ctx.push(_p1+' '+_c0+' '+_n1);
+          if(_c0&&_n1&&_n2) _ctx.push(_c0+' '+_n1+' '+_n2);
+          for (const _phrase of _ctx) {
+            const _ce = PHRASE_DICT[_phrase];
+            if (_ce) {
+              document.querySelectorAll('.word-def-popup').forEach(p => p.remove());
+              const _tc2 = {'Phrasal Verb':{bg:'#0891b2',text:'#fff'},'Deyim':{bg:'#7c3aed',text:'#fff'},'Gramer Kalıbı':{bg:'#b45309',text:'#fff'},'Eylem Kalıbı':{bg:'#065f46',text:'#fff'},'İsim Tamlaması':{bg:'#be185d',text:'#fff'},'Kelime':{bg:'#1d4ed8',text:'#fff'}}[_ce.type]||{bg:'#374151',text:'#fff'};
+              const _cp = document.createElement('div'); _cp.className = 'word-def-popup';
+              const _ch = document.createElement('div'); _ch.className = 'wdp-header';
+              const _ctw = document.createElement('div'); _ctw.className = 'wdp-title-wrap';
+              const _cr = document.createElement('div'); _cr.style.cssText = 'display:flex;align-items:center;gap:8px;flex-wrap:wrap';
+              const _cbg = document.createElement('span'); _cbg.style.cssText = `background:${_tc2.bg};color:${_tc2.text};font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.04em`; _cbg.textContent = _ce.type;
+              const _cen = document.createElement('div'); _cen.className = 'wdp-en'; _cen.textContent = _phrase;
+              _cr.appendChild(_cbg); _cr.appendChild(_cen); _ctw.appendChild(_cr);
+              const _cclose = document.createElement('span'); _cclose.className = 'wdp-close'; _cclose.textContent = '✕'; _cclose.addEventListener('click', () => app._closeWordDef());
+              _ch.appendChild(_ctw); _ch.appendChild(_cclose);
+              const _ctr = document.createElement('div'); _ctr.className = 'wdp-tr'; _ctr.textContent = _ce.tr;
+              const _cs = document.createElement('div'); _cs.className = 'wdp-section';
+              const _cl = document.createElement('div'); _cl.className = 'wdp-label'; _cl.textContent = 'Örnek Cümle';
+              const _cex = document.createElement('div'); _cex.className = 'wdp-ex'; _cex.textContent = '"' + _ce.ex + '"';
+              _cs.appendChild(_cl); _cs.appendChild(_cex);
+              _cp.appendChild(_ch); _cp.appendChild(_ctr); _cp.appendChild(_cs);
+              document.body.appendChild(_cp);
+              if (event) { _cp.style.left = Math.max(8,Math.min(event.clientX,window.innerWidth-_cp.offsetWidth-8))+'px'; _cp.style.top = Math.max(8,Math.min(event.clientY+16,window.innerHeight-_cp.offsetHeight-8))+'px'; }
+              this.audio.play('pop');
+              setTimeout(() => { if (_cp.parentElement) app._closeWordDef(); }, 9000);
+              return;
+            }
+          }
+        }
+      }
+    }
+
     // Check if in dictionary
     const wordMap = {};
     WORDS.forEach(w => { wordMap[w.en.toLowerCase()] = w; });
@@ -4326,8 +4373,59 @@ class App {
 
     {
        // Check basic dictionary
-       const basicTr = basicDict[cleanWord];
-       
+       // ── Irregular verb / çekimli fiil tablosu ──
+       const _IRREG = {
+         'went':'go','gone':'go','was':'be','were':'be','been':'be',
+         'had':'have','did':'do','done':'do',
+         'took':'take','taken':'take','ran':'run','came':'come',
+         'gave':'give','given':'give','saw':'see','seen':'see',
+         'knew':'know','known':'know','grew':'grow','grown':'grow',
+         'threw':'throw','thrown':'throw','flew':'fly','flown':'fly',
+         'bought':'buy','brought':'bring','thought':'think',
+         'caught':'catch','taught':'teach','made':'make',
+         'found':'find','kept':'keep','left':'leave','felt':'feel',
+         'met':'meet','sat':'sit','stood':'stand','got':'get',
+         'told':'tell','sent':'send','spent':'spend','built':'build',
+         'held':'hold','lost':'lose','led':'lead','meant':'mean',
+         'paid':'pay','heard':'hear','wrote':'write','written':'write',
+         'drew':'draw','drawn':'draw','broke':'break','broken':'break',
+         'chose':'choose','chosen':'choose','drove':'drive','driven':'drive',
+         'ate':'eat','eaten':'eat','fell':'fall','fallen':'fall',
+         'forgot':'forget','forgotten':'forget','froze':'freeze','frozen':'freeze',
+         'hid':'hide','hidden':'hide','rode':'ride','ridden':'ride',
+         'rose':'rise','risen':'rise','shook':'shake','shaken':'shake',
+         'shown':'show','spoke':'speak','spoken':'speak',
+         'stole':'steal','stolen':'steal','wore':'wear','worn':'wear',
+         'won':'win','woke':'wake','woken':'wake',
+         'began':'begin','begun':'begin','bit':'bite','bitten':'bite',
+         'blew':'blow','blown':'blow','drank':'drink','drunk':'drink',
+         'lay':'lie','lain':'lie','lit':'light','shot':'shoot',
+         'shrank':'shrink','shrunk':'shrink','sank':'sink','sunk':'sink',
+         'slept':'sleep','swept':'sweep','swam':'swim','swum':'swim',
+         'tore':'tear','torn':'tear','understood':'understand',
+         'withdrew':'withdraw','withdrawn':'withdraw',
+         'wove':'weave','woven':'weave','wept':'weep',
+         'struck':'strike','stricken':'strike','swung':'swing',
+         'dug':'dig','knelt':'kneel','slid':'slide','spread':'spread',
+         'swore':'swear','sworn':'swear','strode':'stride',
+         'spun':'spin','spat':'spit','sped':'speed',
+         'stung':'sting','stuck':'stick','bled':'bleed',
+         'crept':'creep','dealt':'deal','dreamt':'dream',
+         'fled':'flee','flung':'fling','hung':'hang',
+         'leapt':'leap','lent':'lend','sought':'seek',
+         'shed':'shed','shone':'shine','smelt':'smell',
+         'trod':'tread','trodden':'tread','withstood':'withstand',
+         'wrung':'wring','forbade':'forbid','forgave':'forgive',
+         'forgiven':'forgive','forbid':'forbid'
+       };
+       const _irregBase = _IRREG[cleanWord];
+       if (_irregBase && wordMap[_irregBase]) {
+         this._showWordDef(_irregBase, event);
+         return;
+       }
+
+       const basicTr = basicDict[cleanWord] || (_irregBase ? `"${_irregBase}" fiilinin çekimli formu` : null);
+
        document.querySelectorAll('.word-def-popup').forEach(p => p.remove());
        const popup = document.createElement('div');
        popup.className = 'word-def-popup';
@@ -4353,40 +4451,100 @@ class App {
          // Try to strip common suffixes (Lemmatization — multi-form)
          let lemma = cleanWord;
          const _alts = [];
-         if (cleanWord.endsWith('ing') && cleanWord.length > 5) {
-           lemma = cleanWord.slice(0, -3);                                    // running→run, taking→tak
-           _alts.push(lemma + 'e');                                           // taking→take, having→have
-           if (lemma.length > 2 && lemma[lemma.length-1]===lemma[lemma.length-2]) _alts.push(lemma.slice(0,-1)); // running→run
-         } else if (cleanWord.endsWith('ed') && cleanWord.length > 4) {
-           lemma = cleanWord.slice(0, -2);                                    // walked→walk, noticed→notic
-           _alts.push(cleanWord.slice(0, -1));                               // noticed→notice, arrived→arrive
-           if (lemma.length > 2 && lemma[lemma.length-1]===lemma[lemma.length-2]) _alts.push(lemma.slice(0,-1)); // stopped→stop
-         } else if (cleanWord.endsWith('ies') && cleanWord.length > 5) {
-           lemma = cleanWord.slice(0, -3) + 'y';                             // communities→community, cities→city
-         } else if (cleanWord.endsWith('es') && cleanWord.length > 4) {
-           lemma = cleanWord.slice(0, -2);                                    // fixes→fix
-           _alts.push(cleanWord.slice(0, -1));                               // makes→make
-         } else if (cleanWord.length > 3 && cleanWord.endsWith('s')) {
-           lemma = cleanWord.slice(0, -1);                                    // cats→cat
-         } else if (cleanWord.endsWith('ly') && cleanWord.length > 5) {
-           lemma = cleanWord.slice(0, -2);                                    // slowly→slow, carefully→careful
-           _alts.push(cleanWord.slice(0, -4) + 'le');                        // possibly→possible, gently→gentle
-         } else if (cleanWord.endsWith('ness') && cleanWord.length > 6) {
-           lemma = cleanWord.slice(0, -4);                                    // happiness→happi→happy via alt
-           _alts.push(cleanWord.slice(0, -4) + 'y');                         // happiness→happy
-         } else if (cleanWord.endsWith('tion') && cleanWord.length > 6) {
-           lemma = cleanWord.slice(0, -4);                                    // education→educat
-           _alts.push(cleanWord.slice(0, -4) + 'e');                         // production→produce, cooperation→cooperate
-           _alts.push(cleanWord.slice(0, -3));                                // education→educat-ion→educat
-         } else if (cleanWord.endsWith('ment') && cleanWord.length > 6) {
-           lemma = cleanWord.slice(0, -4);                                    // employment→employ, engagement→engag
-           _alts.push(cleanWord.slice(0, -4) + 'e');                         // engagement→engage
-         } else if (cleanWord.endsWith('er') && cleanWord.length > 4) {
-           lemma = cleanWord.slice(0, -2);                                    // stronger→strong, weaker→weak
-           _alts.push(cleanWord.slice(0, -1));                                // faster→fast
-         } else if (cleanWord.endsWith('est') && cleanWord.length > 5) {
-           lemma = cleanWord.slice(0, -3);                                    // strongest→strong, quietest→quiet
-           _alts.push(cleanWord.slice(0, -2));                                // fastest→fast
+         const _cw = cleanWord;
+         if (_cw.endsWith('ing') && _cw.length > 5) {
+           lemma = _cw.slice(0,-3);                                       // running→run, taking→tak
+           _alts.push(lemma+'e');                                          // taking→take, having→have
+           if (lemma.length>2 && lemma[lemma.length-1]===lemma[lemma.length-2]) _alts.push(lemma.slice(0,-1)); // running→run
+         } else if (_cw.endsWith('ed') && _cw.length > 4) {
+           lemma = _cw.slice(0,-2);                                       // walked→walk
+           _alts.push(_cw.slice(0,-1));                                   // noticed→notice, arrived→arrive
+           if (lemma.length>2 && lemma[lemma.length-1]===lemma[lemma.length-2]) _alts.push(lemma.slice(0,-1)); // stopped→stop
+         } else if (_cw.endsWith('ously') && _cw.length > 7) {
+           lemma = _cw.slice(0,-5);                                       // obviously→obvio
+           _alts.push(_cw.slice(0,-2));                                   // obviously→obvious
+           _alts.push(_cw.slice(0,-5)+'e');                               // nervously→nerve
+         } else if (_cw.endsWith('ation') && _cw.length > 7) {
+           lemma = _cw.slice(0,-5);                                       // education→educat
+           _alts.push(_cw.slice(0,-5)+'e');                               // decoration→decorate
+           _alts.push(_cw.slice(0,-4));                                   // exploration→explor
+         } else if (_cw.endsWith('ition') && _cw.length > 7) {
+           lemma = _cw.slice(0,-5);                                       // repetition→repet
+           _alts.push(_cw.slice(0,-5)+'e');                               // competition→compete
+         } else if (_cw.endsWith('ness') && _cw.length > 6) {
+           lemma = _cw.slice(0,-4);                                       // happiness→happi
+           _alts.push(_cw.slice(0,-4)+'y');                               // happiness→happy
+           _alts.push(_cw.slice(0,-4)+'e');                               // darkness→dark
+         } else if (_cw.endsWith('ment') && _cw.length > 6) {
+           lemma = _cw.slice(0,-4);                                       // employment→employ
+           _alts.push(_cw.slice(0,-4)+'e');                               // engagement→engage
+         } else if (_cw.endsWith('ance') && _cw.length > 6) {
+           lemma = _cw.slice(0,-4);                                       // importance→import
+           _alts.push(_cw.slice(0,-4)+'ant');                             // importance→important
+           _alts.push(_cw.slice(0,-4)+'e');                               // compliance→compl
+         } else if (_cw.endsWith('ence') && _cw.length > 6) {
+           lemma = _cw.slice(0,-4);                                       // presence→pres
+           _alts.push(_cw.slice(0,-4)+'ent');                             // presence→present
+           _alts.push(_cw.slice(0,-4)+'e');                               // violence→viole
+         } else if (_cw.endsWith('tion') && _cw.length > 6) {
+           lemma = _cw.slice(0,-4);                                       // pollution→pollut
+           _alts.push(_cw.slice(0,-4)+'e');                               // production→produce
+           _alts.push(_cw.slice(0,-3));                                   // action→act+ion
+         } else if (_cw.endsWith('ism') && _cw.length > 5) {
+           lemma = _cw.slice(0,-3);                                       // nationalism→nation
+           _alts.push(_cw.slice(0,-3)+'e');                               // modernism→modern
+         } else if (_cw.endsWith('ist') && _cw.length > 5) {
+           lemma = _cw.slice(0,-3);                                       // nationalist→nation
+           _alts.push(_cw.slice(0,-2));                                   // nationalist→national
+         } else if (_cw.endsWith('ity') && _cw.length > 5) {
+           lemma = _cw.slice(0,-3);                                       // ability→abil
+           _alts.push(_cw.slice(0,-2));                                   // similarity→similar
+           _alts.push(_cw.slice(0,-3)+'e');                               // ability→able
+         } else if (_cw.endsWith('ous') && _cw.length > 5) {
+           lemma = _cw.slice(0,-3);                                       // dangerous→danger
+           _alts.push(_cw.slice(0,-3)+'e');                               // gorgeous→gorge
+         } else if (_cw.endsWith('ful') && _cw.length > 5) {
+           lemma = _cw.slice(0,-3);                                       // careful→care
+           _alts.push(_cw.slice(0,-3)+'y');                               // beautiful→beauty
+         } else if (_cw.endsWith('less') && _cw.length > 6) {
+           lemma = _cw.slice(0,-4);                                       // careless→care, homeless→home
+         } else if (_cw.endsWith('able') && _cw.length > 6) {
+           lemma = _cw.slice(0,-4);                                       // comfortable→comfort
+           _alts.push(_cw.slice(0,-4)+'e');                               // valuable→value
+         } else if (_cw.endsWith('ible') && _cw.length > 6) {
+           lemma = _cw.slice(0,-4);                                       // reversible→revers
+           _alts.push(_cw.slice(0,-4)+'e');                               // reversible→reverse
+         } else if (_cw.endsWith('ive') && _cw.length > 5) {
+           lemma = _cw.slice(0,-3);                                       // active→act
+           _alts.push(_cw.slice(0,-3)+'e');                               // creative→create
+         } else if (_cw.endsWith('ical') && _cw.length > 6) {
+           lemma = _cw.slice(0,-4);                                       // musical→music
+           _alts.push(_cw.slice(0,-2));                                   // musical→musica
+         } else if (_cw.endsWith('ional') && _cw.length > 7) {
+           lemma = _cw.slice(0,-5);                                       // national→nat+ion
+           _alts.push(_cw.slice(0,-3));                                   // national→nation
+         } else if (_cw.endsWith('al') && _cw.length > 4) {
+           lemma = _cw.slice(0,-2);                                       // national→nation
+           _alts.push(_cw.slice(0,-2)+'e');                               // arrival→arrive
+         } else if (_cw.endsWith('ic') && _cw.length > 4) {
+           lemma = _cw.slice(0,-2);                                       // periodic→period
+           _alts.push(_cw.slice(0,-2)+'e');                               // acidic→acide
+         } else if (_cw.endsWith('ies') && _cw.length > 5) {
+           lemma = _cw.slice(0,-3)+'y';                                   // communities→community
+         } else if (_cw.endsWith('es') && _cw.length > 4) {
+           lemma = _cw.slice(0,-2);                                       // fixes→fix
+           _alts.push(_cw.slice(0,-1));                                   // makes→make
+         } else if (_cw.length > 3 && _cw.endsWith('s')) {
+           lemma = _cw.slice(0,-1);                                       // cats→cat
+         } else if (_cw.endsWith('ly') && _cw.length > 5) {
+           lemma = _cw.slice(0,-2);                                       // slowly→slow
+           _alts.push(_cw.slice(0,-4)+'le');                              // possibly→possible
+         } else if (_cw.endsWith('er') && _cw.length > 4) {
+           lemma = _cw.slice(0,-2);                                       // stronger→strong
+           _alts.push(_cw.slice(0,-1));                                   // nicer→nice
+         } else if (_cw.endsWith('est') && _cw.length > 5) {
+           lemma = _cw.slice(0,-3);                                       // strongest→strong
+           _alts.push(_cw.slice(0,-2));                                   // nicest→nice
          }
          const _lemmas = [lemma, ..._alts];
 
