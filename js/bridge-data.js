@@ -16,6 +16,76 @@ const BRIDGE_CATEGORIES = [
 
 var BRIDGE_DATA = [
   {
+    "id": 1001,
+    "category": "sosyal",
+    "tr": "Yüz yüze konuşalım",
+    "tags": ["yüz", "konuş", "yüzyüze", "görüş"],
+    "english_primary": "Let's talk face to face",
+    "alternatives": ["Let's meet in person", "Let's hash it out together"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Yüz yüze", "tr_gloss": "face to face", "en_fragment": "face to face", "bridge_type": "direct", "explanation": "Doğrudan çeviri mevcut." }
+    ],
+    "cultural_insight": "Türkçede de İngilizcede de 'face to face' (yüz yüze) samimiyet ve netlik belirtir.",
+    "fluency_tip": "Resmi durumlarda 'in person' (şahsen) daha sık kullanılır."
+  },
+  {
+    "id": 1002,
+    "category": "duygular",
+    "tr": "Burnumdan getirdi",
+    "tags": ["burun", "getir", "sinir", "bık", "usan"],
+    "english_primary": "They drove me absolutely crazy",
+    "alternatives": ["They gave me a hard time", "They made my life a living hell"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Burnumdan getirdi", "tr_gloss": "made it come out of my nose", "en_fragment": "drove me crazy", "bridge_type": "transform", "explanation": "Türkçe bedensel bir deyim (burundan gelme) → İngilizce zihinsel bir deyim (çıldırtma)." }
+    ],
+    "cultural_insight": "Türkçedeki 'burundan gelme' bir zevkin veya sürecin zehir olmasıdır. İngilizcede 'gave me a hard time' bu zorluğu karşılar.",
+    "fluency_tip": "'He's really giving me a hard time about the report' diyerek iş hayatında kullanabilirsin."
+  },
+  {
+    "id": 1003,
+    "category": "deyimler",
+    "tr": "Lafı dolandırdı",
+    "tags": ["laf", "dolan", "dolandır", "konuş", "net"],
+    "english_primary": "He's beating around the bush",
+    "alternatives": ["Stop dancing around the subject", "He's avoidng the point"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Lafı dolandırdı", "tr_gloss": "wandered the word", "en_fragment": "beating around the bush", "bridge_type": "transform", "explanation": "Lafı gezdirmek → Çalının etrafında dolanmak (avcılık metaforu)." }
+    ],
+    "cultural_insight": "'Beating around the bush', avcılıkta kuşları çalının içinden çıkarmak yerine etrafında vurma işleminden gelir.",
+    "fluency_tip": "'Get to the point' (Sadede gel) bu deyimin tam zıttıdır."
+  },
+  {
+    "id": 1004,
+    "category": "sasirma",
+    "tr": "Dili tutuldu",
+    "tags": ["dil", "tutul", "şaşır", "söz", "konuş"],
+    "english_primary": "He was lost for words",
+    "alternatives": ["He was tongue-tied", "He was speechless"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Dili tutuldu", "tr_gloss": "his tongue was caught", "en_fragment": "lost for words", "bridge_type": "transform", "explanation": "Fiziksel tutulma → Kelimelerin kaybolması." }
+    ],
+    "cultural_insight": "Türkçede 'dil' organ olarak tutulur, İngilizcede ise 'words' (kelimeler) kaybolur.",
+    "fluency_tip": "Eğer çok şaşırdıysan 'I'm speechless' diyebilirsin."
+  },
+  {
+    "id": 1005,
+    "category": "gunluk",
+    "tr": "Sonu gelmedi",
+    "tags": ["son", "gel", "bit", "uzun", "sür"],
+    "english_primary": "It went on forever",
+    "alternatives": ["There was no end in sight", "It dragged on and on"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Sonu gelmedi", "tr_gloss": "the end didn't come", "en_fragment": "on forever", "bridge_type": "transform", "explanation": "Sonun gelmemesi → Sonsuzluk vurgusu." }
+    ],
+    "cultural_insight": "'Drag on' deyimi bir şeyin sıkıcı bir şekilde uzamasını çok iyi betimler.",
+    "fluency_tip": "'The meeting just dragged on for hours' (Toplantı saatlerce uzadı gitti)."
+  },
+  {
     "id": 1,
     "category": "duygular",
     "tr": "Canım sıkıldı",
