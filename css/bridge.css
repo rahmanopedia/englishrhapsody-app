@@ -28,7 +28,7 @@
 /* ── Kapsayıcı + Aurora Arka Plan ────────────────────────────── */
 .bridge-wrap {
   min-height: 100%;
-  background: var(--bg);
+  background: transparent;
   padding: 0 0 80px;
   display: flex;
   flex-direction: column;
