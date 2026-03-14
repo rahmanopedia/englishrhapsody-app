@@ -5511,8 +5511,6 @@ class App {
   _THEMES = [
     { id: 'nebula',   icon: '🌌', name: 'Nebula',   desc: 'Kozmik karanlık — derin uzay',     starColor: '#00d4ff' },
     { id: 'magma',    icon: '🌋', name: 'Magma',    desc: 'Volkanik derinlik — kor kırmızı',  starColor: '#ef4444' },
-    { id: 'sakura',   icon: '🌸', name: 'Sakura',   desc: 'Kiraz çiçeği — sıcak karanlık',   starColor: '#f472b6' },
-    { id: 'obsidian', icon: '⚫', name: 'Obsidian', desc: 'Saf siyah lüks — altın aksanlar', starColor: '#d4a843' },
   ];
 
   _initTheme() {
@@ -5521,7 +5519,7 @@ class App {
   }
 
   setTheme(id, silent = false) {
-    const valid = ['nebula','magma','sakura','obsidian'];
+    const valid = ['nebula','magma'];
     if (!valid.includes(id)) id = 'nebula';
     document.body.classList.remove(...valid.map(t => `theme-${t}`));
     if (id !== 'nebula') document.body.classList.add(`theme-${id}`);
@@ -5559,7 +5557,7 @@ class App {
         <div class="tp-header">
           <div>
             <div class="tp-title">Tema Seç</div>
-            <div class="tp-subtitle">4 dünya klasmanında tasarım</div>
+            <div class="tp-subtitle">2 tema — koyu karanlık</div>
           </div>
           <button class="tp-close" data-action="close-theme-picker">✕</button>
         </div>
@@ -5578,8 +5576,6 @@ class App {
     const map = {
       nebula:   ['#00d4ff','#7c3aed','#f59e0b','#10b981'],
       magma:    ['#ef4444','#f97316','#fbbf24','#22c55e'],
-      sakura:   ['#f472b6','#c084fc','#fbbf24','#4ade80'],
-      obsidian: ['#d4a843','#c8b87a','#f5d076','#4a9e6f'],
     };
     return (map[id] || map.nebula).map(c =>
       `<div class="tp-swatch" style="background:${c}"></div>`
