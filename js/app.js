@@ -2597,7 +2597,7 @@ class App {
     // Sayfa yüklendiği andan itibaren tam 5 saniye splash göster
     window._splashActive = true;
     const elapsed  = Date.now() - (window._splashStart || Date.now());
-    const minWait  = new Promise(resolve => setTimeout(resolve, Math.max(0, 5000 - elapsed)));
+    const minWait  = new Promise(resolve => setTimeout(resolve, Math.max(4000, 7000 - elapsed)));
 
     // Firebase başlat
     if (window.authManager) {
