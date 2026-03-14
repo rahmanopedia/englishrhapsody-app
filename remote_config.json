@@ -91,9 +91,10 @@
       "defaultValue": { "value": "false" },
       "valueType": "BOOLEAN"
     },
-    "speaking_difficulty": {
+    "speakingDifficulty": {
       "defaultValue": { "value": "easy" },
-      "valueType": "STRING"
+      "valueType": "STRING",
+      "description": "Konuşma modu zorluk seviyesi: easy | medium | hard"
     },
     "speaking_auto_advance_score": {
       "defaultValue": { "value": "80" },
