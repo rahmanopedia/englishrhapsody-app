@@ -6029,6 +6029,13 @@ class App {
       if (e.target.closest('button, .action-card, .mode-card, .deck-card')) { UI.particles(e.clientX, e.clientY); }
     });
 
+    document.addEventListener('mousedown', e => {
+      const popup = document.querySelector('.word-def-popup');
+      if (popup && !popup.contains(e.target)) {
+        app._closeWordDef();
+      }
+    });
+
     document.addEventListener('keydown', e => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
         if (e.code === 'Enter' && e.target.id === 'active-write-input') { e.preventDefault(); this._checkWritingV2(); }
