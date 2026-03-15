@@ -6451,6 +6451,11 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       const pct = pool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / pool.length;
       if (pct >= 0.7) current = lvl;
     }
+    // Use placement test result as a floor — never show lower than what was detected
+    const saved = this.state.get('cefrLevel');
+    if (saved && levels.indexOf(saved) > levels.indexOf(current)) {
+      current = saved;
+    }
     const idx  = levels.indexOf(current);
     const next = levels[idx + 1] || 'C2';
     const nextPool = WORDS.filter(w => w.level === next);
