@@ -276,20 +276,22 @@
 .ph-fog-active { opacity: 1; }
 
 /* ── Harfler ────────────────────────────────────────────────── */
-.ph-letters-wrap { position: relative; z-index: 2; }
+.ph-letters-wrap { position: relative; z-index: 2; width: 100%; }
 .ph-letters {
-  display: flex; gap: 7px;
-  flex-wrap: wrap; justify-content: center; align-items: center;
+  display: flex; gap: var(--slot-gap, 7px);
+  flex-wrap: nowrap; justify-content: center; align-items: center;
+  width: 100%;
 }
 
 /* ── Kutu Slot Tasarımı ─────────────────────────────────────── */
 .ph-letter {
   display: inline-flex; align-items: center; justify-content: center;
-  font-size: clamp(1.6rem, 6.5vw, 3rem);
+  font-size: var(--slot-fs, clamp(1.4rem, 6vw, 3rem));
   font-weight: 900;
-  width:  clamp(32px, 10vw, 54px);
-  height: clamp(44px, 13vw, 72px);
-  border-radius: 10px;
+  width:  var(--slot-w, clamp(30px, 9vw, 54px));
+  height: var(--slot-h, clamp(40px, 12vw, 72px));
+  border-radius: var(--slot-r, 10px);
+  flex-shrink: 0;
   border: 1.5px solid rgba(167,139,250,0.25);
   background: rgba(167,139,250,0.04);
   color: transparent;
@@ -599,7 +601,7 @@
    MOBİL
 ══════════════════════════════════════════════════════════════ */
 @media (max-width: 480px) {
-  .ph-letter          { font-size: 1.6rem; width: 30px; height: 40px; border-radius: 8px; }
+  .ph-letter          { flex-shrink: 0; }
   .ph-mode-btns       { flex-direction: column; }
   .ph-mode-btn        { min-width: unset; flex-direction: row; justify-content: space-between; }
   .ph-hint-row        { flex-wrap: wrap; }

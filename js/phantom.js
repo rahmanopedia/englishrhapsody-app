@@ -488,6 +488,33 @@ class PhantomMode {
   _buildLetters(word) {
     const wrap = document.getElementById('ph-letters');
     if (!wrap) return;
+
+    // Kullanılabilir genişliği ölç
+    const container = document.getElementById('ph-letters-wrap');
+    const availW = (container?.offsetWidth || window.innerWidth) - 24;
+
+    const totalChars  = word.length;
+    const spaceCount  = (word.match(/ /g) || []).length;
+    const letterCount = totalChars - spaceCount;
+    const spaceW      = spaceCount * 18;  // boşluk slotları için sabit genişlik
+
+    // Gap hesabı
+    const gap     = totalChars <= 8 ? 7 : totalChars <= 12 ? 5 : 4;
+    const gapTotal = Math.max(0, totalChars - 1) * gap;
+
+    // Harf slotu genişliği
+    const rawW  = (availW - gapTotal - spaceW) / Math.max(1, letterCount);
+    const slotW = Math.max(22, Math.min(54, Math.floor(rawW)));
+    const slotH = Math.round(slotW * 1.38);
+    const fs    = Math.max(13, Math.round(slotW * 0.62));
+    const r     = slotW <= 28 ? 6 : slotW <= 38 ? 8 : 10;
+
+    wrap.style.setProperty('--slot-w',   slotW + 'px');
+    wrap.style.setProperty('--slot-h',   slotH + 'px');
+    wrap.style.setProperty('--slot-fs',  fs    + 'px');
+    wrap.style.setProperty('--slot-gap', gap   + 'px');
+    wrap.style.setProperty('--slot-r',   r     + 'px');
+
     wrap.innerHTML = word.split('').map((c, i) =>
       c === ' '
         ? `<span class="ph-letter ph-letter-space ph-faded" id="phl-${i}" data-c=" "></span>`
