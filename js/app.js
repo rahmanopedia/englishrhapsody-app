@@ -6932,3 +6932,4 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 }
 
 window.app = new App();
+window._app = window.app; // alias — HTML onclick handlers use window._app
