@@ -48,7 +48,7 @@ class ReadingEngine {
 
       const fragment = text.substring(i, j);
       if (currentAnnIds.length === 0) {
-        html += this._escapeHTML(fragment);
+        html += this.app._markupText(fragment, 'story-word');
       } else {
         // Use the "deepest" (last added) annotation as the primary clickable span
         // But keep info about all applicable IDs for split-highlighting
