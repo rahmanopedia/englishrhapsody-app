@@ -160,7 +160,13 @@ class AuthManager {
   async _onLogin(user) {
     console.info('[Auth] Kullanıcı oturum açtı:', user.uid);
     this._updateHeaderUser(user);
-    
+
+    // App henüz hazır değilse kısa bekle
+    if (!window.app) {
+      await new Promise(r => setTimeout(r, 300));
+      if (!window.app) { console.error('[Auth] App başlatılamadı'); return; }
+    }
+
     // Profil dökümanını kontrol et/oluştur
     await this._initUserDoc(user);
 
@@ -188,8 +194,9 @@ class AuthManager {
 
         if (cloudUpdatedAt >= localUpdatedAt) {
           console.info('[Auth] Bulut verisi yükleniyor...');
-          delete result.data._updatedAt;
-          window.app.state._state = Object.assign(window.app.state._defaults(), result.data);
+          const cloudData = Object.assign({}, result.data);
+          delete cloudData._updatedAt;
+          window.app.state._state = Object.assign(window.app.state._defaults(), cloudData);
           window.app.state.save(false);
         } else {
           console.info('[Auth] Yerel veri daha güncel — bulut güncelleniyor.');

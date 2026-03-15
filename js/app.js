@@ -2840,7 +2840,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     this.state.update({ xp, level }, true);
     window.analyticsManager?.xpGain(totalGain, this.session.view || 'unknown');
     this._updateHeader();
-    if (this.session.view === 'home') this._updateHomeStats();
+    if (this.session.view === 'home')      this._updateHomeStats();
+    if (this.session.view === 'analytics') this._initAnalytics();
 
     const mastery  = this.state.get('mastery');
     const learned  = Object.values(mastery).filter(m => (m.score || 0) >= 3).length;
@@ -2866,7 +2867,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     let newlyUnlocked = false;
 
     const stats = {
-      xp: this.state.get('xp') + (this.state.get('level') * (this.state.get('level') - 1) / 2) * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL),
+      xp: Math.round(this.state.get('xp') + (this.state.get('level') * (this.state.get('level') - 1) / 2) * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL)),
       level: this.state.get('level'),
       streak: this.state.get('streak'),
       words: Object.values(this.state.get('mastery') || {}).filter(m => (m.score || 0) >= 3).length,
@@ -3002,7 +3003,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   }
 
   _updateHomeStats() {
-    const mastery = this.state.get('mastery');
+    const mastery = this.state.get('mastery') || {};
     const learned = Object.values(mastery).filter(m => (m.score || 0) >= 3).length;
     const xp      = this.state.get('xp');
     const level   = this.state.get('level');
@@ -3813,6 +3814,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     const total   = this.state.get('totalAttempts') + 1;
     const correct = this.state.get('totalCorrect')  + (isCorrect ? 1 : 0);
     this.state.update({ totalAttempts: total, totalCorrect: correct }, true);
+    if (this.session.view === 'analytics') this._initAnalytics();
   }
 
   _updateSynthCombo() {
@@ -5188,7 +5190,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     const best  = this.state.get('speakBest');
     const total = this.state.get('speakTotal') + 1;
     const sum   = this.state.get('speakSum')   + score;
-    const hist  = this.state.get('speakHistory');
+    const hist  = this.state.get('speakHistory') || [];
     hist.unshift({ score, snippet: text.slice(0, 30) + '…' });
     if (hist.length > 8) hist.pop();
     this.state.update({ speakBest: Math.max(best, score), speakTotal: total, speakSum: sum, speakHistory: hist });
@@ -6404,7 +6406,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   }
 
   _initAnalytics() {
-    const mastery  = this.state.get('mastery');
+    const mastery  = this.state.get('mastery') || {};
     const learned  = Object.values(mastery).filter(m => (m.score || 0) >= 3).length;
     const streak   = this.state.get('streak');
     const total    = this.state.get('totalAttempts');
@@ -6678,7 +6680,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   _renderHeatmap() {
     const el = document.getElementById('heatmap-grid');
     if (!el) return;
-    const hist = this.state.get('history');
+    const hist = this.state.get('history') || {};
     let html = '';
     for (let i = 90; i >= 0; i--) {
       const d   = new Date(Date.now() - i * 86400000);
@@ -6691,12 +6693,18 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     el.innerHTML = html;
   }
 
+  _destroyChart(id) {
+    const existing = Chart.getChart(id);
+    if (existing) existing.destroy();
+  }
+
   _renderCategoryChart() {
     const ctx = document.getElementById('cat-chart');
     if (!ctx || typeof Chart === 'undefined') return;
-    const mastery = this.state.get('mastery');
-    const cats    = [...new Set(WORDS.map(w => w.cat))];
-    const data    = cats.map(c => { const pool = WORDS.filter(w => w.cat === c); return Math.round((pool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / pool.length) * 100); });
+    this._destroyChart('cat-chart');
+    const mastery = this.state.get('mastery') || {};
+    const cats    = [...new Set(WORDS.map(w => w.cat).filter(Boolean))];
+    const data    = cats.map(c => { const pool = WORDS.filter(w => w.cat === c); return pool.length ? Math.round((pool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / pool.length) * 100) : 0; });
     try {
       new Chart(ctx, { type: 'radar', data: { labels: cats, datasets: [{ label: 'Ustalık %', data, backgroundColor: 'rgba(0,212,255,0.15)', borderColor: '#00d4ff', pointBackgroundColor: '#00d4ff', pointRadius: 3 }]}, options: { scales: { r: { beginAtZero:true, max:100, grid: { color:'rgba(255,255,255,0.07)' }, angleLines: { color:'rgba(255,255,255,0.07)' }, ticks: { color:'#4a5568', backdropColor:'transparent', font:{size:10} }, pointLabels:{ color:'#8b9cb8', font:{size:11} }}}, plugins: { legend:{display:false} } }});
     } catch {}
@@ -6705,8 +6713,9 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   _renderCefrChart() {
     const ctx = document.getElementById('cefr-chart');
     if (!ctx || typeof Chart === 'undefined') return;
+    this._destroyChart('cefr-chart');
     const levels  = ['A1','A2','B1','B2','C1','C2'];
-    const mastery = this.state.get('mastery');
+    const mastery = this.state.get('mastery') || {};
     const data    = levels.map(lvl => { const pool = WORDS.filter(w => w.level === lvl); return pool.length ? Math.round((pool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / pool.length) * 100) : 0; });
     const colors  = ['#10b981','#4ade80','#00d4ff','#6366f1','#7c3aed','#f43f5e'];
     try {
@@ -6717,6 +6726,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   _renderWeeklyChart() {
     const ctx = document.getElementById('week-chart');
     if (!ctx || typeof Chart === 'undefined') return;
+    this._destroyChart('week-chart');
     const hist   = this.state.get('history') || {};
     const labels = [];
     const data   = [];
