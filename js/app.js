@@ -5057,6 +5057,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     if (icon)  icon.textContent  = recording ? '⏹️' : '🎤';
     if (label) label.textContent = recording ? 'Durdur' : 'Konuş';
     if (wave)  wave.classList.toggle('recording', recording);
+    const card = document.querySelector('.sentence-card');
+    if (card)  card.classList.toggle('sp-recording', recording);
   }
 
   _handleSpeechResult(event) {
