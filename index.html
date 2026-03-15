@@ -58,6 +58,32 @@
 
   <!-- Merkez logo -->
   <div class="sp-center">
+    <!-- EKG heartbeat line -->
+    <div class="sp-ekg-wrap">
+      <svg class="sp-ekg" viewBox="0 0 500 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ekgGrad" x1="0" y1="0" x2="500" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#00d4ff" stop-opacity="0"/>
+            <stop offset="18%"  stop-color="#00d4ff" stop-opacity="1"/>
+            <stop offset="56%"  stop-color="#a78bfa" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="ekgGlow" x="-10%" y="-120%" width="120%" height="340%">
+            <feGaussianBlur stdDeviation="2.8" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Flat → P wave → Q dip → R spike → S dip → T wave → flat -->
+        <path class="sp-ekg-path"
+          d="M0,28 L138,28 L148,24 L152,28 L160,28 L164,33 L169,4 L174,39 L179,28 L187,28 L193,16 L202,28 L500,28"
+          stroke="url(#ekgGrad)"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          filter="url(#ekgGlow)"
+        />
+      </svg>
+    </div>
     <div class="sp-brand">English<span> Rhapsody</span></div>
     <div class="sp-lyre-wrap">
       <svg class="sp-lyre-svg" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,33 +123,6 @@
       </svg>
     </div>
     <div class="sp-akademi">Dil Akademisi</div>
-
-    <!-- EKG heartbeat line -->
-    <div class="sp-ekg-wrap">
-      <svg class="sp-ekg" viewBox="0 0 500 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="ekgGrad" x1="0" y1="0" x2="500" y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0%"   stop-color="#00d4ff" stop-opacity="0"/>
-            <stop offset="18%"  stop-color="#00d4ff" stop-opacity="1"/>
-            <stop offset="56%"  stop-color="#a78bfa" stop-opacity="1"/>
-            <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
-          </linearGradient>
-          <filter id="ekgGlow" x="-10%" y="-120%" width="120%" height="340%">
-            <feGaussianBlur stdDeviation="2.8" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <!-- Flat → P wave → Q dip → R spike → S dip → T wave → flat -->
-        <path class="sp-ekg-path"
-          d="M0,28 L138,28 L148,24 L152,28 L160,28 L164,33 L169,4 L174,39 L179,28 L187,28 L193,16 L202,28 L500,28"
-          stroke="url(#ekgGrad)"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          filter="url(#ekgGlow)"
-        />
-      </svg>
-    </div>
   </div>
 
   <!-- Alt yükleme çubuğu -->

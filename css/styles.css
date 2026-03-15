@@ -781,7 +781,7 @@ body.sidebar-closed .sidebar-tab {
 .sp-ekg-wrap {
   width: 440px;
   max-width: 84vw;
-  margin-top: 8px;
+  margin-bottom: 2px;
 }
 .sp-ekg {
   width: 100%;
