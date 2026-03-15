@@ -124,6 +124,11 @@ class AuthManager {
     if (window.app) window.app.cloudLoaded = false;
     this._user = null;
 
+    // ── Kritik: bir sonraki kullanıcı eski veriyi görmesin ──
+    localStorage.removeItem('er_state');
+    localStorage.removeItem('er_state_ts');
+    if (window.app) window.app.state._state = window.app.state._defaults();
+
     // Header butonunu gizle
     const btn = document.getElementById('auth-user-btn');
     if (btn) btn.style.display = 'none';
@@ -177,29 +182,38 @@ class AuthManager {
       if (window.app) window.app.cloudLoaded = true; 
 
       if (result.data && window.app) {
-        // Bulut verisi varsa yerel state'i güncelle
+        // Mevcut kullanıcı: bulut verisi daha yeniyse yükle
         const cloudUpdatedAt = result.data._updatedAt || 0;
         const localUpdatedAt = parseInt(localStorage.getItem('er_state_ts') || '0');
 
-        // Sadece bulut verisi daha yeniyse veya yerel veri yoksa güncelle
         if (cloudUpdatedAt >= localUpdatedAt) {
-          console.info('[Auth] Yerel veri bulut ile güncelleniyor...');
+          console.info('[Auth] Bulut verisi yükleniyor...');
           delete result.data._updatedAt;
           window.app.state._state = Object.assign(window.app.state._defaults(), result.data);
-          window.app.state.save(false); // Sadece yerel kaydet, sonsuz döngüden kaçın
+          window.app.state.save(false);
         } else {
-          console.info('[Auth] Yerel veri daha güncel, bulut güncellenecek.');
+          console.info('[Auth] Yerel veri daha güncel — bulut güncelleniyor.');
           this.saveToCloud(window.app.state._state, true);
         }
       } else if (window.app) {
-        // Yeni kullanıcı veya boş bulut — yerel veriyi buluta gönder
-        console.info('[Auth] İlk senkronizasyon yapılıyor...');
+        // ── YENİ KULLANICI: temiz sayfa, sıfırdan başla ──
+        console.info('[Auth] Yeni kullanıcı — defaults ile başlatılıyor...');
+        localStorage.removeItem('er_state');
+        localStorage.removeItem('er_state_ts');
+        window.app.state._state = window.app.state._defaults();
+        window.app.state.save(false);
         this.saveToCloud(window.app.state._state, true);
       }
     }
 
     this._hideAuthModal();
     if (window.app) window.app._syncUIFromState();
+
+    // ── Login sonrası yönlendirme (splash bitmişse) ──
+    if (window.app && !window._splashActive) {
+      const onboarded = window.app.state.get('onboarded');
+      window.app.navigate(onboarded ? 'home' : 'placement');
+    }
 
     // Giriş sonrası sidebar 5 saniye açık kalsın
     document.body.classList.remove('sidebar-closed');
