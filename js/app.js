@@ -6446,13 +6446,15 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     if (saved && levels.indexOf(saved) > levels.indexOf(current)) {
       current = saved;
     }
-    const idx  = levels.indexOf(current);
-    const next = levels[idx + 1] || 'C2';
+    const idx      = levels.indexOf(current);
+    const isMax    = idx >= levels.length - 1;
+    const next     = isMax ? current : levels[idx + 1];
     const nextPool = WORDS.filter(w => w.level === next);
-    const nextPct  = nextPool.length
-      ? Math.round(nextPool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / nextPool.length * 100)
-      : 100;
-    return { level: current, next, nextPct, idx };
+    // If no words exist for next level (e.g. C2 not in data) treat as max level
+    const nextPct  = isMax || !nextPool.length
+      ? 100
+      : Math.round(nextPool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / nextPool.length * 100);
+    return { level: current, next, nextPct, isMax: isMax || !nextPool.length, idx };
   }
 
   _renderAnHero(mastery) {
@@ -6465,20 +6467,21 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       document.body.appendChild(defs);
     }
     const CEFR_LABELS = { A1:'Başlangıç', A2:'Temel', B1:'Orta', B2:'Orta Üstü', C1:'İleri', C2:'Uzman' };
-    const { level, next, nextPct } = this._detectCefrLevel(mastery);
-    const badge = document.getElementById('an-hero-badge');
+    const { level, next, nextPct, isMax } = this._detectCefrLevel(mastery);
+    const badge  = document.getElementById('an-hero-badge');
     const cefrEl = document.getElementById('an-hero-cefr');
     const nextEl = document.getElementById('an-hero-next');
-    const nextPctEl = document.getElementById('an-next-pct');
-    const arc = document.getElementById('an-arc-prog');
-    if (badge)   badge.textContent = level;
+    const arc    = document.getElementById('an-arc-prog');
+    if (badge)   badge.textContent  = level;
     if (cefrEl)  cefrEl.textContent = `${level} — ${CEFR_LABELS[level] || ''}`;
-    if (nextEl)  nextEl.innerHTML   = next !== level ? `${next}'ye <strong id="an-next-pct">${nextPct}%</strong> tamamlandı` : '🏆 En yüksek seviye!';
+    if (nextEl)  nextEl.innerHTML   = isMax
+      ? '🏆 En yüksek seviye!'
+      : `${next}'ye <strong>${nextPct}%</strong> tamamlandı`;
     if (arc) {
       const circ = 2 * Math.PI * 58;
-      arc.style.strokeDasharray = circ;
-      arc.style.strokeDashoffset = circ; // start at 0
-      setTimeout(() => { arc.style.strokeDashoffset = circ - (circ * nextPct / 100); }, 300);
+      arc.style.strokeDasharray  = circ;
+      arc.style.strokeDashoffset = circ;
+      setTimeout(() => { arc.style.strokeDashoffset = circ - (circ * (isMax ? 100 : nextPct) / 100); }, 300);
     }
     // Color badge by level
     const CEFR_COLORS = { A1:'#10b981', A2:'#4ade80', B1:'#00d4ff', B2:'#6366f1', C1:'#7c3aed', C2:'#f43f5e' };
@@ -6503,11 +6506,9 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     this.state.update({ learningMode: mode });
     document.querySelectorAll('.an-mode-card').forEach(c => c.classList.remove('active'));
     if (el) el.classList.add('active');
-    // Ripple feedback
     el?.classList.add('mode-pulse');
     setTimeout(() => el?.classList.remove('mode-pulse'), 600);
-    // Re-render recommendation with new mode
-    const mastery = this.state.get('mastery');
+    const mastery = this.state.get('mastery') || {};
     const due     = SRS.getDue(WORDS, mastery);
     this._renderRecommendation(mastery, due.length);
     this.audio.play('click');
@@ -6517,13 +6518,14 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     this.state.update({ learningGoal: goal });
     document.querySelectorAll('.an-goal-pill').forEach(p => p.classList.remove('active'));
     if (el) el.classList.add('active');
-    const mastery = this.state.get('mastery');
+    const mastery = this.state.get('mastery') || {};
     const due     = SRS.getDue(WORDS, mastery);
     this._renderRecommendation(mastery, due.length);
     this.audio.play('click');
   }
 
   _renderRecommendation(mastery, dueCount) {
+    mastery = mastery || {};
     const mode   = this.state.get('learningMode') || 'balanced';
     const goal   = this.state.get('learningGoal') || 'general';
     const { level } = this._detectCefrLevel(mastery);
@@ -6579,12 +6581,14 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     const { level: curLevel } = this._detectCefrLevel(mastery);
 
     el.innerHTML = levels.map((lvl, i) => {
-      const pool    = WORDS.filter(w => w.level === lvl);
+      const pool     = WORDS.filter(w => w.level === lvl);
       const mastered = pool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length;
-      const pct      = pool.length ? Math.round(mastered / pool.length * 100) : 0;
+      // If no WORDS at this level (e.g. C1/C2 not in data), treat as locked
+      const pct       = pool.length ? Math.round(mastered / pool.length * 100) : 0;
+      const noData    = pool.length === 0;
       const isCurrent = lvl === curLevel;
-      const isDone    = pct >= 70 && levels.indexOf(lvl) < levels.indexOf(curLevel);
-      const isLocked  = levels.indexOf(lvl) > levels.indexOf(curLevel) + 1;
+      const isDone    = !noData && levels.indexOf(lvl) < levels.indexOf(curLevel);
+      const isLocked  = noData || levels.indexOf(lvl) > levels.indexOf(curLevel) + 1;
       return `
         <div class="an-rm-node ${isCurrent ? 'current' : isDone ? 'done' : isLocked ? 'locked' : ''}">
           <div class="an-rm-dot" style="--node-color:${COLORS[lvl]}">
@@ -6604,9 +6608,16 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   _renderWeakSpots(mastery) {
     const el = document.getElementById('an-weak-list');
     if (!el) return;
-    // Words seen but with low mastery score
+    // Words genuinely struggled with (score < 3, interval 0 = recently failed)
+    // Exclude placement-seeded words (score exactly 3 with interval 21)
     const weak = WORDS
-      .filter(w => mastery[w.id||w.en] && (mastery[w.id||w.en].score || 0) < 3)
+      .filter(w => {
+        const m = mastery[w.id||w.en];
+        if (!m) return false;
+        const score = m.score || 0;
+        if (score >= 3) return false;                    // mastered or seeded
+        return true;                                     // genuinely weak
+      })
       .sort((a, b) => (mastery[a.id||a.en]?.score||0) - (mastery[b.id||b.en]?.score||0))
       .slice(0, 8);
     if (!weak.length) {
