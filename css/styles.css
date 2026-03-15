@@ -778,33 +778,6 @@ body.sidebar-closed .sidebar-tab {
 }
 
 /* ── EKG Heartbeat Line ─── */
-.sp-brand {
-  position: relative;
-}
-.sp-ekg-wrap {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.sp-ekg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  overflow: visible;
-}
-.sp-ekg-path {
-  stroke-dasharray: 820;
-  stroke-dashoffset: 820;
-  animation: spEkgDraw 3.6s ease-in-out infinite;
-  animation-delay: 0.9s;
-}
-@keyframes spEkgDraw {
-  0%   { stroke-dashoffset: 820; opacity: 0; }
-  5%   { stroke-dashoffset: 820; opacity: 1; }
-  68%  { stroke-dashoffset: 0;   opacity: 1; }
-  84%  { stroke-dashoffset: 0;   opacity: 0.35; }
-  100% { stroke-dashoffset: 0;   opacity: 0; }
-}
 
 /* ── Alt yükleme çubuğu ─── */
 .sp-bottom {
