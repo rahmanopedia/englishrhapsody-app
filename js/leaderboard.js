@@ -257,6 +257,26 @@ class LeaderboardManager {
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
   }
+
+  // ── Kullanıcı sıralama verilerini sıfırla ─────────────────────
+  async resetUserEntries() {
+    const auth = window.authManager;
+    if (!auth?.isLoggedIn || !auth._db || !auth.uid) return;
+    const uid = auth.uid;
+    try {
+      const batch = auth._db.batch();
+      for (const period of ['daily', 'weekly', 'monthly']) {
+        const ref = auth._db
+          .collection('leaderboards').doc(this._periodId(period))
+          .collection('users').doc(uid);
+        batch.delete(ref);
+      }
+      await batch.commit();
+      console.info('[Leaderboard] Kullanıcı sıralama verileri silindi');
+    } catch(e) {
+      console.warn('[Leaderboard] resetUserEntries error:', e);
+    }
+  }
 }
 
 window.leaderboardManager = new LeaderboardManager();

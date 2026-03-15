@@ -6484,6 +6484,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     // 1. Firebase'den sil
     if (window.authManager?.isLoggedIn) {
       await window.authManager.resetCloudData();
+      await window.leaderboardManager?.resetUserEntries();
     }
 
     // 2. LocalStorage temizle
