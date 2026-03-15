@@ -453,6 +453,20 @@
 }
 .ph-skip:hover { color: #8b9cb8; }
 
+/* Boşluk slotu — kutu yok, sadece gap */
+.ph-letter.ph-letter-space {
+  width: clamp(14px, 4vw, 22px);
+  border: none;
+  background: transparent;
+  box-shadow: none !important;
+  pointer-events: none;
+}
+.ph-letter.ph-letter-space.ph-crystal {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 /* ── VKB ────────────────────────────────────────────────────── */
 .ph-vkb {
   display: flex; flex-direction: column; align-items: center;
@@ -473,6 +487,7 @@
 .ph-key:active     { transform: scale(0.88); }
 .ph-key-ok         { background: rgba(var(--a4-rgb),0.2) !important; border-color: #4ade80 !important; color: #4ade80 !important; }
 .ph-key-err        { background: rgba(239,68,68,0.18) !important; border-color: #ef4444 !important; color: #ef4444 !important; }
+.ph-key-space      { min-width: 90px; font-size: 0.7rem; letter-spacing: 0.08em; color: #8b9cb8; }
 .ph-key-bs         { min-width: 58px; font-size: 1rem; color: #f87171; border-color: rgba(248,113,113,0.2); }
 .ph-key-bs:hover   { background: rgba(248,113,113,0.1); }
 

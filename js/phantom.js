@@ -303,6 +303,7 @@ class PhantomMode {
       if (e.key === 'Escape') { e.preventDefault(); this._confirmExit(); return; }
       if (this.phase !== 'recall') return;
       if (e.key === 'Backspace') { e.preventDefault(); this._backspace(); return; }
+      if (e.key === ' ') { e.preventDefault(); this._typeChar(' '); return; }
       if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
         e.preventDefault();
         this._typeChar(e.key.toLowerCase());
@@ -330,6 +331,7 @@ class PhantomMode {
       }</div>`
     ).join('') +
     `<div class="ph-vkb-row">
+       <button class="ph-key ph-key-space" onclick="window.phantomMod._typeChar(' ')">SPACE</button>
        <button class="ph-key ph-key-bs" onclick="window.phantomMod._backspace()">⌫</button>
      </div>`;
   }
@@ -487,7 +489,9 @@ class PhantomMode {
     const wrap = document.getElementById('ph-letters');
     if (!wrap) return;
     wrap.innerHTML = word.split('').map((c, i) =>
-      `<span class="ph-letter ph-faded" id="phl-${i}" data-c="${c}">${c}</span>`
+      c === ' '
+        ? `<span class="ph-letter ph-letter-space ph-faded" id="phl-${i}" data-c=" "></span>`
+        : `<span class="ph-letter ph-faded" id="phl-${i}" data-c="${c}">${c}</span>`
     ).join('');
   }
 
@@ -661,9 +665,15 @@ class PhantomMode {
         el.classList.remove('ph-faded', 'ph-cursor', 'ph-hint-glow');
         el.classList.add('ph-crystal');
         el.style.opacity = '1';
-        el.textContent   = c;
+        el.textContent   = c === ' ' ? '' : c;
       }
       this.app.audio.play('pop');
+      // Sonraki pozisyon boşluksa otomatik atla
+      while (this.typed.length < word.length && word[this.typed.length] === ' ') {
+        const spEl = document.getElementById(`phl-${this.typed.length}`);
+        if (spEl) { spEl.classList.remove('ph-faded','ph-cursor'); spEl.classList.add('ph-crystal'); }
+        this.typed.push(' ');
+      }
       this._updateCursor();
       if (this.typed.length === word.length) this._onWordComplete(true);
     } else {
@@ -717,8 +727,8 @@ class PhantomMode {
       el.classList.remove('ph-faded', 'ph-hint-glow', 'ph-cursor');
       el.classList.add('ph-crystal');
       el.style.opacity = '1';
-      el.textContent   = word[i];
-      await _wait(55);
+      el.textContent   = word[i] === ' ' ? '' : word[i];
+      if (word[i] !== ' ') await _wait(55);
     }
   }
 
