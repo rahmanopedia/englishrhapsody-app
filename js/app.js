@@ -2753,7 +2753,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   }
 
   async _initQuantum() {
-    if (!window.QuantumMode) {
+    if (typeof QuantumMode === 'undefined') {
       const root = document.getElementById('quantum-root');
       if (root) root.innerHTML = '<div style="text-align:center;padding:60px;color:#888">Yükleniyor...</div>';
       await this._loadScript('js/quantum.js?v=1.0.51');
@@ -4121,7 +4121,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   // ─────────────────────────────────────────────────────────
 
   async _initReading() {
-    if (!window.STORIES) {
+    if (typeof STORIES === 'undefined') {
       const main = document.getElementById('main-content');
       if (main) main.insertAdjacentHTML('afterbegin', '<div id="_stories-loader" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(7,10,15,0.92);z-index:20;color:#888;border-radius:16px">Yükleniyor...</div>');
       await this._loadScript('js/stories-data.js');
@@ -4906,7 +4906,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 
   async _initSpeak() {
     // SPEAK_CHALLENGES lives in stories-data.js — lazy load if not yet loaded
-    if (!window.SPEAK_CHALLENGES) {
+    if (typeof SPEAK_CHALLENGES === 'undefined') {
       await this._loadScript('js/stories-data.js');
     }
     this._buildWaveform();
@@ -5047,7 +5047,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   _getSpeakPool() {
     const diff = this.state.get('speakDiff');
     const isShuffle = this.state.get('speakShuffle');
-    if (!window.SPEAK_CHALLENGES) return [];
+    if (typeof SPEAK_CHALLENGES === 'undefined') return [];
     const basePool = SPEAK_CHALLENGES[diff] || SPEAK_CHALLENGES.easy;
     if (!isShuffle) return basePool;
     if (!this.session.shuffledPools[diff]) {
