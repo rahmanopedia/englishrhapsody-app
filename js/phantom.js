@@ -117,15 +117,6 @@ class PhantomMode {
             </div>
           </div>
 
-          <div class="ph-config-row">
-            <span class="ph-config-label">CEFR Seviye Filtresi <small>(boş = tümü)</small></span>
-            <div class="ph-cefr-filter">
-              ${PH_CEFR_LEVELS.map(l =>
-                `<button class="ph-cefr-btn" data-level="${l}"
-                         onclick="window.phantomMod._toggleCefr('${l}',this)">${l}</button>`
-              ).join('')}
-            </div>
-          </div>
 
         </div>
 
@@ -176,15 +167,6 @@ class PhantomMode {
     this.sessLen = n;
     document.querySelectorAll('.ph-len-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-  }
-
-  _toggleCefr(level, btn) {
-    btn.classList.toggle('active');
-    if (btn.classList.contains('active')) {
-      if (!this.cefrFilter.includes(level)) this.cefrFilter.push(level);
-    } else {
-      this.cefrFilter = this.cefrFilter.filter(l => l !== level);
-    }
   }
 
   // ── OTURUM BAŞLAT ─────────────────────────────────────────────

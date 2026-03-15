@@ -3149,20 +3149,10 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     if (!this._synthSessionLen)  this._synthSessionLen  = 10;
     if (!this._synthModeConfig)  this._synthModeConfig  = 'mix';
 
-    // Restore CEFR filter from placement result if not already set
-    if (!this._synthCEFRFilter) {
-      const saved = this.state.get('cefrLevel');
-      if (saved) {
-        this._synthCEFRFilter = ['A1','A2','B1','B2'].includes(saved) ? saved : 'B2';
-      }
-    }
-
-    // Sync CEFR filter button UI
-    if (this._synthCEFRFilter) {
-      document.querySelectorAll('[data-action="set-synth-cefr"]').forEach(b => {
-        b.classList.toggle('active', b.dataset.level === this._synthCEFRFilter || (this._synthCEFRFilter === 'B2' && b.dataset.level === 'B2'));
-      });
-    }
+    // Always auto-set CEFR filter from user's detected level
+    const mastery = this.state.get('mastery');
+    const { level: detectedLevel } = this._detectCefrLevel(mastery);
+    this._synthCEFRFilter = ['A1','A2','B1','B2'].includes(detectedLevel) ? detectedLevel : 'B2';
 
     intro.style.display = 'flex';
     if (chamber) chamber.style.display = 'none';
@@ -3185,13 +3175,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       if (!wrapper) return;
       document.getElementById('synth-intro').style.display = 'none';
       window.phantomMod = new PhantomMode(this);
-      
-      // Pass the CEFR filter to phantomMod
-      if (this._synthCEFRFilter && this._synthCEFRFilter !== 'all') {
-        window.phantomMod.cefrFilter = [this._synthCEFRFilter];
-      } else {
-        window.phantomMod.cefrFilter = [];
-      }
+      // Auto-apply user's level filter
+      window.phantomMod.cefrFilter = this._synthCEFRFilter ? [this._synthCEFRFilter] : [];
 
       window.phantomMod.init(wrapper);
       return;
