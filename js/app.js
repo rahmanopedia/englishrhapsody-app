@@ -5078,6 +5078,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 
   _renderSpeak() {
     const pool = this._getSpeakPool();
+    if (!pool.length) return;
     const idx  = this.session.speakIdx % pool.length;
     const text = pool[idx];
     UI.setEl('speak-counter', `${idx + 1}/${pool.length}`);
