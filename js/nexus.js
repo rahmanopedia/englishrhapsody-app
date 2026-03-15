@@ -18,6 +18,7 @@ class NexusMode {
     this.combo = 0;
     this.locked = false;
     this.mode = null; // 'network', 'cipher', 'synthesis'
+    this._netRaf = null;
     
     // Cipher Mode State
     this.cipherVerbs = [];
@@ -119,6 +120,7 @@ class NexusMode {
   destroy() {
     window.removeEventListener('resize', this._resizeHandler);
     this._clearSynthTimer();
+    this._stopNetCanvas();
     if (this.root) this.root.innerHTML = '';
   }
 
@@ -452,6 +454,7 @@ class NexusMode {
       </div>
 
       <div class="nexus-game-area" id="nexus-board">
+        <canvas class="nexus-net-canvas" id="nexus-net-canvas"></canvas>
         <svg class="nexus-connection-line" id="nexus-svg"></svg>
         <div class="nexus-core-node nexus-core-speak-btn" id="nexus-core" data-verb="${this.current.verb.replace(/"/g,'&quot;')}">
           ${this.current.verb}
@@ -500,56 +503,40 @@ class NexusMode {
        const y = adjustedCenterY + Math.sin(angle) * radius - p.offsetHeight/2;
        p.style.left = `${x}px`;
        p.style.top = `${y}px`;
+       setTimeout(() => p.classList.add('appeared'), 80 + i * 80);
     });
 
     this._redrawLines();
+    this._startNetCanvas();
   }
 
   _redrawLines() {
        const core = document.getElementById('nexus-core');
        const svg = document.getElementById('nexus-svg');
        if (!core || !svg) return;
-       svg.innerHTML = ''; 
+       svg.innerHTML = '';
        const coreRect = core.getBoundingClientRect();
        const boardRect = document.getElementById('nexus-board').getBoundingClientRect();
-       
-       document.querySelectorAll('.nexus-particle-node.solved').forEach(p => {
+       const x1 = coreRect.left + coreRect.width/2 - boardRect.left;
+       const y1 = coreRect.top + coreRect.height/2 - boardRect.top;
+
+       document.querySelectorAll('.nexus-particle-node').forEach(p => {
              const pRect = p.getBoundingClientRect();
-             const x1 = coreRect.left + coreRect.width/2 - boardRect.left;
-             const y1 = coreRect.top + coreRect.height/2 - boardRect.top;
              const x2 = pRect.left + pRect.width/2 - boardRect.left;
              const y2 = pRect.top + pRect.height/2 - boardRect.top;
-             
+             const isSolved = p.classList.contains('solved');
              const newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
              newLine.setAttribute('x1', x1);
              newLine.setAttribute('y1', y1);
              newLine.setAttribute('x2', x2);
              newLine.setAttribute('y2', y2);
-             newLine.setAttribute('class', 'nexus-line correct-line');
+             newLine.setAttribute('class', isSolved ? 'nexus-line correct-line' : 'nexus-line ambient-line');
              svg.appendChild(newLine);
        });
   }
 
   _drawLineTo(el) {
-       const core = document.getElementById('nexus-core');
-       const svg = document.getElementById('nexus-svg');
-       if (!core || !svg) return;
-       const coreRect = core.getBoundingClientRect();
-       const elRect = el.getBoundingClientRect();
-       const boardRect = document.getElementById('nexus-board').getBoundingClientRect();
-       
-       const x1 = coreRect.left + coreRect.width/2 - boardRect.left;
-       const y1 = coreRect.top + coreRect.height/2 - boardRect.top;
-       const x2 = elRect.left + elRect.width/2 - boardRect.left;
-       const y2 = elRect.top + elRect.height/2 - boardRect.top;
-       
-       const newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-       newLine.setAttribute('x1', x1);
-       newLine.setAttribute('y1', y1);
-       newLine.setAttribute('x2', x2);
-       newLine.setAttribute('y2', y2);
-       newLine.setAttribute('class', 'nexus-line correct-line new-line');
-       svg.appendChild(newLine);
+       this._redrawLines();
   }
 
   checkNetworkAnswer(particle, el) {
@@ -628,6 +615,69 @@ class NexusMode {
       }, 3500);
   }
 
+
+  _startNetCanvas() {
+    this._stopNetCanvas();
+    const canvas = document.getElementById('nexus-net-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const board = document.getElementById('nexus-board');
+    if (board) {
+      canvas.width  = board.offsetWidth;
+      canvas.height = board.offsetHeight;
+    }
+
+    const pts = [];
+    for (let i = 0; i < 22; i++) {
+      pts.push({
+        x:  Math.random() * canvas.width,
+        y:  Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r:  Math.random() * 1.4 + 0.4,
+        a:  Math.random() * 0.35 + 0.08,
+      });
+    }
+
+    const draw = () => {
+      if (!canvas.isConnected) { this._stopNetCanvas(); return; }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Radial glow at center
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const r  = Math.min(canvas.width, canvas.height) * 0.46;
+      const g  = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      g.addColorStop(0, 'rgba(139,92,246,0.13)');
+      g.addColorStop(1, 'rgba(139,92,246,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Floating micro-particles
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width)  p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(167,139,250,${p.a})`;
+        ctx.fill();
+      });
+
+      this._netRaf = requestAnimationFrame(draw);
+    };
+    draw();
+  }
+
+  _stopNetCanvas() {
+    if (this._netRaf) {
+      cancelAnimationFrame(this._netRaf);
+      this._netRaf = null;
+    }
+  }
 
   // ==========================================
   // CIPHER MODE
