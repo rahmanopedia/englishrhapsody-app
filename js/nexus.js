@@ -903,7 +903,7 @@ class NexusMode {
     const finalXP = Math.round(this.score * mult);
 
     if (this.app.addXP && this.score > 0) {
-      this.app.addXP(this.score, 'medium');
+      this.app.addXP(this.score, 'medium', 'nexus');
     }
     this.root.innerHTML = `
       <div class="nexus-header">

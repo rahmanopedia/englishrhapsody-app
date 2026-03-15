@@ -2354,6 +2354,8 @@ class StateManager {
       missionsDate: '',
       convoCompleted: {},        // { scenarioId: { avg, ts } }
       readingMode:   'read',     // 'read' | 'shadow' | 'quiz'
+      learningMode:  'balanced', // 'balanced' | 'intensive' | 'speaking' | 'grammar'
+      learningGoal:  'general',  // 'general' | 'travel' | 'business' | 'academic'
       _lastMilestoneCelebrated: 0,
     };
   }
@@ -2785,9 +2787,15 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   //  XP & PROGRESS
   // ─────────────────────────────────────────────────────────
 
-  addXP(amount, difficulty = 'easy') {
+  addXP(amount, difficulty = 'easy', type = '') {
     const multiplier = window.remoteFlags?.[`multiplier_${difficulty}`] || 1.0;
-    let baseAmount = Math.round(amount * multiplier);
+    // Learning mode bonus: 1.5× XP for the matching activity type
+    const lMode = this.state.get('learningMode') || 'balanced';
+    const modeMult = (lMode === 'intensive' && type === 'vocab') ||
+                     (lMode === 'speaking'  && type === 'speak') ||
+                     (lMode === 'grammar'   && type === 'nexus') ? 1.5 : 1.0;
+    let baseAmount = Math.round(amount * multiplier * modeMult);
+    if (modeMult > 1) UI.toast(`⚡ Mod bonusu: ×1.5 XP!`, 1500);
 
     // ── Streak bonusu ──────────────────────────────────────────
     const streak         = this.state.get('streak') || 1;
@@ -3707,7 +3715,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     if (this.session.synthRevealTimer) { clearTimeout(this.session.synthRevealTimer); this.session.synthRevealTimer = null; }
     this.session.synthActive = false;
     this.session.synthPaused = false;
-    this.addXP(this.session.synthScore);
+    this.addXP(this.session.synthScore, 'easy', 'vocab');
     this.state.update({ sessions: this.state.get('sessions') + 1, sessionsToday: (this.state.get('sessionsToday') || 0) + 1 });
 
     const total   = this.session.learnPool.length;
@@ -5167,7 +5175,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       }
     }    this.audio.play(score >= 75 ? 'success' : score >= 40 ? 'pop' : 'click');
     window.analyticsManager?.speakingAttempt(score, this.state.get('accent'));
-    this.addXP(xp, 'hard');
+    this.addXP(xp, 'hard', 'speak');
     if (score === 100) {
       const ring = document.querySelector('.score-ring-wrap');
       if (ring) { ring.classList.add('perfect-score'); setTimeout(() => ring.classList.remove('perfect-score'), 2000); }
@@ -5977,17 +5985,218 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   // ─────────────────────────────────────────────────────────
 
   _initAnalytics() {
-    const mastery   = this.state.get('mastery');
-    const learned   = Object.values(mastery).filter(m => (m.score || 0) >= 3).length;
-    const sessions  = this.state.get('sessions');
-    const streak    = this.state.get('streak');
-    const total     = this.state.get('totalAttempts');
-    const correct   = this.state.get('totalCorrect');
-    const acc       = total > 0 ? Math.round((correct / total) * 100) : 0;
-    UI.setEl('an-words', learned); UI.setEl('an-sessions', sessions); UI.setEl('an-streak', streak); UI.setEl('an-acc', `${acc}%`);
-    const due = SRS.getDue(WORDS, mastery);
+    const mastery  = this.state.get('mastery');
+    const learned  = Object.values(mastery).filter(m => (m.score || 0) >= 3).length;
+    const streak   = this.state.get('streak');
+    const total    = this.state.get('totalAttempts');
+    const correct  = this.state.get('totalCorrect');
+    const acc      = total > 0 ? Math.round((correct / total) * 100) : 0;
+    const due      = SRS.getDue(WORDS, mastery);
+
+    UI.setEl('an-words', learned);
+    UI.setEl('an-streak', streak);
+    UI.setEl('an-acc', `${acc}%`);
     UI.setEl('an-due', due.length);
-    this._renderHeatmap(); this._renderCategoryChart(); this._renderCefrChart(); this._renderWeeklyChart(); this._renderBadges();
+
+    this._renderAnHero(mastery);
+    this._renderModeSelector();
+    this._renderGoalSelector();
+    this._renderRecommendation(mastery, due.length);
+    this._renderLevelRoadmap(mastery);
+    this._renderWeakSpots(mastery);
+    this._renderHeatmap();
+    this._renderCategoryChart();
+    this._renderCefrChart();
+    this._renderWeeklyChart();
+    this._renderBadges();
+  }
+
+  _detectCefrLevel(mastery) {
+    const levels = ['A1','A2','B1','B2','C1','C2'];
+    let current = 'A1';
+    for (const lvl of levels) {
+      const pool = WORDS.filter(w => w.level === lvl);
+      if (!pool.length) continue;
+      const pct = pool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / pool.length;
+      if (pct >= 0.7) current = lvl;
+    }
+    const idx  = levels.indexOf(current);
+    const next = levels[idx + 1] || 'C2';
+    const nextPool = WORDS.filter(w => w.level === next);
+    const nextPct  = nextPool.length
+      ? Math.round(nextPool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length / nextPool.length * 100)
+      : 100;
+    return { level: current, next, nextPct, idx };
+  }
+
+  _renderAnHero(mastery) {
+    // Inject SVG gradient defs once
+    if (!document.getElementById('an-svg-defs')) {
+      const defs = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      defs.id = 'an-svg-defs';
+      defs.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      defs.innerHTML = `<defs><linearGradient id="an-grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient></defs>`;
+      document.body.appendChild(defs);
+    }
+    const CEFR_LABELS = { A1:'Başlangıç', A2:'Temel', B1:'Orta', B2:'Orta Üstü', C1:'İleri', C2:'Uzman' };
+    const { level, next, nextPct } = this._detectCefrLevel(mastery);
+    const badge = document.getElementById('an-hero-badge');
+    const cefrEl = document.getElementById('an-hero-cefr');
+    const nextEl = document.getElementById('an-hero-next');
+    const nextPctEl = document.getElementById('an-next-pct');
+    const arc = document.getElementById('an-arc-prog');
+    if (badge)   badge.textContent = level;
+    if (cefrEl)  cefrEl.textContent = `${level} — ${CEFR_LABELS[level] || ''}`;
+    if (nextEl)  nextEl.innerHTML   = next !== level ? `${next}'ye <strong id="an-next-pct">${nextPct}%</strong> tamamlandı` : '🏆 En yüksek seviye!';
+    if (arc) {
+      const circ = 2 * Math.PI * 58;
+      arc.style.strokeDasharray = circ;
+      arc.style.strokeDashoffset = circ; // start at 0
+      setTimeout(() => { arc.style.strokeDashoffset = circ - (circ * nextPct / 100); }, 300);
+    }
+    // Color badge by level
+    const CEFR_COLORS = { A1:'#10b981', A2:'#4ade80', B1:'#00d4ff', B2:'#6366f1', C1:'#7c3aed', C2:'#f43f5e' };
+    if (badge) badge.style.color = CEFR_COLORS[level] || '#00d4ff';
+  }
+
+  _renderModeSelector() {
+    const mode  = this.state.get('learningMode') || 'balanced';
+    document.querySelectorAll('.an-mode-card').forEach(card => {
+      card.classList.toggle('active', card.dataset.mode === mode);
+    });
+  }
+
+  _renderGoalSelector() {
+    const goal = this.state.get('learningGoal') || 'general';
+    document.querySelectorAll('.an-goal-pill').forEach(pill => {
+      pill.classList.toggle('active', pill.dataset.goal === goal);
+    });
+  }
+
+  setLearningMode(mode, el) {
+    this.state.update({ learningMode: mode });
+    document.querySelectorAll('.an-mode-card').forEach(c => c.classList.remove('active'));
+    if (el) el.classList.add('active');
+    // Ripple feedback
+    el?.classList.add('mode-pulse');
+    setTimeout(() => el?.classList.remove('mode-pulse'), 600);
+    // Re-render recommendation with new mode
+    const mastery = this.state.get('mastery');
+    const due     = SRS.getDue(WORDS, mastery);
+    this._renderRecommendation(mastery, due.length);
+    this.audio.play('click');
+  }
+
+  setLearningGoal(goal, el) {
+    this.state.update({ learningGoal: goal });
+    document.querySelectorAll('.an-goal-pill').forEach(p => p.classList.remove('active'));
+    if (el) el.classList.add('active');
+    const mastery = this.state.get('mastery');
+    const due     = SRS.getDue(WORDS, mastery);
+    this._renderRecommendation(mastery, due.length);
+    this.audio.play('click');
+  }
+
+  _renderRecommendation(mastery, dueCount) {
+    const mode   = this.state.get('learningMode') || 'balanced';
+    const goal   = this.state.get('learningGoal') || 'general';
+    const { level } = this._detectCefrLevel(mastery);
+    const speakAvg = this.state.get('speakTotal') > 0
+      ? Math.round(this.state.get('speakSum') / this.state.get('speakTotal'))
+      : 0;
+
+    const GOAL_LABELS = { general:'Genel İngilizce', travel:'Seyahat', business:'İş Hayatı', academic:'Akademik' };
+
+    const subEl  = document.getElementById('an-rec-sub');
+    const taskEl = document.getElementById('an-rec-tasks');
+    if (!taskEl) return;
+    if (subEl) subEl.textContent = `${level} seviye · ${GOAL_LABELS[goal]} · ${mode === 'balanced' ? 'Dengeli' : mode === 'intensive' ? 'Yoğun Kelime' : mode === 'speaking' ? 'Konuşma' : 'Gramer'} modu`;
+
+    const tasks = [];
+
+    if (mode === 'intensive') {
+      tasks.push({ icon:'📚', text:`${dueCount} tekrar bekliyor — şimdi bitir`, nav:'learn', btn:'Kelime Çalış' });
+      tasks.push({ icon:'🔥', text:'Bugün 20 yeni kelime öğren',               nav:'learn', btn:'Başla' });
+      if (speakAvg < 70) tasks.push({ icon:'💡', text:'Telaffuz puanın düşük — biraz konuşma pratiği yap', nav:'speak', btn:'Konuşma Lab' });
+    } else if (mode === 'speaking') {
+      tasks.push({ icon:'🎙️', text:'3 farklı zorlukta cümle sesli söyle',     nav:'speak', btn:'Konuşma Lab' });
+      tasks.push({ icon:'🤖', text:'AI Koç hatalarını analiz etsin',           nav:'speak', btn:'Koça Git' });
+      if (dueCount > 5) tasks.push({ icon:'📚', text:`${dueCount} kelime tekrarı bekleniyor`, nav:'learn', btn:'Tekrar Et' });
+    } else if (mode === 'grammar') {
+      tasks.push({ icon:'🧩', text:'5 Nexus gramer oyunu oyna',                nav:'nexus',   btn:'Nexus Oyna' });
+      tasks.push({ icon:'📖', text:'Bağlam okuma — yapı analizi yap',          nav:'reading', btn:'Okumaya Geç' });
+      if (dueCount > 0) tasks.push({ icon:'📚', text:`${dueCount} kelime tekrarı`, nav:'learn', btn:'Tekrar' });
+    } else {
+      // balanced — tailor by level
+      if (dueCount > 0) tasks.push({ icon:'📚', text:`${dueCount} kelime seni bekliyor — SRS zamanı`, nav:'learn', btn:'Tekrar Et' });
+      tasks.push({ icon:'🎙️', text:'Günlük konuşma: 1 cümle sesli söyle',     nav:'speak', btn:'Konuşma Lab' });
+      tasks.push({ icon:'🧩', text:'3 Nexus gramer oyunu',                     nav:'nexus', btn:'Oyna' });
+      if (level === 'A1' || level === 'A2') {
+        tasks.push({ icon:'💡', text:'A1-A2 kelimelerine odaklan — temel sağlam olsun', nav:'learn', btn:'A1-A2 Kelimeler' });
+      }
+    }
+
+    taskEl.innerHTML = tasks.map(t => `
+      <div class="an-rec-task">
+        <div class="an-rec-task-icon">${t.icon}</div>
+        <div class="an-rec-task-text">${t.text}</div>
+        <button class="an-rec-task-btn" onclick="window._app.navigate('${t.nav}')">${t.btn}</button>
+      </div>`).join('');
+  }
+
+  _renderLevelRoadmap(mastery) {
+    const el = document.getElementById('an-roadmap');
+    if (!el) return;
+    const levels = ['A1','A2','B1','B2','C1','C2'];
+    const LABELS = { A1:'Başlangıç', A2:'Temel', B1:'Orta', B2:'Orta Üstü', C1:'İleri', C2:'Uzman' };
+    const COLORS = { A1:'#10b981', A2:'#4ade80', B1:'#00d4ff', B2:'#6366f1', C1:'#7c3aed', C2:'#f43f5e' };
+    const { level: curLevel } = this._detectCefrLevel(mastery);
+
+    el.innerHTML = levels.map((lvl, i) => {
+      const pool    = WORDS.filter(w => w.level === lvl);
+      const mastered = pool.filter(w => (mastery[w.id||w.en]?.score||0) >= 3).length;
+      const pct      = pool.length ? Math.round(mastered / pool.length * 100) : 0;
+      const isCurrent = lvl === curLevel;
+      const isDone    = pct >= 70 && levels.indexOf(lvl) < levels.indexOf(curLevel);
+      const isLocked  = levels.indexOf(lvl) > levels.indexOf(curLevel) + 1;
+      return `
+        <div class="an-rm-node ${isCurrent ? 'current' : isDone ? 'done' : isLocked ? 'locked' : ''}">
+          <div class="an-rm-dot" style="--node-color:${COLORS[lvl]}">
+            ${isDone ? '✓' : isCurrent ? '★' : lvl}
+          </div>
+          <div class="an-rm-info">
+            <div class="an-rm-level">${lvl}</div>
+            <div class="an-rm-label">${LABELS[lvl]}</div>
+            <div class="an-rm-bar-wrap"><div class="an-rm-bar" style="width:${pct}%;background:${COLORS[lvl]}"></div></div>
+            <div class="an-rm-pct">${pct}%</div>
+          </div>
+        </div>
+        ${i < levels.length - 1 ? '<div class="an-rm-line"></div>' : ''}`;
+    }).join('');
+  }
+
+  _renderWeakSpots(mastery) {
+    const el = document.getElementById('an-weak-list');
+    if (!el) return;
+    // Words seen but with low mastery score
+    const weak = WORDS
+      .filter(w => mastery[w.id||w.en] && (mastery[w.id||w.en].score || 0) < 3)
+      .sort((a, b) => (mastery[a.id||a.en]?.score||0) - (mastery[b.id||b.en]?.score||0))
+      .slice(0, 8);
+    if (!weak.length) {
+      el.innerHTML = '<div class="an-weak-empty">🎉 Harika! Gördüğün tüm kelimeleri iyi biliyorsun.</div>';
+      return;
+    }
+    el.innerHTML = weak.map(w => {
+      const sc = mastery[w.id||w.en]?.score || 0;
+      const bars = [1,2,3,4,5].map(i => `<div class="an-weak-dot ${i <= sc ? 'fill' : ''}"></div>`).join('');
+      return `
+        <div class="an-weak-chip" onclick="window._app.speech.speak('${w.en.replace(/'/g,"\\'")}',1)">
+          <div class="an-weak-en">${w.en}</div>
+          <div class="an-weak-tr">${w.tr || ''}</div>
+          <div class="an-weak-score">${bars}</div>
+        </div>`;
+    }).join('');
   }
 
   _renderBadges() {

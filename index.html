@@ -863,40 +863,113 @@
 
 <!-- Analytics -->
 <template id="tpl-analytics">
-<div class="animate-in" style="padding:24px 16px 100px; max-width:860px; margin:0 auto;">
+<div class="an-page animate-in">
 
-  <div style="margin-bottom:24px;">
-    <h1 style="font-size:1.7rem;font-weight:900;color:#fff;margin:0 0 4px;">📊 Analitik</h1>
-    <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin:0;">İlerleme özeti ve istatistiklerin</p>
-  </div>
-
-  <!-- Stat satırı -->
-  <div class="analytics-stat-row">
-    <div class="ana-stat">
-      <div class="ana-stat-val" id="an-words">—</div>
-      <div class="ana-stat-label">Öğrenilen Kelime</div>
+  <!-- ── HERO: Seviye Kartı ── -->
+  <div class="an-hero">
+    <div class="an-hero-badge-wrap">
+      <svg class="an-hero-arc" viewBox="0 0 140 140">
+        <circle cx="70" cy="70" r="58" class="an-arc-track"/>
+        <circle cx="70" cy="70" r="58" class="an-arc-prog" id="an-arc-prog"/>
+      </svg>
+      <div class="an-hero-badge" id="an-hero-badge">B1</div>
     </div>
-    <div class="ana-stat">
-      <div class="ana-stat-val" id="an-sessions">—</div>
-      <div class="ana-stat-label">Toplam Oturum</div>
-    </div>
-    <div class="ana-stat">
-      <div class="ana-stat-val" id="an-streak">—</div>
-      <div class="ana-stat-label">🔥 Günlük Seri</div>
-    </div>
-    <div class="ana-stat">
-      <div class="ana-stat-val" id="an-acc">—</div>
-      <div class="ana-stat-label">Doğruluk Oranı</div>
-    </div>
-    <div class="ana-stat">
-      <div class="ana-stat-val" id="an-due">—</div>
-      <div class="ana-stat-label">📚 Tekrar Bekleyen</div>
+    <div class="an-hero-info">
+      <div class="an-hero-label">Mevcut Seviye</div>
+      <div class="an-hero-cefr" id="an-hero-cefr">B1 — Orta Üstü</div>
+      <div class="an-hero-next" id="an-hero-next">B2'ye <strong id="an-next-pct">0%</strong> kaldı</div>
+      <div class="an-hero-stats">
+        <div class="an-hs"><span id="an-words">—</span><em>kelime</em></div>
+        <div class="an-hs"><span id="an-streak">—</span><em>🔥 gün</em></div>
+        <div class="an-hs"><span id="an-acc">—</span><em>doğruluk</em></div>
+        <div class="an-hs"><span id="an-due">—</span><em>tekrar</em></div>
+      </div>
     </div>
   </div>
 
+  <!-- ── ÖĞRENIM MODU ── -->
+  <div class="an-section">
+    <div class="an-section-hd">
+      <div class="an-section-title">🎯 Öğrenim Modu</div>
+      <div class="an-section-sub">Seçtiğin moda göre uygulama deneyimin optimize edilir ve XP çarpanı aktifleşir</div>
+    </div>
+    <div class="an-mode-grid" id="an-mode-grid">
+      <button class="an-mode-card" data-mode="balanced" onclick="window._app.setLearningMode('balanced',this)">
+        <div class="an-mode-icon">⚖️</div>
+        <div class="an-mode-name">Dengeli</div>
+        <div class="an-mode-desc">Her beceriden eşit pratik</div>
+        <div class="an-mode-tag">Önerilen</div>
+      </button>
+      <button class="an-mode-card" data-mode="intensive" onclick="window._app.setLearningMode('intensive',this)">
+        <div class="an-mode-icon">🔥</div>
+        <div class="an-mode-name">Yoğun Kelime</div>
+        <div class="an-mode-desc">Hızlı kelime kazanımı — 1.5× XP</div>
+        <div class="an-mode-tag">Kelime odaklı</div>
+      </button>
+      <button class="an-mode-card" data-mode="speaking" onclick="window._app.setLearningMode('speaking',this)">
+        <div class="an-mode-icon">🎙️</div>
+        <div class="an-mode-name">Konuşma</div>
+        <div class="an-mode-desc">Telaffuz öncelikli — 1.5× XP</div>
+        <div class="an-mode-tag">Akıcılık</div>
+      </button>
+      <button class="an-mode-card" data-mode="grammar" onclick="window._app.setLearningMode('grammar',this)">
+        <div class="an-mode-icon">🧩</div>
+        <div class="an-mode-name">Gramer</div>
+        <div class="an-mode-desc">Yapı ve dilbilgisi — 1.5× XP</div>
+        <div class="an-mode-tag">Yapı odaklı</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── HEDEF ── -->
+  <div class="an-section">
+    <div class="an-section-hd">
+      <div class="an-section-title">🏁 Hedefin</div>
+      <div class="an-section-sub">Hedefine göre kelime seçimi ve içerik ağırlığı değişir</div>
+    </div>
+    <div class="an-goal-row" id="an-goal-grid">
+      <button class="an-goal-pill" data-goal="general"  onclick="window._app.setLearningGoal('general',this)">🌍 Genel</button>
+      <button class="an-goal-pill" data-goal="travel"   onclick="window._app.setLearningGoal('travel',this)">✈️ Seyahat</button>
+      <button class="an-goal-pill" data-goal="business" onclick="window._app.setLearningGoal('business',this)">💼 İş Hayatı</button>
+      <button class="an-goal-pill" data-goal="academic" onclick="window._app.setLearningGoal('academic',this)">🎓 Akademik</button>
+    </div>
+  </div>
+
+  <!-- ── BUGÜNKÜ PLAN ── -->
+  <div class="an-section">
+    <div class="an-rec-card" id="an-rec-card">
+      <div class="an-rec-hd">
+        <div class="an-rec-avatar">🤖</div>
+        <div>
+          <div class="an-rec-title">Bugünkü Plan</div>
+          <div class="an-rec-sub" id="an-rec-sub">Seviyene ve moduna göre özelleştirildi</div>
+        </div>
+      </div>
+      <div class="an-rec-tasks" id="an-rec-tasks"></div>
+    </div>
+  </div>
+
+  <!-- ── SEVIYE YOLU ── -->
+  <div class="an-section">
+    <div class="an-section-hd">
+      <div class="an-section-title">🗺️ Seviye Yolu</div>
+    </div>
+    <div class="an-roadmap-wrap">
+      <div class="an-roadmap" id="an-roadmap"></div>
+    </div>
+  </div>
+
+  <!-- ── ZAYIF NOKTALAR ── -->
+  <div class="an-section" id="an-weak-section">
+    <div class="an-section-hd">
+      <div class="an-section-title">⚠️ En Çok Zorluk Çektiğin Kelimeler</div>
+      <div class="an-section-sub">Bu kelimeleri tekrar et — mastery skoru düşük</div>
+    </div>
+    <div id="an-weak-list" class="an-weak-list"></div>
+  </div>
+
+  <!-- ── GRAFİKLER ── -->
   <div class="analytics-grid">
-
-    <!-- Aktivite Haritası -->
     <div class="card card-full">
       <div class="card-title">📅 Son 90 Gün Aktivitesi</div>
       <div id="heatmap-grid" class="heatmap-grid" style="margin-top:12px;"></div>
@@ -909,32 +982,28 @@
         <span>Çok</span>
       </div>
     </div>
-
-    <!-- Haftalık XP -->
     <div class="card card-full">
       <div class="card-title">📊 Son 7 Gün XP</div>
       <canvas id="week-chart" style="margin-top:12px;max-height:180px;"></canvas>
     </div>
-
-    <!-- Kategori Radar -->
     <div class="card">
       <div class="card-title">🗂️ Kategori Ustalığı</div>
       <canvas id="cat-chart" style="margin-top:12px;"></canvas>
     </div>
-
-    <!-- CEFR Bar -->
     <div class="card">
       <div class="card-title">📈 CEFR Seviye Dağılımı</div>
       <canvas id="cefr-chart" style="margin-top:12px;"></canvas>
     </div>
-
-    <!-- Başarımlar -->
-    <div class="card card-full">
-      <div class="card-title">🏅 Başarımlar</div>
-      <div id="badges-grid" class="badges-grid" style="margin-top:16px;"></div>
-    </div>
-
   </div>
+
+  <!-- ── BAŞARIMLAR ── -->
+  <div class="an-section">
+    <div class="an-section-hd">
+      <div class="an-section-title">🏅 Başarımlar</div>
+    </div>
+    <div id="badges-grid" class="badges-grid" style="margin-top:12px;"></div>
+  </div>
+
 </div>
 </template>
 
