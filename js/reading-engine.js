@@ -6,6 +6,7 @@ class ReadingEngine {
   constructor(app) {
     this.app = app;
     this.activePopup = null;
+    this._closeOnAction = null;
   }
 
   /**
@@ -173,17 +174,20 @@ class ReadingEngine {
     popup.style.top = top + 'px';
 
     popup.querySelector('.ann-popup-close').onclick = () => this.closePopup();
-    
-    const closeOnAction = (e) => {
-        if (!popup.contains(e.target) && !e.target.classList.contains('sw-v2')) {
-            this.closePopup();
-            document.removeEventListener('mousedown', closeOnAction);
-        }
+
+    this._closeOnAction = (e) => {
+      if (!popup.contains(e.target)) {
+        this.closePopup();
+      }
     };
-    document.addEventListener('mousedown', closeOnAction);
+    document.addEventListener('mousedown', this._closeOnAction);
   }
 
   closePopup() {
+    if (this._closeOnAction) {
+      document.removeEventListener('mousedown', this._closeOnAction);
+      this._closeOnAction = null;
+    }
     if (this.activePopup) {
       this.activePopup.remove();
       this.activePopup = null;
