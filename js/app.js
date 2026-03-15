@@ -3185,24 +3185,41 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     }
 
     this.session.synthActive = true;
-    const len = this._synthSessionLen || (window.remoteFlags?.srs_session_word_count ?? 10);
+    const len     = this._synthSessionLen || (window.remoteFlags?.srs_session_word_count ?? 10);
+    const mastery = this.state.get('mastery') || {};
 
-    // Filter words by CEFR if selected
-    let sourcePool = WORDS;
-    if (this._synthCEFRFilter && this._synthCEFRFilter !== 'all') {
-      sourcePool = WORDS.filter(w => w.level === this._synthCEFRFilter);
-      if (sourcePool.length === 0) {
-        UI.toast(`${this._synthCEFRFilter} seviyesinde kelime bulunamadı.`);
-        sourcePool = WORDS;
-      }
-    }
+    // ── PRIMARY pool: user's current CEFR level ────────────────
+    const curLevel   = this._synthCEFRFilter;
+    const levelPool  = curLevel && curLevel !== 'all'
+      ? WORDS.filter(w => w.level === curLevel)
+      : WORDS;
+    const levelDue   = SRS.getDue(levelPool, mastery).sort(() => Math.random() - 0.5);
+    const levelNew   = levelPool.filter(w => !mastery[w.id || w.en]).sort(() => Math.random() - 0.5);
+    const levelKnown = levelPool.filter(w => mastery[w.id || w.en] && !levelDue.includes(w)).sort(() => Math.random() - 0.5);
+    const primaryFill = [...levelDue, ...levelNew, ...levelKnown];
 
-    // SRS-prioritized pool: due words first, then fill with random
-    const mastery = this.state.get('mastery');
-    const due = SRS.getDue(sourcePool, mastery);
-    const notDue = sourcePool.filter(w => !due.includes(w)).sort(() => Math.random() - 0.5);
-    const shuffledDue = [...due].sort(() => Math.random() - 0.5);
-    this.session.learnPool = [...shuffledDue, ...notDue].slice(0, len);
+    // ── REVIEW pool: SRS-due words from OTHER (lower) levels ───
+    // Keeps older knowledge fresh — prevents atrophy
+    const reviewPool = WORDS.filter(w => w.level !== curLevel || curLevel === 'all');
+    const reviewDue  = SRS.getDue(reviewPool, mastery).sort(() => Math.random() - 0.5);
+
+    // Allocate: up to 30% of session for reviews (min 2 if any are due)
+    const reviewCount  = Math.min(reviewDue.length, Math.max(reviewDue.length > 0 ? 2 : 0, Math.floor(len * 0.30)));
+    const primaryCount = len - reviewCount;
+    const primarySlice = primaryFill.slice(0, primaryCount);
+    const reviewSlice  = reviewDue.slice(0, reviewCount);
+
+    // Interleave review cards evenly throughout the session (not all at end)
+    const combined = [];
+    const step = reviewSlice.length > 0 ? Math.ceil(primarySlice.length / reviewSlice.length) : Infinity;
+    let ri = 0;
+    primarySlice.forEach((w, i) => {
+      combined.push(w);
+      if (ri < reviewSlice.length && (i + 1) % step === 0) combined.push(reviewSlice[ri++]);
+    });
+    while (ri < reviewSlice.length) combined.push(reviewSlice[ri++]);
+
+    this.session.learnPool = combined.slice(0, len);
 
     this.session.learnIdx           = 0;
     this.session.synthScore         = 0;
@@ -6374,11 +6391,18 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     this.navigate('home');
   }
 
-  // Pre-seed mastery so SRS starts at the detected CEFR level, not A1
+  // Pre-seed mastery with TIERED intervals so lower-level words come back
+  // periodically for review — prevents atrophy without overwhelming the user.
+  //
+  // gap = how many levels below detected:
+  //   gap 1 (e.g. B1 for B2 user) → score:3, 4-12 days  → frequent light review
+  //   gap 2 (e.g. A2 for B2 user) → score:3, 14-28 days → moderate review
+  //   gap 3 (e.g. A1 for B2 user) → score:4, 30-50 days → occasional review
+  // Random spread within each range avoids a flood of reviews on the same day.
   _seedPlacementMastery(cefrLevel) {
     const LEVEL_ORDER = ['A1','A2','B1','B2','C1','C2'];
     const detectedIdx = LEVEL_ORDER.indexOf(cefrLevel);
-    if (detectedIdx <= 0) return; // A1 → no seeding needed
+    if (detectedIdx <= 0) return;
 
     const lowerLevels = LEVEL_ORDER.slice(0, detectedIdx);
     const mastery = Object.assign({}, this.state.get('mastery'));
@@ -6387,15 +6411,21 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     WORDS.forEach(w => {
       if (!lowerLevels.includes(w.level)) return;
       const key = w.id || w.en;
-      if (mastery[key]) return; // don't overwrite real data
-      // score:3 = "learned" threshold; 21-day interval keeps them away
-      mastery[key] = { score: 3, interval: 21, ease: 2.5, nextReview: now + 21 * 86400000 };
+      if (mastery[key]) return; // don't overwrite real progress
+
+      const gap = detectedIdx - LEVEL_ORDER.indexOf(w.level);
+      let baseInterval, score;
+      if      (gap === 1) { score = 3; baseInterval = 4;  }  // 4-12 days
+      else if (gap === 2) { score = 3; baseInterval = 14; }  // 14-28 days
+      else                { score = 4; baseInterval = 30; }  // 30-50 days
+
+      const spread   = Math.floor(Math.random() * (gap === 1 ? 8 : gap === 2 ? 14 : 20));
+      const interval = baseInterval + spread;
+      mastery[key] = { score, interval, ease: 2.5, nextReview: now + interval * 86400000 };
     });
 
-    // immediate=true → mastery de anında Firebase'e gitsin
     this.state.update({ mastery }, true);
 
-    // Set synesthesia filter to detected level (max B2 since WORDS only go to B2)
     const wordLevel = ['A1','A2','B1','B2'].includes(cefrLevel) ? cefrLevel : 'B2';
     this._synthCEFRFilter = wordLevel;
   }
