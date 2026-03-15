@@ -2654,8 +2654,23 @@ class App {
         splash.remove();
         window._splashActive = false;
         if (window.authManager?.isLoggedIn) {
-          const onboarded = this.state.get('onboarded');
-          this.navigate(onboarded ? 'home' : 'placement');
+          // Wait for cloud data before deciding — avoids showing placement
+          // due to stale local defaults when Firestore is slow (>2s)
+          if (window.authManager._cloudReady) {
+            const onboarded = this.state.get('onboarded');
+            this.navigate(onboarded ? 'home' : 'placement');
+          } else {
+            // Cloud not ready yet — poll every 200ms up to 8s, then fall back
+            let waited = 0;
+            const poll = setInterval(() => {
+              waited += 200;
+              if (window.authManager._cloudReady || waited >= 8000) {
+                clearInterval(poll);
+                const onboarded = this.state.get('onboarded');
+                this.navigate(onboarded ? 'home' : 'placement');
+              }
+            }, 200);
+          }
         } else {
           window.authUI?.open();
         }
@@ -6493,7 +6508,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   }
 
   _placementSkip() {
-    this.state.update({ onboarded: true });
+    this.state.update({ onboarded: true }, true); // immediate cloud save
     this.navigate('home');
   }
 
