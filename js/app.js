@@ -6669,14 +6669,17 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     this.state._state = this.state._defaults();
     this.state.save(false);
 
-    // 4. Temiz state'i cloud'a kaydet
+    // 4. Header'ı hemen güncelle (XP/level/streak sıfırlandı)
+    this._updateHeader();
+
+    // 5. Temiz state'i cloud'a kaydet
     if (window.authManager?.isLoggedIn) {
       window.authManager._cloudReady = true;
       this.cloudLoaded = true;
       await window.authManager.saveToCloud(this.state._state, true);
     }
 
-    // 5. Modal kapat, placement'a yönlendir
+    // 6. Modal kapat, placement'a yönlendir
     const modal = document.getElementById('reset-confirm-modal');
     if (modal) modal.style.display = 'none';
 
