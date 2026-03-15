@@ -2356,6 +2356,7 @@ class StateManager {
       readingMode:   'read',     // 'read' | 'shadow' | 'quiz'
       learningMode:  'balanced', // 'balanced' | 'intensive' | 'speaking' | 'grammar'
       learningGoal:  'general',  // 'general' | 'travel' | 'business' | 'academic'
+      cefrLevel:     '',         // placement test result: A1|A2|B1|B2|C1|C2
       _lastMilestoneCelebrated: 0,
     };
   }
@@ -6365,7 +6366,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   }
 
   _placementFinish(level, mode) {
-    this.state.update({ onboarded: true, learningMode: mode, cefrLevel: level });
+    // immediate=true → Firebase'e anında kaydet, 15sn beklemeden
+    this.state.update({ onboarded: true, learningMode: mode, cefrLevel: level }, true);
     this._seedPlacementMastery(level);
     this.navigate('home');
   }
@@ -6388,7 +6390,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       mastery[key] = { score: 3, interval: 21, ease: 2.5, nextReview: now + 21 * 86400000 };
     });
 
-    this.state.update({ mastery });
+    // immediate=true → mastery de anında Firebase'e gitsin
+    this.state.update({ mastery }, true);
 
     // Set synesthesia filter to detected level (max B2 since WORDS only go to B2)
     const wordLevel = ['A1','A2','B1','B2'].includes(cefrLevel) ? cefrLevel : 'B2';

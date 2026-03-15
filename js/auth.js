@@ -197,13 +197,13 @@ class AuthManager {
         }
 
         // ── Geçiş: placement test öncesinde var olan kullanıcıları otomatik onboard et ──
-        // onboarded alanı cloud'da yoksa ve anlamlı veri varsa → doğrudan home
+        // onboarded alanı cloud'da yoksa ve gerçek (placement öncesi) veri varsa → home
         if (!window.app.state.get('onboarded')) {
-          const mastery  = window.app.state.get('mastery')  || {};
           const xp       = window.app.state.get('xp')       || 0;
           const sessions = window.app.state.get('sessions') || 0;
-          if (Object.keys(mastery).length > 0 || xp > 0 || sessions > 0) {
-            window.app.state.update({ onboarded: true });
+          // Sadece gerçek XP/oturum varsa migrate et — seeded mastery buna dahil değil
+          if (xp > 0 || sessions > 0) {
+            window.app.state.update({ onboarded: true }, true);
             console.info('[Auth] Mevcut kullanıcı → onboarded=true (migration)');
           }
         }
