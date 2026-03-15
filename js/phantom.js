@@ -408,9 +408,10 @@ class PhantomMode {
     this._coolTimer = setInterval(() => {
       if (this.phase !== 'recall') return;
       this._coolLevel = Math.min(1, this._coolLevel + 0.015);
-      // Slotların parlaklığını azalt
+      // Kutunun kenarlık opaklığını yavaşça düşür
+      const alpha = Math.max(0.06, 0.2 - this._coolLevel * 0.14);
       document.querySelectorAll('.ph-letter.ph-faded').forEach(el => {
-        el.style.opacity = Math.max(0.018, 0.038 - this._coolLevel * 0.02);
+        el.style.borderColor = `rgba(167,139,250,${alpha})`;
       });
     }, 400);
   }
@@ -685,8 +686,10 @@ class PhantomMode {
     if (el) {
       el.classList.remove('ph-crystal', 'ph-hint-glow');
       el.classList.add('ph-faded', 'ph-cursor');
-      el.style.opacity = '0.038';
-      el.textContent   = this.word.en[pos];
+      el.style.removeProperty('color');
+      el.style.removeProperty('border-color');
+      el.style.removeProperty('box-shadow');
+      el.textContent = this.word.en[pos];
     }
     this._updateCursor();
   }
