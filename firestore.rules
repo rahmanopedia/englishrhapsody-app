@@ -24,11 +24,12 @@ service cloud.firestore {
     }
 
     // ── Liderlik Tablosu ──────────────────────────────────────
-    // Giriş yapmış herkes okuyabilir; sadece kendi satırını yazabilir
+    // Giriş yapmış herkes okuyabilir; sadece kendi satırını yazabilir/silebilir
     match /leaderboards/{period}/users/{userId} {
-      allow read:  if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == userId
+      allow read:   if request.auth != null;
+      allow create, update: if request.auth != null && request.auth.uid == userId
                    && request.resource.data.keys().size() <= 10;
+      allow delete: if request.auth != null && request.auth.uid == userId;
     }
 
     // ── Reddet: Yukarıdaki kurallara uymayan her şey ─────────
