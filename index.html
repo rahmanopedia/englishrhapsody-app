@@ -1019,18 +1019,6 @@
     </div>
   </div>
 
-  <!-- Onay Modalı -->
-  <div id="reset-confirm-modal" class="reset-modal" style="display:none">
-    <div class="reset-modal-box">
-      <div class="reset-modal-icon">⚠️</div>
-      <div class="reset-modal-title">Emin misin?</div>
-      <div class="reset-modal-desc">Tüm XP, kelimeler, seriler ve başarımların kalıcı olarak silinecek.<br>Bu işlem <strong>geri alınamaz.</strong></div>
-      <div class="reset-modal-btns">
-        <button class="reset-btn-cancel" onclick="document.getElementById('reset-confirm-modal').style.display='none'">Vazgeç</button>
-        <button class="reset-btn-confirm" id="btn-reset-confirm" onclick="window._app._doResetUserData()">Evet, Sıfırla</button>
-      </div>
-    </div>
-  </div>
 
 </div>
 </template>
@@ -1100,5 +1088,22 @@
 <script src="js/phrasal_verbs_ext2.js"></script>
 
 <script src="js/sw-register.js"></script>
+<!-- ── Veri Sıfırlama Onay Modalı (body'de sabit — her zaman erişilebilir) ── -->
+<div id="reset-confirm-modal" class="reset-modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+  <div class="reset-modal-box">
+    <div class="reset-modal-icon">⚠️</div>
+    <div class="reset-modal-title">Emin misin?</div>
+    <div class="reset-modal-desc">
+      Tüm XP, kelimeler, seriler ve başarımların kalıcı olarak silinecek.<br>
+      Firebase ve yerel veriler tamamen temizlenecek.<br><br>
+      <strong>Bu işlem geri alınamaz.</strong>
+    </div>
+    <div class="reset-modal-btns">
+      <button class="reset-btn-cancel" onclick="document.getElementById('reset-confirm-modal').style.display='none'">Vazgeç</button>
+      <button class="reset-btn-confirm" id="btn-reset-confirm" onclick="window._app._doResetUserData()">🗑️ Evet, Sıfırla</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
