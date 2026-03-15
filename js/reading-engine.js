@@ -121,6 +121,21 @@ class ReadingEngine {
     const label = typeLabels[ann.annotation_type] || 'Bilgi';
     const color = typeColors[ann.annotation_type] || '#374151';
 
+    const individualsHtml = (ann.individual_meanings && ann.individual_meanings.length)
+      ? `<div class="ann-divider"></div>
+         <div class="ann-individual-label">Kelime Kelime</div>
+         <div class="ann-individuals">
+           ${ann.individual_meanings.map(m => `
+             <div class="ann-ind-row">
+               <span class="ann-ind-word">${m.word}</span>
+               <span class="ann-ind-sep">→</span>
+               <span class="ann-ind-meaning">${m.meaning}</span>
+               ${m.note ? `<span class="ann-ind-note">${m.note}</span>` : ''}
+             </div>
+           `).join('')}
+         </div>`
+      : '';
+
     popup.innerHTML = `
       <div class="ann-popup-header">
         <div class="ann-type-badge" style="background: ${color}">${label}</div>
@@ -130,7 +145,7 @@ class ReadingEngine {
         <div class="ann-surface">${ann.surface_form}</div>
         <div class="ann-meaning">${ann.contextual_turkish_meaning}</div>
         <div class="ann-explanation">${ann.short_explanation_tr}</div>
-        
+        ${individualsHtml}
         ${ann.example_sentence_en ? `
           <div class="ann-divider"></div>
           <div class="ann-example-label">Örnek Cümle</div>

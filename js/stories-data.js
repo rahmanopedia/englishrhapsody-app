@@ -1,7 +1,12 @@
 /**
  * English Rhapsody - Reading Workshop Stories Data
  * 10 hikaye: 3 Kolay / 4 Orta / 3 İleri
- * Derin bağlamsal annotation sistemi — v3.0
+ * Derin bağlamsal annotation sistemi — v4.0
+ *
+ * YENİ: Fiil+zarf / zarf+sıfat birleşimleri (cried quietly, spread quickly...):
+ *   - annotation_type: "verb_phrase" olarak işaretlenir
+ *   - individual_meanings[] ile her kelime ayrıca açıklanır
+ *   - Popup hem birleşik anlamı hem kelime kelime gösterir
  */
 
 const STORIES = [
@@ -31,7 +36,7 @@ const STORIES = [
         "pos": "CLAUSE",
         "annotation_type": "relative_clause",
         "contextual_turkish_meaning": "çok nazik olan (öğretmen)",
-        "short_explanation_tr": "'who' burada öğretmeni niteleyen bir sıfat cümleciği başlatır. 'çok nazik olan öğretmen' anlamını verir.",
+        "short_explanation_tr": "'who' burada öğretmeni niteleyen bir sıfat cümleciği başlatır.",
         "example_sentence_en": "The nurse who was very kind helped me.",
         "example_sentence_tr": "Çok nazik olan hemşire bana yardım etti."
       },
@@ -72,6 +77,30 @@ const STORIES = [
         "example_sentence_tr": "Adı çağrılınca ayağa kalktı."
       },
       {
+        "start_index": 281,
+        "end_index": 302,
+        "surface_form": "said his name clearly",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "ismini açıkça / net bir sesle söyledi",
+        "short_explanation_tr": "Fiil + zarf birleşimi. 'clearly' eylemin nasıl gerçekleştiğini gösterir: tereddütsüz, anlaşılır biçimde.",
+        "example_sentence_en": "She said her name clearly so everyone could hear.",
+        "example_sentence_tr": "Herkes duyabilsin diye ismini net bir şekilde söyledi.",
+        "individual_meanings": [
+          {
+            "word": "said",
+            "meaning": "söyledi",
+            "note": "'say' fiilinin geçmiş biçimi"
+          },
+          {
+            "word": "clearly",
+            "meaning": "açıkça / anlaşılır biçimde",
+            "note": "Eylemin nasıl yapıldığını gösteren zarf"
+          }
+        ]
+      },
+      {
         "start_index": 338,
         "end_index": 347,
         "surface_form": "came over",
@@ -79,7 +108,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "phrasal_verb",
         "contextual_turkish_meaning": "yanına geldi",
-        "short_explanation_tr": "'come over' = birisinin bulunduğu yere doğru gelmek, yanına geçmek.",
+        "short_explanation_tr": "'come over' = birisinin bulunduğu yere doğru gelmek.",
         "example_sentence_en": "She came over to say hello.",
         "example_sentence_tr": "Merhaba demek için yanıma geldi."
       },
@@ -140,6 +169,30 @@ const STORIES = [
     "text": "It was raining heavily outside, so Anna decided to stay at home. She looked out of the window and watched the raindrops run down the glass. She made herself a cup of tea and sat down on the sofa. She picked up her favourite book and started reading. The story was about a girl who lived alone in a lighthouse. Anna felt so absorbed in the book that she forgot about everything else. When her mother called her for dinner, she did not hear it at first. Her mother had to call her name three times before she finally looked up. Anna put her book down and went to the kitchen. The food smelled delicious and she was very hungry by then. After dinner, she helped her mother wash the dishes. That evening, they watched an old film together and laughed a lot.",
     "annotations": [
       {
+        "start_index": 7,
+        "end_index": 22,
+        "surface_form": "raining heavily",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "şiddetli yağmur yağıyordu",
+        "short_explanation_tr": "Fiil + zarf birleşimi. 'raining' devamlı eylemi, 'heavily' yoğunluğu gösterir. İkisi birlikte kuvvetli bir yağışı anlatır.",
+        "example_sentence_en": "It was raining heavily all night.",
+        "example_sentence_tr": "Bütün gece şiddetli yağmur yağıyordu.",
+        "individual_meanings": [
+          {
+            "word": "raining",
+            "meaning": "yağmur yağıyor",
+            "note": "Present Continuous; süregelen hava durumu"
+          },
+          {
+            "word": "heavily",
+            "meaning": "şiddetli biçimde / yoğun olarak",
+            "note": "Eylemin yoğunluğunu gösteren zarf"
+          }
+        ]
+      },
+      {
         "start_index": 51,
         "end_index": 63,
         "surface_form": "stay at home",
@@ -159,7 +212,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "phrasal_verb",
         "contextual_turkish_meaning": "pencereden dışarı baktı",
-        "short_explanation_tr": "'look out of' = bir açıklıktan dışarıya bakmak. Burada pencerenin dışını seyretmek.",
+        "short_explanation_tr": "'look out of' = bir açıklıktan dışarıya bakmak.",
         "example_sentence_en": "She looked out of the window at the snow.",
         "example_sentence_tr": "Pencereden dışarıdaki kara baktı."
       },
@@ -171,7 +224,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "kendine bir fincan çay yaptı",
-        "short_explanation_tr": "Reflexive yapı + dative: 'herself' eylemi kendi için yaptığını gösterir. 'a cup of tea' standart içecek ifadesi.",
+        "short_explanation_tr": "Reflexive yapı: 'herself' eylemi kendi için yaptığını gösterir. 'a cup of tea' standart içecek ifadesi.",
         "example_sentence_en": "He made himself a sandwich.",
         "example_sentence_tr": "Kendine bir sandviç yaptı."
       },
@@ -194,7 +247,7 @@ const STORIES = [
         "lemma": "pick up",
         "pos": "VERB",
         "annotation_type": "phrasal_verb",
-        "contextual_turkish_meaning": "aldı / elinden tuttu / yerden kaldırdı",
+        "contextual_turkish_meaning": "aldı / elinden tuttu",
         "short_explanation_tr": "'pick up': bir nesneyi yerden ya da bir yerden alıp eline geçirmek.",
         "example_sentence_en": "She picked up the pen from the floor.",
         "example_sentence_tr": "Kalemi yerden aldı."
@@ -207,7 +260,7 @@ const STORIES = [
         "pos": "CLAUSE",
         "annotation_type": "relative_clause",
         "contextual_turkish_meaning": "bir deniz fenerinde yalnız yaşayan (kız)",
-        "short_explanation_tr": "'who' kız hakkında ek bilgi verir. Tam yapı: 'yalnız başına bir fenerde yaşayan kız'.",
+        "short_explanation_tr": "'who' kız hakkında ek bilgi verir. 'alone' = yalnız başına; 'lighthouse' = deniz feneri.",
         "example_sentence_en": "The boy who lived alone was very brave.",
         "example_sentence_tr": "Yalnız yaşayan çocuk çok cesurdu."
       },
@@ -236,6 +289,30 @@ const STORIES = [
         "example_sentence_tr": "Bir saat beklemek zorunda kaldım."
       },
       {
+        "start_index": 583,
+        "end_index": 600,
+        "surface_form": "smelled delicious",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "nefis kokuyordu",
+        "short_explanation_tr": "Bağlaç fiil (linking verb) + sıfat. 'smelled' duyuyu aktarır; 'delicious' onu niteler. Eylem değil, durum ifade eder.",
+        "example_sentence_en": "The soup smelled delicious.",
+        "example_sentence_tr": "Çorba nefis kokuyordu.",
+        "individual_meanings": [
+          {
+            "word": "smelled",
+            "meaning": "kokuyordu",
+            "note": "'smell' linking verb olarak kullanılmış; eylem değil durum"
+          },
+          {
+            "word": "delicious",
+            "meaning": "nefis / iştah açıcı",
+            "note": "Yiyecek/içecek için kullanılan sıfat"
+          }
+        ]
+      },
+      {
         "start_index": 531,
         "end_index": 548,
         "surface_form": "put her book down",
@@ -243,7 +320,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "phrasal_verb",
         "contextual_turkish_meaning": "kitabını bıraktı / elindeki kitabı yere koydu",
-        "short_explanation_tr": "Split phrasal verb: 'put ... down' = elindeki nesneyi bırakmak. Burada nesne aradaki konuma girmiş.",
+        "short_explanation_tr": "Split phrasal verb: 'put ... down' = elindeki nesneyi bırakmak. Nesne aradaki konuma girmiş.",
         "example_sentence_en": "She put the newspaper down and looked at me.",
         "example_sentence_tr": "Gazeteyi bırakıp bana baktı."
       },
@@ -255,7 +332,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "collocation",
         "contextual_turkish_meaning": "bulaşıkları yıkamak",
-        "short_explanation_tr": "Yerleşik Türkçeye de geçmiş standart ifade. 'do the dishes' ile eş anlamlıdır.",
+        "short_explanation_tr": "Yerleşik standart ifade. 'do the dishes' ile eş anlamlıdır.",
         "example_sentence_en": "Can you wash the dishes after dinner?",
         "example_sentence_tr": "Yemekten sonra bulaşıkları yıkayabilir misin?"
       }
@@ -358,10 +435,34 @@ const STORIES = [
         "lemma": "look back",
         "pos": "VERB",
         "annotation_type": "phrasal_verb",
-        "contextual_turkish_meaning": "arkasına baktı / geriye döndü",
+        "contextual_turkish_meaning": "arkasına baktı",
         "short_explanation_tr": "'look back' = arkaya, geride kalan yöne bakmak.",
         "example_sentence_en": "He looked back and waved.",
         "example_sentence_tr": "Arkasına bakıp el salladı."
+      },
+      {
+        "start_index": 508,
+        "end_index": 519,
+        "surface_form": "nearly fell",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "neredeyse düştü",
+        "short_explanation_tr": "Zarf + fiil birleşimi. 'nearly' eylemin gerçekleşmeye çok yaklaştığını ama olmadığını gösterir.",
+        "example_sentence_en": "She nearly fell on the ice.",
+        "example_sentence_tr": "Buzda neredeyse düşüyordu.",
+        "individual_meanings": [
+          {
+            "word": "nearly",
+            "meaning": "neredeyse / az kalsın",
+            "note": "Eylemin çok az farkla gerçekleşmediğini gösteren zarf"
+          },
+          {
+            "word": "fell",
+            "meaning": "düştü",
+            "note": "'fall' fiilinin geçmiş biçimi"
+          }
+        ]
       },
       {
         "start_index": 527,
@@ -371,7 +472,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "gitmeye devam etti / durmadı",
-        "short_explanation_tr": "'keep going' = durmayarak devam etmek. Burada düşmeden bisiklet sürmeye devam etmeyi ifade eder.",
+        "short_explanation_tr": "'keep going' = durmayarak devam etmek.",
         "example_sentence_en": "Despite the rain, they kept going.",
         "example_sentence_tr": "Yağmura rağmen devam ettiler."
       },
@@ -383,7 +484,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "hata yapmak öğrenmenin bir parçasıdır",
-        "short_explanation_tr": "Gerund'ün özne olarak kullanımı: 'making mistakes' cümlenin öznesidir. İngilizcede fiil mastar olarak da özne olabilir.",
+        "short_explanation_tr": "Gerund'ün özne olarak kullanımı: 'making mistakes' cümlenin öznesidir.",
         "example_sentence_en": "Asking questions is part of understanding.",
         "example_sentence_tr": "Soru sormak anlamanın bir parçasıdır."
       }
@@ -415,7 +516,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "idiom",
         "contextual_turkish_meaning": "gözlerine inanamadı",
-        "short_explanation_tr": "Deyim. Beklenmedik bir şey karşısında çok şaşırmak; göreni hayrete düşüren bir durumu ifade eder.",
+        "short_explanation_tr": "Deyim. Beklenmedik bir şey karşısında çok şaşırmak.",
         "example_sentence_en": "She could not believe her eyes when she saw the prize.",
         "example_sentence_tr": "Ödülü görünce gözlerine inanamadı."
       },
@@ -439,7 +540,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "seyahat etmekteydi / aylarca seyahat etmişti",
-        "short_explanation_tr": "Past Perfect Continuous: geçmişte belirli bir noktadan önce başlayıp süren eylem. Vurgu devam üstünde.",
+        "short_explanation_tr": "Past Perfect Continuous: geçmişte belirli bir noktadan önce başlayıp süren eylem.",
         "example_sentence_en": "She had been working there for five years.",
         "example_sentence_tr": "Beş yıldır orada çalışmaktaydı."
       },
@@ -480,6 +581,30 @@ const STORIES = [
         "example_sentence_tr": "Eski günleri konuşarak saatler geçirdik."
       },
       {
+        "start_index": 624,
+        "end_index": 642,
+        "surface_form": "listened carefully",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "dikkatle / dikkatlice dinledi",
+        "short_explanation_tr": "Fiil + zarf birleşimi. 'carefully' dinlemenin kalitesini gösterir: her ayrıntıya önem vererek.",
+        "example_sentence_en": "She listened carefully to every word.",
+        "example_sentence_tr": "Her kelimeyi dikkatlice dinledi.",
+        "individual_meanings": [
+          {
+            "word": "listened",
+            "meaning": "dinledi",
+            "note": "'listen' fiilinin geçmiş biçimi; dikkatli ve kasıtlı dinleme"
+          },
+          {
+            "word": "carefully",
+            "meaning": "dikkatlice / özenle",
+            "note": "Eylemin nasıl yapıldığını gösteren zarf"
+          }
+        ]
+      },
+      {
         "start_index": 728,
         "end_index": 763,
         "surface_form": "had completely forgotten about work",
@@ -487,7 +612,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "işi tamamen unutmuştu",
-        "short_explanation_tr": "Past Perfect: fark etme anından önce unutmanın gerçekleştiğini gösterir. 'completely' yoğunlaştırıcı.",
+        "short_explanation_tr": "Past Perfect: fark etme anından önce unutmanın gerçekleştiğini gösterir.",
         "example_sentence_en": "She had forgotten about the meeting.",
         "example_sentence_tr": "Toplantıyı unutmuştu."
       },
@@ -547,7 +672,7 @@ const STORIES = [
         "pos": "ADV",
         "annotation_type": "idiom",
         "contextual_turkish_meaning": "sonunda / nihayetinde",
-        "short_explanation_tr": "'in the end' = sonuç olarak, her şey bittiğinde. 'at the end' ile karıştırılmamalı.",
+        "short_explanation_tr": "'in the end' = sonuç olarak, her şey bittiğinde.",
         "example_sentence_en": "In the end, everything worked out fine.",
         "example_sentence_tr": "Sonunda her şey yoluna girdi."
       },
@@ -579,7 +704,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "idiom",
         "contextual_turkish_meaning": "karar vermek / kafasında karara varmak",
-        "short_explanation_tr": "Deyim. Uzun süre düşündükten sonra bir karara ulaşmak. 'decide' den daha çok kararsızlık sürecini vurgular.",
+        "short_explanation_tr": "Deyim. Uzun süre düşündükten sonra bir karara ulaşmak.",
         "example_sentence_en": "Have you made up your mind yet?",
         "example_sentence_tr": "Henüz karar verdin mi?"
       },
@@ -591,7 +716,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "çok daha iyi maaş ödüyordu",
-        "short_explanation_tr": "Comparative + 'much' güçlendirici. 'paid' burada ücret anlamıyla geçmiş zamanda kullanılmış.",
+        "short_explanation_tr": "Comparative + 'much' güçlendirici. 'paid' burada ücret anlamıyla geçmiş zamanda.",
         "example_sentence_en": "This job paid much better than the last.",
         "example_sentence_tr": "Bu iş bir öncekinden çok daha iyi ödüyordu."
       },
@@ -615,7 +740,7 @@ const STORIES = [
         "pos": "CLAUSE",
         "annotation_type": "relative_clause",
         "contextual_turkish_meaning": "kararın ne kadar zor olduğunu anlayan (eşi)",
-        "short_explanation_tr": "'who' eşini niteleyen relative clause açar. 'how difficult' dolaylı soru yapısıdır.",
+        "short_explanation_tr": "'who' eşini niteleyen relative clause. 'how difficult' dolaylı soru yapısıdır.",
         "example_sentence_en": "She was a friend who understood everything.",
         "example_sentence_tr": "Her şeyi anlayan bir arkadaştı."
       },
@@ -627,7 +752,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "word",
         "contextual_turkish_meaning": "itiraf etti / kabul etti",
-        "short_explanation_tr": "'admit' = hoş olmayan bir gerçeği kabullenmek ya da söylemek. Burada zorluğu dile getirmek.",
+        "short_explanation_tr": "'admit' = hoş olmayan bir gerçeği kabullenmek ya da söylemek.",
         "example_sentence_en": "He admitted that it would be hard.",
         "example_sentence_tr": "Bunun zor olacağını kabul etti."
       },
@@ -651,7 +776,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "korkunun onu ilerlemekten alıkoymasına izin vermemeli",
-        "short_explanation_tr": "'let + nesne + bare infinitive + from + gerund': birinin bir şeyi yapmasına izin vermek yapısı.",
+        "short_explanation_tr": "'let + nesne + bare infinitive + from + gerund': yapı izin/sebep olma anlamı taşır.",
         "example_sentence_en": "Don't let doubt stop you from trying.",
         "example_sentence_tr": "Şüphenin seni denemekten alıkoymasına izin verme."
       },
@@ -668,6 +793,30 @@ const STORIES = [
         "example_sentence_tr": "Neden olduğunu bilmeden gülümsediğimi fark ettim."
       },
       {
+        "start_index": 851,
+        "end_index": 862,
+        "surface_form": "simply knew",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "öylesine / birden biliyordu — analiz etmeden, içgüdüsel olarak",
+        "short_explanation_tr": "Zarf + fiil birleşimi. 'simply' burada 'just' anlamında: açıklaması olmayan, kendiliğinden gelen bir bilgiyi anlatır.",
+        "example_sentence_en": "She woke up and simply knew it was over.",
+        "example_sentence_tr": "Uyandı ve birden her şeyin bittiğini bildi.",
+        "individual_meanings": [
+          {
+            "word": "simply",
+            "meaning": "öylesine / sadece / birden",
+            "note": "Burada 'just' anlamında; fazla düşünmeden, kendiliğinden"
+          },
+          {
+            "word": "knew",
+            "meaning": "bildi / fark etti",
+            "note": "'know' fiilinin geçmiş biçimi; içgüdüsel farkındalık"
+          }
+        ]
+      },
+      {
         "start_index": 953,
         "end_index": 967,
         "surface_form": "broke the news",
@@ -678,6 +827,35 @@ const STORIES = [
         "short_explanation_tr": "Deyim. Önemli (çoğunlukla beklenmedik) bir haberi birine iletmek.",
         "example_sentence_en": "He broke the news to her gently.",
         "example_sentence_tr": "Haberi ona nazikçe verdi."
+      },
+      {
+        "start_index": 996,
+        "end_index": 1021,
+        "surface_form": "took it surprisingly well",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "bunu şaşırtıcı derecede iyi karşıladı",
+        "short_explanation_tr": "Fiil + zarf + sıfat/zarf birleşimi. 'surprisingly' beklentinin ötesinde bir tepkiyi işaret eder.",
+        "example_sentence_en": "He took the bad news surprisingly well.",
+        "example_sentence_tr": "Kötü haberi şaşırtıcı biçimde iyi karşıladı.",
+        "individual_meanings": [
+          {
+            "word": "took",
+            "meaning": "karşıladı / aldı",
+            "note": "'take news well/badly' = bir haberi iyi/kötü karşılamak"
+          },
+          {
+            "word": "surprisingly",
+            "meaning": "şaşırtıcı biçimde",
+            "note": "Beklentilerin ötesinde olduğunu vurgular"
+          },
+          {
+            "word": "well",
+            "meaning": "iyi / güzel bir şekilde",
+            "note": "Burada zarf; tepkinin olumluluğunu gösterir"
+          }
+        ]
       },
       {
         "start_index": 1037,
@@ -699,7 +877,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "phrasal_verb",
         "contextual_turkish_meaning": "yeni arkadaşlar edinmeyi dört gözle bekliyordu",
-        "short_explanation_tr": "'look forward to + gerund': heyecanla, sabırsızlıkla beklemek. 'to'dan sonra fiil -ing alır.",
+        "short_explanation_tr": "'look forward to + gerund': heyecanla beklemek. 'to'dan sonra fiil -ing alır.",
         "example_sentence_en": "I am looking forward to starting.",
         "example_sentence_tr": "Başlamayı dört gözle bekliyorum."
       },
@@ -731,7 +909,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "idiom",
         "contextual_turkish_meaning": "sıfırdan başlamak / en baştan başlamak",
-        "short_explanation_tr": "Deyim. Daha önce hiç yapılmamış gibi, temel bilgi ya da malzeme olmaksızın başlamak.",
+        "short_explanation_tr": "Deyim. Temel bilgi ya da malzeme olmaksızın başlamak.",
         "example_sentence_en": "We had to start from scratch after the fire.",
         "example_sentence_tr": "Yangından sonra sıfırdan başlamak zorunda kaldık."
       },
@@ -743,7 +921,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "yeterince basit görünüyordu",
-        "short_explanation_tr": "'look + adjective' = görünmek, -gibi görünmek. 'enough' sıfat sonrasında 'yeterince' anlamı katar.",
+        "short_explanation_tr": "'look + adjective' = görünmek. 'enough' sıfat sonrasında 'yeterince' anlamı katar.",
         "example_sentence_en": "The task looked easy enough.",
         "example_sentence_tr": "Görev yeterince kolay görünüyordu."
       },
@@ -755,7 +933,7 @@ const STORIES = [
         "pos": "NOUN",
         "annotation_type": "noun_phrase",
         "contextual_turkish_meaning": "bir avuç taze ot",
-        "short_explanation_tr": "'a handful of' = bir avuç kadar miktar ifadesi. Belirsiz ama somut miktar belirter.",
+        "short_explanation_tr": "'a handful of' = bir avuç kadar belirsiz miktar ifadesi.",
         "example_sentence_en": "Add a handful of nuts to the salad.",
         "example_sentence_tr": "Salataya bir avuç fındık ekle."
       },
@@ -796,6 +974,30 @@ const STORIES = [
         "example_sentence_tr": "Soğuk rüzgâr gözlerini yaşarttı."
       },
       {
+        "start_index": 473,
+        "end_index": 488,
+        "surface_form": "burned slightly",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "hafifçe yandı / birazcık kavruldu",
+        "short_explanation_tr": "Fiil + zarf birleşimi. 'slightly' yanmanın minimal düzeyde olduğunu gösterir; tam yanma değil.",
+        "example_sentence_en": "The garlic burned slightly but was still usable.",
+        "example_sentence_tr": "Sarımsak hafifçe yandı ama hâlâ kullanılabilirdi.",
+        "individual_meanings": [
+          {
+            "word": "burned",
+            "meaning": "yandı / kavruldu",
+            "note": "'burn' fiilinin geçmiş biçimi; burada hafif yanma"
+          },
+          {
+            "word": "slightly",
+            "meaning": "hafifçe / birazcık",
+            "note": "Eylemin minimalliğini vurgular; çok az miktarda"
+          }
+        ]
+      },
+      {
         "start_index": 501,
         "end_index": 514,
         "surface_form": "throw it away",
@@ -827,7 +1029,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "word",
         "contextual_turkish_meaning": "hafifçe kaynamaya başladı",
-        "short_explanation_tr": "'simmer' = sıvının tam kaynamadan hafifçe fokurdaması. Mutfakta sık kullanılan teknik terim.",
+        "short_explanation_tr": "'simmer' = sıvının tam kaynamadan hafifçe fokurdaması.",
         "example_sentence_en": "Let the soup simmer for twenty minutes.",
         "example_sentence_tr": "Çorbanın yirmi dakika hafifçe kaynamasını sağla."
       },
@@ -839,9 +1041,33 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "harika bir kokuyla doldu",
-        "short_explanation_tr": "'fill with' = bir şeyle dolmak. Pasif benzeri yapı; mutfak kendiliğinden dolmuş.",
+        "short_explanation_tr": "'fill with' = bir şeyle dolmak. Mutfak kendiliğinden dolmuş.",
         "example_sentence_en": "The room filled with laughter.",
         "example_sentence_tr": "Oda kahkahalarla doldu."
+      },
+      {
+        "start_index": 882,
+        "end_index": 901,
+        "surface_form": "immediately decided",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "hemen / anında karar verdi",
+        "short_explanation_tr": "Zarf + fiil birleşimi. 'immediately' kararsızlık yaşamadan, hiç beklemeden eyleme geçtiğini gösterir.",
+        "example_sentence_en": "She immediately decided to try again.",
+        "example_sentence_tr": "Hemen tekrar denemek için karar verdi.",
+        "individual_meanings": [
+          {
+            "word": "immediately",
+            "meaning": "hemen / anında",
+            "note": "Gecikme olmaksızın gerçekleştiğini gösteren zarf"
+          },
+          {
+            "word": "decided",
+            "meaning": "karar verdi",
+            "note": "'decide' fiilinin geçmiş biçimi"
+          }
+        ]
       },
       {
         "start_index": 852,
@@ -863,7 +1089,7 @@ const STORIES = [
         "pos": "NOUN",
         "annotation_type": "noun_phrase",
         "contextual_turkish_meaning": "hata yapmaya isteklilik / hata yapmaktan çekinmemek",
-        "short_explanation_tr": "'willingness to + infinitive' = bir şeyi yapmaya istekli olma hâli. İsim tamlaması olarak işlev görür.",
+        "short_explanation_tr": "'willingness to + infinitive' = bir şeyi yapmaya istekli olma hâli.",
         "example_sentence_en": "Success requires a willingness to fail.",
         "example_sentence_tr": "Başarı, başarısız olmaya isteklilik gerektirir."
       }
@@ -924,28 +1150,28 @@ const STORIES = [
         "example_sentence_tr": "Habere nasıl tepki vereceğini bilmiyordum."
       },
       {
-        "start_index": 314,
-        "end_index": 339,
-        "surface_form": "staring out of the window",
-        "lemma": "stare out of",
-        "pos": "VERB",
-        "annotation_type": "phrasal_verb",
-        "contextual_turkish_meaning": "pencereden dışarıyı bakakalmak / dalmak",
-        "short_explanation_tr": "'stare' = dalmış gibi sabit bakmak. 'out of the window' bakış yönünü gösterir.",
-        "example_sentence_en": "He sat staring out of the window for hours.",
-        "example_sentence_tr": "Saatlerce pencereden dışarıyı bakakaldı."
-      },
-      {
-        "start_index": 380,
+        "start_index": 373,
         "end_index": 394,
-        "surface_form": "come into view",
-        "lemma": "come into view",
+        "surface_form": "slowly come into view",
+        "lemma": null,
         "pos": "VERB",
-        "annotation_type": "phrasal_verb",
-        "contextual_turkish_meaning": "gözükmeye başlamak / görüş alanına girmek",
-        "short_explanation_tr": "'come into view' = uzaktan yavaş yavaş görünür hâle gelmek.",
-        "example_sentence_en": "The mountains came into view as we drove north.",
-        "example_sentence_tr": "Kuzeye sürerken dağlar yavaş yavaş göründü."
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "yavaş yavaş görünür hâle gelmek / ağır ağır belirmek",
+        "short_explanation_tr": "Zarf + phrasal verb birleşimi. 'slowly' hareketin temposunu gösterir; 'come into view' görünür olmayı.",
+        "example_sentence_en": "The village slowly came into view through the fog.",
+        "example_sentence_tr": "Köy sisten yavaş yavaş belirdi.",
+        "individual_meanings": [
+          {
+            "word": "slowly",
+            "meaning": "yavaş yavaş / ağır ağır",
+            "note": "Hareketin hızını belirten zarf"
+          },
+          {
+            "word": "come into view",
+            "meaning": "görünür hâle gelmek / gözükmeye başlamak",
+            "note": "Phrasal verb: görüş alanına girmek"
+          }
+        ]
       },
       {
         "start_index": 411,
@@ -967,7 +1193,7 @@ const STORIES = [
         "pos": "CLAUSE",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "aylardır taşıdığı gerilim",
-        "short_explanation_tr": "Past Perfect Continuous + sıfır relative pronoun: 'he had been carrying' tanımsız gerginliği süregelmiş eylemle niteler.",
+        "short_explanation_tr": "Past Perfect Continuous + sıfır relative pronoun: 'he had been carrying' tanımsız gerginliği niteler.",
         "example_sentence_en": "The worry she had been carrying finally faded.",
         "example_sentence_tr": "Aylardır taşıdığı endişe nihayet dağıldı."
       },
@@ -979,9 +1205,33 @@ const STORIES = [
         "pos": "ADV",
         "annotation_type": "idiom",
         "contextual_turkish_meaning": "bir anda / anında",
-        "short_explanation_tr": "'in an instant' = çok kısa sürede, saniyeler içinde. Etkinin hızını vurgular.",
+        "short_explanation_tr": "'in an instant' = çok kısa sürede, saniyeler içinde.",
         "example_sentence_en": "Everything changed in an instant.",
         "example_sentence_tr": "Her şey bir anda değişti."
+      },
+      {
+        "start_index": 865,
+        "end_index": 878,
+        "surface_form": "talked freely",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "özgürce / rahatça konuştular",
+        "short_explanation_tr": "Fiil + zarf birleşimi. 'freely' konuşmanın kısıtlama olmaksızın, açık yüreklilikle yapıldığını gösterir.",
+        "example_sentence_en": "For the first time, they talked freely about everything.",
+        "example_sentence_tr": "İlk kez her şeyi özgürce konuştular.",
+        "individual_meanings": [
+          {
+            "word": "talked",
+            "meaning": "konuştular",
+            "note": "'talk' fiilinin geçmiş biçimi; karşılıklı konuşmak"
+          },
+          {
+            "word": "freely",
+            "meaning": "özgürce / serbestçe / çekinmeden",
+            "note": "Kısıtlama veya çekince olmaksızın yapıldığını gösterir"
+          }
+        ]
       },
       {
         "start_index": 879,
@@ -991,9 +1241,33 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "gündeme getirmeden / söz açmadan",
-        "short_explanation_tr": "'without + gerund' + 'bring up' phrasal verb: bir konuyu ortaya atmadan, o konuya değmeden.",
+        "short_explanation_tr": "'without + gerund' + 'bring up' phrasal verb: bir konuyu ortaya atmadan.",
         "example_sentence_en": "They met without bringing up the past.",
         "example_sentence_tr": "Geçmişi gündeme getirmeden buluştular."
+      },
+      {
+        "start_index": 991,
+        "end_index": 1035,
+        "surface_form": "quietly placed his hand on Daniel's shoulder",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "sessizce / usulca elini Daniel'ın omzuna koydu",
+        "short_explanation_tr": "Zarf + fiil + nesne birleşimi. 'quietly' eylemin sessizce, kelimesiz gerçekleştiğini gösterir; sözden güçlü bir jest.",
+        "example_sentence_en": "She quietly placed her hand on his arm.",
+        "example_sentence_tr": "Usulca elini koluna koydu.",
+        "individual_meanings": [
+          {
+            "word": "quietly",
+            "meaning": "sessizce / usulca",
+            "note": "Eylemin gürültüsüz, dikkat çekmeden yapıldığını gösterir"
+          },
+          {
+            "word": "placed",
+            "meaning": "koydu / yerleştirdi",
+            "note": "'place' fiilinin geçmiş biçimi; 'put'tan daha özenli, nazik bir eylem"
+          }
+        ]
       },
       {
         "start_index": 937,
@@ -1015,7 +1289,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "phrasal_verb",
         "contextual_turkish_meaning": "uzak durmuştu / gelmemişti",
-        "short_explanation_tr": "'stay away' = bir yerden ya da kişiden kasıtlı olarak uzak durmak. Past Perfect yapısında.",
+        "short_explanation_tr": "'stay away' = bir yerden ya da kişiden kasıtlı olarak uzak durmak.",
         "example_sentence_en": "He had stayed away from home for years.",
         "example_sentence_tr": "Yıllarca evden uzak durmuştu."
       },
@@ -1027,7 +1301,7 @@ const STORIES = [
         "pos": "ADV",
         "annotation_type": "idiom",
         "contextual_turkish_meaning": "bundan böyle / artık",
-        "short_explanation_tr": "'from now on' = bu andan itibaren sürekli olarak; bir kararı gelecekte uygulamaya koyma niyeti.",
+        "short_explanation_tr": "'from now on' = bu andan itibaren sürekli olarak.",
         "example_sentence_en": "From now on, I will be more careful.",
         "example_sentence_tr": "Bundan böyle daha dikkatli olacağım."
       }
@@ -1047,7 +1321,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "vitreyde asılı duruyordu",
-        "short_explanation_tr": "Past Perfect Continuous: önceki bir andan üç hafta boyunca süregelen durum. Sürekliliği vurgular.",
+        "short_explanation_tr": "Past Perfect Continuous: önceki bir andan üç hafta boyunca süregelen durum.",
         "example_sentence_en": "The painting had been hanging there for years.",
         "example_sentence_tr": "Tablo yıllardır orada asılı duruyordu."
       },
@@ -1064,6 +1338,30 @@ const STORIES = [
         "example_sentence_tr": "On yıllardır kafeyi işleten adam emekli oldu."
       },
       {
+        "start_index": 276,
+        "end_index": 289,
+        "surface_form": "cried quietly",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "sessizce ağladı",
+        "short_explanation_tr": "Fiil + zarf birleşimi. 'cried' geçmiş biçimiyle 'ağladı'; 'quietly' bunu kimseye belli etmeden, içe kapanarak yaptığını gösterir. Duygusal kontrolü yitirme ile dışa vurmama arasındaki gerilimi anlatır.",
+        "example_sentence_en": "She closed the door and cried quietly.",
+        "example_sentence_tr": "Kapıyı kapattı ve sessizce ağladı.",
+        "individual_meanings": [
+          {
+            "word": "cried",
+            "meaning": "ağladı",
+            "note": "'cry' fiilinin geçmiş biçimi"
+          },
+          {
+            "word": "quietly",
+            "meaning": "sessizce / kimseye belli etmeden",
+            "note": "Eylemin fark ettirmeden, içe kapanarak yapıldığını gösterir"
+          }
+        ]
+      },
+      {
         "start_index": 319,
         "end_index": 349,
         "surface_form": "had not told anyone in advance",
@@ -1071,7 +1369,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "önceden kimseye söylememişti",
-        "short_explanation_tr": "Past Perfect olumsuz: bildirim anından önce gerçekleşmemiş eylem. 'in advance' = önceden.",
+        "short_explanation_tr": "Past Perfect olumsuz. 'in advance' = önceden.",
         "example_sentence_en": "She had not told anyone in advance.",
         "example_sentence_tr": "Önceden kimseye söylememişti."
       },
@@ -1083,9 +1381,57 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "işe gelip tabelayı okuyarak öğrenmişti",
-        "short_explanation_tr": "'find out' = bir şeyi keşfetmek. 'by + gerund' yöntemi gösterir. Past Perfect: öğrenme daha önce gerçekleşti.",
+        "short_explanation_tr": "'find out' = bir şeyi keşfetmek. 'by + gerund' yöntemi gösterir.",
         "example_sentence_en": "She found out by checking the website.",
         "example_sentence_tr": "Web sitesini kontrol ederek öğrendi."
+      },
+      {
+        "start_index": 534,
+        "end_index": 548,
+        "surface_form": "spread quickly",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "hızla yayıldı",
+        "short_explanation_tr": "Fiil + zarf birleşimi. 'spread' bir haberin dağılmasını; 'quickly' bu yayılmanın ne kadar hızlı gerçekleştiğini gösterir.",
+        "example_sentence_en": "The rumour spread quickly through the school.",
+        "example_sentence_tr": "Söylenti okulda hızla yayıldı.",
+        "individual_meanings": [
+          {
+            "word": "spread",
+            "meaning": "yayıldı",
+            "note": "'spread' düzensiz fiil; hem past tense hem de base form aynı"
+          },
+          {
+            "word": "quickly",
+            "meaning": "hızla / çabucak",
+            "note": "Yayılmanın hızını gösteren zarf"
+          }
+        ]
+      },
+      {
+        "start_index": 626,
+        "end_index": 643,
+        "surface_form": "suddenly appeared",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "birdenbire / aniden ortaya çıktı",
+        "short_explanation_tr": "Zarf + fiil birleşimi. 'suddenly' eylemin beklenmedik ve ani biçimde gerçekleştiğini vurgular.",
+        "example_sentence_en": "A figure suddenly appeared in the doorway.",
+        "example_sentence_tr": "Kapı aralığında birdenbire bir figür belirdi.",
+        "individual_meanings": [
+          {
+            "word": "suddenly",
+            "meaning": "birdenbire / aniden",
+            "note": "Eylemin beklenmedik ve ani gerçekleştiğini vurgular"
+          },
+          {
+            "word": "appeared",
+            "meaning": "ortaya çıktı / göründü",
+            "note": "'appear' fiilinin geçmiş biçimi; var olmaya başlamak"
+          }
+        ]
       },
       {
         "start_index": 595,
@@ -1095,7 +1441,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "idiom",
         "contextual_turkish_meaning": "adım atmamıştı / uğramamıştı",
-        "short_explanation_tr": "Deyim. 'set foot in' = bir yere girmek ya da gitmek. Çoğunlukla olumsuz veya özel durumlarda kullanılır.",
+        "short_explanation_tr": "Deyim. 'set foot in' = bir yere girmek ya da gitmek. Çoğunlukla olumsuzda kullanılır.",
         "example_sentence_en": "He had never set foot in a theatre before.",
         "example_sentence_tr": "Daha önce hiç tiyatroya adım atmamıştı."
       },
@@ -1107,7 +1453,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "collocation",
         "contextual_turkish_meaning": "raflara göz gezdirmek / raflarda dolaşmak",
-        "short_explanation_tr": "'browse' = hedef belirtmeksizin dolaşarak bakmak. Kitabevi, mağaza için yaygın.",
+        "short_explanation_tr": "'browse' = hedef belirtmeksizin dolaşarak bakmak.",
         "example_sentence_en": "She spent an hour browsing the shelves.",
         "example_sentence_tr": "Raflara göz gezdirerek bir saat geçirdi."
       },
@@ -1119,7 +1465,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "kaybolmak üzere olan",
-        "short_explanation_tr": "'be about to' = çok yakın gelecekte gerçekleşmesi beklenen eylem. Burada sona erme tehdidi.",
+        "short_explanation_tr": "'be about to' = çok yakın gelecekte gerçekleşmesi beklenen eylem.",
         "example_sentence_en": "The species is about to disappear.",
         "example_sentence_tr": "Tür yok olmak üzere."
       },
@@ -1143,9 +1489,33 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "on yıllardır her cumartesi uğruyorlardı",
-        "short_explanation_tr": "Past Perfect Continuous: geçmişte uzun süre tekrar eden alışkanlık. 'for decades' süreyi pekiştirir.",
+        "short_explanation_tr": "Past Perfect Continuous: geçmişte uzun süre tekrar eden alışkanlık.",
         "example_sentence_en": "He had been visiting every Sunday for years.",
         "example_sentence_tr": "Yıllarca her pazar ziyaret etmekteydi."
+      },
+      {
+        "start_index": 1091,
+        "end_index": 1104,
+        "surface_form": "visibly upset",
+        "lemma": null,
+        "pos": "ADJ",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "gözle görülür biçimde üzgün / açıkça belli olan üzüntüyle",
+        "short_explanation_tr": "Zarf + sıfat birleşimi. 'visibly' üzüntünün içe atılmadığını, dışarıdan fark edilebildiğini gösterir.",
+        "example_sentence_en": "She was visibly upset after the call.",
+        "example_sentence_tr": "Telefon sonrası açıkça üzgün görünüyordu.",
+        "individual_meanings": [
+          {
+            "word": "visibly",
+            "meaning": "gözle görülür biçimde / açıkça",
+            "note": "Dışarıdan fark edilebilen bir durumu gösterir"
+          },
+          {
+            "word": "upset",
+            "meaning": "üzgün / rahatsız / sinirlenmiş",
+            "note": "Sıfat; duygusal dengesizlik"
+          }
+        ]
       },
       {
         "start_index": 1125,
@@ -1155,7 +1525,7 @@ const STORIES = [
         "pos": "CLAUSE",
         "annotation_type": "relative_clause",
         "contextual_turkish_meaning": "merhum kocasının kendisine evlenme teklifi ettiği (yaşlı kadın)",
-        "short_explanation_tr": "'whose' sahiplik bildiren relative pronoun. 'late husband' = merhum koca. Past Perfect anı ifade eder.",
+        "short_explanation_tr": "'whose' sahiplik bildiren relative pronoun. 'late husband' = merhum koca.",
         "example_sentence_en": "The woman whose son had won the prize was proud.",
         "example_sentence_tr": "Oğlu ödül kazanan kadın gururluydu."
       },
@@ -1179,7 +1549,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "word",
         "contextual_turkish_meaning": "ondan daha uzun ömürlü olmak / ondan sonra da varlığını sürdürmek",
-        "short_explanation_tr": "'outlast' = bir şeyin ya da kişinin daha uzun süre ayakta kalması. 'out-' öneki 'daha fazla' anlamı katar.",
+        "short_explanation_tr": "'outlast' = bir şeyin ya da kişinin daha uzun süre ayakta kalması.",
         "example_sentence_en": "He hoped his work would outlast him.",
         "example_sentence_tr": "Eserinin kendisinden daha uzun yaşamasını umuyordu."
       },
@@ -1191,7 +1561,7 @@ const STORIES = [
         "pos": "ADJ",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "tamamen pişman da değil / bir yandan hüzünsüz ama bir yandan da barışık",
-        "short_explanation_tr": "Litotes (zayıflatılmış olumsuz): 'not entirely sorry' = tamamen üzgün değil ama tam da mutlu sayılmaz. Karmaşık duyguyu ima eder.",
+        "short_explanation_tr": "Litotes (zayıflatılmış olumsuz): 'not entirely sorry' = tamamen üzgün değil ama tam mutlu sayılmaz.",
         "example_sentence_en": "She was not entirely unhappy with the result.",
         "example_sentence_tr": "Sonuçtan tamamen mutsuz da değildi."
       }
@@ -1259,7 +1629,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "niyetlendiğinden daha sert tepki vermişti",
-        "short_explanation_tr": "Past Perfect karşılaştırma: iki Past Perfect eylem kıyaslanıyor. 'more strongly than intended' gerçek tepki ile niyet arasındaki farkı gösterir.",
+        "short_explanation_tr": "Past Perfect karşılaştırma: iki Past Perfect eylem kıyaslanıyor.",
         "example_sentence_en": "He had spoken more harshly than he had meant to.",
         "example_sentence_tr": "Kastettiğinden daha sert konuşmuştu."
       },
@@ -1283,7 +1653,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "word",
         "contextual_turkish_meaning": "aralarında sertleşmişti / katılaşmıştı",
-        "short_explanation_tr": "'harden' = bir şeyin sertleşmesi, esnekliğini yitirmesi. Burada aralarındaki duvarın kalıplaştığını anlatır.",
+        "short_explanation_tr": "'harden' = bir şeyin sertleşmesi, esnekliğini yitirmesi. Aralarındaki duvarın kalıplaştığını anlatır.",
         "example_sentence_en": "Attitudes had hardened on both sides.",
         "example_sentence_tr": "Her iki taraftaki tutumlar sertleşmişti."
       },
@@ -1312,6 +1682,30 @@ const STORIES = [
         "example_sentence_tr": "Kendini yeni işine adadı."
       },
       {
+        "start_index": 1057,
+        "end_index": 1079,
+        "surface_form": "found almost offensive",
+        "lemma": null,
+        "pos": "ADJ",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "neredeyse rahatsız edici bulduğu / âdeta saldırgan hissettiği",
+        "short_explanation_tr": "Zarf + sıfat birleşimi. 'almost' tam anlamıyla saldırgan değil ama çok yakın; 'offensive' rahatsız edici bulma.",
+        "example_sentence_en": "She found his cheerfulness almost offensive.",
+        "example_sentence_tr": "Neşesini neredeyse rahatsız edici buldu.",
+        "individual_meanings": [
+          {
+            "word": "almost",
+            "meaning": "neredeyse / âdeta",
+            "note": "Tam olarak değil ama çok yakın; sınırda olan bir durum"
+          },
+          {
+            "word": "offensive",
+            "meaning": "rahatsız edici / saldırgan / incitici",
+            "note": "Bir şeyin başkasını rahatsız etme özelliği"
+          }
+        ]
+      },
+      {
         "start_index": 1131,
         "end_index": 1148,
         "surface_form": "broke the silence",
@@ -1331,9 +1725,33 @@ const STORIES = [
         "pos": "ADV",
         "annotation_type": "idiom",
         "contextual_turkish_meaning": "yan yana",
-        "short_explanation_tr": "Deyimsel zarf. İki kişinin fiziksel olarak yanyana bulunması; bazen birlikte çalışma anlamında da kullanılır.",
+        "short_explanation_tr": "Deyimsel zarf. İki kişinin fiziksel olarak yanyana bulunması.",
         "example_sentence_en": "They sat side by side on the bench.",
         "example_sentence_tr": "Bankta yan yana oturdular."
+      },
+      {
+        "start_index": 1392,
+        "end_index": 1403,
+        "surface_form": "said simply",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "yalın bir şekilde / sade olarak dedi",
+        "short_explanation_tr": "Fiil + zarf birleşimi. 'simply' burada gereksiz söz ya da süsleme olmaksızın, doğrudan ve yalın biçimde demeyi anlatır.",
+        "example_sentence_en": "He looked at her and said simply, 'I'm sorry.'",
+        "example_sentence_tr": "Ona bakıp yalınca 'Üzgünüm' dedi.",
+        "individual_meanings": [
+          {
+            "word": "said",
+            "meaning": "dedi / söyledi",
+            "note": "'say' fiilinin geçmiş biçimi"
+          },
+          {
+            "word": "simply",
+            "meaning": "yalın bir şekilde / sadece / doğrudan",
+            "note": "Fazla söz ya da süsleme olmaksızın; doğrudan ve özlü"
+          }
+        ]
       },
       {
         "start_index": 1406,
@@ -1342,7 +1760,7 @@ const STORIES = [
         "lemma": null,
         "pos": "VERB",
         "annotation_type": "grammar_structure",
-        "contextual_turkish_meaning": "aramalıydım / aramalıydım ama aramadım",
+        "contextual_turkish_meaning": "aramalıydım — ama aramadım",
         "short_explanation_tr": "'should have + past participle' = geçmişte yapılması gereken ama yapılmayan eylemi pişmanlıkla ifade eder.",
         "example_sentence_en": "I should have told you earlier.",
         "example_sentence_tr": "Sana daha önce söylemeliydim."
@@ -1355,7 +1773,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "yanıtlar hazırlayıp duruyordu / zihninde defalarca prova yapmıştı",
-        "short_explanation_tr": "Past Perfect Continuous: o ana kadar süregelen zihinsel hazırlık. 'rehearse' = prova yapmak, zihinde tekrar etmek.",
+        "short_explanation_tr": "Past Perfect Continuous: o ana kadar süregelen zihinsel hazırlık.",
         "example_sentence_en": "She had been rehearsing her speech for weeks.",
         "example_sentence_tr": "Konuşmasını haftalarca prova yapmaktaydı."
       },
@@ -1367,7 +1785,7 @@ const STORIES = [
         "pos": "ADV",
         "annotation_type": "idiom",
         "contextual_turkish_meaning": "sonunda / nihayet",
-        "short_explanation_tr": "'at last' = uzun bir bekleme ya da mücadelenin ardından sonunda. Rahatlama ya da çözüm hissi içerir.",
+        "short_explanation_tr": "'at last' = uzun bir bekleme ya da mücadelenin ardından sonunda.",
         "example_sentence_en": "She smiled at last.",
         "example_sentence_tr": "Sonunda güldü."
       }
@@ -1387,7 +1805,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "köşeyi dönmeden hemen önce / köşeyi dönür dönmez",
-        "short_explanation_tr": "'had barely ... before' = bir eylem bitmeden hemen başka bir şeyin gerçekleşmesi. Çok kısa zaman dilimini vurgular.",
+        "short_explanation_tr": "'had barely ... before' = bir eylem bitmeden hemen başka bir şeyin gerçekleşmesi.",
         "example_sentence_en": "She had barely sat down before the phone rang.",
         "example_sentence_tr": "Daha oturur oturmaz telefon çaldı."
       },
@@ -1399,7 +1817,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "doğru seçimi yapmış mıydı",
-        "short_explanation_tr": "Past Perfect: merak etme anından daha önce gerçekleşen karar. 'the right choice' = doğru seçim kalıbı.",
+        "short_explanation_tr": "Past Perfect: merak etme anından daha önce gerçekleşen karar.",
         "example_sentence_en": "She wondered if she had made the right choice.",
         "example_sentence_tr": "Doğru seçimi yapıp yapmadığını merak etti."
       },
@@ -1411,7 +1829,7 @@ const STORIES = [
         "pos": "ADV",
         "annotation_type": "prepositional_phrase",
         "contextual_turkish_meaning": "bizzat / yüz yüze / fiziksel olarak",
-        "short_explanation_tr": "'in person' = fiilen, gerçekte orada bulunarak. Çevrimiçi ya da fotoğrafla değil, doğrudan.",
+        "short_explanation_tr": "'in person' = fiilen, gerçekte orada bulunarak.",
         "example_sentence_en": "I had never met him in person.",
         "example_sentence_tr": "Onu hiç bizzat tanımamıştım."
       },
@@ -1423,9 +1841,33 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "collocation",
         "contextual_turkish_meaning": "kira sözleşmesini imzalamak",
-        "short_explanation_tr": "'sign the lease' = kira kontratına imza atmak. Kiralık daire sürecinde standart ifade.",
+        "short_explanation_tr": "'sign the lease' = kira kontratına imza atmak.",
         "example_sentence_en": "They signed the lease on Friday.",
         "example_sentence_tr": "Cumartesi kira sözleşmesini imzaladılar."
+      },
+      {
+        "start_index": 618,
+        "end_index": 636,
+        "surface_form": "lived here briefly",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "kısa bir süreliğine burada yaşamıştı",
+        "short_explanation_tr": "Fiil + zarf birleşimi. 'briefly' yaşamanın uzun sürmediğini, geçici olduğunu gösterir.",
+        "example_sentence_en": "He had lived there briefly before moving abroad.",
+        "example_sentence_tr": "Yurt dışına taşınmadan önce kısa bir süre orada yaşamıştı.",
+        "individual_meanings": [
+          {
+            "word": "lived",
+            "meaning": "yaşadı / ikamet etti",
+            "note": "'live' fiilinin geçmiş biçimi"
+          },
+          {
+            "word": "briefly",
+            "meaning": "kısa süreliğine / kısaca",
+            "note": "Zamanın sınırlı ve geçici olduğunu gösterir"
+          }
+        ]
       },
       {
         "start_index": 465,
@@ -1435,7 +1877,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "phrasal_verb",
         "contextual_turkish_meaning": "yeniden başlamak / hayatı sıfırlamak",
-        "short_explanation_tr": "'start over' = her şeyi bırakıp yeni bir sayfa açmak. Özellikle zorlu bir dönemin ardından kullanılır.",
+        "short_explanation_tr": "'start over' = her şeyi bırakıp yeni bir sayfa açmak.",
         "example_sentence_en": "It's never too late to start over.",
         "example_sentence_tr": "Yeniden başlamak için asla geç değildir."
       },
@@ -1447,7 +1889,7 @@ const STORIES = [
         "pos": "ADJ",
         "annotation_type": "grammar_structure",
         "contextual_turkish_meaning": "tamamen yabancı da değil / bir ölçüde tanıdık",
-        "short_explanation_tr": "Litotes: 'not entirely unfamiliar' = biraz tanıdık ama tam da bildik sayılmaz. Çift olumsuzla yumuşatılmış ifade.",
+        "short_explanation_tr": "Litotes: çift olumsuzla yumuşatılmış ifade. 'biraz tanıdık' anlamı taşır.",
         "example_sentence_en": "The feeling was not entirely unfamiliar.",
         "example_sentence_tr": "His tamamen yabancı değildi."
       },
@@ -1459,7 +1901,7 @@ const STORIES = [
         "pos": "VERB",
         "annotation_type": "idiom",
         "contextual_turkish_meaning": "küçük pratik ayrıntıların girdabında geçip gitti",
-        "short_explanation_tr": "'in a blur' = bulanık, hızla, net hatıraları kalmayacak biçimde. 'small logistics' = ev kurmanın küçük ayrıntıları.",
+        "short_explanation_tr": "'in a blur' = bulanık, hızla. 'small logistics' = ev kurmanın küçük ayrıntıları.",
         "example_sentence_en": "The day passed in a blur.",
         "example_sentence_tr": "Gün çarçabuk, bulanık geçti."
       },
@@ -1510,6 +1952,30 @@ const STORIES = [
         "short_explanation_tr": "'leave behind' = bir yeri terk ederken bazı şeyleri, insanları ya da geçmişi orada bırakmak.",
         "example_sentence_en": "She missed what she had left behind.",
         "example_sentence_tr": "Geride bıraktıklarını özlüyordu."
+      },
+      {
+        "start_index": 1402,
+        "end_index": 1417,
+        "surface_form": "arrived quietly",
+        "lemma": null,
+        "pos": "VERB",
+        "annotation_type": "verb_phrase",
+        "contextual_turkish_meaning": "sessizce / usulca geldi — fark ettirmeden ulaştı",
+        "short_explanation_tr": "Fiil + zarf birleşimi. 'arrived' farkındalığın ulaşmasını; 'quietly' bunu gürültüsüz, dramatik olmadan yaptığını anlatır.",
+        "example_sentence_en": "Understanding arrived quietly, without fanfare.",
+        "example_sentence_tr": "Anlayış, gürültüsüz ve sessizce geldi.",
+        "individual_meanings": [
+          {
+            "word": "arrived",
+            "meaning": "geldi / ulaştı",
+            "note": "'arrive' fiilinin geçmiş biçimi; bir yere ya da bir duruma ulaşmak"
+          },
+          {
+            "word": "quietly",
+            "meaning": "sessizce / usulca / dramatik olmadan",
+            "note": "Eylemin fark ettirmeden, yavaşça gerçekleştiğini gösterir"
+          }
+        ]
       },
       {
         "start_index": 1419,
