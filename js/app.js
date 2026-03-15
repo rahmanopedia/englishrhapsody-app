@@ -6012,48 +6012,59 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   // ═══════════════════════════════════════════════════════════
 
   _initPlacement() {
-    // ── Grammar questions (2 per level, A1→C1) ──────────────
+    // ── Grammar questions (2 per level, A1→C2) ──────────────
     const GRAMMAR_QS = [
-      // A1
+      // A1 — basic subject-verb agreement
       { type:'grammar', level:'A1', q:'I ___ a student.', choices:[{text:'am',correct:true},{text:'is',correct:false},{text:'are',correct:false},{text:'be',correct:false}], tip:'I → am, He/She → is, We/They → are' },
-      { type:'grammar', level:'A1', q:'There ___ two books on the table.', choices:[{text:'is',correct:false},{text:'are',correct:true},{text:'am',correct:false},{text:'be',correct:false}], tip:'Çoğul isimle "are" kullanılır' },
-      // A2
-      { type:'grammar', level:'A2', q:'She ___ coffee every morning.', choices:[{text:'drink',correct:false},{text:'drinks',correct:true},{text:'drinking',correct:false},{text:'drunk',correct:false}], tip:'3. tekil şahıs (he/she/it) → fiil + -s' },
+      { type:'grammar', level:'A1', q:'There ___ two books on the table.', choices:[{text:'is',correct:false},{text:'are',correct:true},{text:'am',correct:false},{text:'has been',correct:false}], tip:'Çoğul isimle "are" kullanılır' },
+      // A2 — present simple 3rd person + past continuous
+      { type:'grammar', level:'A2', q:'She ___ coffee every morning.', choices:[{text:'drink',correct:false},{text:'drinks',correct:true},{text:'is drinking',correct:false},{text:'drank',correct:false}], tip:'3. tekil şahıs (he/she/it) → fiil + -s' },
       { type:'grammar', level:'A2', q:'They ___ TV when I arrived.', choices:[{text:'watched',correct:false},{text:'were watching',correct:true},{text:'are watching',correct:false},{text:'have watched',correct:false}], tip:'Geçmişte devam eden eylem: was/were + -ing' },
-      // B1
-      { type:'grammar', level:'B1', q:'I ___ never eaten sushi before.', choices:[{text:'has',correct:false},{text:'have',correct:true},{text:'had',correct:false},{text:'having',correct:false}], tip:'Present Perfect: I/You/We/They → have + past participle' },
-      { type:'grammar', level:'B1', q:'If it rains tomorrow, we ___ stay inside.', choices:[{text:'will',correct:true},{text:'would',correct:false},{text:'shall',correct:false},{text:'were',correct:false}], tip:'1. Koşul (gerçek olasılık): If + present → will' },
-      // B2
-      { type:'grammar', level:'B2', q:'If she studied harder, she ___ succeed.', choices:[{text:'will',correct:false},{text:'would',correct:true},{text:'should',correct:false},{text:'might be',correct:false}], tip:'2. Koşul (hayali durum): If + past → would' },
-      { type:'grammar', level:'B2', q:'The report ___ by the manager yesterday.', choices:[{text:'wrote',correct:false},{text:'was written',correct:true},{text:'has written',correct:false},{text:'is writing',correct:false}], tip:'Passive voice: was/were + past participle' },
-      // C1
+      // B1 — present perfect + 1st conditional
+      { type:'grammar', level:'B1', q:'I ___ never eaten sushi before this trip.', choices:[{text:'has',correct:false},{text:'have',correct:true},{text:'had',correct:false},{text:'was',correct:false}], tip:'Present Perfect: I/You/We/They → have + past participle' },
+      { type:'grammar', level:'B1', q:'Unless you hurry, you ___ miss the train.', choices:[{text:'will',correct:true},{text:'would',correct:false},{text:'shall',correct:false},{text:'might have',correct:false}], tip:'"Unless" = "If ... not" → 1. koşul: will + fiil' },
+      // B2 — 3rd conditional + subjunctive after "insist"
+      { type:'grammar', level:'B2', q:'Had I known about the delays, I ___ a different route.', choices:[{text:'would take',correct:false},{text:'would have taken',correct:true},{text:'had taken',correct:false},{text:'will have taken',correct:false}], tip:'3. Koşul: Had I known = If I had known → would have + V3' },
+      { type:'grammar', level:'B2', q:'The committee insisted that the proposal ___ before Friday.', choices:[{text:'was submitted',correct:false},{text:'be submitted',correct:true},{text:'submitted',correct:false},{text:'had been submitted',correct:false}], tip:'"insist that" → subjunctive mood: (should) be + V3' },
+      // C1 — negative inversion + inverted conditional
       { type:'grammar', level:'C1', q:'Not until midnight ___ she finally fall asleep.', choices:[{text:'she did',correct:false},{text:'did she',correct:true},{text:'she had',correct:false},{text:'had she',correct:false}], tip:'Olumsuz zarftan sonra inversion: Not until... did + özne' },
-      { type:'grammar', level:'C1', q:'I wish I ___ more time to practise speaking.', choices:[{text:'have',correct:false},{text:'had',correct:true},{text:'will have',correct:false},{text:'am having',correct:false}], tip:'Wish + past simple = mevcut durum için dilek (subjunctive)' },
+      { type:'grammar', level:'C1', q:'___ the talks succeeded, the deal would never have been finalised.', choices:[{text:'If',correct:false},{text:'Had',correct:true},{text:'Unless',correct:false},{text:'Should',correct:false}], tip:'"Had + özne" = "If + özne + had" — inverted 3rd conditional (formal)' },
+      // C2 — mixed conditional + formal negative inversion
+      { type:'grammar', level:'C2', q:'If she ___ the contract carefully, she would not be facing legal action now.', choices:[{text:'read',correct:false},{text:'had read',correct:true},{text:'has read',correct:false},{text:'would read',correct:false}], tip:'Karma koşul: geçmiş hata + şimdiki sonuç → If + past perfect → would + fiil' },
+      { type:'grammar', level:'C2', q:'Seldom ___ such an audacious proposal put forward in parliamentary debate.', choices:[{text:'has been',correct:true},{text:'have been',correct:false},{text:'was',correct:false},{text:'had been',correct:false}], tip:'Olumsuz zarf başta → inversion: Seldom + has + özne + been + V3 (passive perfect)' },
     ];
 
-    // ── Reading comprehension (shared passage, 2 questions) ──
-    const READING_PASSAGE = `Many people believe that learning a new language becomes much harder after the age of 30. However, recent studies suggest that adults can still reach a high level of fluency if they practise consistently. Unlike young children, adults have stronger analytical skills and can grasp complex grammar rules more efficiently. The key difference is motivation and daily exposure — even 20 minutes of focused practice each day can produce impressive results over time.`;
+    // ── Reading comprehension — harder B2/C1 passage ──────────
+    const READING_PASSAGE = `The concept of cognitive dissonance, introduced by Leon Festinger in 1957, describes the psychological discomfort experienced when an individual simultaneously holds contradictory beliefs or when behaviour conflicts with stated values. Rather than tolerating this discomfort, people tend to rationalise their actions — subtly reinterpreting evidence to align with pre-existing convictions rather than revising them. This phenomenon has profound implications for how we process information: when confronted with facts that challenge our worldview, our instinct is not to update our beliefs but to discredit the source. Festinger's seminal experiment — in which participants paid less to lie about a tedious task later rated it as more enjoyable — demonstrated that the mind will manufacture satisfaction to justify effort already expended.`;
     const READING_QS = [
-      { type:'reading', level:'B1', passage: READING_PASSAGE,
-        q:'According to the text, what is the main advantage adults have over children in language learning?',
-        choices:[{text:'They memorise words without effort',correct:false},{text:'They understand grammar rules more efficiently',correct:true},{text:'They have more time to study',correct:false},{text:'They are more motivated than children',correct:false}],
-        tip:'Metin "adults... grasp complex grammar rules more efficiently" diyor' },
-      { type:'reading', level:'B2', passage: null,
-        q:'What does the text suggest is the most important factor for adult language learners?',
-        choices:[{text:'Starting before the age of 30',correct:false},{text:'Having a natural talent for languages',correct:false},{text:'Consistent daily practice',correct:true},{text:'Studying grammar intensively',correct:false}],
-        tip:'"The key difference is... daily exposure — even 20 minutes..."' },
+      { type:'reading', level:'B2', passage: READING_PASSAGE,
+        q:'According to the passage, what do people typically do when confronted with contradictory information?',
+        choices:[{text:'They rationally evaluate all available evidence',correct:false},{text:'They reinterpret evidence to match existing beliefs',correct:true},{text:'They immediately revise their worldview',correct:false},{text:'They seek guidance from trusted authorities',correct:false}],
+        tip:'"...subtly reinterpreting evidence to align with pre-existing convictions rather than revising them"' },
+      { type:'reading', level:'C1', passage: null,
+        q:'What principle does Festinger\'s payment experiment primarily illustrate?',
+        choices:[{text:'Higher pay leads to more honest self-assessment',correct:false},{text:'The mind justifies past efforts by inflating their perceived value',correct:true},{text:'Lying about a task makes people feel guilty over time',correct:false},{text:'Tedious tasks become genuinely enjoyable with practice',correct:false}],
+        tip:'"...the mind will manufacture satisfaction to justify effort already expended"' },
     ];
 
-    // ── C1 vocabulary (hardcoded, advanced level) ────────────
+    // ── C1 vocabulary (hardcoded, tricky distractors) ────────
     const C1_VOCAB = [
-      { type:'vocab', level:'C1', q:'METICULOUS', choices:[{text:'Çok titiz ve dikkatli',correct:true},{text:'Çok hızlı ve enerjik',correct:false},{text:'İlgisiz ve dağınık',correct:false},{text:'Güçlü ve dayanıklı',correct:false}] },
-      { type:'vocab', level:'C1', q:'UBIQUITOUS', choices:[{text:'Her yerde bulunan',correct:true},{text:'Son derece nadir',correct:false},{text:'Tehlikeli ve zararlı',correct:false},{text:'Göz alıcı ve güzel',correct:false}] },
-      { type:'vocab', level:'C1', q:'AMBIGUOUS', choices:[{text:'Açık ve anlaşılır',correct:false},{text:'Belirsiz ve çift anlamlı',correct:true},{text:'Uzun ve karmaşık',correct:false},{text:'Sessiz ve sakin',correct:false}] },
+      { type:'vocab', level:'C1', q:'METICULOUS', choices:[{text:'Çok titiz ve özenli',correct:true},{text:'Aceleci ve dikkatsiz',correct:false},{text:'Cömert ve anlayışlı',correct:false},{text:'İnatçı ve katı',correct:false}] },
+      { type:'vocab', level:'C1', q:'UBIQUITOUS', choices:[{text:'Her yerde bulunan',correct:true},{text:'Çok nadir ve değerli',correct:false},{text:'Dikkat çekici ve göze çarpan',correct:false},{text:'Kalıcı ve değişmez',correct:false}] },
+      { type:'vocab', level:'C1', q:'AMBIGUOUS', choices:[{text:'Kesin ve açıklayıcı',correct:false},{text:'Belirsiz ve çift anlamlı',correct:true},{text:'Karmaşık ama anlaşılır',correct:false},{text:'Yüzeysel ve önemsiz',correct:false}] },
+    ];
+
+    // ── C2 vocabulary (hardcoded, very advanced) ─────────────
+    const C2_VOCAB = [
+      { type:'vocab', level:'C2', q:'PERFIDIOUS', choices:[{text:'Hain ve güvenilmez',correct:true},{text:'Mütevazı ve alçakgönüllü',correct:false},{text:'Azimli ve inatçı',correct:false},{text:'Kurnaz ama dürüst',correct:false}] },
+      { type:'vocab', level:'C2', q:'EPHEMERAL', choices:[{text:'Görkemli ve kalıcı',correct:false},{text:'Çok kısa süren, geçici',correct:true},{text:'Maddi ve somut',correct:false},{text:'Evrensel ve kapsamlı',correct:false}] },
+      { type:'vocab', level:'C2', q:'EQUIVOCAL', choices:[{text:'Dürüst ve açık sözlü',correct:false},{text:'Kesin ve tartışmasız',correct:false},{text:'Muğlak ve kasıtlı belirsiz',correct:true},{text:'Alışılmamış ve tuhaf',correct:false}] },
     ];
 
     const vocabQs = this._buildPlacementVocab();
-    // Order: vocab A1→B2 (shuffled within each group), C1 vocab, grammar A1→C1, reading
-    const allQs = [...vocabQs, ...C1_VOCAB, ...GRAMMAR_QS, ...READING_QS];
+    // Order: vocab A1→B2, C1 vocab, C2 vocab, grammar A1→C2, reading
+    // Total: 12 vocab (A1-B2 from WORDS) + 3 C1 + 3 C2 + 12 grammar (A1-C2) + 2 reading = 32 questions
+    const allQs = [...vocabQs, ...C1_VOCAB, ...C2_VOCAB, ...GRAMMAR_QS, ...READING_QS];
 
     this.session.pl = {
       questions: allQs,
@@ -6065,8 +6076,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       qIdx: 0,
       stage: 'intro',
       // scores[level] = [correct, total]
-      vocabScores: { A1:[0,0], A2:[0,0], B1:[0,0], B2:[0,0], C1:[0,0] },
-      gramScores:  { A1:[0,0], A2:[0,0], B1:[0,0], B2:[0,0], C1:[0,0] },
+      vocabScores: { A1:[0,0], A2:[0,0], B1:[0,0], B2:[0,0], C1:[0,0], C2:[0,0] },
+      gramScores:  { A1:[0,0], A2:[0,0], B1:[0,0], B2:[0,0], C1:[0,0], C2:[0,0] },
       readingCorrect: 0,
       readingTotal: 0,
       speakScores: [],
@@ -6110,11 +6121,11 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
         <h1 class="pl-intro-title">Gerçek Seviyeni Belirleyelim</h1>
         <p class="pl-intro-sub">Kelime, gramer, okuma ve konuşmayı ölçen<br>kapsamlı bir CEFR seviye testi yapacağız.</p>
         <div class="pl-intro-stages">
-          <div class="pl-stage-item"><div class="pl-stage-icon">📚</div><div>Kelime<br><small>15 soru • A1→C1</small></div></div>
+          <div class="pl-stage-item"><div class="pl-stage-icon">📚</div><div>Kelime<br><small>18 soru • A1→C2</small></div></div>
           <div class="pl-stage-sep">→</div>
-          <div class="pl-stage-item"><div class="pl-stage-icon">🧩</div><div>Gramer<br><small>10 soru • A1→C1</small></div></div>
+          <div class="pl-stage-item"><div class="pl-stage-icon">🧩</div><div>Gramer<br><small>12 soru • A1→C2</small></div></div>
           <div class="pl-stage-sep">→</div>
-          <div class="pl-stage-item"><div class="pl-stage-icon">📖</div><div>Okuma<br><small>2 soru • B1-B2</small></div></div>
+          <div class="pl-stage-item"><div class="pl-stage-icon">📖</div><div>Okuma<br><small>2 soru • B2-C1</small></div></div>
           <div class="pl-stage-sep">→</div>
           <div class="pl-stage-item"><div class="pl-stage-icon">🎙️</div><div>Konuşma<br><small>2 cümle</small></div></div>
         </div>
@@ -6139,7 +6150,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     const total = questions.length;
     const pct   = Math.round((qIdx / total) * 100);
     const STAGE_LABELS = { vocab:'📚 Kelime', grammar:'🧩 Gramer', reading:'📖 Okuma Anlama' };
-    const LEVEL_TAGS   = { A1:'Başlangıç', A2:'Temel', B1:'Orta', B2:'Orta Üstü', C1:'İleri' };
+    const LEVEL_TAGS   = { A1:'Başlangıç', A2:'Temel', B1:'Orta', B2:'Orta Üstü', C1:'İleri', C2:'Uzman' };
     const stageLabel   = STAGE_LABELS[q.type] || '📚 Kelime';
     const levelTag     = LEVEL_TAGS[q.level] || q.level;
 
@@ -6258,24 +6269,28 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     const { vocabScores, gramScores, readingCorrect, readingTotal, speakScores } = pl;
 
     // ── CEFR detection ──────────────────────────────────────
-    // For each level: compute combined vocab+grammar pct
-    const LEVELS = ['A1','A2','B1','B2','C1'];
+    // Tiered thresholds — higher levels require higher accuracy
+    // Result: ~65% → A1, ~50% → A2, ~30% → B1/B2, ~10% → C1/C2
+    const LEVELS = ['A1','A2','B1','B2','C1','C2'];
+    const THRESHOLDS = { A1:0.40, A2:0.50, B1:0.60, B2:0.70, C1:0.80, C2:0.88 };
     const levelPct = {};
     LEVELS.forEach(lvl => {
-      const vc = vocabScores[lvl][0], vt = vocabScores[lvl][1];
-      const gc = gramScores[lvl][0],  gt = gramScores[lvl][1];
+      const vc = vocabScores[lvl] ? vocabScores[lvl][0] : 0;
+      const vt = vocabScores[lvl] ? vocabScores[lvl][1] : 0;
+      const gc = gramScores[lvl]  ? gramScores[lvl][0]  : 0;
+      const gt = gramScores[lvl]  ? gramScores[lvl][1]  : 0;
       const total = vt + gt;
       levelPct[lvl] = total > 0 ? (vc + gc) / total : 0;
     });
 
-    // Highest level with ≥ 60% score
+    // Highest level that meets its threshold
     let level = 'A1';
     for (const lvl of LEVELS) {
-      if (levelPct[lvl] >= 0.60) level = lvl;
+      if (levelPct[lvl] >= THRESHOLDS[lvl]) level = lvl;
     }
 
-    // Reading bonus: if ≥1/2 correct, bump up one level
-    if (readingTotal > 0 && readingCorrect / readingTotal >= 0.5) {
+    // Reading bonus: if 2/2 correct, bump up one level (max C2)
+    if (readingTotal > 0 && readingCorrect === readingTotal) {
       const rIdx = LEVELS.indexOf(level);
       if (rIdx < LEVELS.length - 1) level = LEVELS[rIdx + 1];
     }
