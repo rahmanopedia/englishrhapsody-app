@@ -5077,13 +5077,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       .replace(/there's/g,'there is').replace(/that's/g,'that is').replace(/what's/g,'what is')
       .replace(/[^a-z0-9 ]/g,'');
     const sWords = normSpoken.split(' ').filter(Boolean);
-    const results = tWords.map(tw => {
-      if (sWords.includes(tw)) return true;
-      const stem = tw.endsWith('s') ? tw.slice(0,-1) : tw + 's';
-      if (sWords.includes(stem)) return true;
-      for (const sw of sWords) { if (this._levenshtein(sw, tw) <= (tw.length <= 4 ? 1 : 2)) return true; }
-      return false;
-    });
+    const results = this._scoreWords(tWords, sWords);
     const score  = Math.min(Math.round(results.filter(Boolean).length / tWords.length * 100), 100);
     document.querySelectorAll('.sw').forEach((el, i) => { el.className = 'sw ' + (results[i] ? 'correct' : 'wrong'); });
     const tEl = document.getElementById('speak-transcript');
@@ -5281,6 +5275,46 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     return null;
   }
   // ─────────────────────────────────────────────────────────────
+
+  _scoreWords(tWords, sWords) {
+    const _match = (s, t) => {
+      if (s === t) return true;
+      // Morphological variants — only for words ≥ 4 chars
+      if (t.length >= 4) {
+        if (s === t + 's'   || t === s + 's')   return true;
+        if (s === t + 'es'  || t === s + 'es')  return true;
+        if (s === t + 'ed'  || t === s + 'ed')  return true;
+        if (s === t + 'd'   || t === s + 'd')   return true;
+        if (s === t + 'er'  || t === s + 'er')  return true;
+        if (s === t + 'est' || t === s + 'est') return true;
+        if (t.endsWith('e')   && s === t.slice(0,-1) + 'ing') return true;
+        if (s.endsWith('ing') && t === s.slice(0,-3) + 'e')   return true;
+        if (s.endsWith('ing') && t === s.slice(0,-3))          return true;
+      }
+      // Strict Levenshtein with ratio guard — tightened per word length
+      const dist = this._levenshtein(s, t);
+      const maxL = Math.max(s.length, t.length);
+      if (t.length <= 4) return false;                           // ≤4 chars: exact only
+      if (t.length <= 7) return dist === 1 && dist / maxL < 0.20; // 5–7 chars: 1 edit, <20% ratio
+      return dist <= 2 && dist / maxL < 0.22;                    // 8+ chars : 2 edits, <22% ratio
+    };
+
+    // Position-aware LCS alignment: spoken words must appear in target order
+    const n = tWords.length, m = sWords.length;
+    const results = new Array(n).fill(false);
+    let sBase = 0;
+    for (let ti = 0; ti < n; ti++) {
+      const limit = Math.min(m, sBase + 5); // allow up to 4 extra spoken words
+      for (let si = sBase; si < limit; si++) {
+        if (_match(sWords[si], tWords[ti])) {
+          results[ti] = true;
+          sBase = si + 1;
+          break;
+        }
+      }
+    }
+    return results;
+  }
 
   _levenshtein(a, b) {
     const m = a.length, n = b.length;
