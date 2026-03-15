@@ -4916,11 +4916,21 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
         this.session.lastAudioMime = mime;
         this.session.lastAudioUrl = URL.createObjectURL(audioBlob);
         if (pbBtn) pbBtn.style.display = 'flex';
-        // Azure assessment: blob is ready, fire if speech result already arrived
+        // Pronunciation assessment: blob is ready, fire if speech result already arrived
         if (this.session.pendingAzureText) {
           const ref = this.session.pendingAzureText;
           this.session.pendingAzureText = null;
-          this._runAzureAssessment(audioBlob, mime, ref).then(w => { if (w) this._applyAzureScore(w, ref); });
+          const azureKey = window.remoteFlags?.azure_speech_key || localStorage.getItem('sp_azure_key');
+          if (azureKey) {
+            this._runAzureAssessment(audioBlob, mime, ref).then(w => { if (w) this._applyPronunciationScore(w.map(azW => {
+              const acc = azW.PronunciationAssessment?.AccuracyScore ?? 0;
+              const err = azW.PronunciationAssessment?.ErrorType ?? 'None';
+              return { word: azW.Word?.toLowerCase(), ok: acc >= 75 && err === 'None' };
+            }), ref, null); });
+          } else {
+            // Whisper.js: acoustic-model transcription — much less normalization than Chrome ASR
+            this._runWhisperAssessment(audioBlob, ref).then(r => { if (r) this._applyPronunciationScore(r.wordResults, ref, r.transcript); });
+          }
         }
       };
       this.session.mediaRecorder.start();
@@ -5397,6 +5407,111 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       const ring = document.querySelector('.score-ring-wrap');
       if (ring) { ring.classList.add('perfect-score'); setTimeout(() => ring.classList.remove('perfect-score'), 2000); }
       if (typeof confetti === 'function') { confetti({ particleCount: 40, spread: 50, origin: { y: 0.8 }, colors: ['#00d4ff', '#7c3aed'] }); }
+    }
+  }
+
+  // ─── Whisper.js local pronunciation assessment ───────────────────────────
+  // Uses @xenova/transformers (runs in browser via WASM). Unlike Chrome ASR,
+  // Whisper transcribes acoustically — "avary doy" stays "avary doy", not "every day".
+  async _runWhisperAssessment(audioBlob, refText) {
+    const feedbackEl = document.getElementById('score-feedback');
+    try {
+      // Lazy-load model (cached after first 75MB download)
+      if (!window._whisperPipe) {
+        if (feedbackEl) feedbackEl.textContent = '🧠 Telaffuz motoru yükleniyor...';
+        const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
+        window._whisperPipe = await pipeline(
+          'automatic-speech-recognition',
+          'Xenova/whisper-tiny.en',
+          { progress_callback: p => {
+              if (feedbackEl && p.status === 'progress')
+                feedbackEl.textContent = `📥 Yükleniyor ${Math.round(p.progress || 0)}%...`;
+            }
+          }
+        );
+      }
+      if (feedbackEl) feedbackEl.textContent = '🎯 Telaffuz analiz ediliyor...';
+
+      // Decode blob → float32 mono 16kHz (Whisper requirement)
+      const arrBuf = await audioBlob.arrayBuffer();
+      const tmpCtx = new AudioContext();
+      const decoded = await tmpCtx.decodeAudioData(arrBuf);
+      tmpCtx.close();
+      const offCtx = new OfflineAudioContext(1, Math.ceil(decoded.duration * 16000), 16000);
+      const src = offCtx.createBufferSource();
+      src.buffer = decoded;
+      src.connect(offCtx.destination);
+      src.start(0);
+      const rendered = await offCtx.startRendering();
+      const audioData = rendered.getChannelData(0);
+
+      // Transcribe — Whisper is more literal, less normalized than Chrome ASR
+      const out = await window._whisperPipe(audioData, { language: 'english', task: 'transcribe' });
+      const transcript = (out.text || '').trim().toLowerCase().replace(/[^a-z0-9 ]/g, '');
+
+      const tWords = refText.toLowerCase().replace(/[^a-z0-9 ]/g, '').split(' ').filter(Boolean);
+      const sWords = transcript.split(' ').filter(Boolean);
+
+      // Strict phonetic match: allow max 15% Levenshtein ratio
+      let si = 0;
+      const wordResults = tWords.map(tw => {
+        const limit = Math.min(sWords.length, si + 4);
+        for (let j = si; j < limit; j++) {
+          const lev = this._levenshtein(sWords[j], tw);
+          const ratio = lev / Math.max(tw.length, sWords[j].length, 1);
+          if (ratio <= 0.15) { si = j + 1; return { word: tw, ok: true }; }
+        }
+        return { word: tw, ok: false };
+      });
+
+      return { wordResults, transcript };
+    } catch(e) {
+      console.warn('Whisper assessment failed:', e);
+      return null;
+    }
+  }
+
+  // ─── Unified pronunciation score updater (Azure or Whisper) ──────────────
+  _applyPronunciationScore(wordResults, refText, whisperTranscript) {
+    const panel = document.getElementById('score-panel');
+    if (!panel || panel.style.display === 'none') return;
+    const tWords = refText.toLowerCase().replace(/[^a-z0-9 ]/g, '').split(' ').filter(Boolean);
+
+    // wordResults can come from Azure ({word, ok}) or Whisper ({word, ok})
+    const results = tWords.map((tw, i) => {
+      // Try index-based first, then word-based lookup for Azure
+      const wr = wordResults[i] || wordResults.find(r => r.word === tw);
+      return wr ? wr.ok : false;
+    });
+
+    const score = Math.min(Math.round(results.filter(Boolean).length / tWords.length * 100), 100);
+
+    document.querySelectorAll('.sw').forEach((el, i) => {
+      el.className = 'sw ' + (results[i] ? 'correct' : 'wrong');
+    });
+    const bd = document.getElementById('word-breakdown');
+    if (bd) {
+      bd.innerHTML = tWords.map((w, i) =>
+        `<span class="wb-chip ${results[i] ? 'wb-ok' : 'wb-miss'} speak-word-btn" data-word="${w.replace(/"/g,'&quot;')}" title="Dinle ve Tekrar Et">${w}</span>`
+      ).join('');
+    }
+    this._animateScoreRing(score);
+    let fb = '';
+    if (score >= 90)      fb = '🏆 Mükemmel! Anadili gibi!';
+    else if (score >= 75) fb = '🎉 Harika! Çok iyi gidiyorsun.';
+    else if (score >= 55) fb = '💪 İyi iş! Biraz daha pratik yap.';
+    else                  fb = '🔄 Tekrar dene — daha net söyle.';
+    UI.setEl('score-feedback', fb);
+    const missedWords = tWords.filter((_, i) => !results[i]);
+    if (missedWords.length > 0) {
+      const spokenEl = document.getElementById('speak-transcript');
+      const spoken = spokenEl?.querySelector('em')?.textContent?.replace(/^"|"$/g,'') || whisperTranscript || '';
+      this._callAICoach(refText, spoken, missedWords, score);
+    }
+    if (score === 100) {
+      const ring = document.querySelector('.score-ring-wrap');
+      if (ring) { ring.classList.add('perfect-score'); setTimeout(() => ring.classList.remove('perfect-score'), 2000); }
+      if (typeof confetti === 'function') confetti({ particleCount: 40, spread: 50, origin: { y: 0.8 }, colors: ['#00d4ff', '#7c3aed'] });
     }
   }
 
