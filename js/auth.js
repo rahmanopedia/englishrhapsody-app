@@ -195,6 +195,18 @@ class AuthManager {
           console.info('[Auth] Yerel veri daha güncel — bulut güncelleniyor.');
           this.saveToCloud(window.app.state._state, true);
         }
+
+        // ── Geçiş: placement test öncesinde var olan kullanıcıları otomatik onboard et ──
+        // onboarded alanı cloud'da yoksa ve anlamlı veri varsa → doğrudan home
+        if (!window.app.state.get('onboarded')) {
+          const mastery  = window.app.state.get('mastery')  || {};
+          const xp       = window.app.state.get('xp')       || 0;
+          const sessions = window.app.state.get('sessions') || 0;
+          if (Object.keys(mastery).length > 0 || xp > 0 || sessions > 0) {
+            window.app.state.update({ onboarded: true });
+            console.info('[Auth] Mevcut kullanıcı → onboarded=true (migration)');
+          }
+        }
       } else if (window.app) {
         // ── YENİ KULLANICI: temiz sayfa, sıfırdan başla ──
         console.info('[Auth] Yeni kullanıcı — defaults ile başlatılıyor...');
@@ -282,6 +294,19 @@ class AuthManager {
     } else {
       clearTimeout(this._syncTimer);
       this._syncTimer = setTimeout(doSave, 15000);
+    }
+  }
+
+  // ── Veri Sıfırlama ────────────────────────────────────────
+  async resetCloudData() {
+    if (!this.uid || !this._db) return false;
+    try {
+      await this._db.doc('users/' + this.uid + '/data/state').delete();
+      console.info('[Auth] Bulut verisi silindi');
+      return true;
+    } catch(e) {
+      console.warn('[Auth] resetCloudData error:', e);
+      return false;
     }
   }
 

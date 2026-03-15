@@ -3456,6 +3456,94 @@ body.sidebar-closed .sidebar-tab {
 .an-weak-dot.fill { background: #f43f5e; }
 .an-weak-empty { font-size: 0.85rem; color: var(--text-2); padding: 12px 0; }
 
+/* ── Tehlikeli Bölge ── */
+.an-danger-zone { margin-top: 8px; }
+.an-danger-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(244,63,94,0.05);
+  border: 1px solid rgba(244,63,94,0.2);
+  border-radius: 16px;
+  padding: 20px;
+}
+.an-danger-info { flex: 1; }
+.an-danger-label { font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.an-danger-desc  { font-size: 0.75rem; color: var(--text-2); line-height: 1.5; }
+.an-btn-danger {
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: rgba(244,63,94,0.15);
+  border: 1px solid rgba(244,63,94,0.4);
+  color: #f43f5e;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+.an-btn-danger:hover {
+  background: rgba(244,63,94,0.25);
+  transform: translateY(-1px);
+}
+
+/* ── Onay Modalı ── */
+.reset-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: pl-fade-in 0.2s ease;
+}
+.reset-modal-box {
+  background: var(--bg-card);
+  border: 1px solid rgba(244,63,94,0.3);
+  border-radius: 20px;
+  padding: 32px 28px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(244,63,94,0.15);
+}
+.reset-modal-icon  { font-size: 3rem; margin-bottom: 12px; }
+.reset-modal-title { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+.reset-modal-desc  { font-size: 0.84rem; color: var(--text-2); line-height: 1.6; margin-bottom: 24px; }
+.reset-modal-desc strong { color: #f43f5e; }
+.reset-modal-btns  { display: flex; gap: 12px; }
+.reset-btn-cancel {
+  flex: 1;
+  padding: 13px;
+  border-radius: 12px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.reset-btn-cancel:hover { background: rgba(255,255,255,0.08); }
+.reset-btn-confirm {
+  flex: 1;
+  padding: 13px;
+  border-radius: 12px;
+  background: #f43f5e;
+  border: none;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.reset-btn-confirm:hover:not(:disabled) { background: #e11d48; transform: translateY(-1px); }
+.reset-btn-confirm:disabled { opacity: 0.6; cursor: not-allowed; }
+
 /* ── SVG gradient def (injected inline) ── */
 .an-hidden-defs { position: absolute; width: 0; height: 0; }
 

@@ -1004,6 +1004,34 @@
     <div id="badges-grid" class="badges-grid" style="margin-top:12px;"></div>
   </div>
 
+  <!-- ── TEHLİKELİ BÖLGE ── -->
+  <div class="an-section an-danger-zone">
+    <div class="an-section-hd">
+      <div class="an-section-title" style="color:#f43f5e;">⚠️ Tehlikeli Bölge</div>
+      <div class="an-section-sub">Bu işlem geri alınamaz.</div>
+    </div>
+    <div class="an-danger-card">
+      <div class="an-danger-info">
+        <div class="an-danger-label">Tüm İlerlemeyi Sıfırla</div>
+        <div class="an-danger-desc">XP, kelimeler, seriler, başarımlar ve tüm istatistikler silinir. Firebase ve yerel veriler tamamen temizlenir. Seviye tespit testine yönlendirilirsin.</div>
+      </div>
+      <button class="an-btn-danger" onclick="window._app.resetUserData()">🗑️ Sıfırla</button>
+    </div>
+  </div>
+
+  <!-- Onay Modalı -->
+  <div id="reset-confirm-modal" class="reset-modal" style="display:none">
+    <div class="reset-modal-box">
+      <div class="reset-modal-icon">⚠️</div>
+      <div class="reset-modal-title">Emin misin?</div>
+      <div class="reset-modal-desc">Tüm XP, kelimeler, seriler ve başarımların kalıcı olarak silinecek.<br>Bu işlem <strong>geri alınamaz.</strong></div>
+      <div class="reset-modal-btns">
+        <button class="reset-btn-cancel" onclick="document.getElementById('reset-confirm-modal').style.display='none'">Vazgeç</button>
+        <button class="reset-btn-confirm" id="btn-reset-confirm" onclick="window._app._doResetUserData()">Evet, Sıfırla</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 </template>
 

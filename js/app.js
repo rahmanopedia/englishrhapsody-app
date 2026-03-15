@@ -6471,6 +6471,44 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     }).join('');
   }
 
+  // ── Veri Sıfırlama (Analitik sayfasından erişilir) ────────
+  resetUserData() {
+    const modal = document.getElementById('reset-confirm-modal');
+    if (modal) modal.style.display = 'flex';
+  }
+
+  async _doResetUserData() {
+    const btn = document.getElementById('btn-reset-confirm');
+    if (btn) { btn.disabled = true; btn.textContent = '⏳ Sıfırlanıyor...'; }
+
+    // 1. Firebase'den sil
+    if (window.authManager?.isLoggedIn) {
+      await window.authManager.resetCloudData();
+    }
+
+    // 2. LocalStorage temizle
+    localStorage.removeItem('er_state');
+    localStorage.removeItem('er_state_ts');
+
+    // 3. Bellek sıfırla
+    this.state._state = this.state._defaults();
+    this.state.save(false);
+
+    // 4. Temiz state'i cloud'a kaydet
+    if (window.authManager?.isLoggedIn) {
+      window.authManager._cloudReady = true;
+      this.cloudLoaded = true;
+      await window.authManager.saveToCloud(this.state._state, true);
+    }
+
+    // 5. Modal kapat, placement'a yönlendir
+    const modal = document.getElementById('reset-confirm-modal');
+    if (modal) modal.style.display = 'none';
+
+    UI.toast('✅ Tüm veriler silindi — seviye testi başlıyor!', 2500);
+    setTimeout(() => this.navigate('placement'), 500);
+  }
+
   _renderHeatmap() {
     const el = document.getElementById('heatmap-grid');
     if (!el) return;
