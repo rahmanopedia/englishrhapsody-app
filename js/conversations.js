@@ -70,9 +70,9 @@ const CONVERSATIONS = [
           "We need to talk about your salary request immediately. Why is there a delay?"
         ],
         "tr": [
-          "Merhaba. salary talebiniz hakkında görüşmek için buradayız. Son durum nedir?",
-          "Selam! salary talebinizle ilgili yardımcı olmaktan mutluyum. Bana her şeyi anlatın!",
-          "Hemen salary talebiniz hakkında konuşmalıyiz. Neden bir gecikme var?"
+          "Merhaba. maaş talebiniz hakkında görüşmek için buradayız. Son durum nedir?",
+          "Selam! maaş talebinizle ilgili yardımcı olmaktan mutluyum. Bana her şeyi anlatın!",
+          "Hemen maaş talebiniz hakkında konuşmalıyız. Neden bir gecikme var?"
         ]
       },
       {
@@ -114,9 +114,9 @@ const CONVERSATIONS = [
           "We need to talk about your visa request immediately. Why is there a delay?"
         ],
         "tr": [
-          "Merhaba. visa talebiniz hakkında görüşmek için buradayız. Son durum nedir?",
-          "Selam! visa talebinizle ilgili yardımcı olmaktan mutluyum. Bana her şeyi anlatın!",
-          "Hemen visa talebiniz hakkında konuşmalıyiz. Neden bir gecikme var?"
+          "Merhaba. vize talebiniz hakkında görüşmek için buradayız. Son durum nedir?",
+          "Selam! vize talebinizle ilgili yardımcı olmaktan mutluyum. Bana her şeyi anlatın!",
+          "Hemen vize talebiniz hakkında konuşmalıyız. Neden bir gecikme var?"
         ]
       },
       {
@@ -158,9 +158,9 @@ const CONVERSATIONS = [
           "We need to talk about your emergency request immediately. Why is there a delay?"
         ],
         "tr": [
-          "Merhaba. emergency talebiniz hakkında görüşmek için buradayız. Son durum nedir?",
-          "Selam! emergency talebinizle ilgili yardımcı olmaktan mutluyum. Bana her şeyi anlatın!",
-          "Hemen emergency talebiniz hakkında konuşmalıyiz. Neden bir gecikme var?"
+          "Merhaba. acil durum talebiniz hakkında görüşmek için buradayız. Son durum nedir?",
+          "Selam! acil durum talebinizle ilgili yardımcı olmaktan mutluyum. Bana her şeyi anlatın!",
+          "Hemen acil durum talebiniz hakkında konuşmalıyız. Neden bir gecikme var?"
         ]
       },
       {
@@ -202,9 +202,9 @@ const CONVERSATIONS = [
           "We need to talk about your doctor request immediately. Why is there a delay?"
         ],
         "tr": [
-          "Merhaba. doctor talebiniz hakkında görüşmek için buradayız. Son durum nedir?",
-          "Selam! doctor talebinizle ilgili yardımcı olmaktan mutluyum. Bana her şeyi anlatın!",
-          "Hemen doctor talebiniz hakkında konuşmalıyiz. Neden bir gecikme var?"
+          "Merhaba. doktor randevusu talebiniz hakkında görüşmek için buradayız. Son durum nedir?",
+          "Selam! doktor randevusu talebinizle ilgili yardımcı olmaktan mutluyum. Bana her şeyi anlatın!",
+          "Hemen doktor randevusu talebiniz hakkında konuşmalıyız. Neden bir gecikme var?"
         ]
       },
       {
@@ -246,9 +246,9 @@ const CONVERSATIONS = [
           "We need to talk about your apartment request immediately. Why is there a delay?"
         ],
         "tr": [
-          "Merhaba. apartment talebiniz hakkında görüşmek için buradayız. Son durum nedir?",
-          "Selam! apartment talebinizle ilgili yardımcı olmaktan mutluyum. Bana her şeyi anlatın!",
-          "Hemen apartment talebiniz hakkında konuşmalıyiz. Neden bir gecikme var?"
+          "Merhaba. kiralık daire talebiniz hakkında görüşmek için buradayız. Son durum nedir?",
+          "Selam! kiralık daire talebinizle ilgili yardımcı olmaktan mutluyum. Bana her şeyi anlatın!",
+          "Hemen kiralık daire talebiniz hakkında konuşmalıyız. Neden bir gecikme var?"
         ]
       },
       {

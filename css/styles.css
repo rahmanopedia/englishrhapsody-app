@@ -311,6 +311,17 @@ body.sidebar-closed .sidebar-tab {
   text-align: center;
   flex-shrink: 0;
 }
+.nav-badge {
+  margin-left: auto;
+  background: var(--cyan);
+  color: #000;
+  font-size: 0.62rem;
+  font-weight: 900;
+  padding: 1px 6px;
+  border-radius: 99px;
+  line-height: 1.6;
+}
+.nav-badge-ai { background: var(--violet); color: #fff; }
 
 .nav-divider {
   height: 1px;
@@ -1525,6 +1536,7 @@ body.sidebar-closed .sidebar-tab {
 }
 
 /* ── Streak Calendar ── */
+.streak-calendar { display: flex; gap: 7px; flex-wrap: wrap; }
 .streak-row { display: flex; gap: 7px; flex-wrap: wrap; }
 .streak-day {
   width: 34px; height: 38px;
@@ -6419,6 +6431,7 @@ body.rank-6 { --theme-accent: #ff9d00; }
   overflow: hidden;
 }
 .wod-card-v2:hover { transform: translateY(-4px); border-color: var(--cyan); }
+.wod-v2-icon { font-size: 1.6rem; display: block; margin-bottom: 4px; }
 .wod-v2-label { font-size: 0.65rem; font-weight: 900; color: var(--cyan); letter-spacing: 1px; margin-bottom: 12px; }
 .wod-v2-word { font-size: 1.8rem; font-weight: 900; color: #fff; display: block; }
 .wod-v2-ipa { font-family: monospace; font-size: 0.9rem; color: var(--text-3); }
