@@ -4910,9 +4910,18 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
         if (e.data.size > 0) this.session.audioChunks.push(e.data);
       };
       this.session.mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(this.session.audioChunks, { type: 'audio/wav' });
+        const mime = this.session.mediaRecorder.mimeType || 'audio/webm';
+        const audioBlob = new Blob(this.session.audioChunks, { type: mime });
+        this.session.lastAudioBlob = audioBlob;
+        this.session.lastAudioMime = mime;
         this.session.lastAudioUrl = URL.createObjectURL(audioBlob);
         if (pbBtn) pbBtn.style.display = 'flex';
+        // Azure assessment: blob is ready, fire if speech result already arrived
+        if (this.session.pendingAzureText) {
+          const ref = this.session.pendingAzureText;
+          this.session.pendingAzureText = null;
+          this._runAzureAssessment(audioBlob, mime, ref).then(w => { if (w) this._applyAzureScore(w, ref); });
+        }
       };
       this.session.mediaRecorder.start();
     }).catch(() => {});
@@ -5163,6 +5172,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     this.state.update({ speakBest: Math.max(best, score), speakTotal: total, speakSum: sum, speakHistory: hist });
     this._renderSpeakStats();
     this._renderSpeakHistory();
+    // Store for Azure assessment (fires after MediaRecorder.onstop delivers the blob)
+    this.session.pendingAzureText = text;
     if (this.state.get('autoAdvance') && score >= (window.remoteFlags?.speaking_auto_advance_score ?? 80)) {
       let cd = window.remoteFlags?.speaking_countdown_sec ?? 3;
       const fbEl = document.getElementById('score-feedback');
@@ -5305,6 +5316,88 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       }
     }
     return results;
+  }
+
+  async _runAzureAssessment(audioBlob, mimeType, refText) {
+    const key    = window.remoteFlags?.azure_speech_key    || localStorage.getItem('sp_azure_key');
+    const region = window.remoteFlags?.azure_speech_region || localStorage.getItem('sp_azure_region') || 'eastus';
+    if (!key) return null;
+    const assessConfig = btoa(unescape(encodeURIComponent(JSON.stringify({
+      ReferenceText: refText,
+      GradingSystem: 'HundredMark',
+      Dimension: 'Comprehensive',
+      EnableMiscue: true
+    }))));
+    try {
+      const url = `https://${region}.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Ocp-Apim-Subscription-Key': key,
+          'Content-Type': mimeType,
+          'Pronunciation-Assessment': assessConfig
+        },
+        body: audioBlob
+      });
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data.NBest?.[0]?.Words || null;
+    } catch(e) { return null; }
+  }
+
+  _applyAzureScore(azureWords, refText) {
+    const panel = document.getElementById('score-panel');
+    if (!panel || panel.style.display === 'none') return;
+    const tWords = refText.toLowerCase().replace(/[^a-z0-9 ]/g, '').split(' ').filter(Boolean);
+
+    // Map each target word to its Azure result (threshold: AccuracyScore >= 75)
+    const results = tWords.map(tw => {
+      const azWord = azureWords.find(w => w.Word?.toLowerCase() === tw);
+      if (!azWord) return false;
+      const acc = azWord.PronunciationAssessment?.AccuracyScore ?? 0;
+      const err = azWord.PronunciationAssessment?.ErrorType ?? 'None';
+      return acc >= 75 && err === 'None';
+    });
+
+    const score = Math.min(Math.round(results.filter(Boolean).length / tWords.length * 100), 100);
+
+    // Update word highlight chips
+    document.querySelectorAll('.sw').forEach((el, i) => {
+      el.className = 'sw ' + (results[i] ? 'correct' : 'wrong');
+    });
+
+    // Update word breakdown chips
+    const bd = document.getElementById('word-breakdown');
+    if (bd) {
+      bd.innerHTML = tWords.map((w, i) =>
+        `<span class="wb-chip ${results[i] ? 'wb-ok' : 'wb-miss'} speak-word-btn" data-word="${w.replace(/"/g,'&quot;')}" title="Dinle ve Tekrar Et">${w}</span>`
+      ).join('');
+    }
+
+    // Recompute feedback and XP
+    let fb = '', xp = 0;
+    if (score >= 90)      { fb = '🏆 Mükemmel! Anadili gibi!'; xp = window.remoteFlags?.xp_speak_perfect ?? 60; }
+    else if (score >= 75) { fb = '🎉 Harika! Çok iyi gidiyorsun.'; xp = window.remoteFlags?.xp_speak_great ?? 40; }
+    else if (score >= 55) { fb = '💪 İyi iş! Biraz daha pratik yap.'; xp = window.remoteFlags?.xp_speak_good ?? 20; }
+    else                  { fb = '🔄 Tekrar dene — daha net söyle.'; xp = window.remoteFlags?.xp_speak_retry ?? 5; }
+    UI.setEl('score-feedback', fb);
+
+    // Update score ring with Azure-accurate score
+    this._animateScoreRing(score);
+
+    // Re-trigger AI coach with Azure-precise missed words
+    const missedWords = tWords.filter((_, i) => !results[i]);
+    if (missedWords.length > 0) {
+      const spokenEl = document.getElementById('speak-transcript');
+      const spoken = spokenEl ? spokenEl.querySelector('em')?.textContent?.replace(/^"|"$/g,'') || '' : '';
+      this._callAICoach(refText, spoken, missedWords, score);
+    }
+
+    if (score === 100) {
+      const ring = document.querySelector('.score-ring-wrap');
+      if (ring) { ring.classList.add('perfect-score'); setTimeout(() => ring.classList.remove('perfect-score'), 2000); }
+      if (typeof confetti === 'function') { confetti({ particleCount: 40, spread: 50, origin: { y: 0.8 }, colors: ['#00d4ff', '#7c3aed'] }); }
+    }
   }
 
   _levenshtein(a, b) {
