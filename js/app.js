@@ -5279,24 +5279,15 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   _scoreWords(tWords, sWords) {
     const _match = (s, t) => {
       if (s === t) return true;
-      // Morphological variants — only for words ≥ 4 chars
-      if (t.length >= 4) {
-        if (s === t + 's'   || t === s + 's')   return true;
-        if (s === t + 'es'  || t === s + 'es')  return true;
-        if (s === t + 'ed'  || t === s + 'ed')  return true;
-        if (s === t + 'd'   || t === s + 'd')   return true;
-        if (s === t + 'er'  || t === s + 'er')  return true;
-        if (s === t + 'est' || t === s + 'est') return true;
-        if (t.endsWith('e')   && s === t.slice(0,-1) + 'ing') return true;
-        if (s.endsWith('ing') && t === s.slice(0,-3) + 'e')   return true;
-        if (s.endsWith('ing') && t === s.slice(0,-3))          return true;
-      }
-      // Strict Levenshtein with ratio guard — tightened per word length
-      const dist = this._levenshtein(s, t);
-      const maxL = Math.max(s.length, t.length);
-      if (t.length <= 4) return false;                           // ≤4 chars: exact only
-      if (t.length <= 7) return dist === 1 && dist / maxL < 0.20; // 5–7 chars: 1 edit, <20% ratio
-      return dist <= 2 && dist / maxL < 0.22;                    // 8+ chars : 2 edits, <22% ratio
+      // Only accept legitimate inflected forms of the same word — no fuzzy matching
+      if (s === t + 's'   || t === s + 's')   return true;
+      if (s === t + 'es'  || t === s + 'es')  return true;
+      if (s === t + 'ed'  || t === s + 'ed')  return true;
+      if (s === t + 'd'   || t === s + 'd')   return true;
+      if (t.endsWith('e')   && s === t.slice(0,-1) + 'ing') return true;
+      if (s.endsWith('ing') && t === s.slice(0,-3) + 'e')   return true;
+      if (s.endsWith('ing') && t === s.slice(0,-3))          return true;
+      return false; // no Levenshtein — speech API is the only judge
     };
 
     // Position-aware LCS alignment: spoken words must appear in target order
