@@ -444,7 +444,7 @@ class NexusMode {
         <p class="nexus-subtitle">Takımyıldızı ${this.currentIndex + 1} / ${this.queue.length}</p>
       </div>
 
-      <div class="nexus-display-container">
+      <div class="nexus-display-container network-compact">
          <div class="nexus-task-progress">Düğüm ${this.currentTaskIndex + 1} / ${this.currentTasks.length}</div>
          <div class="nexus-question" id="nx-q">${this.currentTasks[0].tr}</div>
          <div class="nexus-feedback-area" id="nx-feedback" style="display:none;">
@@ -457,6 +457,7 @@ class NexusMode {
         <canvas class="nexus-net-canvas" id="nexus-net-canvas"></canvas>
         <svg class="nexus-connection-line" id="nexus-svg"></svg>
         <div class="nexus-core-node nexus-core-speak-btn" id="nexus-core" data-verb="${this.current.verb.replace(/"/g,'&quot;')}">
+          <div class="nx-spark-ring"></div>
           ${this.current.verb}
         </div>
         ${particlesToShow.map((opt, i) => {
@@ -510,33 +511,43 @@ class NexusMode {
     this._startNetCanvas();
   }
 
-  _redrawLines() {
+  _redrawLines(newlySolved = null) {
        const core = document.getElementById('nexus-core');
-       const svg = document.getElementById('nexus-svg');
+       const svg  = document.getElementById('nexus-svg');
        if (!core || !svg) return;
        svg.innerHTML = '';
-       const coreRect = core.getBoundingClientRect();
+       const coreRect  = core.getBoundingClientRect();
        const boardRect = document.getElementById('nexus-board').getBoundingClientRect();
-       const x1 = coreRect.left + coreRect.width/2 - boardRect.left;
-       const y1 = coreRect.top + coreRect.height/2 - boardRect.top;
+       const x1 = coreRect.left + coreRect.width/2  - boardRect.left;
+       const y1 = coreRect.top  + coreRect.height/2 - boardRect.top;
 
        document.querySelectorAll('.nexus-particle-node').forEach(p => {
              const pRect = p.getBoundingClientRect();
-             const x2 = pRect.left + pRect.width/2 - boardRect.left;
-             const y2 = pRect.top + pRect.height/2 - boardRect.top;
+             const x2 = pRect.left + pRect.width/2  - boardRect.left;
+             const y2 = pRect.top  + pRect.height/2 - boardRect.top;
              const isSolved = p.classList.contains('solved');
-             const newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-             newLine.setAttribute('x1', x1);
-             newLine.setAttribute('y1', y1);
-             newLine.setAttribute('x2', x2);
-             newLine.setAttribute('y2', y2);
-             newLine.setAttribute('class', isSolved ? 'nexus-line correct-line' : 'nexus-line ambient-line');
-             svg.appendChild(newLine);
+             const isNew    = isSolved && p === newlySolved;
+
+             const el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+             if (isNew) {
+               // Draw FROM particle TOWARD center — "snaps back" with spring easing
+               el.setAttribute('d', `M ${x2} ${y2} L ${x1} ${y1}`);
+               const len = Math.round(Math.sqrt((x2-x1)**2 + (y2-y1)**2));
+               el.style.setProperty('--line-len', len);
+               el.setAttribute('class', 'nexus-line snap-line');
+             } else if (isSolved) {
+               el.setAttribute('d', `M ${x1} ${y1} L ${x2} ${y2}`);
+               el.setAttribute('class', 'nexus-line correct-line');
+             } else {
+               el.setAttribute('d', `M ${x1} ${y1} L ${x2} ${y2}`);
+               el.setAttribute('class', 'nexus-line ambient-line');
+             }
+             svg.appendChild(el);
        });
   }
 
   _drawLineTo(el) {
-       this._redrawLines();
+       this._redrawLines(el);
   }
 
   checkNetworkAnswer(particle, el) {
@@ -547,7 +558,13 @@ class NexusMode {
     if (particle === task.particle) {
        this.locked = true;
        el.classList.add('solved');
+       el.insertAdjacentHTML('beforeend', '<div class="nx-known-badge">✓</div>');
        this._drawLineTo(el);
+       const coreEl = document.getElementById('nexus-core');
+       if (coreEl) {
+         coreEl.classList.add('just-solved');
+         setTimeout(() => coreEl.classList.remove('just-solved'), 900);
+       }
        if(this.app.audio) this.app.audio.play('correct');
        if(this.app.speakWord) this.app.speakWord(task.phrase);
 
