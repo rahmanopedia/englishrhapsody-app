@@ -557,7 +557,6 @@ class NexusMode {
     if (particle === task.particle) {
        this.locked = true;
        el.classList.add('solved');
-       el.insertAdjacentHTML('beforeend', '<div class="nx-known-badge">✓</div>');
        this._drawLineTo(el);
        const coreEl = document.getElementById('nexus-core');
        if (coreEl) {
