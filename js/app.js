@@ -3148,6 +3148,22 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     if (!intro) return;
     if (!this._synthSessionLen)  this._synthSessionLen  = 10;
     if (!this._synthModeConfig)  this._synthModeConfig  = 'mix';
+
+    // Restore CEFR filter from placement result if not already set
+    if (!this._synthCEFRFilter) {
+      const saved = this.state.get('cefrLevel');
+      if (saved) {
+        this._synthCEFRFilter = ['A1','A2','B1','B2'].includes(saved) ? saved : 'B2';
+      }
+    }
+
+    // Sync CEFR filter button UI
+    if (this._synthCEFRFilter) {
+      document.querySelectorAll('[data-action="set-synth-cefr"]').forEach(b => {
+        b.classList.toggle('active', b.dataset.level === this._synthCEFRFilter || (this._synthCEFRFilter === 'B2' && b.dataset.level === 'B2'));
+      });
+    }
+
     intro.style.display = 'flex';
     if (chamber) chamber.style.display = 'none';
     const pw = document.getElementById('synth-progress-wrap');
@@ -6365,7 +6381,33 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 
   _placementFinish(level, mode) {
     this.state.update({ onboarded: true, learningMode: mode, cefrLevel: level });
+    this._seedPlacementMastery(level);
     this.navigate('home');
+  }
+
+  // Pre-seed mastery so SRS starts at the detected CEFR level, not A1
+  _seedPlacementMastery(cefrLevel) {
+    const LEVEL_ORDER = ['A1','A2','B1','B2','C1','C2'];
+    const detectedIdx = LEVEL_ORDER.indexOf(cefrLevel);
+    if (detectedIdx <= 0) return; // A1 → no seeding needed
+
+    const lowerLevels = LEVEL_ORDER.slice(0, detectedIdx);
+    const mastery = Object.assign({}, this.state.get('mastery'));
+    const now = Date.now();
+
+    WORDS.forEach(w => {
+      if (!lowerLevels.includes(w.level)) return;
+      const key = w.id || w.en;
+      if (mastery[key]) return; // don't overwrite real data
+      // score:3 = "learned" threshold; 21-day interval keeps them away
+      mastery[key] = { score: 3, interval: 21, ease: 2.5, nextReview: now + 21 * 86400000 };
+    });
+
+    this.state.update({ mastery });
+
+    // Set synesthesia filter to detected level (max B2 since WORDS only go to B2)
+    const wordLevel = ['A1','A2','B1','B2'].includes(cefrLevel) ? cefrLevel : 'B2';
+    this._synthCEFRFilter = wordLevel;
   }
 
   _placementSkip() {
