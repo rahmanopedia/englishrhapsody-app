@@ -4889,7 +4889,11 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   //  SPEAKING MODULE
   // ─────────────────────────────────────────────────────────
 
-  _initSpeak() {
+  async _initSpeak() {
+    // SPEAK_CHALLENGES lives in stories-data.js — lazy load if not yet loaded
+    if (!window.SPEAK_CHALLENGES) {
+      await this._loadScript('js/stories-data.js');
+    }
     this._buildWaveform();
     this._renderSpeak();
     this._renderSpeakStats();
@@ -5028,6 +5032,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   _getSpeakPool() {
     const diff = this.state.get('speakDiff');
     const isShuffle = this.state.get('speakShuffle');
+    if (!window.SPEAK_CHALLENGES) return [];
     const basePool = SPEAK_CHALLENGES[diff] || SPEAK_CHALLENGES.easy;
     if (!isShuffle) return basePool;
     if (!this.session.shuffledPools[diff]) {

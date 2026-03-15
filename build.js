@@ -18,8 +18,9 @@ const EXCLUDE_ROOT_JS = new Set(['build.js', 'analyze2.js', 'audit.js', 'patch.j
   'generate_diverse_data.js', 'generate_high_quality_conversations.js']);
 
 const EXCLUDE_FILES = new Set(['package.json', 'package-lock.json',
-  'lh-report.json', 'lh-report2.json', '.firebaserc', 'firestore.rules',
-  'remote_config.json', 'ntuser.dat', 'ntuser.ini', 'akia.ini']);
+  'lh-report.json', 'lh-report2.json', 'lh-report3.json', '.firebaserc', 'firestore.rules',
+  'remote_config.json', 'ntuser.dat', 'ntuser.ini', 'akia.ini',
+  'AGENTS.md', 'words-list.txt', 'phrases-list.txt', '.gitignore']);
 const EXCLUDE_EXTS = new Set(['.blf', '.log1', '.log2', '.regtrans-ms']);
 
 // Skip JS minification for huge pure-data files — gzip handles compression
