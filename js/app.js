@@ -2669,11 +2669,10 @@ class App {
     this.session.isSpeakingStory = false;
     this._closeWordDef();
 
-    // Cleanup phantom, nexus, quantum, dimension, leaderboard and writing if active
+    // Cleanup phantom, nexus, quantum, leaderboard and writing if active
     if (window.phantomMod)       { window.phantomMod.destroy(); }
     if (window.nexusMod)         { window.nexusMod.destroy(); }
     if (window.quantumMod)       { window.quantumMod.destroy(); }
-    if (window.dimensionMod)     { window.dimensionMod.destroy(); window.dimensionMod = null; }
 if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 
     // Cleanup synesthesia if active (prevents memory leaks and ghost timers)
@@ -2713,7 +2712,6 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       quantum:     () => this._initQuantum(),
       leaderboard: () => this._initLeaderboard(),
       bridge:      () => this._initBridge(),
-      dimension:   () => this._initDimension(),
     };
     if (init[view]) init[view]();
 
@@ -2750,13 +2748,6 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     if (!root) return;
     window.bridgeMod = new BridgeModule(this);
     window.bridgeMod.init(root);
-  }
-
-  _initDimension() {
-    const root = document.getElementById('dimension-root');
-    if (!root) return;
-    window.dimensionMod = new LanguageDimensionMode(this);
-    window.dimensionMod.init(root);
   }
 
   toggleFocusMode() {
