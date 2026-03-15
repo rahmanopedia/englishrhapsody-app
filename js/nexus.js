@@ -608,7 +608,23 @@ class NexusMode {
       if(this.app.audio) this.app.audio.play('level_up');
       const core = document.getElementById('nexus-core');
       if (core) core.classList.add('constellation-complete-glow');
-      document.querySelectorAll('.correct-line').forEach(l => l.classList.add('pulse-line'));
+      document.querySelectorAll('.correct-line, .snap-line').forEach(l => l.classList.add('pulse-line'));
+
+      // Unsolved nodes fly toward the core and vanish
+      if (core) {
+        const coreRect  = core.getBoundingClientRect();
+        const coreCX    = coreRect.left + coreRect.width  / 2;
+        const coreCY    = coreRect.top  + coreRect.height / 2;
+        document.querySelectorAll('.nexus-particle-node:not(.solved)').forEach((p, i) => {
+          const pRect = p.getBoundingClientRect();
+          const dx = coreCX - (pRect.left + pRect.width  / 2);
+          const dy = coreCY - (pRect.top  + pRect.height / 2);
+          p.style.transition = `transform 0.55s ${0.08 * i}s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ${0.08 * i + 0.1}s ease`;
+          p.style.transform  = `translate(${dx}px, ${dy}px) scale(0)`;
+          p.style.opacity    = '0';
+          p.style.pointerEvents = 'none';
+        });
+      }
 
       const base = window.remoteFlags?.xp_nexus_base ?? 15;
       this.score += base * 7;
