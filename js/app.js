@@ -4699,7 +4699,7 @@ class App {
 
   _closeWordDef() {
     document.querySelectorAll('.word-def-popup').forEach(p => p.remove());
-    document.querySelectorAll('.story-word, .story-vocab').forEach(el => el.classList.remove('playing'));
+    document.querySelectorAll('.story-word, .story-vocab, .sw').forEach(el => el.classList.remove('playing'));
   }
 
   _addToMasteryFromDict(id, btn) {
