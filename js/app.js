@@ -5016,6 +5016,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     if (transcript) transcript.innerHTML = '';
     const scorePanel = document.getElementById('score-panel');
     if (scorePanel) scorePanel.style.display = 'none';
+    const coachPanel = document.getElementById('ai-coach-panel');
+    if (coachPanel) { coachPanel.innerHTML = ''; coachPanel.style.display = 'none'; }
   }
 
   toggleRecord() {
@@ -5103,6 +5105,9 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     }
     const wordMap = {};
     WORDS.forEach(wd => { wordMap[wd.en.toLowerCase()] = wd; });
+    const missedWords = tWords.filter((w, i) => !results[i]);
+    this._callAICoach(text, spoken, missedWords, score);
+
     const missedIpa = tWords
       .filter((w, i) => !results[i])
       .map(w => wordMap[w])
@@ -5182,6 +5187,100 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     requestAnimationFrame(() => requestAnimationFrame(() => { arc.style.transition = 'stroke-dashoffset 1.3s var(--bounce)'; arc.style.strokeDashoffset = circ - (score / 100) * circ; }));
     if (numEl) { let cur = 0; const step = score / 55; const iv = setInterval(() => { cur = Math.min(cur + step, score); numEl.textContent = Math.round(cur); if (cur >= score) clearInterval(iv); }, 16); }
   }
+
+  // ── AI Pronunciation Coach ────────────────────────────────────
+  async _callAICoach(target, spoken, missed, score) {
+    const panel = document.getElementById('ai-coach-panel');
+    if (!panel) return;
+
+    panel.style.display = 'block';
+    panel.innerHTML = `
+      <div class="coach-header">
+        <div class="coach-avatar">🤖</div>
+        <div class="coach-meta">
+          <span class="coach-name">AI Telaffuz Koçu</span>
+          <div class="coach-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>`;
+
+    let text = '';
+    const apiKey = window.remoteFlags?.coach_key || localStorage.getItem('sp_coach_key');
+
+    if (apiKey) {
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'content-type': 'application/json',
+            'anthropic-dangerous-direct-browser-access': 'true'
+          },
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 200,
+            messages: [{ role: 'user', content:
+              `İngilizce telaffuz koçusun. Türk öğrenci:\nHedef: "${target}"\nSöylenen: "${spoken || '(sessiz)'}"\nHatalı: ${missed.join(', ') || 'yok'} | Skor: %${score}\nTürkçe, 2-3 cümle, somut öneri + teşvik. Emoji kullan. Çok kısa ol.`
+            }]
+          })
+        });
+        const d = await res.json();
+        text = d.content?.[0]?.text?.trim() || '';
+      } catch(e) {}
+    }
+
+    if (!text) {
+      await new Promise(r => setTimeout(r, 700 + Math.random() * 500));
+      text = this._localCoachFeedback(target, spoken, missed, score);
+    }
+
+    const dots = panel.querySelector('.coach-dots');
+    if (dots) dots.remove();
+    const body = document.createElement('div');
+    body.className = 'coach-body';
+    panel.appendChild(body);
+
+    let i = 0;
+    const chars = [...text.replace(/\n/g, ' • ')];
+    const iv = setInterval(() => {
+      i += 3;
+      body.innerHTML = chars.slice(0, i).join('') + (i < chars.length ? '<span class="coach-cursor">|</span>' : '');
+      if (i >= chars.length) clearInterval(iv);
+    }, 20);
+  }
+
+  _localCoachFeedback(target, spoken, missed, score) {
+    if (score === 100) return '🏆 Mükemmel! Her kelime kristal netliğinde. Anadili konuşucusu gibi söyledin!';
+    const lines = [];
+    if (missed.length > 0) {
+      const tips = missed.slice(0, 2).map(w => {
+        const t = this._phonTip(w);
+        return t ? `"${w}" (${t})` : `"${w}"`;
+      });
+      lines.push(`🎯 Dikkat: ${tips.join(' — ')}.`);
+    }
+    const sw = (spoken || '').trim().split(/\s+/).filter(Boolean).length;
+    const tw = target.trim().split(/\s+/).length;
+    if (sw < tw * 0.65) lines.push('💡 Cümlenin bir kısmı kaçtı — tüm kelimeleri söylemeye çalış.');
+    if (score >= 75)      lines.push('💪 Çok iyi gidiyorsun! Az kalan eksikleri de kapatırsan mükemmel.');
+    else if (score >= 50) lines.push('🔄 Önce 🐢 Yavaş modda dinle, sonra tekrar dene.');
+    else                  lines.push('📢 Cümleyi parça parça pratik et, sonra bütün söyle.');
+    return lines.join(' • ');
+  }
+
+  _phonTip(word) {
+    const w = word.toLowerCase();
+    if (/th/.test(w))              return 'dişler arası "th" sesi';
+    if (/^w[aeiou]|[^a-z]w[aeiou]/.test(w)) return 'dudak yuvarlayarak "w"';
+    if (/tion$|sion$/.test(w))     return 'sonu "şın" gibi';
+    if (/ng$|nk/.test(w))          return 'burundan "ng"';
+    if (w.endsWith('ed'))           return '"-ed" ekini duyur';
+    if (/ough|augh/.test(w))        return 'özel okunuş — dinleyerek öğren';
+    if (/[^aeiou]{3,}/.test(w))    return 'ünsüz yığılmasına dikkat';
+    if (w.length > 9)               return 'hecelere böl: ' + (w.match(/.{1,3}/g)||[]).join('-');
+    return null;
+  }
+  // ─────────────────────────────────────────────────────────────
 
   _levenshtein(a, b) {
     const m = a.length, n = b.length;
