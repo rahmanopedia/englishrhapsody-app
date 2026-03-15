@@ -2008,10 +2008,14 @@ const QUANTUM_SCENARIOS = [
 
 
 const TR_LABELS = {
-  time:  { pres:'Şimdiki', past:'Geçmiş',     fut:'Gelecek'         },
-  flow:  { simp:'Basit',   cont:'Süregelen',   perf:'Tamamlanmış',   perf_cont:'Süreç-Tamamlanmış' },
-  voice: { act:'Etken',    pass:'Edilgen'                            },
-  pol:   { aff:'Olumlu',   neg:'Olumsuz',      que:'Soru'            },
+  time:  { pres:'Şimdiki', past:'Geçmiş', fut:'Gelecek', modal:'Modal Fiil' },
+  flow:  { simp:'Basit', cont:'Süregelen', perf:'Tamamlanmış', perf_cont:'Süreç-Tamamlanmış',
+           going_to:'Yakın Gelecek (going to)', used_to:'Geçmiş Alışkanlık (used to)',
+           can:'Yetenek · can', could:'Geçmiş Yetenek · could', should:'Öneri · should',
+           must:'Zorunluluk · must', might:'Olasılık · might', would:'Koşullu · would', may:'İzin · may' },
+  voice: { act:'Etken', pass:'Edilgen' },
+  pol:   { aff:'Olumlu', neg:'Olumsuz', que:'Soru',
+           wh_what:'Ne?', wh_when:'Ne zaman?', wh_where:'Nerede?', wh_who:'Kim?', wh_how:'Nasıl?' },
 };
 
 // ── Grammar Engine ───────────────────────────────────────────────
@@ -2033,15 +2037,27 @@ function generateSentence(sc, time, flow, voice, pol) {
     else if (v1.match(/(ch|sh|s|x|z|o)$/))                           vs = v1+'es';
     else                                                               vs = v1+'s';
   }
+  // vs3: always 3rd-sg form (used for wh_who subject questions)
+  let vs3 = v1;
+  { const _v=v1;
+    if      (_v.endsWith('y') && !'aeiou'.includes(_v[_v.length-2])) vs3=_v.slice(0,-1)+'ies';
+    else if (_v.match(/(ch|sh|s|x|z|o)$/))                           vs3=_v+'es';
+    else                                                               vs3=_v+'s';
+  }
 
-  let aux=[], mv='';
+  // Treat wh_* as que for aux/mv computation
+  const polBase = pol.startsWith('wh_') ? 'que' : pol;
+  let aux=[], mv='', manualNeg=false;
+
+  const _modalNeg = { can:"can't", could:"couldn't", should:"shouldn't",
+                      must:"mustn't", might:"might not", would:"wouldn't", may:"may not" };
 
   if (voice==='act') {
-    if      (time==='pres'&&flow==='simp')      { if(pol==='aff') mv=vs; else {aux=[isTsg?'does':'do'];mv=v1;} }
+    if      (time==='pres'&&flow==='simp')      { if(polBase==='aff') mv=vs; else {aux=[isTsg?'does':'do'];mv=v1;} }
     else if (time==='pres'&&flow==='cont')      { aux=[be_p]; mv=ving; }
     else if (time==='pres'&&flow==='perf')      { aux=[hv]; mv=v3; }
     else if (time==='pres'&&flow==='perf_cont') { aux=[hv,'been']; mv=ving; }
-    else if (time==='past'&&flow==='simp')      { if(pol==='aff') mv=v2; else {aux=['did'];mv=v1;} }
+    else if (time==='past'&&flow==='simp')      { if(polBase==='aff') mv=v2; else {aux=['did'];mv=v1;} }
     else if (time==='past'&&flow==='cont')      { aux=[be_pa]; mv=ving; }
     else if (time==='past'&&flow==='perf')      { aux=['had']; mv=v3; }
     else if (time==='past'&&flow==='perf_cont') { aux=['had','been']; mv=ving; }
@@ -2049,7 +2065,25 @@ function generateSentence(sc, time, flow, voice, pol) {
     else if (time==='fut' &&flow==='cont')      { aux=['will','be']; mv=ving; }
     else if (time==='fut' &&flow==='perf')      { aux=['will','have']; mv=v3; }
     else if (time==='fut' &&flow==='perf_cont') { aux=['will','have','been']; mv=ving; }
+    // ── going to (future) ─────────────────────────────
+    else if (time==='fut' &&flow==='going_to') {
+      if (polBase==='neg') { aux=[be_p,'not going to']; mv=v1; manualNeg=true; }
+      else                 { aux=[be_p,'going to'];     mv=v1; }
+    }
+    // ── used to (habitual past) ───────────────────────
+    else if (time==='past'&&flow==='used_to') {
+      if      (polBase==='aff') { aux=['used to'];         mv=v1; }
+      else if (polBase==='neg') { aux=["didn't",'use to']; mv=v1; manualNeg=true; }
+      else                      { aux=['did','use to'];    mv=v1; manualNeg=true; }
+    }
+    // ── modals ────────────────────────────────────────
+    else if (time==='modal') {
+      const mn=flow;
+      if      (polBase==='neg') { aux=[_modalNeg[mn]]; mv=v1; manualNeg=true; }
+      else                      { aux=[mn];            mv=v1; }
+    }
   } else {
+    // passive
     if      (time==='pres'&&flow==='simp')      { aux=[be_p]; mv=v3; }
     else if (time==='pres'&&flow==='cont')      { aux=[be_p,'being']; mv=v3; }
     else if (time==='pres'&&flow==='perf')      { aux=[hv,'been']; mv=v3; }
@@ -2062,29 +2096,72 @@ function generateSentence(sc, time, flow, voice, pol) {
     else if (time==='fut' &&flow==='cont')      { aux=['will','be','being']; mv=v3; }
     else if (time==='fut' &&flow==='perf')      { aux=['will','have','been']; mv=v3; }
     else if (time==='fut' &&flow==='perf_cont') { aux=['will','have','been','being']; mv=v3; }
+    // ── going to passive ──────────────────────────────
+    else if (time==='fut' &&flow==='going_to') {
+      if (polBase==='neg') { aux=[be_p,'not going to be']; mv=v3; manualNeg=true; }
+      else                 { aux=[be_p,'going to be'];     mv=v3; }
+    }
+    // ── used to passive ───────────────────────────────
+    else if (time==='past'&&flow==='used_to') {
+      if      (polBase==='aff') { aux=['used to be'];         mv=v3; }
+      else if (polBase==='neg') { aux=["didn't",'use to be']; mv=v3; manualNeg=true; }
+      else                      { aux=['did','use to be'];    mv=v3; manualNeg=true; }
+    }
+    // ── modals passive ────────────────────────────────
+    else if (time==='modal') {
+      const mn=flow;
+      if      (polBase==='neg') { aux=[_modalNeg[mn],'be']; mv=v3; manualNeg=true; }
+      else                      { aux=[mn,'be'];            mv=v3; }
+    }
   }
 
-  if (pol==='neg' && aux.length>0) {
+  // Auto-negation (skip when negation already set manually)
+  if (pol==='neg' && aux.length>0 && !manualNeg) {
     if      (aux[0]==='will') aux[0]="won't";
     else if (aux[0]==='am')   aux.splice(1,0,'not');
     else                      aux[0]=aux[0]+"n't";
   }
 
+  const punct = (polBase==='que') ? '?' : '.';
+  const ag = origSubj.obj_form||origSubj.w.toLowerCase();
+
+  // ── wh_who: subject question (no do-support for simple tenses) ──
+  if (pol==='wh_who') {
+    const wp=[];
+    wp.push({w:'Who', c:'aux'});
+    if      (time==='past'&&flow==='simp') { wp.push({w:v2,   c:'verb'}); }
+    else if (time==='pres'&&flow==='simp') { wp.push({w:vs3,  c:'verb'}); }
+    else if (time==='modal')               { wp.push({w:flow, c:'aux'}); wp.push({w:v1, c:'verb'}); }
+    else { aux.forEach(a=>wp.push({w:a,c:'aux'})); if(mv) wp.push({w:mv,c:'verb'}); }
+    if (voice==='act') wp.push({w:sc.obj.w+'?', c:'obj'});
+    else               wp.push({w:`by ${ag}?`,  c:'obj'});
+    return wp;
+  }
+
   const parts=[];
-  if (pol==='que' && aux.length>0) {
+
+  // WH-word prefix (for wh_what/when/where/how)
+  const whMap = { wh_what:'What', wh_when:'When', wh_where:'Where', wh_how:'How' };
+  const whWord = whMap[pol] || '';
+  if (whWord) parts.push({w:whWord, c:'aux'});
+
+  // Subject / first-aux placement
+  if (polBase==='que' && aux.length>0) {
     const fa=aux.shift();
-    parts.push({w:fa[0].toUpperCase()+fa.slice(1), c:'aux'});
+    // If a WH-word was pushed, keep aux lowercase; otherwise capitalize
+    parts.push({w: whWord ? fa : fa[0].toUpperCase()+fa.slice(1), c:'aux'});
     parts.push({w:subj.w.toLowerCase(), c:'subj'});
   } else {
     parts.push({w:subj.w[0].toUpperCase()+subj.w.slice(1), c:'subj'});
   }
   aux.forEach(a=>parts.push({w:a,c:'aux'}));
   if (mv) parts.push({w:mv,c:'verb'});
-  const punct = pol==='que' ? '?' : '.';
+
   if (voice==='act') {
-    parts.push({w:sc.obj.w+punct, c:'obj'});
+    // wh_what asks about the object → drop obj, just add punctuation
+    if (pol==='wh_what') parts.push({w:punct, c:'obj'});
+    else                  parts.push({w:sc.obj.w+punct, c:'obj'});
   } else {
-    const ag = origSubj.obj_form||origSubj.w.toLowerCase();
     parts.push({w:`by ${ag}${punct}`, c:'obj'});
   }
   return parts;
@@ -2181,6 +2258,53 @@ function trQueForm(verb) {
   return verb+' mi?';
 }
 
+// ── Turkish Modal Helpers ─────────────────────────────────────────
+function _trStem(negPres) {
+  // Extract verb stem from negative geniş zaman (e.g. 'yazmaz' → 'yaz', 'içmez' → 'iç')
+  let v = negPres;
+  for (const s of ['müz','muz','mez','maz']) { if (v.endsWith(s)) { v=v.slice(0,-s.length); break; } }
+  for (const s of ['mü','mu','me','ma'])      { if (v.endsWith(s)) { v=v.slice(0,-s.length); break; } }
+  return v;
+}
+function _trLV(v) { const m=v.match(/[aeıioöuü]/g); return m?m[m.length-1]:'a'; }
+function _trH2(v) { return ['a','ı','o','u'].includes(_trLV(v))?'a':'e'; }
+function _trH4(v) { const lv=_trLV(v); return ['a','ı'].includes(lv)?'ı':['e','i'].includes(lv)?'i':['o','u'].includes(lv)?'u':'ü'; }
+function _trEV(v) { return 'aeıioöuü'.includes(v.slice(-1)); }
+
+function _trCan(stem) { const h=_trH2(stem); return stem+(_trEV(stem)?'y':'')+h+'bilir'; }
+function _trCanNeg(stem) { const h=_trH2(stem); return stem+(_trEV(stem)?'y':'')+h+(h==='a'?'maz':'mez'); }
+function _trCould(stem) { const h=_trH4(_trCan(stem)); return _trCan(stem)+{ı:'dı',i:'di',u:'du',ü:'dü'}[h]; }
+function _trCouldNeg(stem) { const h=_trH4(_trCanNeg(stem)); return _trCanNeg(stem)+{ı:'dı',i:'di',u:'du',ü:'dü'}[h]; }
+function _trShould(stem) { return stem+(_trH2(stem)==='a'?'malı':'meli'); }
+function _trShouldNeg(stem) { return stem+(_trH2(stem)==='a'?'mamalı':'memeli'); }
+function _trMust(stem) { return stem+(_trH2(stem)==='a'?'mak':'mek')+' zorunda'; }
+function _trMustNeg(stem) { return stem+(_trH2(stem)==='a'?'mak':'mek')+' zorunda değil'; }
+function _trMight(stem) { return _trCan(stem); }  // same surface form, context differs
+function _trMightNeg(negBase) {
+  // "might not" = "yazmayabilir" — take negative base (e.g. 'yazma') and add yabilir/yebilir
+  const h=_trH2(negBase);
+  return negBase+'y'+(h==='a'?'abilir':'ebilir');
+}
+function _trWould(presPos) {
+  // habitual past from geniş zaman: yazar→yazardı, içer→içerdi, okur→okurdu
+  const h=_trH4(presPos);
+  return presPos+{ı:'dı',i:'di',u:'du',ü:'dü'}[h];
+}
+function _trWouldNeg(presNeg) {
+  // yazmaz→yazmazdı
+  const h=_trH4(presNeg);
+  return presNeg+{ı:'dı',i:'di',u:'du',ü:'dü'}[h];
+}
+function _trMay(stem) { return _trCan(stem); }
+function _trMayNeg(negBase) { return _trMightNeg(negBase); }
+
+// Extract the negative infinitive base (e.g. 'yazma' from 'yazmaz')
+function _trNegBase(negPres) {
+  let v=negPres;
+  for (const s of ['müz','muz','mez','maz']) { if(v.endsWith(s)){v=v.slice(0,-s.length);break;} }
+  return v; // e.g. 'yazma', 'içme', 'okuma'
+}
+
 function generateTurkishTranslation(sc, time, flow, voice, pol) {
   const d = sc.trData;
   if (!d) return '—';
@@ -2210,7 +2334,7 @@ function generateTurkishTranslation(sc, time, flow, voice, pol) {
   let verb;
   if      (time==='pres' && flow==='simp')       verb = side.pres[pi];
   else if (time==='pres' && flow==='cont')       verb = side.prg[pi];
-  else if (time==='pres' && flow==='perf')       verb = side.past[pi]; // Have read -> Okudu/Okudum
+  else if (time==='pres' && flow==='perf')       verb = side.past[pi];
   else if (time==='pres' && flow==='perf_cont')  verb = side.prg[pi] + ' olmuş';
   else if (time==='past' && flow==='simp')       verb = side.past[pi];
   else if (time==='past' && flow==='cont')       verb = toPastCont(side.prg[pi]);
@@ -2220,15 +2344,47 @@ function generateTurkishTranslation(sc, time, flow, voice, pol) {
   else if (time==='fut'  && flow==='cont')       verb = side.prg[pi] + ' olacak';
   else if (time==='fut'  && flow==='perf')       verb = toMiş(side.ppas[pi]) + ' olacak';
   else if (time==='fut'  && flow==='perf_cont')  verb = side.prg[pi] + ' olmuş olacak';
+  // ── going to ──────────────────────────────────────────
+  else if (time==='fut'  && flow==='going_to') {
+    verb = pi===0 ? side.fut[0] : side.fut[1]; // same as simple future
+  }
+  // ── used to (geçmiş alışkanlık = geniş zaman geçmişi) ─
+  else if (time==='past' && flow==='used_to') {
+    const stem  = _trStem(side.pres[1]);
+    const negBase = _trNegBase(side.pres[1]);
+    verb = pi===0 ? _trWould(side.pres[0]) : _trWouldNeg(side.pres[1].replace(/maz$|mez$/,''));
+    // Fallback to simple past if derivation looks wrong
+    if (!verb) verb = side.past[pi];
+  }
+  // ── modals ─────────────────────────────────────────────
+  else if (time==='modal') {
+    const stem    = _trStem(side.pres[1]);
+    const negBase = _trNegBase(side.pres[1]);
+    if      (flow==='can')    verb = pi===0 ? _trCan(stem)     : _trCanNeg(stem);
+    else if (flow==='could')  verb = pi===0 ? _trCould(stem)   : _trCouldNeg(stem);
+    else if (flow==='should') verb = pi===0 ? _trShould(stem)  : _trShouldNeg(stem);
+    else if (flow==='must')   verb = pi===0 ? _trMust(stem)    : _trMustNeg(stem);
+    else if (flow==='might')  verb = pi===0 ? _trMight(stem)   : _trMightNeg(negBase);
+    else if (flow==='would')  verb = pi===0 ? _trWould(side.pres[0]) : _trWouldNeg(side.pres[1].replace(/maz$|mez$/,''));
+    else if (flow==='may')    verb = pi===0 ? _trMay(stem)     : _trMayNeg(negBase);
+    else                      verb = side.pres[pi];
+  }
   else                                           verb = side.pres[pi];
 
   // Çekimle
   verb = _trConjugate(verb, subjType, time);
 
-  if (pol === 'que') {
+  const isQue = pol === 'que' || pol.startsWith('wh_');
+  const whLabels = { wh_what:'Ne', wh_when:'Ne zaman', wh_where:'Nerede', wh_who:'Kim', wh_how:'Nasıl' };
+  const whPrefix = whLabels[pol] ? whLabels[pol] + ' ' : '';
+
+  if (isQue) {
+    if (pol === 'wh_what' && voice === 'act') {
+      return `${whPrefix}${trQueForm(verb)}?`; // drop obj for "what" question
+    }
     return voice === 'act'
-      ? `${trSubj} ${side.obj} ${trQueForm(verb)}`
-      : `${side.subj} ${side.agent} ${trQueForm(verb)}`;
+      ? `${whPrefix}${trSubj} ${side.obj} ${trQueForm(verb)}`
+      : `${whPrefix}${side.subj} ${side.agent} ${trQueForm(verb)}`;
   }
   return voice === 'act'
     ? `${trSubj} ${side.obj} ${verb}.`
@@ -2236,7 +2392,50 @@ function generateTurkishTranslation(sc, time, flow, voice, pol) {
 }
 
 function stateLabel(s) {
-  return `${TR_LABELS.pol[s.pol]} · ${TR_LABELS.time[s.time]} ${TR_LABELS.flow[s.flow]} · ${TR_LABELS.voice[s.voice]}`;
+  const tl = TR_LABELS.time[s.time]  || s.time;
+  const fl = TR_LABELS.flow[s.flow]  || s.flow;
+  const pl = TR_LABELS.pol[s.pol]    || s.pol;
+  const vl = TR_LABELS.voice[s.voice]|| s.voice;
+  return `${pl} · ${tl} ${fl} · ${vl}`;
+}
+
+// ── Random state generator ────────────────────────────────────────
+function _randState(allowPassive) {
+  const r = Math.random();
+  const pols3    = ['aff','neg','que'];
+  const polsWH   = ['wh_what','wh_when','wh_where','wh_who','wh_how'];
+  const modals   = ['can','could','should','must','might','would','may'];
+  const voice    = (allowPassive && Math.random()>0.45) ? 'pass' : 'act';
+
+  if (r < 0.35) {
+    // Classic tenses (pres/past/fut × simp/cont/perf/perf_cont)
+    return {
+      time:  ['pres','past','fut'][Math.floor(Math.random()*3)],
+      flow:  ['simp','cont','perf','perf_cont'][Math.floor(Math.random()*4)],
+      voice, pol: pols3[Math.floor(Math.random()*3)]
+    };
+  } else if (r < 0.55) {
+    // Modal verbs
+    return {
+      time: 'modal',
+      flow: modals[Math.floor(Math.random()*modals.length)],
+      voice, pol: pols3[Math.floor(Math.random()*3)]
+    };
+  } else if (r < 0.65) {
+    // going to
+    return { time:'fut', flow:'going_to', voice, pol: pols3[Math.floor(Math.random()*3)] };
+  } else if (r < 0.75) {
+    // used to
+    return { time:'past', flow:'used_to', voice, pol: pols3[Math.floor(Math.random()*3)] };
+  } else {
+    // WH-questions (active only, simple/cont/perf tenses)
+    return {
+      time:  ['pres','past','fut'][Math.floor(Math.random()*3)],
+      flow:  ['simp','cont','perf'][Math.floor(Math.random()*3)],
+      voice: 'act',
+      pol:   polsWH[Math.floor(Math.random()*polsWH.length)]
+    };
+  }
 }
 
 function shuffle(arr) { return [...arr].sort(()=>Math.random()-0.5); }
@@ -2432,12 +2631,7 @@ class SentenceRush {
     this.placed=[];
     clearMeaningCard('rush-shell');
     this.sc=randScenario();
-    this.st={
-      time: ['pres','past','fut'][Math.floor(Math.random()*3)],
-      flow: ['simp','cont','perf'][Math.floor(Math.random()*3)],
-      voice:'act',
-      pol:  Math.random()>0.3?'aff':'neg',
-    };
+    this.st=_randState(false);
     this.parts=generateSentence(this.sc,this.st.time,this.st.flow,this.st.voice,this.st.pol);
     this.remaining=shuffle(this.parts.map(p=>({w:p.w.replace(/[?.]/g,''),c:p.c})));
 
@@ -2614,12 +2808,7 @@ class SentenceScramble {
     this._busy=false;
     clearMeaningCard('ss-shell');
     this.sc=randScenario();
-    this.st={
-      time:  ['pres','past','fut'][Math.floor(Math.random()*3)],
-      flow:  ['simp','cont','perf','perf_cont'][Math.floor(Math.random()*4)],
-      voice: Math.random()>0.4?'act':'pass',
-      pol:   Math.random()>0.3?'aff':'neg',
-    };
+    this.st=_randState(true);
     this.parts=generateSentence(this.sc,this.st.time,this.st.flow,this.st.voice,this.st.pol);
     this.remaining=shuffle(this.parts.map(p=>({w:p.w.replace(/[?.]/g,''),c:p.c})));
 
