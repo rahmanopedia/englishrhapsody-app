@@ -6129,8 +6129,23 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
           <div class="pl-stage-sep">→</div>
           <div class="pl-stage-item"><div class="pl-stage-icon">🎙️</div><div>Konuşma<br><small>2 cümle</small></div></div>
         </div>
-        <button class="pl-btn-primary" onclick="window._app._placementStart()">Teste Başla →</button>
+        <button class="pl-btn-primary" onclick="window._app._placementWarn()">Teste Başla →</button>
         <button class="pl-btn-skip" onclick="window._app._placementSkip()">Şimdi değil, ana ekrana git</button>
+      </div>`;
+  }
+
+  _placementWarn() {
+    const wrap = document.getElementById('pl-wrap');
+    if (!wrap) return;
+    wrap.innerHTML = `
+      <div class="pl-intro">
+        <div class="pl-intro-icon">⚠️</div>
+        <h2 class="pl-intro-title" style="font-size:1.3rem">Bu test B2–C2 için tasarlandı</h2>
+        <p class="pl-intro-sub">A1–B1 seviyesindeyseniz testi geçip<br>en baştan öğrenmeye başlamanızı öneririz.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+          <button class="pl-btn-skip" style="margin:0" onclick="window._app._placementSkip()">Testten Çık</button>
+          <button class="pl-btn-primary" style="margin:0" onclick="window._app._placementStart()">Teste Devam Et →</button>
+        </div>
       </div>`;
   }
 
