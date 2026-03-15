@@ -2910,6 +2910,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
         if (stats[ach.req.type] !== undefined && stats[ach.req.type] >= ach.req.val) {
           unlocked.push(ach.id);
           newlyUnlocked = true;
+          window.analyticsManager?.achievementUnlocked(ach.id);
           this._showAchievementToast(ach);
         }
       }
@@ -3769,6 +3770,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     this.session.synthActive = false;
     this.session.synthPaused = false;
     this.addXP(this.session.synthScore, 'easy', 'vocab');
+    window.analyticsManager?.lessonComplete('learn', this.session.synthScore);
     this.state.update({ sessions: this.state.get('sessions') + 1, sessionsToday: (this.state.get('sessionsToday') || 0) + 1 });
 
     const total   = this.session.learnPool.length;
@@ -4822,6 +4824,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       const btn = document.getElementById('btn-next-story');
       if (btn) btn.style.display = '';
       this.addXP(window.remoteFlags?.xp_reading_complete ?? 50, 'easy');
+      window.analyticsManager?.lessonComplete('reading', 100);
       if (typeof confetti === 'function') confetti({ particleCount:80, spread:60, origin:{y:0.6} });
     }
   }
@@ -6003,6 +6006,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     const avg = total > 0 ? Math.round(score / total) : 0;
     const xp  = Math.round(avg / 100 * (window.remoteFlags?.xp_speaking_max ?? 80));
     this.addXP(xp, 'hard');
+    window.analyticsManager?.lessonComplete('conversations', avg);
 
     // Persist completion
     const completed = this.state.get('convoCompleted') || {};
