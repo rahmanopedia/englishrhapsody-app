@@ -457,7 +457,6 @@ class NexusMode {
         <canvas class="nexus-net-canvas" id="nexus-net-canvas"></canvas>
         <svg class="nexus-connection-line" id="nexus-svg"></svg>
         <div class="nexus-core-node nexus-core-speak-btn" id="nexus-core" data-verb="${this.current.verb.replace(/"/g,'&quot;')}">
-          <div class="nx-spark-ring"></div>
           ${this.current.verb}
         </div>
         ${particlesToShow.map((opt, i) => {
