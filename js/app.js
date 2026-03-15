@@ -2754,8 +2754,6 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 
   async _initQuantum() {
     if (typeof QuantumMode === 'undefined') {
-      const root = document.getElementById('quantum-root');
-      if (root) root.innerHTML = '<div style="text-align:center;padding:60px;color:#888">Yükleniyor...</div>';
       await this._loadScript('js/quantum.js?v=1.0.51');
     }
     const root = document.getElementById('quantum-root');
@@ -2780,8 +2778,6 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 
   async _initBridge() {
     if (!window.BRIDGE_DATA) {
-      const root = document.getElementById('bridge-root');
-      if (root) root.innerHTML = '<div style="text-align:center;padding:60px;color:#888">Yükleniyor...</div>';
       await this._loadScript('js/bridge-data.js');
     }
     const root = document.getElementById('bridge-root');
