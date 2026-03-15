@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.cloudfunctions.net wss://*.firebaseio.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com/recaptcha/; frame-src 'self' https://www.google.com/recaptcha/ https://englishrhapsody-78866.firebaseapp.com; object-src 'none'; base-uri 'self';">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>English Rhapsody | Synesthesia Edition</title>
+  <meta name="description" content="İngilizce öğrenmenin en akıllı yolu — AI destekli kelime, gramer, okuma ve konuşma antrenmanı. CEFR seviyene göre kişiselleştirilmiş pratik.">
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
@@ -14,9 +15,12 @@
   <meta name="apple-mobile-web-app-title" content="Rhapsody">
   <link rel="apple-touch-icon" href="https://img.icons8.com/nolan/192/graduation-cap.png">
 
-  <!-- Fonts -->
+  <!-- Preconnect to external origins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/styles.css">
@@ -1055,28 +1059,25 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-remote-config-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check-compat.js"></script>
 
-<script src="js/firebase-config.js"></script>
-<script src="js/storage.js"></script>
-<script src="js/analytics.js"></script>
-<script src="js/notifications.js"></script>
-<script src="js/notification-settings.js"></script>
-<script src="js/remote-config.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/conversations.js"></script>
-<script src="js/stories-data.js"></script>
-<script src="js/data.js"></script>
-<script src="js/phantom.js"></script>
-<script src="js/nexus.js"></script>
-<script name="quantum-script" src="js/quantum.js?v=1.0.51"></script>
-<script src="js/leaderboard.js"></script>
-<script src="js/bridge-data.js"></script>
-<script src="js/bridge.js"></script>
-<script src="js/reading-engine.js"></script>
-<script src="js/app.js"></script>
-<script src="js/phrasal_verbs_ext.js"></script>
-<script src="js/phrasal_verbs_ext2.js"></script>
+<script src="js/firebase-config.js" defer></script>
+<script src="js/storage.js" defer></script>
+<script src="js/analytics.js" defer></script>
+<script src="js/notifications.js" defer></script>
+<script src="js/notification-settings.js" defer></script>
+<script src="js/remote-config.js" defer></script>
+<script src="js/auth.js" defer></script>
+<script src="js/conversations.js" defer></script>
+<script src="js/data.js" defer></script>
+<script src="js/phantom.js" defer></script>
+<script src="js/nexus.js" defer></script>
+<script src="js/leaderboard.js" defer></script>
+<script src="js/bridge.js" defer></script>
+<script src="js/reading-engine.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/phrasal_verbs_ext.js" defer></script>
+<script src="js/phrasal_verbs_ext2.js" defer></script>
 
-<script src="js/sw-register.js"></script>
+<script src="js/sw-register.js" defer></script>
 <!-- ── Veri Sıfırlama Onay Modalı (body'de sabit — her zaman erişilebilir) ── -->
 <div id="reset-confirm-modal" class="reset-modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="reset-modal-box">

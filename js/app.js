@@ -2727,7 +2727,22 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     }
   }
 
-  _initQuantum() {
+  // ── Lazy script loader ───────────────────────────────────
+  _loadScript(src) {
+    if (document.querySelector(`script[src="${src}"]`)) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  async _initQuantum() {
+    if (!window.QuantumMode) {
+      const root = document.getElementById('quantum-root');
+      if (root) root.innerHTML = '<div style="text-align:center;padding:60px;color:#888">Yükleniyor...</div>';
+      await this._loadScript('js/quantum.js?v=1.0.51');
+    }
     const root = document.getElementById('quantum-root');
     if (!root) return;
     window.quantumMod = new QuantumMode(this);
@@ -2748,7 +2763,12 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     window.leaderboardManager.render(root);
   }
 
-  _initBridge() {
+  async _initBridge() {
+    if (!window.BRIDGE_DATA) {
+      const root = document.getElementById('bridge-root');
+      if (root) root.innerHTML = '<div style="text-align:center;padding:60px;color:#888">Yükleniyor...</div>';
+      await this._loadScript('js/bridge-data.js');
+    }
     const root = document.getElementById('bridge-root');
     if (!root) return;
     window.bridgeMod = new BridgeModule(this);
@@ -4085,7 +4105,13 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   //  READING MODULE
   // ─────────────────────────────────────────────────────────
 
-  _initReading() {
+  async _initReading() {
+    if (!window.STORIES) {
+      const main = document.getElementById('main-content');
+      if (main) main.insertAdjacentHTML('afterbegin', '<div id="_stories-loader" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(7,10,15,0.92);z-index:20;color:#888;border-radius:16px">Yükleniyor...</div>');
+      await this._loadScript('js/stories-data.js');
+      document.getElementById('_stories-loader')?.remove();
+    }
     this._activeBlank = null;
     const currentMode = this.state.get('readingMode') || 'read';
     this.setReadingMode(currentMode);
