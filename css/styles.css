@@ -932,6 +932,10 @@ body.sidebar-closed .sidebar-tab {
 .auth-brand span {
   background: linear-gradient(90deg,#00d4ff,#a78bfa);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  display: inline-block;
+  animation: spRhapsodyBeat 3.6s ease-in-out infinite;
+  transform-origin: center bottom;
+  will-change: transform, opacity, filter;
 }
 .auth-brand-sub {
   font-size: 0.7rem; font-weight: 600; letter-spacing: 3px;
