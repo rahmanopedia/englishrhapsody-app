@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="css/reading.css">
   <link rel="stylesheet" href="css/speak.css">
   <link rel="stylesheet" href="css/revolution.css">
+  <link rel="stylesheet" href="css/synapse.css">
   <!-- App Check reCAPTCHA v3 -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LfOLlMsAAAAAE4K1Xr0yVKAAp4FB6GSlacAdZKy" async defer></script>
 </head>
@@ -176,6 +177,9 @@
       <a class="nav-item" data-target="quantum">
         <span class="nav-icon">⚛️</span> Kuantum Modu
       </a>
+      <a class="nav-item" data-target="synapse">
+        <span class="nav-icon">🧠</span> Synapse
+      </a>
       <div class="nav-divider"></div>
       <a class="nav-item" data-target="analytics">
         <span class="nav-icon">📊</span> Analitik
@@ -229,6 +233,10 @@
   <button class="m-nav-item" data-target="quantum">
     <span class="m-icon">⚛️</span>
     <span>Kuantum</span>
+  </button>
+  <button class="m-nav-item" data-target="synapse">
+    <span class="m-icon">🧠</span>
+    <span>Synapse</span>
   </button>
   <button class="m-nav-item" data-target="leaderboard">
     <span class="m-icon">🏆</span>
@@ -944,6 +952,11 @@
 <div class="animate-in" id="bridge-root" style="width:100%;min-height:100%;"></div>
 </template>
 
+<!-- Synapse — Bioluminescent Neural English -->
+<template id="tpl-synapse">
+<div id="synapse-root" style="width:100%;height:calc(100vh - 80px);"></div>
+</template>
+
 <!-- External Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous"></script>
@@ -979,6 +992,7 @@
 <script src="js/app.js"></script>
 <script src="js/phrasal_verbs_ext.js"></script>
 <script src="js/phrasal_verbs_ext2.js"></script>
+<script src="js/synapse.js"></script>
 
 <script src="js/sw-register.js"></script>
 </body>

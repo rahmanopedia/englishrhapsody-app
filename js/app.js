@@ -2673,6 +2673,7 @@ class App {
     if (window.phantomMod)       { window.phantomMod.destroy(); }
     if (window.nexusMod)         { window.nexusMod.destroy(); }
     if (window.quantumMod)       { window.quantumMod.destroy(); }
+    if (window.synapseMod)       { window.synapseMod.destroy(); window.synapseMod = null; }
     if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 
     // Cleanup synesthesia if active (prevents memory leaks and ghost timers)
@@ -2712,6 +2713,7 @@ class App {
       quantum:     () => this._initQuantum(),
       leaderboard: () => this._initLeaderboard(),
       bridge:      () => this._initBridge(),
+      synapse:     () => this._initSynapse(),
     };
     if (init[view]) init[view]();
 
@@ -2727,6 +2729,13 @@ class App {
     if (!root) return;
     window.quantumMod = new QuantumMode(this);
     window.quantumMod.init(root);
+  }
+
+  _initSynapse() {
+    const root = document.getElementById('synapse-root');
+    if (!root) return;
+    window.synapseMod = new SynapseMode(this);
+    window.synapseMod.init(root);
   }
 
   _initNexus() {
