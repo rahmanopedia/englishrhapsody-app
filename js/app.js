@@ -5987,52 +5987,97 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   // ─────────────────────────────────────────────────────────
 
   // ═══════════════════════════════════════════════════════════
-  //  PLACEMENT TEST — First-time level assessment
+  //  PLACEMENT TEST — Adaptive CEFR level assessment
   // ═══════════════════════════════════════════════════════════
 
   _initPlacement() {
+    // ── Grammar questions (2 per level, A1→C1) ──────────────
     const GRAMMAR_QS = [
-      { level:'A2', q:'She ___ coffee every morning.', choices:['drink','drinks','drinking','drunk'], answer:'drinks', tip:'He/She/It için fiil -s alır' },
-      { level:'B1', q:'I ___ never tried sushi before.', choices:['has','have','had','having'], answer:'have', tip:'Present Perfect: I/You/We/They → have' },
-      { level:'B2', q:'If she ___ harder, she would succeed.', choices:['study','studies','studied','studying'], answer:'studied', tip:'2nd Conditional: If + Past Simple' },
+      // A1
+      { type:'grammar', level:'A1', q:'I ___ a student.', choices:[{text:'am',correct:true},{text:'is',correct:false},{text:'are',correct:false},{text:'be',correct:false}], tip:'I → am, He/She → is, We/They → are' },
+      { type:'grammar', level:'A1', q:'There ___ two books on the table.', choices:[{text:'is',correct:false},{text:'are',correct:true},{text:'am',correct:false},{text:'be',correct:false}], tip:'Çoğul isimle "are" kullanılır' },
+      // A2
+      { type:'grammar', level:'A2', q:'She ___ coffee every morning.', choices:[{text:'drink',correct:false},{text:'drinks',correct:true},{text:'drinking',correct:false},{text:'drunk',correct:false}], tip:'3. tekil şahıs (he/she/it) → fiil + -s' },
+      { type:'grammar', level:'A2', q:'They ___ TV when I arrived.', choices:[{text:'watched',correct:false},{text:'were watching',correct:true},{text:'are watching',correct:false},{text:'have watched',correct:false}], tip:'Geçmişte devam eden eylem: was/were + -ing' },
+      // B1
+      { type:'grammar', level:'B1', q:'I ___ never eaten sushi before.', choices:[{text:'has',correct:false},{text:'have',correct:true},{text:'had',correct:false},{text:'having',correct:false}], tip:'Present Perfect: I/You/We/They → have + past participle' },
+      { type:'grammar', level:'B1', q:'If it rains tomorrow, we ___ stay inside.', choices:[{text:'will',correct:true},{text:'would',correct:false},{text:'shall',correct:false},{text:'were',correct:false}], tip:'1. Koşul (gerçek olasılık): If + present → will' },
+      // B2
+      { type:'grammar', level:'B2', q:'If she studied harder, she ___ succeed.', choices:[{text:'will',correct:false},{text:'would',correct:true},{text:'should',correct:false},{text:'might be',correct:false}], tip:'2. Koşul (hayali durum): If + past → would' },
+      { type:'grammar', level:'B2', q:'The report ___ by the manager yesterday.', choices:[{text:'wrote',correct:false},{text:'was written',correct:true},{text:'has written',correct:false},{text:'is writing',correct:false}], tip:'Passive voice: was/were + past participle' },
+      // C1
+      { type:'grammar', level:'C1', q:'Not until midnight ___ she finally fall asleep.', choices:[{text:'she did',correct:false},{text:'did she',correct:true},{text:'she had',correct:false},{text:'had she',correct:false}], tip:'Olumsuz zarftan sonra inversion: Not until... did + özne' },
+      { type:'grammar', level:'C1', q:'I wish I ___ more time to practise speaking.', choices:[{text:'have',correct:false},{text:'had',correct:true},{text:'will have',correct:false},{text:'am having',correct:false}], tip:'Wish + past simple = mevcut durum için dilek (subjunctive)' },
     ];
-    const SPEAK_SENTENCE = 'I drink coffee every morning.';
+
+    // ── Reading comprehension (shared passage, 2 questions) ──
+    const READING_PASSAGE = `Many people believe that learning a new language becomes much harder after the age of 30. However, recent studies suggest that adults can still reach a high level of fluency if they practise consistently. Unlike young children, adults have stronger analytical skills and can grasp complex grammar rules more efficiently. The key difference is motivation and daily exposure — even 20 minutes of focused practice each day can produce impressive results over time.`;
+    const READING_QS = [
+      { type:'reading', level:'B1', passage: READING_PASSAGE,
+        q:'According to the text, what is the main advantage adults have over children in language learning?',
+        choices:[{text:'They memorise words without effort',correct:false},{text:'They understand grammar rules more efficiently',correct:true},{text:'They have more time to study',correct:false},{text:'They are more motivated than children',correct:false}],
+        tip:'Metin "adults... grasp complex grammar rules more efficiently" diyor' },
+      { type:'reading', level:'B2', passage: null,
+        q:'What does the text suggest is the most important factor for adult language learners?',
+        choices:[{text:'Starting before the age of 30',correct:false},{text:'Having a natural talent for languages',correct:false},{text:'Consistent daily practice',correct:true},{text:'Studying grammar intensively',correct:false}],
+        tip:'"The key difference is... daily exposure — even 20 minutes..."' },
+    ];
+
+    // ── C1 vocabulary (hardcoded, advanced level) ────────────
+    const C1_VOCAB = [
+      { type:'vocab', level:'C1', q:'METICULOUS', choices:[{text:'Çok titiz ve dikkatli',correct:true},{text:'Çok hızlı ve enerjik',correct:false},{text:'İlgisiz ve dağınık',correct:false},{text:'Güçlü ve dayanıklı',correct:false}] },
+      { type:'vocab', level:'C1', q:'UBIQUITOUS', choices:[{text:'Her yerde bulunan',correct:true},{text:'Son derece nadir',correct:false},{text:'Tehlikeli ve zararlı',correct:false},{text:'Göz alıcı ve güzel',correct:false}] },
+      { type:'vocab', level:'C1', q:'AMBIGUOUS', choices:[{text:'Açık ve anlaşılır',correct:false},{text:'Belirsiz ve çift anlamlı',correct:true},{text:'Uzun ve karmaşık',correct:false},{text:'Sessiz ve sakin',correct:false}] },
+    ];
+
     const vocabQs = this._buildPlacementVocab();
-    const allQs   = [...vocabQs, ...GRAMMAR_QS];
+    // Order: vocab A1→B2 (shuffled within each group), C1 vocab, grammar A1→C1, reading
+    const allQs = [...vocabQs, ...C1_VOCAB, ...GRAMMAR_QS, ...READING_QS];
 
     this.session.pl = {
       questions: allQs,
-      speakSentence: SPEAK_SENTENCE,
+      speakSentences: [
+        'I enjoy learning new things every day.',
+        'She was reading a book when the phone rang.',
+      ],
+      speakIdx: 0,
       qIdx: 0,
-      stage: 'intro',  // intro | quiz | speak | result
-      levelScores: { A1:0, A2:0, B1:0, B2:0 },
-      grammarCorrect: 0,
-      speakScore: null,
+      stage: 'intro',
+      // scores[level] = [correct, total]
+      vocabScores: { A1:[0,0], A2:[0,0], B1:[0,0], B2:[0,0], C1:[0,0] },
+      gramScores:  { A1:[0,0], A2:[0,0], B1:[0,0], B2:[0,0], C1:[0,0] },
+      readingCorrect: 0,
+      readingTotal: 0,
+      speakScores: [],
     };
     this._renderPlacementIntro();
   }
 
   _buildPlacementVocab() {
     const levels = ['A1','A2','B1','B2'];
-    const questions = [];
-    const usedIds = new Set();
+    const byLevel = {};
     levels.forEach(lvl => {
+      byLevel[lvl] = [];
       const pool = WORDS.filter(w => w.level === lvl && w.tr && w.en && w.en.split(' ').length === 1);
-      for (let i = 0; i < 2 && i < pool.length; i++) {
-        let word;
-        let attempts = 0;
-        do { word = pool[Math.floor(Math.random() * pool.length)]; attempts++; }
-        while (usedIds.has(word.id || word.en) && attempts < 20);
+      const usedIds = new Set();
+      // Pick 3 per level
+      let attempts = 0;
+      while (byLevel[lvl].length < 3 && pool.length > 0 && attempts < 60) {
+        attempts++;
+        const word = pool[Math.floor(Math.random() * pool.length)];
+        if (usedIds.has(word.id || word.en)) continue;
         usedIds.add(word.id || word.en);
         const wrongs = WORDS.filter(w => w !== word && w.tr && w.tr !== word.tr)
           .sort(() => Math.random() - 0.5).slice(0, 3);
-        const choices = [{ text: word.tr, correct: true, ans: word.tr },
-          ...wrongs.map(w => ({ text: w.tr, correct: false, ans: w.tr }))
+        const choices = [
+          { text: word.tr, correct: true },
+          ...wrongs.map(w => ({ text: w.tr, correct: false }))
         ].sort(() => Math.random() - 0.5);
-        questions.push({ type:'vocab', level: lvl, q: word.en.toUpperCase(), choices });
+        byLevel[lvl].push({ type:'vocab', level: lvl, q: word.en.toUpperCase(), choices });
       }
     });
-    return questions.sort(() => Math.random() - 0.5);
+    // Keep level groups in order (A1, A2, B1, B2) — each group shuffled within
+    return levels.flatMap(lvl => byLevel[lvl].sort(() => Math.random() - 0.5));
   }
 
   _renderPlacementIntro() {
@@ -6041,17 +6086,19 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     wrap.innerHTML = `
       <div class="pl-intro">
         <div class="pl-intro-icon">🎯</div>
-        <h1 class="pl-intro-title">Seviyeni Belirleyelim</h1>
-        <p class="pl-intro-sub">Kısa bir test yapacağız — kelime, gramer ve konuşma.<br>Sonunda sana özel bir öğrenim planı oluşturulacak.</p>
+        <h1 class="pl-intro-title">Gerçek Seviyeni Belirleyelim</h1>
+        <p class="pl-intro-sub">Kelime, gramer, okuma ve konuşmayı ölçen<br>kapsamlı bir CEFR seviye testi yapacağız.</p>
         <div class="pl-intro-stages">
-          <div class="pl-stage-item"><div class="pl-stage-icon">📚</div><div>Kelime Testi<br><small>8 soru</small></div></div>
+          <div class="pl-stage-item"><div class="pl-stage-icon">📚</div><div>Kelime<br><small>15 soru • A1→C1</small></div></div>
           <div class="pl-stage-sep">→</div>
-          <div class="pl-stage-item"><div class="pl-stage-icon">🧩</div><div>Gramer Testi<br><small>3 soru</small></div></div>
+          <div class="pl-stage-item"><div class="pl-stage-icon">🧩</div><div>Gramer<br><small>10 soru • A1→C1</small></div></div>
           <div class="pl-stage-sep">→</div>
-          <div class="pl-stage-item"><div class="pl-stage-icon">🎙️</div><div>Telaffuz<br><small>1 cümle</small></div></div>
+          <div class="pl-stage-item"><div class="pl-stage-icon">📖</div><div>Okuma<br><small>2 soru • B1-B2</small></div></div>
+          <div class="pl-stage-sep">→</div>
+          <div class="pl-stage-item"><div class="pl-stage-icon">🎙️</div><div>Konuşma<br><small>2 cümle</small></div></div>
         </div>
         <button class="pl-btn-primary" onclick="window._app._placementStart()">Teste Başla →</button>
-        <button class="pl-btn-skip" onclick="window._app._placementSkip()">Şimdi değil, ev ekranına git</button>
+        <button class="pl-btn-skip" onclick="window._app._placementSkip()">Şimdi değil, ana ekrana git</button>
       </div>`;
   }
 
@@ -6064,79 +6111,94 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   _renderPlacementQ() {
     const { questions, qIdx } = this.session.pl;
     const wrap = document.getElementById('pl-wrap');
-    if (!wrap || qIdx >= questions.length) { this._renderPlacementSpeak(); return; }
-    const q      = questions[qIdx];
-    const total  = questions.length;
-    const pct    = Math.round((qIdx / total) * 100);
-    const isGram = !q.type;
-    const stageLabel = isGram ? '🧩 Gramer' : '📚 Kelime';
-    const levelTag   = { A1:'Başlangıç', A2:'Temel', B1:'Orta', B2:'Orta Üstü' }[q.level] || q.level;
+    if (!wrap) return;
+    if (qIdx >= questions.length) { this._renderPlacementSpeak(); return; }
+
+    const q     = questions[qIdx];
+    const total = questions.length;
+    const pct   = Math.round((qIdx / total) * 100);
+    const STAGE_LABELS = { vocab:'📚 Kelime', grammar:'🧩 Gramer', reading:'📖 Okuma Anlama' };
+    const LEVEL_TAGS   = { A1:'Başlangıç', A2:'Temel', B1:'Orta', B2:'Orta Üstü', C1:'İleri' };
+    const stageLabel   = STAGE_LABELS[q.type] || '📚 Kelime';
+    const levelTag     = LEVEL_TAGS[q.level] || q.level;
+
+    const passageHtml = q.passage
+      ? `<div class="pl-reading-passage">${q.passage}</div>`
+      : (q.type === 'reading' && qIdx > 0 && questions[qIdx-1]?.passage
+          ? `<div class="pl-reading-passage">${questions[qIdx-1].passage}</div>` : '');
+
     wrap.innerHTML = `
       <div class="pl-quiz">
         <div class="pl-progress-bar"><div class="pl-progress-fill" style="width:${pct}%"></div></div>
         <div class="pl-q-meta">
           <span class="pl-stage-tag">${stageLabel}</span>
           <span class="pl-q-count">${qIdx + 1} / ${total}</span>
-          <span class="pl-level-tag">${levelTag}</span>
+          <span class="pl-level-tag pl-level-${q.level}">${levelTag}</span>
         </div>
+        ${passageHtml}
         <div class="pl-question-card" id="pl-qcard">
           <div class="pl-q-text">${q.q}</div>
-          ${!isGram ? '<div class="pl-q-hint">Bu kelime Türkçede ne demek?</div>' : ''}
+          ${q.type === 'vocab' ? '<div class="pl-q-hint">Bu kelime Türkçede ne demek?</div>' : ''}
         </div>
         <div class="pl-choices" id="pl-choices">
-          ${q.choices.map((c, i) => `
-            <button class="pl-choice" data-correct="${c.correct}" data-level="${q.level}"
-              onclick="window._app._placementAnswer(this, ${c.correct}, '${q.level}')">
-              ${c.text || c}
+          ${q.choices.map(c => `
+            <button class="pl-choice" data-correct="${c.correct}"
+              onclick="window._app._placementAnswer(this, ${c.correct}, '${q.level}', '${q.type}')">
+              ${c.text}
             </button>`).join('')}
         </div>
-        ${isGram && q.tip ? `<div class="pl-tip" id="pl-tip" style="display:none">💡 ${q.tip}</div>` : ''}
+        ${q.tip ? `<div class="pl-tip" id="pl-tip" style="display:none">💡 ${q.tip}</div>` : ''}
       </div>`;
   }
 
-  _placementAnswer(btn, isCorrect, level) {
-    // Disable all buttons
+  _placementAnswer(btn, isCorrect, level, type) {
     document.querySelectorAll('.pl-choice').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; });
     btn.classList.add(isCorrect ? 'pl-correct' : 'pl-wrong');
-    // Show correct if wrong
-    if (!isCorrect) {
-      document.querySelectorAll('.pl-choice[data-correct="true"]').forEach(b => b.classList.add('pl-correct'));
-    }
-    // Show tip for grammar
+    if (!isCorrect) document.querySelectorAll('.pl-choice[data-correct="true"]').forEach(b => b.classList.add('pl-correct'));
     const tip = document.getElementById('pl-tip');
     if (tip) tip.style.display = 'block';
-    // Update scores
-    if (isCorrect) {
-      if (this.session.pl.levelScores[level] !== undefined) this.session.pl.levelScores[level]++;
-      else this.session.pl.grammarCorrect++;
+
+    // Track scores by type and level
+    const pl = this.session.pl;
+    if (type === 'vocab' && pl.vocabScores[level]) {
+      pl.vocabScores[level][1]++;
+      if (isCorrect) pl.vocabScores[level][0]++;
+    } else if (type === 'grammar' && pl.gramScores[level]) {
+      pl.gramScores[level][1]++;
+      if (isCorrect) pl.gramScores[level][0]++;
+    } else if (type === 'reading') {
+      pl.readingTotal++;
+      if (isCorrect) pl.readingCorrect++;
     }
-    const q = this.session.pl.questions[this.session.pl.qIdx];
-    if (!q.type && isCorrect) this.session.pl.grammarCorrect++; // grammar question
+
     this.audio.play(isCorrect ? 'success' : 'click');
     setTimeout(() => {
-      this.session.pl.qIdx++;
+      pl.qIdx++;
       this._renderPlacementQ();
-    }, 900);
+    }, 1000);
   }
 
   _renderPlacementSpeak() {
     this.session.pl.stage = 'speak';
-    const sentence = this.session.pl.speakSentence;
+    const { speakSentences, speakIdx } = this.session.pl;
+    const sentence = speakSentences[speakIdx] || speakSentences[0];
     const wrap = document.getElementById('pl-wrap');
     if (!wrap) return;
     wrap.innerHTML = `
       <div class="pl-speak">
         <div class="pl-speak-icon">🎙️</div>
-        <h2 class="pl-speak-title">Şimdi Bu Cümleyi Söyle</h2>
+        <h2 class="pl-speak-title">Konuşma Değerlendirmesi</h2>
+        <div class="pl-speak-sub">${speakIdx + 1} / ${this.session.pl.speakSentences.length}</div>
         <div class="pl-speak-sentence">"${sentence}"</div>
-        <div class="pl-speak-status" id="pl-speak-status">Hazır olunca mikrofona bas</div>
+        <div class="pl-speak-status" id="pl-speak-status">Hazır olduğunda mikrofona bas</div>
         <button class="pl-btn-mic" id="pl-btn-mic" onclick="window._app._placementStartSpeak()">🎤 Başla</button>
-        <button class="pl-btn-skip" onclick="window._app._placementShowResult(null)">Bu adımı atla</button>
+        <button class="pl-btn-skip" onclick="window._app._placementSpeakDone(null)">Atla</button>
       </div>`;
   }
 
   _placementStartSpeak() {
-    const sentence = this.session.pl.speakSentence;
+    const pl = this.session.pl;
+    const sentence = pl.speakSentences[pl.speakIdx];
     const statusEl = document.getElementById('pl-speak-status');
     const micBtn   = document.getElementById('pl-btn-mic');
     if (statusEl) statusEl.textContent = '🔴 Dinleniyor...';
@@ -6152,44 +6214,98 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       const tW = target.split(' ').filter(Boolean);
       const sW = spoken.split(' ').filter(Boolean);
       const matched = tW.filter(tw => sW.some(sw => sw === tw || this._levenshtein(sw,tw) <= 1)).length;
-      const score = Math.round((matched / tW.length) * 100);
-      this._placementShowResult(score);
+      this._placementSpeakDone(Math.round((matched / tW.length) * 100));
     };
-    rec.onerror = () => this._placementShowResult(null);
+    rec.onerror = () => this._placementSpeakDone(null);
     rec.onend = () => {};
     rec.start();
   }
 
-  _placementShowResult(speakScore) {
-    this.session.pl.speakScore = speakScore;
-    const { levelScores, grammarCorrect } = this.session.pl;
-
-    // Determine CEFR level
-    const LEVELS = ['A1','A2','B1','B2'];
-    let level = 'A1';
-    if ((levelScores.A1 || 0) >= 1) level = 'A2';
-    if ((levelScores.A2 || 0) >= 1) level = 'B1';
-    if ((levelScores.B1 || 0) >= 2) level = 'B2';
-    if ((levelScores.B2 || 0) >= 2) level = 'C1';
-    // Grammar bonus
-    if (grammarCorrect >= 3 && LEVELS.indexOf(level) < LEVELS.indexOf('B2')) level = 'B1';
-    if (grammarCorrect === 3 && level === 'B1') level = 'B2';
-
-    // Determine recommended mode
-    let mode = 'balanced';
-    let modeReason = 'Her beceriden dengeli pratik yaparsın';
-    if (speakScore !== null && speakScore < 60) {
-      mode = 'speaking'; modeReason = 'Telaffuz pratiğine öncelik verelim';
-    } else if (grammarCorrect >= 3) {
-      mode = 'grammar'; modeReason = 'Gramer yapılarını pekiştirmeye odaklanıyoruz';
-    } else if ((levelScores.B1 || 0) + (levelScores.B2 || 0) === 0) {
-      mode = 'intensive'; modeReason = 'Kelime dağarcığını hızla genişletelim';
+  _placementSpeakDone(score) {
+    const pl = this.session.pl;
+    if (score !== null) pl.speakScores.push(score);
+    pl.speakIdx++;
+    if (pl.speakIdx < pl.speakSentences.length) {
+      this._renderPlacementSpeak();
+    } else {
+      this._placementShowResult();
     }
+  }
+
+  _placementShowResult() {
+    const pl = this.session.pl;
+    const { vocabScores, gramScores, readingCorrect, readingTotal, speakScores } = pl;
+
+    // ── CEFR detection ──────────────────────────────────────
+    // For each level: compute combined vocab+grammar pct
+    const LEVELS = ['A1','A2','B1','B2','C1'];
+    const levelPct = {};
+    LEVELS.forEach(lvl => {
+      const vc = vocabScores[lvl][0], vt = vocabScores[lvl][1];
+      const gc = gramScores[lvl][0],  gt = gramScores[lvl][1];
+      const total = vt + gt;
+      levelPct[lvl] = total > 0 ? (vc + gc) / total : 0;
+    });
+
+    // Highest level with ≥ 60% score
+    let level = 'A1';
+    for (const lvl of LEVELS) {
+      if (levelPct[lvl] >= 0.60) level = lvl;
+    }
+
+    // Reading bonus: if ≥1/2 correct, bump up one level
+    if (readingTotal > 0 && readingCorrect / readingTotal >= 0.5) {
+      const rIdx = LEVELS.indexOf(level);
+      if (rIdx < LEVELS.length - 1) level = LEVELS[rIdx + 1];
+    }
+
+    // Speaking: if very low avg, drop one level
+    const avgSpeak = speakScores.length ? speakScores.reduce((a,b)=>a+b,0) / speakScores.length : null;
+    if (avgSpeak !== null && avgSpeak < 40) {
+      const sIdx = LEVELS.indexOf(level);
+      if (sIdx > 0) level = LEVELS[sIdx - 1];
+    }
+
+    // ── Mode recommendation ─────────────────────────────────
+    let mode = 'balanced', modeReason = 'Her beceriden dengeli pratik yaparsın';
+    const vocabTotal  = LEVELS.reduce((s,l) => s + vocabScores[l][0], 0);
+    const gramTotal   = LEVELS.reduce((s,l) => s + gramScores[l][0], 0);
+    const gramMax     = LEVELS.reduce((s,l) => s + gramScores[l][1], 0);
+    const gramPct     = gramMax > 0 ? gramTotal / gramMax : 0;
+
+    if (avgSpeak !== null && avgSpeak < 55) {
+      mode = 'speaking'; modeReason = 'Telaffuz ve konuşma becerine öncelik verelim';
+    } else if (gramPct >= 0.75) {
+      mode = 'intensive'; modeReason = 'Gramerini biliyorsun, kelime dağarcığını genişletelim';
+    } else if (gramPct < 0.45) {
+      mode = 'grammar'; modeReason = 'Gramer yapılarını güçlendirmeye odaklanıyoruz';
+    }
+
+    // ── Score breakdown ─────────────────────────────────────
+    const totalVocabQ  = LEVELS.reduce((s,l) => s + vocabScores[l][1], 0);
+    const totalVocabC  = LEVELS.reduce((s,l) => s + vocabScores[l][0], 0);
+    const totalGramQ   = LEVELS.reduce((s,l) => s + gramScores[l][1], 0);
+    const totalGramC   = LEVELS.reduce((s,l) => s + gramScores[l][0], 0);
 
     const CEFR_LABELS = { A1:'Başlangıç', A2:'Temel', B1:'Orta', B2:'Orta Üstü', C1:'İleri', C2:'Uzman' };
     const CEFR_COLORS = { A1:'#10b981', A2:'#4ade80', B1:'#00d4ff', B2:'#6366f1', C1:'#7c3aed', C2:'#f43f5e' };
     const MODE_ICONS  = { balanced:'⚖️', intensive:'🔥', speaking:'🎙️', grammar:'🧩' };
     const MODE_NAMES  = { balanced:'Dengeli', intensive:'Yoğun Kelime', speaking:'Konuşma', grammar:'Gramer' };
+
+    // Level bar per CEFR for breakdown
+    const levelBarsHtml = LEVELS.map(lvl => {
+      const vc = vocabScores[lvl][0], vt = vocabScores[lvl][1];
+      const gc = gramScores[lvl][0],  gt = gramScores[lvl][1];
+      const tot = vt + gt; const cor = vc + gc;
+      if (tot === 0) return '';
+      const pct = Math.round((cor / tot) * 100);
+      const col = CEFR_COLORS[lvl] || '#888';
+      return `<div class="pl-lvl-bar-row">
+        <span class="pl-lvl-bar-label" style="color:${col}">${lvl}</span>
+        <div class="pl-lvl-bar-track"><div class="pl-lvl-bar-fill" style="width:${pct}%;background:${col}"></div></div>
+        <span class="pl-lvl-bar-pct">${cor}/${tot}</span>
+      </div>`;
+    }).join('');
 
     const wrap = document.getElementById('pl-wrap');
     if (!wrap) return;
@@ -6198,7 +6314,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
         <div class="pl-result-burst"></div>
         <div class="pl-result-badge" style="color:${CEFR_COLORS[level] || '#00d4ff'}">${level}</div>
         <div class="pl-result-label">${CEFR_LABELS[level] || level} Seviyesi</div>
-        <div class="pl-result-desc">Testin tamamlandı! İşte sana özel plan:</div>
+        <div class="pl-result-desc">Testin tamamlandı! İşte sonuçların ve önerilen planın:</div>
 
         <div class="pl-result-cards">
           <div class="pl-result-card">
@@ -6207,37 +6323,48 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
             <div class="pl-rc-val">${MODE_NAMES[mode]}</div>
             <div class="pl-rc-why">${modeReason}</div>
           </div>
-          ${speakScore !== null ? `
-          <div class="pl-result-card">
-            <div class="pl-rc-icon">🎙️</div>
-            <div class="pl-rc-name">Telaffuz Skoru</div>
-            <div class="pl-rc-val">${speakScore}%</div>
-            <div class="pl-rc-why">${speakScore >= 80 ? 'Harika telaffuz!' : speakScore >= 60 ? 'Gelişiyor' : 'Çalışmaya devam'}</div>
-          </div>` : ''}
           <div class="pl-result-card">
             <div class="pl-rc-icon">📚</div>
             <div class="pl-rc-name">Kelime Skoru</div>
-            <div class="pl-rc-val">${Object.values(levelScores).reduce((a,b)=>a+b,0)} / ${Object.keys(levelScores).length * 2}</div>
-            <div class="pl-rc-why">${level} kelimelerinde iyi durumdasın</div>
+            <div class="pl-rc-val">${totalVocabC} / ${totalVocabQ}</div>
+            <div class="pl-rc-why">${Math.round(totalVocabC/Math.max(totalVocabQ,1)*100)}% doğru</div>
           </div>
+          <div class="pl-result-card">
+            <div class="pl-rc-icon">🧩</div>
+            <div class="pl-rc-name">Gramer Skoru</div>
+            <div class="pl-rc-val">${totalGramC} / ${totalGramQ}</div>
+            <div class="pl-rc-why">${Math.round(totalGramC/Math.max(totalGramQ,1)*100)}% doğru</div>
+          </div>
+          ${readingTotal > 0 ? `<div class="pl-result-card">
+            <div class="pl-rc-icon">📖</div>
+            <div class="pl-rc-name">Okuma Skoru</div>
+            <div class="pl-rc-val">${readingCorrect} / ${readingTotal}</div>
+            <div class="pl-rc-why">${readingCorrect === readingTotal ? 'Mükemmel anlama!' : 'Gelişiyor'}</div>
+          </div>` : ''}
+          ${avgSpeak !== null ? `<div class="pl-result-card">
+            <div class="pl-rc-icon">🎙️</div>
+            <div class="pl-rc-name">Konuşma Skoru</div>
+            <div class="pl-rc-val">${Math.round(avgSpeak)}%</div>
+            <div class="pl-rc-why">${avgSpeak >= 80 ? 'Harika telaffuz!' : avgSpeak >= 60 ? 'Gelişiyor' : 'Çalışmaya devam'}</div>
+          </div>` : ''}
+        </div>
+
+        <div class="pl-level-breakdown">
+          <div class="pl-lb-title">Seviye Dağılımı</div>
+          ${levelBarsHtml}
         </div>
 
         <button class="pl-btn-primary pl-btn-start" onclick="window._app._placementFinish('${level}','${mode}')">
           🚀 Öğrenmeye Başla!
         </button>
-        <div class="pl-result-note">Bu ayarlar istediğin zaman Analitik sayfasından değiştirilebilir.</div>
+        <div class="pl-result-note">Bu ayarlar Analitik sayfasından istediğin zaman değiştirilebilir.</div>
       </div>`;
 
-    // Confetti!
-    if (typeof confetti === 'function') confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 }, colors: [CEFR_COLORS[level], '#00d4ff', '#7c3aed'] });
+    if (typeof confetti === 'function') confetti({ particleCount: 80, spread: 80, origin: { y: 0.6 }, colors: [CEFR_COLORS[level], '#00d4ff', '#7c3aed'] });
   }
 
   _placementFinish(level, mode) {
-    // Save results to state
-    this.state.update({ onboarded: true, learningMode: mode });
-    // Pre-seed mastery bias toward detected level so app starts at right level
-    const bias = { A1:'A1', A2:'A1', B1:'A2', B2:'B1', C1:'B2' }[level] || 'A1';
-    // Navigate home with mode active
+    this.state.update({ onboarded: true, learningMode: mode, cefrLevel: level });
     this.navigate('home');
   }
 
