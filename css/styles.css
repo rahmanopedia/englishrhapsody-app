@@ -8225,3 +8225,149 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .at-title { font-size: 0.8rem; }
   .section-label { font-size: 0.72rem; margin-bottom: 10px; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   MOBİL KONUŞMA LAB — Native App Tasarımı
+   Desktop grid/card yapısından tamamen farklı, tam ekran UX
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Konteyner: esnek, tam yükseklik */
+  .speak-container {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100dvh - var(--nav-h) - var(--mobile-nav-h, 60px));
+    padding: 0;
+    gap: 0;
+  }
+
+  /* Büyük header gizle — mobilde yer kaplar */
+  .speak-container .lab-header { display: none; }
+
+  /* Zorluk sekmeleri: yatay kaydırma şeridi */
+  .diff-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 10px 16px 0;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .diff-tabs::-webkit-scrollbar { display: none; }
+  .diff-tab {
+    padding: 6px 14px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-radius: 20px;
+  }
+
+  /* Grid kaldır → sütun akışı */
+  .speak-layout { display: flex; flex-direction: column; flex: 1; }
+  .game-sidebar { display: none; }
+
+  /* speak-main: şeffaf, tam genişlik */
+  .speak-main {
+    display: flex !important;
+    flex-direction: column;
+    flex: 1;
+    padding: 10px 16px 14px;
+    border-radius: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .speak-main::before { display: none !important; }
+
+  /* İlerleme satırı: ince, kompakt */
+  .speak-progress-row { gap: 8px; margin-bottom: 8px; }
+  .speak-counter { font-size: 0.72rem; }
+  .speak-prog-bar { height: 3px; }
+  .speak-prog-fill::after { display: none; }
+
+  /* Toggles: kompakt yatay */
+  .speak-toggles-row { margin-bottom: 10px; gap: 8px; }
+  .shadow-toggle small { font-size: 0.6rem; }
+
+  /* ── Cümle Kartı: sayfanın merkezi, büyük ── */
+  .sentence-card {
+    flex: 1;
+    min-height: 140px;
+    max-height: none;
+    padding: 24px 18px;
+    margin-bottom: 12px;
+    border-radius: 22px;
+    border: 1px solid rgba(var(--a1-rgb), 0.18) !important;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 50%, rgba(var(--a1-rgb),0.06) 0%, transparent 70%),
+      rgba(255,255,255,0.025) !important;
+  }
+  .sentence-card.sp-recording {
+    border-color: rgba(244,63,94,0.45) !important;
+    box-shadow: 0 0 24px rgba(244,63,94,0.2);
+  }
+  .sw { font-size: 1.2rem; }
+
+  /* Waveform: kompakt şerit */
+  .waveform {
+    height: 40px;
+    margin-bottom: 10px;
+    padding: 6px 14px;
+    border-radius: 12px;
+  }
+
+  /* Transcript */
+  #speak-transcript { font-size: 0.82rem; min-height: 22px; margin-bottom: 10px; }
+
+  /* ── Kontrol Barı: grid yerleşimi ── */
+  .speak-controls {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 80px 1fr 1fr;
+    align-items: center;
+    gap: 8px;
+    padding: 0 !important;
+    margin-bottom: 0;
+  }
+
+  /* Yan butonlar: dikdörtgen hap şekli */
+  .speak-side-btn {
+    width: 100% !important;
+    height: 56px !important;
+    border-radius: 16px !important;
+    font-size: 1rem;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .speak-side-btn small { font-size: 0.48rem; }
+
+  /* Kayıt butonu: büyük, merkez */
+  .speak-rec-btn {
+    width: 72px !important;
+    height: 72px !important;
+    box-shadow: 0 0 0 0 rgba(var(--a1-rgb),0.4),
+                0 0 24px rgba(var(--a1-rgb),0.25),
+                inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  .speak-rec-btn::before { inset: -6px !important; }
+
+  /* Skor paneli: tam genişlik kart */
+  .score-panel {
+    flex-direction: column !important;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    margin-top: 8px;
+  }
+  .score-ring-wrap { align-self: center; }
+  .score-detail { width: 100%; }
+  .score-btns { justify-content: center; gap: 10px; }
+  .word-breakdown { font-size: 0.8rem; }
+  .ipa-hint-panel { font-size: 0.78rem; }
+
+  /* Desktop-only unsur gizle */
+  .desktop-only { display: none !important; }
+}
