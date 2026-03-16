@@ -757,7 +757,7 @@ body.sidebar-closed .sidebar-tab {
 .sp-terminal {
   position: absolute;
   top: 28px; right: 32px;
-  width: 360px;
+  width: min(360px, calc(100vw - 32px));
   z-index: 6;
   background: rgba(0,10,18,0.85);
   border: 1px solid rgba(0,212,255,0.15);
@@ -3770,7 +3770,7 @@ body.sidebar-closed .sidebar-tab {
   .an-hero-badge-wrap { width: 90px; height: 90px; }
   .an-hero-arc { width: 90px; height: 90px; }
   .an-mode-grid { grid-template-columns: repeat(2, 1fr); }
-  .an-roadmap { min-width: 480px; }
+  .an-roadmap { min-width: 420px; }
 }
 @media (max-width: 480px) {
   .an-mode-grid { grid-template-columns: repeat(2, 1fr); }
@@ -3850,6 +3850,12 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
     padding-right:  calc(16px + env(safe-area-inset-right, 0px));
     padding-left:   calc(20px + env(safe-area-inset-left, 0px));
   }
+  /* Tüm mod wrapper'larında yatay taşma engeli */
+  .layout, .main-content,
+  .nexus-shell, .speak-container, .quantum-shell,
+  .ph-intro, .ph-game, .ph-result,
+  .reading-view, .bridge-workspace,
+  .leaderboard-shell { max-width: 100%; overflow-x: hidden; }
   .actions-grid { grid-template-columns: 1fr 1fr; }
   .home-mid-row { grid-template-columns: 1fr; }
   .hero-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
