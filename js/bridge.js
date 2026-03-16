@@ -110,17 +110,18 @@ class BridgeModule {
     const bTrigger = this.el.querySelector('#b-trigger');
     const bText = this.el.querySelector('#b-text');
     
-    // YENİ: Otomatik ifade keşfi veya manuel analiz
+    // Discovery: ALWAYS pick a new random phrase on click
     bTrigger.addEventListener('click', () => {
-      const manualVal = bText.value.trim();
-      if (manualVal) {
-        this._analyze(manualVal);
-      } else {
-        this._smartDiscovery();
-      }
+      this._smartDiscovery();
     });
 
-    bText.addEventListener('keydown', (e) => { if((e.ctrlKey || e.metaKey) && e.key === 'Enter') this._analyze(bText.value.trim()); });
+    // Manual Analysis: Only via Enter key or by selecting examples
+    bText.addEventListener('keydown', (e) => { 
+      if((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        const manualVal = bText.value.trim();
+        if (manualVal) this._analyze(manualVal);
+      }
+    });
 
     this.el.querySelectorAll('.bridge-example-pill').forEach(p => {
       p.addEventListener('click', () => { bText.value = p.dataset.ex; this._analyze(p.dataset.ex); });
