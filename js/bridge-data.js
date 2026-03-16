@@ -12426,11 +12426,12 @@ function findBridgeMatch(inputRaw) {
         score = 90;
       } else {
         // 3. Tag eşleşmesi
-        const matchedTags = entry.tags.filter(function(tag) {
+        const tags = entry.tags || [];
+        const matchedTags = tags.filter(function(tag) {
           return input.includes(tag.toLowerCase());
         });
         if (matchedTags.length > 0) {
-          score = Math.round((matchedTags.length / entry.tags.length) * 70) + 10;
+          score = Math.round((matchedTags.length / tags.length) * 70) + 10;
         } else {
           // 4. Kelime düzeyinde örtüşme
           const entryWords = entry.tr.toLowerCase().split(' ');
@@ -12468,11 +12469,12 @@ function getTopMatches(inputRaw, count) {
     } else if (input.includes(entry.tr.toLowerCase())) {
       score = 85;
     } else {
-      const matchedTags = entry.tags.filter(function(tag) {
+      const tags = entry.tags || [];
+      const matchedTags = tags.filter(function(tag) {
         return input.includes(tag.toLowerCase());
       });
       if (matchedTags.length > 0) {
-        score = Math.round((matchedTags.length / entry.tags.length) * 70) + 10;
+        score = Math.round((matchedTags.length / tags.length) * 70) + 10;
       } else {
         const entryWords = entry.tr.toLowerCase().split(' ');
         const overlap = inputWords.filter(function(w) {
