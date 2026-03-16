@@ -1,205 +1,29 @@
-/**
- * Reading Workshop - Context-Aware Annotation Engine (v2.1)
- * Optimized for nested annotations and split phrasal verbs.
- */
-class ReadingEngine {
-  constructor(app) {
-    this.app = app;
-    this.activePopup = null;
-    this._closeOnAction = null;
-  }
-
-  /**
-   * Renders a story with support for nested and split annotations.
-   */
-  markupStory(story) {
-    if (!story.annotations || story.annotations.length === 0) {
-      const plainText = story.text.replace(/\{([^}]+)\}/g, '$1');
-      return this.app._markupText(plainText, 'story-word');
-    }
-
-    const text = story.text;
-    const annotations = story.annotations;
-
-    // 1. Create a map of character index to annotation IDs
-    // Each index can have multiple annotations (nesting)
-    const indexToAnns = Array.from({ length: text.length }, () => []);
-    
-    annotations.forEach((ann, id) => {
-      // Support for split spans (multiple [start, end] pairs)
-      const spans = ann.spans || [{ start: ann.start_index, end: ann.end_index }];
-      spans.forEach(span => {
-        for (let i = span.start; i < span.end; i++) {
-          indexToAnns[i].push(id);
-        }
-      });
-    });
-
-    // 2. Build the HTML by grouping consecutive indices with the same set of annotations
-    let html = '';
-    let i = 0;
-    while (i < text.length) {
-      const currentAnnIds = indexToAnns[i];
-      let j = i + 1;
-      
-      // Find the range that has the exact same set of annotations
-      while (j < text.length && this._arraysEqual(indexToAnns[j], currentAnnIds)) {
-        j++;
-      }
-
-      const fragment = text.substring(i, j);
-      if (currentAnnIds.length === 0) {
-        html += this.app._markupText(fragment, 'story-word');
-      } else {
-        // Use the "deepest" (last added) annotation as the primary clickable span
-        // But keep info about all applicable IDs for split-highlighting
-        const primaryId = currentAnnIds[currentAnnIds.length - 1];
-        const allIds = currentAnnIds.join(',');
-        const ann = annotations[primaryId];
-        
-        const classes = ['sw-v2', `ann-type-${ann.annotation_type || 'word'}`];
-        html += `<span class="${classes.join(' ')}" data-ann-id="${primaryId}" data-all-ids="${allIds}">${this._escapeHTML(fragment)}</span>`;
-      }
-      i = j;
-    }
-
-    return html;
-  }
-
-  _arraysEqual(a, b) {
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) {
-      if (a[i] !== b[i]) return false;
-    }
-    return true;
-  }
-
-  handleAnnotationClick(ann, element, event) {
-    if (this.activePopup) this.closePopup();
-
-    // Highlight all parts of a split phrasal verb or the same phrase
-    const annId = element.dataset.annId;
-    document.querySelectorAll(`.sw-v2[data-ann-id="${annId}"]`).forEach(el => {
-      el.classList.add('ann-active');
-    });
-
-    if (ann.surface_form) {
-      this.app.speakWord(ann.surface_form, 1.0);
-    }
-
-    this._renderPopup(ann, element, event);
-    this.app.audio.play('pop');
-  }
-
-  _renderPopup(ann, element, event) {
-    const popup = document.createElement('div');
-    popup.className = 'ann-popup animate-pop';
-    
-    const typeLabels = {
-      'word': 'Kelime',
-      'phrasal_verb': 'Deyimsel Fiil',
-      'idiom': 'Deyim',
-      'collocation': 'Kalıp İfade',
-      'noun_phrase': 'İsim Tamlaması',
-      'grammar_structure': 'Gramer Yapısı',
-      'relative_clause': 'Sıfat Cümleciği',
-      'verb_phrase': 'Fiil Grubu',
-      'prepositional_phrase': 'Edat Grubu'
-    };
-
-    const typeColors = {
-      'word': '#1d4ed8',
-      'phrasal_verb': '#0891b2',
-      'idiom': '#7c3aed',
-      'collocation': '#065f46',
-      'noun_phrase': '#be185d',
-      'grammar_structure': '#b45309',
-      'relative_clause': '#4338ca',
-      'verb_phrase': '#0369a1',
-      'prepositional_phrase': '#475569'
-    };
-
-    const label = typeLabels[ann.annotation_type] || 'Bilgi';
-    const color = typeColors[ann.annotation_type] || '#374151';
-
-    const individualsHtml = (ann.individual_meanings && ann.individual_meanings.length)
-      ? `<div class="ann-divider"></div>
+class ReadingEngine{constructor(n){this.app=n,this.activePopup=null,this._closeOnAction=null}markupStory(n){if(!n.annotations||n.annotations.length===0){const a=n.text.replace(/\{([^}]+)\}/g,"$1");return this.app._markupText(a,"story-word")}const t=n.text,i=n.annotations,e=Array.from({length:t.length},()=>[]);i.forEach((a,s)=>{(a.spans||[{start:a.start_index,end:a.end_index}]).forEach(o=>{for(let l=o.start;l<o.end;l++)e[l].push(s)})});let d="",r=0;for(;r<t.length;){const a=e[r];let s=r+1;for(;s<t.length&&this._arraysEqual(e[s],a);)s++;const p=t.substring(r,s);if(a.length===0)d+=this.app._markupText(p,"story-word");else{const o=a[a.length-1],l=a.join(","),c=["sw-v2",`ann-type-${i[o].annotation_type||"word"}`];d+=`<span class="${c.join(" ")}" data-ann-id="${o}" data-all-ids="${l}">${this._escapeHTML(p)}</span>`}r=s}return d}_arraysEqual(n,t){if(n.length!==t.length)return!1;for(let i=0;i<n.length;i++)if(n[i]!==t[i])return!1;return!0}handleAnnotationClick(n,t,i){this.activePopup&&this.closePopup();const e=t.dataset.annId;document.querySelectorAll(`.sw-v2[data-ann-id="${e}"]`).forEach(d=>{d.classList.add("ann-active")}),n.surface_form&&this.app.speakWord(n.surface_form,1),this._renderPopup(n,t,i),this.app.audio.play("pop")}_renderPopup(n,t,i){const e=document.createElement("div");e.className="ann-popup animate-pop";const d={word:"Kelime",phrasal_verb:"Deyimsel Fiil",idiom:"Deyim",collocation:"Kal\u0131p \u0130fade",noun_phrase:"\u0130sim Tamlamas\u0131",grammar_structure:"Gramer Yap\u0131s\u0131",relative_clause:"S\u0131fat C\xFCmleci\u011Fi",verb_phrase:"Fiil Grubu",prepositional_phrase:"Edat Grubu"},r={word:"#1d4ed8",phrasal_verb:"#0891b2",idiom:"#7c3aed",collocation:"#065f46",noun_phrase:"#be185d",grammar_structure:"#b45309",relative_clause:"#4338ca",verb_phrase:"#0369a1",prepositional_phrase:"#475569"},a=d[n.annotation_type]||"Bilgi",s=r[n.annotation_type]||"#374151",p=n.individual_meanings&&n.individual_meanings.length?`<div class="ann-divider"></div>
          <div class="ann-individual-label">Kelime Kelime</div>
          <div class="ann-individuals">
-           ${ann.individual_meanings.map(m => `
+           ${n.individual_meanings.map(c=>`
              <div class="ann-ind-row">
-               <span class="ann-ind-word">${m.word}</span>
-               <span class="ann-ind-sep">→</span>
-               <span class="ann-ind-meaning">${m.meaning}</span>
-               ${m.note ? `<span class="ann-ind-note">${m.note}</span>` : ''}
+               <span class="ann-ind-word">${c.word}</span>
+               <span class="ann-ind-sep">\u2192</span>
+               <span class="ann-ind-meaning">${c.meaning}</span>
+               ${c.note?`<span class="ann-ind-note">${c.note}</span>`:""}
              </div>
-           `).join('')}
-         </div>`
-      : '';
-
-    popup.innerHTML = `
+           `).join("")}
+         </div>`:"";e.innerHTML=`
       <div class="ann-popup-header">
-        <div class="ann-type-badge" style="background: ${color}">${label}</div>
-        <button class="ann-popup-close">✕</button>
+        <div class="ann-type-badge" style="background: ${s}">${a}</div>
+        <button class="ann-popup-close">\u2715</button>
       </div>
       <div class="ann-popup-body">
-        <div class="ann-surface">${ann.surface_form}</div>
-        <div class="ann-meaning">${ann.contextual_turkish_meaning}</div>
-        <div class="ann-explanation">${ann.short_explanation_tr}</div>
-        ${individualsHtml}
-        ${ann.example_sentence_en ? `
+        <div class="ann-surface">${n.surface_form}</div>
+        <div class="ann-meaning">${n.contextual_turkish_meaning}</div>
+        <div class="ann-explanation">${n.short_explanation_tr}</div>
+        ${p}
+        ${n.example_sentence_en?`
           <div class="ann-divider"></div>
-          <div class="ann-example-label">Örnek Cümle</div>
-          <div class="ann-example-en">${ann.example_sentence_en}</div>
-          <div class="ann-example-tr">${ann.example_sentence_tr}</div>
-        ` : ''}
+          <div class="ann-example-label">\xD6rnek C\xFCmle</div>
+          <div class="ann-example-en">${n.example_sentence_en}</div>
+          <div class="ann-example-tr">${n.example_sentence_tr}</div>
+        `:""}
       </div>
-    `;
-
-    document.body.appendChild(popup);
-    this.activePopup = popup;
-
-    const rect = element.getBoundingClientRect();
-    let left = rect.left + window.scrollX;
-    let top = rect.bottom + window.scrollY + 8;
-
-    if (left + popup.offsetWidth > window.innerWidth - 10) {
-      left = window.innerWidth - popup.offsetWidth - 10;
-    }
-    if (top + popup.offsetHeight > window.innerHeight - 10) {
-      top = rect.top + window.scrollY - popup.offsetHeight - 8;
-    }
-
-    popup.style.left = Math.max(10, left) + 'px';
-    popup.style.top = top + 'px';
-
-    popup.querySelector('.ann-popup-close').onclick = () => this.closePopup();
-
-    this._closeOnAction = (e) => {
-      if (!popup.contains(e.target)) {
-        this.closePopup();
-      }
-    };
-    document.addEventListener('mousedown', this._closeOnAction);
-  }
-
-  closePopup() {
-    if (this._closeOnAction) {
-      document.removeEventListener('mousedown', this._closeOnAction);
-      this._closeOnAction = null;
-    }
-    if (this.activePopup) {
-      this.activePopup.remove();
-      this.activePopup = null;
-      document.querySelectorAll('.ann-active').forEach(el => el.classList.remove('ann-active'));
-    }
-  }
-
-  _escapeHTML(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-}
-
-window.ReadingEngine = ReadingEngine;
+    `,document.body.appendChild(e),this.activePopup=e;const o=t.getBoundingClientRect();let l=o.left+window.scrollX,u=o.bottom+window.scrollY+8;l+e.offsetWidth>window.innerWidth-10&&(l=window.innerWidth-e.offsetWidth-10),u+e.offsetHeight>window.innerHeight-10&&(u=o.top+window.scrollY-e.offsetHeight-8),e.style.left=Math.max(10,l)+"px",e.style.top=u+"px",e.querySelector(".ann-popup-close").onclick=()=>this.closePopup(),this._closeOnAction=c=>{e.contains(c.target)||this.closePopup()},document.addEventListener("mousedown",this._closeOnAction)}closePopup(){this._closeOnAction&&(document.removeEventListener("mousedown",this._closeOnAction),this._closeOnAction=null),this.activePopup&&(this.activePopup.remove(),this.activePopup=null,document.querySelectorAll(".ann-active").forEach(n=>n.classList.remove("ann-active")))}_escapeHTML(n){const t=document.createElement("div");return t.textContent=n,t.innerHTML}}window.ReadingEngine=ReadingEngine;
