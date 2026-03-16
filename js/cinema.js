@@ -1,6 +1,6 @@
 /**
- * RHAPSODY CINEMA — MODÜL MANTIĞI
- * YouTube IFrame Player API & App Integration
+ * RHAPSODY CINEMA — Gelişmiş Video Modülü
+ * Voscreen Tarzı Öğrenme Deneyimi
  */
 class CinemaModule {
   constructor(app) {
@@ -12,9 +12,11 @@ class CinemaModule {
     this.timerInterval = null;
     this.isSubtitleOn = false;
     this.canAnswer = false;
+    this.apiReady = false;
   }
 
   init(el) {
+    console.log("[Cinema] Başlatılıyor...");
     this.el = el;
     this._render();
     this._loadYouTubeAPI();
@@ -24,36 +26,48 @@ class CinemaModule {
     if (window.YT && window.YT.Player) {
       this._initPlayer();
     } else {
-      const tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      if (!document.getElementById('yt-api-script')) {
+        const tag = document.createElement('script');
+        tag.id = 'yt-api-script';
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      }
       
-      const prevReady = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => {
-        if (prevReady) prevReady();
-        this._initPlayer();
-      };
+      const checkAPI = setInterval(() => {
+        if (window.YT && window.YT.Player) {
+          clearInterval(checkAPI);
+          this._initPlayer();
+        }
+      }, 300);
     }
   }
 
   _initPlayer() {
-    // Önceki player varsa temizle
+    console.log("[Cinema] Player kuruluyor...");
+    const playerContainer = document.getElementById('cinema-player');
+    if (!playerContainer) return;
+
+    // Eğer zaten bir player varsa temizle
     if (this.player) { try { this.player.destroy(); } catch(e) {} }
 
     this.player = new YT.Player('cinema-player', {
       height: '100%', width: '100%',
       playerVars: { 
-        'autoplay': 1, 'controls': 0, 'rel': 0, 'showinfo': 0, 'modestbranding': 1, 'fs': 0, 'iv_load_policy': 3, 'disablekb': 1
+        'autoplay': 1, 'controls': 0, 'rel': 0, 'showinfo': 0, 'modestbranding': 1, 'fs': 0, 'iv_load_policy': 3, 'disablekb': 1, 'enablejsapi': 1
       },
       events: {
-        'onReady': () => this._nextVideo(),
+        'onReady': () => {
+          console.log("[Cinema] Player hazır.");
+          this._nextVideo();
+        },
         'onStateChange': (e) => this._onPlayerStateChange(e)
       }
     });
   }
 
   _render() {
+    if (!this.el) return;
     this.el.innerHTML = `
       <div class="cinema-wrap">
         <div class="cinema-video-box">
@@ -76,12 +90,14 @@ class CinemaModule {
       </div>
     `;
 
-    this.el.querySelector('#btn-sub-off').onclick = () => this._startQuiz(false);
-    this.el.querySelector('#btn-sub-on').onclick = () => this._startQuiz(true);
+    const offBtn = this.el.querySelector('#btn-sub-off');
+    const onBtn = this.el.querySelector('#btn-sub-on');
+    if (offBtn) offBtn.onclick = () => this._startQuiz(false);
+    if (onBtn) onBtn.onclick = () => this._startQuiz(true);
   }
 
   _nextVideo() {
-    const dataPool = typeof CINEMA_DATA !== 'undefined' ? CINEMA_DATA : [];
+    const dataPool = (typeof CINEMA_DATA !== 'undefined') ? CINEMA_DATA : [];
     if (!dataPool.length) return;
 
     this.currentIndex = Math.floor(Math.random() * dataPool.length);
@@ -93,6 +109,7 @@ class CinemaModule {
         startSeconds: video.start,
         endSeconds: video.end
       });
+      console.log("[Cinema] Video yüklendi:", video.videoId);
     }
     
     this.el.querySelector('#cinema-overlay').style.display = 'none';
@@ -118,12 +135,14 @@ class CinemaModule {
     const overlay = this.el.querySelector('#cinema-overlay');
     const decisionBox = this.el.querySelector('#cinema-decision-box');
     const timerEl = this.el.querySelector('#cinema-timer');
+    if (!overlay) return;
+
     const oldSub = overlay.querySelector('.cinema-sub-text');
     if (oldSub) oldSub.remove();
 
     overlay.style.display = 'flex';
-    decisionBox.style.display = 'flex';
-    timerEl.style.display = 'none';
+    if (decisionBox) decisionBox.style.display = 'flex';
+    if (timerEl) timerEl.style.display = 'none';
   }
 
   _startQuiz(subtitle) {
@@ -134,8 +153,8 @@ class CinemaModule {
     const timerEl = this.el.querySelector('#cinema-timer');
 
     this.isSubtitleOn = subtitle;
-    decisionBox.style.display = 'none';
-    timerEl.style.display = 'flex';
+    if (decisionBox) decisionBox.style.display = 'none';
+    if (timerEl) timerEl.style.display = 'flex';
     
     if (subtitle) {
       const subDiv = document.createElement('div');
@@ -147,7 +166,7 @@ class CinemaModule {
 
     quizArea.style.display = 'grid';
     quizArea.innerHTML = video.options.map((opt, i) => `
-      <div class="cinema-option-card" onclick="app.modules.cinema._checkAnswer(${i})">${opt.text}</div>
+      <div class="cinema-option-card" onclick="window.cinemaMod._checkAnswer(${i})">${opt.text}</div>
     `).join('');
 
     this.timer = 15;
@@ -184,10 +203,10 @@ class CinemaModule {
       let earned = this.isSubtitleOn ? Math.round(video.points / 2) : video.points;
       pointsPopup.textContent = `+${earned}`;
       pointsPopup.classList.add('show');
-      this.app.addXP(earned, "medium", "cinema");
-      if (this.app.audio) this.app.audio.play("success");
+      if (this.app && this.app.addXP) this.app.addXP(earned, "medium", "cinema");
+      if (this.app && this.app.audio) this.app.audio.play("success");
     } else {
-      if (this.app.audio) this.app.audio.play("pop");
+      if (this.app && this.app.audio) this.app.audio.play("pop");
     }
 
     setTimeout(() => {
@@ -197,25 +216,23 @@ class CinemaModule {
   }
 }
 
-// ── APP ENTEGRASYONU ──
-// Bu kısım minify edilmiş app.js'e dokunmadan modülü sisteme dahil eder.
+// ── GLOBAL REGISTRATION ──
 (function() {
   const checkApp = setInterval(() => {
-    if (window._app || window.app) {
-      const appInstance = window._app || window.app;
-      appInstance.modules = appInstance.modules || {};
-      appInstance.modules.cinema = new CinemaModule(appInstance);
+    const appInstance = window._app || window.app;
+    if (appInstance) {
+      clearInterval(checkApp);
+      window.cinemaMod = new CinemaModule(appInstance);
       
-      // Navigate fonksiyonuna cinema desteği ekle
+      // Navigate fonksiyonuna cinema desteği enjekte et
       appInstance._initCinema = function() {
         const mount = document.getElementById('cinema-mount-point');
-        if (mount) this.modules.cinema.init(mount);
+        if (mount) window.cinemaMod.init(mount);
       };
       
-      clearInterval(checkApp);
-      console.log("[Cinema] Entegre edildi.");
+      console.log("[Cinema] Enjeksiyon başarılı.");
     }
-  }, 500);
+  }, 200);
 })();
 
 window.CinemaModule = CinemaModule;
