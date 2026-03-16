@@ -1,6 +1,6 @@
 /**
  * ENGLISH RHAPSODY — KÖPRÜ (BRIDGE) MODULE
- * Fixed & Robust Implementation
+ * Smart Discovery Update — Auto-Discovery by Level & Analytics
  */
 class BridgeModule {
   constructor(app) {
@@ -51,10 +51,10 @@ class BridgeModule {
             <div class="bridge-logo-circle">K</div>
             <div class="bridge-title-block">
               <h1 style="margin:0; font-size:1.4rem;">KÖPRÜ</h1>
-              <p style="margin:0; font-size:0.7rem; color:var(--text-3); text-transform:uppercase;">Kültürel Dil Dönüşümü</p>
+              <p style="margin:0; font-size:0.7rem; color:var(--text-3); text-transform:uppercase;">Akıllı Keşif Modu</p>
             </div>
           </div>
-          <div class="bridge-stat-group">
+          <div class="bridge-header-stats">
             <div class="bridge-stat-item" id="b-stat-count">✨ ${this.bridgeCount}</div>
             <div class="bridge-stat-item" id="b-stat-streak">🔥 ${this.streakData.count}</div>
             <button class="bridge-trigger-btn" style="width:40px; height:40px; font-size:1.2rem;" id="b-quiz-btn">🎯</button>
@@ -65,12 +65,13 @@ class BridgeModule {
 
         <div class="bridge-workspace">
           <div class="bridge-panel">
-            <div style="font-size:0.7rem; font-weight:800; color:var(--br-tr); margin-bottom:10px;">TÜRKÇE DÜŞÜNCE</div>
-            <textarea class="bridge-textarea" id="b-text" placeholder="Bir ifade yazın..."></textarea>
+            <div style="font-size:0.7rem; font-weight:800; color:var(--br-tr); margin-bottom:10px;">GİRİŞ VEYA KEŞİF</div>
+            <textarea class="bridge-textarea" id="b-text" placeholder="Bir ifade yaz veya oka bas!"></textarea>
             <div class="bridge-examples">${examplesHtml}</div>
           </div>
-          <div style="display:flex; justify-content:center;">
-            <button class="bridge-trigger-btn" id="b-trigger">➔</button>
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;">
+            <button class="bridge-trigger-btn" id="b-trigger" title="Yeni İfade Keşfet">➔</button>
+            <span style="font-size:0.6rem; color:var(--text-3); font-weight:700;">KEŞFET</span>
           </div>
           <div class="bridge-panel">
             <div style="font-size:0.7rem; font-weight:800; color:var(--cyan); margin-bottom:10px;">İNGİLİZCE KÖPRÜ</div>
@@ -109,7 +110,16 @@ class BridgeModule {
     const bTrigger = this.el.querySelector('#b-trigger');
     const bText = this.el.querySelector('#b-text');
     
-    bTrigger.addEventListener('click', () => this._analyze(bText.value.trim()));
+    // YENİ: Otomatik ifade keşfi veya manuel analiz
+    bTrigger.addEventListener('click', () => {
+      const manualVal = bText.value.trim();
+      if (manualVal) {
+        this._analyze(manualVal);
+      } else {
+        this._smartDiscovery();
+      }
+    });
+
     bText.addEventListener('keydown', (e) => { if((e.ctrlKey || e.metaKey) && e.key === 'Enter') this._analyze(bText.value.trim()); });
 
     this.el.querySelectorAll('.bridge-example-pill').forEach(p => {
@@ -127,6 +137,45 @@ class BridgeModule {
     this.el.querySelector('#b-quiz-btn').addEventListener('click', () => this._showQuiz());
     this.el.querySelector('#b-save-btn').addEventListener('click', () => this._saveToColl());
     this.el.querySelector('#b-shadow-btn').addEventListener('click', () => this._startShadowing());
+  }
+
+  /**
+   * Kullanıcı seviyesine göre akıllı ifade seçimi
+   */
+  _smartDiscovery() {
+    if (!window.BRIDGE_DATA) return;
+    
+    // Seviyeyi al (varsayılan 1)
+    const level = this.app.state?.get ? this.app.state.get('level') : 1;
+    let pool = window.BRIDGE_DATA;
+
+    // Kategori seçiliyse filtrele
+    if (this.activeCategory) pool = pool.filter(x => x.category === this.activeCategory);
+
+    // Seviyeye göre zorluk filtreleme (Simülasyon)
+    // 1-10: Basit, 11-20: Orta, 21+: Deyimsel
+    if (level < 10) {
+      pool = pool.filter(x => x.register === 'neutral' || x.bridges.some(b => b.bridge_type === 'direct'));
+    } else if (level < 20) {
+      pool = pool.filter(x => x.register === 'informal' || x.bridges.some(b => b.bridge_type === 'transform'));
+    }
+
+    // Havuz boşsa hepsini kullan
+    if (!pool.length) pool = window.BRIDGE_DATA;
+
+    const randomEntry = pool[Math.floor(Math.random() * pool.length)];
+    this.el.querySelector('#b-text').value = randomEntry.tr;
+    
+    // Analytics Log
+    if (window.analyticsManager) {
+      window.analyticsManager._log('discovery_bridge', {
+        tr: randomEntry.tr,
+        level: level,
+        category: randomEntry.category
+      });
+    }
+
+    this._analyze(randomEntry.tr);
   }
 
   _analyze(query) {
