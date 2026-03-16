@@ -250,9 +250,15 @@ body.sidebar-closed .sidebar {
   box-shadow: 3px 0 24px rgba(var(--a1-rgb), 0.55);
 }
 
+/* Sidebar kapalıyken tab görünür */
 body.sidebar-closed .sidebar-tab {
   opacity: 1;
   pointer-events: auto;
+}
+/* Sidebar açıkken tab gizli (sidebar içinde gezinme var, tuşa gerek yok) */
+body:not(.sidebar-closed) .sidebar-tab {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .sidebar-tab .st-dot {
@@ -354,6 +360,14 @@ body.sidebar-closed .sidebar-tab {
   padding: 0 4px env(safe-area-inset-bottom, 0px);
   justify-content: space-around;
   align-items: flex-start;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+}
+
+/* Mod görünümlerinde 5 saniye sonra gizlenir */
+.mobile-nav.nav-hidden {
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .m-nav-item {

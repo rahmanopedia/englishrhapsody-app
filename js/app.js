@@ -2716,6 +2716,21 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     // Close modes drawer on navigation
     document.getElementById('modes-drawer')?.classList.remove('open');
     document.getElementById('modes-drawer-backdrop')?.classList.remove('open');
+    // Sidebar: navigate ettikten sonra kapat
+    document.body.classList.add('sidebar-closed');
+
+    // Mobil alt nav: mod görünümlerinde 5 saniye sonra gizle
+    const NAV_HIDE_VIEWS = new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement']);
+    const mobileNav = document.getElementById('mobile-nav');
+    if (mobileNav) {
+      mobileNav.classList.remove('nav-hidden');
+      clearTimeout(this._navHideTimer);
+      if (NAV_HIDE_VIEWS.has(view)) {
+        this._navHideTimer = setTimeout(() => {
+          mobileNav.classList.add('nav-hidden');
+        }, 5000);
+      }
+    }
 
     const main = document.getElementById('main-content');
     const tpl  = document.getElementById(`tpl-${view}`);
@@ -7071,43 +7086,36 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   }
 
   _bindGlobalEvents() {
-    // ── Sidebar hover-to-open / leave-to-close ─────────────
-    const sidebar   = document.querySelector('.sidebar');
+    // ── Sidebar: mavi tuşla aç/kapat (hover kaldırıldı) ────
     const sidebarTab = document.getElementById('sidebar-tab');
-    let   sidebarCloseTimer = null;
 
-    const openSidebar = () => {
-      clearTimeout(sidebarCloseTimer);
-      document.body.classList.remove('sidebar-closed');
-    };
-    const closeSidebar = (delay = 400) => {
-      clearTimeout(sidebarCloseTimer);
-      sidebarCloseTimer = setTimeout(() => {
-        document.body.classList.add('sidebar-closed');
-      }, delay);
-    };
+    const openSidebar  = () => document.body.classList.remove('sidebar-closed');
+    const closeSidebar = () => document.body.classList.add('sidebar-closed');
 
-    // Open when mouse is within 8px of left edge; close when clearly outside sidebar
-    document.addEventListener('mousemove', e => {
-      if (document.body.classList.contains('sidebar-closed')) {
-        if (e.clientX <= 8) openSidebar();
-      } else {
-        const sidebarWidth = sidebar ? sidebar.offsetWidth : 220;
-        if (e.clientX > sidebarWidth + 16) {
-          closeSidebar();
-        } else {
-          clearTimeout(sidebarCloseTimer);
-        }
-      }
+    // Mavi tuş: tıklayınca aç
+    if (sidebarTab) sidebarTab.addEventListener('click', openSidebar);
+
+    // Sidebar dışına tıklanınca kapat
+    document.addEventListener('click', e => {
+      if (document.body.classList.contains('sidebar-closed')) return;
+      if (e.target.closest('.sidebar') || e.target.closest('#sidebar-tab')) return;
+      closeSidebar();
     });
-
-    // Click on tab also opens sidebar
-    if (sidebarTab) {
-      sidebarTab.addEventListener('click', openSidebar);
-    }
 
     // Start with sidebar closed
     document.body.classList.add('sidebar-closed');
+
+    // Mobil: ekrana dokunulunca alt nav yeniden göster
+    document.addEventListener('touchstart', () => {
+      const mobileNav = document.getElementById('mobile-nav');
+      if (!mobileNav) return;
+      mobileNav.classList.remove('nav-hidden');
+      clearTimeout(this._navHideTimer);
+      const NAV_HIDE_VIEWS = new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement']);
+      if (NAV_HIDE_VIEWS.has(this.session?.view)) {
+        this._navHideTimer = setTimeout(() => mobileNav.classList.add('nav-hidden'), 5000);
+      }
+    }, { passive: true });
 
     window.addEventListener('beforeunload', () => {
       if (window.authManager && window.authManager.isLoggedIn && this.cloudLoaded) {
