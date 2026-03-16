@@ -2706,9 +2706,16 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     }
 
     // Update nav active states
-    document.querySelectorAll('.nav-item, .m-nav-item').forEach(el => {
+    const DRAWER_VIEWS = new Set(['reading','bridge','nexus','quantum','conversations','leaderboard']);
+    document.querySelectorAll('.nav-item, .m-nav-item, .modes-drawer-item').forEach(el => {
       el.classList.toggle('active', el.dataset.target === view);
     });
+    // Highlight "Modlar" button when a drawer mode is active
+    const mModesBtn = document.getElementById('m-modes-btn');
+    if (mModesBtn) mModesBtn.classList.toggle('active', DRAWER_VIEWS.has(view));
+    // Close modes drawer on navigation
+    document.getElementById('modes-drawer')?.classList.remove('open');
+    document.getElementById('modes-drawer-backdrop')?.classList.remove('open');
 
     const main = document.getElementById('main-content');
     const tpl  = document.getElementById(`tpl-${view}`);
@@ -7110,9 +7117,42 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       }
     });
 
+    // Swipe-down to close modes drawer
+    (() => {
+      let startY = 0;
+      const drawer = () => document.getElementById('modes-drawer');
+      document.addEventListener('touchstart', e => {
+        if (drawer()?.classList.contains('open')) startY = e.touches[0].clientY;
+      }, { passive: true });
+      document.addEventListener('touchend', e => {
+        if (!drawer()?.classList.contains('open')) return;
+        const dy = e.changedTouches[0].clientY - startY;
+        if (dy > 60) {
+          drawer()?.classList.remove('open');
+          document.getElementById('modes-drawer-backdrop')?.classList.remove('open');
+        }
+      }, { passive: true });
+    })();
+
     document.addEventListener('click', e => {
-      const navItem = e.target.closest('.nav-item, .m-nav-item');
-      if (navItem) { this.navigate(navItem.dataset.target); return; }
+      // Modes drawer toggle
+      if (e.target.closest('#m-modes-btn')) {
+        const drawer   = document.getElementById('modes-drawer');
+        const backdrop = document.getElementById('modes-drawer-backdrop');
+        const isOpen   = drawer?.classList.contains('open');
+        drawer?.classList.toggle('open', !isOpen);
+        backdrop?.classList.toggle('open', !isOpen);
+        return;
+      }
+      // Backdrop click — close drawer
+      if (e.target.closest('#modes-drawer-backdrop')) {
+        document.getElementById('modes-drawer')?.classList.remove('open');
+        e.target.closest('#modes-drawer-backdrop')?.classList.remove('open');
+        return;
+      }
+
+      const navItem = e.target.closest('.nav-item, .m-nav-item, .modes-drawer-item');
+      if (navItem && navItem.dataset.target) { this.navigate(navItem.dataset.target); return; }
 
       // Delegated: speak button (cb-replay, speak-btn class)
       const speakBtn = e.target.closest('.speak-btn');

@@ -213,33 +213,54 @@
   </button>
   <button class="m-nav-item" data-target="learn">
     <span class="m-icon">🌀</span>
-    <span>Sinestezi</span>
-  </button>
-  <button class="m-nav-item" data-target="reading">
-    <span class="m-icon">📖</span>
-    <span>Okuma</span>
+    <span>Öğren</span>
   </button>
   <button class="m-nav-item" data-target="speak">
     <span class="m-icon">🎙️</span>
-    <span>Konuşma</span>
+    <span>Konuş</span>
   </button>
-  <button class="m-nav-item" data-target="bridge">
-    <span class="m-icon">🌉</span>
-    <span>Köprü</span>
+  <button class="m-nav-item" id="m-modes-btn">
+    <span class="m-icon m-modes-icon">⚡</span>
+    <span>Modlar</span>
   </button>
-  <button class="m-nav-item" data-target="nexus">
-    <span class="m-icon">✨</span>
-    <span>Nexus</span>
-  </button>
-  <button class="m-nav-item" data-target="quantum">
-    <span class="m-icon">⚛️</span>
-    <span>Kuantum</span>
-  </button>
-  <button class="m-nav-item" data-target="leaderboard">
-    <span class="m-icon">🏆</span>
-    <span>Sıralama</span>
+  <button class="m-nav-item" data-target="analytics">
+    <span class="m-icon">📊</span>
+    <span>İstatistik</span>
   </button>
 </nav>
+
+<!-- Modes Drawer -->
+<div class="modes-drawer-backdrop" id="modes-drawer-backdrop"></div>
+<div class="modes-drawer" id="modes-drawer">
+  <div class="modes-drawer-handle"></div>
+  <div class="modes-drawer-title">Modlar</div>
+  <div class="modes-drawer-grid">
+    <button class="modes-drawer-item" data-target="reading">
+      <span class="mdi-icon">📖</span>
+      <span>Okuma</span>
+    </button>
+    <button class="modes-drawer-item" data-target="bridge">
+      <span class="mdi-icon">🌉</span>
+      <span>Köprü</span>
+    </button>
+    <button class="modes-drawer-item" data-target="nexus">
+      <span class="mdi-icon">✨</span>
+      <span>Nexus</span>
+    </button>
+    <button class="modes-drawer-item" data-target="quantum">
+      <span class="mdi-icon">⚛️</span>
+      <span>Kuantum</span>
+    </button>
+    <button class="modes-drawer-item" data-target="conversations">
+      <span class="mdi-icon">💬</span>
+      <span>Sohbet</span>
+    </button>
+    <button class="modes-drawer-item" data-target="leaderboard">
+      <span class="mdi-icon">🏆</span>
+      <span>Sıralama</span>
+    </button>
+  </div>
+</div>
 
 <!-- Toast container -->
 <div id="toast-container"></div>

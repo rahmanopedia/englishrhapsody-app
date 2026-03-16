@@ -46,8 +46,9 @@
   --glow-cyan: 0 0 20px rgba(var(--a1-rgb),0.25);
   --glow-violet: 0 0 20px rgba(var(--a2-rgb),0.3);
 
-  --sidebar-w: 220px;
-  --nav-h:     54px;
+  --sidebar-w:    220px;
+  --nav-h:        54px;
+  --mobile-nav-h: 60px;
   --transition: 200ms cubic-bezier(0.4,0,0.2,1);
   --bounce: 400ms cubic-bezier(0.16,1,0.3,1);
 }
@@ -344,33 +345,108 @@ body.sidebar-closed .sidebar-tab {
   display: none;
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  height: 60px;
-  background: rgba(7,10,15,0.95);
+  height: calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px));
+  background: rgba(7,10,15,0.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid var(--border);
-  z-index: 100;
-  padding: 0 8px;
+  z-index: 200;
+  padding: 0 4px env(safe-area-inset-bottom, 0px);
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .m-nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 3px;
-  padding: 6px 16px;
+  padding: 10px 8px 6px;
+  min-height: 56px;
   border-radius: var(--radius-sm);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 600;
   color: var(--text-3);
   transition: var(--transition);
   flex: 1;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.m-nav-item .m-icon { font-size: 1.2rem; }
+.m-nav-item .m-icon { font-size: 1.35rem; line-height: 1; }
 .m-nav-item.active { color: var(--cyan); }
+.m-nav-item.active .m-icon { filter: drop-shadow(0 0 6px rgba(0,212,255,0.6)); }
+
+/* Modes Drawer */
+.modes-drawer-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 300;
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+.modes-drawer-backdrop.open { display: block; opacity: 1; }
+
+.modes-drawer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  border-radius: 20px 20px 0 0;
+  z-index: 400;
+  padding: 8px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(100%);
+  transition: transform 300ms cubic-bezier(0.16,1,0.3,1);
+  will-change: transform;
+}
+.modes-drawer.open { transform: translateY(0); }
+
+.modes-drawer-handle {
+  width: 40px; height: 4px;
+  background: var(--border-hover);
+  border-radius: 2px;
+  margin: 0 auto 14px;
+}
+
+.modes-drawer-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.modes-drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.modes-drawer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: var(--transition);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 72px;
+}
+.modes-drawer-item .mdi-icon { font-size: 1.6rem; line-height: 1; }
+.modes-drawer-item:active { transform: scale(0.96); background: var(--bg-elevated); }
+.modes-drawer-item.active { color: var(--cyan); border-color: rgba(0,212,255,0.35); background: rgba(0,212,255,0.06); }
 
 /* ── 11. Buttons ──────────────────────────────────────────── */
 .btn {
@@ -3661,7 +3737,9 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
   .layout { grid-template-columns: 1fr; }
   .sidebar { display: none; }
   .mobile-nav { display: flex; }
-  .main-content { padding: 16px 16px 76px; }
+  .main-content {
+    padding: 16px 16px calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px) + 12px);
+  }
   .actions-grid { grid-template-columns: 1fr 1fr; }
   .home-mid-row { grid-template-columns: 1fr; }
   .hero-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
@@ -3674,6 +3752,19 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
   .finish-card { padding: 32px 20px; }
   .card-scene { height: 300px; }
   .hero-name { font-size: 1.25rem; }
+}
+
+/* Landscape on mobile */
+@media (max-height: 500px) and (max-width: 900px) {
+  .mobile-nav {
+    height: calc(50px + env(safe-area-inset-bottom, 0px));
+    padding-top: 0;
+  }
+  .m-nav-item { min-height: 44px; padding: 6px 8px 4px; gap: 2px; font-size: 0.58rem; }
+  .m-nav-item .m-icon { font-size: 1.1rem; }
+  .main-content {
+    padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px) + 8px);
+  }
 }
 
 @media (max-width: 480px) {
