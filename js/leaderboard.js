@@ -84,9 +84,9 @@ class LeaderboardManager {
     if (dailyXP === 0 && weeklyXP === 0 && monthlyXP === 0) return;
 
     const periods = [
-      { id: this._periodId('daily'),   xp: dailyXP   },
-      { id: this._periodId('weekly'),  xp: weeklyXP  },
-      { id: this._periodId('monthly'), xp: monthlyXP },
+      { id: this._periodId('daily'),   xp: Math.round(Math.max(0, dailyXP))   },
+      { id: this._periodId('weekly'),  xp: Math.round(Math.max(0, weeklyXP))  },
+      { id: this._periodId('monthly'), xp: Math.round(Math.max(0, monthlyXP)) },
     ];
 
     try {

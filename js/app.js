@@ -2844,22 +2844,25 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       UI.toast(`🔥 ${streak} günlük seri bonusu: +${streakBonus} XP`, 2000);
     }
 
-    let xp    = this.state.get('xp') + totalGain;
-    let level = this.state.get('level');
+    let xp    = Math.max(0, Math.round(this.state.get('xp') || 0) + totalGain);
+    let level = Math.max(1, Math.round(this.state.get('level') || 1));
 
-    const today = new Date().toISOString().split('T')[0];
-    const hist  = this.state.get('history') || {};
-    hist[today] = (hist[today] || 0) + totalGain;
+    const today  = new Date().toISOString().split('T')[0];
+    const cutoff = new Date(Date.now() - 31 * 86400000).toISOString().split('T')[0];
+    const hist   = this.state.get('history') || {};
+    hist[today]  = (hist[today] || 0) + totalGain;
+    Object.keys(hist).forEach(k => { if (k < cutoff) delete hist[k]; });
     this.state.set('history', hist);
 
     let leveled = false;
-    let needed  = level * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL);
+    let needed  = Math.round(level * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL));
     while (xp >= needed) {
       xp -= needed;
       level++;
       leveled = true;
-      needed  = level * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL);
+      needed  = Math.round(level * (window.remoteFlags?.xp_per_level || XP_PER_LEVEL));
     }
+    xp = Math.max(0, xp);
     if (leveled) {
       UI.toast(`🎉 Seviye atladın! Level ${level}`, 4000);
       this.audio.play('success');
