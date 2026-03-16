@@ -485,7 +485,8 @@ class NexusMode {
     const centerX = boardRect.width / 2;
     const centerY = boardRect.height / 2;
     
-    const nodeSize = 90;
+    const isMobileNarrow = window.innerWidth <= 480;
+    const nodeSize = isMobileNarrow ? 74 : 90;
     const topMargin = nodeSize / 2 + 12; // en üstteki düğümün board dışına taşmaması için
     const adjustedCenterY = Math.max(centerY, topMargin + (Math.min(boardRect.width, boardRect.height) * 0.38));
 
@@ -493,9 +494,12 @@ class NexusMode {
     core.style.top = `${adjustedCenterY - core.offsetHeight/2}px`;
 
     const particles = document.querySelectorAll('.nexus-particle-node');
+    // Clamp radius so rightmost/leftmost particle stays inside board
+    const halfNode = nodeSize / 2;
+    const maxSafeRadius = centerX - halfNode - 4;
     const baseRadius = Math.min(boardRect.width, boardRect.height) * 0.38;
-    const wantedRadius = Math.max(baseRadius, window.innerWidth < 600 ? 110 : 150);
-    const radius = Math.min(wantedRadius, adjustedCenterY - topMargin);
+    const wantedRadius = Math.max(baseRadius, window.innerWidth < 600 ? 100 : 150);
+    const radius = Math.min(wantedRadius, adjustedCenterY - topMargin, maxSafeRadius);
     
     particles.forEach((p, i) => {
        const angle = (i / particles.length) * Math.PI * 2 - Math.PI/2;

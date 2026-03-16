@@ -56,7 +56,7 @@
 /* ── 2. Reset & Base ──────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
 
 body {
   font-family: 'Plus Jakarta Sans', 'Outfit', system-ui, sans-serif;
@@ -368,6 +368,7 @@ body.sidebar-closed .sidebar-tab {
   grid-row: 2;
   padding: 20px 24px;
   overflow-y: auto;
+  overflow-x: hidden;
   max-width: 1100px;
   width: 100%;
   margin: 0 auto;
@@ -3874,6 +3875,25 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
   .hstat { padding: 12px 6px; }
   .header-stats .stat-chip:not(:first-child):not(:last-child) { display: none; }
   .hero-name { font-size: 1.1rem; }
+
+  /* ── App header: compress to fit narrow screens ── */
+  .app-header { padding: 0 10px 0 12px; }
+  .header-stats { gap: 5px; }
+  .stat-chip { padding: 5px 8px; gap: 4px; font-size: 0.72rem; }
+  .header-logo { font-size: 0.9rem; gap: 5px; }
+
+  /* ── Speaking: shrink controls row so it fits ── */
+  .speak-controls { gap: 8px !important; padding: 8px 10px !important; }
+  .speak-side-btn  { width: 46px !important; height: 46px !important; font-size: 0.85rem; }
+  .speak-rec-btn   { width: 64px !important; height: 64px !important; }
+  .speak-rec-btn::before { inset: -7px; }
+  .speak-main { padding: 14px !important; }
+  .sentence-card { padding: 18px 14px !important; }
+
+  /* ── Sinestezi intro: prevent letter-spacing overflow ── */
+  .synth-title    { letter-spacing: 2px; }
+  .synth-subtitle { letter-spacing: 0.5px; font-size: 0.72rem; }
+  .synth-rules    { width: 100%; box-sizing: border-box; }
 }
 
 /* ── 28. Rank Themes ──────────────────────────────────────── */
