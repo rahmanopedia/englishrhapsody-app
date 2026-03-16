@@ -2683,10 +2683,9 @@ class App {
   // ─────────────────────────────────────────────────────────
 
   navigate(view) {
-    // Sinestezi: learn view'ı yükle + otomatik başlat
+    // Sinestezi: learn view'ı yükle — intro/seçim ekranı göster
     if (view === 'synesthesia') {
       this.navigate('learn');
-      setTimeout(() => this.startSynesthesia(), 80);
       return;
     }
     this.session.view = view;
