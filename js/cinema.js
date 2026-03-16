@@ -1,56 +1,25 @@
 /**
- * RHAPSODY CINEMA — Bağımsız Modül (v1.2)
- * Kendi kendini tetikleyen (Auto-hook) versiyon
+ * RHAPSODY CINEMA — Bağımsız Modül (v3.0)
+ * HTML5 Video — YouTube IFrame kaldırıldı, reklam yok.
+ * Kaynak: Archive.org kamu malı filmler + öz barındırma desteği.
  */
 class CinemaModule {
   constructor(app) {
     this.app = app;
     this.el = null;
-    this.player = null;
+    this.video = null;
     this.currentIndex = 0;
     this.timer = 15;
     this.timerInterval = null;
     this.isSubtitleOn = false;
     this.canAnswer = false;
+    this.endWatcher = null;
   }
 
   init(el) {
     console.log("🎬 Cinema başlatılıyor...");
     this.el = el;
     this._render();
-    this._loadYouTubeAPI();
-  }
-
-  _loadYouTubeAPI() {
-    if (window.YT && window.YT.Player) {
-      this._initPlayer();
-    } else {
-      if (!document.getElementById('yt-api-script')) {
-        const tag = document.createElement('script');
-        tag.id = 'yt-api-script';
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      }
-      const checkAPI = setInterval(() => {
-        if (window.YT && window.YT.Player) {
-          clearInterval(checkAPI);
-          this._initPlayer();
-        }
-      }, 200);
-    }
-  }
-
-  _initPlayer() {
-    if (this.player) { try { this.player.destroy(); } catch(e) {} }
-    this.player = new YT.Player('cinema-player', {
-      height: '100%', width: '100%',
-      playerVars: { 'autoplay': 1, 'controls': 0, 'rel': 0, 'modestbranding': 1, 'fs': 0, 'iv_load_policy': 3, 'enablejsapi': 1 },
-      events: {
-        'onReady': () => this._nextVideo(),
-        'onStateChange': (e) => this._onPlayerStateChange(e)
-      }
-    });
   }
 
   _render() {
@@ -58,7 +27,15 @@ class CinemaModule {
     this.el.innerHTML = `
       <div class="cinema-wrap">
         <div class="cinema-video-box">
-          <div id="cinema-player"></div>
+          <video id="cinema-video" playsinline muted style="width:100%;height:100%;object-fit:cover;background:#000;display:block;"></video>
+          <div id="cinema-loading" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;gap:12px;">
+            <div style="color:var(--text-3);font-size:0.75rem;letter-spacing:2px;">YÜKLENİYOR</div>
+            <div style="width:40px;height:2px;background:var(--cyan);animation:cinema-load 1.2s ease-in-out infinite alternate;border-radius:2px;"></div>
+          </div>
+          <div id="cinema-play-prompt" style="position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);cursor:pointer;gap:12px;">
+            <div style="width:60px;height:60px;border-radius:50%;background:var(--cyan);display:flex;align-items:center;justify-content:center;font-size:1.6rem;">▶</div>
+            <div style="color:#fff;font-size:0.8rem;letter-spacing:1px;">OYNATMAK İÇİN DOKUN</div>
+          </div>
           <div id="cinema-overlay" class="cinema-overlay" style="display:none">
             <div class="cinema-timer-ring" id="cinema-timer">15</div>
             <div id="cinema-decision-box" class="cinema-decision-buttons">
@@ -68,39 +45,102 @@ class CinemaModule {
           </div>
           <div id="cinema-points" class="cinema-points-popup">+8</div>
         </div>
+        <div id="cinema-video-info" style="display:none;text-align:center;font-size:0.72rem;color:var(--text-3);margin-top:8px;letter-spacing:0.5px;"></div>
         <div id="cinema-quiz" class="cinema-quiz-area" style="display:none"></div>
-        <div class="cinema-info" style="text-align:center; color:var(--text-3); font-size:0.8rem; margin-top:20px; text-transform:uppercase; letter-spacing:1px;">
+        <div class="cinema-info" style="text-align:center;color:var(--text-3);font-size:0.8rem;margin-top:20px;text-transform:uppercase;letter-spacing:1px;">
           RHAPSODY CINEMA — SAHNEYİ DİNLE VE ANLA
         </div>
       </div>
+      <style>
+        @keyframes cinema-load {
+          from { transform: scaleX(0.3); opacity:0.4; }
+          to   { transform: scaleX(1);   opacity:1;   }
+        }
+      </style>
     `;
+
+    this.video = this.el.querySelector('#cinema-video');
     this.el.querySelector('#btn-sub-off').onclick = () => this._startQuiz(false);
     this.el.querySelector('#btn-sub-on').onclick = () => this._startQuiz(true);
+    this.el.querySelector('#cinema-play-prompt').onclick = () => this._playAfterInteraction();
+    this._nextVideo();
   }
 
   _nextVideo() {
-    if (typeof CINEMA_DATA === 'undefined') return;
+    if (typeof CINEMA_DATA === 'undefined' || !CINEMA_DATA.length) return;
+    if (this.endWatcher) { clearInterval(this.endWatcher); this.endWatcher = null; }
+
     this.currentIndex = Math.floor(Math.random() * CINEMA_DATA.length);
-    const video = CINEMA_DATA[this.currentIndex];
-    if (this.player && this.player.loadVideoById) {
-      this.player.loadVideoById({ videoId: video.videoId, startSeconds: video.start, endSeconds: video.end });
-    }
+    const entry = CINEMA_DATA[this.currentIndex];
+    const v = this.video;
+
     this.el.querySelector('#cinema-overlay').style.display = 'none';
     this.el.querySelector('#cinema-quiz').style.display = 'none';
+    this.el.querySelector('#cinema-play-prompt').style.display = 'none';
+    this.el.querySelector('#cinema-loading').style.display = 'flex';
+    this.el.querySelector('#cinema-video-info').style.display = 'none';
     this.canAnswer = false;
+
+    v.src = entry.url;
+    v.load();
+
+    v.addEventListener('loadedmetadata', () => {
+      v.currentTime = entry.start;
+    }, { once: true });
+
+    v.addEventListener('seeked', () => {
+      this._showInfo(entry);
+      this._playVideo(entry.end);
+    }, { once: true });
+
+    v.addEventListener('error', () => {
+      this.el.querySelector('#cinema-loading').innerHTML =
+        '<div style="color:var(--rose);font-size:0.8rem;text-align:center;padding:20px;">Video yüklenemedi. Bağlantınızı kontrol edin.</div>';
+    }, { once: true });
   }
 
-  _onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.PLAYING) {
-      const video = CINEMA_DATA[this.currentIndex];
-      const checkEnd = setInterval(() => {
-        if (!this.player || !this.player.getCurrentTime) { clearInterval(checkEnd); return; }
-        if (this.player.getCurrentTime() >= video.end) {
-          clearInterval(checkEnd);
-          this.player.pauseVideo();
-          this._showDecisionOverlay();
-        }
-      }, 200);
+  _playVideo(endTime) {
+    const v = this.video;
+    const loading = this.el.querySelector('#cinema-loading');
+
+    v.play().then(() => {
+      loading.style.display = 'none';
+      this._watchEnd(endTime);
+    }).catch(() => {
+      // Tarayıcı otomatik oynatmayı engelledi — dokunma butonu göster
+      loading.style.display = 'none';
+      this.el.querySelector('#cinema-play-prompt').style.display = 'flex';
+      this._pendingEndTime = endTime;
+    });
+  }
+
+  _playAfterInteraction() {
+    const v = this.video;
+    this.el.querySelector('#cinema-play-prompt').style.display = 'none';
+    v.play().then(() => {
+      this._watchEnd(this._pendingEndTime);
+    });
+  }
+
+  _watchEnd(endTime) {
+    const v = this.video;
+    if (this.endWatcher) clearInterval(this.endWatcher);
+    this.endWatcher = setInterval(() => {
+      if (!v || v.paused) return;
+      if (v.currentTime >= endTime) {
+        clearInterval(this.endWatcher);
+        this.endWatcher = null;
+        v.pause();
+        this._showDecisionOverlay();
+      }
+    }, 100);
+  }
+
+  _showInfo(entry) {
+    const info = this.el.querySelector('#cinema-video-info');
+    if (entry.film) {
+      info.textContent = `🎬 ${entry.film}${entry.year ? ' (' + entry.year + ')' : ''} · Public Domain`;
+      info.style.display = 'block';
     }
   }
 
@@ -114,7 +154,7 @@ class CinemaModule {
   }
 
   _startQuiz(subtitle) {
-    const video = CINEMA_DATA[this.currentIndex];
+    const entry = CINEMA_DATA[this.currentIndex];
     const quizArea = this.el.querySelector('#cinema-quiz');
     const overlay = this.el.querySelector('#cinema-overlay');
     const timerEl = this.el.querySelector('#cinema-timer');
@@ -124,12 +164,12 @@ class CinemaModule {
     if (subtitle) {
       const subDiv = document.createElement('div');
       subDiv.className = 'cinema-sub-text';
-      subDiv.style = 'font-size:1.2rem; font-weight:800; color:#fff; text-align:center; padding:20px; background:rgba(0,0,0,0.5); border-radius:10px; margin-top:20px;';
-      subDiv.textContent = `"${video.transcript}"`;
+      subDiv.style = 'font-size:1.2rem;font-weight:800;color:#fff;text-align:center;padding:20px;background:rgba(0,0,0,0.5);border-radius:10px;margin-top:20px;';
+      subDiv.textContent = `"${entry.transcript}"`;
       overlay.appendChild(subDiv);
     }
     quizArea.style.display = 'grid';
-    quizArea.innerHTML = video.options.map((opt, i) => `<div class="cinema-option-card" onclick="cinemaMod._checkAnswer(${i})">${opt.text}</div>`).join('');
+    quizArea.innerHTML = entry.options.map((opt, i) => `<div class="cinema-option-card" onclick="cinemaMod._checkAnswer(${i})">${opt.text}</div>`).join('');
     this.timer = 15;
     timerEl.textContent = this.timer;
     this.canAnswer = true;
@@ -145,27 +185,26 @@ class CinemaModule {
     if (!this.canAnswer) return;
     this.canAnswer = false;
     clearInterval(this.timerInterval);
-    const video = CINEMA_DATA[this.currentIndex];
+    const entry = CINEMA_DATA[this.currentIndex];
     const cards = this.el.querySelectorAll('.cinema-option-card');
     const pointsPopup = this.el.querySelector('#cinema-points');
-    let correctIndex = video.options.findIndex(o => o.isCorrect);
+    const correctIndex = entry.options.findIndex(o => o.isCorrect);
     cards.forEach((card, i) => {
       if (i === correctIndex) card.classList.add('correct');
       else if (i === index) card.classList.add('wrong');
     });
     if (index === correctIndex) {
-      let earned = this.isSubtitleOn ? Math.round(video.points / 2) : video.points;
+      const earned = this.isSubtitleOn ? Math.round(entry.points / 2) : entry.points;
       pointsPopup.textContent = `+${earned}`;
       pointsPopup.classList.add('show');
       const app = window._app || window.app;
-      if (app && app.addXP) app.addXP(earned, "medium", "cinema");
+      if (app && app.addXP) app.addXP(earned, 'medium', 'cinema');
     }
     setTimeout(() => { pointsPopup.classList.remove('show'); this._nextVideo(); }, 2500);
   }
 }
 
-// ── OTOMATİK BAĞLANTI (OBSERVER) ──
-// Sayfa değişimlerini izler ve Cinema mount point'i gördüğü an başlatır.
+// ── OTOMATİK BAĞLANTI ──
 (function() {
   const initPlugin = () => {
     const mount = document.getElementById('cinema-mount-point');
@@ -175,11 +214,7 @@ class CinemaModule {
       window.cinemaMod.init(mount);
     }
   };
-
-  // DOM değişimlerini izle
   const observer = new MutationObserver(() => initPlugin());
   observer.observe(document.body, { childList: true, subtree: true });
-  
-  // İlk yükleme için deneme
   setTimeout(initPlugin, 1000);
 })();

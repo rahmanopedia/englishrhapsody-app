@@ -1,119 +1,182 @@
 /**
- * RHAPSODY CINEMA — Video Veritabanı
- * YouTube ID, Start/End saniyeleri ve Quiz seçenekleri
- * NOT: Tüm videolar embed izinli, resmi kanallardan seçilmiştir.
+ * RHAPSODY CINEMA — Video Veritabanı (v3.0)
+ * Kaynak: Archive.org kamu malı filmler — reklamsız, ücretsiz, yasal.
+ *
+ * Kendi klibini eklemek için:
+ *   url   → MP4 dosya URL'si (Firebase Storage, Bunny.net veya archive.org)
+ *   start → klip başlangıç saniyesi
+ *   end   → klip bitiş saniyesi (max 15 sn fark)
+ *
+ * ⚠ Zaman damgaları yaklaşıktır — test edip ayarlayın.
  */
-const CINEMA_DATA = [
+var CINEMA_DATA = [
+
+  /* ── Duck and Cover (1951) ────────────────────────────────────
+     ABD federal hükümet filmi → kamu malı (public domain)
+     Amerikan İngilizcesi, yavaş ve net anlatım, kısa cümleler.
+     Dosya: ~55 MB | archive.org/details/DuckandC1951
+  ──────────────────────────────────────────────────────────── */
   {
     id: 1,
-    videoId: "UF8uR6Z6KLc", // Steve Jobs — Stanford Commencement 2005 (Stanford Univ. kanalı)
-    start: 688,
-    end: 694,
-    transcript: "Your time is limited, so don't waste it living someone else's life.",
+    url: "https://archive.org/download/DuckandC1951/DuckandC1951.mp4",
+    start: 38,
+    end: 48,
+    film: "Duck and Cover",
+    year: 1951,
+    transcript: "Duck, and cover!",
     options: [
-      { text: "Zamanın sınırlı, başkasının hayatını yaşayarak harcama.", isCorrect: true },
-      { text: "Zamanın çok, istediğin gibi kullanabilirsin.", isCorrect: false },
-      { text: "Başkalarının hayatlarını izlemek seni geliştirir.", isCorrect: false }
+      { text: "Eğil ve koru kendini!", isCorrect: true },
+      { text: "Kaç ve saklan!", isCorrect: false },
+      { text: "Dur ve bekle!", isCorrect: false }
     ],
-    points: 15,
-    category: "Konuşma"
+    points: 5,
+    category: "Tarih"
   },
   {
     id: 2,
-    videoId: "UF8uR6Z6KLc", // Steve Jobs — Stanford Commencement 2005
-    start: 893,
-    end: 898,
-    transcript: "Stay hungry. Stay foolish.",
+    url: "https://archive.org/download/DuckandC1951/DuckandC1951.mp4",
+    start: 198,
+    end: 210,
+    film: "Duck and Cover",
+    year: 1951,
+    transcript: "You must be ready every day, all the time, to duck and cover.",
     options: [
-      { text: "Aç kal. Aptal kal. (Meraklı ve mütevazı olmayı bırakma.)", isCorrect: true },
-      { text: "Her zaman doymuş ve akıllı hisset.", isCorrect: false },
-      { text: "Yemek yemeyi ve öğrenmeyi bırak.", isCorrect: false }
+      { text: "Her gün, her zaman eğilmeye ve korunmaya hazır olmalısın.", isCorrect: true },
+      { text: "Sadece okuldayken hazır olman yeterli.", isCorrect: false },
+      { text: "Hafta sonları daha dikkatli olmalısın.", isCorrect: false }
     ],
-    points: 8,
-    category: "Konuşma"
+    points: 10,
+    category: "Tarih"
   },
   {
     id: 3,
-    videoId: "qp0HIF3SfI4", // Simon Sinek — How Great Leaders Inspire Action (TED)
-    start: 218,
-    end: 225,
-    transcript: "People don't buy what you do; they buy why you do it.",
+    url: "https://archive.org/download/DuckandC1951/DuckandC1951.mp4",
+    start: 330,
+    end: 342,
+    film: "Duck and Cover",
+    year: 1951,
+    transcript: "At school, your teacher will tell you what to do.",
     options: [
-      { text: "İnsanlar ne yaptığını değil, neden yaptığını satın alır.", isCorrect: true },
-      { text: "İnsanlar her zaman en ucuz ürünü tercih eder.", isCorrect: false },
-      { text: "İnsanlar kaliteye değil markaya bakar.", isCorrect: false }
+      { text: "Okulda öğretmenin sana ne yapacağını söyleyecek.", isCorrect: true },
+      { text: "Okulda hiç kimse sana yardım etmeyecek.", isCorrect: false },
+      { text: "Okulda kendi başına karar vermelisin.", isCorrect: false }
     ],
-    points: 12,
-    category: "İş & Liderlik"
+    points: 8,
+    category: "Tarih"
   },
+
+  /* ── Shy Guy (1947) ───────────────────────────────────────────
+     Coronet Instructional Film → Prelinger Archives → kamu malı
+     Ergen diyaloğu, doğal günlük İngilizce, okul hayatı.
+     Dosya: ~81 MB | archive.org/details/ShyGuy1947
+  ──────────────────────────────────────────────────────────── */
   {
     id: 4,
-    videoId: "qp0HIF3SfI4", // Simon Sinek — How Great Leaders Inspire Action (TED)
-    start: 320,
-    end: 327,
-    transcript: "The goal is not to do business with everybody who needs what you have.",
+    url: "https://archive.org/download/ShyGuy1947/ShyGuy1947.mp4",
+    start: 42,
+    end: 53,
+    film: "Shy Guy",
+    year: 1947,
+    transcript: "Tom didn't know how to make friends.",
     options: [
-      { text: "Amaç, sahip olduğun şeye ihtiyacı olan herkesle iş yapmak değil.", isCorrect: true },
-      { text: "Amaç, mümkün olduğunca çok müşteriyle çalışmak.", isCorrect: false },
-      { text: "Amaç, rakiplerini alt etmek.", isCorrect: false }
+      { text: "Tom arkadaş edinmeyi bilmiyordu.", isCorrect: true },
+      { text: "Tom'un çok fazla arkadaşı vardı.", isCorrect: false },
+      { text: "Tom yeni bir şehre taşınmıştı.", isCorrect: false }
     ],
-    points: 12,
-    category: "İş & Liderlik"
+    points: 8,
+    category: "Sosyal"
   },
   {
     id: 5,
-    videoId: "iCvmsMzlF7o", // Brené Brown — The Power of Vulnerability (TED)
-    start: 296,
-    end: 302,
-    transcript: "Vulnerability is not weakness.",
+    url: "https://archive.org/download/ShyGuy1947/ShyGuy1947.mp4",
+    start: 230,
+    end: 242,
+    film: "Shy Guy",
+    year: 1947,
+    transcript: "The first step is to stop thinking about yourself and start thinking about others.",
     options: [
-      { text: "Kırılganlık zayıflık değildir.", isCorrect: true },
-      { text: "Kırılganlık her zaman güçsüzlüktür.", isCorrect: false },
-      { text: "Kırılganlık utanç verici bir şeydir.", isCorrect: false }
+      { text: "İlk adım kendini düşünmeyi bırakıp başkalarını düşünmeye başlamak.", isCorrect: true },
+      { text: "İlk adım daha çok konuşmak ve dikkat çekmek.", isCorrect: false },
+      { text: "İlk adım yalnız kalmaktan hoşlanmayı öğrenmek.", isCorrect: false }
     ],
-    points: 10,
-    category: "Psikoloji"
+    points: 12,
+    category: "Sosyal"
   },
   {
     id: 6,
-    videoId: "iCvmsMzlF7o", // Brené Brown — The Power of Vulnerability (TED)
-    start: 820,
-    end: 827,
-    transcript: "Connection is why we're here. It is what gives purpose and meaning to our lives.",
+    url: "https://archive.org/download/ShyGuy1947/ShyGuy1947.mp4",
+    start: 450,
+    end: 461,
+    film: "Shy Guy",
+    year: 1947,
+    transcript: "Making friends takes practice, just like any other skill.",
     options: [
-      { text: "Bağlantı burada neden olduğumuzdur; hayatımıza amaç ve anlam verir.", isCorrect: true },
-      { text: "Bağımsızlık hayatımıza anlam katar.", isCorrect: false },
-      { text: "Başarı hayatımızın tek amacıdır.", isCorrect: false }
-    ],
-    points: 15,
-    category: "Psikoloji"
-  },
-  {
-    id: 7,
-    videoId: "ji5_MqicxSo", // Randy Pausch — Last Lecture (Carnegie Mellon)
-    start: 82,
-    end: 89,
-    transcript: "We cannot change the cards we are dealt, just how we play the hand.",
-    options: [
-      { text: "Elimizdeki kartları değiştiremeyiz, sadece onları nasıl oynadığımızı.", isCorrect: true },
-      { text: "Hayatta her şeyi değiştirme gücüne sahibiz.", isCorrect: false },
-      { text: "Şans oyunları hayatı yönetir.", isCorrect: false }
+      { text: "Arkadaş edinmek, diğer beceriler gibi pratik gerektirir.", isCorrect: true },
+      { text: "Arkadaş edinmek tamamen şansa bağlıdır.", isCorrect: false },
+      { text: "Arkadaş edinmek için çok para harcamak gerekir.", isCorrect: false }
     ],
     points: 12,
-    category: "Motivasyon"
+    category: "Sosyal"
+  },
+
+  /* ── Dating: Do's and Don'ts (1949) ──────────────────────────
+     Coronet Instructional Film → Prelinger Archives → kamu malı
+     Ken Nordine anlatımı, sosyal İngilizce, nezaket kalıpları.
+     archive.org/details/0191_Dating_Dos_and_Donts_E00191_10_26_50_00
+  ──────────────────────────────────────────────────────────── */
+  {
+    id: 7,
+    url: "https://archive.org/download/0191_Dating_Dos_and_Donts_E00191_10_26_50_00/0191_Dating_Dos_and_Donts_E00191_10_26_50_00.mp4",
+    start: 55,
+    end: 66,
+    film: "Dating: Do's and Don'ts",
+    year: 1949,
+    transcript: "Good manners make other people feel comfortable.",
+    options: [
+      { text: "İyi görgü kuralları başkalarının rahat hissetmesini sağlar.", isCorrect: true },
+      { text: "İyi görgü kuralları sadece yemek masasında önemlidir.", isCorrect: false },
+      { text: "İyi görgü kuralları artık modası geçmiş bir şeydir.", isCorrect: false }
+    ],
+    points: 10,
+    category: "Sosyal"
   },
   {
     id: 8,
-    videoId: "ji5_MqicxSo", // Randy Pausch — Last Lecture
-    start: 225,
-    end: 232,
-    transcript: "Brick walls are there for a reason. They let us prove how badly we want things.",
+    url: "https://archive.org/download/0191_Dating_Dos_and_Donts_E00191_10_26_50_00/0191_Dating_Dos_and_Donts_E00191_10_26_50_00.mp4",
+    start: 310,
+    end: 322,
+    film: "Dating: Do's and Don'ts",
+    year: 1949,
+    transcript: "Being a good listener is one of the most important social skills.",
     options: [
-      { text: "Duvarlar bir nedenden dolayı vardır; bir şeyi ne kadar istediğimizi kanıtlamamızı sağlarlar.", isCorrect: true },
-      { text: "Duvarlar aşılamaz engellerdir.", isCorrect: false },
-      { text: "Duvarlar bizi korumak için vardır.", isCorrect: false }
+      { text: "İyi bir dinleyici olmak en önemli sosyal becerilerden biridir.", isCorrect: true },
+      { text: "Çok konuşmak sosyal becerilerin en önemlisidir.", isCorrect: false },
+      { text: "Sosyal becerilerin hiçbir önemi yoktur.", isCorrect: false }
     ],
-    points: 15,
-    category: "Motivasyon"
+    points: 12,
+    category: "Sosyal"
+  },
+
+  /* ── Bringing Up Baby (1938) ──────────────────────────────────
+     Howard Hawks — Cary Grant & Katharine Hepburn
+     Kamu malı (telif yenilenmedi) — hızlı ve esprili diyalog.
+     archive.org/details/bringing-up-baby-1938_202006
+  ──────────────────────────────────────────────────────────── */
+  {
+    id: 9,
+    url: "https://archive.org/download/bringing-up-baby-1938_202006/Bringing.Up.Baby.1938.mp4",
+    start: 185,
+    end: 196,
+    film: "Bringing Up Baby",
+    year: 1938,
+    transcript: "Now, it isn't that I don't like you. I do like you.",
+    options: [
+      { text: "Seni sevmediğim anlamına gelmiyor. Seni seviyorum.", isCorrect: true },
+      { text: "Seni hiç tanımıyorum ve tanımak istemiyorum.", isCorrect: false },
+      { text: "Seninle hiçbir şekilde iletişim kuramıyorum.", isCorrect: false }
+    ],
+    points: 10,
+    category: "Film"
   }
+
 ];
