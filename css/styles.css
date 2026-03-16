@@ -255,6 +255,39 @@ body.sidebar-closed .sidebar-tab {
   pointer-events: auto;
 }
 
+/* Mobilde: sidebar-tab nav gizliyken altta göster, nav görünürken gizle */
+@media (max-width: 768px) {
+  /* Masaüstü sidebar-tab davranışını mobilde devre dışı bırak */
+  body.sidebar-closed .sidebar-tab {
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* Nav gizlenince alt ortada çıkan küçük tab */
+  .sidebar-tab.mobile-nav-trigger {
+    top: auto;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 52px;
+    height: 20px;
+    border-radius: 10px 10px 0 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 201;
+  }
+  .sidebar-tab.mobile-nav-trigger.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .sidebar-tab.mobile-nav-trigger .st-dot,
+  .sidebar-tab.mobile-nav-trigger .st-arrow { display: none; }
+  .sidebar-tab.mobile-nav-trigger::after {
+    content: '▲';
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.9);
+  }
+}
+
 .sidebar-tab .st-dot {
   width: 4px;
   height: 4px;

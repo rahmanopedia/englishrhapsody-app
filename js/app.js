@@ -2716,17 +2716,11 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     // Close modes drawer on navigation
     document.getElementById('modes-drawer')?.classList.remove('open');
     document.getElementById('modes-drawer-backdrop')?.classList.remove('open');
-    // Mobil alt nav: mod görünümlerinde 5 saniye sonra gizle
+    // Mobil alt nav: mod görünümlerinde 7 saniye sonra gizle
     const NAV_HIDE_VIEWS = new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement']);
-    const mobileNav = document.getElementById('mobile-nav');
-    if (mobileNav) {
-      mobileNav.classList.remove('nav-hidden');
-      clearTimeout(this._navHideTimer);
-      if (NAV_HIDE_VIEWS.has(view)) {
-        this._navHideTimer = setTimeout(() => {
-          mobileNav.classList.add('nav-hidden');
-        }, 5000);
-      }
+    if (window.innerWidth <= 768) {
+      this._showMobileNav();
+      if (!NAV_HIDE_VIEWS.has(view)) clearTimeout(this._navHideTimer);
     }
 
     const main = document.getElementById('main-content');
@@ -7082,6 +7076,25 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     animate();
   }
 
+  // Mobil alt nav'ı göster ve 7s sonra gizle
+  _showMobileNav() {
+    const NAV_HIDE_VIEWS = new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement']);
+    const mobileNav  = document.getElementById('mobile-nav');
+    const sidebarTab = document.getElementById('sidebar-tab');
+    if (!mobileNav) return;
+
+    mobileNav.classList.remove('nav-hidden');
+    sidebarTab?.classList.remove('visible');
+    clearTimeout(this._navHideTimer);
+
+    if (NAV_HIDE_VIEWS.has(this.session?.view)) {
+      this._navHideTimer = setTimeout(() => {
+        mobileNav.classList.add('nav-hidden');
+        sidebarTab?.classList.add('visible');
+      }, 7000);
+    }
+  }
+
   _bindGlobalEvents() {
     // ── Sidebar hover-to-open / leave-to-close ─────────────
     const sidebar    = document.querySelector('.sidebar');
@@ -7112,21 +7125,30 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       }
     });
 
-    if (sidebarTab) sidebarTab.addEventListener('click', openSidebar);
+    if (sidebarTab) {
+      sidebarTab.addEventListener('click', () => {
+        // Mobilde: nav'ı geri getir
+        if (window.innerWidth <= 768) {
+          this._showMobileNav();
+          return;
+        }
+        openSidebar();
+      });
+    }
 
     // Start with sidebar closed
     document.body.classList.add('sidebar-closed');
 
-    // Mobil: ekrana dokunulunca alt nav yeniden göster
-    document.addEventListener('touchstart', () => {
-      const mobileNav = document.getElementById('mobile-nav');
-      if (!mobileNav) return;
-      mobileNav.classList.remove('nav-hidden');
-      clearTimeout(this._navHideTimer);
-      const NAV_HIDE_VIEWS = new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement']);
-      if (NAV_HIDE_VIEWS.has(this.session?.view)) {
-        this._navHideTimer = setTimeout(() => mobileNav.classList.add('nav-hidden'), 5000);
-      }
+    // Mobilde sidebar-tab'ı nav trigger olarak ayarla
+    if (window.innerWidth <= 768 && sidebarTab) {
+      sidebarTab.classList.add('mobile-nav-trigger');
+    }
+
+    // Mobil: ekrana dokunulunca alt nav yeniden göster + timer sıfırla
+    document.addEventListener('touchstart', e => {
+      // sidebar-tab'a dokunulmuşsa _showMobileNav zaten çalışır, buraya gerek yok
+      if (e.target.closest('#sidebar-tab')) return;
+      this._showMobileNav();
     }, { passive: true });
 
     window.addEventListener('beforeunload', () => {
