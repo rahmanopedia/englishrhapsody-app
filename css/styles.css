@@ -943,11 +943,71 @@ body.sidebar-closed .sidebar-tab {
   50%     { opacity:.9; transform:scale(1.2) rotate(15deg); }
 }
 
-/* Mobil uyum */
+/* ── Splash Mobil ─────────────────────────────────────────── */
 @media (max-width: 640px) {
+  /* Terminal gizle, alan kazanılsın */
   .sp-terminal { display: none; }
-  .sp-brand    { font-size: 1.7rem; }
-  .sp-bottom   { bottom: 24px; }
+  .sp-sparkle  { display: none; }
+
+  /* Glow daha küçük olsun, taşmasın */
+  .sp-center-glow {
+    width: 280px; height: 220px;
+    transform: translate(-50%, -55%);
+  }
+
+  /* Logo tam ortaya, hafif yukarı */
+  .sp-center {
+    top: 46%;
+    transform: translate(-50%, -50%);
+    gap: 2px;
+    animation: spLogoInMobile 0.7s cubic-bezier(.22,1,.36,1) 0.1s both;
+  }
+  @keyframes spLogoInMobile {
+    from { opacity:0; transform: translate(-50%,-56%) scale(.92); }
+    to   { opacity:1; transform: translate(-50%,-50%) scale(1);   }
+  }
+
+  /* Brand text */
+  .sp-brand { font-size: 1.75rem; }
+
+  /* Lyre biraz küçülsün */
+  .sp-lyre-svg { width: 58px; height: 66px; }
+
+  /* Alt bar: safe area ile altta sabit */
+  .sp-bottom {
+    bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+    width: min(320px, 88vw);
+    gap: 10px;
+  }
+}
+
+/* Çok küçük ekranlar (SE, mini) */
+@media (max-width: 375px) {
+  .sp-brand    { font-size: 1.5rem; }
+  .sp-lyre-svg { width: 50px; height: 57px; }
+  .sp-akademi  { font-size: 0.68rem; letter-spacing: 2px; }
+}
+
+/* Landscape mobil */
+@media (max-height: 500px) and (max-width: 900px) {
+  .sp-terminal { display: none; }
+  .sp-sparkle  { display: none; }
+  .sp-center {
+    top: 44%;
+    transform: translate(-50%, -50%);
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+  }
+  .sp-lyre-wrap { margin: 0; }
+  .sp-lyre-svg  { width: 44px; height: 50px; }
+  .sp-brand     { font-size: 1.4rem; }
+  .sp-akademi   { font-size: 0.6rem; letter-spacing: 2px; }
+  .sp-bottom    {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    width: min(300px, 80vw);
+  }
+  .sp-center-glow { width: 200px; height: 140px; }
 }
 
 /* ── Auth Modal ───────────────────────────────────────────── */
