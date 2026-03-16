@@ -27,7 +27,7 @@ class CinemaModule {
     this.el.innerHTML = `
       <div class="cinema-wrap">
         <div class="cinema-video-box">
-          <video id="cinema-video" playsinline muted style="width:100%;height:100%;object-fit:cover;background:#000;display:block;"></video>
+          <video id="cinema-video" playsinline style="width:100%;height:100%;object-fit:cover;background:#000;display:block;"></video>
           <div id="cinema-loading" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;gap:12px;">
             <div style="color:var(--text-3);font-size:0.75rem;letter-spacing:2px;">YÜKLENİYOR</div>
             <div style="width:40px;height:2px;background:var(--cyan);animation:cinema-load 1.2s ease-in-out infinite alternate;border-radius:2px;"></div>
