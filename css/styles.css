@@ -250,15 +250,9 @@ body.sidebar-closed .sidebar {
   box-shadow: 3px 0 24px rgba(var(--a1-rgb), 0.55);
 }
 
-/* Sidebar kapalıyken tab görünür */
 body.sidebar-closed .sidebar-tab {
   opacity: 1;
   pointer-events: auto;
-}
-/* Sidebar açıkken tab gizli (sidebar içinde gezinme var, tuşa gerek yok) */
-body:not(.sidebar-closed) .sidebar-tab {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .sidebar-tab .st-dot {

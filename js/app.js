@@ -2716,9 +2716,6 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     // Close modes drawer on navigation
     document.getElementById('modes-drawer')?.classList.remove('open');
     document.getElementById('modes-drawer-backdrop')?.classList.remove('open');
-    // Sidebar: navigate ettikten sonra kapat
-    document.body.classList.add('sidebar-closed');
-
     // Mobil alt nav: mod görünümlerinde 5 saniye sonra gizle
     const NAV_HIDE_VIEWS = new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement']);
     const mobileNav = document.getElementById('mobile-nav');
@@ -7086,21 +7083,36 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   }
 
   _bindGlobalEvents() {
-    // ── Sidebar: mavi tuşla aç/kapat (hover kaldırıldı) ────
+    // ── Sidebar hover-to-open / leave-to-close ─────────────
+    const sidebar    = document.querySelector('.sidebar');
     const sidebarTab = document.getElementById('sidebar-tab');
+    let   sidebarCloseTimer = null;
 
-    const openSidebar  = () => document.body.classList.remove('sidebar-closed');
-    const closeSidebar = () => document.body.classList.add('sidebar-closed');
+    const openSidebar = () => {
+      clearTimeout(sidebarCloseTimer);
+      document.body.classList.remove('sidebar-closed');
+    };
+    const closeSidebar = (delay = 400) => {
+      clearTimeout(sidebarCloseTimer);
+      sidebarCloseTimer = setTimeout(() => {
+        document.body.classList.add('sidebar-closed');
+      }, delay);
+    };
 
-    // Mavi tuş: tıklayınca aç
-    if (sidebarTab) sidebarTab.addEventListener('click', openSidebar);
-
-    // Sidebar dışına tıklanınca kapat
-    document.addEventListener('click', e => {
-      if (document.body.classList.contains('sidebar-closed')) return;
-      if (e.target.closest('.sidebar') || e.target.closest('#sidebar-tab')) return;
-      closeSidebar();
+    document.addEventListener('mousemove', e => {
+      if (document.body.classList.contains('sidebar-closed')) {
+        if (e.clientX <= 8) openSidebar();
+      } else {
+        const sidebarWidth = sidebar ? sidebar.offsetWidth : 220;
+        if (e.clientX > sidebarWidth + 16) {
+          closeSidebar();
+        } else {
+          clearTimeout(sidebarCloseTimer);
+        }
+      }
     });
+
+    if (sidebarTab) sidebarTab.addEventListener('click', openSidebar);
 
     // Start with sidebar closed
     document.body.classList.add('sidebar-closed');
