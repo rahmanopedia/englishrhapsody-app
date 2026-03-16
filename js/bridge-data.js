@@ -2422,7 +2422,6 @@ var BRIDGE_DATA = [
     "id": 1857,
     "category": "sosyal",
     "tr": "Gözün aydın",
-...
     "tags": ["göz", "aydın", "müjde", "iyi", "haber"],
     "english_primary": "Good news! I'm so happy for you",
     "alternatives": ["Congratulations on the good news!", "Finally! I'm glad it worked out"],
