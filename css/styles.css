@@ -4946,21 +4946,6 @@ body.rank-6 { --theme-accent: #ff9d00; }
     font-size: 0.78rem;
   }
 
-  /* VKB: kompakt, VKB'den önce otomatik boşluk */
-  .synth-vkb {
-    margin-top: 10px;
-    padding: 8px 8px 4px;
-    gap: 4px;
-  }
-  .vkb-row { gap: 3px; }
-  .vkb-key {
-    min-width: 28px;
-    height: 36px;
-    font-size: 0.78rem;
-    padding: 0 3px;
-    border-radius: 6px;
-  }
-
   /* Seçme modu butonları */
   .synth-choice-btn { padding: 14px 10px; gap: 4px; }
   .sc-emoji { font-size: 1.4rem; }
@@ -4972,8 +4957,6 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .synth-topbar { padding: 8px 10px; }
   .synth-target-tr { font-size: 1.45rem; }
   .synth-core-container { transform: scale(0.58); margin-bottom: -40px; margin-top: -14px; }
-  .synth-vkb { padding: 6px 6px 2px; }
-  .vkb-key { min-width: 24px; height: 34px; font-size: 0.72rem; }
   .synth-hint-btn, .synth-skip-btn, .synth-pause-btn { padding: 6px 10px; font-size: 0.72rem; }
 }
 
@@ -4987,16 +4970,26 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .synth-word-meta { margin-bottom: 4px; }
   .synth-hint-action { margin-top: 4px; gap: 8px; }
   .synth-hint-btn, .synth-skip-btn, .synth-pause-btn { padding: 6px 10px; font-size: 0.72rem; }
-  .vkb-key { height: 30px; font-size: 0.72rem; }
-  .synth-vkb { margin-top: 4px; padding: 4px; }
 }
 
-/* Sistem klavyesi açık — VKB gizle, layout daralt (JS .keyboard-open sınıfı ekler) */
-.synesthesia-wrapper.keyboard-open .synth-vkb { display: none !important; }
-.synesthesia-wrapper.keyboard-open .synth-core-container { transform: scale(0.5); margin-bottom: -50px; margin-top: -18px; }
-.synesthesia-wrapper.keyboard-open .synth-target-tr { font-size: 1.2rem; }
-.synesthesia-wrapper.keyboard-open .synth-target-area { margin-bottom: 6px; }
-.synesthesia-wrapper.keyboard-open .synth-hint-action { margin-top: 6px; }
+/* ── Klavye açık: sıkıştırılmış düzen (JS .keyboard-open sınıfı ekler) ── */
+.synesthesia-wrapper.keyboard-open .synth-core-container { display: none; }
+.synesthesia-wrapper.keyboard-open .synth-target-tr     { font-size: 1.5rem !important; }
+.synesthesia-wrapper.keyboard-open .synth-target-area   { margin-bottom: 8px; }
+.synesthesia-wrapper.keyboard-open .synth-word-meta     { margin-bottom: 4px; }
+.synesthesia-wrapper.keyboard-open #synth-ex            { display: none; }
+.synesthesia-wrapper.keyboard-open .synth-hint-action   { margin-top: 10px; gap: 10px; }
+.synesthesia-wrapper.keyboard-open .synth-input-area    { gap: 10px; }
+.synesthesia-wrapper.keyboard-open .synth-input-area span { font-size: 1.9rem; width: 28px; }
+.synesthesia-wrapper.keyboard-open .synth-input-area.word-md span { font-size: 1.5rem; width: 20px; }
+.synesthesia-wrapper.keyboard-open .synth-input-area.word-lg span { font-size: 1.2rem; width: 16px; }
+.synesthesia-wrapper.keyboard-open .synth-input-area.word-xl span { font-size: 1.0rem; width: 13px; }
+.synesthesia-wrapper.keyboard-open .synth-input-area.word-xxl span { font-size: 0.85rem; width: 10px; }
+/* Seçme modu: klavye açıkken de butonlar görünsün */
+.synesthesia-wrapper.keyboard-open .synth-choice-grid   { gap: 8px; }
+.synesthesia-wrapper.keyboard-open .synth-choice-btn    { padding: 12px 8px; }
+.synesthesia-wrapper.keyboard-open .sc-emoji            { font-size: 1.3rem; }
+.synesthesia-wrapper.keyboard-open .sc-en               { font-size: 0.9rem; }
 
 .synth-core {
   width: 100px; height: 100px; border-radius: 50%;
@@ -5176,43 +5169,55 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .sfs-val { font-size: 2rem; font-weight: 900; line-height: 1; margin-bottom: 6px; }
 .sfs-label { font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; }
 
-/* Virtual Keyboard */
-.synth-vkb {
-  flex-direction: column;
+/* ── Native Keyboard Input (görünmez, telefonun klavyesini tetikler) ── */
+.synth-native-input {
+  position: fixed;
+  bottom: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px; height: 1px;
+  opacity: 0.01; /* 0 bazı tarayıcılarda odağı engeller */
+  border: none; outline: none;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+  font-size: 16px; /* iOS'un otomatik yakınlaştırmasını engelle */
+  padding: 0; margin: 0;
+  z-index: -1;
+  -webkit-user-select: text; /* iOS için gerekli */
+  user-select: text;
+}
+
+/* Dokunarak yaz ipucu (mobilde klavye kapalıyken görünür) */
+.synth-tap-hint {
+  display: none;
   align-items: center;
-  gap: 6px;
-  width: 100%;
-  max-width: 460px;
-  margin-top: 20px;
-  padding: 12px;
-  background: rgba(0,0,0,0.4);
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.06);
-}
-.vkb-row {
-  display: flex;
-  gap: 5px;
   justify-content: center;
-}
-.vkb-key {
-  min-width: 34px;
-  height: 42px;
-  padding: 0 8px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: var(--text-1);
+  gap: 6px;
+  margin-top: 12px;
+  padding: 10px 20px;
+  border: 1px dashed rgba(0,212,255,0.2);
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(0,212,255,0.5);
+  background: rgba(0,212,255,0.04);
   cursor: pointer;
-  transition: all 0.12s;
   -webkit-tap-highlight-color: transparent;
-  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.2s;
+  animation: tapPulse 2.5s ease-in-out infinite;
 }
-.vkb-key:active { background: var(--cyan); color: #000; transform: scale(0.92); }
-.vkb-hint  { background: rgba(var(--a1-rgb),0.1); border-color: rgba(var(--a1-rgb),0.3); color: var(--cyan); }
-.vkb-skip  { background: rgba(244,63,94,0.1); border-color: rgba(244,63,94,0.25); color: var(--rose); min-width: 80px; }
-.vkb-space { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.18); color: var(--text-2); min-width: 56px; font-size: 1.1rem; }
+@keyframes tapPulse {
+  0%,100% { opacity: 0.6; }
+  50%      { opacity: 1; border-color: rgba(0,212,255,0.45); }
+}
+/* Sadece mobilde, klavye kapalıyken ve yazma modundayken göster */
+@media (max-width: 768px) {
+  .synth-tap-hint { display: flex; }
+  .synesthesia-wrapper.keyboard-open .synth-tap-hint { display: none !important; }
+  .synesthesia-wrapper:not([data-spell-mode]) .synth-tap-hint { display: none; }
+}
 
 @media (max-width: 480px) {
   .synth-finish-stats { gap: 16px; padding: 20px; }

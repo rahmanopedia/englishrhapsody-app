@@ -707,8 +707,16 @@
       <button class="synth-skip-btn" data-action="skip-synth-word" title="Bilemedim, geç">Bilmiyorum ⏭</button>
     </div>
 
-    <!-- Virtual Keyboard (mobile/touch) -->
-    <div class="synth-vkb" id="synth-vkb" style="display:none"></div>
+    <!-- Mobil: dokunarak yaz ipucu -->
+    <button class="synth-tap-hint" id="synth-tap-hint" data-action="focus-synth-input">
+      ⌨️ Yazmak için dokun
+    </button>
+
+    <!-- Native keyboard input — görünmez, odaklandığında telefon klavyesi açılır -->
+    <input id="synth-native-input" class="synth-native-input"
+           type="text" inputmode="text"
+           autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
+           aria-hidden="true">
 
   </div>
 </div>

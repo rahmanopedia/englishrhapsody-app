@@ -3281,26 +3281,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     document.getElementById('synth-intro').style.display = 'none';
     document.getElementById('synth-chamber').style.display = 'flex';
 
-    // Show virtual keyboard on touch/mobile devices
     const isMobile = window.innerWidth <= 1024 || 'ontouchstart' in window;
-    const vkb = document.getElementById('synth-vkb');
-    if (vkb && isMobile) {
-      vkb.style.display = 'flex';
-      this._renderSynthVKB();
-    }
-
-    // Samsung / Android: sistem klavyesi açılırsa layout daralt
-    this._synthViewportListener = null;
-    if (window.visualViewport && isMobile) {
-      const wrapper = document.querySelector('.synesthesia-wrapper');
-      const baseH = window.visualViewport.height;
-      this._synthViewportListener = () => {
-        if (!wrapper) return;
-        const shrunk = window.visualViewport.height < baseH * 0.75;
-        wrapper.classList.toggle('keyboard-open', shrunk);
-      };
-      window.visualViewport.addEventListener('resize', this._synthViewportListener);
-    }
+    if (isMobile) this._setupSynthNativeKeyboard();
 
     this._startSynthDrone();
     this._loadSynthWord();
@@ -3312,6 +3294,49 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     document.querySelectorAll('.sp-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
     this.audio.play('click');
+  }
+
+  // ── Telefon klavyesi entegrasyonu ─────────────────────────
+  _setupSynthNativeKeyboard() {
+    const inp     = document.getElementById('synth-native-input');
+    const wrapper = document.querySelector('.synesthesia-wrapper');
+    if (!inp || !wrapper) return;
+
+    // Input event: her tuşa basışta değeri oku, işle, temizle
+    this._synthInputHandler = () => {
+      const raw = inp.value;
+      inp.value = '';
+      if (!raw || !this.session.synthActive || this.session.synthPaused) return;
+      for (const ch of raw) {
+        if (/[a-zA-Z ]/.test(ch)) this._handleSynthKey(ch);
+      }
+    };
+    inp.addEventListener('input', this._synthInputHandler);
+
+    // VisualViewport: klavye açılınca wrapper yüksekliğini güncelle
+    if (window.visualViewport) {
+      this._synthViewportListener = () => {
+        const vvh = window.visualViewport.height;
+        wrapper.style.height = vvh + 'px';
+        wrapper.classList.toggle('keyboard-open', vvh < window.innerHeight * 0.72);
+      };
+      window.visualViewport.addEventListener('resize', this._synthViewportListener);
+    }
+
+    // İlk odak: Başla butonuna basıldığı için user-gesture içindeyiz → focus çalışır
+    inp.focus();
+  }
+
+  // Spell modunda native input'a odaklan (iOS için requestAnimationFrame kullan)
+  _synthFocusInput() {
+    const inp = document.getElementById('synth-native-input');
+    if (!inp) return;
+    // requestAnimationFrame: iOS setTimeout'tan daha güvenilir
+    requestAnimationFrame(() => {
+      inp.focus();
+      // Bazı Samsung modelleri için ikinci deneme
+      setTimeout(() => { if (document.activeElement !== inp) inp.focus(); }, 80);
+    });
   }
 
   _startSynthDrone() {
@@ -3492,9 +3517,20 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     // Start speed timer (both modes)
     this._startSpeedTimer();
 
-    // Update VKB space button visibility per word
-    const vkb = document.getElementById('synth-vkb');
-    if (vkb && vkb.style.display !== 'none') this._renderSynthVKB();
+    // Native klavye: yazma modunda aç, seçme modunda kapat
+    const wrapper = document.querySelector('.synesthesia-wrapper');
+    if ('ontouchstart' in window || window.innerWidth <= 1024) {
+      const tapHint = document.getElementById('synth-tap-hint');
+      if (wordMode === 'spell') {
+        wrapper?.setAttribute('data-spell-mode', '1');
+        if (tapHint) tapHint.style.display = '';
+        this._synthFocusInput();
+      } else {
+        wrapper?.removeAttribute('data-spell-mode');
+        if (tapHint) tapHint.style.display = 'none';
+        document.getElementById('synth-native-input')?.blur();
+      }
+    }
 
     setTimeout(() => { if (this.session.synthActive) this.speakWord(word.en); }, 400);
   }
@@ -3793,10 +3829,25 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     if (this.session.synthRevealTimer) { clearTimeout(this.session.synthRevealTimer); this.session.synthRevealTimer = null; }
     this.session.synthActive = false;
     this.session.synthPaused = false;
-    // Temizle: visualViewport listener
+    // Temizle: native klavye
+    const inp = document.getElementById('synth-native-input');
+    if (inp) {
+      inp.blur();
+      if (this._synthInputHandler) {
+        inp.removeEventListener('input', this._synthInputHandler);
+        this._synthInputHandler = null;
+      }
+    }
     if (this._synthViewportListener && window.visualViewport) {
       window.visualViewport.removeEventListener('resize', this._synthViewportListener);
       this._synthViewportListener = null;
+    }
+    // Wrapper yüksekliğini sıfırla
+    const wrapper = document.querySelector('.synesthesia-wrapper');
+    if (wrapper) {
+      wrapper.style.height = '';
+      wrapper.classList.remove('keyboard-open');
+      wrapper.removeAttribute('data-spell-mode');
     }
     this.addXP(this.session.synthScore, 'easy', 'vocab');
     window.analyticsManager?.lessonComplete('learn', this.session.synthScore);
@@ -4105,6 +4156,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     }
     const overlay = document.getElementById('synth-pause-overlay');
     if (overlay) overlay.style.display = 'flex';
+    // Klavyeyi kapat
+    document.getElementById('synth-native-input')?.blur();
   }
 
   resumeSynesthesia() {
@@ -4141,6 +4194,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       }, 5000);
     }
     this.audio.play('pop');
+    // Spell modundaysa klavyeyi yeniden aç
+    if (this.session.synthWordMode === 'spell') this._synthFocusInput();
   }
 
   // ─────────────────────────────────────────────────────────
@@ -7084,8 +7139,9 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 
           case 'resume-synesthesia':this.resumeSynesthesia(); return;
           case 'pause-synesthesia': this._pauseSynesthesia(); return;
-          case 'play-synth-hint':   this.playSynthHint(); return;
-          case 'skip-synth-word':   this.skipSynthWord(); return;
+          case 'play-synth-hint':    this.playSynthHint(); return;
+          case 'skip-synth-word':    this.skipSynthWord(); return;
+          case 'focus-synth-input':  this._synthFocusInput(); return;
           case 'set-reading-mode':  this.setReadingMode(actionEl.dataset.mode); return;
           case 'play-story':        this.playStory(); return;
           case 'set-reading-level': this.setReadingLevel(actionEl.dataset.level, actionEl); return;
