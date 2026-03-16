@@ -4866,19 +4866,137 @@ body.rank-6 { --theme-accent: #ff9d00; }
 
 .synth-core-container { position: relative; width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 40px; transition: transform 0.3s, margin 0.3s; }
 
-/* Mobile and Keyboard Open Adjustments */
-@media (max-width: 768px), (max-height: 600px) {
-  .synth-target-area { margin-bottom: 20px; }
-  .synth-target-tr { font-size: 2rem; }
-  .synth-core-container { transform: scale(0.8); margin-bottom: 20px; }
-  .synth-input-area span { font-size: 2rem; width: 30px; }
-  .synth-input-area.word-md span { font-size: 1.6rem; width: 22px; }
-  .synth-input-area.word-lg span { font-size: 1.3rem; width: 18px; }
-  .synth-input-area.word-xl span { font-size: 1.1rem; width: 14px; }
-  .synth-input-area.word-xxl span { font-size: 0.9rem; width: 11px; }
-  .synth-hint-action { margin-top: 20px; }
-  .synesthesia-wrapper { min-height: 95dvh; border-radius: 0; }
+/* ── Sinestezi Mobil Optimizasyon ─────────────────────────── */
+
+/* Telefon ekranına tam sığsın */
+@media (max-width: 768px) {
+  .synesthesia-wrapper {
+    height: calc(100dvh - var(--mobile-nav-h) - env(safe-area-inset-bottom, 0px));
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0;
+  }
+
+  /* Topbar: sıkıştır */
+  .synth-topbar {
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  /* Intro ekranı kaydırılabilir */
+  .synth-intro {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px 18px;
+    justify-content: flex-start;
+    gap: 0;
+  }
+  .synth-icon-main { font-size: 2rem; margin-bottom: 8px; }
+  .synth-title { font-size: 1.4rem; letter-spacing: 2px; margin-bottom: 4px; }
+  .synth-subtitle { font-size: 0.78rem; margin-bottom: 10px; }
+  .synth-rules { padding: 14px 16px; margin-bottom: 14px; }
+  .synth-rules .rule-item { margin-bottom: 10px; }
+  .synth-mode-picker { margin-bottom: 16px; gap: 10px; }
+  .synth-mode-cards { grid-template-columns: repeat(2, 1fr) !important; gap: 8px; }
+  .synth-mode-card { padding: 14px 8px; gap: 4px; border-radius: 14px; }
+  .smc-icon { font-size: 1.5rem; }
+  .smc-name { font-size: 0.75rem; }
+  .smc-desc { font-size: 0.62rem; }
+  .synth-session-picker { margin-bottom: 18px; }
+  .synth-start-btn { padding: 14px 32px; font-size: 1rem; }
+
+  /* Game chamber: tam alan, scroll güvenliği */
+  .synth-chamber {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 14px 10px;
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  /* Word display alanı */
+  .synth-target-area { margin-bottom: 10px; }
+  .synth-target-tr { font-size: 1.65rem; }
+  .synth-word-meta { gap: 6px; margin-bottom: 8px; }
+  .synth-word-icon { font-size: 1.2rem; }
+
+  /* Orb: küçült */
+  .synth-core-container {
+    transform: scale(0.65);
+    margin-bottom: -30px; /* negatif margin — scale küçüldüğünde boşluk kalmasın */
+    margin-top: -10px;
+  }
+
+  /* Harf alanı */
+  .synth-input-area span { font-size: 1.9rem; width: 28px; }
+  .synth-input-area.word-md span { font-size: 1.5rem; width: 20px; }
+  .synth-input-area.word-lg span { font-size: 1.2rem; width: 16px; }
+  .synth-input-area.word-xl span { font-size: 1.0rem; width: 13px; }
+  .synth-input-area.word-xxl span { font-size: 0.85rem; width: 10px; }
+
+  /* Alt butonlar (dinle / geç / duraklat) */
+  .synth-hint-action { margin-top: 8px; gap: 10px; }
+  .synth-hint-btn, .synth-skip-btn, .synth-pause-btn {
+    padding: 8px 14px;
+    font-size: 0.78rem;
+  }
+
+  /* VKB: kompakt, VKB'den önce otomatik boşluk */
+  .synth-vkb {
+    margin-top: 10px;
+    padding: 8px 8px 4px;
+    gap: 4px;
+  }
+  .vkb-row { gap: 3px; }
+  .vkb-key {
+    min-width: 28px;
+    height: 36px;
+    font-size: 0.78rem;
+    padding: 0 3px;
+    border-radius: 6px;
+  }
+
+  /* Seçme modu butonları */
+  .synth-choice-btn { padding: 14px 10px; gap: 4px; }
+  .sc-emoji { font-size: 1.4rem; }
+  .sc-en { font-size: 0.95rem; }
 }
+
+/* Çok küçük ekranlar (≤400px — SE, A02, vs.) */
+@media (max-width: 400px) {
+  .synth-topbar { padding: 8px 10px; }
+  .synth-target-tr { font-size: 1.45rem; }
+  .synth-core-container { transform: scale(0.58); margin-bottom: -40px; margin-top: -14px; }
+  .synth-vkb { padding: 6px 6px 2px; }
+  .vkb-key { min-width: 24px; height: 34px; font-size: 0.72rem; }
+  .synth-hint-btn, .synth-skip-btn, .synth-pause-btn { padding: 6px 10px; font-size: 0.72rem; }
+}
+
+/* Landscape mobil: yatay yoğun düzen */
+@media (max-height: 500px) and (max-width: 900px) {
+  .synth-topbar { padding: 6px 12px; }
+  .synth-chamber { padding: 4px 14px; }
+  .synth-target-area { margin-bottom: 4px; }
+  .synth-target-tr { font-size: 1.2rem; }
+  .synth-core-container { transform: scale(0.5); margin-bottom: -50px; margin-top: -20px; }
+  .synth-word-meta { margin-bottom: 4px; }
+  .synth-hint-action { margin-top: 4px; gap: 8px; }
+  .synth-hint-btn, .synth-skip-btn, .synth-pause-btn { padding: 6px 10px; font-size: 0.72rem; }
+  .vkb-key { height: 30px; font-size: 0.72rem; }
+  .synth-vkb { margin-top: 4px; padding: 4px; }
+}
+
+/* Sistem klavyesi açık — VKB gizle, layout daralt (JS .keyboard-open sınıfı ekler) */
+.synesthesia-wrapper.keyboard-open .synth-vkb { display: none !important; }
+.synesthesia-wrapper.keyboard-open .synth-core-container { transform: scale(0.5); margin-bottom: -50px; margin-top: -18px; }
+.synesthesia-wrapper.keyboard-open .synth-target-tr { font-size: 1.2rem; }
+.synesthesia-wrapper.keyboard-open .synth-target-area { margin-bottom: 6px; }
+.synesthesia-wrapper.keyboard-open .synth-hint-action { margin-top: 6px; }
 
 .synth-core {
   width: 100px; height: 100px; border-radius: 50%;
@@ -5097,7 +5215,6 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .vkb-space { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.18); color: var(--text-2); min-width: 56px; font-size: 1.1rem; }
 
 @media (max-width: 480px) {
-  .vkb-key { min-width: 28px; height: 38px; font-size: 0.78rem; }
   .synth-finish-stats { gap: 16px; padding: 20px; }
   .sfs-val { font-size: 1.5rem; }
 }
@@ -5469,14 +5586,15 @@ body.rank-6 { --theme-accent: #ff9d00; }
 }
 
 @media (max-width: 480px) {
-  .synth-progress-wrap { max-width: 160px; margin: 0 8px; }
+  .synth-progress-wrap { max-width: 150px; margin: 0 6px; }
   .synth-counter { display: none; }
-  .synth-exit-btn { padding: 6px 10px; font-size: 0.75rem; }
-  .synth-pause-card { padding: 36px 28px; }
-  .synth-pause-title { font-size: 1.3rem; }
-  .synth-finish-grade { font-size: 3rem; }
-  .synth-word-meta { gap: 6px; }
-  .synth-word-icon { font-size: 1.3rem; }
+  .synth-exit-btn { padding: 6px 10px; font-size: 0.72rem; }
+  .synth-pause-card { padding: 32px 24px; }
+  .synth-pause-title { font-size: 1.2rem; }
+  .synth-finish-grade { font-size: 2.8rem; }
+  .synth-mode-ind { font-size: 0.65rem; padding: 2px 7px; }
+  .synth-combo-badge { font-size: 0.72rem; padding: 3px 8px; }
+  .synth-score-chip { font-size: 0.72rem; padding: 3px 9px; }
 }
 
 /* ── 40. SİNESTEZİ v5.0 Styles ──────────────────────────── */
@@ -5683,12 +5801,9 @@ body.rank-6 { --theme-accent: #ff9d00; }
   transition: color 0.15s, text-shadow 0.15s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1), border-bottom-color 0.15s;
 }
 
+/* choice grid remains 2-col even on small screens */
 @media (max-width: 480px) {
-  .synth-mode-cards { grid-template-columns: 1fr; gap: 8px; }
-  .synth-choice-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .synth-choice-btn { padding: 14px 8px; }
-  .sc-emoji { font-size: 1.4rem; }
-  .sc-en { font-size: 0.95rem; }
+  .synth-choice-grid { gap: 8px; }
 }
 
 /* ══════════════════════════════════════════════════════════════

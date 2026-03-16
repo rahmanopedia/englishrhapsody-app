@@ -3289,6 +3289,19 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       this._renderSynthVKB();
     }
 
+    // Samsung / Android: sistem klavyesi açılırsa layout daralt
+    this._synthViewportListener = null;
+    if (window.visualViewport && isMobile) {
+      const wrapper = document.querySelector('.synesthesia-wrapper');
+      const baseH = window.visualViewport.height;
+      this._synthViewportListener = () => {
+        if (!wrapper) return;
+        const shrunk = window.visualViewport.height < baseH * 0.75;
+        wrapper.classList.toggle('keyboard-open', shrunk);
+      };
+      window.visualViewport.addEventListener('resize', this._synthViewportListener);
+    }
+
     this._startSynthDrone();
     this._loadSynthWord();
     this.audio.play('pop');
@@ -3780,6 +3793,11 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     if (this.session.synthRevealTimer) { clearTimeout(this.session.synthRevealTimer); this.session.synthRevealTimer = null; }
     this.session.synthActive = false;
     this.session.synthPaused = false;
+    // Temizle: visualViewport listener
+    if (this._synthViewportListener && window.visualViewport) {
+      window.visualViewport.removeEventListener('resize', this._synthViewportListener);
+      this._synthViewportListener = null;
+    }
     this.addXP(this.session.synthScore, 'easy', 'vocab');
     window.analyticsManager?.lessonComplete('learn', this.session.synthScore);
     this.state.update({ sessions: this.state.get('sessions') + 1, sessionsToday: (this.state.get('sessionsToday') || 0) + 1 });
