@@ -1,282 +1,31 @@
-/* ================================================================
-   ENGLISH RHAPSODY — Leaderboard Manager  v1.0
-   Firebase Firestore real-time sıralama tablosu
-   Günlük / Haftalık / Aylık — canlı onSnapshot güncelleme
-   ================================================================ */
-
-class LeaderboardManager {
-  constructor() {
-    this._listeners = {};
-    this._currentPeriod = 'daily';
-  }
-
-  // ── Period key helpers ─────────────────────────────────────────
-
-  _dailyKey() {
-    return new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-  }
-
-  _weeklyKey() {
-    // UTC bazlı ISO hafta hesabı — _dailyKey() ile tutarlı
-    const d = new Date(this._dailyKey() + 'T00:00:00Z');
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    const week      = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
-    return `${d.getUTCFullYear()}-W${String(week).padStart(2, '0')}`;
-  }
-
-  _monthlyKey() {
-    // UTC bazlı — _dailyKey() ile tutarlı (yerel saat dilimine bağlı değil)
-    return new Date().toISOString().slice(0, 7); // YYYY-MM
-  }
-
-  _periodKey(period) {
-    if (period === 'daily')   return this._dailyKey();
-    if (period === 'weekly')  return this._weeklyKey();
-    if (period === 'monthly') return this._monthlyKey();
-  }
-
-  _periodId(period) {
-    // Firestore path: leaderboards/{periodId}/users/{uid}
-    // örn: leaderboards/daily_2026-03-08/users/abc123
-    return `${period}_${this._periodKey(period)}`;
-  }
-
-  // ── Dönem XP hesaplama ─────────────────────────────────────────
-
-  _calcXP(history) {
-    const today       = this._dailyKey();
-    const monthPrefix = today.slice(0, 7);
-
-    const dailyXP = history[today] || 0;
-
-    const todayMs  = new Date(today + 'T00:00:00Z').getTime();
-    const weeklyXP = Object.entries(history)
-      .filter(([d]) => {
-        const dMs = new Date(d + 'T00:00:00Z').getTime();
-        if (isNaN(dMs)) return false;
-        const diff = (todayMs - dMs) / 86400000;
-        return diff >= 0 && diff < 7;
-      })
-      .reduce((s, [, x]) => s + x, 0);
-
-    const monthlyXP = Object.entries(history)
-      .filter(([d]) => d.startsWith(monthPrefix))
-      .reduce((s, [, x]) => s + x, 0);
-
-    return { dailyXP, weeklyXP, monthlyXP };
-  }
-
-  // ── Firestore'a skor yaz ───────────────────────────────────────
-
-  async updateScore() {
-    const auth = window.authManager;
-    if (!auth?.isLoggedIn || !auth._db || !auth.uid) return;
-
-    const history = window.app?.state?.get('history') || {};
-    const level   = window.app?.state?.get('level')   || 1;
-    const name    = auth.displayName || 'Kullanıcı';
-    const uid     = auth.uid;
-
-    const { dailyXP, weeklyXP, monthlyXP } = this._calcXP(history);
-
-    // XP 0 ise yazmaya gerek yok
-    if (dailyXP === 0 && weeklyXP === 0 && monthlyXP === 0) return;
-
-    const periods = [
-      { id: this._periodId('daily'),   xp: Math.round(Math.max(0, dailyXP))   },
-      { id: this._periodId('weekly'),  xp: Math.round(Math.max(0, weeklyXP))  },
-      { id: this._periodId('monthly'), xp: Math.round(Math.max(0, monthlyXP)) },
-    ];
-
-    try {
-      const batch = auth._db.batch();
-      for (const p of periods) {
-        const ref = auth._db
-          .collection('leaderboards').doc(p.id)
-          .collection('users').doc(uid);
-        batch.set(ref, {
-          uid, name, xp: p.xp, level,
-          avatar: (auth.displayName || 'K')[0].toUpperCase(),
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        }, { merge: true });
-      }
-      await batch.commit();
-      console.info('[Leaderboard] Skorlar başarıyla güncellendi:', dailyXP, 'XP');
-    } catch (e) {
-      console.error('[Leaderboard] Yazma hatası (Firestore Kurallarını kontrol edin):', e.code, e.message);
-    }
-  }
-
-  // ── Real-time dinleyici ────────────────────────────────────────
-
-  subscribe(period, onUpdate) {
-    this.unsubscribe(period);
-    const auth = window.authManager;
-    if (!auth?.isLoggedIn || !auth._db) return;
-
-    const unsub = auth._db
-      .collection('leaderboards').doc(this._periodId(period))
-      .collection('users')
-      .orderBy('xp', 'desc')
-      .limit(50)
-      .onSnapshot(
-        snap => {
-          const users = [];
-          snap.forEach(doc => users.push(doc.data()));
-          onUpdate(users);
-        },
-        err => {
-          console.error('[Leaderboard] Dinleme hatası:', err.code, err.message);
-          if (err.code === 'permission-denied') {
-             console.warn('[Leaderboard] İpucu: Firestore kurallarında "leaderboards" koleksiyonuna okuma yetkisi vermelisiniz.');
-          }
-        }
-      );
-
-    this._listeners[period] = unsub;
-  }
-
-  unsubscribe(period) {
-    if (this._listeners[period]) {
-      this._listeners[period]();
-      delete this._listeners[period];
-    }
-  }
-
-  unsubscribeAll() {
-    Object.keys(this._listeners).forEach(p => this.unsubscribe(p));
-  }
-
-  // ── UI ─────────────────────────────────────────────────────────
-
-  render(container) {
-    if (!container) return;
-    container.innerHTML = `
+class LeaderboardManager{constructor(){this._listeners={},this._currentPeriod="daily"}_dailyKey(){return new Date().toISOString().split("T")[0]}_weeklyKey(){const e=new Date(this._dailyKey()+"T00:00:00Z");e.setUTCDate(e.getUTCDate()+4-(e.getUTCDay()||7));const s=new Date(Date.UTC(e.getUTCFullYear(),0,1)),t=Math.ceil(((e-s)/864e5+1)/7);return`${e.getUTCFullYear()}-W${String(t).padStart(2,"0")}`}_monthlyKey(){return new Date().toISOString().slice(0,7)}_periodKey(e){if(e==="daily")return this._dailyKey();if(e==="weekly")return this._weeklyKey();if(e==="monthly")return this._monthlyKey()}_periodId(e){return`${e}_${this._periodKey(e)}`}_calcXP(e){const s=this._dailyKey(),t=s.slice(0,7),i=e[s]||0,a=new Date(s+"T00:00:00Z").getTime(),d=Object.entries(e).filter(([l])=>{const n=new Date(l+"T00:00:00Z").getTime();if(isNaN(n))return!1;const c=(a-n)/864e5;return c>=0&&c<7}).reduce((l,[,n])=>l+n,0),o=Object.entries(e).filter(([l])=>l.startsWith(t)).reduce((l,[,n])=>l+n,0);return{dailyXP:i,weeklyXP:d,monthlyXP:o}}async updateScore(){var c,u,r,y;const e=window.authManager;if(!(e!=null&&e.isLoggedIn)||!e._db||!e.uid)return;const s=((u=(c=window.app)==null?void 0:c.state)==null?void 0:u.get("history"))||{},t=((y=(r=window.app)==null?void 0:r.state)==null?void 0:y.get("level"))||1,i=e.displayName||"Kullan\u0131c\u0131",a=e.uid,{dailyXP:d,weeklyXP:o,monthlyXP:l}=this._calcXP(s);if(d===0&&o===0&&l===0)return;const n=[{id:this._periodId("daily"),xp:Math.round(Math.max(0,d))},{id:this._periodId("weekly"),xp:Math.round(Math.max(0,o))},{id:this._periodId("monthly"),xp:Math.round(Math.max(0,l))}];try{const b=e._db.batch();for(const h of n){const m=e._db.collection("leaderboards").doc(h.id).collection("users").doc(a);b.set(m,{uid:a,name:i,xp:h.xp,level:t,avatar:(e.displayName||"K")[0].toUpperCase(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:!0})}await b.commit(),console.info("[Leaderboard] Skorlar ba\u015Far\u0131yla g\xFCncellendi:",d,"XP")}catch(b){console.error("[Leaderboard] Yazma hatas\u0131 (Firestore Kurallar\u0131n\u0131 kontrol edin):",b.code,b.message)}}subscribe(e,s){this.unsubscribe(e);const t=window.authManager;if(!(t!=null&&t.isLoggedIn)||!t._db)return;const i=t._db.collection("leaderboards").doc(this._periodId(e)).collection("users").orderBy("xp","desc").limit(50).onSnapshot(a=>{const d=[];a.forEach(o=>d.push(o.data())),s(d)},a=>{console.error("[Leaderboard] Dinleme hatas\u0131:",a.code,a.message),a.code==="permission-denied"&&console.warn('[Leaderboard] \u0130pucu: Firestore kurallar\u0131nda "leaderboards" koleksiyonuna okuma yetkisi vermelisiniz.')});this._listeners[e]=i}unsubscribe(e){this._listeners[e]&&(this._listeners[e](),delete this._listeners[e])}unsubscribeAll(){Object.keys(this._listeners).forEach(e=>this.unsubscribe(e))}render(e){e&&(e.innerHTML=`
       <div class="lb-shell">
         <div class="lb-header">
-          <div class="lb-trophy-wrap">🏆</div>
+          <div class="lb-trophy-wrap">\u{1F3C6}</div>
           <h1 class="lb-title">Liderlik Tablosu</h1>
-          <p class="lb-subtitle">Canlı sıralama · Anlık güncellenir</p>
+          <p class="lb-subtitle">Canl\u0131 s\u0131ralama \xB7 Anl\u0131k g\xFCncellenir</p>
         </div>
 
         <div class="lb-tabs">
-          <button class="lb-tab active" data-period="daily">Günlük</button>
-          <button class="lb-tab" data-period="weekly">Haftalık</button>
-          <button class="lb-tab" data-period="monthly">Aylık</button>
+          <button class="lb-tab active" data-period="daily">G\xFCnl\xFCk</button>
+          <button class="lb-tab" data-period="weekly">Haftal\u0131k</button>
+          <button class="lb-tab" data-period="monthly">Ayl\u0131k</button>
         </div>
 
         <div class="lb-list" id="lb-list">
-          <div class="lb-loading"><div class="lb-spinner"></div><p>Yükleniyor…</p></div>
+          <div class="lb-loading"><div class="lb-spinner"></div><p>Y\xFCkleniyor\u2026</p></div>
         </div>
 
         <div class="lb-my-rank" id="lb-my-rank" style="display:none">
-          <span class="lb-mr-label">Senin sıran</span>
-          <span class="lb-mr-val" id="lb-mr-val">—</span>
+          <span class="lb-mr-label">Senin s\u0131ran</span>
+          <span class="lb-mr-val" id="lb-mr-val">\u2014</span>
         </div>
-      </div>`;
-
-    this._currentPeriod = 'daily';
-    this._listen('daily');
-
-    if (!window._lbDelegateAttached) {
-      window._lbDelegateAttached = true;
-      document.addEventListener('click', e => {
-        const tab = e.target.closest('.lb-tab');
-        if (tab && window.leaderboardManager) {
-          window.leaderboardManager.switchTab(tab.dataset.period, tab);
-        }
-      });
-    }
-  }
-
-  switchTab(period, btn) {
-    document.querySelectorAll('.lb-tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    this.unsubscribeAll();
-    this._currentPeriod = period;
-    const el = document.getElementById('lb-list');
-    if (el) el.innerHTML = '<div class="lb-loading"><div class="lb-spinner"></div><p>Yükleniyor…</p></div>';
-    this._listen(period);
-  }
-
-  _listen(period) {
-    this.subscribe(period, users => this._renderList(users, period));
-  }
-
-  _renderList(users, period) {
-    const el = document.getElementById('lb-list');
-    if (!el) return;
-
-    const uid    = window.authManager?.uid;
-    const labels = { daily: 'bugün', weekly: 'bu hafta', monthly: 'bu ay' };
-    const label  = labels[period];
-    const medals = ['🥇', '🥈', '🥉'];
-
-    if (!users.length) {
-      el.innerHTML = '<div class="lb-empty">Henüz kimse yok — ilk sen ol! 🚀</div>';
-      const myEl = document.getElementById('lb-my-rank');
-      if (myEl) myEl.style.display = 'none';
-      return;
-    }
-
-    el.innerHTML = users.map((u, i) => {
-      const isMe  = u.uid === uid;
-      const rank  = i + 1;
-      const medal = rank <= 3
-        ? `<span class="lb-medal">${medals[i]}</span>`
-        : `<span class="lb-medal lb-medal-num">${rank}</span>`;
-      return `
-        <div class="lb-row ${isMe ? 'lb-row-me' : ''}">
-          ${medal}
-          <div class="lb-name">${this._esc(u.name)}</div>
+      </div>`,this._currentPeriod="daily",this._listen("daily"),window._lbDelegateAttached||(window._lbDelegateAttached=!0,document.addEventListener("click",s=>{const t=s.target.closest(".lb-tab");t&&window.leaderboardManager&&window.leaderboardManager.switchTab(t.dataset.period,t)})))}switchTab(e,s){document.querySelectorAll(".lb-tab").forEach(i=>i.classList.remove("active")),s.classList.add("active"),this.unsubscribeAll(),this._currentPeriod=e;const t=document.getElementById("lb-list");t&&(t.innerHTML='<div class="lb-loading"><div class="lb-spinner"></div><p>Y\xFCkleniyor\u2026</p></div>'),this._listen(e)}_listen(e){this.subscribe(e,s=>this._renderList(s,e))}_renderList(e,s){var u;const t=document.getElementById("lb-list");if(!t)return;const i=(u=window.authManager)==null?void 0:u.uid,d={daily:"bug\xFCn",weekly:"bu hafta",monthly:"bu ay"}[s],o=["\u{1F947}","\u{1F948}","\u{1F949}"];if(!e.length){t.innerHTML='<div class="lb-empty">Hen\xFCz kimse yok \u2014 ilk sen ol! \u{1F680}</div>';const r=document.getElementById("lb-my-rank");r&&(r.style.display="none");return}t.innerHTML=e.map((r,y)=>{const b=r.uid===i,h=y+1,m=h<=3?`<span class="lb-medal">${o[y]}</span>`:`<span class="lb-medal lb-medal-num">${h}</span>`;return`
+        <div class="lb-row ${b?"lb-row-me":""}">
+          ${m}
+          <div class="lb-name">${this._esc(r.name)}</div>
           <div class="lb-right">
-            <div class="lb-xp">${u.xp} <span class="lb-xp-unit">XP ${label}</span></div>
-            <div class="lb-lv">Lv.${u.level || 1}</div>
+            <div class="lb-xp">${r.xp} <span class="lb-xp-unit">XP ${d}</span></div>
+            <div class="lb-lv">Lv.${r.level||1}</div>
           </div>
-        </div>`;
-    }).join('');
-
-    // Kendi sıram
-    const myIdx   = users.findIndex(u => u.uid === uid);
-    const myRankEl = document.getElementById('lb-my-rank');
-    const myVal    = document.getElementById('lb-mr-val');
-    if (myRankEl && myVal) {
-      if (myIdx !== -1) {
-        myVal.textContent      = `#${myIdx + 1}`;
-        myRankEl.style.display = 'flex';
-      } else {
-        myRankEl.style.display = 'none';
-      }
-    }
-  }
-
-  _esc(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  }
-
-  // ── Kullanıcı sıralama verilerini sıfırla ─────────────────────
-  async resetUserEntries() {
-    const auth = window.authManager;
-    if (!auth?.isLoggedIn || !auth._db || !auth.uid) return;
-    const uid = auth.uid;
-    try {
-      const batch = auth._db.batch();
-      for (const period of ['daily', 'weekly', 'monthly']) {
-        const ref = auth._db
-          .collection('leaderboards').doc(this._periodId(period))
-          .collection('users').doc(uid);
-        batch.delete(ref);
-      }
-      await batch.commit();
-      console.info('[Leaderboard] Kullanıcı sıralama verileri silindi');
-    } catch(e) {
-      console.warn('[Leaderboard] resetUserEntries error:', e);
-    }
-  }
-}
-
-window.leaderboardManager = new LeaderboardManager();
+        </div>`}).join("");const l=e.findIndex(r=>r.uid===i),n=document.getElementById("lb-my-rank"),c=document.getElementById("lb-mr-val");n&&c&&(l!==-1?(c.textContent=`#${l+1}`,n.style.display="flex"):n.style.display="none")}_esc(e){return String(e).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}async resetUserEntries(){const e=window.authManager;if(!(e!=null&&e.isLoggedIn)||!e._db||!e.uid)return;const s=e.uid;try{const t=e._db.batch();for(const i of["daily","weekly","monthly"]){const a=e._db.collection("leaderboards").doc(this._periodId(i)).collection("users").doc(s);t.delete(a)}await t.commit(),console.info("[Leaderboard] Kullan\u0131c\u0131 s\u0131ralama verileri silindi")}catch(t){console.warn("[Leaderboard] resetUserEntries error:",t)}}}window.leaderboardManager=new LeaderboardManager;

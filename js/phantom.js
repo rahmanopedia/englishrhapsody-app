@@ -1,76 +1,4 @@
-/* ================================================================
-   PHANTOM INK v2.0 — Görünmez Mürekkep Hafızası
-   ================================================================
-   v2.0 YENİLİKLERİ:
-   ✦ Harf slotları — karanlıkta kelime uzunluğu görünür
-   ✦ 3 ipucu sistemi — ilk harf / orta harf / tümünü göster
-   ✦ Dalga kristalizasyon — harfler domino gibi yayılır
-   ✦ Ekran flaşı — başarıda yeşil, yanılgıda kırmızı dalga
-   ✦ CEFR / Kategori filtresi — istediğin seviyeyi seç
-   ✦ VKB tuş renklendirme — yanlış tuş kırmızıya döner
-   ✦ First-attempt doğruluk takibi — hatasız tamamlanan kelimeler
-   ✦ Hafıza soğuma göstergesi — uzun bekleme = slotlar solar
-   ✦ Canvas nöral dalgası — recall'da arka planda beyin dalgası
-   ✦ Gelişmiş sonuç ekranı — mükemmel / zorlandığın kelimeler
-   ✦ Kombo alev animasyonu — 5+ komboda ekran yanar
-   ✦ Çıkış onayı — oturum ortasında sorular
-   ================================================================ */
-'use strict';
-
-const PH_MODES = {
-  phantom: { label:'🌫️ Phantom', desc:'1.2s tümü birden · Zor',     imprintMs:1200, xp:40, allAtOnce:true  },
-};
-
-const PH_CEFR_LEVELS = ['A1','A2','B1','B2','C1','C2'];
-
-const _wait = ms => new Promise(r => setTimeout(r, ms));
-
-// ════════════════════════════════════════════════════════════════
-class PhantomMode {
-  constructor(appRef) {
-    this.app        = appRef;
-    this.root       = null;
-    this.mode       = 'phantom';
-    this.sessLen    = 10;
-    this.cefrFilter = [];        // boş = tümü
-    this.queue      = [];
-    this.idx        = 0;
-    this.score      = 0;
-    this.combo      = 0;
-    this.phase      = 'intro';
-    this.typed      = [];
-    this.word       = null;
-    this.aborted    = false;
-    this.hintsLeft  = 3;
-    this.errorCount = 0;         // bu kelimedeki hata sayısı
-    this.perfectWords = 0;       // hatasız tamamlanan kelime sayısı
-    this.missedWords  = [];      // atlanan/yanlış kelimeler
-    this._kbHandler  = null;
-    this._coolTimer  = null;     // hafıza soğuma zamanlayıcısı
-    this._neuralRaf  = null;     // canvas animasyon
-    this._coolLevel  = 0;        // 0-1 arası, artınca slotlar solar
-  }
-
-  // ── Yaşam Döngüsü ───────────────────────────────────────────
-  init(root) {
-    this.root = root;
-    window.analyticsManager?.lessonStart('phantom');
-    this._showIntro();
-  }
-
-  destroy() {
-    this.aborted = true;
-    this._stopCool();
-    this._stopNeural();
-    if (this._kbHandler) document.removeEventListener('keydown', this._kbHandler);
-    this._kbHandler = null;
-    window.phantomMod = null;
-  }
-
-  // ── INTRO ────────────────────────────────────────────────────
-  _showIntro() {
-    this.phase = 'intro';
-    this.root.innerHTML = `
+"use strict";const PH_MODES={phantom:{label:"\u{1F32B}\uFE0F Phantom",desc:"1.2s t\xFCm\xFC birden \xB7 Zor",imprintMs:1200,xp:40,allAtOnce:!0}},PH_CEFR_LEVELS=["A1","A2","B1","B2","C1","C2"],_wait=g=>new Promise(t=>setTimeout(t,g));class PhantomMode{constructor(t){this.app=t,this.root=null,this.mode="phantom",this.sessLen=10,this.cefrFilter=[],this.queue=[],this.idx=0,this.score=0,this.combo=0,this.phase="intro",this.typed=[],this.word=null,this.aborted=!1,this.hintsLeft=3,this.errorCount=0,this.perfectWords=0,this.missedWords=[],this._kbHandler=null,this._coolTimer=null,this._neuralRaf=null,this._coolLevel=0}init(t){var s;this.root=t,(s=window.analyticsManager)==null||s.lessonStart("phantom"),this._showIntro()}destroy(){this.aborted=!0,this._stopCool(),this._stopNeural(),this._kbHandler&&document.removeEventListener("keydown",this._kbHandler),this._kbHandler=null,window.phantomMod=null}_showIntro(){this.phase="intro",this.root.innerHTML=`
       <div class="ph-intro">
 
         <div class="ph-intro-logo">
@@ -79,42 +7,40 @@ class PhantomMode {
             <div class="ph-ghost-ring ph-ring2"></div>
             <div class="ph-ghost-ring ph-ring3"></div>
             <canvas class="ph-orb-canvas" id="ph-orb-canvas" width="88" height="88"></canvas>
-            <span class="ph-ghost-glyph">🌫️</span>
+            <span class="ph-ghost-glyph">\u{1F32B}\uFE0F</span>
           </div>
           <h1 class="ph-title">PHANTOM <span class="ph-title-ink">INK</span>
             <span class="ph-v2-badge">v2.0</span>
           </h1>
-          <p class="ph-tagline">Görünmez Mürekkep Hafızası · Temporal Recall Sistemi</p>
+          <p class="ph-tagline">G\xF6r\xFCnmez M\xFCrekkep Haf\u0131zas\u0131 \xB7 Temporal Recall Sistemi</p>
         </div>
 
         <div class="ph-how">
           <div class="ph-how-step">
             <span class="ph-step-num">1</span>
-            <span>Kelime <strong>altın ışıkla</strong> harf harf yanıp söner — sesini de duyarsın.</span>
+            <span>Kelime <strong>alt\u0131n \u0131\u015F\u0131kla</strong> harf harf yan\u0131p s\xF6ner \u2014 sesini de duyars\u0131n.</span>
           </div>
           <div class="ph-how-step">
             <span class="ph-step-num">2</span>
-            <span>Işık <strong>söner</strong>. Sadece boş slotlar kalır. Hiçbir şey görünmez.</span>
+            <span>I\u015F\u0131k <strong>s\xF6ner</strong>. Sadece bo\u015F slotlar kal\u0131r. Hi\xE7bir \u015Fey g\xF6r\xFCnmez.</span>
           </div>
           <div class="ph-how-step">
             <span class="ph-step-num">3</span>
-            <span>Kelimeyi <strong>hafızandan yaz</strong> — her doğru harf kristal gibi patlar.</span>
+            <span>Kelimeyi <strong>haf\u0131zandan yaz</strong> \u2014 her do\u011Fru harf kristal gibi patlar.</span>
           </div>
           <div class="ph-how-step">
-            <span class="ph-step-num ph-step-hint">💡</span>
-            <span>3 <strong>ipucu hakkın</strong> var. İpucu kullanmak XP'i yarıya indirir.</span>
+            <span class="ph-step-num ph-step-hint">\u{1F4A1}</span>
+            <span>3 <strong>ipucu hakk\u0131n</strong> var. \u0130pucu kullanmak XP'i yar\u0131ya indirir.</span>
           </div>
         </div>
 
         <div class="ph-config">
 
           <div class="ph-config-row">
-            <span class="ph-config-label">Kelime Sayısı</span>
+            <span class="ph-config-label">Kelime Say\u0131s\u0131</span>
             <div class="ph-len-btns">
-              ${[5,10,20].map(n =>
-                `<button class="ph-len-btn ${n===10?'active':''}"
-                         onclick="window.phantomMod._setLen(${n},this)">${n}</button>`
-              ).join('')}
+              ${[5,10,20].map(t=>`<button class="ph-len-btn ${t===10?"active":""}"
+                         onclick="window.phantomMod._setLen(${t},this)">${t}</button>`).join("")}
             </div>
           </div>
 
@@ -122,96 +48,11 @@ class PhantomMode {
         </div>
 
         <button class="ph-start-btn" onclick="window.phantomMod._startSession()">
-          <span class="ph-start-icon">🌫️</span> BAŞLAT — IŞIĞI SÖNDÜR
+          <span class="ph-start-icon">\u{1F32B}\uFE0F</span> BA\u015ELAT \u2014 I\u015EI\u011EI S\xD6ND\xDCR
         </button>
 
-        <button class="ph-back-btn" onclick="app.navigate('learn')">← Ana Merkez</button>
-      </div>`;
-
-    this._animOrbCanvas();
-  }
-
-  _animOrbCanvas() {
-    const canvas = document.getElementById('ph-orb-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let t = 0;
-    const frame = () => {
-      if (!document.getElementById('ph-orb-canvas')) return;
-      ctx.clearRect(0, 0, 88, 88);
-      for (let i = 0; i < 6; i++) {
-        const angle = (t * 0.6 + i * Math.PI * 2 / 6);
-        const r = 28 + 6 * Math.sin(t * 1.2 + i);
-        const x = 44 + Math.cos(angle) * r;
-        const y = 44 + Math.sin(angle) * r;
-        const g = ctx.createRadialGradient(x, y, 0, x, y, 6);
-        g.addColorStop(0, 'rgba(167,139,250,0.7)');
-        g.addColorStop(1, 'rgba(167,139,250,0)');
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(x, y, 6, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      t += 0.03;
-      requestAnimationFrame(frame);
-    };
-    requestAnimationFrame(frame);
-  }
-
-  _setMode(key, btn) {
-    this.mode = key;
-    document.querySelectorAll('.ph-mode-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-
-  _setLen(n, btn) {
-    this.sessLen = n;
-    document.querySelectorAll('.ph-len-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-
-  // ── OTURUM BAŞLAT ─────────────────────────────────────────────
-  _startSession() {
-    const mastery = this.app.state.get('mastery') || {};
-    const now     = Date.now();
-
-    let pool = WORDS.filter(w => {
-      if (!w.en || !w.tr) return false;
-      if (this.cefrFilter.length && !this.cefrFilter.includes(w.level)) return false;
-      return true;
-    });
-
-    // Tekrar edilmesi gerekenler önce
-    const due   = pool.filter(w => { const m = mastery[w.id]; return m && m.score > 0 && m.score < 5 && (m.nextReview||0) <= now; });
-    const fresh = pool.filter(w => !mastery[w.id] || mastery[w.id].score === 0);
-    const rest  = pool.filter(w => { const m = mastery[w.id]; return m && m.score >= 5; });
-
-    pool = [...due, ...fresh, ...rest];
-    for (let i = pool.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
-    }
-
-    this.queue        = pool.slice(0, this.sessLen);
-    this.idx          = 0;
-    this.score        = 0;
-    this.combo        = 0;
-    this.hintsLeft    = 3;
-    this.perfectWords = 0;
-    this.missedWords  = [];
-
-    if (!this.queue.length) {
-      UI.toast('Bu filtrelerle kelime bulunamadı!');
-      return;
-    }
-
-    this._renderChamber();
-    this._nextWord();
-  }
-
-  // ── ARENA ────────────────────────────────────────────────────
-  _renderChamber() {
-    this.root.innerHTML = `
+        <button class="ph-back-btn" onclick="app.navigate('learn')">\u2190 Ana Merkez</button>
+      </div>`,this._animOrbCanvas()}_animOrbCanvas(){const t=document.getElementById("ph-orb-canvas");if(!t)return;const s=t.getContext("2d");let e=0;const a=()=>{if(document.getElementById("ph-orb-canvas")){s.clearRect(0,0,88,88);for(let i=0;i<6;i++){const o=e*.6+i*Math.PI*2/6,n=28+6*Math.sin(e*1.2+i),h=44+Math.cos(o)*n,d=44+Math.sin(o)*n,m=s.createRadialGradient(h,d,0,h,d,6);m.addColorStop(0,"rgba(167,139,250,0.7)"),m.addColorStop(1,"rgba(167,139,250,0)"),s.fillStyle=m,s.beginPath(),s.arc(h,d,6,0,Math.PI*2),s.fill()}e+=.03,requestAnimationFrame(a)}};requestAnimationFrame(a)}_setMode(t,s){this.mode=t,document.querySelectorAll(".ph-mode-btn").forEach(e=>e.classList.remove("active")),s.classList.add("active")}_setLen(t,s){this.sessLen=t,document.querySelectorAll(".ph-len-btn").forEach(e=>e.classList.remove("active")),s.classList.add("active")}_startSession(){const t=this.app.state.get("mastery")||{},s=Date.now();let e=WORDS.filter(n=>!(!n.en||!n.tr||this.cefrFilter.length&&!this.cefrFilter.includes(n.level)));const a=e.filter(n=>{const h=t[n.id];return h&&h.score>0&&h.score<5&&(h.nextReview||0)<=s}),i=e.filter(n=>!t[n.id]||t[n.id].score===0),o=e.filter(n=>{const h=t[n.id];return h&&h.score>=5});e=[...a,...i,...o];for(let n=e.length-1;n>0;n--){const h=Math.floor(Math.random()*(n+1));[e[n],e[h]]=[e[h],e[n]]}if(this.queue=e.slice(0,this.sessLen),this.idx=0,this.score=0,this.combo=0,this.hintsLeft=3,this.perfectWords=0,this.missedWords=[],!this.queue.length){UI.toast("Bu filtrelerle kelime bulunamad\u0131!");return}this._renderChamber(),this._nextWord()}_renderChamber(){this.root.innerHTML=`
       <div class="ph-chamber" id="ph-chamber">
 
         <canvas class="ph-neural-canvas" id="ph-neural-canvas"></canvas>
@@ -219,7 +60,7 @@ class PhantomMode {
         <div class="ph-screen-flash" id="ph-flash"></div>
 
         <div class="ph-topbar">
-          <button class="ph-exit" onclick="window.phantomMod._confirmExit()">← Çık</button>
+          <button class="ph-exit" onclick="window.phantomMod._confirmExit()">\u2190 \xC7\u0131k</button>
           <div class="ph-progress-wrap">
             <span class="ph-counter" id="ph-counter">1/${this.queue.length}</span>
             <div class="ph-prog-track">
@@ -227,7 +68,7 @@ class PhantomMode {
             </div>
           </div>
           <div class="ph-topbar-right">
-            <span class="ph-combo" id="ph-combo" style="display:none">🔥×<span id="ph-combo-val">1</span></span>
+            <span class="ph-combo" id="ph-combo" style="display:none">\u{1F525}\xD7<span id="ph-combo-val">1</span></span>
             <span class="ph-score-chip" id="ph-score">0 XP</span>
           </div>
         </div>
@@ -247,713 +88,94 @@ class PhantomMode {
             <div class="ph-translation" id="ph-translation"></div>
             <div class="ph-ipa" id="ph-ipa"></div>
             <div class="ph-example" id="ph-example"></div>
-            ${'' /* Eşanlamlılar */}
+            
             <div class="ph-syns" id="ph-syns"></div>
           </div>
         </div>
 
         <div class="ph-hint-row" id="ph-hint-row">
-          <button class="ph-hint-btn" id="ph-hint-first" onclick="window.phantomMod._hint('first')" title="İlk harfi göster">
-            💡 İlk Harf
+          <button class="ph-hint-btn" id="ph-hint-first" onclick="window.phantomMod._hint('first')" title="\u0130lk harfi g\xF6ster">
+            \u{1F4A1} \u0130lk Harf
           </button>
-          <button class="ph-hint-btn" id="ph-hint-mid" onclick="window.phantomMod._hint('mid')" title="Orta harfi göster">
-            💡 Orta
+          <button class="ph-hint-btn" id="ph-hint-mid" onclick="window.phantomMod._hint('mid')" title="Orta harfi g\xF6ster">
+            \u{1F4A1} Orta
           </button>
-          <button class="ph-hint-btn" id="ph-hint-all" onclick="window.phantomMod._hint('all')" title="Hepsini göster (-50% XP)">
-            💡 Tümü <span class="ph-hint-penalty">−50%</span>
+          <button class="ph-hint-btn" id="ph-hint-all" onclick="window.phantomMod._hint('all')" title="Hepsini g\xF6ster (-50% XP)">
+            \u{1F4A1} T\xFCm\xFC <span class="ph-hint-penalty">\u221250%</span>
           </button>
-          <span class="ph-hints-left" id="ph-hints-left">💡 ${this.hintsLeft} hak</span>
+          <span class="ph-hints-left" id="ph-hints-left">\u{1F4A1} ${this.hintsLeft} hak</span>
         </div>
 
         <div class="ph-footer">
           <span class="ph-mode-label">${PH_MODES[this.mode].label}</span>
-          <button class="ph-skip" onclick="window.phantomMod._skipWord()">Bilmiyorum ⏭</button>
+          <button class="ph-skip" onclick="window.phantomMod._skipWord()">Bilmiyorum \u23ED</button>
         </div>
 
         <div class="ph-vkb" id="ph-vkb" style="display:none"></div>
 
-      </div>`;
-
-    this._bindKeys();
-    this._setupNeural();
-    this._checkMobile();
-  }
-
-  _bindKeys() {
-    if (this._kbHandler) document.removeEventListener('keydown', this._kbHandler);
-    this._kbHandler = e => {
-      if (this.aborted) return;
-      if (e.key === 'Escape') { e.preventDefault(); this._confirmExit(); return; }
-      if (this.phase !== 'recall') return;
-      if (e.key === 'Backspace') { e.preventDefault(); this._backspace(); return; }
-      if (e.key === ' ') { e.preventDefault(); this._typeChar(' '); return; }
-      if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
-        e.preventDefault();
-        this._typeChar(e.key.toLowerCase());
-      }
-    };
-    document.addEventListener('keydown', this._kbHandler);
-  }
-
-  _checkMobile() {
-    const vkb = document.getElementById('ph-vkb');
-    if (!vkb) return;
-    if (window.innerWidth <= 820 || 'ontouchstart' in window) {
-      vkb.style.display = 'flex';
-      this._buildVKB(vkb);
-    }
-  }
-
-  _buildVKB(container) {
-    const rows = ['qwertyuiop','asdfghjkl','zxcvbnm'];
-    container.innerHTML = rows.map(row =>
-      `<div class="ph-vkb-row">${
-        row.split('').map(c =>
-          `<button class="ph-key" id="phk-${c}" onclick="window.phantomMod._typeChar('${c}')">${c.toUpperCase()}</button>`
-        ).join('')
-      }</div>`
-    ).join('') +
-    `<div class="ph-vkb-row">
+      </div>`,this._bindKeys(),this._setupNeural(),this._checkMobile()}_bindKeys(){this._kbHandler&&document.removeEventListener("keydown",this._kbHandler),this._kbHandler=t=>{if(!this.aborted){if(t.key==="Escape"){t.preventDefault(),this._confirmExit();return}if(this.phase==="recall"){if(t.key==="Backspace"){t.preventDefault(),this._backspace();return}if(t.key===" "){t.preventDefault(),this._typeChar(" ");return}t.key.length===1&&/[a-zA-Z]/.test(t.key)&&(t.preventDefault(),this._typeChar(t.key.toLowerCase()))}}},document.addEventListener("keydown",this._kbHandler)}_checkMobile(){const t=document.getElementById("ph-vkb");t&&(window.innerWidth<=820||"ontouchstart"in window)&&(t.style.display="flex",this._buildVKB(t))}_buildVKB(t){const s=["qwertyuiop","asdfghjkl","zxcvbnm"];t.innerHTML=s.map(e=>`<div class="ph-vkb-row">${e.split("").map(a=>`<button class="ph-key" id="phk-${a}" onclick="window.phantomMod._typeChar('${a}')">${a.toUpperCase()}</button>`).join("")}</div>`).join("")+`<div class="ph-vkb-row">
        <button class="ph-key ph-key-space" onclick="window.phantomMod._typeChar(' ')">SPACE</button>
-       <button class="ph-key ph-key-bs" onclick="window.phantomMod._backspace()">⌫</button>
-     </div>`;
-  }
-
-  _vkbFlash(c, ok) {
-    const key = document.getElementById(`phk-${c}`);
-    if (!key) return;
-    key.classList.remove('ph-key-ok', 'ph-key-err');
-    key.classList.add(ok ? 'ph-key-ok' : 'ph-key-err');
-    setTimeout(() => key.classList.remove('ph-key-ok', 'ph-key-err'), 600);
-  }
-
-  // ── NÖRAL CANVAS ─────────────────────────────────────────────
-  _setupNeural() {
-    const canvas = document.getElementById('ph-neural-canvas');
-    if (!canvas) return;
-    canvas.width  = canvas.offsetWidth  || window.innerWidth;
-    canvas.height = canvas.offsetHeight || window.innerHeight;
-    this._neuralCanvas = canvas;
-    this._neuralCtx    = canvas.getContext('2d');
-    this._neuralLines  = Array.from({ length: 12 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      len: 40 + Math.random() * 80,
-      alpha: 0,
-    }));
-    this._neuralActive = false;
-  }
-
-  _startNeural() {
-    this._neuralActive = true;
-    const loop = () => {
-      if (!this._neuralActive || !this._neuralCtx) return;
-      const ctx = this._neuralCtx;
-      const W   = this._neuralCanvas.width;
-      const H   = this._neuralCanvas.height;
-      ctx.clearRect(0, 0, W, H);
-      for (const l of this._neuralLines) {
-        l.x += l.vx; l.y += l.vy;
-        if (l.x < 0 || l.x > W) l.vx *= -1;
-        if (l.y < 0 || l.y > H) l.vy *= -1;
-        l.alpha = Math.min(0.12, l.alpha + 0.003);
-        const angle = Math.atan2(l.vy, l.vx);
-        ctx.save();
-        ctx.globalAlpha = l.alpha;
-        ctx.strokeStyle = '#a78bfa';
-        ctx.lineWidth   = 0.8;
-        ctx.beginPath();
-        ctx.moveTo(l.x, l.y);
-        ctx.lineTo(l.x + Math.cos(angle) * l.len, l.y + Math.sin(angle) * l.len);
-        ctx.stroke();
-        // Düğüm noktası
-        ctx.fillStyle = '#a78bfa';
-        ctx.beginPath();
-        ctx.arc(l.x, l.y, 1.5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-      this._neuralRaf = requestAnimationFrame(loop);
-    };
-    this._neuralRaf = requestAnimationFrame(loop);
-  }
-
-  _stopNeural() {
-    this._neuralActive = false;
-    if (this._neuralRaf) { cancelAnimationFrame(this._neuralRaf); this._neuralRaf = null; }
-    if (this._neuralCtx && this._neuralCanvas)
-      this._neuralCtx.clearRect(0, 0, this._neuralCanvas.width, this._neuralCanvas.height);
-  }
-
-  // ── HAFIZA SOĞUMA ─────────────────────────────────────────────
-  _startCool() {
-    this._coolLevel = 0;
-    this._coolTimer = setInterval(() => {
-      if (this.phase !== 'recall') return;
-      this._coolLevel = Math.min(1, this._coolLevel + 0.015);
-      // Kutunun kenarlık opaklığını yavaşça düşür
-      const alpha = Math.max(0.06, 0.2 - this._coolLevel * 0.14);
-      document.querySelectorAll('.ph-letter.ph-faded').forEach(el => {
-        el.style.borderColor = `rgba(167,139,250,${alpha})`;
-      });
-    }, 400);
-  }
-
-  _stopCool() {
-    if (this._coolTimer) { clearInterval(this._coolTimer); this._coolTimer = null; }
-    this._coolLevel = 0;
-  }
-
-  // ── KELIME DÖNGÜSÜ ────────────────────────────────────────────
-  async _nextWord() {
-    if (this.aborted) return;
-    if (this.idx >= this.queue.length) { this._showResult(); return; }
-
-    this.word       = this.queue[this.idx];
-    this.typed      = [];
-    this.errorCount = 0;
-    this.phase      = 'imprint';
-    this._stopCool();
-    this._stopNeural();
-
-    this._updateTopbar();
-    this._setHintBtnsVisible(false);
-
-    // Kelime bilgi bandı
-    this._showWordInfo(this.word);
-
-    // Slotlu harf ekranı oluştur
-    this._buildLetters(this.word.en);
-
-    // Çeviri + IPA + örnek belir
-    await this._showMeta(this.word);
-    if (this.aborted) return;
-
-    // Imprint
-    await this._runImprint(this.word.en);
-    if (this.aborted) return;
-
-    // Recall fazına geç
-    this._enterRecall();
-  }
-
-  _updateTopbar() {
-    const n = this.idx + 1, t = this.queue.length;
-    const counter = document.getElementById('ph-counter');
-    const fill    = document.getElementById('ph-prog-fill');
-    const score   = document.getElementById('ph-score');
-    const combo   = document.getElementById('ph-combo');
-    const cval    = document.getElementById('ph-combo-val');
-    if (counter) counter.textContent = `${n}/${t}`;
-    if (fill)    fill.style.width    = `${((n-1) / t) * 100}%`;
-    if (score)   score.textContent   = `${this.score} XP`;
-    if (combo) {
-      const show = this.combo >= 2;
-      combo.style.display = show ? 'inline-flex' : 'none';
-      if (show && cval) cval.textContent = this.combo;
-    }
-  }
-
-  _showWordInfo(word) {
-    const el = document.getElementById('ph-word-info');
-    if (!el) return;
-    el.innerHTML =
-      `<span class="ph-word-icon">${word.icon||'📝'}</span>
-       <span class="ph-cefr" data-level="${word.level}">${word.level}</span>
-       <span class="ph-cat">${word.cat}</span>`;
-    el.style.opacity = '1';
-    el.style.transition = 'opacity 0.4s';
-  }
-
-  // ── HARF SLOTLARI ────────────────────────────────────────────
-  _buildLetters(word) {
-    const wrap = document.getElementById('ph-letters');
-    if (!wrap) return;
-
-    // Kullanılabilir genişliği ölç
-    const container = document.getElementById('ph-letters-wrap');
-    const availW = (container?.offsetWidth || window.innerWidth) - 24;
-
-    const totalChars  = word.length;
-    const spaceCount  = (word.match(/ /g) || []).length;
-    const letterCount = totalChars - spaceCount;
-    const spaceW      = spaceCount * 18;  // boşluk slotları için sabit genişlik
-
-    // Gap hesabı
-    const gap     = totalChars <= 8 ? 7 : totalChars <= 12 ? 5 : 4;
-    const gapTotal = Math.max(0, totalChars - 1) * gap;
-
-    // Harf slotu genişliği
-    const rawW  = (availW - gapTotal - spaceW) / Math.max(1, letterCount);
-    const slotW = Math.max(22, Math.min(54, Math.floor(rawW)));
-    const slotH = Math.round(slotW * 1.38);
-    const fs    = Math.max(13, Math.round(slotW * 0.62));
-    const r     = slotW <= 28 ? 6 : slotW <= 38 ? 8 : 10;
-
-    wrap.style.setProperty('--slot-w',   slotW + 'px');
-    wrap.style.setProperty('--slot-h',   slotH + 'px');
-    wrap.style.setProperty('--slot-fs',  fs    + 'px');
-    wrap.style.setProperty('--slot-gap', gap   + 'px');
-    wrap.style.setProperty('--slot-r',   r     + 'px');
-
-    wrap.innerHTML = word.split('').map((c, i) =>
-      c === ' '
-        ? `<span class="ph-letter ph-letter-space ph-faded" id="phl-${i}" data-c=" "></span>`
-        : `<span class="ph-letter ph-faded" id="phl-${i}" data-c="${c}">${c}</span>`
-    ).join('');
-  }
-
-  async _showMeta(word) {
-    const meta = document.getElementById('ph-meta');
-    const tr   = document.getElementById('ph-translation');
-    const ipa  = document.getElementById('ph-ipa');
-    const ex   = document.getElementById('ph-example');
-    const syns = document.getElementById('ph-syns');
-    await _wait(180);
-    if (this.aborted) return;
-    if (tr)   tr.textContent  = word.tr;
-    if (ipa)  ipa.textContent = word.ipa || '';
-    if (ex)   ex.textContent  = word.ex ? `"${word.ex}"` : '';
-    if (syns) syns.textContent = word.syns?.length ? `≈ ${word.syns.join(', ')}` : '';
-    if (meta) meta.style.opacity = '1';
-    setTimeout(() => { if (!this.aborted) this.app.speakWord(word.en); }, 280);
-  }
-
-  // ── IMPRINT ──────────────────────────────────────────────────
-  async _runImprint(word) {
-    const cfg    = PH_MODES[this.mode];
-    const status = document.getElementById('ph-status');
-
-    if (cfg.allAtOnce) {
-      // PHANTOM: hepsi birden
-      if (status) { status.textContent = '👁 İzle — hepsini gör'; status.className = 'ph-status ph-status-watch'; }
-      word.split('').forEach((_, i) => this._litLetter(i));
-      await _wait(cfg.imprintMs);
-      if (this.aborted) return;
-      // Toplu sönme
-      const letters = document.querySelectorAll('.ph-letter');
-      letters.forEach(el => el.classList.add('ph-fading-out'));
-      await _wait(500);
-      letters.forEach(el => { el.classList.remove('ph-lit', 'ph-fading-out'); el.classList.add('ph-faded'); });
-    } else {
-      // FLASH / GHOST: harf harf, önceki harf yarı-görünür
-      if (status) { status.textContent = '👁 Her harfi hafızana işle'; status.className = 'ph-status ph-status-watch'; }
-      for (let i = 0; i < word.length; i++) {
-        if (this.aborted) return;
-        this._litLetter(i);
-        await _wait(cfg.imprintMs);
-        if (this.aborted) return;
-        const el = document.getElementById(`phl-${i}`);
-        if (el) { el.classList.remove('ph-lit'); el.classList.add('ph-faded'); }
-        await _wait(60);
-      }
-    }
-
-    if (this.aborted) return;
-
-    // Meta ve word-info solar
-    const meta = document.getElementById('ph-meta');
-    const wi   = document.getElementById('ph-word-info');
-    if (meta) meta.style.opacity = '0';
-    if (wi)   wi.style.opacity   = '0';
-  }
-
-  _litLetter(i) {
-    const el = document.getElementById(`phl-${i}`);
-    if (!el) return;
-    el.classList.remove('ph-faded');
-    el.classList.add('ph-lit');
-  }
-
-  // ── RECALL ───────────────────────────────────────────────────
-  _enterRecall() {
-    if (this.aborted) return;
-    this.phase = 'recall';
-    this.typed = [];
-
-    const status = document.getElementById('ph-status');
-    const fog    = document.getElementById('ph-fog');
-    if (status) { status.textContent = '🖊 Şimdi yaz…'; status.className = 'ph-status ph-status-write'; }
-    if (fog)    fog.classList.add('ph-fog-active');
-
-    this._updateCursor();
-    this._setHintBtnsVisible(true);
-    this._startCool();
-    this._startNeural();
-  }
-
-  _updateCursor() {
-    if (!this.word) return;
-    const len  = this.word.en.length;
-    const next = this.typed.length;
-    for (let i = 0; i < len; i++) {
-      const el = document.getElementById(`phl-${i}`);
-      if (!el) continue;
-      if (i < next) {
-        el.classList.remove('ph-cursor');
-      } else {
-        el.classList.toggle('ph-cursor', i === next);
-      }
-    }
-  }
-
-  // ── İPUCU SİSTEMİ ────────────────────────────────────────────
-  _setHintBtnsVisible(show) {
-    const row = document.getElementById('ph-hint-row');
-    if (row) row.style.display = show ? 'flex' : 'none';
-  }
-
-  _hint(type) {
-    if (this.phase !== 'recall' || !this.word || this.hintsLeft <= 0) return;
-    this.hintsLeft--;
-    this._hintUsed = true;
-    const hl = document.getElementById('ph-hints-left');
-    if (hl) hl.textContent = `💡 ${this.hintsLeft} hak`;
-    const _hintsUsed  = 3 - this.hintsLeft;
-    const _penalty    = [1, 0.75, 0.5, 0.25][Math.min(_hintsUsed, 3)];
-    const _baseXP     = window.remoteFlags?.xp_phantom_base ?? 20;
-    const _earnXP     = Math.round(_baseXP * _penalty);
-
-    const word = this.word.en.toLowerCase();
-    const alreadyTyped = this.typed.length;
-
-    if (type === 'first') {
-      // İlk yazılmamış harfi göster
-      const pos = alreadyTyped;
-      if (pos < word.length) this._revealLetter(pos, 'hint');
-    } else if (type === 'mid') {
-      const mid = Math.floor(word.length / 2);
-      this._revealLetter(mid, 'hint');
-    } else if (type === 'all') {
-      // Tümünü göster
-      for (let i = 0; i < word.length; i++) {
-        if (i >= alreadyTyped) this._revealLetter(i, 'hint');
-      }
-    }
-
-    UI.toast(`💡 İpucu kullanıldı — bu kelimeden +${_earnXP} XP (tam: ${_baseXP} XP)`);
-
-    if (this.hintsLeft <= 0) {
-      document.querySelectorAll('.ph-hint-btn').forEach(b => b.disabled = true);
-    }
-  }
-
-  _revealLetter(pos, cls) {
-    const el = document.getElementById(`phl-${pos}`);
-    if (!el || el.classList.contains('ph-crystal')) return;
-    el.classList.remove('ph-faded', 'ph-cursor');
-    el.classList.add('ph-hint-glow');
-    el.style.opacity = '1';
-    el.textContent   = this.word.en[pos];
-  }
-
-  // ── KARAKTER GİRİŞİ ──────────────────────────────────────────
-  _typeChar(c) {
-    if (this.phase !== 'recall' || !this.word) return;
-    const word = this.word.en.toLowerCase();
-    const pos  = this.typed.length;
-    if (pos >= word.length) return;
-
-    // İpucuyla zaten açılmış mı?
-    const el = document.getElementById(`phl-${pos}`);
-    if (el && el.classList.contains('ph-hint-glow')) {
-      // Bu pozisyon ipucuyla açıldı, doğru harfi kabul et
-      this.typed.push(word[pos]);
-      el.classList.remove('ph-hint-glow', 'ph-cursor');
-      el.classList.add('ph-crystal');
-      el.style.opacity = '1';
-      this.app.audio.play('pop');
-      this._updateCursor();
-      if (this.typed.length === word.length) this._onWordComplete(true);
-      return;
-    }
-
-    const ok = word[pos] === c;
-    this._vkbFlash(c, ok);
-
-    if (ok) {
-      this.typed.push(c);
-      if (el) {
-        el.classList.remove('ph-faded', 'ph-cursor', 'ph-hint-glow');
-        el.classList.add('ph-crystal');
-        el.style.opacity = '1';
-        el.textContent   = c === ' ' ? '' : c;
-      }
-      this.app.audio.play('pop');
-      // Sonraki pozisyon boşluksa otomatik atla
-      while (this.typed.length < word.length && word[this.typed.length] === ' ') {
-        const spEl = document.getElementById(`phl-${this.typed.length}`);
-        if (spEl) { spEl.classList.remove('ph-faded','ph-cursor'); spEl.classList.add('ph-crystal'); }
-        this.typed.push(' ');
-      }
-      this._updateCursor();
-      if (this.typed.length === word.length) this._onWordComplete(true);
-    } else {
-      this.errorCount++;
-      if (el) {
-        el.classList.add('ph-error');
-        setTimeout(() => el.classList.remove('ph-error'), 320);
-      }
-      // 3+ yanlış: hafif ekran sarsma
-      if (this.errorCount % 3 === 0) this._flashScreen('red');
-      this.app.audio.play('error');
-    }
-  }
-
-  _backspace() {
-    if (this.phase !== 'recall' || !this.typed.length) return;
-    this.typed.pop();
-    const pos = this.typed.length;
-    const el  = document.getElementById(`phl-${pos}`);
-    if (el) {
-      el.classList.remove('ph-crystal', 'ph-hint-glow');
-      el.classList.add('ph-faded', 'ph-cursor');
-      el.style.removeProperty('color');
-      el.style.removeProperty('border-color');
-      el.style.removeProperty('box-shadow');
-      el.textContent = this.word.en[pos];
-    }
-    this._updateCursor();
-  }
-
-  _skipWord() {
-    if (this.phase !== 'recall' && this.phase !== 'imprint') return;
-    this.missedWords.push(this.word);
-    this.combo = 0;
-    this._onWordComplete(false);
-  }
-
-  // ── EKRAN FLAŞI ──────────────────────────────────────────────
-  _flashScreen(color) {
-    const el = document.getElementById('ph-flash');
-    if (!el) return;
-    el.className = `ph-screen-flash ph-flash-${color} ph-flash-active`;
-    setTimeout(() => { el.className = 'ph-screen-flash'; }, 500);
-  }
-
-  // ── DALGA KRİSTALİZASYON ─────────────────────────────────────
-  async _waveCrystal(word) {
-    for (let i = this.typed.length; i < word.length; i++) {
-      const el = document.getElementById(`phl-${i}`);
-      if (!el) continue;
-      el.classList.remove('ph-faded', 'ph-hint-glow', 'ph-cursor');
-      el.classList.add('ph-crystal');
-      el.style.opacity = '1';
-      el.textContent   = word[i] === ' ' ? '' : word[i];
-      if (word[i] !== ' ') await _wait(55);
-    }
-  }
-
-  // ── KOMBO ALEV EFEKTİ ─────────────────────────────────────────
-  _showComboFlame(multiplier) {
-    const el = document.getElementById('ph-combo');
-    if (!el) return;
-    el.classList.add('ph-combo-burst');
-    setTimeout(() => el.classList.remove('ph-combo-burst'), 700);
-    if (multiplier >= 3) this._flashScreen('gold');
-    else if (multiplier >= 2) this._flashScreen('violet');
-  }
-
-  // ── KELIME TAMAMLANDI ─────────────────────────────────────────
-  async _onWordComplete(success) {
-    if (this.aborted) return;
-    this.phase = 'feedback';
-    this._stopCool();
-    this._stopNeural();
-
-    const cfg    = PH_MODES[this.mode];
-    const word   = this.word;
-    const fog    = document.getElementById('ph-fog');
-    const status = document.getElementById('ph-status');
-    const mastery = this.app.state.get('mastery') || {};
-    const m       = mastery[word.id] || {};
-
-    if (success) {
-      this.combo++;
-      const hintsUsed   = 3 - this.hintsLeft;
-      const perfect     = this.errorCount === 0 && hintsUsed === 0;
-      const cfg         = { xp: window.remoteFlags?.xp_phantom_base ?? 20 };
-      const multiplier  = this.combo >= 10 ? 3 : this.combo >= 5 ? 2 : 1;
-      const hintPenalty = [1, 0.75, 0.5, 0.25][Math.min(hintsUsed, 3)];
-      const xp          = Math.round(cfg.xp * multiplier * hintPenalty);
-      this.score        += xp;
-      if (perfect) this.perfectWords++;
-      this._hintUsed = false;
-
-      mastery[word.id] = {
-        ...m,
-        score:      Math.min(5, (m.score||0) + (perfect ? 2 : 1)),
-        interval:   ((m.interval||1) * (perfect ? 2 : 1.5)),
-        nextReview: Date.now() + ((m.interval||1) * 86400000),
-      };
-
-      this.app.addXP(xp, 'easy');
-      this.app.state.set('mastery', mastery);
-
-      // Dalga kristalizasyon
-      await this._waveCrystal(word.en);
-      if (this.aborted) return;
-
-      if (status) {
-        const msgs = ['✨ Süper!','💎 Harika!','⚡ Mükemmel!','🌟 İnanılmaz!'];
-        const mult_msg = multiplier >= 3 ? '🔥 EFSANE KOMBO!' : multiplier >= 2 ? '⚡ KOMBO!×2' : '';
-        const perf_msg = perfect ? ' ✦ Hatasız!' : '';
-        status.textContent = `${mult_msg || msgs[Math.min(this.combo-1, msgs.length-1)]}${perf_msg} +${xp} XP`;
-        status.className = 'ph-status ph-status-success';
-      }
-
-      if (fog) fog.classList.remove('ph-fog-active');
-      this._flashScreen('green');
-      if (multiplier >= 2) this._showComboFlame(multiplier);
-      this._updateTopbar();
-
-      if (window.confetti && perfect)
-        confetti({ particleCount: 45, spread: 60, origin: { y: 0.5 }, colors: ['#a78bfa','#22d3ee','#f5d770'] });
-
-    } else {
-      // Başarısız
-      this._hintUsed = false;
-      this.combo = 0;
-      this.missedWords.push(word);
-      mastery[word.id] = { ...m, score: Math.max(0, (m.score||0) - 1), interval:1, nextReview: Date.now()+3600000 };
-      this.app.state.set('mastery', mastery);
-
-      // Tüm harfleri kırmızı göster
-      for (let i = 0; i < word.en.length; i++) {
-        const el = document.getElementById(`phl-${i}`);
-        if (el) { el.classList.remove('ph-faded','ph-cursor','ph-crystal','ph-hint-glow'); el.classList.add('ph-reveal'); el.style.opacity='1'; el.textContent=word.en[i]; }
-      }
-      if (status) { status.textContent = `💀 Cevap: ${word.en}`; status.className = 'ph-status ph-status-fail'; }
-      if (fog)    fog.classList.remove('ph-fog-active');
-      this._flashScreen('red');
-      this._updateTopbar();
-    }
-
-    this._setHintBtnsVisible(false);
-
-    // Çeviriyi geri göster
-    const meta = document.getElementById('ph-meta');
-    const tr   = document.getElementById('ph-translation');
-    const ex   = document.getElementById('ph-example');
-    if (tr)   tr.textContent   = word.tr;
-    if (ex)   ex.textContent   = word.ex ? `"${word.ex}"` : '';
-    if (meta) meta.style.opacity = '1';
-
-    await _wait(success ? 1300 : 2100);
-    if (this.aborted) return;
-
-    this.idx++;
-    this._nextWord();
-  }
-
-  // ── ÇIKIŞ ONAYI ─────────────────────────────────────────────
-  _confirmExit() {
-    if (this.phase === 'intro' || this.phase === 'result') { this.app.navigate('learn'); return; }
-    const ok = confirm('Oturumdan çıkmak istiyor musun? İlerleme kaydedildi.');
-    if (ok) this.app.navigate('learn');
-  }
-
-  // ── SONUÇ ────────────────────────────────────────────────────
-  _showResult() {
-    this.phase = 'result';
-    if (this._kbHandler) document.removeEventListener('keydown', this._kbHandler);
-
-    const mastery = this.app.state.get('mastery') || {};
-    const total   = this.queue.length;
-    const correct = this.queue.filter(w => (mastery[w.id]?.score||0) >= 1).length;
-    const pct     = total > 0 ? Math.round(correct / total * 100) : 0;
-    window.analyticsManager?.lessonComplete('phantom', pct);
-
-    const grade = pct >= 90 ? { icon:'🌟', label:'EFSANE',  cls:'grade-gold',   msg:'Muhteşem bir hafıza!' }
-                : pct >= 70 ? { icon:'💎', label:'HARİKA',  cls:'grade-blue',   msg:'Çok güçlü performans!' }
-                : pct >= 50 ? { icon:'⚡', label:'İYİ',     cls:'grade-violet', msg:'İyi ilerliyorsun!' }
-                :             { icon:'💪', label:'DEVAM ET', cls:'grade-gray',   msg:'Pratik seni mükemmelleştirir.' };
-
-    // XP sayaç animasyonu için başlangıç
-    const finalScore = this.score;
-
-    this.root.innerHTML = `
+       <button class="ph-key ph-key-bs" onclick="window.phantomMod._backspace()">\u232B</button>
+     </div>`}_vkbFlash(t,s){const e=document.getElementById(`phk-${t}`);e&&(e.classList.remove("ph-key-ok","ph-key-err"),e.classList.add(s?"ph-key-ok":"ph-key-err"),setTimeout(()=>e.classList.remove("ph-key-ok","ph-key-err"),600))}_setupNeural(){const t=document.getElementById("ph-neural-canvas");t&&(t.width=t.offsetWidth||window.innerWidth,t.height=t.offsetHeight||window.innerHeight,this._neuralCanvas=t,this._neuralCtx=t.getContext("2d"),this._neuralLines=Array.from({length:12},()=>({x:Math.random()*t.width,y:Math.random()*t.height,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,len:40+Math.random()*80,alpha:0})),this._neuralActive=!1)}_startNeural(){this._neuralActive=!0;const t=()=>{if(!this._neuralActive||!this._neuralCtx)return;const s=this._neuralCtx,e=this._neuralCanvas.width,a=this._neuralCanvas.height;s.clearRect(0,0,e,a);for(const i of this._neuralLines){i.x+=i.vx,i.y+=i.vy,(i.x<0||i.x>e)&&(i.vx*=-1),(i.y<0||i.y>a)&&(i.vy*=-1),i.alpha=Math.min(.12,i.alpha+.003);const o=Math.atan2(i.vy,i.vx);s.save(),s.globalAlpha=i.alpha,s.strokeStyle="#a78bfa",s.lineWidth=.8,s.beginPath(),s.moveTo(i.x,i.y),s.lineTo(i.x+Math.cos(o)*i.len,i.y+Math.sin(o)*i.len),s.stroke(),s.fillStyle="#a78bfa",s.beginPath(),s.arc(i.x,i.y,1.5,0,Math.PI*2),s.fill(),s.restore()}this._neuralRaf=requestAnimationFrame(t)};this._neuralRaf=requestAnimationFrame(t)}_stopNeural(){this._neuralActive=!1,this._neuralRaf&&(cancelAnimationFrame(this._neuralRaf),this._neuralRaf=null),this._neuralCtx&&this._neuralCanvas&&this._neuralCtx.clearRect(0,0,this._neuralCanvas.width,this._neuralCanvas.height)}_startCool(){this._coolLevel=0,this._coolTimer=setInterval(()=>{if(this.phase!=="recall")return;this._coolLevel=Math.min(1,this._coolLevel+.015);const t=Math.max(.06,.2-this._coolLevel*.14);document.querySelectorAll(".ph-letter.ph-faded").forEach(s=>{s.style.borderColor=`rgba(167,139,250,${t})`})},400)}_stopCool(){this._coolTimer&&(clearInterval(this._coolTimer),this._coolTimer=null),this._coolLevel=0}async _nextWord(){if(!this.aborted){if(this.idx>=this.queue.length){this._showResult();return}this.word=this.queue[this.idx],this.typed=[],this.errorCount=0,this.phase="imprint",this._stopCool(),this._stopNeural(),this._updateTopbar(),this._setHintBtnsVisible(!1),this._showWordInfo(this.word),this._buildLetters(this.word.en),await this._showMeta(this.word),!this.aborted&&(await this._runImprint(this.word.en),!this.aborted&&this._enterRecall())}}_updateTopbar(){const t=this.idx+1,s=this.queue.length,e=document.getElementById("ph-counter"),a=document.getElementById("ph-prog-fill"),i=document.getElementById("ph-score"),o=document.getElementById("ph-combo"),n=document.getElementById("ph-combo-val");if(e&&(e.textContent=`${t}/${s}`),a&&(a.style.width=`${(t-1)/s*100}%`),i&&(i.textContent=`${this.score} XP`),o){const h=this.combo>=2;o.style.display=h?"inline-flex":"none",h&&n&&(n.textContent=this.combo)}}_showWordInfo(t){const s=document.getElementById("ph-word-info");s&&(s.innerHTML=`<span class="ph-word-icon">${t.icon||"\u{1F4DD}"}</span>
+       <span class="ph-cefr" data-level="${t.level}">${t.level}</span>
+       <span class="ph-cat">${t.cat}</span>`,s.style.opacity="1",s.style.transition="opacity 0.4s")}_buildLetters(t){const s=document.getElementById("ph-letters");if(!s)return;const e=document.getElementById("ph-letters-wrap"),a=((e==null?void 0:e.offsetWidth)||window.innerWidth)-24,i=t.length,o=(t.match(/ /g)||[]).length,n=i-o,h=o*18,d=i<=8?7:i<=12?5:4,m=Math.max(0,i-1)*d,p=(a-m-h)/Math.max(1,n),r=Math.max(22,Math.min(54,Math.floor(p))),l=Math.round(r*1.38),c=Math.max(13,Math.round(r*.62)),f=r<=28?6:r<=38?8:10;s.style.setProperty("--slot-w",r+"px"),s.style.setProperty("--slot-h",l+"px"),s.style.setProperty("--slot-fs",c+"px"),s.style.setProperty("--slot-gap",d+"px"),s.style.setProperty("--slot-r",f+"px"),s.innerHTML=t.split("").map((u,v)=>u===" "?`<span class="ph-letter ph-letter-space ph-faded" id="phl-${v}" data-c=" "></span>`:`<span class="ph-letter ph-faded" id="phl-${v}" data-c="${u}">${u}</span>`).join("")}async _showMeta(t){var n;const s=document.getElementById("ph-meta"),e=document.getElementById("ph-translation"),a=document.getElementById("ph-ipa"),i=document.getElementById("ph-example"),o=document.getElementById("ph-syns");await _wait(180),!this.aborted&&(e&&(e.textContent=t.tr),a&&(a.textContent=t.ipa||""),i&&(i.textContent=t.ex?`"${t.ex}"`:""),o&&(o.textContent=(n=t.syns)!=null&&n.length?`\u2248 ${t.syns.join(", ")}`:""),s&&(s.style.opacity="1"),setTimeout(()=>{this.aborted||this.app.speakWord(t.en)},280))}async _runImprint(t){const s=PH_MODES[this.mode],e=document.getElementById("ph-status");if(s.allAtOnce){if(e&&(e.textContent="\u{1F441} \u0130zle \u2014 hepsini g\xF6r",e.className="ph-status ph-status-watch"),t.split("").forEach((n,h)=>this._litLetter(h)),await _wait(s.imprintMs),this.aborted)return;const o=document.querySelectorAll(".ph-letter");o.forEach(n=>n.classList.add("ph-fading-out")),await _wait(500),o.forEach(n=>{n.classList.remove("ph-lit","ph-fading-out"),n.classList.add("ph-faded")})}else{e&&(e.textContent="\u{1F441} Her harfi haf\u0131zana i\u015Fle",e.className="ph-status ph-status-watch");for(let o=0;o<t.length;o++){if(this.aborted||(this._litLetter(o),await _wait(s.imprintMs),this.aborted))return;const n=document.getElementById(`phl-${o}`);n&&(n.classList.remove("ph-lit"),n.classList.add("ph-faded")),await _wait(60)}}if(this.aborted)return;const a=document.getElementById("ph-meta"),i=document.getElementById("ph-word-info");a&&(a.style.opacity="0"),i&&(i.style.opacity="0")}_litLetter(t){const s=document.getElementById(`phl-${t}`);s&&(s.classList.remove("ph-faded"),s.classList.add("ph-lit"))}_enterRecall(){if(this.aborted)return;this.phase="recall",this.typed=[];const t=document.getElementById("ph-status"),s=document.getElementById("ph-fog");t&&(t.textContent="\u{1F58A} \u015Eimdi yaz\u2026",t.className="ph-status ph-status-write"),s&&s.classList.add("ph-fog-active"),this._updateCursor(),this._setHintBtnsVisible(!0),this._startCool(),this._startNeural()}_updateCursor(){if(!this.word)return;const t=this.word.en.length,s=this.typed.length;for(let e=0;e<t;e++){const a=document.getElementById(`phl-${e}`);a&&(e<s?a.classList.remove("ph-cursor"):a.classList.toggle("ph-cursor",e===s))}}_setHintBtnsVisible(t){const s=document.getElementById("ph-hint-row");s&&(s.style.display=t?"flex":"none")}_hint(t){var d,m;if(this.phase!=="recall"||!this.word||this.hintsLeft<=0)return;this.hintsLeft--,this._hintUsed=!0;const s=document.getElementById("ph-hints-left");s&&(s.textContent=`\u{1F4A1} ${this.hintsLeft} hak`);const e=3-this.hintsLeft,a=[1,.75,.5,.25][Math.min(e,3)],i=(m=(d=window.remoteFlags)==null?void 0:d.xp_phantom_base)!=null?m:20,o=Math.round(i*a),n=this.word.en.toLowerCase(),h=this.typed.length;if(t==="first"){const p=h;p<n.length&&this._revealLetter(p,"hint")}else if(t==="mid"){const p=Math.floor(n.length/2);this._revealLetter(p,"hint")}else if(t==="all")for(let p=0;p<n.length;p++)p>=h&&this._revealLetter(p,"hint");UI.toast(`\u{1F4A1} \u0130pucu kullan\u0131ld\u0131 \u2014 bu kelimeden +${o} XP (tam: ${i} XP)`),this.hintsLeft<=0&&document.querySelectorAll(".ph-hint-btn").forEach(p=>p.disabled=!0)}_revealLetter(t,s){const e=document.getElementById(`phl-${t}`);!e||e.classList.contains("ph-crystal")||(e.classList.remove("ph-faded","ph-cursor"),e.classList.add("ph-hint-glow"),e.style.opacity="1",e.textContent=this.word.en[t])}_typeChar(t){if(this.phase!=="recall"||!this.word)return;const s=this.word.en.toLowerCase(),e=this.typed.length;if(e>=s.length)return;const a=document.getElementById(`phl-${e}`);if(a&&a.classList.contains("ph-hint-glow")){this.typed.push(s[e]),a.classList.remove("ph-hint-glow","ph-cursor"),a.classList.add("ph-crystal"),a.style.opacity="1",this.app.audio.play("pop"),this._updateCursor(),this.typed.length===s.length&&this._onWordComplete(!0);return}const i=s[e]===t;if(this._vkbFlash(t,i),i){for(this.typed.push(t),a&&(a.classList.remove("ph-faded","ph-cursor","ph-hint-glow"),a.classList.add("ph-crystal"),a.style.opacity="1",a.textContent=t===" "?"":t),this.app.audio.play("pop");this.typed.length<s.length&&s[this.typed.length]===" ";){const o=document.getElementById(`phl-${this.typed.length}`);o&&(o.classList.remove("ph-faded","ph-cursor"),o.classList.add("ph-crystal")),this.typed.push(" ")}this._updateCursor(),this.typed.length===s.length&&this._onWordComplete(!0)}else this.errorCount++,a&&(a.classList.add("ph-error"),setTimeout(()=>a.classList.remove("ph-error"),320)),this.errorCount%3===0&&this._flashScreen("red"),this.app.audio.play("error")}_backspace(){if(this.phase!=="recall"||!this.typed.length)return;this.typed.pop();const t=this.typed.length,s=document.getElementById(`phl-${t}`);s&&(s.classList.remove("ph-crystal","ph-hint-glow"),s.classList.add("ph-faded","ph-cursor"),s.style.removeProperty("color"),s.style.removeProperty("border-color"),s.style.removeProperty("box-shadow"),s.textContent=this.word.en[t]),this._updateCursor()}_skipWord(){this.phase!=="recall"&&this.phase!=="imprint"||(this.missedWords.push(this.word),this.combo=0,this._onWordComplete(!1))}_flashScreen(t){const s=document.getElementById("ph-flash");s&&(s.className=`ph-screen-flash ph-flash-${t} ph-flash-active`,setTimeout(()=>{s.className="ph-screen-flash"},500))}async _waveCrystal(t){for(let s=this.typed.length;s<t.length;s++){const e=document.getElementById(`phl-${s}`);e&&(e.classList.remove("ph-faded","ph-hint-glow","ph-cursor"),e.classList.add("ph-crystal"),e.style.opacity="1",e.textContent=t[s]===" "?"":t[s],t[s]!==" "&&await _wait(55))}}_showComboFlame(t){const s=document.getElementById("ph-combo");s&&(s.classList.add("ph-combo-burst"),setTimeout(()=>s.classList.remove("ph-combo-burst"),700),t>=3?this._flashScreen("gold"):t>=2&&this._flashScreen("violet"))}async _onWordComplete(t){var p,r;if(this.aborted)return;this.phase="feedback",this._stopCool(),this._stopNeural();const s=PH_MODES[this.mode],e=this.word,a=document.getElementById("ph-fog"),i=document.getElementById("ph-status"),o=this.app.state.get("mastery")||{},n=o[e.id]||{};if(t){this.combo++;const l=3-this.hintsLeft,c=this.errorCount===0&&l===0,f={xp:(r=(p=window.remoteFlags)==null?void 0:p.xp_phantom_base)!=null?r:20},u=this.combo>=10?3:this.combo>=5?2:1,v=[1,.75,.5,.25][Math.min(l,3)],y=Math.round(f.xp*u*v);if(this.score+=y,c&&this.perfectWords++,this._hintUsed=!1,o[e.id]={...n,score:Math.min(5,(n.score||0)+(c?2:1)),interval:(n.interval||1)*(c?2:1.5),nextReview:Date.now()+(n.interval||1)*864e5},this.app.addXP(y,"easy"),this.app.state.set("mastery",o),await this._waveCrystal(e.en),this.aborted)return;if(i){const b=["\u2728 S\xFCper!","\u{1F48E} Harika!","\u26A1 M\xFCkemmel!","\u{1F31F} \u0130nan\u0131lmaz!"],_=u>=3?"\u{1F525} EFSANE KOMBO!":u>=2?"\u26A1 KOMBO!\xD72":"",w=c?" \u2726 Hatas\u0131z!":"";i.textContent=`${_||b[Math.min(this.combo-1,b.length-1)]}${w} +${y} XP`,i.className="ph-status ph-status-success"}a&&a.classList.remove("ph-fog-active"),this._flashScreen("green"),u>=2&&this._showComboFlame(u),this._updateTopbar(),window.confetti&&c&&confetti({particleCount:45,spread:60,origin:{y:.5},colors:["#a78bfa","#22d3ee","#f5d770"]})}else{this._hintUsed=!1,this.combo=0,this.missedWords.push(e),o[e.id]={...n,score:Math.max(0,(n.score||0)-1),interval:1,nextReview:Date.now()+36e5},this.app.state.set("mastery",o);for(let l=0;l<e.en.length;l++){const c=document.getElementById(`phl-${l}`);c&&(c.classList.remove("ph-faded","ph-cursor","ph-crystal","ph-hint-glow"),c.classList.add("ph-reveal"),c.style.opacity="1",c.textContent=e.en[l])}i&&(i.textContent=`\u{1F480} Cevap: ${e.en}`,i.className="ph-status ph-status-fail"),a&&a.classList.remove("ph-fog-active"),this._flashScreen("red"),this._updateTopbar()}this._setHintBtnsVisible(!1);const h=document.getElementById("ph-meta"),d=document.getElementById("ph-translation"),m=document.getElementById("ph-example");d&&(d.textContent=e.tr),m&&(m.textContent=e.ex?`"${e.ex}"`:""),h&&(h.style.opacity="1"),await _wait(t?1300:2100),!this.aborted&&(this.idx++,this._nextWord())}_confirmExit(){if(this.phase==="intro"||this.phase==="result"){this.app.navigate("learn");return}confirm("Oturumdan \xE7\u0131kmak istiyor musun? \u0130lerleme kaydedildi.")&&this.app.navigate("learn")}_showResult(){var p;this.phase="result",this._kbHandler&&document.removeEventListener("keydown",this._kbHandler);const t=this.app.state.get("mastery")||{},s=this.queue.length,e=this.queue.filter(r=>{var l;return(((l=t[r.id])==null?void 0:l.score)||0)>=1}).length,a=s>0?Math.round(e/s*100):0;(p=window.analyticsManager)==null||p.lessonComplete("phantom",a);const i=a>=90?{icon:"\u{1F31F}",label:"EFSANE",cls:"grade-gold",msg:"Muhte\u015Fem bir haf\u0131za!"}:a>=70?{icon:"\u{1F48E}",label:"HAR\u0130KA",cls:"grade-blue",msg:"\xC7ok g\xFC\xE7l\xFC performans!"}:a>=50?{icon:"\u26A1",label:"\u0130Y\u0130",cls:"grade-violet",msg:"\u0130yi ilerliyorsun!"}:{icon:"\u{1F4AA}",label:"DEVAM ET",cls:"grade-gray",msg:"Pratik seni m\xFCkemmelle\u015Ftirir."},o=this.score;this.root.innerHTML=`
       <div class="ph-result">
 
-        <div class="ph-result-grade ${grade.cls}">
-          <div class="ph-grade-icon">${grade.icon}</div>
-          <div class="ph-grade-label">${grade.label}</div>
+        <div class="ph-result-grade ${i.cls}">
+          <div class="ph-grade-icon">${i.icon}</div>
+          <div class="ph-grade-label">${i.label}</div>
         </div>
 
         <div class="ph-result-header">
-          <h2 class="ph-result-title">Oturum Tamamlandı</h2>
-          <p class="ph-result-msg">${grade.msg}</p>
+          <h2 class="ph-result-title">Oturum Tamamland\u0131</h2>
+          <p class="ph-result-msg">${i.msg}</p>
         </div>
 
         <div class="ph-result-stats">
           <div class="ph-rs ph-rs-xp">
             <span class="ph-rs-val" id="ph-rs-xp-val">0</span>
-            <span class="ph-rs-lbl">XP Kazanıldı</span>
+            <span class="ph-rs-lbl">XP Kazan\u0131ld\u0131</span>
           </div>
           <div class="ph-rs">
-            <span class="ph-rs-val">${correct}/${total}</span>
-            <span class="ph-rs-lbl">Doğru</span>
+            <span class="ph-rs-val">${e}/${s}</span>
+            <span class="ph-rs-lbl">Do\u011Fru</span>
           </div>
           <div class="ph-rs">
-            <span class="ph-rs-val ${pct >= 80 ? 'ph-rs-green' : ''}">${pct}%</span>
-            <span class="ph-rs-lbl">Başarı</span>
+            <span class="ph-rs-val ${a>=80?"ph-rs-green":""}">${a}%</span>
+            <span class="ph-rs-lbl">Ba\u015Far\u0131</span>
           </div>
           <div class="ph-rs">
             <span class="ph-rs-val ph-rs-gold">${this.perfectWords}</span>
-            <span class="ph-rs-lbl">Hatasız ✦</span>
+            <span class="ph-rs-lbl">Hatas\u0131z \u2726</span>
           </div>
         </div>
 
-        ${this.missedWords.length ? `
+        ${this.missedWords.length?`
         <div class="ph-missed-block">
-          <div class="ph-missed-title">📌 Çalışman Gereken Kelimeler</div>
+          <div class="ph-missed-title">\u{1F4CC} \xC7al\u0131\u015Fman Gereken Kelimeler</div>
           <div class="ph-missed-list">
-            ${[...new Set(this.missedWords.map(w=>w.id))].map(id => {
-              const w = this.missedWords.find(x=>x.id===id);
-              return `<div class="ph-missed-item">
-                <span class="ph-mi-icon">${w.icon||'📝'}</span>
-                <span class="ph-mi-en">${w.en}</span>
-                <span class="ph-mi-tr">${w.tr}</span>
-                <button class="ph-mi-listen" onclick="app.speakWord('${w.en}')">🔊</button>
-              </div>`;
-            }).join('')}
+            ${[...new Set(this.missedWords.map(r=>r.id))].map(r=>{const l=this.missedWords.find(c=>c.id===r);return`<div class="ph-missed-item">
+                <span class="ph-mi-icon">${l.icon||"\u{1F4DD}"}</span>
+                <span class="ph-mi-en">${l.en}</span>
+                <span class="ph-mi-tr">${l.tr}</span>
+                <button class="ph-mi-listen" onclick="app.speakWord('${l.en}')">\u{1F50A}</button>
+              </div>`}).join("")}
           </div>
-        </div>` : ''}
+        </div>`:""}
 
         <div class="ph-result-words">
-          <div class="ph-rw-title">Tüm Kelimeler</div>
-          ${this.queue.map(w => {
-            const ok  = (mastery[w.id]?.score||0) >= 1;
-            const perf = this.perfectWords > 0 && ok && !this.missedWords.find(x=>x.id===w.id);
-            return `<div class="ph-rw ${ok?'ph-rw-ok':'ph-rw-miss'}">
-              <span class="ph-rw-icon">${w.icon||'📝'}</span>
-              <span class="ph-rw-en">${w.en}</span>
-              <span class="ph-rw-tr">${w.tr}</span>
-              <span class="ph-rw-mark">${ok ? (perf ? '✦' : '✓') : '✗'}</span>
-            </div>`;
-          }).join('')}
+          <div class="ph-rw-title">T\xFCm Kelimeler</div>
+          ${this.queue.map(r=>{var f;const l=(((f=t[r.id])==null?void 0:f.score)||0)>=1,c=this.perfectWords>0&&l&&!this.missedWords.find(u=>u.id===r.id);return`<div class="ph-rw ${l?"ph-rw-ok":"ph-rw-miss"}">
+              <span class="ph-rw-icon">${r.icon||"\u{1F4DD}"}</span>
+              <span class="ph-rw-en">${r.en}</span>
+              <span class="ph-rw-tr">${r.tr}</span>
+              <span class="ph-rw-mark">${l?c?"\u2726":"\u2713":"\u2717"}</span>
+            </div>`}).join("")}
         </div>
 
         <div class="ph-result-acts">
-          <button class="ph-start-btn" onclick="window.phantomMod._startSession()">🔄 Yeniden Oyna</button>
-          <button class="ph-back-btn" onclick="app.navigate('learn')">← Ana Merkez</button>
+          <button class="ph-start-btn" onclick="window.phantomMod._startSession()">\u{1F504} Yeniden Oyna</button>
+          <button class="ph-back-btn" onclick="app.navigate('learn')">\u2190 Ana Merkez</button>
         </div>
 
-      </div>`;
-
-    // XP sayaç animasyonu
-    let displayed = 0;
-    const step = Math.max(1, Math.floor(finalScore / 40));
-    const counter = document.getElementById('ph-rs-xp-val');
-    const iv = setInterval(() => {
-      displayed = Math.min(finalScore, displayed + step);
-      if (counter) counter.textContent = displayed;
-      if (displayed >= finalScore) clearInterval(iv);
-    }, 25);
-
-    if (window.confetti && pct >= 70)
-      confetti({ particleCount: 130, spread: 85, origin: { y: 0.35 } });
-  }
-}
+      </div>`;let n=0;const h=Math.max(1,Math.floor(o/40)),d=document.getElementById("ph-rs-xp-val"),m=setInterval(()=>{n=Math.min(o,n+h),d&&(d.textContent=n),n>=o&&clearInterval(m)},25);window.confetti&&a>=70&&confetti({particleCount:130,spread:85,origin:{y:.35}})}}
