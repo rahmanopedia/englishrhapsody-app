@@ -16,6 +16,146 @@ const BRIDGE_CATEGORIES = [
 
 var BRIDGE_DATA = [
   {
+    "id": 1857,
+    "category": "sosyal",
+    "tr": "Gözün aydın",
+    "tags": ["göz", "aydın", "müjde", "iyi", "haber"],
+    "english_primary": "Good news! I'm so happy for you",
+    "alternatives": ["Congratulations on the good news!", "Finally! I'm glad it worked out"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Gözün aydın", "tr_gloss": "your eye is bright", "en_fragment": "Good news", "bridge_type": "transform", "explanation": "Gözdeki ışık/sevinç → İyi haber/Mutluluk." }
+    ],
+    "cultural_insight": "Türkçede müjdeli bir haber alan kişiye söylenir. İngilizcede doğrudan karşılığı yoktur, sevinci paylaşan ifadeler kullanılır.",
+    "fluency_tip": "Bir bebek doğduğunda veya biri sınavı geçtiğinde 'I'm so happy for you' en doğal tepkidir."
+  },
+  {
+    "id": 1858,
+    "category": "yogunluk",
+    "tr": "Kolay gelsin",
+    "tags": ["kolay", "gel", "iş", "çalış", "yardım"],
+    "english_primary": "Take it easy! / Good luck with your work",
+    "alternatives": ["Hope it goes well!", "Keep up the good work"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Kolay gelsin", "tr_gloss": "may it come easy", "en_fragment": "Good luck / Take it easy", "bridge_type": "disappear", "explanation": "Türkçe iş başındakine söylenen standart dilek → İngilizcede duruma göre değişen ifadeler." }
+    ],
+    "cultural_insight": "Türk kültüründe her türlü iş yapana söylenen evrensel bir kibarlık ifadesidir. İngilizcede 'Take it easy' daha çok vedalaşırken kullanılır.",
+    "fluency_tip": "Bir dükkandan çıkarken veya çalışan birine selam verirken 'Have a good one' diyebilirsin."
+  },
+  {
+    "id": 1859,
+    "category": "deyimler",
+    "tr": "Etekleri zil çalmak",
+    "tags": ["etek", "zil", "çal", "sevinç", "mutlu"],
+    "english_primary": "To be over the moon",
+    "alternatives": ["To be thrilled to bits", "To be jumping for joy"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Etekleri zil çalmak", "tr_gloss": "bells ringing on skirts", "en_fragment": "over the moon", "bridge_type": "transform", "explanation": "Bedensel sevinç (zil çalma) → Mekansal sevinç (ayın üzerinde olma)." }
+    ],
+    "cultural_insight": "Aşırı sevinci betimler. İngilizcede 'over the moon' çok yaygın ve samimi bir deyimdir.",
+    "fluency_tip": "Çok büyük bir başarı kazandığında 'I'm absolutely thrilled' diyerek duyguyu pekiştirebilirsin."
+  },
+  {
+    "id": 1860,
+    "category": "yogunluk",
+    "tr": "Kasmak",
+    "tags": ["kas", "kasmak", "zorla", "stres", "çabala"],
+    "english_primary": "To try too hard / To overthink",
+    "alternatives": ["Don't sweat it!", "To be uptight"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Kasmak", "tr_gloss": "to tense up", "en_fragment": "try too hard", "bridge_type": "transform", "explanation": "Kas gerilmesi → Zihinsel/Eylemsel aşırılık." }
+    ],
+    "cultural_insight": "Hem bir iş için çok uğraşmak hem de gergin davranmak anlamındadır. İngilizcede 'uptight' gergin kişilikler için kullanılır.",
+    "fluency_tip": "'Don't stress too much' yerine 'Don't sweat it' dersen çok daha doğal (cool) duyulursun."
+  },
+  {
+    "id": 1861,
+    "category": "sosyal",
+    "tr": "Geyik yapmak",
+    "tags": ["geyik", "yap", "konuş", "muhabbet", "boş"],
+    "english_primary": "To shoot the breeze",
+    "alternatives": ["To small talk", "To chew the fat"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Geyik yapmak", "tr_gloss": "to do deer", "en_fragment": "shoot the breeze", "bridge_type": "transform", "explanation": "Hayvan metaforu → Doğa metaforu (rüzgarı vurmak)." }
+    ],
+    "cultural_insight": "Hafif, amaçsız ama keyifli sohbeti anlatır. İngilizcede 'shoot the breeze' tam karşılığıdır.",
+    "fluency_tip": "Arkadaşlarla boş boş oturduğunuzu anlatırken 'We were just shooting the breeze' harika durur."
+  },
+  {
+    "id": 1862,
+    "category": "sasirma",
+    "tr": "Atar yapmak",
+    "tags": ["atar", "yap", "kız", "tepki", "sert"],
+    "english_primary": "To snap at someone",
+    "alternatives": ["To give someone attitude", "To lash out"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Atar yapmak", "tr_gloss": "to do throwing/pulse", "en_fragment": "snap at someone", "bridge_type": "transform", "explanation": "Sert çıkış → Ani kopma (snap)." }
+    ],
+    "cultural_insight": "Sebepsiz veya ani tepki göstermek. 'Giving attitude' daha çok ergenlerin veya huysuzların tavrını anlatır.",
+    "fluency_tip": "Birinin sana sert çıktığını anlatırken 'Why are you snapping at me?' (Niye bana atar yapıyorsun?) diyebilirsin."
+  },
+  {
+    "id": 1863,
+    "category": "basari",
+    "tr": "Paçayı kurtarmak",
+    "tags": ["paça", "kurtar", "kaç", "zor", "durum"],
+    "english_primary": "To get off the hook",
+    "alternatives": ["To make a narrow escape", "To save one's neck"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Paçayı kurtarmak", "tr_gloss": "to save the trouser leg", "en_fragment": "get off the hook", "bridge_type": "transform", "explanation": "Kıyafeti kurtarma → Oltadan kurtulma." }
+    ],
+    "cultural_insight": "Zor bir durumdan veya cezadan sıyrılmak. İngilizcede 'off the hook' sorumluluktan kaçmayı da anlatır.",
+    "fluency_tip": "Bir hatadan ceza almadan kurtulduğunda 'I'm off the hook!' diyerek sevinebilirsin."
+  },
+  {
+    "id": 1864,
+    "category": "duygular",
+    "tr": "İçim parçalandı",
+    "tags": ["iç", "parçalan", "üzül", "acı", "kalp"],
+    "english_primary": "It broke my heart",
+    "alternatives": ["My heart bleeds for them", "It's gut-wrenching"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "İçim parçalandı", "tr_gloss": "my inside was broken to pieces", "en_fragment": "broke my heart", "bridge_type": "transform", "explanation": "Genel iç organ → Kalp (heart)." }
+    ],
+    "cultural_insight": "Derin bir üzüntü ve empatiyi anlatır. 'Gut-wrenching' midede hissedilen o ağır acıyı ifade eder.",
+    "fluency_tip": "Çok üzücü bir haber için 'That's heartbreaking' (Yürek parçalayıcı) demek en doğalıdır."
+  },
+  {
+    "id": 1865,
+    "category": "gunluk",
+    "tr": "Baştan savma",
+    "tags": ["baş", "sav", "kötü", "iş", "özensiz"],
+    "english_primary": "A sloppy job / Half-hearted",
+    "alternatives": ["To do a rush job", "Cut corners"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Baştan savma", "tr_gloss": "fend off from the head", "en_fragment": "sloppy job", "bridge_type": "transform", "explanation": "Kafadan uzaklaştırma → Gevşek/Dikkatsiz iş." }
+    ],
+    "cultural_insight": "Özensiz yapılan işi anlatır. 'Cutting corners' ise maliyet veya zaman için kaliteden ödün vermektir.",
+    "fluency_tip": "İş dünyasında 'We shouldn't cut corners' derseniz, 'Kaliteden ödün vermeyelim' demiş olursunuz."
+  },
+  {
+    "id": 1866,
+    "category": "sosyal",
+    "tr": "Ağzından yel alsın",
+    "tags": ["ağız", "yel", "al", "kötü", "şans"],
+    "english_primary": "Bite your tongue! / Heaven forbid!",
+    "alternatives": ["Don't even say that!", "Knock on wood"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Ağzından yel alsın", "tr_gloss": "may the wind take it from your mouth", "en_fragment": "Bite your tongue", "bridge_type": "transform", "explanation": "Rüzgarın götürmesi → Dilini ısırmak (söylememek)." }
+    ],
+    "cultural_insight": "Kötü bir ihtimal dile getirildiğinde söylenir. İngilizcede 'Bite your tongue' biraz daha sert bir susturmadır.",
+    "fluency_tip": "Batıl inanç olarak 'Tahtaya vur' demek için 'Touch wood' (UK) veya 'Knock on wood' (US) kullanılır."
+  },
+  {
     "id": 1001,
     "category": "sosyal",
     "tr": "Yüz yüze konuşalım",
