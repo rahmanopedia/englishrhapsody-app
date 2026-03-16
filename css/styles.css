@@ -56,7 +56,7 @@
 /* ── 2. Reset & Base ──────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; max-width: 100vw; }
 
 body {
   font-family: 'Plus Jakarta Sans', 'Outfit', system-ui, sans-serif;
@@ -119,6 +119,9 @@ a { color: inherit; text-decoration: none; }
   min-height: 100dvh;
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 /* ── 7. Top Header ────────────────────────────────────────── */
@@ -3839,6 +3842,16 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
   .layout { grid-template-columns: 1fr; }
   .sidebar { display: none; }
   .mobile-nav { display: flex; }
+
+  /* Flex/grid çocuklarının min-width:auto ile taşmasını önle */
+  .main-content > *,
+  .home-grid > *,
+  .actions-grid > *,
+  .home-mid-row > *,
+  .hero-inner > *,
+  .hero-meta > *,
+  .header-stats > *,
+  .modes-drawer-grid > * { min-width: 0; }
   .main-content {
     padding: 16px
              calc(18px + env(safe-area-inset-right, 0px))
