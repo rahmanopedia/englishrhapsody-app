@@ -1171,6 +1171,7 @@ class BridgeModule {
       if (idx >= pool.length) {
         const pct = Math.round((score / pool.length) * 100);
         window.analyticsManager?.lessonComplete('bridge', pct);
+        this.app.addXP(score * 10, 'medium');
         overlay.innerHTML = `
           <div class="bridge-modal bridge-quiz-modal">
             <button class="bridge-modal-close" id="qclose">✕</button>
@@ -1292,6 +1293,7 @@ class BridgeModule {
         card.classList.add('done');
         this.dailyDone.push({ id, date: today });
         localStorage.setItem('bridge_daily_done', JSON.stringify(this.dailyDone));
+        this.app.addXP(10, 'easy');
         this._updateStreak();
         // progress bar güncelle
         const newDone = this.dailyDone.filter(d => d.date === today).length;
@@ -1300,6 +1302,7 @@ class BridgeModule {
         if (fill) fill.style.width = `${(newDone / dailyPool.length) * 100}%`;
         if (frac) frac.textContent = `${newDone}/${dailyPool.length}`;
         if (newDone === dailyPool.length) {
+          this.app.addXP(window.remoteFlags?.xp_grammar_rule ?? 30, 'medium');
           const existing = overlay.querySelector('.bridge-daily-complete');
           if (!existing) {
             const msg = document.createElement('div');

@@ -611,6 +611,10 @@ class PhantomMode {
     this._hintUsed = true;
     const hl = document.getElementById('ph-hints-left');
     if (hl) hl.textContent = `💡 ${this.hintsLeft} hak`;
+    const _hintsUsed  = 3 - this.hintsLeft;
+    const _penalty    = [1, 0.75, 0.5, 0.25][Math.min(_hintsUsed, 3)];
+    const _baseXP     = window.remoteFlags?.xp_phantom_base ?? 20;
+    const _earnXP     = Math.round(_baseXP * _penalty);
 
     const word = this.word.en.toLowerCase();
     const alreadyTyped = this.typed.length;
@@ -629,7 +633,7 @@ class PhantomMode {
       }
     }
 
-    UI.toast(`💡 İpucu kullanıldı (+${this.hintsLeft < 0 ? 0 : ''}${PH_MODES[this.mode].xp / 2} XP yerine ${PH_MODES[this.mode].xp} XP)`);
+    UI.toast(`💡 İpucu kullanıldı — bu kelimeden +${_earnXP} XP (tam: ${_baseXP} XP)`);
 
     if (this.hintsLeft <= 0) {
       document.querySelectorAll('.ph-hint-btn').forEach(b => b.disabled = true);
@@ -768,10 +772,11 @@ class PhantomMode {
 
     if (success) {
       this.combo++;
-      const perfect     = this.errorCount === 0 && !this._hintUsed;
+      const hintsUsed   = 3 - this.hintsLeft;
+      const perfect     = this.errorCount === 0 && hintsUsed === 0;
       const cfg         = { xp: window.remoteFlags?.xp_phantom_base ?? 20 };
       const multiplier  = this.combo >= 10 ? 3 : this.combo >= 5 ? 2 : 1;
-      const hintPenalty = this._hintUsed ? 0.5 : 1;
+      const hintPenalty = [1, 0.75, 0.5, 0.25][Math.min(hintsUsed, 3)];
       const xp          = Math.round(cfg.xp * multiplier * hintPenalty);
       this.score        += xp;
       if (perfect) this.perfectWords++;

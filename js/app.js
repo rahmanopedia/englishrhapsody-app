@@ -6008,7 +6008,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   _convoFinish() {
     const { score, total, level, scenario, turnLog = [] } = this.session.convo;
     const avg = total > 0 ? Math.round(score / total) : 0;
-    const xp  = Math.round(avg / 100 * (window.remoteFlags?.xp_speaking_max ?? 80));
+    const xp  = this.session.convo.sessionXP || Math.round(avg / 100 * (window.remoteFlags?.xp_speaking_max ?? 10));
     this.addXP(xp, 'hard');
     window.analyticsManager?.lessonComplete('conversations', avg);
 
@@ -6466,6 +6466,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
   }
 
   _placementFinish(level, mode) {
+    if (!this.state.get('onboarded')) this.addXP(75, 'easy');
     // immediate=true → Firebase'e anında kaydet, 15sn beklemeden
     this.state.update({ onboarded: true, learningMode: mode, cefrLevel: level }, true);
     this._seedPlacementMastery(level);

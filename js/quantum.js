@@ -2724,7 +2724,7 @@ class SentenceRush {
     const baseWin = window.remoteFlags?.xp_quantum_win ?? 100;
     const mult = window.remoteFlags?.multiplier_hard ?? 2.0;
     
-    const baseXP = won ? baseWin : this.solved * 10;
+    const baseXP  = won ? baseWin : Math.round(this.solved / 10 * baseWin * 0.8);
     const finalXP = Math.round(baseXP * mult);
 
     if(won){
@@ -2942,7 +2942,7 @@ class SentenceScramble {
     const baseWin = window.remoteFlags?.xp_quantum_win ?? 100;
     const mult = window.remoteFlags?.multiplier_hard ?? 2.0;
 
-    const baseXP  = won ? baseWin : this.solved * 25;
+    const baseXP  = won ? baseWin : Math.round(this.solved / this.maxRound * baseWin * 0.8);
     const finalXP = Math.round(baseXP * mult);
 
     if(won){

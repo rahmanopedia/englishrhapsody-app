@@ -40,8 +40,9 @@
       "valueType": "NUMBER"
     },
     "xp_speaking_max": {
-      "defaultValue": { "value": "80" },
-      "valueType": "NUMBER"
+      "defaultValue": { "value": "10" },
+      "valueType": "NUMBER",
+      "description": "Konuşma senaryosunda tur başına maks XP (sessionXP toplamı olarak ödüllendirilir)"
     },
     "xp_per_level": {
       "defaultValue": { "value": "500" },
