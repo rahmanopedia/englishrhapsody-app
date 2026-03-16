@@ -1,13 +1,158 @@
 /**
- * RHAPSODY CINEMA — Video Veritabanı (v3.1)
- * Zaman damgaları Archive.org ASR (.asr.srt) dosyalarından doğrulandı.
- * Kaynak: Archive.org kamu malı filmler — reklamsız, ücretsiz, yasal.
+ * RHAPSODY CINEMA — Video Veritabanı (v4.0)
+ * Zaman damgaları resmi .srt dosyalarından doğrulandı.
+ *
+ * Lisanslar:
+ *  - Duck and Cover / Shy Guy / Dating Do's and Don'ts → Public Domain (ABD hükümet/Prelinger)
+ *  - Sintel (2010) → CC BY 3.0 — Blender Foundation
+ *  - Tears of Steel (2012) → CC BY 3.0 — Blender Foundation / Mango Open Movie Project
  */
 var CINEMA_DATA = [
 
-  /* ── Duck and Cover (1951) ────────────────────────────────────
-     SRT: archive.org/download/DuckandC1951/DuckandC1951.asr.srt
-  ──────────────────────────────────────────────────────────── */
+  /* ══════════════════════════════════════════════════════════
+     SINTEL (2010) — Blender Foundation — CC BY 3.0
+     Video: archive.org/download/Sintel/sintel-2048-stereo_512kb.mp4
+     SRT kaynak: durian.blender.org
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 10,
+    url: "https://archive.org/download/Sintel/sintel-2048-stereo_512kb.mp4",
+    start: 106,
+    end: 116,
+    film: "Sintel",
+    year: 2010,
+    transcript: "This blade has a dark past. It has shed much innocent blood.",
+    options: [
+      { text: "Bu kılıcın karanlık bir geçmişi var. Pek çok masum kanı dökmüş.", isCorrect: true },
+      { text: "Bu kılıç çok eskidir ama hiç kan dökmemiştir.", isCorrect: false },
+      { text: "Bu kılıcı bulmak çok zor oldu.", isCorrect: false }
+    ],
+    points: 12,
+    category: "Fantastik"
+  },
+  {
+    id: 11,
+    url: "https://archive.org/download/Sintel/sintel-2048-stereo_512kb.mp4",
+    start: 117,
+    end: 126,
+    film: "Sintel",
+    year: 2010,
+    transcript: "You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing.",
+    options: [
+      { text: "Yalnız yolculuk etmek için aptalsın, tamamen hazırlıksızsın. Kanın hâlâ aktığına şükret.", isCorrect: true },
+      { text: "Yalnız yolculuk etmek en güvenli yoldur.", isCorrect: false },
+      { text: "Hazırlıklı olmak bu yolculukta önemli değil.", isCorrect: false }
+    ],
+    points: 12,
+    category: "Fantastik"
+  },
+  {
+    id: 12,
+    url: "https://archive.org/download/Sintel/sintel-2048-stereo_512kb.mp4",
+    start: 134,
+    end: 146,
+    film: "Sintel",
+    year: 2010,
+    transcript: "I'm searching for someone. Someone very dear? A kindred spirit? — A dragon.",
+    options: [
+      { text: "Birini arıyorum. Çok sevdiğim biri mi? — Bir ejderha.", isCorrect: true },
+      { text: "Kayboldum ve eve giden yolu arıyorum.", isCorrect: false },
+      { text: "Bir hazine haritası arıyorum.", isCorrect: false }
+    ],
+    points: 10,
+    category: "Fantastik"
+  },
+  {
+    id: 13,
+    url: "https://archive.org/download/Sintel/sintel-2048-stereo_512kb.mp4",
+    start: 147,
+    end: 157,
+    film: "Sintel",
+    year: 2010,
+    transcript: "A dangerous quest for a lone hunter. I've been alone for as long as I can remember.",
+    options: [
+      { text: "Yalnız bir avcı için tehlikeli bir görev. Hatırlayabildiğim sürece hep yalnız oldum.", isCorrect: true },
+      { text: "Bu görev çok kolaydır, yardım gerekmez.", isCorrect: false },
+      { text: "Arkadaşlarım her zaman yanımdaydı.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Fantastik"
+  },
+  {
+    id: 14,
+    url: "https://archive.org/download/Sintel/sintel-2048-stereo_512kb.mp4",
+    start: 451,
+    end: 464,
+    film: "Sintel",
+    year: 2010,
+    transcript: "You've only failed to see... These are dragon lands, Sintel. You are closer than you know.",
+    options: [
+      { text: "Sadece görmeyi başaramadın... Burası ejderha toprakları, Sintel. Sandığından daha yakınsın.", isCorrect: true },
+      { text: "Başarısız oldun ve artık devam etmemelisin.", isCorrect: false },
+      { text: "Ejderhalar bu topraklarda yaşamaz.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Fantastik"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     TEARS OF STEEL (2012) — Blender Foundation — CC BY 3.0
+     Video: download.blender.org (WebM — Chrome/Firefox/Edge)
+     SRT kaynak: download.blender.org/demo/movies/ToS/subtitles/TOS-en.srt
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 20,
+    url: "https://download.blender.org/demo/movies/ToS/tears_of_steel_1080p.webm",
+    start: 130,
+    end: 139,
+    film: "Tears of Steel",
+    year: 2012,
+    transcript: "I heard you guys talking last night. It's not my fault, you know.",
+    options: [
+      { text: "Dün gece konuştuğunuzu duydum. Biliyorsun, bu benim hatam değil.", isCorrect: true },
+      { text: "Dün gece hiçbir şey duymadım.", isCorrect: false },
+      { text: "Her şey benim hatam, kabul ediyorum.", isCorrect: false }
+    ],
+    points: 10,
+    category: "Bilim Kurgu"
+  },
+  {
+    id: 21,
+    url: "https://download.blender.org/demo/movies/ToS/tears_of_steel_1080p.webm",
+    start: 315,
+    end: 329,
+    film: "Tears of Steel",
+    year: 2012,
+    transcript: "Look Celia, we have to follow our passions. You have your robotics, and I just want to be awesome in space.",
+    options: [
+      { text: "Bak Celia, tutkularımızın peşinden gitmemiz gerek. Senin robotiğin var, ben de uzayda harika olmak istiyorum.", isCorrect: true },
+      { text: "Celia, tutkularımızı bırakıp pratik olmamız gerekiyor.", isCorrect: false },
+      { text: "Uzay seyahati imkânsızdır, boşuna hayal etme.", isCorrect: false }
+    ],
+    points: 12,
+    category: "Bilim Kurgu"
+  },
+  {
+    id: 22,
+    url: "https://download.blender.org/demo/movies/ToS/tears_of_steel_1080p.webm",
+    start: 382,
+    end: 391,
+    film: "Tears of Steel",
+    year: 2012,
+    transcript: "You broke my heart. — I know. You forgot me on earth. — I know.",
+    options: [
+      { text: "Kalbimi kırdın. — Biliyorum. Beni dünyada unuttun. — Biliyorum.", isCorrect: true },
+      { text: "Kalbim sağlam, hiçbir şey hissetmedim.", isCorrect: false },
+      { text: "Seni hiç unutmadım, her zaman düşündüm.", isCorrect: false }
+    ],
+    points: 12,
+    category: "Bilim Kurgu"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     DUCK AND COVER (1951) — Public Domain (ABD Federal Film)
+     SRT kaynak: archive.org — DuckandC1951.asr.srt
+  ══════════════════════════════════════════════════════════ */
   {
     id: 1,
     url: "https://archive.org/download/DuckandC1951/DuckandC1951.mp4",
@@ -21,7 +166,7 @@ var CINEMA_DATA = [
       { text: "Kaç ve saklan, tıpkı okulda öğrendiğin gibi.", isCorrect: false },
       { text: "Dur ve bekle, öğretmenin gelene kadar.", isCorrect: false }
     ],
-    points: 8,
+    points: 6,
     category: "Tarih"
   },
   {
@@ -37,7 +182,7 @@ var CINEMA_DATA = [
       { text: "Bazen, zaman buldukça, doğru şeyleri yapmak.", isCorrect: false },
       { text: "Sadece acil durumlarda doğru davranmak yeterli.", isCorrect: false }
     ],
-    points: 8,
+    points: 6,
     category: "Tarih"
   },
   {
@@ -53,13 +198,14 @@ var CINEMA_DATA = [
       { text: "Ne yapacağını bilmiyorsan evine git.", isCorrect: false },
       { text: "Ne yapacağını bilmiyorsan bekle ve izle.", isCorrect: false }
     ],
-    points: 8,
+    points: 6,
     category: "Tarih"
   },
 
-  /* ── Shy Guy (1947) ───────────────────────────────────────────
-     SRT: archive.org/download/ShyGuy1947/ShyGuy1947.asr.srt
-  ──────────────────────────────────────────────────────────── */
+  /* ══════════════════════════════════════════════════════════
+     SHY GUY (1947) — Public Domain (Prelinger / Coronet)
+     SRT kaynak: archive.org — ShyGuy1947.asr.srt
+  ══════════════════════════════════════════════════════════ */
   {
     id: 4,
     url: "https://archive.org/download/ShyGuy1947/ShyGuy1947.mp4",
@@ -105,13 +251,14 @@ var CINEMA_DATA = [
       { text: "Bunun imkânsız olduğunu anladı ve vazgeçti.", isCorrect: false },
       { text: "Asıl önemli şeyin ne olduğunu hâlâ bilmiyor.", isCorrect: false }
     ],
-    points: 12,
+    points: 10,
     category: "Sosyal"
   },
 
-  /* ── Dating: Do's and Don'ts (1949) ──────────────────────────
-     SRT: archive.org/download/.../0191...asr.srt
-  ──────────────────────────────────────────────────────────── */
+  /* ══════════════════════════════════════════════════════════
+     DATING: DO'S AND DON'TS (1949) — Public Domain (Prelinger)
+     SRT kaynak: archive.org — asr.srt
+  ══════════════════════════════════════════════════════════ */
   {
     id: 7,
     url: "https://archive.org/download/0191_Dating_Dos_and_Donts_E00191_10_26_50_00/0191_Dating_Dos_and_Donts_E00191_10_26_50_00.mp4",
@@ -125,7 +272,7 @@ var CINEMA_DATA = [
       { text: "Eğlenmeyi bilmiyor ama bunu saklamaya çalışıyor.", isCorrect: false },
       { text: "Yanındaki kişiyi hiç umursamıyor.", isCorrect: false }
     ],
-    points: 10,
+    points: 8,
     category: "Sosyal"
   },
   {
@@ -141,7 +288,7 @@ var CINEMA_DATA = [
       { text: "İlk randevu teklifi her zaman çok kolaydır.", isCorrect: false },
       { text: "Randevu teklifinde bulunmak için doğru zaman yok.", isCorrect: false }
     ],
-    points: 10,
+    points: 8,
     category: "Sosyal"
   }
 
