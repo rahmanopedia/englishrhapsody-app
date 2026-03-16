@@ -2488,6 +2488,10 @@ body.sidebar-closed .sidebar-tab {
   from { transform: scaleY(0.25); opacity: 0.6; }
   to   { transform: scaleY(1);    opacity: 1; }
 }
+@keyframes fakeWave {
+  from { transform: scaleY(0.2); opacity: 0.5; }
+  to   { transform: scaleY(1.2); opacity: 1; }
+}
 
 /* Controls */
 .speak-controls {

@@ -5053,10 +5053,17 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 
   _startMicAnalysis() {
     if (this.session.micInterval) clearInterval(this.session.micInterval);
-    if (!this.audio._ctx) this.audio._ctx_ensure();
-    const ctx = this.audio._ctx;
     const pbBtn = document.getElementById('btn-playback');
     if (pbBtn) pbBtn.style.display = 'none';
+
+    // Mobilde getUserMedia + webkitSpeechRecognition çakışıyor → sadece CSS animasyon
+    if (window.innerWidth <= 768 || !navigator.mediaDevices) {
+      this._startFakeWave();
+      return;
+    }
+
+    if (!this.audio._ctx) this.audio._ctx_ensure();
+    const ctx = this.audio._ctx;
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
       this.session.micStream = stream;
       const source = ctx.createMediaStreamSource(stream);
@@ -5114,6 +5121,15 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     document.querySelectorAll('.wave-bar').forEach(bar => {
       bar.style.setProperty('--h', '8px');
       bar.style.opacity = '0.3';
+      bar.style.animation = '';
+    });
+  }
+
+  // Mobilde ses analizi yerine CSS animasyonlu dalga
+  _startFakeWave() {
+    const bars = document.querySelectorAll('.wave-bar');
+    bars.forEach((bar, i) => {
+      bar.style.animation = `fakeWave 0.6s ease-in-out ${i * 0.08}s infinite alternate`;
     });
   }
 
@@ -5228,7 +5244,11 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
       onError:  (e) => {
         this._stopRecord();
         const el = document.getElementById('speak-transcript');
-        const msg = e.error === 'not-allowed' ? 'Mikrofon izni gerekli.' : `Hata: ${e.error}`;
+        const errCode = e && e.error ? e.error : 'unknown';
+        const msg = errCode === 'not-allowed' ? '🔒 Mikrofon izni gerekli. Tarayıcı ayarlarından izin ver.'
+                  : errCode === 'no-speech'   ? '🎤 Ses algılanamadı, tekrar dene.'
+                  : errCode === 'network'     ? '🌐 Ağ hatası. İnternet bağlantını kontrol et.'
+                  : `Ses tanıma hatası: ${errCode}`;
         if (el) el.innerHTML = `<span style="color:var(--rose)">${msg}</span>`;
       },
       onEnd:     () => this._stopRecord(),
