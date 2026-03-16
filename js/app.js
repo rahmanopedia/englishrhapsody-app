@@ -2683,6 +2683,12 @@ class App {
   // ─────────────────────────────────────────────────────────
 
   navigate(view) {
+    // Sinestezi: learn view'ı yükle + otomatik başlat
+    if (view === 'synesthesia') {
+      this.navigate('learn');
+      setTimeout(() => this.startSynesthesia(), 80);
+      return;
+    }
     this.session.view = view;
     this.speech.stop();
     this.session.isSpeakingStory = false;
@@ -2706,7 +2712,7 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
     }
 
     // Update nav active states
-    const DRAWER_VIEWS = new Set(['reading','bridge','nexus','quantum','conversations','leaderboard']);
+    const DRAWER_VIEWS = new Set(['reading','bridge','nexus','quantum','conversations','leaderboard','synesthesia']);
     document.querySelectorAll('.nav-item, .m-nav-item, .modes-drawer-item').forEach(el => {
       el.classList.toggle('active', el.dataset.target === view);
     });
