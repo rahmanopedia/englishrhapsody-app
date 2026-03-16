@@ -13,8 +13,2552 @@ const BRIDGE_CATEGORIES = [
   { id: 'basari',    label: 'Başarı & Başarısızlık', icon: '🎯' },
   { id: 'gunluk',    label: 'Günlük Hayat',     icon: '☀️' },
 ];
-
 var BRIDGE_DATA = [
+
+  {
+    "id": 3051,
+    "category": "duygular",
+    "tr": "Abayı yakmak",
+    "english_primary": "To fall head over heels",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Aba yakmak",
+        "en_fragment": "head over heels",
+        "bridge_type": "transform",
+        "explanation": "Burning cloak -> Upside down love."
+      }
+    ],
+    "cultural_insight": "Deep crush.",
+    "fluency_tip": "Romantic slang."
+  },
+  {
+    "id": 3052,
+    "category": "sosyal",
+    "tr": "Açık kapı bırakmak",
+    "english_primary": "To leave the door open",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Açık kapı",
+        "en_fragment": "door open",
+        "bridge_type": "direct",
+        "explanation": "Possibility remains."
+      }
+    ],
+    "cultural_insight": "Negotiation tactic.",
+    "fluency_tip": "Professional talks."
+  },
+  {
+    "id": 3053,
+    "category": "sosyal",
+    "tr": "Ağzı gevşek",
+    "english_primary": "Blabbermouth / Big mouth",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Ağzı gevşek",
+        "en_fragment": "big mouth",
+        "bridge_type": "transform",
+        "explanation": "Loose mouth."
+      }
+    ],
+    "cultural_insight": "Unreliable secret keeper.",
+    "fluency_tip": "Social gossip."
+  },
+  {
+    "id": 3054,
+    "category": "gunluk",
+    "tr": "Al birini vur ötekine",
+    "english_primary": "Six of one, half a dozen of the other",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Al birini",
+        "en_fragment": "six of one",
+        "bridge_type": "transform",
+        "explanation": "Both equally bad."
+      }
+    ],
+    "cultural_insight": "Skepticism about options.",
+    "fluency_tip": "Comparing bad choices."
+  },
+  {
+    "id": 3055,
+    "category": "basari",
+    "tr": "Allem edip kallem edip",
+    "english_primary": "By hook or by crook",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Allem kallem",
+        "en_fragment": "hook or crook",
+        "bridge_type": "transform",
+        "explanation": "One way or another."
+      }
+    ],
+    "cultural_insight": "Persistence.",
+    "fluency_tip": "Goal orientation."
+  },
+  {
+    "id": 3056,
+    "category": "yogunluk",
+    "tr": "Askıya almak",
+    "english_primary": "To put on hold / On ice",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Askı",
+        "en_fragment": "hold / ice",
+        "bridge_type": "transform",
+        "explanation": "Suspending."
+      }
+    ],
+    "cultural_insight": "Delaying projects.",
+    "fluency_tip": "Corporate speak."
+  },
+  {
+    "id": 3057,
+    "category": "basari",
+    "tr": "Atı alan Üsküdar'ı geçti",
+    "english_primary": "That ship has sailed / Too late",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Üsküdar",
+        "en_fragment": "ship sailed",
+        "bridge_type": "transform",
+        "explanation": "Missed chance."
+      }
+    ],
+    "cultural_insight": "Irreversible timing.",
+    "fluency_tip": "Regret talk."
+  },
+  {
+    "id": 3058,
+    "category": "gunluk",
+    "tr": "Ayak bağı olmak",
+    "english_primary": "To be a drag / To hold back",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Ayak bağı",
+        "en_fragment": "a drag",
+        "bridge_type": "transform",
+        "explanation": "Physical weight -> Social burden."
+      }
+    ],
+    "cultural_insight": "Hindrance.",
+    "fluency_tip": "Group dynamics."
+  },
+  {
+    "id": 3059,
+    "category": "sosyal",
+    "tr": "Ayaküstü konuşmak",
+    "english_primary": "To talk on the fly",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Ayaküstü",
+        "en_fragment": "on the fly",
+        "bridge_type": "transform",
+        "explanation": "Brief chat while standing."
+      }
+    ],
+    "cultural_insight": "Casual encounters.",
+    "fluency_tip": "In the hallway."
+  },
+  {
+    "id": 3060,
+    "category": "gunluk",
+    "tr": "Başa sarmak",
+    "english_primary": "Back to square one",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Başa sarmak",
+        "en_fragment": "square one",
+        "bridge_type": "transform",
+        "explanation": "Rewinding -> Board game start."
+      }
+    ],
+    "cultural_insight": "Failure and restart.",
+    "fluency_tip": "Project failure."
+  },
+  {
+    "id": 3061,
+    "category": "sosyal",
+    "tr": "Baş tacı etmek",
+    "english_primary": "To put someone on a pedestal",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Baş tacı",
+        "en_fragment": "pedestal",
+        "bridge_type": "transform",
+        "explanation": "Head crown -> Statue base."
+      }
+    ],
+    "cultural_insight": "Great respect.",
+    "fluency_tip": "Praising mentors."
+  },
+  {
+    "id": 3062,
+    "category": "gunluk",
+    "tr": "Bindiği dalı kesmek",
+    "english_primary": "To shoot oneself in the foot",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Dal kesmek",
+        "en_fragment": "shoot foot",
+        "bridge_type": "transform",
+        "explanation": "Self-harm error."
+      }
+    ],
+    "cultural_insight": "Foolish mistakes.",
+    "fluency_tip": "Giving advice."
+  },
+  {
+    "id": 3063,
+    "category": "gunluk",
+    "tr": "Boşa kürek çekmek",
+    "english_primary": "To whistle in the wind / Futile",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Kürek çekmek",
+        "en_fragment": "whistle wind",
+        "bridge_type": "transform",
+        "explanation": "Pointless rowing."
+      }
+    ],
+    "cultural_insight": "Hopeless efforts.",
+    "fluency_tip": "Despair talk."
+  },
+  {
+    "id": 3064,
+    "category": "basari",
+    "tr": "Boynuz kulağı geçer",
+    "english_primary": "The student becomes the master",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Boynuz kulak",
+        "en_fragment": "student master",
+        "bridge_type": "transform",
+        "explanation": "Horn > Ear."
+      }
+    ],
+    "cultural_insight": "Evolution of skills.",
+    "fluency_tip": "Successions."
+  },
+  {
+    "id": 3065,
+    "category": "duygular",
+    "tr": "Can damarına basmak",
+    "english_primary": "To hit a raw nerve",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Can damarı",
+        "en_fragment": "raw nerve",
+        "bridge_type": "direct",
+        "explanation": "Touching sensitivity."
+      }
+    ],
+    "cultural_insight": "Sensitive topics.",
+    "fluency_tip": "Heated arguments."
+  },
+  {
+    "id": 3066,
+    "category": "gunluk",
+    "tr": "Cebi delik",
+    "english_primary": "Penniless / Broke",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Cebi delik",
+        "en_fragment": "penniless",
+        "bridge_type": "transform",
+        "explanation": "Hole in pocket."
+      }
+    ],
+    "cultural_insight": "Poverty/Spending.",
+    "fluency_tip": "Personal finance."
+  },
+  {
+    "id": 3067,
+    "category": "sosyal",
+    "tr": "Çizgiyi aşmak",
+    "english_primary": "To cross the line",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Çizgiyi aşmak",
+        "en_fragment": "cross the line",
+        "bridge_type": "direct",
+        "explanation": "Boundary violation."
+      }
+    ],
+    "cultural_insight": "Disrespect.",
+    "fluency_tip": "Conflict resolution."
+  },
+  {
+    "id": 3068,
+    "category": "basari",
+    "tr": "Çorap söküğü gibi gelmek",
+    "english_primary": "To follow like dominoes / To unfold easily",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Çorap söküğü",
+        "en_fragment": "dominoes",
+        "bridge_type": "transform",
+        "explanation": "Sock unravelling."
+      }
+    ],
+    "cultural_insight": "Chain reaction.",
+    "fluency_tip": "Progress updates."
+  },
+  {
+    "id": 3069,
+    "category": "sasirma",
+    "tr": "Dağlara taşlara",
+    "english_primary": "Heaven forbid / Perish the thought",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Dağlara",
+        "en_fragment": "heaven forbid",
+        "bridge_type": "transform",
+        "explanation": "To the mountains."
+      }
+    ],
+    "cultural_insight": "Protection prayer.",
+    "fluency_tip": "Bad scenarios."
+  },
+  {
+    "id": 3070,
+    "category": "duygular",
+    "tr": "Damarına basmak",
+    "english_primary": "To press someone's buttons",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Damar",
+        "en_fragment": "buttons",
+        "bridge_type": "transform",
+        "explanation": "Touching vein -> pressing button."
+      }
+    ],
+    "cultural_insight": "Provocation.",
+    "fluency_tip": "Annoyance."
+  },
+  {
+    "id": 3071,
+    "category": "gunluk",
+    "tr": "Devede kulak",
+    "english_primary": "A drop in the ocean",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Deve kulak",
+        "en_fragment": "drop ocean",
+        "bridge_type": "transform",
+        "explanation": "Camel ear -> Sea drop."
+      }
+    ],
+    "cultural_insight": "Insignificant size.",
+    "fluency_tip": "Comparing budgets."
+  },
+  {
+    "id": 3072,
+    "category": "duygular",
+    "tr": "Dikine gitmek",
+    "english_primary": "To go against the grain / Stubborn",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Dikine",
+        "en_fragment": "against grain",
+        "bridge_type": "transform",
+        "explanation": "Vertical -> wood texture."
+      }
+    ],
+    "cultural_insight": "Opposition.",
+    "fluency_tip": "Stubborn traits."
+  },
+  {
+    "id": 3073,
+    "category": "sosyal",
+    "tr": "Dilinin ucunda olmak",
+    "english_primary": "On the tip of one's tongue",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Dilin ucu",
+        "en_fragment": "tip of tongue",
+        "bridge_type": "direct",
+        "explanation": "Memory lapse."
+      }
+    ],
+    "cultural_insight": "Universal mental block.",
+    "fluency_tip": "Conversations."
+  },
+  {
+    "id": 3074,
+    "category": "gunluk",
+    "tr": "Düğüm noktası",
+    "english_primary": "The crux of the matter",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Düğüm",
+        "en_fragment": "crux",
+        "bridge_type": "transform",
+        "explanation": "Knot point."
+      }
+    ],
+    "cultural_insight": "Key issue.",
+    "fluency_tip": "Business meetings."
+  },
+  {
+    "id": 3075,
+    "category": "sosyal",
+    "tr": "Dümen çevirmek",
+    "english_primary": "To pull strings / To scheme",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Dümen",
+        "en_fragment": "scheme",
+        "bridge_type": "transform",
+        "explanation": "Turning rudder."
+      }
+    ],
+    "cultural_insight": "Cunning plans.",
+    "fluency_tip": "Office politics."
+  },
+  {
+    "id": 3076,
+    "category": "basari",
+    "tr": "Elini kolunu sallayarak",
+    "english_primary": "Walking in like you own the place",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Sallayarak",
+        "en_fragment": "own place",
+        "bridge_type": "transform",
+        "explanation": "Shaking hands/arms."
+      }
+    ],
+    "cultural_insight": "Confidence/Ease.",
+    "fluency_tip": "Entry talks."
+  },
+  {
+    "id": 3077,
+    "category": "yorgunluk",
+    "tr": "Ense yapmak",
+    "english_primary": "To kick back / To loaf around",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Ense",
+        "en_fragment": "kick back",
+        "bridge_type": "transform",
+        "explanation": "Nape of neck."
+      }
+    ],
+    "cultural_insight": "Laziness/Relaxing.",
+    "fluency_tip": "Holiday chat."
+  },
+  {
+    "id": 3078,
+    "category": "sosyal",
+    "tr": "Eşek şakası",
+    "english_primary": "Practical joke / Horseplay",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Eşek şaka",
+        "en_fragment": "practical joke",
+        "bridge_type": "transform",
+        "explanation": "Donkey joke."
+      }
+    ],
+    "cultural_insight": "Rough humor.",
+    "fluency_tip": "Friend warnings."
+  },
+  {
+    "id": 3079,
+    "category": "gunluk",
+    "tr": "Evdeki hesap çarşıya uymaz",
+    "english_primary": "The best laid plans of mice and men",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Ev hesap",
+        "en_fragment": "laid plans",
+        "bridge_type": "transform",
+        "explanation": "Home vs Market."
+      }
+    ],
+    "cultural_insight": "Failed expectations.",
+    "fluency_tip": "Financial fails."
+  },
+  {
+    "id": 3080,
+    "category": "gunluk",
+    "tr": "Fare kapanı",
+    "english_primary": "Mousetrap / Booby trap",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Fare kapan",
+        "en_fragment": "mousetrap",
+        "bridge_type": "direct",
+        "explanation": "Trapping devices."
+      }
+    ],
+    "cultural_insight": "Cautionary tale.",
+    "fluency_tip": "Risk warnings."
+  },
+  {
+    "id": 3081,
+    "category": "sosyal",
+    "tr": "Gözden düşmek",
+    "english_primary": "To fall from grace / Out of favor",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Gözden düşmek",
+        "en_fragment": "fall from grace",
+        "bridge_type": "transform",
+        "explanation": "Falling from eye."
+      }
+    ],
+    "cultural_insight": "Loss of status.",
+    "fluency_tip": "Career changes."
+  },
+  {
+    "id": 3082,
+    "category": "gunluk",
+    "tr": "Gözden kaçırmak",
+    "english_primary": "To miss / To overlook",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Gözden kaç",
+        "en_fragment": "miss",
+        "bridge_type": "direct",
+        "explanation": "Unnoticed."
+      }
+    ],
+    "cultural_insight": "Errors.",
+    "fluency_tip": "Email corrections."
+  },
+  {
+    "id": 3083,
+    "category": "duygular",
+    "tr": "Gözü dönmek",
+    "english_primary": "To see red / To go berserk",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Gözü dönmek",
+        "en_fragment": "see red",
+        "bridge_type": "transform",
+        "explanation": "Eye turning."
+      }
+    ],
+    "cultural_insight": "Extreme rage.",
+    "fluency_tip": "Conflict tales."
+  },
+  {
+    "id": 3084,
+    "category": "sosyal",
+    "tr": "Gözü ısırmak",
+    "english_primary": "To look familiar",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Gözü ısırmak",
+        "en_fragment": "look familiar",
+        "bridge_type": "transform",
+        "explanation": "Eye biting."
+      }
+    ],
+    "cultural_insight": "Vague recognition.",
+    "fluency_tip": "Meeting people."
+  },
+  {
+    "id": 3085,
+    "category": "basari",
+    "tr": "Gözü yükseklerde olmak",
+    "english_primary": "To have high ambitions / Aim high",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Yükseklerde",
+        "en_fragment": "aim high",
+        "bridge_type": "transform",
+        "explanation": "Eye up high."
+      }
+    ],
+    "cultural_insight": "Ambition.",
+    "fluency_tip": "Career goals."
+  },
+  {
+    "id": 3086,
+    "category": "sasirma",
+    "tr": "Güme gitmek",
+    "english_primary": "To go to waste / To be wasted",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Güme",
+        "en_fragment": "wasted",
+        "bridge_type": "transform",
+        "explanation": "Lost in 'Güm' sound."
+      }
+    ],
+    "cultural_insight": "Lost effort.",
+    "fluency_tip": "Failed projects."
+  },
+  {
+    "id": 3087,
+    "category": "gunluk",
+    "tr": "Hafife almak",
+    "english_primary": "To take lightly / Underrated",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Hafif",
+        "en_fragment": "lightly",
+        "bridge_type": "direct",
+        "explanation": "Ignoring weight."
+      }
+    ],
+    "cultural_insight": "Underestimation.",
+    "fluency_tip": "Strategy talks."
+  },
+  {
+    "id": 3088,
+    "category": "duygular",
+    "tr": "Her işte bir hayır vardır",
+    "english_primary": "Every cloud has a silver lining",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Her iş",
+        "en_fragment": "cloud silver",
+        "bridge_type": "transform",
+        "explanation": "Fate is good."
+      }
+    ],
+    "cultural_insight": "Spiritual comfort.",
+    "fluency_tip": "Consolation."
+  },
+  {
+    "id": 3089,
+    "category": "duygular",
+    "tr": "Hop oturup hop kalkmak",
+    "english_primary": "To be on pins and needles",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Hop otur",
+        "en_fragment": "pins needles",
+        "bridge_type": "transform",
+        "explanation": "Jump up down."
+      }
+    ],
+    "cultural_insight": "Anxiety.",
+    "fluency_tip": "Waiting for results."
+  },
+  {
+    "id": 3090,
+    "category": "gunluk",
+    "tr": "Iska geçmek",
+    "english_primary": "To miss the mark",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Iska",
+        "en_fragment": "miss mark",
+        "bridge_type": "direct",
+        "explanation": "Missing target."
+      }
+    ],
+    "cultural_insight": "Failure to notice.",
+    "fluency_tip": "Sports/Game chat."
+  },
+  {
+    "id": 3091,
+    "category": "gunluk",
+    "tr": "İp koptu",
+    "english_primary": "The deal fell through / All hell broke loose",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "İp koptu",
+        "en_fragment": "hell broke loose",
+        "bridge_type": "transform",
+        "explanation": "Rope snapped."
+      }
+    ],
+    "cultural_insight": "Chaos/Failure.",
+    "fluency_tip": "Crisis events."
+  },
+  {
+    "id": 3092,
+    "category": "duygular",
+    "tr": "İşin içinden çıkamamak",
+    "english_primary": "To be in over one's head",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "İçinden",
+        "en_fragment": "over head",
+        "bridge_type": "transform",
+        "explanation": "Can't get out."
+      }
+    ],
+    "cultural_insight": "Overwhelmed.",
+    "fluency_tip": "Asking for help."
+  },
+  {
+    "id": 3093,
+    "category": "duygular",
+    "tr": "Kabuğuna çekilmek",
+    "english_primary": "To crawl into a shell",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Kabuk",
+        "en_fragment": "shell",
+        "bridge_type": "direct",
+        "explanation": "Introversion."
+      }
+    ],
+    "cultural_insight": "Social withdrawal.",
+    "fluency_tip": "Mental health talks."
+  },
+  {
+    "id": 3094,
+    "category": "duygular",
+    "tr": "Kafayı takmak",
+    "english_primary": "To be obsessed / To dwell on",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Kafa takmak",
+        "en_fragment": "obsess",
+        "bridge_type": "transform",
+        "explanation": "Hooking head."
+      }
+    ],
+    "cultural_insight": "Overthinking.",
+    "fluency_tip": "Relationship advice."
+  },
+  {
+    "id": 3095,
+    "category": "sosyal",
+    "tr": "Kalıbımı basarım",
+    "english_primary": "I'd bet my life on it / I'm certain",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Kalıp basmak",
+        "en_fragment": "bet life",
+        "bridge_type": "transform",
+        "explanation": "Pressing mold."
+      }
+    ],
+    "cultural_insight": "Strong conviction.",
+    "fluency_tip": "Surety."
+  },
+  {
+    "id": 3096,
+    "category": "sosyal",
+    "tr": "Kara kutu",
+    "english_primary": "A dark horse / Black box",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Kara kutu",
+        "en_fragment": "dark horse",
+        "bridge_type": "transform",
+        "explanation": "Black box."
+      }
+    ],
+    "cultural_insight": "Secretive person.",
+    "fluency_tip": "Mystery talk."
+  },
+  {
+    "id": 3097,
+    "category": "gunluk",
+    "tr": "Kese atmak",
+    "english_primary": "Exfoliate / Scrub down",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Kese",
+        "en_fragment": "exfoliate",
+        "bridge_type": "transform",
+        "explanation": "Bag throwing -> scrubbing."
+      }
+    ],
+    "cultural_insight": "Bath culture.",
+    "fluency_tip": "Spa/Beauty chat."
+  },
+  {
+    "id": 3098,
+    "category": "duygular",
+    "tr": "Kıl oldum",
+    "english_primary": "To get on my nerves / Annoyed",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Kıl oldum",
+        "en_fragment": "get on nerves",
+        "bridge_type": "transform",
+        "explanation": "Became hair."
+      }
+    ],
+    "cultural_insight": "Modern slang.",
+    "fluency_tip": "Talking to friends."
+  },
+  {
+    "id": 3099,
+    "category": "gunluk",
+    "tr": "Kulağı küpe olmak",
+    "english_primary": "A lesson learned / Bear in mind",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Kulak küpe",
+        "en_fragment": "lesson learned",
+        "bridge_type": "transform",
+        "explanation": "Earring lesson."
+      }
+    ],
+    "cultural_insight": "Memorable advice.",
+    "fluency_tip": "Parental advice."
+  },
+  {
+    "id": 3100,
+    "category": "sosyal",
+    "tr": "Laf ebeliği yapmak",
+    "english_primary": "To be wordy / To spin yarns",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Laf ebeliği",
+        "en_fragment": "wordy",
+        "bridge_type": "transform",
+        "explanation": "Word midwifery."
+      }
+    ],
+    "cultural_insight": "Excessive talking.",
+    "fluency_tip": "Debates."
+  }
+,
+
+  {
+    "id": 3001,
+    "category": "deyimler",
+    "tr": "Akıl akıldan üstündür",
+    "english_primary": "Two heads are better than one",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Akıl",
+        "en_fragment": "Heads",
+        "bridge_type": "transform",
+        "explanation": "Wisdom of many."
+      }
+    ],
+    "cultural_insight": "Value of consultation.",
+    "fluency_tip": "Use when asking for advice."
+  },
+  {
+    "id": 3002,
+    "category": "yogunluk",
+    "tr": "Ayak sürümek",
+    "english_primary": "To drag one's feet",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Ayak sürümek",
+        "en_fragment": "drag feet",
+        "bridge_type": "direct",
+        "explanation": "Delaying intentionally."
+      }
+    ],
+    "cultural_insight": "Stalling on a task.",
+    "fluency_tip": "Common in work environments."
+  },
+  {
+    "id": 3003,
+    "category": "gunluk",
+    "tr": "Bal dök yala",
+    "english_primary": "Spick and span / Squeaky clean",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Bal dök yala",
+        "en_fragment": "spick and span",
+        "bridge_type": "transform",
+        "explanation": "Extremely clean."
+      }
+    ],
+    "cultural_insight": "Deep hygiene.",
+    "fluency_tip": "Complimenting a clean house."
+  },
+  {
+    "id": 3004,
+    "category": "basari",
+    "tr": "Başına devlet kuşu konmak",
+    "english_primary": "To hit the jackpot / Windfall",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Devlet kuşu",
+        "en_fragment": "windfall",
+        "bridge_type": "transform",
+        "explanation": "Unexpected wealth."
+      }
+    ],
+    "cultural_insight": "Stroke of luck.",
+    "fluency_tip": "Financial good news."
+  },
+  {
+    "id": 3005,
+    "category": "duygular",
+    "tr": "Bin pişman olmak",
+    "english_primary": "To deeply regret / To kick oneself",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Bin pişman",
+        "en_fragment": "kick oneself",
+        "bridge_type": "transform",
+        "explanation": "Strong regret."
+      }
+    ],
+    "cultural_insight": "Missing an opportunity.",
+    "fluency_tip": "Expressing regret."
+  },
+  {
+    "id": 3006,
+    "category": "deyimler",
+    "tr": "Bir taşla iki kuş vurmak",
+    "english_primary": "To kill two birds with one stone",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Bir taşla iki kuş",
+        "en_fragment": "two birds one stone",
+        "bridge_type": "direct",
+        "explanation": "Universal efficiency."
+      }
+    ],
+    "cultural_insight": "Solving two problems at once.",
+    "fluency_tip": "Very common idiom."
+  },
+  {
+    "id": 3007,
+    "category": "sosyal",
+    "tr": "Can kulağıyla dinlemek",
+    "english_primary": "To be all ears",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Can kulağı",
+        "en_fragment": "all ears",
+        "bridge_type": "transform",
+        "explanation": "Full attention."
+      }
+    ],
+    "cultural_insight": "Active listening.",
+    "fluency_tip": "Encouraging someone to speak."
+  },
+  {
+    "id": 3008,
+    "category": "sosyal",
+    "tr": "Çam devirmek",
+    "english_primary": "To put one's foot in it / Gaffe",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Çam devirmek",
+        "en_fragment": "foot in it",
+        "bridge_type": "transform",
+        "explanation": "Saying something embarrassing."
+      }
+    ],
+    "cultural_insight": "Social blunders.",
+    "fluency_tip": "When you accidentally offend someone."
+  },
+  {
+    "id": 3009,
+    "category": "sasirma",
+    "tr": "Dağ fare doğurdu",
+    "english_primary": "Much ado about nothing",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Dağ fare",
+        "en_fragment": "much ado",
+        "bridge_type": "transform",
+        "explanation": "Big hype, small result."
+      }
+    ],
+    "cultural_insight": "Anti-climax situations.",
+    "fluency_tip": "Reviewing overhyped products."
+  },
+  {
+    "id": 3010,
+    "category": "duygular",
+    "tr": "Dili damağı kurumak",
+    "english_primary": "To be parched",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Dil damak",
+        "en_fragment": "parched",
+        "bridge_type": "direct",
+        "explanation": "Extreme thirst."
+      }
+    ],
+    "cultural_insight": "Physical dehydration or fear.",
+    "fluency_tip": "Asking for water."
+  },
+  {
+    "id": 3011,
+    "category": "sosyal",
+    "tr": "Dost kara günde belli olur",
+    "english_primary": "A friend in need is a friend indeed",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Kara gün",
+        "en_fragment": "friend in need",
+        "bridge_type": "transform",
+        "explanation": "Testing loyalty."
+      }
+    ],
+    "cultural_insight": "Value of true friendship.",
+    "fluency_tip": "Thanking a loyal friend."
+  },
+  {
+    "id": 3012,
+    "category": "duygular",
+    "tr": "Dört gözle beklemek",
+    "english_primary": "To look forward to / Bated breath",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Dört gözle",
+        "en_fragment": "look forward",
+        "bridge_type": "transform",
+        "explanation": "Anticipation."
+      }
+    ],
+    "cultural_insight": "Waiting eagerly.",
+    "fluency_tip": "Professional emails."
+  },
+  {
+    "id": 3013,
+    "category": "sosyal",
+    "tr": "El bebek gül bebek",
+    "english_primary": "To be pampered / Spoiled rotten",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "El bebek",
+        "en_fragment": "pampered",
+        "bridge_type": "transform",
+        "explanation": "Over-protected growth."
+      }
+    ],
+    "cultural_insight": "Protective families.",
+    "fluency_tip": "Describing a sheltered person."
+  },
+  {
+    "id": 3014,
+    "category": "gunluk",
+    "tr": "Eli kulağında",
+    "english_primary": "Any minute now / Imminent",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Eli kulağında",
+        "en_fragment": "any minute",
+        "bridge_type": "transform",
+        "explanation": "About to happen."
+      }
+    ],
+    "cultural_insight": "Immediacy.",
+    "fluency_tip": "Waiting for a bus or call."
+  },
+  {
+    "id": 3015,
+    "category": "gunluk",
+    "tr": "Eski tas eski hamam",
+    "english_primary": "Nothing has changed / Same old",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Eski hamam",
+        "en_fragment": "same old",
+        "bridge_type": "transform",
+        "explanation": "Status quo."
+      }
+    ],
+    "cultural_insight": "Skepticism about change.",
+    "fluency_tip": "Complaining about office routine."
+  },
+  {
+    "id": 3016,
+    "category": "sasirma",
+    "tr": "Faka basmak",
+    "english_primary": "To fall into a trap / Hoodwinked",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Faka basmak",
+        "en_fragment": "fall into trap",
+        "bridge_type": "direct",
+        "explanation": "Being tricked."
+      }
+    ],
+    "cultural_insight": "Falling for scams.",
+    "fluency_tip": "Talking about bad experiences."
+  },
+  {
+    "id": 3017,
+    "category": "yogunluk",
+    "tr": "Göz ardı etmek",
+    "english_primary": "To ignore / Turn a blind eye",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Göz ardı",
+        "en_fragment": "blind eye",
+        "bridge_type": "transform",
+        "explanation": "Ignoring facts."
+      }
+    ],
+    "cultural_insight": "Negligence.",
+    "fluency_tip": "Work feedback."
+  },
+  {
+    "id": 3018,
+    "category": "yogunluk",
+    "tr": "Göz hapsine almak",
+    "english_primary": "Watch like a hawk / Keep tabs on",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Göz hapsi",
+        "en_fragment": "watch like hawk",
+        "bridge_type": "transform",
+        "explanation": "Close monitoring."
+      }
+    ],
+    "cultural_insight": "Control and surveillance.",
+    "fluency_tip": "Supervision."
+  },
+  {
+    "id": 3019,
+    "category": "sasirma",
+    "tr": "Gözleri faltaşı gibi açılmak",
+    "english_primary": "Eyes popped out / Stunned",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Faltaşı gibi",
+        "en_fragment": "popped out",
+        "bridge_type": "transform",
+        "explanation": "Shock."
+      }
+    ],
+    "cultural_insight": "Visual shock.",
+    "fluency_tip": "Describing surprises."
+  },
+  {
+    "id": 3020,
+    "category": "duygular",
+    "tr": "Gün doğmadan neler doğar",
+    "english_primary": "Darkest before dawn / Anything can happen",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Neler doğar",
+        "en_fragment": "anything can happen",
+        "bridge_type": "transform",
+        "explanation": "Hopeful outlook."
+      }
+    ],
+    "cultural_insight": "Optimism.",
+    "fluency_tip": "Encouraging others."
+  },
+  {
+    "id": 3021,
+    "category": "sasirma",
+    "tr": "Habbeyi kubbe yapmak",
+    "english_primary": "Mountain out of a molehill",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Habbe Kubbe",
+        "en_fragment": "molehill mountain",
+        "bridge_type": "transform",
+        "explanation": "Exaggeration."
+      }
+    ],
+    "cultural_insight": "Drama queens.",
+    "fluency_tip": "Calming someone down."
+  },
+  {
+    "id": 3022,
+    "category": "gunluk",
+    "tr": "Hapı yutmak",
+    "english_primary": "To be toast / In a fix",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Hapı yutmak",
+        "en_fragment": "to be toast",
+        "bridge_type": "transform",
+        "explanation": "Big trouble."
+      }
+    ],
+    "cultural_insight": "Desperation.",
+    "fluency_tip": "Slang use."
+  },
+  {
+    "id": 3023,
+    "category": "yogunluk",
+    "tr": "Havanda su dövmek",
+    "english_primary": "Beat a dead horse / Spin wheels",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Havanda su",
+        "en_fragment": "beat dead horse",
+        "bridge_type": "transform",
+        "explanation": "Pointless effort."
+      }
+    ],
+    "cultural_insight": "Inefficiency.",
+    "fluency_tip": "Stopping an unproductive talk."
+  },
+  {
+    "id": 3024,
+    "category": "gunluk",
+    "tr": "İğne atsan yere düşmez",
+    "english_primary": "Packed like sardines",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "İğne düşmez",
+        "en_fragment": "sardines",
+        "bridge_type": "transform",
+        "explanation": "Extreme crowd."
+      }
+    ],
+    "cultural_insight": "Busy places.",
+    "fluency_tip": "Public transport."
+  },
+  {
+    "id": 3025,
+    "category": "yogunluk",
+    "tr": "İğneyle kuyu kazmak",
+    "english_primary": "Needle in a haystack / Pains-taking",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "İğneyle kuyu",
+        "en_fragment": "needle haystack",
+        "bridge_type": "transform",
+        "explanation": "Difficult task."
+      }
+    ],
+    "cultural_insight": "Patience.",
+    "fluency_tip": "Research work."
+  },
+  {
+    "id": 3026,
+    "category": "sosyal",
+    "tr": "İki eli kanda olsa gelmek",
+    "english_primary": "Come hell or high water",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Eli kanda",
+        "en_fragment": "hell high water",
+        "bridge_type": "transform",
+        "explanation": "Absolute commitment."
+      }
+    ],
+    "cultural_insight": "Loyalty.",
+    "fluency_tip": "Promises."
+  },
+  {
+    "id": 3027,
+    "category": "gunluk",
+    "tr": "İki ucu boklu değnek",
+    "english_primary": "Catch-22 / Rock and hard place",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "İki uç",
+        "en_fragment": "catch-22",
+        "bridge_type": "transform",
+        "explanation": "No-win situation."
+      }
+    ],
+    "cultural_insight": "Dilemmas.",
+    "fluency_tip": "Hard choices."
+  },
+  {
+    "id": 3028,
+    "category": "sasirma",
+    "tr": "Kabak tadı vermek",
+    "english_primary": "To wear thin / Get old",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Kabak tadı",
+        "en_fragment": "wear thin",
+        "bridge_type": "transform",
+        "explanation": "Becoming annoying."
+      }
+    ],
+    "cultural_insight": "Repetition.",
+    "fluency_tip": "Old jokes."
+  },
+  {
+    "id": 3029,
+    "category": "sosyal",
+    "tr": "Kaçın kurası",
+    "english_primary": "Not born yesterday",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Kaçın kurası",
+        "en_fragment": "not born yesterday",
+        "bridge_type": "transform",
+        "explanation": "Experienced/Cunning."
+      }
+    ],
+    "cultural_insight": "Street smarts.",
+    "fluency_tip": "Refuting tricks."
+  },
+  {
+    "id": 3030,
+    "category": "duygular",
+    "tr": "Kanıksamak",
+    "english_primary": "Desensitized / Take for granted",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Kanıksamak",
+        "en_fragment": "desensitized",
+        "bridge_type": "transform",
+        "explanation": "Used to negative things."
+      }
+    ],
+    "cultural_insight": "Societal habituation.",
+    "fluency_tip": "Social commentary."
+  },
+  {
+    "id": 3031,
+    "category": "gunluk",
+    "tr": "Kaş yaparken göz çıkarmak",
+    "english_primary": "More harm than good",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Kaş Göz",
+        "en_fragment": "harm good",
+        "bridge_type": "transform",
+        "explanation": "Fixing gone wrong."
+      }
+    ],
+    "cultural_insight": "Well-meaning errors.",
+    "fluency_tip": "Giving warnings."
+  },
+  {
+    "id": 3032,
+    "category": "basari",
+    "tr": "Kendi göbeğini kendi kesmek",
+    "english_primary": "Take matters into own hands",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Göbek kesmek",
+        "en_fragment": "own hands",
+        "bridge_type": "transform",
+        "explanation": "Self-reliance."
+      }
+    ],
+    "cultural_insight": "Independence.",
+    "fluency_tip": "Empowerment."
+  },
+  {
+    "id": 3033,
+    "category": "basari",
+    "tr": "Kıl payı kurtulmak",
+    "english_primary": "Skin of one's teeth",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Kıl payı",
+        "en_fragment": "skin of teeth",
+        "bridge_type": "transform",
+        "explanation": "Narrow escape."
+      }
+    ],
+    "cultural_insight": "Luck.",
+    "fluency_tip": "Close calls."
+  },
+  {
+    "id": 3034,
+    "category": "sosyal",
+    "tr": "Kulak asmamak",
+    "english_primary": "Turn a deaf ear",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Kulak asmamak",
+        "en_fragment": "deaf ear",
+        "bridge_type": "transform",
+        "explanation": "Ignoring advice."
+      }
+    ],
+    "cultural_insight": "Stubbornness.",
+    "fluency_tip": "Relationship talks."
+  },
+  {
+    "id": 3035,
+    "category": "sasirma",
+    "tr": "Leb demeden leblebiyi anlamak",
+    "english_primary": "Quick on the uptake",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Leb Leblebi",
+        "en_fragment": "quick uptake",
+        "bridge_type": "transform",
+        "explanation": "High intuition."
+      }
+    ],
+    "cultural_insight": "Intelligence.",
+    "fluency_tip": "Praising coworkers."
+  },
+  {
+    "id": 3036,
+    "category": "duygular",
+    "tr": "Maymun iştahlı",
+    "english_primary": "Fickle / Short interest",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Maymun iştah",
+        "en_fragment": "fickle",
+        "bridge_type": "transform",
+        "explanation": "Losing interest fast."
+      }
+    ],
+    "cultural_insight": "Lack of focus.",
+    "fluency_tip": "Habits."
+  },
+  {
+    "id": 3037,
+    "category": "sosyal",
+    "tr": "Nabza göre şerbet vermek",
+    "english_primary": "Play to the audience",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Nabız Şerbet",
+        "en_fragment": "play audience",
+        "bridge_type": "transform",
+        "explanation": "Catering to moods."
+      }
+    ],
+    "cultural_insight": "Diplomacy.",
+    "fluency_tip": "Politics/Sales."
+  },
+  {
+    "id": 3038,
+    "category": "sosyal",
+    "tr": "Nalıncı keseri gibi kendine yontmak",
+    "english_primary": "Look out for number one",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Kendine yontmak",
+        "en_fragment": "number one",
+        "bridge_type": "transform",
+        "explanation": "Selfishness."
+      }
+    ],
+    "cultural_insight": "Self-interest.",
+    "fluency_tip": "Social ethics."
+  },
+  {
+    "id": 3039,
+    "category": "sasirma",
+    "tr": "Ne oldum delisi olmak",
+    "english_primary": "Go to one's head",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Oldum delisi",
+        "en_fragment": "go to head",
+        "bridge_type": "transform",
+        "explanation": "Success-driven arrogance."
+      }
+    ],
+    "cultural_insight": "New money/fame.",
+    "fluency_tip": "Warning others."
+  },
+  {
+    "id": 3040,
+    "category": "deyimler",
+    "tr": "Ocağına incir ağacı dikmek",
+    "english_primary": "To ruin someone / Downfall",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "İncir dikmek",
+        "en_fragment": "ruin",
+        "bridge_type": "disappear",
+        "explanation": "Total destruction."
+      }
+    ],
+    "cultural_insight": "Severe harm.",
+    "fluency_tip": "Drama."
+  },
+  {
+    "id": 3041,
+    "category": "sasirma",
+    "tr": "Öküz altında buzağı aramak",
+    "english_primary": "Split hairs / Nitpick",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Öküz Buzağı",
+        "en_fragment": "split hairs",
+        "bridge_type": "transform",
+        "explanation": "Looking for flaws."
+      }
+    ],
+    "cultural_insight": "Pessimism.",
+    "fluency_tip": "Stopping complaints."
+  },
+  {
+    "id": 3042,
+    "category": "gunluk",
+    "tr": "Püf noktası",
+    "english_primary": "Trick of the trade / Golden rule",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Püf noktası",
+        "en_fragment": "trick of trade",
+        "bridge_type": "transform",
+        "explanation": "Key secret."
+      }
+    ],
+    "cultural_insight": "Craftsmanship.",
+    "fluency_tip": "Tutorials."
+  },
+  {
+    "id": 3043,
+    "category": "sosyal",
+    "tr": "Rahmetli olmak",
+    "english_primary": "To pass away",
+    "register": "formal",
+    "bridges": [
+      {
+        "tr_fragment": "Rahmetli",
+        "en_fragment": "pass away",
+        "bridge_type": "transform",
+        "explanation": "Polite death ref."
+      }
+    ],
+    "cultural_insight": "Respect for dead.",
+    "fluency_tip": "Sympathy cards."
+  },
+  {
+    "id": 3044,
+    "category": "sosyal",
+    "tr": "Saman altından su yürütmek",
+    "english_primary": "Behind someone's back",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Saman altı",
+        "en_fragment": "behind back",
+        "bridge_type": "transform",
+        "explanation": "Sneaky work."
+      }
+    ],
+    "cultural_insight": "Deception.",
+    "fluency_tip": "Office drama."
+  },
+  {
+    "id": 3045,
+    "category": "deyimler",
+    "tr": "Sütten ağzı yanan yoğurdu üfleyerek yer",
+    "english_primary": "Once bitten, twice shy",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Süt Yoğurt",
+        "en_fragment": "bitten shy",
+        "bridge_type": "transform",
+        "explanation": "Cautious after error."
+      }
+    ],
+    "cultural_insight": "Wisdom.",
+    "fluency_tip": "Giving advice."
+  },
+  {
+    "id": 3046,
+    "category": "sasirma",
+    "tr": "Tavşana kaç tazıya tut demek",
+    "english_primary": "Run with hare, hunt with hounds",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Tavşan Tazı",
+        "en_fragment": "hare hounds",
+        "bridge_type": "direct",
+        "explanation": "Playing both sides."
+      }
+    ],
+    "cultural_insight": "Double game.",
+    "fluency_tip": "Accusations."
+  },
+  {
+    "id": 3047,
+    "category": "basari",
+    "tr": "Tereyağından kıl çeker gibi",
+    "english_primary": "Hot knife through butter",
+    "register": "neutral",
+    "bridges": [
+      {
+        "tr_fragment": "Tereyağı Kıl",
+        "en_fragment": "knife butter",
+        "bridge_type": "transform",
+        "explanation": "Very easy."
+      }
+    ],
+    "cultural_insight": "Ease of work.",
+    "fluency_tip": "Post-exam talks."
+  },
+  {
+    "id": 3048,
+    "category": "gunluk",
+    "tr": "Yılan hikayesine dönmek",
+    "english_primary": "Long-winded / Never-ending saga",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Yılan hikaye",
+        "en_fragment": "neverending saga",
+        "bridge_type": "transform",
+        "explanation": "Endless wait."
+      }
+    ],
+    "cultural_insight": "Bureaucracy.",
+    "fluency_tip": "Project status."
+  },
+  {
+    "id": 3049,
+    "category": "sosyal",
+    "tr": "Gözünü seveyim",
+    "english_primary": "For goodness' sake",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Gözünü seveyim",
+        "en_fragment": "goodness sake",
+        "bridge_type": "transform",
+        "explanation": "Strong plea."
+      }
+    ],
+    "cultural_insight": "Begging/Pleading.",
+    "fluency_tip": "Stopping a mistake."
+  },
+  {
+    "id": 3050,
+    "category": "duygular",
+    "tr": "Burnu havada",
+    "english_primary": "Stuck-up / Nose in the air",
+    "register": "informal",
+    "bridges": [
+      {
+        "tr_fragment": "Burnu havada",
+        "en_fragment": "nose in air",
+        "bridge_type": "direct",
+        "explanation": "Arrogance."
+      }
+    ],
+    "cultural_insight": "Snobbery.",
+    "fluency_tip": "Social gossip."
+  }
+,
+  {
+    "id": 2001,
+    "category": "sosyal",
+    "tr": "Sıhhatler olsun",
+    "tags": ["sıhhat", "sağlık", "berber", "duş", "banyo"],
+    "english_primary": "Enjoy your fresh look! / Looking sharp!",
+    "alternatives": ["May it bring you health", "Nice haircut!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Sıhhatler olsun", "tr_gloss": "may healths be with you", "en_fragment": "Looking sharp", "bridge_type": "disappear", "explanation": "Türkçe banyo/tıraş sonrası standart dilek → İngilizcede doğrudan karşılığı yok, sonuca odaklı iltifat." }
+    ],
+    "cultural_insight": "Türk kültüründe banyo yapan veya tıraş olan kişiye söylenir. İngilizcede 'Bless you' gibi bir karşılığı yoktur, 'Nice haircut' gibi somut iltifatlar edilir.",
+    "fluency_tip": "Bir arkadaşın yeni tıraş olduysa 'Looking sharp!' (Keskin/Şık görünüyorsun) demek en doğal yoldur."
+  },
+  {
+    "id": 2002,
+    "category": "sosyal",
+    "tr": "Başın sağolsun",
+    "tags": ["baş", "sağ", "ölüm", "taziye", "cenaze"],
+    "english_primary": "I'm so sorry for your loss",
+    "alternatives": ["My deepest condolences", "My thoughts are with you"],
+    "register": "formal",
+    "bridges": [
+      { "tr_fragment": "Başın sağolsun", "tr_gloss": "may your head be alive", "en_fragment": "Sorry for your loss", "bridge_type": "transform", "explanation": "Hayatta kalanlara sağlık dileği → Kayıp için üzüntü paylaşımı." }
+    ],
+    "cultural_insight": "Türkçede geride kalanların sağlığına odaklanırken, İngilizcede kaybedilen kişinin yarattığı boşluğa odaklanılır.",
+    "fluency_tip": "Resmi durumlarda 'My condolences' (Taziyelerimi sunarım) ifadesi daha profesyonel durur."
+  },
+  {
+    "id": 2003,
+    "category": "deyimler",
+    "tr": "Jeton düştü",
+    "tags": ["jeton", "düştü", "anla", "fark et", "nihayet"],
+    "english_primary": "The penny dropped! / Now I get it!",
+    "alternatives": ["It finally clicked", "I see what you mean"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Jeton düştü", "tr_gloss": "the token fell", "en_fragment": "the penny dropped", "bridge_type": "direct", "explanation": "Her iki dilde de eski ankesörlü telefon/makine metaforu." }
+    ],
+    "cultural_insight": "Bir şeyi geç de olsa anladığımızda kullanılır. 'Penny' İngilizlerin madeni parasıdır, 'Jeton' ise bizimkidir.",
+    "fluency_tip": "Uzun süre anlamadığın bir konuyu aniden kavradığında 'Oh, the penny dropped!' dersen çok İngilizvari durursun."
+  },
+  {
+    "id": 2004,
+    "category": "duygular",
+    "tr": "Kafa ütülemek",
+    "tags": ["kafa", "ütü", "konuş", "çok", "sıkıcı"],
+    "english_primary": "To bend someone's ear / To talk someone's head off",
+    "alternatives": ["To drone on and on", "To be a chatterbox"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Kafa ütülemek", "tr_gloss": "to iron the head", "en_fragment": "talk someone's head off", "bridge_type": "transform", "explanation": "Isı metaforu → Fiziksel kopma metaforu." }
+    ],
+    "cultural_insight": "Çok konuşarak birini bunaltmayı anlatır. İngilizcede 'bend someone's ear' bazen bir konuyu zorla anlatmak için de kullanılır.",
+    "fluency_tip": "Biri seni çok yorduysa 'He really talked my head off today!' diyerek dert yanabilirsin."
+  },
+  {
+    "id": 2005,
+    "category": "sasirma",
+    "tr": "Havalara girmek",
+    "tags": ["hava", "gir", "ego", "kibir", "değiş"],
+    "english_primary": "To get high and mighty / To be full of oneself",
+    "alternatives": ["To have a big head", "To get on a high horse"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Havalara girmek", "tr_gloss": "to enter the airs", "en_fragment": "high and mighty", "bridge_type": "transform", "explanation": "Gökyüzü/Hava metaforu → Yükseklik/Güç metaforu." }
+    ],
+    "cultural_insight": "Bir başarıdan sonra kibre kapılanlar için söylenir. 'High horse' deyimi, birine yukarıdan bakmak anlamında çok yaygındır.",
+    "fluency_tip": "Birine 'Atından in de gel' demek için 'Get off your high horse' diyebilirsin."
+  },
+  {
+    "id": 2006,
+    "category": "sosyal",
+    "tr": "Güle güle harca",
+    "tags": ["gül", "harca", "para", "yeni", "eşya"],
+    "english_primary": "Enjoy your new purchase! / Use it in good health!",
+    "alternatives": ["Wear it well!", "Hope you like it!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Güle güle harca", "tr_gloss": "spend it laughingly", "en_fragment": "Enjoy your purchase", "bridge_type": "transform", "explanation": "Eylemin neşesine odaklanma → Kullanımın keyfine odaklanma." }
+    ],
+    "cultural_insight": "Yeni bir şey alan birine söylenen nezaket ifadesidir. İngilizcede yeni bir kıyafet alanı için 'Wear it well!' (İyi günlerde giy) denir.",
+    "fluency_tip": "Bir arkadaşın yeni bir araba veya telefon aldıysa 'Enjoy your new ride/phone!' diyebilirsin."
+  },
+  {
+    "id": 2007,
+    "category": "yogunluk",
+    "tr": "Elini taşın altına koymak",
+    "tags": ["el", "taş", "alt", "sorumluluk", "risk"],
+    "english_primary": "To step up to the plate / To shoulder the burden",
+    "alternatives": ["To pull one's weight", "To bite the bullet"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Elini taşın altına koymak", "tr_gloss": "to put hand under the stone", "en_fragment": "step up to the plate", "bridge_type": "transform", "explanation": "Ezilme riski metaforu → Beysbolda vuruş sırasına gelme metaforu." }
+    ],
+    "cultural_insight": "Sorumluluk almayı ve risk paylaşmayı ifade eder. 'Step up to the plate' Amerikan kökenli olsa da iş dünyasında evrenseldir.",
+    "fluency_tip": "İş yerinde 'Herkes sorumluluk almalı' demek yerine 'Everyone needs to step up to the plate' dersen liderlik dili kullanmış olursun."
+  },
+  {
+    "id": 2008,
+    "category": "deyimler",
+    "tr": "Çamur atmak",
+    "tags": ["çamur", "at", "iftira", "kötüle", "yalan"],
+    "english_primary": "To sling mud / To badmouth someone",
+    "alternatives": ["To smear someone's reputation", "To trash talk"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Çamur atmak", "tr_gloss": "to throw mud", "en_fragment": "sling mud", "bridge_type": "direct", "explanation": "İsim ve eylem neredeyse birebir eşleşiyor." }
+    ],
+    "cultural_insight": "Birinin itibarını sarsmak için asılsız iddialarda bulunmak. Siyasette ve rekabette her iki dilde de çok yaygındır.",
+    "fluency_tip": "'Slinging mud' daha çok politik/kurumsal bir iftirayı anlatırken, 'badmouthing' birinin arkasından konuşmayı anlatır."
+  },
+  {
+    "id": 2009,
+    "category": "sasirma",
+    "tr": "Gözü yememek",
+    "tags": ["göz", "ye", "kork", "cesaret", "yapama"],
+    "english_primary": "To get cold feet / To not have the guts",
+    "alternatives": ["To chick out", "To be intimidated"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Gözü yememek", "tr_gloss": "the eye doesn't eat it", "en_fragment": "get cold feet", "bridge_type": "transform", "explanation": "Görme/Algı kapasitesi → Isı/Cesaret metaforu (ayakların donması)." }
+    ],
+    "cultural_insight": "Bir işi yapmaya cesaret edememek. 'Cold feet' özellikle tam eylem anındaki korkuyu (evlilik, sahneye çıkma vb.) anlatır.",
+    "fluency_tip": "Son anda vazgeçen biri için 'He got cold feet' (Gözü yemedi/Korktu) diyebilirsin."
+  },
+  {
+    "id": 2010,
+    "category": "gunluk",
+    "tr": "Ayıkla pirincin taşını",
+    "tags": ["ayıkla", "pirinç", "taş", "sorun", "karışık"],
+    "english_primary": "What a mess! / Untangle this mess!",
+    "alternatives": ["Pick up the pieces", "A real can of worms"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Ayıkla pirincin taşını", "tr_gloss": "sort out the stone of the rice", "en_fragment": "a can of worms", "bridge_type": "transform", "explanation": "Gıda temizleme metaforu → Balık yemi/Solucan kutusu metaforu." }
+    ],
+    "cultural_insight": "Çözülmesi çok zor ve karmaşık bir duruma düşüldüğünde söylenir. 'A can of worms' açıldığında içinden çıkılmaz hale gelen durumları anlatır.",
+    "fluency_tip": "Çok karmaşık bir problemle karşılaştığında 'This is a real can of worms!' diyerek durumun zorluğunu belirtebilirsin."
+  },
+  {
+    "id": 2011,
+    "category": "sosyal",
+    "tr": "Güle güle kullan",
+    "tags": ["gül", "kullan", "yeni", "eşya", "hayırlı"],
+    "english_primary": "Enjoy using it! / Wear it in good health!",
+    "alternatives": ["I hope you enjoy it!", "It looks great on you!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Güle güle kullan", "tr_gloss": "use it laughingly", "en_fragment": "Enjoy using it", "bridge_type": "transform", "explanation": "Kullanım anındaki neşe → Kullanımdan alınan keyif." }
+    ],
+    "cultural_insight": "Yeni bir nesne alan kişiye söylenen standart nezaket cümlesi.",
+    "fluency_tip": "Eğer hediye verdiysen 'I hope you like it' (Umarım beğenirsin) demek daha doğal olabilir."
+  },
+  {
+    "id": 2012,
+    "category": "yorgunluk",
+    "tr": "Canım çıktı",
+    "tags": ["can", "çık", "yorgun", "bitkin", "öldüm"],
+    "english_primary": "I'm worn out / I'm exhausted",
+    "alternatives": ["I'm dead tired", "I've worked myself to the bone"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Canım çıktı", "tr_gloss": "my soul came out", "en_fragment": "worn out / dead tired", "bridge_type": "transform", "explanation": "Ruhun bedeni terk etmesi → Eskime/Yıpranma metaforu." }
+    ],
+    "cultural_insight": "Aşırı yorgunluğu ve yoğun çalışmayı anlatır. 'Worked to the bone' ifadesi kemiklerine kadar (iliklerine kadar) çalışmayı anlatır.",
+    "fluency_tip": "Çok yoğun bir günden sonra 'I'm absolutely drained' (Tamamen boşaldım/tükendim) diyebilirsin."
+  },
+  {
+    "id": 2013,
+    "category": "sosyal",
+    "tr": "Eline sağlık",
+    "tags": ["el", "sağlık", "yemek", "teşekkür", "güzel"],
+    "english_primary": "Compliments to the chef! / That was delicious!",
+    "alternatives": ["Great job on the food", "Thanks for the meal"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Eline sağlık", "tr_gloss": "health to your hand", "en_fragment": "Compliments to the chef", "bridge_type": "disappear", "explanation": "Uzuv sağlığı dileği → Aşçıya iltifat." }
+    ],
+    "cultural_insight": "Yemeği yapan kişiye teşekkür etmek için kullanılır. İngilizcede yemeğin tadına odaklanılır.",
+    "fluency_tip": "Ev ortamında yemeği beğenince 'This is amazing, thank you' demek 'Eline sağlık' yerine geçer."
+  },
+  {
+    "id": 2014,
+    "category": "sosyal",
+    "tr": "Kesene bereket",
+    "tags": ["kese", "bereket", "yemek", "hesap", "öde"],
+    "english_primary": "Thanks for picking up the tab!",
+    "alternatives": ["Thanks for the treat!", "Much appreciated!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Kesene bereket", "tr_gloss": "abundance to your purse", "en_fragment": "Thanks for the treat", "bridge_type": "transform", "explanation": "Cüzdan bereket dileği → Ismarlama/İkram teşekkürü." }
+    ],
+    "cultural_insight": "Hesabı ödeyen kişiye söylenen şık bir teşekkürdür. İngilizcede 'tab' hesap defteri/adisyon demektir.",
+    "fluency_tip": "Biri sana kahve ısmarladığında 'Thanks for the treat' demek çok samimidir."
+  },
+  {
+    "id": 2015,
+    "category": "sasirma",
+    "tr": "Ağzı açık kaldı",
+    "tags": ["ağız", "açık", "şaşır", "hayret", "donakaldı"],
+    "english_primary": "His jaw dropped / To be flabbergasted",
+    "alternatives": ["To be wide-eyed", "To be stunned"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Ağzı açık kaldı", "tr_gloss": "his mouth stayed open", "en_fragment": "his jaw dropped", "bridge_type": "direct", "explanation": "Çene/Ağız açılmasıyla şaşkınlık ifadesi her iki dilde de aynıdır." }
+    ],
+    "cultural_insight": "Beklenmedik bir durum karşısındaki büyük şaşkınlık.",
+    "fluency_tip": "Eğer çok şaşırtıcı bir haber duyduysan 'I was absolutely flabbergasted!' diyerek kelime dağarcığını konuşturabilirsin."
+  },
+  {
+    "id": 2016,
+    "category": "duygular",
+    "tr": "İçine doğmak",
+    "tags": ["iç", "doğmak", "his", "önsezi", "tahmin"],
+    "english_primary": "To have a hunch / To have a gut feeling",
+    "alternatives": ["My intuition tells me", "I just knew it"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "İçine doğmak", "tr_gloss": "to be born inside", "en_fragment": "have a hunch / gut feeling", "bridge_type": "transform", "explanation": "Doğum metaforu → Karın/Mide hissi (gut)." }
+    ],
+    "cultural_insight": "Bir olayın olacağını önceden hissetmek. İngilizcede bu his karın bölgesinde (gut) hissedilen bir şey olarak tarif edilir.",
+    "fluency_tip": "'I have a gut feeling that something is wrong' (Bir şeylerin yanlış olduğu içime doğuyor) yaygın bir kullanımdır."
+  },
+  {
+    "id": 2017,
+    "category": "yogunluk",
+    "tr": "Başımdan aşkın",
+    "tags": ["baş", "aşkın", "meşgul", "çok", "iş"],
+    "english_primary": "To be up to one's neck / To be snowed under",
+    "alternatives": ["I have a lot on my plate", "I'm swamped"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Başımdan aşkın", "tr_gloss": "exceeding my head", "en_fragment": "snowed under / up to my neck", "bridge_type": "transform", "explanation": "Boyu aşan su metaforu → Kar altında kalma/Boyna kadar gömülme." }
+    ],
+    "cultural_insight": "Aşırı yoğunluğu ifade eder. 'Snowed under' özellikle iş yükü altında kalmayı anlatır.",
+    "fluency_tip": "Eğer çok meşgulsen 'I'm swamped right now' (Bataklığa gömüldüm/Çok yoğunum) diyebilirsin."
+  },
+  {
+    "id": 2018,
+    "category": "deyimler",
+    "tr": "İpe un sermek",
+    "tags": ["ip", "un", "ser", "bahane", "ertele", "yapma"],
+    "english_primary": "To drag one's feet / To make excuses",
+    "alternatives": ["To beat around the bush", "To stonewall"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "İpe un sermek", "tr_gloss": "to spread flour on rope", "en_fragment": "drag one's feet", "bridge_type": "transform", "explanation": "İmkansız eylemle kaçış → Ayak sürüyerek yavaşlatma." }
+    ],
+    "cultural_insight": "Bir işi yapmamak için anlamsız bahaneler üretmek. İngilizcede ayaklarını sürümek (drag feet) isteksizliği anlatır.",
+    "fluency_tip": "Bir karar vermekte geciken biri için 'Stop dragging your feet and decide!' diyebilirsin."
+  },
+  {
+    "id": 2019,
+    "category": "sosyal",
+    "tr": "Lafı ağzımdan aldın",
+    "tags": ["laf", "ağız", "al", "aynı", "düşünce", "fikir"],
+    "english_primary": "You took the words right out of my mouth!",
+    "alternatives": ["I was just about to say that!", "Exactly my thoughts!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Lafı ağzımdan aldın", "tr_gloss": "you took the word from my mouth", "en_fragment": "took the words from my mouth", "bridge_type": "direct", "explanation": "Her iki dilde de tam olarak aynı yapı kullanılmaktadır." }
+    ],
+    "cultural_insight": "Aynı şeyi söylemek üzereyken diğeri söyleyince kullanılır.",
+    "fluency_tip": "Birinin fikrine tamamen katıldığında 'You read my mind!' (Aklımı okudun) da diyebilirsin."
+  },
+  {
+    "id": 2020,
+    "category": "sasirma",
+    "tr": "Dünya küçük",
+    "tags": ["dünya", "küçük", "rastlantı", "tesadüf", "karşılaşma"],
+    "english_primary": "It's a small world!",
+    "alternatives": ["What a coincidence!", "Small world, isn't it?"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Dünya küçük", "tr_gloss": "world is small", "en_fragment": "small world", "bridge_type": "direct", "explanation": "Evrensel bir rastlantı ifadesi." }
+    ],
+    "cultural_insight": "Hiç beklenmedik bir yerde tanıdık biriyle karşılaşınca söylenir.",
+    "fluency_tip": "Başka bir şehirde eski bir arkadaşını görünce 'Fancy meeting you here!' (Seni burada görmek ne sürpriz!) diyerek söze başlayabilirsin."
+  },
+  {
+    "id": 2021,
+    "category": "duygular",
+    "tr": "İçim şişti",
+    "tags": ["iç", "şiş", "sıkıl", "bunaldım", "yeter"],
+    "english_primary": "I'm fed up / I'm bored to tears",
+    "alternatives": ["I can't take it anymore", "I've had enough"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "İçim şişti", "tr_gloss": "my inside is swollen", "en_fragment": "fed up / bored to tears", "bridge_type": "transform", "explanation": "Şişme/Bunalma metaforu → Boğaza kadar doyma (fed up) veya ağlayacak kadar sıkılma." }
+    ],
+    "cultural_insight": "Sürekli aynı şeyleri duymaktan veya çok sıkılmaktan kaynaklanan ruh halidir.",
+    "fluency_tip": "Bir durumdan çok bıktıysan 'I'm sick and tired of this!' (Bıktım usandım artık) diyebilirsin."
+  },
+  {
+    "id": 2022,
+    "category": "gunluk",
+    "tr": "Havadan sudan konuşmak",
+    "tags": ["hava", "su", "konuş", "sohbet", "boş"],
+    "english_primary": "To make small talk",
+    "alternatives": ["To talk about this and that", "To shoot the breeze"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Havadan sudan", "tr_gloss": "from air and water", "en_fragment": "small talk", "bridge_type": "transform", "explanation": "Doğa elemanları metaforu → Küçük/Hafif konuşma." }
+    ],
+    "cultural_insight": "Önemli olmayan konularda sohbet etmek. İngilizcede 'small talk' özellikle yabancılarla buzları eritmek için yapılır.",
+    "fluency_tip": "Asansörde veya beklerken yapılan kısa sohbetlere 'Small talk' denir."
+  },
+  {
+    "id": 2023,
+    "category": "basari",
+    "tr": "Turnayı gözünden vurmak",
+    "tags": ["turna", "göz", "vur", "şans", "büyük", "başarı"],
+    "english_primary": "To hit the jackpot / To strike gold",
+    "alternatives": ["To hit the bullseye", "A stroke of luck"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Turnayı gözünden vurmak", "tr_gloss": "to hit the crane from its eye", "en_fragment": "hit the jackpot / strike gold", "bridge_type": "transform", "explanation": "Avcılık metaforu → Kumar/Maden metaforu." }
+    ],
+    "cultural_insight": "Büyük bir fırsat yakalamak veya şans eseri büyük bir başarı kazanmak.",
+    "fluency_tip": "Çok karlı bir iş bağladığında 'We really hit the jackpot this time!' diyebilirsin."
+  },
+  {
+    "id": 2024,
+    "category": "sosyal",
+    "tr": "Lafı mı olur?",
+    "tags": ["laf", "olur", "önemsiz", "rica", "teşekkür"],
+    "english_primary": "Don't mention it! / It's nothing!",
+    "alternatives": ["You're very welcome", "No big deal"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Lafı mı olur?", "tr_gloss": "would it be the word?", "en_fragment": "Don't mention it", "bridge_type": "transform", "explanation": "Sözü edilmez → Bahsetme bile." }
+    ],
+    "cultural_insight": "Bir iyilik yapıldıktan sonra teşekkür edildiğinde 'önemli değil' anlamında söylenir.",
+    "fluency_tip": "Biri teşekkür ettiğinde 'It's no biggie!' (Önemli bir şey değil ya!) dersen çok samimi ve modern duyulursun."
+  },
+  {
+    "id": 2025,
+    "category": "duygular",
+    "tr": "İçini dökmek",
+    "tags": ["iç", "dök", "anlat", "dertleş", "rahatla"],
+    "english_primary": "To pour one's heart out / To vent",
+    "alternatives": ["To get it off one's chest", "To have a heart-to-heart"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "İçini dökmek", "tr_gloss": "to pour one's inside", "en_fragment": "pour one's heart out", "bridge_type": "transform", "explanation": "İç organ metaforu → Kalp metaforu." }
+    ],
+    "cultural_insight": "Dertlerini ve hislerini samimiyetle anlatmak. 'Venting' daha çok sinirini veya stresini boşaltmak anlamındadır.",
+    "fluency_tip": "Seni rahatsız eden bir şeyi sonunda birine anlattığında 'I finally got it off my chest' (Üstümden yük kalktı/İçimi döktüm) diyebilirsin."
+  },
+  {
+    "id": 2026,
+    "category": "yogunluk",
+    "tr": "Arı gibi çalışmak",
+    "tags": ["arı", "çalış", "çalışkan", "hızlı", "üretken"],
+    "english_primary": "To be as busy as a bee",
+    "alternatives": ["To work like a dog", "To be a workaholic"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Arı gibi", "tr_gloss": "like a bee", "en_fragment": "as busy as a bee", "bridge_type": "direct", "explanation": "Arı metaforu her iki dilde de çalışkanlığı temsil eder." }
+    ],
+    "cultural_insight": "Çok çalışkan ve üretken olmayı ifade eder.",
+    "fluency_tip": "Eğer çok yoğun bir çalışma döneminden geçiyorsan 'I've been working like a dog' (Köpek gibi/Çok ağır çalışıyorum) diyerek durumun ağırlığını vurgulayabilirsin."
+  },
+  {
+    "id": 2027,
+    "category": "sasirma",
+    "tr": "Dudak uçuklatan",
+    "tags": ["dudak", "uçuk", "pahalı", "şaşırtıcı", "inanılmaz"],
+    "english_primary": "Jaw-dropping / Mind-boggling",
+    "alternatives": ["Eye-popping", "Staggering"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Dudak uçuklatan", "tr_gloss": "lip blistering", "en_fragment": "jaw-dropping / mind-boggling", "bridge_type": "transform", "explanation": "Cilt tepkisi metaforu → Çene düşmesi/Zihin karışması metaforu." }
+    ],
+    "cultural_insight": "Genellikle çok yüksek fiyatlar veya inanılmaz başarılar için kullanılır. İngilizcede 'mind-boggling' akıl almaz demektir.",
+    "fluency_tip": "Bir fiyatın aşırı yüksek olduğunu anlatırken 'The price was absolutely staggering!' diyebilirsin."
+  },
+  {
+    "id": 2028,
+    "category": "deyimler",
+    "tr": "Pabucu dama atılmak",
+    "tags": ["pabuç", "dam", "at", "eskidi", "ilgi", "kaybı"],
+    "english_primary": "To be cast aside / To be yesterday's news",
+    "alternatives": ["To be second best", "Out with the old, in with the new"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Pabucu dama atılmak", "tr_gloss": "shoe thrown to the roof", "en_fragment": "yesterday's news", "bridge_type": "transform", "explanation": "Osmanlı lonca geleneği → Medya/Zaman metaforu." }
+    ],
+    "cultural_insight": "Yeni bir şeyin gelmesiyle eskisinin değerini yitirmesi. 'Yesterday's news' (Dünkü haber) artık kimsenin ilgilenmediği şeyler için kullanılır.",
+    "fluency_tip": "Artık popüler olmayan bir trend için 'That's so yesterday!' diyerek havalı bir çıkış yapabilirsin."
+  },
+  {
+    "id": 2029,
+    "category": "gunluk",
+    "tr": "Ucuz atlatmak",
+    "tags": ["ucuz", "atlat", "kaza", "tehlike", "şans"],
+    "english_primary": "A narrow escape / To have a close shave",
+    "alternatives": ["To dodge a bullet", "That was close!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Ucuz atlatmak", "tr_gloss": "to get over cheaply", "en_fragment": "dodge a bullet / close shave", "bridge_type": "transform", "explanation": "Maliyet metaforu → Kurşundan kaçma/Yakın tıraş metaforu." }
+    ],
+    "cultural_insight": "Büyük bir tehlikeyi çok az bir zararla veya tamamen zararsız savuşturmak.",
+    "fluency_tip": "Kötü bir durumdan son anda kurtulduğunda 'Phew, I really dodged a bullet there!' (Valla kurşunu sektirdim/Ucuz atlattım) diyebilirsin."
+  },
+  {
+    "id": 2030,
+    "category": "sosyal",
+    "tr": "Gözden ırak olan gönülden de ırak olur",
+    "tags": ["göz", "ırak", "gönül", "uzak", "unutulma"],
+    "english_primary": "Out of sight, out of mind",
+    "alternatives": ["Distance makes the heart forget"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Gözden ırak olan gönülden de ırak olur", "tr_gloss": "the one away from the eye becomes away from the heart", "en_fragment": "out of sight, out of mind", "bridge_type": "direct", "explanation": "Görüş alanı ve zihin/kalp ilişkisi her iki dilde de benzerdir." }
+    ],
+    "cultural_insight": "Araya mesafe girdiğinde sevginin ve bağlılığın azalacağını savunan atasözü.",
+    "fluency_tip": "Biri seni unuttuysa sitemkar bir şekilde 'I guess it's out of sight, out of mind!' diyebilirsin."
+  },
+  {
+    "id": 2031,
+    "category": "yorgunluk",
+    "tr": "Pili bitmek",
+    "tags": ["pil", "bit", "yorgun", "enerji", "tükenmek"],
+    "english_primary": "To run out of steam / To be out of juice",
+    "alternatives": ["To hit the wall", "My battery is low"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Pili bitmek", "tr_gloss": "the battery is finished", "en_fragment": "run out of steam / out of juice", "bridge_type": "transform", "explanation": "Elektrik metaforu → Buhar/Yakıt metaforu." }
+    ],
+    "cultural_insight": "Enerjinin tamamen tükenmesi. 'Run out of steam' başlangıçtaki hızın ve isteğin kaybolmasını anlatır.",
+    "fluency_tip": "Çalışırken artık devam edemeyecek hale geldiğinde 'I've run out of steam' diyerek ara isteyebilirsin."
+  },
+  {
+    "id": 2032,
+    "category": "sosyal",
+    "tr": "Kesenize bereket",
+    "tags": ["kese", "bereket", "yemek", "hesap", "teşekkür"],
+    "english_primary": "May your purse be always full! / Thanks for paying!",
+    "alternatives": ["I owe you one!", "That was very kind of you"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Kesenize bereket", "tr_gloss": "abundance to your purse", "en_fragment": "I owe you one", "bridge_type": "transform", "explanation": "Maddi bereket dileği → Borçlu kalma/Teşekkür ifadesi." }
+    ],
+    "cultural_insight": "Ismarlanan bir yemek veya yapılan bir masraf sonrası nezaketle söylenir.",
+    "fluency_tip": "Biri senin yerine bir şey ödediğinde 'I'll get the next one' (Bir sonrakini ben öderim) dersen 'Kesenize bereket' ruhunu tam yansıtırsın."
+  },
+  {
+    "id": 2033,
+    "category": "sasirma",
+    "tr": "Küçük dilini yutmak",
+    "tags": ["dil", "yut", "şaşır", "hayret", "şok"],
+    "english_primary": "To be dumbstruck / To be struck dumb",
+    "alternatives": ["I was speechless", "My heart skipped a beat"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Küçük dilini yutmak", "tr_gloss": "to swallow the uvula", "en_fragment": "dumbstruck", "bridge_type": "transform", "explanation": "Organ yutma metaforu → Dilsiz/Sessiz kalma metaforu." }
+    ],
+    "cultural_insight": "Aşırı heyecan veya korkudan konuşamaz hale gelmek.",
+    "fluency_tip": "İnanamadığın bir manzara karşısında 'I was absolutely dumbstruck!' diyerek şaşkınlığını belirtebilirsin."
+  },
+  {
+    "id": 2034,
+    "category": "duygular",
+    "tr": "Canı sağolsun",
+    "tags": ["can", "sağ", "boşver", "sorun", "değil"],
+    "english_primary": "Never mind! / No hard feelings!",
+    "alternatives": ["It's alright", "Let it be"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Canı sağolsun", "tr_gloss": "may his soul be healthy", "en_fragment": "no hard feelings", "bridge_type": "transform", "explanation": "Varlık sağlığı dileği → Kırgınlık/Kızgınlık yokluğu." }
+    ],
+    "cultural_insight": "Birinin yaptığı bir hatayı veya eksikliği hoşgörüyle karşılamak için söylenir.",
+    "fluency_tip": "Biri senin bir eşyanı bozduğunda ve sen kızmadığını göstermek istediğinde 'No hard feelings!' diyebilirsin."
+  },
+  {
+    "id": 2035,
+    "category": "basari",
+    "tr": "Zoru başarmak",
+    "tags": ["zor", "başar", "güç", "imkansız", "zafer"],
+    "english_primary": "To pull off the impossible",
+    "alternatives": ["To beat the odds", "Against all odds"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Zoru başarmak", "tr_gloss": "to achieve the hard", "en_fragment": "beat the odds", "bridge_type": "transform", "explanation": "Zorluk derecesi → İstatistiksel ihtimal metaforu (odds)." }
+    ],
+    "cultural_insight": "Herkesin başarısız olacağını düşündüğü bir işte başarılı olmak. 'Beat the odds' ihtimalleri yenmek demektir.",
+    "fluency_tip": "Kimsenin inanmadığı bir projeyi bitirdiğinde 'We really beat the odds!' diyerek ekibini gururlandırabilirsin."
+  },
+  {
+    "id": 2036,
+    "category": "sosyal",
+    "tr": "Üstüme iyilik sağlık",
+    "tags": ["üst", "iyilik", "sağlık", "şaşır", "hayret"],
+    "english_primary": "Bless my soul! / Good heavens!",
+    "alternatives": ["My goodness!", "Gracious me!"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Üstüme iyilik sağlık", "tr_gloss": "goodness and health upon me", "en_fragment": "Bless my soul", "bridge_type": "transform", "explanation": "Korunma/Dua metaforu → Ruh kutsama metaforu." }
+    ],
+    "cultural_insight": "Çok şaşırtıcı veya hoş olmayan bir haber duyulduğunda hayretle söylenir. Biraz 'eski usul' ama samimi bir ifadedir.",
+    "fluency_tip": "Şaşkınlığını bir 'teyze' edasıyla değil de doğal bir şaşkınlıkla belirtmek için 'Oh my goodness!' en güvenli limandır."
+  },
+  {
+    "id": 2037,
+    "category": "sasirma",
+    "tr": "Ağzı kulaklarına varmak",
+    "tags": ["ağız", "kulak", "mutlu", "sevinç", "gülümse"],
+    "english_primary": "To be grinning from ear to ear",
+    "alternatives": ["To be beaming with joy", "A big fat smile"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Ağzı kulaklarına varmak", "tr_gloss": "his mouth reached his ears", "en_fragment": "grinning from ear to ear", "bridge_type": "direct", "explanation": "Gülümsemenin boyutu her iki dilde de kulaklarla ölçülür." }
+    ],
+    "cultural_insight": "Çok sevindiği her halinden belli olan kişiler için kullanılır.",
+    "fluency_tip": "Çok mutlu görünen birine 'You're grinning from ear to ear! What happened?' diyerek sorabilirsin."
+  },
+  {
+    "id": 2038,
+    "category": "yogunluk",
+    "tr": "Elinin hamuruyla erkek işine karışmak",
+    "tags": ["el", "hamur", "erkek", "iş", "karış"],
+    "english_primary": "To stick one's nose into other's business",
+    "alternatives": ["None of your business", "Keep out of it"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Elinin hamuruyla", "tr_gloss": "with dough on hands", "en_fragment": "stick one's nose", "bridge_type": "transform", "explanation": "Mutfak metaforu → Burun sokma metaforu." }
+    ],
+    "cultural_insight": "Geleneksel ve biraz cinsiyetçi bir deyimdir; bilmediği işe karışanlar için söylenir. İngilizcede 'burun sokmak' cinsiyetsiz ve geneldir.",
+    "fluency_tip": "Biri senin işine çok karışıyorsa 'Don't stick your nose into my business' diyerek uyarabilirsin."
+  },
+  {
+    "id": 2039,
+    "category": "gunluk",
+    "tr": "İnce eleyip sık dokumak",
+    "tags": ["ince", "ele", "sık", "doku", "titiz", "dikkat"],
+    "english_primary": "To be fastidious / To nitpick",
+    "alternatives": ["To go over with a fine-tooth comb", "To leave no stone unturned"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "İnce eleyip sık dokumak", "tr_gloss": "sift finely and weave densely", "en_fragment": "fine-tooth comb", "bridge_type": "transform", "explanation": "Tekstil metaforu → İnce dişli tarak metaforu." }
+    ],
+    "cultural_insight": "Bir işi çok titizlikle ve en ince ayrıntısına kadar incelemek.",
+    "fluency_tip": "Bir raporu çok detaylı kontrol ettiğini anlatırken 'I went over the report with a fine-tooth comb' diyebilirsin."
+  },
+  {
+    "id": 2040,
+    "category": "sosyal",
+    "tr": "Gözü gibi bakmak",
+    "tags": ["göz", "bak", "koru", "değerli", "dikkat"],
+    "english_primary": "To treasure something / To look after like the apple of one's eye",
+    "alternatives": ["To take great care of", "To cherish"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Gözü gibi bakmak", "tr_gloss": "to look after like his eye", "en_fragment": "apple of one's eye", "bridge_type": "direct", "explanation": "En değerli organ (göz) üzerinden koruma ve sevgi ifadesi." }
+    ],
+    "cultural_insight": "Bir şeye veya birine çok büyük özen göstermek, onu her türlü zarardan korumak.",
+    "fluency_tip": "Çocuğun veya çok sevdiğin bir eşyan için 'It's the apple of my eye' (Gözümün nuru/Gözüm gibi bakarım) diyebilirsin."
+  },
+  {
+    "id": 2041,
+    "category": "duygular",
+    "tr": "Burnundan kıl aldırmamak",
+    "tags": ["burun", "kıl", "gurur", "kibir", "inat"],
+    "english_primary": "To be as proud as a peacock / To be stuck-up",
+    "alternatives": ["To be high-handed", "Full of oneself"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Burnundan kıl aldırmamak", "tr_gloss": "not letting a hair be taken from the nose", "en_fragment": "proud as a peacock", "bridge_type": "transform", "explanation": "Fiziksel dokunulmazlık metaforu → Tavus kuşu metaforu." }
+    ],
+    "cultural_insight": "Çok gururlu, kibirli ve eleştiriye kapalı kişiler için söylenir.",
+    "fluency_tip": "Burnu havada olan biri için 'She is so stuck-up!' diyebilirsin."
+  },
+  {
+    "id": 2042,
+    "category": "sasirma",
+    "tr": "Şafak atmak",
+    "tags": ["şafak", "at", "kork", "anla", "fark et"],
+    "english_primary": "To have a sudden realization / To be hit by it",
+    "alternatives": ["It dawned on me", "The light bulb went off"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Şafak atmak", "tr_gloss": "dawn breaking", "en_fragment": "it dawned on me", "bridge_type": "direct", "explanation": "Günün ağarması (aydınlanma) metaforu her iki dilde de 'anlama'yı temsil eder." }
+    ],
+    "cultural_insight": "Bir durumu aniden kavramak veya bir tehlikenin farkına varmak.",
+    "fluency_tip": "Bir şeyi nihayet anladığında 'Suddenly, it dawned on me!' (Birdenbire şafak attı/anladım) dersen harika durur."
+  },
+  {
+    "id": 2043,
+    "category": "gunluk",
+    "tr": "Etekleri tutuşmak",
+    "tags": ["etek", "tutuş", "panik", "telâş", "korku"],
+    "english_primary": "To be in a state of panic / To get into a flap",
+    "alternatives": ["To run around like a headless chicken", "To freak out"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Etekleri tutuşmak", "tr_gloss": "skirts catching fire", "en_fragment": "headless chicken", "bridge_type": "transform", "explanation": "Ateş/Kıyafet metaforu → Tavuk metaforu (başsız tavuk gibi koşma)." }
+    ],
+    "cultural_insight": "Büyük bir telaş ve panik halini anlatır. 'Headless chicken' plansız ve anlamsız telaşı çok iyi betimler.",
+    "fluency_tip": "Panik içinde sağa sola koşturan biri için 'Stop running around like a headless chicken!' diyebilirsin."
+  },
+  {
+    "id": 2044,
+    "category": "sosyal",
+    "tr": "Yerin kulağı var",
+    "tags": ["yer", "kulak", "gizli", "duyulur", "dikkat"],
+    "english_primary": "Walls have ears!",
+    "alternatives": ["Someone might be listening", "Keep it down"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Yerin kulağı var", "tr_gloss": "the ground has ears", "en_fragment": "walls have ears", "bridge_type": "direct", "explanation": "Mekanların duyma yetisi metaforu her iki dilde de gizliliği anlatır." }
+    ],
+    "cultural_insight": "Gizli konuşulanların başkaları tarafından duyulabileceği uyarısı.",
+    "fluency_tip": "Biri tehlikeli bir sır anlatırken 'Shh! Walls have ears!' diyerek onu uyarabilirsin."
+  },
+  {
+    "id": 2045,
+    "category": "duygular",
+    "tr": "Yüreği ağzına gelmek",
+    "tags": ["yürek", "ağız", "korku", "heyecan", "ani"],
+    "english_primary": "To have one's heart in one's mouth",
+    "alternatives": ["My heart skipped a beat", "I was terrified"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Yüreği ağzına gelmek", "tr_gloss": "heart coming to the mouth", "en_fragment": "heart in one's mouth", "bridge_type": "direct", "explanation": "Korku anındaki fiziksel kalp hissi metaforu tamamen aynıdır." }
+    ],
+    "cultural_insight": "Çok korkmak veya ani bir heyecan yaşamak.",
+    "fluency_tip": "Çok korkunç bir olay anlattığında 'My heart was in my mouth the whole time!' diyebilirsin."
+  },
+  {
+    "id": 2046,
+    "category": "basari",
+    "tr": "Çantada keklik",
+    "tags": ["çanta", "keklik", "kolay", "garanti", "emin"],
+    "english_primary": "It's a cinch! / It's in the bag!",
+    "alternatives": ["A piece of cake", "As easy as pie"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Çantada keklik", "tr_gloss": "partridge in the bag", "en_fragment": "in the bag / a cinch", "bridge_type": "transform", "explanation": "Av ganimeti metaforu → Çanta/Kolaylık metaforu." }
+    ],
+    "cultural_insight": "Elde edilmesi çok kolay olan veya sonucu garanti olan durumlar için kullanılır.",
+    "fluency_tip": "Garanti gördüğün bir zafer için 'Don't worry, it's in the bag!' (Merak etme, o iş çantada keklik/bizde) diyebilirsin."
+  },
+  {
+    "id": 2047,
+    "category": "gunluk",
+    "tr": "Zeytinyağı gibi üste çıkmak",
+    "tags": ["zeytinyağı", "üst", "suçlu", "yavuz", "haksız"],
+    "english_primary": "To try to worm one's way out of it / To turn the tables",
+    "alternatives": ["To make oneself look innocent", "To pass the buck"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Zeytinyağı gibi", "tr_gloss": "like olive oil", "en_fragment": "worm one's way out", "bridge_type": "transform", "explanation": "Yoğunluk/Sıvı metaforu → Hareket/Kıvrılma metaforu (solucan gibi sıyrılma)." }
+    ],
+    "cultural_insight": "Haksız olduğu halde kendini haklı çıkarmaya çalışanlar için söylenir. 'Turn the tables' ise durumu tersine çevirip karşı tarafı suçlu duruma düşürmektir.",
+    "fluency_tip": "Suçlu olup da seni suçlayan birine 'Don't try to turn the tables on me!' diyebilirsin."
+  },
+  {
+    "id": 2048,
+    "category": "sosyal",
+    "tr": "Güle güle harca",
+    "tags": ["gül", "harca", "para", "hediye", "yeni"],
+    "english_primary": "Enjoy spending it!",
+    "alternatives": ["Hope you buy something nice!", "Use it well"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Güle güle harca", "tr_gloss": "spend it laughingly", "en_fragment": "Enjoy spending it", "bridge_type": "transform", "explanation": "Neşe metaforu → Keyif metaforu." }
+    ],
+    "cultural_insight": "Genellikle para hediyesi verildiğinde söylenir.",
+    "fluency_tip": "Harçlık verdiğin birine 'Enjoy it!' demen yeterlidir."
+  },
+  {
+    "id": 2049,
+    "category": "yorgunluk",
+    "tr": "Canı çıkmak",
+    "tags": ["can", "çık", "yorul", "perişan", "bitkin"],
+    "english_primary": "To be dead on one's feet",
+    "alternatives": ["To be knackered", "I'm spent"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Canı çıkmak", "tr_gloss": "soul coming out", "en_fragment": "dead on one's feet", "bridge_type": "transform", "explanation": "Ölüm metaforu → Ayakta ölü olma metaforu." }
+    ],
+    "cultural_insight": "Çok ağır bir iş yükünden sonraki aşırı yorgunluk.",
+    "fluency_tip": "İngiliz argosunda (UK) 'I'm absolutely knackered!' (Canım çıktı/Bittim) çok popülerdir."
+  },
+  {
+    "id": 2050,
+    "category": "gunluk",
+    "tr": "Vakit nakittir",
+    "tags": ["vakit", "nakit", "zaman", "para", "değerli"],
+    "english_primary": "Time is money",
+    "alternatives": ["Every second counts", "Don't waste time"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Vakit nakittir", "tr_gloss": "time is cash", "en_fragment": "time is money", "bridge_type": "direct", "explanation": "Zamanın maddi değeri evrensel bir gerçektir." }
+    ],
+    "cultural_insight": "Zamanın boşa harcanmaması gerektiğini hatırlatan evrensel atasözü.",
+    "fluency_tip": "Toplantıda konuyu uzatan birine nezaketle 'Remember, time is money!' diyerek hızlanmasını sağlayabilirsin."
+  },
+  {
+    "id": 1857,
+    "category": "sosyal",
+    "tr": "Gözün aydın",
+...
+    "tags": ["göz", "aydın", "müjde", "iyi", "haber"],
+    "english_primary": "Good news! I'm so happy for you",
+    "alternatives": ["Congratulations on the good news!", "Finally! I'm glad it worked out"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Gözün aydın", "tr_gloss": "your eye is bright", "en_fragment": "Good news", "bridge_type": "transform", "explanation": "Gözdeki ışık/sevinç → İyi haber/Mutluluk." }
+    ],
+    "cultural_insight": "Türkçede müjdeli bir haber alan kişiye söylenir. İngilizcede doğrudan karşılığı yoktur, sevinci paylaşan ifadeler kullanılır.",
+    "fluency_tip": "Bir bebek doğduğunda veya biri sınavı geçtiğinde 'I'm so happy for you' en doğal tepkidir."
+  },
+  {
+    "id": 1858,
+    "category": "yogunluk",
+    "tr": "Kolay gelsin",
+    "tags": ["kolay", "gel", "iş", "çalış", "yardım"],
+    "english_primary": "Take it easy! / Good luck with your work",
+    "alternatives": ["Hope it goes well!", "Keep up the good work"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Kolay gelsin", "tr_gloss": "may it come easy", "en_fragment": "Good luck / Take it easy", "bridge_type": "disappear", "explanation": "Türkçe iş başındakine söylenen standart dilek → İngilizcede duruma göre değişen ifadeler." }
+    ],
+    "cultural_insight": "Türk kültüründe her türlü iş yapana söylenen evrensel bir kibarlık ifadesidir. İngilizcede 'Take it easy' daha çok vedalaşırken kullanılır.",
+    "fluency_tip": "Bir dükkandan çıkarken veya çalışan birine selam verirken 'Have a good one' diyebilirsin."
+  },
+  {
+    "id": 1859,
+    "category": "deyimler",
+    "tr": "Etekleri zil çalmak",
+    "tags": ["etek", "zil", "çal", "sevinç", "mutlu"],
+    "english_primary": "To be over the moon",
+    "alternatives": ["To be thrilled to bits", "To be jumping for joy"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Etekleri zil çalmak", "tr_gloss": "bells ringing on skirts", "en_fragment": "over the moon", "bridge_type": "transform", "explanation": "Bedensel sevinç (zil çalma) → Mekansal sevinç (ayın üzerinde olma)." }
+    ],
+    "cultural_insight": "Aşırı sevinci betimler. İngilizcede 'over the moon' çok yaygın ve samimi bir deyimdir.",
+    "fluency_tip": "Çok büyük bir başarı kazandığında 'I'm absolutely thrilled' diyerek duyguyu pekiştirebilirsin."
+  },
+  {
+    "id": 1860,
+    "category": "yogunluk",
+    "tr": "Kasmak",
+    "tags": ["kas", "kasmak", "zorla", "stres", "çabala"],
+    "english_primary": "To try too hard / To overthink",
+    "alternatives": ["Don't sweat it!", "To be uptight"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Kasmak", "tr_gloss": "to tense up", "en_fragment": "try too hard", "bridge_type": "transform", "explanation": "Kas gerilmesi → Zihinsel/Eylemsel aşırılık." }
+    ],
+    "cultural_insight": "Hem bir iş için çok uğraşmak hem de gergin davranmak anlamındadır. İngilizcede 'uptight' gergin kişilikler için kullanılır.",
+    "fluency_tip": "'Don't stress too much' yerine 'Don't sweat it' dersen çok daha doğal (cool) duyulursun."
+  },
+  {
+    "id": 1861,
+    "category": "sosyal",
+    "tr": "Geyik yapmak",
+    "tags": ["geyik", "yap", "konuş", "muhabbet", "boş"],
+    "english_primary": "To shoot the breeze",
+    "alternatives": ["To small talk", "To chew the fat"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Geyik yapmak", "tr_gloss": "to do deer", "en_fragment": "shoot the breeze", "bridge_type": "transform", "explanation": "Hayvan metaforu → Doğa metaforu (rüzgarı vurmak)." }
+    ],
+    "cultural_insight": "Hafif, amaçsız ama keyifli sohbeti anlatır. İngilizcede 'shoot the breeze' tam karşılığıdır.",
+    "fluency_tip": "Arkadaşlarla boş boş oturduğunuzu anlatırken 'We were just shooting the breeze' harika durur."
+  },
+  {
+    "id": 1862,
+    "category": "sasirma",
+    "tr": "Atar yapmak",
+    "tags": ["atar", "yap", "kız", "tepki", "sert"],
+    "english_primary": "To snap at someone",
+    "alternatives": ["To give someone attitude", "To lash out"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Atar yapmak", "tr_gloss": "to do throwing/pulse", "en_fragment": "snap at someone", "bridge_type": "transform", "explanation": "Sert çıkış → Ani kopma (snap)." }
+    ],
+    "cultural_insight": "Sebepsiz veya ani tepki göstermek. 'Giving attitude' daha çok ergenlerin veya huysuzların tavrını anlatır.",
+    "fluency_tip": "Birinin sana sert çıktığını anlatırken 'Why are you snapping at me?' (Niye bana atar yapıyorsun?) diyebilirsin."
+  },
+  {
+    "id": 1863,
+    "category": "basari",
+    "tr": "Paçayı kurtarmak",
+    "tags": ["paça", "kurtar", "kaç", "zor", "durum"],
+    "english_primary": "To get off the hook",
+    "alternatives": ["To make a narrow escape", "To save one's neck"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Paçayı kurtarmak", "tr_gloss": "to save the trouser leg", "en_fragment": "get off the hook", "bridge_type": "transform", "explanation": "Kıyafeti kurtarma → Oltadan kurtulma." }
+    ],
+    "cultural_insight": "Zor bir durumdan veya cezadan sıyrılmak. İngilizcede 'off the hook' sorumluluktan kaçmayı da anlatır.",
+    "fluency_tip": "Bir hatadan ceza almadan kurtulduğunda 'I'm off the hook!' diyerek sevinebilirsin."
+  },
+  {
+    "id": 1864,
+    "category": "duygular",
+    "tr": "İçim parçalandı",
+    "tags": ["iç", "parçalan", "üzül", "acı", "kalp"],
+    "english_primary": "It broke my heart",
+    "alternatives": ["My heart bleeds for them", "It's gut-wrenching"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "İçim parçalandı", "tr_gloss": "my inside was broken to pieces", "en_fragment": "broke my heart", "bridge_type": "transform", "explanation": "Genel iç organ → Kalp (heart)." }
+    ],
+    "cultural_insight": "Derin bir üzüntü ve empatiyi anlatır. 'Gut-wrenching' midede hissedilen o ağır acıyı ifade eder.",
+    "fluency_tip": "Çok üzücü bir haber için 'That's heartbreaking' (Yürek parçalayıcı) demek en doğalıdır."
+  },
+  {
+    "id": 1865,
+    "category": "gunluk",
+    "tr": "Baştan savma",
+    "tags": ["baş", "sav", "kötü", "iş", "özensiz"],
+    "english_primary": "A sloppy job / Half-hearted",
+    "alternatives": ["To do a rush job", "Cut corners"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Baştan savma", "tr_gloss": "fend off from the head", "en_fragment": "sloppy job", "bridge_type": "transform", "explanation": "Kafadan uzaklaştırma → Gevşek/Dikkatsiz iş." }
+    ],
+    "cultural_insight": "Özensiz yapılan işi anlatır. 'Cutting corners' ise maliyet veya zaman için kaliteden ödün vermektir.",
+    "fluency_tip": "İş dünyasında 'We shouldn't cut corners' derseniz, 'Kaliteden ödün vermeyelim' demiş olursunuz."
+  },
+  {
+    "id": 1866,
+    "category": "sosyal",
+    "tr": "Ağzından yel alsın",
+    "tags": ["ağız", "yel", "al", "kötü", "şans"],
+    "english_primary": "Bite your tongue! / Heaven forbid!",
+    "alternatives": ["Don't even say that!", "Knock on wood"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Ağzından yel alsın", "tr_gloss": "may the wind take it from your mouth", "en_fragment": "Bite your tongue", "bridge_type": "transform", "explanation": "Rüzgarın götürmesi → Dilini ısırmak (söylememek)." }
+    ],
+    "cultural_insight": "Kötü bir ihtimal dile getirildiğinde söylenir. İngilizcede 'Bite your tongue' biraz daha sert bir susturmadır.",
+    "fluency_tip": "Batıl inanç olarak 'Tahtaya vur' demek için 'Touch wood' (UK) veya 'Knock on wood' (US) kullanılır."
+  },
   {
     "id": 1001,
     "category": "sosyal",
