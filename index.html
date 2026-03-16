@@ -32,6 +32,9 @@
   <link rel="stylesheet" href="css/revolution.css">
   <!-- App Check reCAPTCHA v3 -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LfOLlMsAAAAAE4K1Xr0yVKAAp4FB6GSlacAdZKy" async defer></script>
+  <link rel="stylesheet" href="css/cinema.css">
+  <script src="js/video-data.js"></script>
+  <script src="js/cinema.js"></script>
 </head>
 <body class="rank-1">
 
@@ -551,6 +554,13 @@
           <span class="at-desc">Deyimler</span>
         </div>
       </div>
+      <div class="action-tile cinema-tile" data-action="navigate" data-target="cinema">
+        <span class="at-icon">🎬</span>
+        <div class="at-text">
+          <span class="at-title">Sinema</span>
+          <span class="at-desc">Video Lab</span>
+        </div>
+      </div>
       <div class="action-tile" data-action="navigate" data-target="quantum">
         <span class="at-icon">⚛️</span>
         <div class="at-text">
@@ -568,6 +578,20 @@
     </div>
   </section>
 
+</div>
+</template>
+
+<!-- Cinema: Rhapsody Cinema v1.0 -->
+<template id="tpl-cinema">
+<div class="animate-in cinema-wrapper">
+  <div class="cinema-topbar">
+    <button class="synth-exit-btn" data-action="navigate" data-target="home">← Merkez</button>
+    <div class="cinema-title-area">
+      <span class="cinema-icon-small">🎬</span>
+      <span class="cinema-label-main">RHAPSODY CINEMA</span>
+    </div>
+  </div>
+  <div id="cinema-mount-point" class="cinema-mount"></div>
 </div>
 </template>
 
