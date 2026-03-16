@@ -13,12 +13,712 @@ const BRIDGE_CATEGORIES = [
   { id: 'basari',    label: 'Başarı & Başarısızlık', icon: '🎯' },
   { id: 'gunluk',    label: 'Günlük Hayat',     icon: '☀️' },
 ];
-
 var BRIDGE_DATA = [
+  {
+    "id": 2001,
+    "category": "sosyal",
+    "tr": "Sıhhatler olsun",
+    "tags": ["sıhhat", "sağlık", "berber", "duş", "banyo"],
+    "english_primary": "Enjoy your fresh look! / Looking sharp!",
+    "alternatives": ["May it bring you health", "Nice haircut!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Sıhhatler olsun", "tr_gloss": "may healths be with you", "en_fragment": "Looking sharp", "bridge_type": "disappear", "explanation": "Türkçe banyo/tıraş sonrası standart dilek → İngilizcede doğrudan karşılığı yok, sonuca odaklı iltifat." }
+    ],
+    "cultural_insight": "Türk kültüründe banyo yapan veya tıraş olan kişiye söylenir. İngilizcede 'Bless you' gibi bir karşılığı yoktur, 'Nice haircut' gibi somut iltifatlar edilir.",
+    "fluency_tip": "Bir arkadaşın yeni tıraş olduysa 'Looking sharp!' (Keskin/Şık görünüyorsun) demek en doğal yoldur."
+  },
+  {
+    "id": 2002,
+    "category": "sosyal",
+    "tr": "Başın sağolsun",
+    "tags": ["baş", "sağ", "ölüm", "taziye", "cenaze"],
+    "english_primary": "I'm so sorry for your loss",
+    "alternatives": ["My deepest condolences", "My thoughts are with you"],
+    "register": "formal",
+    "bridges": [
+      { "tr_fragment": "Başın sağolsun", "tr_gloss": "may your head be alive", "en_fragment": "Sorry for your loss", "bridge_type": "transform", "explanation": "Hayatta kalanlara sağlık dileği → Kayıp için üzüntü paylaşımı." }
+    ],
+    "cultural_insight": "Türkçede geride kalanların sağlığına odaklanırken, İngilizcede kaybedilen kişinin yarattığı boşluğa odaklanılır.",
+    "fluency_tip": "Resmi durumlarda 'My condolences' (Taziyelerimi sunarım) ifadesi daha profesyonel durur."
+  },
+  {
+    "id": 2003,
+    "category": "deyimler",
+    "tr": "Jeton düştü",
+    "tags": ["jeton", "düştü", "anla", "fark et", "nihayet"],
+    "english_primary": "The penny dropped! / Now I get it!",
+    "alternatives": ["It finally clicked", "I see what you mean"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Jeton düştü", "tr_gloss": "the token fell", "en_fragment": "the penny dropped", "bridge_type": "direct", "explanation": "Her iki dilde de eski ankesörlü telefon/makine metaforu." }
+    ],
+    "cultural_insight": "Bir şeyi geç de olsa anladığımızda kullanılır. 'Penny' İngilizlerin madeni parasıdır, 'Jeton' ise bizimkidir.",
+    "fluency_tip": "Uzun süre anlamadığın bir konuyu aniden kavradığında 'Oh, the penny dropped!' dersen çok İngilizvari durursun."
+  },
+  {
+    "id": 2004,
+    "category": "duygular",
+    "tr": "Kafa ütülemek",
+    "tags": ["kafa", "ütü", "konuş", "çok", "sıkıcı"],
+    "english_primary": "To bend someone's ear / To talk someone's head off",
+    "alternatives": ["To drone on and on", "To be a chatterbox"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Kafa ütülemek", "tr_gloss": "to iron the head", "en_fragment": "talk someone's head off", "bridge_type": "transform", "explanation": "Isı metaforu → Fiziksel kopma metaforu." }
+    ],
+    "cultural_insight": "Çok konuşarak birini bunaltmayı anlatır. İngilizcede 'bend someone's ear' bazen bir konuyu zorla anlatmak için de kullanılır.",
+    "fluency_tip": "Biri seni çok yorduysa 'He really talked my head off today!' diyerek dert yanabilirsin."
+  },
+  {
+    "id": 2005,
+    "category": "sasirma",
+    "tr": "Havalara girmek",
+    "tags": ["hava", "gir", "ego", "kibir", "değiş"],
+    "english_primary": "To get high and mighty / To be full of oneself",
+    "alternatives": ["To have a big head", "To get on a high horse"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Havalara girmek", "tr_gloss": "to enter the airs", "en_fragment": "high and mighty", "bridge_type": "transform", "explanation": "Gökyüzü/Hava metaforu → Yükseklik/Güç metaforu." }
+    ],
+    "cultural_insight": "Bir başarıdan sonra kibre kapılanlar için söylenir. 'High horse' deyimi, birine yukarıdan bakmak anlamında çok yaygındır.",
+    "fluency_tip": "Birine 'Atından in de gel' demek için 'Get off your high horse' diyebilirsin."
+  },
+  {
+    "id": 2006,
+    "category": "sosyal",
+    "tr": "Güle güle harca",
+    "tags": ["gül", "harca", "para", "yeni", "eşya"],
+    "english_primary": "Enjoy your new purchase! / Use it in good health!",
+    "alternatives": ["Wear it well!", "Hope you like it!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Güle güle harca", "tr_gloss": "spend it laughingly", "en_fragment": "Enjoy your purchase", "bridge_type": "transform", "explanation": "Eylemin neşesine odaklanma → Kullanımın keyfine odaklanma." }
+    ],
+    "cultural_insight": "Yeni bir şey alan birine söylenen nezaket ifadesidir. İngilizcede yeni bir kıyafet alanı için 'Wear it well!' (İyi günlerde giy) denir.",
+    "fluency_tip": "Bir arkadaşın yeni bir araba veya telefon aldıysa 'Enjoy your new ride/phone!' diyebilirsin."
+  },
+  {
+    "id": 2007,
+    "category": "yogunluk",
+    "tr": "Elini taşın altına koymak",
+    "tags": ["el", "taş", "alt", "sorumluluk", "risk"],
+    "english_primary": "To step up to the plate / To shoulder the burden",
+    "alternatives": ["To pull one's weight", "To bite the bullet"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Elini taşın altına koymak", "tr_gloss": "to put hand under the stone", "en_fragment": "step up to the plate", "bridge_type": "transform", "explanation": "Ezilme riski metaforu → Beysbolda vuruş sırasına gelme metaforu." }
+    ],
+    "cultural_insight": "Sorumluluk almayı ve risk paylaşmayı ifade eder. 'Step up to the plate' Amerikan kökenli olsa da iş dünyasında evrenseldir.",
+    "fluency_tip": "İş yerinde 'Herkes sorumluluk almalı' demek yerine 'Everyone needs to step up to the plate' dersen liderlik dili kullanmış olursun."
+  },
+  {
+    "id": 2008,
+    "category": "deyimler",
+    "tr": "Çamur atmak",
+    "tags": ["çamur", "at", "iftira", "kötüle", "yalan"],
+    "english_primary": "To sling mud / To badmouth someone",
+    "alternatives": ["To smear someone's reputation", "To trash talk"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Çamur atmak", "tr_gloss": "to throw mud", "en_fragment": "sling mud", "bridge_type": "direct", "explanation": "İsim ve eylem neredeyse birebir eşleşiyor." }
+    ],
+    "cultural_insight": "Birinin itibarını sarsmak için asılsız iddialarda bulunmak. Siyasette ve rekabette her iki dilde de çok yaygındır.",
+    "fluency_tip": "'Slinging mud' daha çok politik/kurumsal bir iftirayı anlatırken, 'badmouthing' birinin arkasından konuşmayı anlatır."
+  },
+  {
+    "id": 2009,
+    "category": "sasirma",
+    "tr": "Gözü yememek",
+    "tags": ["göz", "ye", "kork", "cesaret", "yapama"],
+    "english_primary": "To get cold feet / To not have the guts",
+    "alternatives": ["To chick out", "To be intimidated"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Gözü yememek", "tr_gloss": "the eye doesn't eat it", "en_fragment": "get cold feet", "bridge_type": "transform", "explanation": "Görme/Algı kapasitesi → Isı/Cesaret metaforu (ayakların donması)." }
+    ],
+    "cultural_insight": "Bir işi yapmaya cesaret edememek. 'Cold feet' özellikle tam eylem anındaki korkuyu (evlilik, sahneye çıkma vb.) anlatır.",
+    "fluency_tip": "Son anda vazgeçen biri için 'He got cold feet' (Gözü yemedi/Korktu) diyebilirsin."
+  },
+  {
+    "id": 2010,
+    "category": "gunluk",
+    "tr": "Ayıkla pirincin taşını",
+    "tags": ["ayıkla", "pirinç", "taş", "sorun", "karışık"],
+    "english_primary": "What a mess! / Untangle this mess!",
+    "alternatives": ["Pick up the pieces", "A real can of worms"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Ayıkla pirincin taşını", "tr_gloss": "sort out the stone of the rice", "en_fragment": "a can of worms", "bridge_type": "transform", "explanation": "Gıda temizleme metaforu → Balık yemi/Solucan kutusu metaforu." }
+    ],
+    "cultural_insight": "Çözülmesi çok zor ve karmaşık bir duruma düşüldüğünde söylenir. 'A can of worms' açıldığında içinden çıkılmaz hale gelen durumları anlatır.",
+    "fluency_tip": "Çok karmaşık bir problemle karşılaştığında 'This is a real can of worms!' diyerek durumun zorluğunu belirtebilirsin."
+  },
+  {
+    "id": 2011,
+    "category": "sosyal",
+    "tr": "Güle güle kullan",
+    "tags": ["gül", "kullan", "yeni", "eşya", "hayırlı"],
+    "english_primary": "Enjoy using it! / Wear it in good health!",
+    "alternatives": ["I hope you enjoy it!", "It looks great on you!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Güle güle kullan", "tr_gloss": "use it laughingly", "en_fragment": "Enjoy using it", "bridge_type": "transform", "explanation": "Kullanım anındaki neşe → Kullanımdan alınan keyif." }
+    ],
+    "cultural_insight": "Yeni bir nesne alan kişiye söylenen standart nezaket cümlesi.",
+    "fluency_tip": "Eğer hediye verdiysen 'I hope you like it' (Umarım beğenirsin) demek daha doğal olabilir."
+  },
+  {
+    "id": 2012,
+    "category": "yorgunluk",
+    "tr": "Canım çıktı",
+    "tags": ["can", "çık", "yorgun", "bitkin", "öldüm"],
+    "english_primary": "I'm worn out / I'm exhausted",
+    "alternatives": ["I'm dead tired", "I've worked myself to the bone"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Canım çıktı", "tr_gloss": "my soul came out", "en_fragment": "worn out / dead tired", "bridge_type": "transform", "explanation": "Ruhun bedeni terk etmesi → Eskime/Yıpranma metaforu." }
+    ],
+    "cultural_insight": "Aşırı yorgunluğu ve yoğun çalışmayı anlatır. 'Worked to the bone' ifadesi kemiklerine kadar (iliklerine kadar) çalışmayı anlatır.",
+    "fluency_tip": "Çok yoğun bir günden sonra 'I'm absolutely drained' (Tamamen boşaldım/tükendim) diyebilirsin."
+  },
+  {
+    "id": 2013,
+    "category": "sosyal",
+    "tr": "Eline sağlık",
+    "tags": ["el", "sağlık", "yemek", "teşekkür", "güzel"],
+    "english_primary": "Compliments to the chef! / That was delicious!",
+    "alternatives": ["Great job on the food", "Thanks for the meal"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Eline sağlık", "tr_gloss": "health to your hand", "en_fragment": "Compliments to the chef", "bridge_type": "disappear", "explanation": "Uzuv sağlığı dileği → Aşçıya iltifat." }
+    ],
+    "cultural_insight": "Yemeği yapan kişiye teşekkür etmek için kullanılır. İngilizcede yemeğin tadına odaklanılır.",
+    "fluency_tip": "Ev ortamında yemeği beğenince 'This is amazing, thank you' demek 'Eline sağlık' yerine geçer."
+  },
+  {
+    "id": 2014,
+    "category": "sosyal",
+    "tr": "Kesene bereket",
+    "tags": ["kese", "bereket", "yemek", "hesap", "öde"],
+    "english_primary": "Thanks for picking up the tab!",
+    "alternatives": ["Thanks for the treat!", "Much appreciated!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Kesene bereket", "tr_gloss": "abundance to your purse", "en_fragment": "Thanks for the treat", "bridge_type": "transform", "explanation": "Cüzdan bereket dileği → Ismarlama/İkram teşekkürü." }
+    ],
+    "cultural_insight": "Hesabı ödeyen kişiye söylenen şık bir teşekkürdür. İngilizcede 'tab' hesap defteri/adisyon demektir.",
+    "fluency_tip": "Biri sana kahve ısmarladığında 'Thanks for the treat' demek çok samimidir."
+  },
+  {
+    "id": 2015,
+    "category": "sasirma",
+    "tr": "Ağzı açık kaldı",
+    "tags": ["ağız", "açık", "şaşır", "hayret", "donakaldı"],
+    "english_primary": "His jaw dropped / To be flabbergasted",
+    "alternatives": ["To be wide-eyed", "To be stunned"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Ağzı açık kaldı", "tr_gloss": "his mouth stayed open", "en_fragment": "his jaw dropped", "bridge_type": "direct", "explanation": "Çene/Ağız açılmasıyla şaşkınlık ifadesi her iki dilde de aynıdır." }
+    ],
+    "cultural_insight": "Beklenmedik bir durum karşısındaki büyük şaşkınlık.",
+    "fluency_tip": "Eğer çok şaşırtıcı bir haber duyduysan 'I was absolutely flabbergasted!' diyerek kelime dağarcığını konuşturabilirsin."
+  },
+  {
+    "id": 2016,
+    "category": "duygular",
+    "tr": "İçine doğmak",
+    "tags": ["iç", "doğmak", "his", "önsezi", "tahmin"],
+    "english_primary": "To have a hunch / To have a gut feeling",
+    "alternatives": ["My intuition tells me", "I just knew it"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "İçine doğmak", "tr_gloss": "to be born inside", "en_fragment": "have a hunch / gut feeling", "bridge_type": "transform", "explanation": "Doğum metaforu → Karın/Mide hissi (gut)." }
+    ],
+    "cultural_insight": "Bir olayın olacağını önceden hissetmek. İngilizcede bu his karın bölgesinde (gut) hissedilen bir şey olarak tarif edilir.",
+    "fluency_tip": "'I have a gut feeling that something is wrong' (Bir şeylerin yanlış olduğu içime doğuyor) yaygın bir kullanımdır."
+  },
+  {
+    "id": 2017,
+    "category": "yogunluk",
+    "tr": "Başımdan aşkın",
+    "tags": ["baş", "aşkın", "meşgul", "çok", "iş"],
+    "english_primary": "To be up to one's neck / To be snowed under",
+    "alternatives": ["I have a lot on my plate", "I'm swamped"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Başımdan aşkın", "tr_gloss": "exceeding my head", "en_fragment": "snowed under / up to my neck", "bridge_type": "transform", "explanation": "Boyu aşan su metaforu → Kar altında kalma/Boyna kadar gömülme." }
+    ],
+    "cultural_insight": "Aşırı yoğunluğu ifade eder. 'Snowed under' özellikle iş yükü altında kalmayı anlatır.",
+    "fluency_tip": "Eğer çok meşgulsen 'I'm swamped right now' (Bataklığa gömüldüm/Çok yoğunum) diyebilirsin."
+  },
+  {
+    "id": 2018,
+    "category": "deyimler",
+    "tr": "İpe un sermek",
+    "tags": ["ip", "un", "ser", "bahane", "ertele", "yapma"],
+    "english_primary": "To drag one's feet / To make excuses",
+    "alternatives": ["To beat around the bush", "To stonewall"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "İpe un sermek", "tr_gloss": "to spread flour on rope", "en_fragment": "drag one's feet", "bridge_type": "transform", "explanation": "İmkansız eylemle kaçış → Ayak sürüyerek yavaşlatma." }
+    ],
+    "cultural_insight": "Bir işi yapmamak için anlamsız bahaneler üretmek. İngilizcede ayaklarını sürümek (drag feet) isteksizliği anlatır.",
+    "fluency_tip": "Bir karar vermekte geciken biri için 'Stop dragging your feet and decide!' diyebilirsin."
+  },
+  {
+    "id": 2019,
+    "category": "sosyal",
+    "tr": "Lafı ağzımdan aldın",
+    "tags": ["laf", "ağız", "al", "aynı", "düşünce", "fikir"],
+    "english_primary": "You took the words right out of my mouth!",
+    "alternatives": ["I was just about to say that!", "Exactly my thoughts!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Lafı ağzımdan aldın", "tr_gloss": "you took the word from my mouth", "en_fragment": "took the words from my mouth", "bridge_type": "direct", "explanation": "Her iki dilde de tam olarak aynı yapı kullanılmaktadır." }
+    ],
+    "cultural_insight": "Aynı şeyi söylemek üzereyken diğeri söyleyince kullanılır.",
+    "fluency_tip": "Birinin fikrine tamamen katıldığında 'You read my mind!' (Aklımı okudun) da diyebilirsin."
+  },
+  {
+    "id": 2020,
+    "category": "sasirma",
+    "tr": "Dünya küçük",
+    "tags": ["dünya", "küçük", "rastlantı", "tesadüf", "karşılaşma"],
+    "english_primary": "It's a small world!",
+    "alternatives": ["What a coincidence!", "Small world, isn't it?"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Dünya küçük", "tr_gloss": "world is small", "en_fragment": "small world", "bridge_type": "direct", "explanation": "Evrensel bir rastlantı ifadesi." }
+    ],
+    "cultural_insight": "Hiç beklenmedik bir yerde tanıdık biriyle karşılaşınca söylenir.",
+    "fluency_tip": "Başka bir şehirde eski bir arkadaşını görünce 'Fancy meeting you here!' (Seni burada görmek ne sürpriz!) diyerek söze başlayabilirsin."
+  },
+  {
+    "id": 2021,
+    "category": "duygular",
+    "tr": "İçim şişti",
+    "tags": ["iç", "şiş", "sıkıl", "bunaldım", "yeter"],
+    "english_primary": "I'm fed up / I'm bored to tears",
+    "alternatives": ["I can't take it anymore", "I've had enough"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "İçim şişti", "tr_gloss": "my inside is swollen", "en_fragment": "fed up / bored to tears", "bridge_type": "transform", "explanation": "Şişme/Bunalma metaforu → Boğaza kadar doyma (fed up) veya ağlayacak kadar sıkılma." }
+    ],
+    "cultural_insight": "Sürekli aynı şeyleri duymaktan veya çok sıkılmaktan kaynaklanan ruh halidir.",
+    "fluency_tip": "Bir durumdan çok bıktıysan 'I'm sick and tired of this!' (Bıktım usandım artık) diyebilirsin."
+  },
+  {
+    "id": 2022,
+    "category": "gunluk",
+    "tr": "Havadan sudan konuşmak",
+    "tags": ["hava", "su", "konuş", "sohbet", "boş"],
+    "english_primary": "To make small talk",
+    "alternatives": ["To talk about this and that", "To shoot the breeze"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Havadan sudan", "tr_gloss": "from air and water", "en_fragment": "small talk", "bridge_type": "transform", "explanation": "Doğa elemanları metaforu → Küçük/Hafif konuşma." }
+    ],
+    "cultural_insight": "Önemli olmayan konularda sohbet etmek. İngilizcede 'small talk' özellikle yabancılarla buzları eritmek için yapılır.",
+    "fluency_tip": "Asansörde veya beklerken yapılan kısa sohbetlere 'Small talk' denir."
+  },
+  {
+    "id": 2023,
+    "category": "basari",
+    "tr": "Turnayı gözünden vurmak",
+    "tags": ["turna", "göz", "vur", "şans", "büyük", "başarı"],
+    "english_primary": "To hit the jackpot / To strike gold",
+    "alternatives": ["To hit the bullseye", "A stroke of luck"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Turnayı gözünden vurmak", "tr_gloss": "to hit the crane from its eye", "en_fragment": "hit the jackpot / strike gold", "bridge_type": "transform", "explanation": "Avcılık metaforu → Kumar/Maden metaforu." }
+    ],
+    "cultural_insight": "Büyük bir fırsat yakalamak veya şans eseri büyük bir başarı kazanmak.",
+    "fluency_tip": "Çok karlı bir iş bağladığında 'We really hit the jackpot this time!' diyebilirsin."
+  },
+  {
+    "id": 2024,
+    "category": "sosyal",
+    "tr": "Lafı mı olur?",
+    "tags": ["laf", "olur", "önemsiz", "rica", "teşekkür"],
+    "english_primary": "Don't mention it! / It's nothing!",
+    "alternatives": ["You're very welcome", "No big deal"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Lafı mı olur?", "tr_gloss": "would it be the word?", "en_fragment": "Don't mention it", "bridge_type": "transform", "explanation": "Sözü edilmez → Bahsetme bile." }
+    ],
+    "cultural_insight": "Bir iyilik yapıldıktan sonra teşekkür edildiğinde 'önemli değil' anlamında söylenir.",
+    "fluency_tip": "Biri teşekkür ettiğinde 'It's no biggie!' (Önemli bir şey değil ya!) dersen çok samimi ve modern duyulursun."
+  },
+  {
+    "id": 2025,
+    "category": "duygular",
+    "tr": "İçini dökmek",
+    "tags": ["iç", "dök", "anlat", "dertleş", "rahatla"],
+    "english_primary": "To pour one's heart out / To vent",
+    "alternatives": ["To get it off one's chest", "To have a heart-to-heart"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "İçini dökmek", "tr_gloss": "to pour one's inside", "en_fragment": "pour one's heart out", "bridge_type": "transform", "explanation": "İç organ metaforu → Kalp metaforu." }
+    ],
+    "cultural_insight": "Dertlerini ve hislerini samimiyetle anlatmak. 'Venting' daha çok sinirini veya stresini boşaltmak anlamındadır.",
+    "fluency_tip": "Seni rahatsız eden bir şeyi sonunda birine anlattığında 'I finally got it off my chest' (Üstümden yük kalktı/İçimi döktüm) diyebilirsin."
+  },
+  {
+    "id": 2026,
+    "category": "yogunluk",
+    "tr": "Arı gibi çalışmak",
+    "tags": ["arı", "çalış", "çalışkan", "hızlı", "üretken"],
+    "english_primary": "To be as busy as a bee",
+    "alternatives": ["To work like a dog", "To be a workaholic"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Arı gibi", "tr_gloss": "like a bee", "en_fragment": "as busy as a bee", "bridge_type": "direct", "explanation": "Arı metaforu her iki dilde de çalışkanlığı temsil eder." }
+    ],
+    "cultural_insight": "Çok çalışkan ve üretken olmayı ifade eder.",
+    "fluency_tip": "Eğer çok yoğun bir çalışma döneminden geçiyorsan 'I've been working like a dog' (Köpek gibi/Çok ağır çalışıyorum) diyerek durumun ağırlığını vurgulayabilirsin."
+  },
+  {
+    "id": 2027,
+    "category": "sasirma",
+    "tr": "Dudak uçuklatan",
+    "tags": ["dudak", "uçuk", "pahalı", "şaşırtıcı", "inanılmaz"],
+    "english_primary": "Jaw-dropping / Mind-boggling",
+    "alternatives": ["Eye-popping", "Staggering"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Dudak uçuklatan", "tr_gloss": "lip blistering", "en_fragment": "jaw-dropping / mind-boggling", "bridge_type": "transform", "explanation": "Cilt tepkisi metaforu → Çene düşmesi/Zihin karışması metaforu." }
+    ],
+    "cultural_insight": "Genellikle çok yüksek fiyatlar veya inanılmaz başarılar için kullanılır. İngilizcede 'mind-boggling' akıl almaz demektir.",
+    "fluency_tip": "Bir fiyatın aşırı yüksek olduğunu anlatırken 'The price was absolutely staggering!' diyebilirsin."
+  },
+  {
+    "id": 2028,
+    "category": "deyimler",
+    "tr": "Pabucu dama atılmak",
+    "tags": ["pabuç", "dam", "at", "eskidi", "ilgi", "kaybı"],
+    "english_primary": "To be cast aside / To be yesterday's news",
+    "alternatives": ["To be second best", "Out with the old, in with the new"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Pabucu dama atılmak", "tr_gloss": "shoe thrown to the roof", "en_fragment": "yesterday's news", "bridge_type": "transform", "explanation": "Osmanlı lonca geleneği → Medya/Zaman metaforu." }
+    ],
+    "cultural_insight": "Yeni bir şeyin gelmesiyle eskisinin değerini yitirmesi. 'Yesterday's news' (Dünkü haber) artık kimsenin ilgilenmediği şeyler için kullanılır.",
+    "fluency_tip": "Artık popüler olmayan bir trend için 'That's so yesterday!' diyerek havalı bir çıkış yapabilirsin."
+  },
+  {
+    "id": 2029,
+    "category": "gunluk",
+    "tr": "Ucuz atlatmak",
+    "tags": ["ucuz", "atlat", "kaza", "tehlike", "şans"],
+    "english_primary": "A narrow escape / To have a close shave",
+    "alternatives": ["To dodge a bullet", "That was close!"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Ucuz atlatmak", "tr_gloss": "to get over cheaply", "en_fragment": "dodge a bullet / close shave", "bridge_type": "transform", "explanation": "Maliyet metaforu → Kurşundan kaçma/Yakın tıraş metaforu." }
+    ],
+    "cultural_insight": "Büyük bir tehlikeyi çok az bir zararla veya tamamen zararsız savuşturmak.",
+    "fluency_tip": "Kötü bir durumdan son anda kurtulduğunda 'Phew, I really dodged a bullet there!' (Valla kurşunu sektirdim/Ucuz atlattım) diyebilirsin."
+  },
+  {
+    "id": 2030,
+    "category": "sosyal",
+    "tr": "Gözden ırak olan gönülden de ırak olur",
+    "tags": ["göz", "ırak", "gönül", "uzak", "unutulma"],
+    "english_primary": "Out of sight, out of mind",
+    "alternatives": ["Distance makes the heart forget"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Gözden ırak olan gönülden de ırak olur", "tr_gloss": "the one away from the eye becomes away from the heart", "en_fragment": "out of sight, out of mind", "bridge_type": "direct", "explanation": "Görüş alanı ve zihin/kalp ilişkisi her iki dilde de benzerdir." }
+    ],
+    "cultural_insight": "Araya mesafe girdiğinde sevginin ve bağlılığın azalacağını savunan atasözü.",
+    "fluency_tip": "Biri seni unuttuysa sitemkar bir şekilde 'I guess it's out of sight, out of mind!' diyebilirsin."
+  },
+  {
+    "id": 2031,
+    "category": "yorgunluk",
+    "tr": "Pili bitmek",
+    "tags": ["pil", "bit", "yorgun", "enerji", "tükenmek"],
+    "english_primary": "To run out of steam / To be out of juice",
+    "alternatives": ["To hit the wall", "My battery is low"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Pili bitmek", "tr_gloss": "the battery is finished", "en_fragment": "run out of steam / out of juice", "bridge_type": "transform", "explanation": "Elektrik metaforu → Buhar/Yakıt metaforu." }
+    ],
+    "cultural_insight": "Enerjinin tamamen tükenmesi. 'Run out of steam' başlangıçtaki hızın ve isteğin kaybolmasını anlatır.",
+    "fluency_tip": "Çalışırken artık devam edemeyecek hale geldiğinde 'I've run out of steam' diyerek ara isteyebilirsin."
+  },
+  {
+    "id": 2032,
+    "category": "sosyal",
+    "tr": "Kesenize bereket",
+    "tags": ["kese", "bereket", "yemek", "hesap", "teşekkür"],
+    "english_primary": "May your purse be always full! / Thanks for paying!",
+    "alternatives": ["I owe you one!", "That was very kind of you"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Kesenize bereket", "tr_gloss": "abundance to your purse", "en_fragment": "I owe you one", "bridge_type": "transform", "explanation": "Maddi bereket dileği → Borçlu kalma/Teşekkür ifadesi." }
+    ],
+    "cultural_insight": "Ismarlanan bir yemek veya yapılan bir masraf sonrası nezaketle söylenir.",
+    "fluency_tip": "Biri senin yerine bir şey ödediğinde 'I'll get the next one' (Bir sonrakini ben öderim) dersen 'Kesenize bereket' ruhunu tam yansıtırsın."
+  },
+  {
+    "id": 2033,
+    "category": "sasirma",
+    "tr": "Küçük dilini yutmak",
+    "tags": ["dil", "yut", "şaşır", "hayret", "şok"],
+    "english_primary": "To be dumbstruck / To be struck dumb",
+    "alternatives": ["I was speechless", "My heart skipped a beat"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Küçük dilini yutmak", "tr_gloss": "to swallow the uvula", "en_fragment": "dumbstruck", "bridge_type": "transform", "explanation": "Organ yutma metaforu → Dilsiz/Sessiz kalma metaforu." }
+    ],
+    "cultural_insight": "Aşırı heyecan veya korkudan konuşamaz hale gelmek.",
+    "fluency_tip": "İnanamadığın bir manzara karşısında 'I was absolutely dumbstruck!' diyerek şaşkınlığını belirtebilirsin."
+  },
+  {
+    "id": 2034,
+    "category": "duygular",
+    "tr": "Canı sağolsun",
+    "tags": ["can", "sağ", "boşver", "sorun", "değil"],
+    "english_primary": "Never mind! / No hard feelings!",
+    "alternatives": ["It's alright", "Let it be"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Canı sağolsun", "tr_gloss": "may his soul be healthy", "en_fragment": "no hard feelings", "bridge_type": "transform", "explanation": "Varlık sağlığı dileği → Kırgınlık/Kızgınlık yokluğu." }
+    ],
+    "cultural_insight": "Birinin yaptığı bir hatayı veya eksikliği hoşgörüyle karşılamak için söylenir.",
+    "fluency_tip": "Biri senin bir eşyanı bozduğunda ve sen kızmadığını göstermek istediğinde 'No hard feelings!' diyebilirsin."
+  },
+  {
+    "id": 2035,
+    "category": "basari",
+    "tr": "Zoru başarmak",
+    "tags": ["zor", "başar", "güç", "imkansız", "zafer"],
+    "english_primary": "To pull off the impossible",
+    "alternatives": ["To beat the odds", "Against all odds"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Zoru başarmak", "tr_gloss": "to achieve the hard", "en_fragment": "beat the odds", "bridge_type": "transform", "explanation": "Zorluk derecesi → İstatistiksel ihtimal metaforu (odds)." }
+    ],
+    "cultural_insight": "Herkesin başarısız olacağını düşündüğü bir işte başarılı olmak. 'Beat the odds' ihtimalleri yenmek demektir.",
+    "fluency_tip": "Kimsenin inanmadığı bir projeyi bitirdiğinde 'We really beat the odds!' diyerek ekibini gururlandırabilirsin."
+  },
+  {
+    "id": 2036,
+    "category": "sosyal",
+    "tr": "Üstüme iyilik sağlık",
+    "tags": ["üst", "iyilik", "sağlık", "şaşır", "hayret"],
+    "english_primary": "Bless my soul! / Good heavens!",
+    "alternatives": ["My goodness!", "Gracious me!"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Üstüme iyilik sağlık", "tr_gloss": "goodness and health upon me", "en_fragment": "Bless my soul", "bridge_type": "transform", "explanation": "Korunma/Dua metaforu → Ruh kutsama metaforu." }
+    ],
+    "cultural_insight": "Çok şaşırtıcı veya hoş olmayan bir haber duyulduğunda hayretle söylenir. Biraz 'eski usul' ama samimi bir ifadedir.",
+    "fluency_tip": "Şaşkınlığını bir 'teyze' edasıyla değil de doğal bir şaşkınlıkla belirtmek için 'Oh my goodness!' en güvenli limandır."
+  },
+  {
+    "id": 2037,
+    "category": "sasirma",
+    "tr": "Ağzı kulaklarına varmak",
+    "tags": ["ağız", "kulak", "mutlu", "sevinç", "gülümse"],
+    "english_primary": "To be grinning from ear to ear",
+    "alternatives": ["To be beaming with joy", "A big fat smile"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Ağzı kulaklarına varmak", "tr_gloss": "his mouth reached his ears", "en_fragment": "grinning from ear to ear", "bridge_type": "direct", "explanation": "Gülümsemenin boyutu her iki dilde de kulaklarla ölçülür." }
+    ],
+    "cultural_insight": "Çok sevindiği her halinden belli olan kişiler için kullanılır.",
+    "fluency_tip": "Çok mutlu görünen birine 'You're grinning from ear to ear! What happened?' diyerek sorabilirsin."
+  },
+  {
+    "id": 2038,
+    "category": "yogunluk",
+    "tr": "Elinin hamuruyla erkek işine karışmak",
+    "tags": ["el", "hamur", "erkek", "iş", "karış"],
+    "english_primary": "To stick one's nose into other's business",
+    "alternatives": ["None of your business", "Keep out of it"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Elinin hamuruyla", "tr_gloss": "with dough on hands", "en_fragment": "stick one's nose", "bridge_type": "transform", "explanation": "Mutfak metaforu → Burun sokma metaforu." }
+    ],
+    "cultural_insight": "Geleneksel ve biraz cinsiyetçi bir deyimdir; bilmediği işe karışanlar için söylenir. İngilizcede 'burun sokmak' cinsiyetsiz ve geneldir.",
+    "fluency_tip": "Biri senin işine çok karışıyorsa 'Don't stick your nose into my business' diyerek uyarabilirsin."
+  },
+  {
+    "id": 2039,
+    "category": "gunluk",
+    "tr": "İnce eleyip sık dokumak",
+    "tags": ["ince", "ele", "sık", "doku", "titiz", "dikkat"],
+    "english_primary": "To be fastidious / To nitpick",
+    "alternatives": ["To go over with a fine-tooth comb", "To leave no stone unturned"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "İnce eleyip sık dokumak", "tr_gloss": "sift finely and weave densely", "en_fragment": "fine-tooth comb", "bridge_type": "transform", "explanation": "Tekstil metaforu → İnce dişli tarak metaforu." }
+    ],
+    "cultural_insight": "Bir işi çok titizlikle ve en ince ayrıntısına kadar incelemek.",
+    "fluency_tip": "Bir raporu çok detaylı kontrol ettiğini anlatırken 'I went over the report with a fine-tooth comb' diyebilirsin."
+  },
+  {
+    "id": 2040,
+    "category": "sosyal",
+    "tr": "Gözü gibi bakmak",
+    "tags": ["göz", "bak", "koru", "değerli", "dikkat"],
+    "english_primary": "To treasure something / To look after like the apple of one's eye",
+    "alternatives": ["To take great care of", "To cherish"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Gözü gibi bakmak", "tr_gloss": "to look after like his eye", "en_fragment": "apple of one's eye", "bridge_type": "direct", "explanation": "En değerli organ (göz) üzerinden koruma ve sevgi ifadesi." }
+    ],
+    "cultural_insight": "Bir şeye veya birine çok büyük özen göstermek, onu her türlü zarardan korumak.",
+    "fluency_tip": "Çocuğun veya çok sevdiğin bir eşyan için 'It's the apple of my eye' (Gözümün nuru/Gözüm gibi bakarım) diyebilirsin."
+  },
+  {
+    "id": 2041,
+    "category": "duygular",
+    "tr": "Burnundan kıl aldırmamak",
+    "tags": ["burun", "kıl", "gurur", "kibir", "inat"],
+    "english_primary": "To be as proud as a peacock / To be stuck-up",
+    "alternatives": ["To be high-handed", "Full of oneself"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Burnundan kıl aldırmamak", "tr_gloss": "not letting a hair be taken from the nose", "en_fragment": "proud as a peacock", "bridge_type": "transform", "explanation": "Fiziksel dokunulmazlık metaforu → Tavus kuşu metaforu." }
+    ],
+    "cultural_insight": "Çok gururlu, kibirli ve eleştiriye kapalı kişiler için söylenir.",
+    "fluency_tip": "Burnu havada olan biri için 'She is so stuck-up!' diyebilirsin."
+  },
+  {
+    "id": 2042,
+    "category": "sasirma",
+    "tr": "Şafak atmak",
+    "tags": ["şafak", "at", "kork", "anla", "fark et"],
+    "english_primary": "To have a sudden realization / To be hit by it",
+    "alternatives": ["It dawned on me", "The light bulb went off"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Şafak atmak", "tr_gloss": "dawn breaking", "en_fragment": "it dawned on me", "bridge_type": "direct", "explanation": "Günün ağarması (aydınlanma) metaforu her iki dilde de 'anlama'yı temsil eder." }
+    ],
+    "cultural_insight": "Bir durumu aniden kavramak veya bir tehlikenin farkına varmak.",
+    "fluency_tip": "Bir şeyi nihayet anladığında 'Suddenly, it dawned on me!' (Birdenbire şafak attı/anladım) dersen harika durur."
+  },
+  {
+    "id": 2043,
+    "category": "gunluk",
+    "tr": "Etekleri tutuşmak",
+    "tags": ["etek", "tutuş", "panik", "telâş", "korku"],
+    "english_primary": "To be in a state of panic / To get into a flap",
+    "alternatives": ["To run around like a headless chicken", "To freak out"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Etekleri tutuşmak", "tr_gloss": "skirts catching fire", "en_fragment": "headless chicken", "bridge_type": "transform", "explanation": "Ateş/Kıyafet metaforu → Tavuk metaforu (başsız tavuk gibi koşma)." }
+    ],
+    "cultural_insight": "Büyük bir telaş ve panik halini anlatır. 'Headless chicken' plansız ve anlamsız telaşı çok iyi betimler.",
+    "fluency_tip": "Panik içinde sağa sola koşturan biri için 'Stop running around like a headless chicken!' diyebilirsin."
+  },
+  {
+    "id": 2044,
+    "category": "sosyal",
+    "tr": "Yerin kulağı var",
+    "tags": ["yer", "kulak", "gizli", "duyulur", "dikkat"],
+    "english_primary": "Walls have ears!",
+    "alternatives": ["Someone might be listening", "Keep it down"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Yerin kulağı var", "tr_gloss": "the ground has ears", "en_fragment": "walls have ears", "bridge_type": "direct", "explanation": "Mekanların duyma yetisi metaforu her iki dilde de gizliliği anlatır." }
+    ],
+    "cultural_insight": "Gizli konuşulanların başkaları tarafından duyulabileceği uyarısı.",
+    "fluency_tip": "Biri tehlikeli bir sır anlatırken 'Shh! Walls have ears!' diyerek onu uyarabilirsin."
+  },
+  {
+    "id": 2045,
+    "category": "duygular",
+    "tr": "Yüreği ağzına gelmek",
+    "tags": ["yürek", "ağız", "korku", "heyecan", "ani"],
+    "english_primary": "To have one's heart in one's mouth",
+    "alternatives": ["My heart skipped a beat", "I was terrified"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Yüreği ağzına gelmek", "tr_gloss": "heart coming to the mouth", "en_fragment": "heart in one's mouth", "bridge_type": "direct", "explanation": "Korku anındaki fiziksel kalp hissi metaforu tamamen aynıdır." }
+    ],
+    "cultural_insight": "Çok korkmak veya ani bir heyecan yaşamak.",
+    "fluency_tip": "Çok korkunç bir olay anlattığında 'My heart was in my mouth the whole time!' diyebilirsin."
+  },
+  {
+    "id": 2046,
+    "category": "basari",
+    "tr": "Çantada keklik",
+    "tags": ["çanta", "keklik", "kolay", "garanti", "emin"],
+    "english_primary": "It's a cinch! / It's in the bag!",
+    "alternatives": ["A piece of cake", "As easy as pie"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Çantada keklik", "tr_gloss": "partridge in the bag", "en_fragment": "in the bag / a cinch", "bridge_type": "transform", "explanation": "Av ganimeti metaforu → Çanta/Kolaylık metaforu." }
+    ],
+    "cultural_insight": "Elde edilmesi çok kolay olan veya sonucu garanti olan durumlar için kullanılır.",
+    "fluency_tip": "Garanti gördüğün bir zafer için 'Don't worry, it's in the bag!' (Merak etme, o iş çantada keklik/bizde) diyebilirsin."
+  },
+  {
+    "id": 2047,
+    "category": "gunluk",
+    "tr": "Zeytinyağı gibi üste çıkmak",
+    "tags": ["zeytinyağı", "üst", "suçlu", "yavuz", "haksız"],
+    "english_primary": "To try to worm one's way out of it / To turn the tables",
+    "alternatives": ["To make oneself look innocent", "To pass the buck"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Zeytinyağı gibi", "tr_gloss": "like olive oil", "en_fragment": "worm one's way out", "bridge_type": "transform", "explanation": "Yoğunluk/Sıvı metaforu → Hareket/Kıvrılma metaforu (solucan gibi sıyrılma)." }
+    ],
+    "cultural_insight": "Haksız olduğu halde kendini haklı çıkarmaya çalışanlar için söylenir. 'Turn the tables' ise durumu tersine çevirip karşı tarafı suçlu duruma düşürmektir.",
+    "fluency_tip": "Suçlu olup da seni suçlayan birine 'Don't try to turn the tables on me!' diyebilirsin."
+  },
+  {
+    "id": 2048,
+    "category": "sosyal",
+    "tr": "Güle güle harca",
+    "tags": ["gül", "harca", "para", "hediye", "yeni"],
+    "english_primary": "Enjoy spending it!",
+    "alternatives": ["Hope you buy something nice!", "Use it well"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Güle güle harca", "tr_gloss": "spend it laughingly", "en_fragment": "Enjoy spending it", "bridge_type": "transform", "explanation": "Neşe metaforu → Keyif metaforu." }
+    ],
+    "cultural_insight": "Genellikle para hediyesi verildiğinde söylenir.",
+    "fluency_tip": "Harçlık verdiğin birine 'Enjoy it!' demen yeterlidir."
+  },
+  {
+    "id": 2049,
+    "category": "yorgunluk",
+    "tr": "Canı çıkmak",
+    "tags": ["can", "çık", "yorul", "perişan", "bitkin"],
+    "english_primary": "To be dead on one's feet",
+    "alternatives": ["To be knackered", "I'm spent"],
+    "register": "informal",
+    "bridges": [
+      { "tr_fragment": "Canı çıkmak", "tr_gloss": "soul coming out", "en_fragment": "dead on one's feet", "bridge_type": "transform", "explanation": "Ölüm metaforu → Ayakta ölü olma metaforu." }
+    ],
+    "cultural_insight": "Çok ağır bir iş yükünden sonraki aşırı yorgunluk.",
+    "fluency_tip": "İngiliz argosunda (UK) 'I'm absolutely knackered!' (Canım çıktı/Bittim) çok popülerdir."
+  },
+  {
+    "id": 2050,
+    "category": "gunluk",
+    "tr": "Vakit nakittir",
+    "tags": ["vakit", "nakit", "zaman", "para", "değerli"],
+    "english_primary": "Time is money",
+    "alternatives": ["Every second counts", "Don't waste time"],
+    "register": "neutral",
+    "bridges": [
+      { "tr_fragment": "Vakit nakittir", "tr_gloss": "time is cash", "en_fragment": "time is money", "bridge_type": "direct", "explanation": "Zamanın maddi değeri evrensel bir gerçektir." }
+    ],
+    "cultural_insight": "Zamanın boşa harcanmaması gerektiğini hatırlatan evrensel atasözü.",
+    "fluency_tip": "Toplantıda konuyu uzatan birine nezaketle 'Remember, time is money!' diyerek hızlanmasını sağlayabilirsin."
+  },
   {
     "id": 1857,
     "category": "sosyal",
     "tr": "Gözün aydın",
+...
     "tags": ["göz", "aydın", "müjde", "iyi", "haber"],
     "english_primary": "Good news! I'm so happy for you",
     "alternatives": ["Congratulations on the good news!", "Finally! I'm glad it worked out"],
