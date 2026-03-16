@@ -47,6 +47,7 @@ class BridgeModule {
 
   init(container) {
     this.el = container;
+    window.analyticsManager?.lessonStart('bridge');
     this._render();
   }
 
@@ -1168,6 +1169,8 @@ class BridgeModule {
 
     const render = () => {
       if (idx >= pool.length) {
+        const pct = Math.round((score / pool.length) * 100);
+        window.analyticsManager?.lessonComplete('bridge', pct);
         overlay.innerHTML = `
           <div class="bridge-modal bridge-quiz-modal">
             <button class="bridge-modal-close" id="qclose">✕</button>

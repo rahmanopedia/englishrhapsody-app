@@ -2737,7 +2737,8 @@ if (window.leaderboardManager) { window.leaderboardManager.unsubscribeAll(); }
 
     this.audio.play('click');
     window.analyticsManager?.screenView(view);
-    if (['learn', 'speak', 'reading'].includes(view)) {
+    const LESSON_VIEWS = ['learn', 'speak', 'reading', 'conversations', 'nexus', 'quantum', 'bridge'];
+    if (LESSON_VIEWS.includes(view)) {
       window.analyticsManager?.lessonStart(view);
     }
   }

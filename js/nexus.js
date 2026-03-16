@@ -905,6 +905,7 @@ class NexusMode {
     if (this.app.addXP && this.score > 0) {
       this.app.addXP(this.score, 'medium', 'nexus');
     }
+    window.analyticsManager?.lessonComplete('nexus', this.score);
     this.root.innerHTML = `
       <div class="nexus-header">
         <h1 class="nexus-title">NEXUS <span class="v5-badge">BAŞARILI</span></h1>

@@ -2727,14 +2727,14 @@ class SentenceRush {
     const baseXP = won ? baseWin : this.solved * 10;
     const finalXP = Math.round(baseXP * mult);
 
-    if(won){ 
-      this.qm.recordWin(); 
-      this.qm.addXP(baseXP, 'hard'); 
-      this.qm.confetti(); 
-    } else { 
-      this.qm.addXP(baseXP, 'hard'); 
+    if(won){
+      this.qm.recordWin();
+      this.qm.addXP(baseXP, 'hard');
+      this.qm.confetti();
+    } else {
+      this.qm.addXP(baseXP, 'hard');
     }
-    
+    window.analyticsManager?.lessonComplete('quantum_rush', this.score);
     this.root.innerHTML=_resultHTML('⚡','Sentence Rush',won,this.score,`${this.solved}/10 cümle çözüldü`,finalXP,'rush');
   }
 }
@@ -2945,13 +2945,14 @@ class SentenceScramble {
     const baseXP  = won ? baseWin : this.solved * 25;
     const finalXP = Math.round(baseXP * mult);
 
-    if(won){ 
-      this.qm.recordWin(); 
-      this.qm.addXP(baseXP, 'hard'); 
-      this.qm.confetti(); 
-    } else { 
-      this.qm.addXP(baseXP, 'hard'); 
+    if(won){
+      this.qm.recordWin();
+      this.qm.addXP(baseXP, 'hard');
+      this.qm.confetti();
+    } else {
+      this.qm.addXP(baseXP, 'hard');
     }
+    window.analyticsManager?.lessonComplete('quantum_scramble', this.score);
     this.root.innerHTML=_resultHTML('🧩','Sentence Scramble',won,this.score,`${this.maxRound} cümle`,finalXP,'scramble');
   }
 }

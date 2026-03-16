@@ -54,6 +54,7 @@ class PhantomMode {
   // ── Yaşam Döngüsü ───────────────────────────────────────────
   init(root) {
     this.root = root;
+    window.analyticsManager?.lessonStart('phantom');
     this._showIntro();
   }
 
@@ -857,7 +858,8 @@ class PhantomMode {
     const mastery = this.app.state.get('mastery') || {};
     const total   = this.queue.length;
     const correct = this.queue.filter(w => (mastery[w.id]?.score||0) >= 1).length;
-    const pct     = Math.round(correct / total * 100);
+    const pct     = total > 0 ? Math.round(correct / total * 100) : 0;
+    window.analyticsManager?.lessonComplete('phantom', pct);
 
     const grade = pct >= 90 ? { icon:'🌟', label:'EFSANE',  cls:'grade-gold',   msg:'Muhteşem bir hafıza!' }
                 : pct >= 70 ? { icon:'💎', label:'HARİKA',  cls:'grade-blue',   msg:'Çok güçlü performans!' }
