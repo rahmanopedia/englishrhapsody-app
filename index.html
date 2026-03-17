@@ -33,6 +33,7 @@
   <!-- App Check reCAPTCHA v3 -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LfOLlMsAAAAAE4K1Xr0yVKAAp4FB6GSlacAdZKy" async defer></script>
   <link rel="stylesheet" href="css/cinema.css">
+  <link rel="stylesheet" href="css/speak-v2.css">
 </head>
 <body class="rank-1">
 
@@ -779,125 +780,7 @@
 <!-- Speaking -->
 <template id="tpl-speak">
 <div class="animate-in speak-container">
-
-  <div class="lab-header">
-    <div class="lh-top">
-      <div class="lab-header-icon">🎙️</div>
-      <div>
-        <h1>Konuşma Lab</h1>
-        <p class="lab-subtitle">AI destekli telaffuz koçunuz</p>
-      </div>
-    </div>
-    <div class="lh-bottom" style="display:none;">
-      <div class="lab-mode-tabs">
-        <button class="lab-mode-tab active" data-mode="classic" data-action="set-speak-mode">
-          <span class="lmt-icon">🎯</span><span class="lmt-name">Telaffuz</span>
-        </button>
-        <button class="lab-mode-tab" data-mode="convo" data-action="set-speak-mode">
-          <span class="lmt-icon">🤖</span><span class="lmt-name">AI Sohbet</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- CLASSIC MODE -->
-  <div class="speak-mode-panel active" id="speak-panel-classic">
-    <div class="diff-tabs">
-      <button class="diff-tab active" data-diff="easy" data-action="set-speak-diff">🌱 Başlangıç</button>
-      <button class="diff-tab" data-diff="medium" data-action="set-speak-diff">📚 Orta</button>
-      <button class="diff-tab" data-diff="hard" data-action="set-speak-diff">🔥 İleri</button>
-    </div>
-    <div class="speak-layout">
-      <div class="speak-main">
-        <div class="speak-progress-row">
-          <span class="speak-counter" id="speak-counter">1/100</span>
-          <div class="speak-prog-bar"><div class="speak-prog-fill" id="speak-prog-fill" style="width:1%"></div></div>
-          <button class="speak-skip-btn" data-action="next-speak" title="Atla">⏭</button>
-        </div>
-        <div class="speak-toggles-row">
-          <label class="shadow-toggle" title="Gölge Modu: AI okuduktan sonra otomatik dinler">
-            <input type="checkbox" id="shadow-mode" data-action="toggle-shadow-mode">
-            <span class="shadow-slider"></span>
-            <small>Gölge Modu</small>
-          </label>
-          <label class="shadow-toggle" title="Karışık Mod: Cümleleri rastgele sırayla getirir">
-            <input type="checkbox" id="shuffle-mode" data-action="toggle-shuffle-mode">
-            <span class="shadow-slider"></span>
-            <small>Karıştır</small>
-          </label>
-        </div>
-        <div class="sentence-card">
-          <div class="sentence-words" id="sentence-words"></div>
-        </div>
-        <div class="waveform" id="waveform"></div>
-        <div class="speak-controls">
-          <button class="speak-side-btn" data-action="speak-sentence"><span>🔊</span><small>Dinle</small></button>
-          <button class="speak-side-btn" data-action="speak-sentence-slow"><span>🐢</span><small>Yavaş</small></button>
-          <button class="speak-rec-btn" id="rec-btn" data-action="toggle-record">
-            <span id="rec-icon">🎤</span>
-            <small id="rec-label">Konuş</small>
-          </button>
-          <button class="speak-side-btn" id="btn-playback" data-action="play-last-recording" style="display:none; border-color:var(--violet); color:var(--violet)">
-            <span>🎧</span><small>Seni Dinle</small>
-          </button>
-          <button class="speak-side-btn" data-action="retry-speak"><span>🔄</span><small>Tekrar</small></button>
-        </div>
-        <div id="speak-transcript" style="text-align:center;color:var(--text-2);font-size:0.9rem;min-height:28px;margin-bottom:12px"></div>
-        <div id="score-panel" style="display:none" class="score-panel">
-          <div class="score-ring-wrap">
-            <svg class="score-svg" viewBox="0 0 120 120">
-              <circle class="score-track" cx="60" cy="60" r="50"/>
-              <circle class="score-arc" cx="60" cy="60" r="50" id="score-arc"/>
-            </svg>
-            <div class="score-center">
-              <span class="score-num" id="score-num">0</span>
-              <span class="score-pct">%</span>
-            </div>
-          </div>
-          <div class="score-detail">
-            <p class="score-feedback" id="score-feedback"></p>
-            <div class="word-breakdown" id="word-breakdown"></div>
-            <div class="ipa-hint-panel" id="ipa-hint-panel"></div>
-            <div id="ai-coach-panel" class="ai-coach-panel"></div>
-            <div class="score-btns">
-              <button class="btn btn-ghost btn-sm" data-action="retry-speak">🔄 Tekrar</button>
-              <button class="btn btn-primary btn-sm" data-action="next-speak">Sonraki →</button>
-            </div>
-          </div>
-        </div>
-        <div style="text-align:center;font-size:0.72rem;color:var(--text-3);margin-top:12px" class="desktop-only">
-          ⌨️ <strong>Boşluk</strong> — Kaydet / Durdur
-        </div>
-      </div>
-      <div class="game-sidebar desktop-only">
-        <div class="sidebar-panel">
-          <div class="sidebar-panel-title">📊 Oturum</div>
-          <div class="session-stats">
-            <div class="ss-stat correct"><span class="ss-val" id="sp-best">—</span><div class="ss-label">En İyi</div></div>
-            <div class="ss-stat"><span class="ss-val" id="sp-avg">—</span><div class="ss-label">Ortalama</div></div>
-          </div>
-          <div style="text-align:center;margin-top:10px;font-size:0.8rem;color:var(--text-3)"><span id="sp-total">0</span> deneme</div>
-        </div>
-        <div class="sidebar-panel">
-          <div class="sidebar-panel-title">📋 Son Denemeler</div>
-          <div id="speak-history"><p style="font-size:0.8rem;color:var(--text-3)">Henüz deneme yok</p></div>
-        </div>
-        <div class="sidebar-panel">
-          <div class="sidebar-panel-title">⚙️ Ayarlar</div>
-          <label style="display:flex;align-items:center;gap:10px;font-size:0.82rem;cursor:pointer">
-            <input type="checkbox" id="auto-advance" data-action="toggle-auto-advance">
-            <span style="color:var(--text-2)">Otomatik ilerle (80%+)</span>
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AI CONVERSATION PANEL -->
-  <div class="speak-mode-panel" id="speak-panel-convo">
-    <div id="convo-content"></div>
-  </div>
-
+  <div id="speak-mount-point"></div>
 </div>
 </template>
 
@@ -1125,6 +1008,7 @@
 <script src="js/app.js" defer></script>
 <script src="js/video-data.js" defer></script>
 <script src="js/cinema.js" defer></script>
+<script src="js/speak-v2.js" defer></script>
 <script src="js/phrasal_verbs_ext.js" defer></script>
 <script src="js/phrasal_verbs_ext2.js" defer></script>
 
