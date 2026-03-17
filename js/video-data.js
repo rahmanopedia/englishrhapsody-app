@@ -1,54 +1,13 @@
 /**
- * RHAPSODY CINEMA — Video Veritabanı (v7.0)
+ * RHAPSODY CINEMA — Video Veritabanı (v8.0)
  * Tüm klipler catbox.moe'da barındırılıyor — anında oynatma, sıfır bekleme.
  * Kaynak filmler: YouTube'dan yt-dlp+FFmpeg ile kesildi, catbox.moe'ya yüklendi.
+ * Altyazılar doğrulanmış timestamp'lerle eşleştirildi.
  */
 var CINEMA_DATA = [
 
   /* ══════════════════════════════════════════════════════════
-     THE SHAWSHANK REDEMPTION (1994)
-  ══════════════════════════════════════════════════════════ */
-  {
-    id: 69,
-    url: "https://files.catbox.moe/gzuj91.mp4",
-    start: 0,
-    end: 22,
-    film: "The Shawshank Redemption",
-    year: 1994,
-    transcript: "Remember, Red, hope is a good thing, maybe the best of things. And no good thing ever dies.",
-    options: [
-      { text: "Unutma Red, umut iyi bir şeydir, belki de en iyisi. Ve hiçbir iyi şey ölmez.", isCorrect: true },
-      { text: "Umut tehlikelidir, insanı hayal kırıklığına uğratır.", isCorrect: false },
-      { text: "Kötü şeyler de zamanla iyiye dönüşür, sabırla bekle.", isCorrect: false }
-    ],
-    points: 18,
-    category: "Drama"
-  },
-
-  /* ══════════════════════════════════════════════════════════
-     THE DARK KNIGHT (2008)
-  ══════════════════════════════════════════════════════════ */
-  {
-    id: 71,
-    url: "https://files.catbox.moe/fo06v0.mp4",
-    start: 0,
-    end: 15,
-    film: "The Dark Knight",
-    year: 2008,
-    transcript: "Why so serious? Let's put a smile on that face!",
-    options: [
-      { text: "Neden bu kadar ciddisin? O yüze bir gülümseme katalım!", isCorrect: true },
-      { text: "Neden gülümsüyorsun? Ciddi ol biraz.", isCorrect: false },
-      { text: "Gülümsemek güçlüğün işaretidir.", isCorrect: false }
-    ],
-    points: 14,
-    category: "Aksiyon"
-  },
-
-
-  /* ══════════════════════════════════════════════════════════
-     FORREST GUMP (1994) — Fair Use / Eğitim
-     Kaynak: https://www.youtube.com/watch?v=SqOnkiQRCUU
+     FORREST GUMP (1994)
   ══════════════════════════════════════════════════════════ */
   {
     id: 72,
@@ -67,10 +26,8 @@ var CINEMA_DATA = [
     category: "Drama"
   },
 
-
   /* ══════════════════════════════════════════════════════════
-     THE SHAWSHANK REDEMPTION (1994) — Fair Use / Eğitim
-     Kaynak: https://www.youtube.com/watch?v=9K30e9O3Nng
+     THE SHAWSHANK REDEMPTION (1994)
   ══════════════════════════════════════════════════════════ */
   {
     id: 73,
@@ -89,10 +46,8 @@ var CINEMA_DATA = [
     category: "Drama"
   },
 
-
   /* ══════════════════════════════════════════════════════════
-     DEAD POETS SOCIETY (1989) — Fair Use / Eğitim
-     Kaynak: https://www.youtube.com/watch?v=vi0Lbjs5ECI
+     DEAD POETS SOCIETY (1989)
   ══════════════════════════════════════════════════════════ */
   {
     id: 74,
@@ -111,10 +66,8 @@ var CINEMA_DATA = [
     category: "Drama"
   },
 
-
   /* ══════════════════════════════════════════════════════════
-     THE DARK KNIGHT (2008) — Fair Use / Eğitim
-     Kaynak: https://www.youtube.com/watch?v=PoyejjJGajk
+     THE DARK KNIGHT (2008)
   ══════════════════════════════════════════════════════════ */
   {
     id: 75,
@@ -133,10 +86,8 @@ var CINEMA_DATA = [
     category: "Aksiyon"
   },
 
-
   /* ══════════════════════════════════════════════════════════
-     THE MATRIX (1999) — Fair Use / Eğitim
-     Kaynak: https://www.youtube.com/watch?v=zE7PKRjrid4
+     THE MATRIX (1999)
   ══════════════════════════════════════════════════════════ */
   {
     id: 76,
@@ -153,6 +104,26 @@ var CINEMA_DATA = [
     ],
     points: 18,
     category: "Aksiyon"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     GOOD WILL HUNTING (1997)
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 77,
+    url: "https://files.catbox.moe/3mhqt2.mp4",
+    start: 0,
+    end: 45,
+    film: "Good Will Hunting",
+    year: 1997,
+    transcript: "It's not your fault. It's not your fault. It's not your fault.",
+    options: [
+      { text: "Bu senin hatan değil. Bu senin hatan değil. Bu senin hatan değil.", isCorrect: true },
+      { text: "Her şey senin hatan, bunu kabul et.", isCorrect: false },
+      { text: "Kimin hatası olduğu önemli değil artık.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Drama"
   },
 
 ];
