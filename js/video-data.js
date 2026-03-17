@@ -1,16 +1,152 @@
 /**
- * RHAPSODY CINEMA — Video Veritabanı (v5.1)
+ * RHAPSODY CINEMA — Video Veritabanı (v5.2)
  * Zaman damgaları resmi .srt dosyalarından doğrulandı.
  * YouTube kaldırıldı — reklamsız, doğrudan MP4/WebM akışı.
  *
  * Lisanslar:
  *  - Duck and Cover / Shy Guy / Dating Do's and Don'ts → Public Domain (ABD hükümet/Prelinger)
+ *  - Charade (1963) → Public Domain (telif notu eksikliğiyle yayınlandı)
  *  - Sintel (2010) → CC BY 3.0 — Blender Foundation
  *  - Tears of Steel (2012) → CC BY 3.0 — Blender Foundation / Mango Open Movie Project
  *  - Cosmos Laundromat (2015) → CC BY 3.0 — Blender Foundation
  *  - Sprite Fright (2021) → CC BY 4.0 — Blender Foundation
  */
 var CINEMA_DATA = [
+
+  /* ══════════════════════════════════════════════════════════
+     CHARADE (1963) — Cary Grant & Audrey Hepburn — Public Domain
+     Video: archive.org — ecatma-Old_Time_Movie_Show_-_Charade_1963
+     SRT kaynak: OpenSubtitles.org (IMDb tt0056923, sub ID 142121)
+     Not: SRT farklı baskı için hazırlandı, küçük zaman farkı olabilir.
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 60,
+    url: "https://archive.org/download/ecatma-Old_Time_Movie_Show_-_Charade_1963/Old_Time_Movie_Show_-_Charade_1963.mp4",
+    start: 941,
+    end: 951,
+    film: "Charade",
+    year: 1963,
+    transcript: "Not a very large turnout, is it? — Didn't Charles have any friends? — Don't ask me. I'm only the widow.",
+    options: [
+      { text: "Pek kalabalık sayılmaz, değil mi? — Charles'ın hiç arkadaşı yok muydu? — Bana sormayın. Ben sadece dul eşiyim.", isCorrect: true },
+      { text: "Çok kalabalık bir cenaze, Charles çok seviliyordu.", isCorrect: false },
+      { text: "Arkadaşları geldi ama geç kaldılar.", isCorrect: false }
+    ],
+    points: 14,
+    category: "Komedi"
+  },
+  {
+    id: 61,
+    url: "https://archive.org/download/ecatma-Old_Time_Movie_Show_-_Charade_1963/Old_Time_Movie_Show_-_Charade_1963.mp4",
+    start: 971,
+    end: 979,
+    film: "Charade",
+    year: 1963,
+    transcript: "Until two days ago the only thing I really knew about Charles was his name. Now it seems I didn't even know that.",
+    options: [
+      { text: "İki gün öncesine kadar Charles hakkında gerçekten bildiğim tek şey onun adıydı. Şimdi onu da bilmediğim anlaşılıyor.", isCorrect: true },
+      { text: "İki gündür Charles hakkında her şeyi öğrendim.", isCorrect: false },
+      { text: "Charles hakkında her zaman her şeyi biliyordum.", isCorrect: false }
+    ],
+    points: 16,
+    category: "Gizem"
+  },
+  {
+    id: 62,
+    url: "https://archive.org/download/ecatma-Old_Time_Movie_Show_-_Charade_1963/Old_Time_Movie_Show_-_Charade_1963.mp4",
+    start: 2012,
+    end: 2018,
+    film: "Charade",
+    year: 1963,
+    transcript: "I don't bite, you know, unless it's called for.",
+    options: [
+      { text: "Biliyorsunuz, ısırmam — tabii gereken durum olmadıkça.", isCorrect: true },
+      { text: "Her zaman çok nazik davranırım, hiçbir zaman kötü olmam.", isCorrect: false },
+      { text: "Sizi ısırırım, çünkü bu gerekli.", isCorrect: false }
+    ],
+    points: 12,
+    category: "Komedi"
+  },
+  {
+    id: 63,
+    url: "https://archive.org/download/ecatma-Old_Time_Movie_Show_-_Charade_1963/Old_Time_Movie_Show_-_Charade_1963.mp4",
+    start: 2034,
+    end: 2042,
+    film: "Charade",
+    year: 1963,
+    transcript: "Do you know what's wrong with you? — No. What? — Nothing.",
+    options: [
+      { text: "Sende neyin yanlış olduğunu biliyor musun? — Hayır. Ne? — Hiçbir şey.", isCorrect: true },
+      { text: "Sende çok şey yanlış, hepsini sayayım mı?", isCorrect: false },
+      { text: "Sende yanlış bir şey yok mu? — Evet, çok şey var.", isCorrect: false }
+    ],
+    points: 12,
+    category: "Romantik"
+  },
+  {
+    id: 64,
+    url: "https://archive.org/download/ecatma-Old_Time_Movie_Show_-_Charade_1963/Old_Time_Movie_Show_-_Charade_1963.mp4",
+    start: 2405,
+    end: 2416,
+    film: "Charade",
+    year: 1963,
+    transcript: "Why do people have to tell lies? — Usually because they want something. They're afraid the truth won't get it.",
+    options: [
+      { text: "İnsanlar neden yalan söylemek zorunda? — Genellikle bir şey istedikleri için. Gerçeğin işe yaramayacağından korkarlar.", isCorrect: true },
+      { text: "İnsanlar yalan söylemez, her zaman dürüsttür.", isCorrect: false },
+      { text: "Yalan söylemek kötüdür ama bazen gereklidir.", isCorrect: false }
+    ],
+    points: 18,
+    category: "Gizem"
+  },
+  {
+    id: 65,
+    url: "https://archive.org/download/ecatma-Old_Time_Movie_Show_-_Charade_1963/Old_Time_Movie_Show_-_Charade_1963.mp4",
+    start: 3619,
+    end: 3630,
+    film: "Charade",
+    year: 1963,
+    transcript: "Can't you be serious? — Oh, you just said a horrible word. When a man gets to be my age, that's the last word he ever wants to hear.",
+    options: [
+      { text: "Ciddi olamaz mısın? — Ah, korkunç bir sözcük söyledin. Bir adam benim yaşıma geldiğinde, duymak isteyeceği son kelimedir bu.", isCorrect: true },
+      { text: "Lütfen daha ciddi ol, bu çok önemli bir konu.", isCorrect: false },
+      { text: "Ciddiyet yaşla birlikte artar, ben artık çok ciddiyim.", isCorrect: false }
+    ],
+    points: 16,
+    category: "Komedi"
+  },
+  {
+    id: 66,
+    url: "https://archive.org/download/ecatma-Old_Time_Movie_Show_-_Charade_1963/Old_Time_Movie_Show_-_Charade_1963.mp4",
+    start: 3609,
+    end: 3616,
+    film: "Charade",
+    year: 1963,
+    transcript: "You forget I'm already a widow. — So was Juliet, at 15. — But I'm not 15. — Well, that's your trouble, you're too old for me.",
+    options: [
+      { text: "Unutuyorsunuz, ben zaten dul biriyim. — Juliet de öyleydi, 15 yaşında. — Ama ben 15 değilim. — İşte derdiniz bu, benim için çok yaşlısınız.", isCorrect: true },
+      { text: "Yaşın önemi yok, önemli olan kalp yaşıdır.", isCorrect: false },
+      { text: "Juliet 15 yaşında dul kaldı ve mutlu yaşadı.", isCorrect: false }
+    ],
+    points: 18,
+    category: "Romantik"
+  },
+  {
+    id: 67,
+    url: "https://archive.org/download/ecatma-Old_Time_Movie_Show_-_Charade_1963/Old_Time_Movie_Show_-_Charade_1963.mp4",
+    start: 1956,
+    end: 1963,
+    film: "Charade",
+    year: 1963,
+    transcript: "Being murdered in cold blood is not nonsense. Why don't you try it sometime?",
+    options: [
+      { text: "Soğukkanlılıkla öldürülmek saçmalık değil. Bir ara denesene?", isCorrect: true },
+      { text: "Cinayet her zaman saçmalıktır, ciddi bir şey değildir.", isCorrect: false },
+      { text: "Soğukkanlı olmak zordur ama mümkündür.", isCorrect: false }
+    ],
+    points: 14,
+    category: "Gizem"
+  },
 
   /* ══════════════════════════════════════════════════════════
      SINTEL (2010) — Blender Foundation — CC BY 3.0
