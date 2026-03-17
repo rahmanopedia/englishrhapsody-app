@@ -76,36 +76,30 @@ class CinemaModule {
     this.el.querySelector('#cinema-overlay').style.display = 'none';
     this.el.querySelector('#cinema-quiz').style.display = 'none';
     this.el.querySelector('#cinema-play-prompt').style.display = 'none';
-    this.el.querySelector('#cinema-loading').style.display = 'flex';
     this.el.querySelector('#cinema-video-info').style.display = 'none';
     this.canAnswer = false;
 
+    this._showInfo(entry);
+
+    v.preload = 'auto';
     v.src = entry.url;
-    v.load();
 
-    v.addEventListener('loadedmetadata', () => {
-      v.currentTime = entry.start;
-    }, { once: true });
-
-    v.addEventListener('seeked', () => {
-      this._showInfo(entry);
-      this._playVideo(entry.end);
-    }, { once: true });
-
-    v.addEventListener('error', () => {
-      this.el.querySelector('#cinema-loading').innerHTML =
-        '<div style="color:var(--rose);font-size:0.8rem;text-align:center;padding:20px;">Video yüklenemedi. Bağlantınızı kontrol edin.</div>';
-    }, { once: true });
+    if (entry.start === 0) {
+      // Klip baştan başlıyor — hiç beklemeden oyna
+      this._tryPlay(v, entry.end);
+    } else {
+      // Seek gerekiyor — sadece metadata bekle (seeked'i bekleme)
+      v.addEventListener('loadedmetadata', () => {
+        v.currentTime = entry.start;
+        this._tryPlay(v, entry.end);
+      }, { once: true });
+    }
   }
 
-  _playVideo(endTime) {
-    const v = this.video;
-    const loading = this.el.querySelector('#cinema-loading');
+  _tryPlay(v, endTime) {
     v.play().then(() => {
-      loading.style.display = 'none';
       this._watchEnd(endTime);
     }).catch(() => {
-      loading.style.display = 'none';
       this.el.querySelector('#cinema-play-prompt').style.display = 'flex';
       this._pendingEndTime = endTime;
     });
