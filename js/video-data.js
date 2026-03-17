@@ -9,7 +9,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 72,
-    url: "https://files.catbox.moe/e36yyr.mp4",
+    url: "https://files.catbox.moe/s8k9ep.mp4",
     start: 0,
     end: 14,
     film: "Forrest Gump",
@@ -66,7 +66,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 76,
-    url: "https://files.catbox.moe/xi03zy.mp4",
+    url: "https://files.catbox.moe/5b3q6j.mp4",
     start: 0,
     end: 12,
     film: "The Matrix",
@@ -104,7 +104,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 78,
-    url: "https://files.catbox.moe/dfsnzq.mp4",
+    url: "https://files.catbox.moe/m581qt.mp4",
     start: 0,
     end: 12,
     film: "Bird Box",
@@ -123,7 +123,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 79,
-    url: "https://files.catbox.moe/snnhnj.mp4",
+    url: "https://files.catbox.moe/79a60y.mp4",
     start: 0,
     end: 15,
     film: "Knives Out",
@@ -161,7 +161,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 81,
-    url: "https://files.catbox.moe/n3yrhr.mp4",
+    url: "https://files.catbox.moe/9x7x56.mp4",
     start: 0,
     end: 10,
     film: "Extraction",
@@ -180,7 +180,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 82,
-    url: "https://files.catbox.moe/7rmg07.mp4",
+    url: "https://files.catbox.moe/m8f5zl.mp4",
     start: 0,
     end: 14,
     film: "Hustle",
@@ -201,7 +201,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 83,
-    url: "https://files.catbox.moe/alnp21.mp4",
+    url: "https://files.catbox.moe/vxryvs.mp4",
     start: 0,
     end: 15,
     film: "The Pursuit of Happyness",
@@ -245,7 +245,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 85,
-    url: "https://files.catbox.moe/951utj.mp4",
+    url: "https://files.catbox.moe/v06msa.mp4",
     start: 0,
     end: 25,
     film: "Inception",
@@ -267,7 +267,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 86,
-    url: "https://files.catbox.moe/81228f.mp4",
+    url: "https://files.catbox.moe/dqdn7b.mp4",
     start: 0,
     end: 16,
     film: "La La Land",
