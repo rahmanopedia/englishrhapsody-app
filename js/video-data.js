@@ -67,26 +67,6 @@ var CINEMA_DATA = [
   },
 
   /* ══════════════════════════════════════════════════════════
-     THE DARK KNIGHT (2008)
-  ══════════════════════════════════════════════════════════ */
-  {
-    id: 75,
-    url: "https://files.catbox.moe/fo06v0.mp4",
-    start: 0,
-    end: 15,
-    film: "The Dark Knight",
-    year: 2008,
-    transcript: "Why so serious? Let's put a smile on that face!",
-    options: [
-      { text: "Neden bu kadar ciddisin? O yüze bir gülümseme katalım!", isCorrect: true },
-      { text: "Neden gülümsüyorsun? Ciddi ol biraz.", isCorrect: false },
-      { text: "Gülümsemek güçlüğün işaretidir.", isCorrect: false }
-    ],
-    points: 14,
-    category: "Aksiyon"
-  },
-
-  /* ══════════════════════════════════════════════════════════
      THE MATRIX (1999)
   ══════════════════════════════════════════════════════════ */
   {
