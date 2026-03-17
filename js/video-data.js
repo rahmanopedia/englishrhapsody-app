@@ -156,24 +156,6 @@ var CINEMA_DATA = [
     category: "Drama"
   },
 
-  /* ══════════════════════════════════════════════════════════
-     EXTRACTION (2020) — Netflix
-  ══════════════════════════════════════════════════════════ */
-  {
-    id: 81,
-    url: "https://files.catbox.moe/9x7x56.mp4",
-    start: 0,
-    end: 10,
-    film: "Extraction",
-    year: 2020,
-    transcript: "You drown not by falling into the river, but by staying submerged in it.",
-    options: [
-      { text: "Nehre düşerek boğulmazsın; nehirde kalmaya devam ederek boğulursun.", isCorrect: true },
-      { text: "Nehre düşersen hemen yüz, yoksa boğulursun.", isCorrect: false }
-    ],
-    points: 15,
-    category: "Aksiyon"
-  },
 
   /* ══════════════════════════════════════════════════════════
      HUSTLE (2022) — Netflix
