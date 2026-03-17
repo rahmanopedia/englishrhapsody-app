@@ -208,7 +208,10 @@ class SpeakV2Module {
             <div class="sv2-word-breakdown" id="sv2-word-breakdown"></div>
 
             <!-- Playback -->
-            <audio id="sv2-playback" class="sv2-audio-player" controls style="display:none"></audio>
+            <button class="sv2-playback-btn" id="sv2-playback" style="display:none">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              Sesi Dinle
+            </button>
 
             <!-- Sentence history from localStorage -->
             <div class="sv2-sent-hist" id="sv2-sent-hist"></div>
@@ -707,15 +710,15 @@ class SpeakV2Module {
       `;
     }
 
-    // Playback — native <audio controls>, poll until blob URL is ready
-    const audioEl = panel.querySelector('#sv2-playback');
-    if (audioEl) {
+    // Playback button — poll until audio URL is ready (onstop is async)
+    const pbBtn = panel.querySelector('#sv2-playback');
+    if (pbBtn) {
       let attempts = 0;
       const tryShow = () => {
         if (this._audioUrl) {
-          audioEl.src = this._audioUrl;
-          audioEl.style.display = 'block';
-        } else if (attempts++ < 15) {
+          pbBtn.style.display = 'flex';
+          pbBtn.onclick = () => { try { new Audio(this._audioUrl).play(); } catch {} };
+        } else if (attempts++ < 10) {
           setTimeout(tryShow, 200);
         }
       };
