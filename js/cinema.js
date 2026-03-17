@@ -20,7 +20,23 @@ class CinemaModule {
   init(el) {
     console.log("🎬 Cinema başlatılıyor...");
     this.el = el;
+    this._audioCtx = null;
+    this._gainNode = null;
     this._render();
+  }
+
+  _boostVolume(videoEl) {
+    try {
+      if (!this._audioCtx) {
+        this._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const src = this._audioCtx.createMediaElementSource(videoEl);
+        this._gainNode = this._audioCtx.createGain();
+        this._gainNode.gain.value = 3.0;
+        src.connect(this._gainNode);
+        this._gainNode.connect(this._audioCtx.destination);
+      }
+      if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+    } catch(e) {}
   }
 
   _render() {
@@ -96,6 +112,8 @@ class CinemaModule {
   }
 
   _tryPlay(v, endTime) {
+    v.volume = 1.0;
+    this._boostVolume(v);
     v.play().then(() => {
       this._watchEnd(endTime);
     }).catch(() => {
@@ -107,6 +125,8 @@ class CinemaModule {
   _playAfterInteraction() {
     this.el.querySelector('#cinema-play-prompt').style.display = 'none';
     const v = this.video;
+    v.volume = 1.0;
+    this._boostVolume(v);
     const doPlay = () => {
       v.play().then(() => {
         this._watchEnd(this._pendingEndTime);
