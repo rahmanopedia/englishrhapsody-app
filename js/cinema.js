@@ -41,10 +41,10 @@ class CinemaModule {
               <button class="cinema-btn" id="btn-sub-on">📝 Altyazı Açık</button>
             </div>
           </div>
+          <div id="cinema-quiz" class="cinema-quiz-area" style="display:none"></div>
           <div id="cinema-points" class="cinema-points-popup">+8</div>
         </div>
         <div id="cinema-video-info" style="display:none;text-align:center;font-size:0.72rem;color:var(--text-3);margin-top:8px;letter-spacing:0.5px;"></div>
-        <div id="cinema-quiz" class="cinema-quiz-area" style="display:none"></div>
         <div class="cinema-info" style="text-align:center;color:var(--text-3);font-size:0.8rem;margin-top:20px;text-transform:uppercase;letter-spacing:1px;">
           RHAPSODY CINEMA — SAHNEYİ DİNLE VE ANLA
         </div>
@@ -167,7 +167,7 @@ class CinemaModule {
     if (subtitle) {
       const subDiv = document.createElement('div');
       subDiv.className = 'cinema-sub-text';
-      subDiv.style = 'font-size:1.2rem;font-weight:800;color:#fff;text-align:center;padding:20px;background:rgba(0,0,0,0.5);border-radius:10px;margin-top:20px;';
+      subDiv.style = 'font-size:0.8rem;font-weight:600;color:#fff;text-align:center;padding:10px 16px;background:rgba(0,0,0,0.6);border-radius:8px;margin-top:12px;line-height:1.4;';
       subDiv.textContent = `"${entry.transcript}"`;
       overlay.appendChild(subDiv);
     }
