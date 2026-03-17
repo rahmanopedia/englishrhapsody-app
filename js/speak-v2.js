@@ -510,8 +510,36 @@ class SpeakV2Module {
 
   // ─── Scoring ───────────────────────────────────────────────────────────────
 
+  _normalizeNums(s) {
+    const h  = ['','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
+    const nw = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven',
+      'twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty',
+      'twenty one','twenty two','twenty three','twenty four','twenty five','twenty six','twenty seven',
+      'twenty eight','twenty nine','thirty','thirty one','thirty two','thirty three','thirty four',
+      'thirty five','thirty six','thirty seven','thirty eight','thirty nine','forty','forty one',
+      'forty two','forty three','forty four','forty five','forty six','forty seven','forty eight',
+      'forty nine','fifty','fifty one','fifty two','fifty three','fifty four','fifty five','fifty six',
+      'fifty seven','fifty eight','fifty nine','sixty','sixty one','sixty two','sixty three','sixty four',
+      'sixty five','sixty six','sixty seven','sixty eight','sixty nine','seventy','seventy one',
+      'seventy two','seventy three','seventy four','seventy five','seventy six','seventy seven',
+      'seventy eight','seventy nine','eighty','eighty one','eighty two','eighty three','eighty four',
+      'eighty five','eighty six','eighty seven','eighty eight','eighty nine','ninety','ninety one',
+      'ninety two','ninety three','ninety four','ninety five','ninety six','ninety seven','ninety eight',
+      'ninety nine','one hundred'];
+    const ord = ['','first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth',
+      'eleventh','twelfth'];
+    // "7:00" → "seven o'clock", "7:30" → "seven thirty"
+    s = s.replace(/\b(\d{1,2}):00\b/g, (_, n) => (h[+n] || n) + " o'clock");
+    s = s.replace(/\b(\d{1,2}):(\d{2})\b/g, (_, n, m) => (h[+n] || n) + ' ' + (nw[+m] || m));
+    // ordinals: "1st" → "first"
+    s = s.replace(/\b(\d+)(st|nd|rd|th)\b/gi, (_, n) => ord[+n] || _);
+    // standalone numbers 0–100
+    s = s.replace(/\b(\d+)\b/g, n => nw[+n] !== undefined ? nw[+n] : n);
+    return s;
+  }
+
   _score(target, spoken) {
-    const norm = s => s.toLowerCase().replace(/[^a-z0-9\s']/g, '').replace(/\s+/g, ' ').trim();
+    const norm = s => this._normalizeNums(s.toLowerCase()).replace(/[^a-z\s']/g, '').replace(/\s+/g, ' ').trim();
     const tw = norm(target).split(' ');
     const sw = norm(spoken).split(' ');
     const words = tw.map((w, i) => ({ word: w, correct: sw[i] === w }));
