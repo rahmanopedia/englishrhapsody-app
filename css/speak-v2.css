@@ -592,3 +592,137 @@
   border: none;
   box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
 }
+
+/* ── Syllable Stress Guide (V2.2) ── */
+.sv2-stress-guide {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  text-align: center;
+  line-height: 2;
+  letter-spacing: 0.01em;
+  color: #64748b;
+  min-height: 20px;
+}
+
+.sv2-sg-word {
+  display: inline;
+  margin: 0 2px;
+}
+
+.sv2-sg-stressed {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-style: dotted;
+}
+
+.sv2-sg-unstressed {
+  color: #475569;
+}
+
+.sv2-sg-dot {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.7rem;
+  margin: 0 1px;
+}
+
+/* ── Fluency + WPM Metrics (V2.2) ── */
+.sv2-metrics {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sv2-metric-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sv2-metric-label {
+  font-size: 0.7rem;
+  color: #64748b;
+  width: 46px;
+  flex-shrink: 0;
+}
+
+.sv2-metric-bar-wrap {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.sv2-metric-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease-out;
+}
+
+.sv2-metric-val {
+  font-size: 0.72rem;
+  font-weight: 700;
+  width: 34px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.sv2-metric-wpm {
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex: 1;
+}
+
+.sv2-metric-wpm small {
+  font-size: 0.65rem;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.sv2-metric-tag {
+  font-size: 0.66rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 8px;
+  border: 1px solid;
+  opacity: 0.85;
+}
+
+/* ── Sentence History (V2.2) ── */
+.sv2-sent-hist {
+  margin-bottom: 10px;
+}
+
+.sv2-sh-title {
+  font-size: 0.7rem;
+  color: #475569;
+  margin: 0 0 6px;
+}
+
+.sv2-sh-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sv2-sh-entry {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 3px 8px;
+}
+
+.sv2-sh-date {
+  font-size: 0.66rem;
+  color: #475569;
+}
+
+.sv2-sh-score {
+  font-size: 0.72rem;
+  font-weight: 700;
+}
