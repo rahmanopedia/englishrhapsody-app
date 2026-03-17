@@ -363,4 +363,99 @@ var CINEMA_DATA = [
     category: "Drama"
   },
 
+  /* ══════════════════════════════════════════════════════════
+     GLADIATOR (2000) — Paramount Movies (Watermarksız)
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 93,
+    url: "https://files.catbox.moe/s7kvi3.mp4",
+    start: 0,
+    end: 12,
+    film: "Gladiator",
+    year: 2000,
+    transcript: "Are you not entertained?! Are you not entertained?! Is this not why you are here?!",
+    options: [
+      { text: "Eğlenmiyorsunuz, değil mi?! Eğlenmiyorsunuz, değil mi?! Bunun için burada değil misiniz?!", isCorrect: true },
+      { text: "Hepiniz buraya savaşmak için mi geldiniz? Hiç kimse beni eğlendiremez.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Aksiyon"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     TITANIC (1997) — Paramount Movies (Watermarksız)
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 94,
+    url: "https://files.catbox.moe/hx1h89.mp4",
+    start: 0,
+    end: 14,
+    film: "Titanic",
+    year: 1997,
+    transcript: "I'm flying, Jack! I'm flying!",
+    options: [
+      { text: "Uçuyorum, Jack! Uçuyorum!", isCorrect: true },
+      { text: "Batıyoruz, Jack! Gemiyi terk etmeliyiz!", isCorrect: false }
+    ],
+    points: 13,
+    category: "Drama"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     SCHINDLER'S LIST (1993) — Universal Pictures (Watermarksız)
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 95,
+    url: "https://files.catbox.moe/flbuzz.mp4",
+    start: 0,
+    end: 15,
+    film: "Schindler's List",
+    year: 1993,
+    transcript: "I could have got more. I know I could have. I don't know, if I'd just... I could have got more. I'm sure of it.",
+    options: [
+      { text: "Daha fazlasını kurtarabilirdim. Biliyorum, kurtarabilirdim. Daha fazlasını kurtarabilirdim. Bundan eminim.", isCorrect: true },
+      { text: "Elimden gelenin en iyisini yaptım. Pişman değilim, daha iyisini yapamazdım.", isCorrect: false }
+    ],
+    points: 16,
+    category: "Drama"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     THE GODFATHER (1972) — Paramount Movies (Watermarksız)
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 96,
+    url: "https://files.catbox.moe/2hybeu.mp4",
+    start: 0,
+    end: 17,
+    film: "The Godfather",
+    year: 1972,
+    transcript: "I believe in America. America has made my fortune. And I raised my daughter in the American fashion. I gave her freedom, but I taught her never to dishonor her family.",
+    options: [
+      { text: "Amerika'ya inanıyorum. Amerika bana servetimi kazandırdı. Kızımı Amerikan tarzında yetiştirdim. Ona özgürlük verdim ama ailemi asla küçük düşürmemesini öğrettim.", isCorrect: true },
+      { text: "Amerika'ya inanmıyorum. Buraya gelmek en büyük hatam oldu. Kızımı Amerikan tarzında yetiştirdiğim için pişmanım.", isCorrect: false }
+    ],
+    points: 16,
+    category: "Drama"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     A FEW GOOD MEN (1992) — Cine Bytes 4K (Watermarksız)
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 97,
+    url: "https://files.catbox.moe/l0ke6s.mp4",
+    start: 0,
+    end: 16,
+    film: "A Few Good Men",
+    year: 1992,
+    transcript: "You can't handle the truth! Son, we live in a world that has walls, and those walls have to be guarded by men with guns.",
+    options: [
+      { text: "Gerçeği kaldıramazsın! Evladım, duvarlarla çevrili bir dünyada yaşıyoruz ve o duvarlar silahlı adamlar tarafından korunmak zorunda.", isCorrect: true },
+      { text: "Gerçeği her zaman söylemek gerekir. Duvarlar insanları değil, düşmanları durdurmak için vardır.", isCorrect: false }
+    ],
+    points: 16,
+    category: "Drama"
+  },
+
 ];
