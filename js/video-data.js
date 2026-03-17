@@ -268,4 +268,99 @@ var CINEMA_DATA = [
     category: "Aksiyon"
   },
 
+  /* ══════════════════════════════════════════════════════════
+     WALL STREET (1987) — Fair Use / Eğitim
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 88,
+    url: "https://files.catbox.moe/fojdn1.mp4",
+    start: 0,
+    end: 16,
+    film: "Wall Street",
+    year: 1987,
+    transcript: "The point is, ladies and gentlemen, that greed, for lack of a better word, is good. Greed is right. Greed works.",
+    options: [
+      { text: "Mesele şu, bayanlar ve baylar: açgözlülük, daha iyi bir kelime olmadığından, iyidir. Açgözlülük doğrudur. Açgözlülük işe yarar.", isCorrect: true },
+      { text: "Açgözlülük sizi mahveder. Dürüstlük ve erdem başarının tek yoludur.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Drama"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     BRAVEHEART (1995) — Fair Use / Eğitim
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 89,
+    url: "https://files.catbox.moe/d85bng.mp4",
+    start: 0,
+    end: 14,
+    film: "Braveheart",
+    year: 1995,
+    transcript: "They may take our lives, but they'll never take our freedom!",
+    options: [
+      { text: "Hayatlarımızı alabilirler, ama özgürlüğümüzü asla alamazlar!", isCorrect: true },
+      { text: "Hayatlarımızı kurtarmak için özgürlüğümüzden vazgeçmeliyiz.", isCorrect: false }
+    ],
+    points: 14,
+    category: "Aksiyon"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     INDEPENDENCE DAY (1996) — Fair Use / Eğitim
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 90,
+    url: "https://files.catbox.moe/c5rkme.mp4",
+    start: 0,
+    end: 22,
+    film: "Independence Day",
+    year: 1996,
+    transcript: "We will not go quietly into the night. We will not vanish without a fight. We're going to live on. We're going to survive. Today we celebrate our Independence Day!",
+    options: [
+      { text: "Geceye sessizce girmeyeceğiz. Savaşmadan yok olmayacağız. Yaşamaya devam edeceğiz. Hayatta kalacağız. Bugün Bağımsızlık Günümüzü kutluyoruz!", isCorrect: true },
+      { text: "Geceye sessizce gireceğiz. Bu savaşı kazanamayız, teslim olmaktan başka seçeneğimiz yok.", isCorrect: false }
+    ],
+    points: 17,
+    category: "Aksiyon"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     DARKEST HOUR (2017) — Fair Use / Eğitim
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 91,
+    url: "https://files.catbox.moe/tfzs8f.mp4",
+    start: 0,
+    end: 24,
+    film: "Darkest Hour",
+    year: 2017,
+    transcript: "We shall fight on the beaches, we shall fight on the landing grounds, we shall fight in the fields and in the streets, we shall fight in the hills; we shall never surrender.",
+    options: [
+      { text: "Sahillerde savaşacağız, çıkarma alanlarında savaşacağız, tarlalarda ve sokaklarda savaşacağız, tepelerde savaşacağız; asla teslim olmayacağız.", isCorrect: true },
+      { text: "Sahillerde barış görüşmeleri yapacağız. Düşmanla uzlaşmak en akıllıca yoldur.", isCorrect: false }
+    ],
+    points: 17,
+    category: "Drama"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     FENCES (2016) — Fair Use / Eğitim
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 92,
+    url: "https://files.catbox.moe/1ow43r.mp4",
+    start: 0,
+    end: 16,
+    film: "Fences",
+    year: 2016,
+    transcript: "A man is supposed to take care of his family. You live in my house, you put a sir on the end of it. Because you're my son. Because it's my duty to take care of you.",
+    options: [
+      { text: "Bir adam ailesine bakmak zorundadır. Benim evimde yaşıyorsun, konuşurken 'efendim' diyeceksin. Çünkü oğlumsun. Çünkü sana bakmak benim görevim.", isCorrect: true },
+      { text: "Bir adam ailesinden bağımsız olmalıdır. Evimde yaşaman için sana borçlu değilim.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Drama"
+  },
+
 ];
