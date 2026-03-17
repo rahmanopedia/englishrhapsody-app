@@ -30,7 +30,7 @@ class SpeakV2Module {
   }
 
   get _sentences() {
-    return (window.SPEAK_CHALLENGES || {})[this.level] || [];
+    try { return SPEAK_CHALLENGES[this.level] || []; } catch { return []; }
   }
 
   get _currentSentence() {
@@ -39,7 +39,7 @@ class SpeakV2Module {
 
   async init(el) {
     this.el = el;
-    if (!window.SPEAK_CHALLENGES) await this._loadData();
+    if (typeof SPEAK_CHALLENGES === 'undefined') await this._loadData();
     this._render();
   }
 
