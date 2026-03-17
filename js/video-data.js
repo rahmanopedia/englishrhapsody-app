@@ -106,4 +106,114 @@ var CINEMA_DATA = [
     category: "Drama"
   },
 
+
+  /* ══════════════════════════════════════════════════════════
+     BIRD BOX (2018) — Fair Use / Eğitim
+     Kaynak: https://www.youtube.com/watch?v=j5XghrgEFLw
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 78,
+    url: "https://files.catbox.moe/dfsnzq.mp4",
+    start: 0,
+    end: 24,
+    film: "Bird Box",
+    year: 2018,
+    transcript: "Under no circumstance are you allowed to take off your blindfold. Do not take your blindfold off. If you hear something in the woods, you tell me. If you hear something in the water, you tell me. But you never, ever take off your blindfold.",
+    options: [
+      { text: "Hiçbir koşulda göz bağını çıkarmanıza izin verilmiyor. Göz bağını çıkarma. Ormanda bir şey duyarsan bana söyle. Suda bir şey duyarsan bana söyle. Ama asla, asla göz bağını çıkarma.", isCorrect: true },
+      { text: "Göz bağını istediğinde çıkarabilirsin, sadece dikkatli ol ve sessiz kal.", isCorrect: false },
+      { text: "Tehlike geçince göz bağını çıkar ve etrafa bak, ne gördüğünü söyle.", isCorrect: false }
+    ],
+    points: 17,
+    category: "Gerilim"
+  },
+
+
+  /* ══════════════════════════════════════════════════════════
+     KNIVES OUT (2019) — Fair Use / Eğitim
+     Kaynak: https://www.youtube.com/watch?v=FRlGQL5BJjM
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 79,
+    url: "https://files.catbox.moe/snnhnj.mp4",
+    start: 0,
+    end: 30,
+    film: "Knives Out",
+    year: 2019,
+    transcript: "There is at least one truly guilty party behind it all, guilty in the true sense of acting with malice and committing a heinous crime with selfish intent.",
+    options: [
+      { text: "Tüm bunların arkasında en az bir gerçekten suçlu kişi var; kötü niyetle hareket etmek ve bencil amaçlarla iğrenç bir suç işlemek anlamında gerçekten suçlu.", isCorrect: true },
+      { text: "Herkes masumdur, bu bir kaza; kimse kasıtlı olarak kötü bir şey yapmadı.", isCorrect: false },
+      { text: "Suçlu kişi pişmandır ve her şeyi itiraf etmeye hazırdır.", isCorrect: false }
+    ],
+    points: 18,
+    category: "Gizem"
+  },
+
+
+  /* ══════════════════════════════════════════════════════════
+     MARRIAGE STORY (2019) — Fair Use / Eğitim
+     Kaynak: https://www.youtube.com/watch?v=UPubdNMDGUM
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 80,
+    url: "https://files.catbox.moe/c8o6po.mp4",
+    start: 0,
+    end: 40,
+    film: "Marriage Story",
+    year: 2019,
+    transcript: "You know what I love about Charlie? He loves being a dad. He cries easily in movies. He's very competitive. He's a great dresser. He takes all of my moods steadily.",
+    options: [
+      { text: "Charlie hakkında ne sevdiğimi biliyor musun? Baba olmayı seviyor. Filmlerde kolayca ağlıyor. Çok rekabetçidir. Harika giyiniyor. Tüm ruh hallerimi sabırla karşılıyor.", isCorrect: true },
+      { text: "Charlie hakkında ne sevdiğimi biliyor musun? Hiçbir zaman evde olmaz ve beni umursamaz.", isCorrect: false },
+      { text: "Charlie sabırsız ve duygusuz biridir; kimseyle iyi geçinemez.", isCorrect: false }
+    ],
+    points: 16,
+    category: "Drama"
+  },
+
+
+  /* ══════════════════════════════════════════════════════════
+     EXTRACTION (2020) — Fair Use / Eğitim
+     Kaynak: https://www.youtube.com/watch?v=qGIgrU6lFD0
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 81,
+    url: "https://files.catbox.moe/n3yrhr.mp4",
+    start: 0,
+    end: 40,
+    film: "Extraction",
+    year: 2020,
+    transcript: "You drown not by falling into the river, but by staying submerged in it.",
+    options: [
+      { text: "Nehre düşerek boğulmazsın; nehirde kalmaya devam ederek boğulursun.", isCorrect: true },
+      { text: "Nehre düştüğünde en hızlı şekilde yüzmeli ve kıyıya çıkmalısın.", isCorrect: false },
+      { text: "Nehirde boğulmak için önce suya girmen gerekir, düşmek yetmez.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Aksiyon"
+  },
+
+
+  /* ══════════════════════════════════════════════════════════
+     HUSTLE (2022) — Fair Use / Eğitim
+     Kaynak: https://www.youtube.com/watch?v=Oyl40PC-dQ8
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 82,
+    url: "https://files.catbox.moe/7rmg07.mp4",
+    start: 0,
+    end: 70,
+    film: "Hustle",
+    year: 2022,
+    transcript: "Do you love the game? I need to know. Do you love it? Because the game don't love you back.",
+    options: [
+      { text: "Oyunu seviyor musun? Bilmem lazım. Onu seviyor musun? Çünkü oyun seni sevmiyor.", isCorrect: true },
+      { text: "Oyunu sevmek zorunda değilsin; para kazanmak için oynamak yeterlidir.", isCorrect: false },
+      { text: "Oyun seni sever ama sen onu sevmiyorsun, bu yüzden başaramıyorsun.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Spor"
+  },
+
 ];
