@@ -1,13 +1,94 @@
 /**
- * RHAPSODY CINEMA — Video Veritabanı (v4.0)
+ * RHAPSODY CINEMA — Video Veritabanı (v5.0)
  * Zaman damgaları resmi .srt dosyalarından doğrulandı.
  *
  * Lisanslar:
  *  - Duck and Cover / Shy Guy / Dating Do's and Don'ts → Public Domain (ABD hükümet/Prelinger)
  *  - Sintel (2010) → CC BY 3.0 — Blender Foundation
  *  - Tears of Steel (2012) → CC BY 3.0 — Blender Foundation / Mango Open Movie Project
+ *  - The Matrix / Good Will Hunting → Fair Use (eğitim amaçlı, ~15 sn kesit, dönüştürücü kullanım)
  */
 var CINEMA_DATA = [
+
+  /* ══════════════════════════════════════════════════════════
+     THE MATRIX (1999) — Fair Use / Eğitim
+     YouTube: zE7PKRjrid4 (Movieclips — resmi kanal)
+     Sahne: Kırmızı hap / Mavi hap seçimi
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 30,
+    type: "youtube",
+    videoId: "zE7PKRjrid4",
+    start: 22,
+    end: 46,
+    film: "The Matrix",
+    year: 1999,
+    transcript: "This is your last chance. After this, there is no turning back. You take the blue pill — the story ends. You take the red pill — you stay in Wonderland.",
+    options: [
+      { text: "Bu son şansın. Bundan sonra geri dönüş yok. Mavi hapı alırsan hikaye biter. Kırmızı hapı alırsan Harikalar Diyarı'nda kalırsın.", isCorrect: true },
+      { text: "Bir hap alman gerekiyor ama hangisini seçersen seç fark etmez.", isCorrect: false },
+      { text: "Kırmızı hap seni uyutacak, mavi hap ise gerçeği gösterecek.", isCorrect: false }
+    ],
+    points: 18,
+    category: "Aksiyon"
+  },
+  {
+    id: 31,
+    type: "youtube",
+    videoId: "zE7PKRjrid4",
+    start: 50,
+    end: 68,
+    film: "The Matrix",
+    year: 1999,
+    transcript: "Remember, all I'm offering is the truth. Nothing more.",
+    options: [
+      { text: "Unutma, sunduğum tek şey gerçek. Bundan fazlası değil.", isCorrect: true },
+      { text: "Sana her şeyi öğreteceğim, gerçek de dahil.", isCorrect: false },
+      { text: "Bu teklifim sadece sana özel, başkasına söyleme.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Aksiyon"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     GOOD WILL HUNTING (1997) — Fair Use / Eğitim
+     YouTube: UYa6gbDcx18 (resmi film klibi)
+     Sahne: "Senin hatan degil" — Sean ve Will
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 32,
+    type: "youtube",
+    videoId: "UYa6gbDcx18",
+    start: 48,
+    end: 70,
+    film: "Good Will Hunting",
+    year: 1997,
+    transcript: "It's not your fault. It's not your fault. It's not your fault.",
+    options: [
+      { text: "Bu senin hatan değil. Bu senin hatan değil. Bu senin hatan değil.", isCorrect: true },
+      { text: "Her şey senin hatan, bunu kabul etmen gerek.", isCorrect: false },
+      { text: "Kimin hatası olduğu artık önemli değil.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Drama"
+  },
+  {
+    id: 33,
+    type: "youtube",
+    videoId: "UYa6gbDcx18",
+    start: 10,
+    end: 30,
+    film: "Good Will Hunting",
+    year: 1997,
+    transcript: "Does this scare you? I don't want to talk about it.",
+    options: [
+      { text: "Bu seni korkutuyor mu? Bunun hakkında konuşmak istemiyorum.", isCorrect: true },
+      { text: "Bundan bahsedelim. Tamam, hazırım.", isCorrect: false },
+      { text: "Korkuyorum ama devam edeceğim.", isCorrect: false }
+    ],
+    points: 12,
+    category: "Drama"
+  },
 
   /* ══════════════════════════════════════════════════════════
      SINTEL (2010) — Blender Foundation — CC BY 3.0
