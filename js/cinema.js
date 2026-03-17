@@ -124,14 +124,18 @@ class CinemaModule {
   _watchEnd(endTime) {
     const v = this.video;
     if (this.endWatcher) clearInterval(this.endWatcher);
+
+    const trigger = () => {
+      if (this.endWatcher) { clearInterval(this.endWatcher); this.endWatcher = null; }
+      v.pause();
+      this._showDecisionOverlay();
+    };
+
+    v.addEventListener('ended', trigger, { once: true });
+
     this.endWatcher = setInterval(() => {
-      if (!v || v.paused) return;
-      if (v.currentTime >= endTime) {
-        clearInterval(this.endWatcher);
-        this.endWatcher = null;
-        v.pause();
-        this._showDecisionOverlay();
-      }
+      if (!v) return;
+      if (v.currentTime >= endTime) trigger();
     }, 100);
   }
 
