@@ -47,7 +47,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 74,
-    url: "https://files.catbox.moe/osemfp.mp4",
+    url: "https://files.catbox.moe/cxz4dp.mp4",
     start: 0,
     end: 15,
     film: "Dead Poets Society",
@@ -85,7 +85,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 77,
-    url: "https://files.catbox.moe/3mhqt2.mp4",
+    url: "https://files.catbox.moe/de1ena.mp4",
     start: 0,
     end: 14,
     film: "Good Will Hunting",
@@ -104,7 +104,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 78,
-    url: "https://files.catbox.moe/m581qt.mp4",
+    url: "https://files.catbox.moe/ss305e.mp4",
     start: 0,
     end: 12,
     film: "Bird Box",
@@ -124,7 +124,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 80,
-    url: "https://files.catbox.moe/c8o6po.mp4",
+    url: "https://files.catbox.moe/chimff.mp4",
     start: 0,
     end: 12,
     film: "Marriage Story",
@@ -144,7 +144,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 82,
-    url: "https://files.catbox.moe/m8f5zl.mp4",
+    url: "https://files.catbox.moe/7yy3h2.mp4",
     start: 0,
     end: 14,
     film: "Hustle",
@@ -165,7 +165,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 83,
-    url: "https://files.catbox.moe/vxryvs.mp4",
+    url: "https://files.catbox.moe/qrvt13.mp4",
     start: 0,
     end: 15,
     film: "The Pursuit of Happyness",
@@ -187,7 +187,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 84,
-    url: "https://files.catbox.moe/xevpjj.mp4",
+    url: "https://files.catbox.moe/bbo1bx.mp4",
     start: 0,
     end: 14,
     film: "Rocky Balboa",
@@ -209,7 +209,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 85,
-    url: "https://files.catbox.moe/v06msa.mp4",
+    url: "https://files.catbox.moe/gszwin.mp4",
     start: 0,
     end: 25,
     film: "Inception",
@@ -231,7 +231,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 86,
-    url: "https://files.catbox.moe/dqdn7b.mp4",
+    url: "https://files.catbox.moe/b55qb9.mp4",
     start: 0,
     end: 16,
     film: "La La Land",
@@ -253,7 +253,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 87,
-    url: "https://files.catbox.moe/09jf04.mp4",
+    url: "https://files.catbox.moe/3wypu9.mp4",
     start: 0,
     end: 14,
     film: "Spider-Man",
@@ -273,7 +273,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 88,
-    url: "https://files.catbox.moe/fojdn1.mp4",
+    url: "https://files.catbox.moe/2sifoa.mp4",
     start: 0,
     end: 16,
     film: "Wall Street",
@@ -311,7 +311,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 90,
-    url: "https://files.catbox.moe/c5rkme.mp4",
+    url: "https://files.catbox.moe/1uo7ue.mp4",
     start: 0,
     end: 22,
     film: "Independence Day",
@@ -349,7 +349,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 92,
-    url: "https://files.catbox.moe/1ow43r.mp4",
+    url: "https://files.catbox.moe/oif2fm.mp4",
     start: 0,
     end: 16,
     film: "Fences",
@@ -406,7 +406,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 95,
-    url: "https://files.catbox.moe/flbuzz.mp4",
+    url: "https://files.catbox.moe/bfgeah.mp4",
     start: 0,
     end: 15,
     film: "Schindler's List",
@@ -425,7 +425,7 @@ var CINEMA_DATA = [
   ══════════════════════════════════════════════════════════ */
   {
     id: 96,
-    url: "https://files.catbox.moe/2hybeu.mp4",
+    url: "https://files.catbox.moe/rcmhpf.mp4",
     start: 0,
     end: 17,
     film: "The Godfather",
