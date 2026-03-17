@@ -447,13 +447,16 @@ class SpeakV2Module {
     if (this._recognition) { try { this._recognition.stop(); } catch {} this._recognition = null; }
     if (this._animFrame)   { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
     if (this._mediaRecorder && this._mediaRecorder.state !== 'inactive') {
-      this._mediaRecorder.onstop = () => {
+      const mr = this._mediaRecorder;
+      mr.onstop = () => {
         if (this._audioChunks.length) {
           if (this._audioUrl) URL.revokeObjectURL(this._audioUrl);
-          this._audioUrl = URL.createObjectURL(new Blob(this._audioChunks, { type: 'audio/webm' }));
+          this._audioUrl = URL.createObjectURL(
+            new Blob(this._audioChunks, { type: mr.mimeType || 'audio/webm' })
+          );
         }
       };
-      try { this._mediaRecorder.stop(); } catch {}
+      try { mr.stop(); } catch {}
     }
     this._mediaRecorder = null;
     if (this._audioCtx) { try { this._audioCtx.close(); } catch {} this._audioCtx = null; }
@@ -479,9 +482,11 @@ class SpeakV2Module {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       this._stream = stream;
       try {
-        this._mediaRecorder = new MediaRecorder(stream);
+        const mime = ['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4','']
+          .find(t => !t || MediaRecorder.isTypeSupported(t)) || '';
+        this._mediaRecorder = new MediaRecorder(stream, mime ? { mimeType: mime } : {});
         this._mediaRecorder.ondataavailable = e => { if (e.data.size > 0) this._audioChunks.push(e.data); };
-        this._mediaRecorder.start();
+        this._mediaRecorder.start(100);
       } catch {}
       const ctx = new AudioContext(); this._audioCtx = ctx;
       const src = ctx.createMediaStreamSource(stream);
@@ -705,15 +710,19 @@ class SpeakV2Module {
       `;
     }
 
-    // Playback button
+    // Playback button — poll until audio URL is ready (onstop is async)
     const pbBtn = panel.querySelector('#sv2-playback');
     if (pbBtn) {
-      setTimeout(() => {
+      let attempts = 0;
+      const tryShow = () => {
         if (this._audioUrl) {
           pbBtn.style.display = 'flex';
           pbBtn.onclick = () => { try { new Audio(this._audioUrl).play(); } catch {} };
+        } else if (attempts++ < 10) {
+          setTimeout(tryShow, 200);
         }
-      }, 300);
+      };
+      setTimeout(tryShow, 300);
     }
 
     // Sentence history from localStorage
