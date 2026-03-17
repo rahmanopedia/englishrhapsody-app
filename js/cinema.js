@@ -85,11 +85,14 @@ class CinemaModule {
     v.src = entry.url;
     v.load();
 
-    const tryWhenReady = () => {
-      if (entry.start > 0) v.currentTime = entry.start;
+    if (entry.start === 0) {
       this._tryPlay(v, entry.end);
-    };
-    v.addEventListener('canplay', tryWhenReady, { once: true });
+    } else {
+      v.addEventListener('loadedmetadata', () => {
+        v.currentTime = entry.start;
+        this._tryPlay(v, entry.end);
+      }, { once: true });
+    }
   }
 
   _tryPlay(v, endTime) {
@@ -103,11 +106,19 @@ class CinemaModule {
 
   _playAfterInteraction() {
     this.el.querySelector('#cinema-play-prompt').style.display = 'none';
-    this.video.play().then(() => {
-      this._watchEnd(this._pendingEndTime);
-    }).catch(() => {
-      this.el.querySelector('#cinema-play-prompt').style.display = 'flex';
-    });
+    const v = this.video;
+    const doPlay = () => {
+      v.play().then(() => {
+        this._watchEnd(this._pendingEndTime);
+      }).catch(() => {
+        this.el.querySelector('#cinema-play-prompt').style.display = 'flex';
+      });
+    };
+    if (v.readyState >= 3) {
+      doPlay();
+    } else {
+      v.addEventListener('canplay', doPlay, { once: true });
+    }
   }
 
   _watchEnd(endTime) {
