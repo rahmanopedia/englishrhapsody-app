@@ -80,27 +80,14 @@
   100% { transform: scale(1);   opacity: 1; }
 }
 
-/* ── Playback Button ── */
-.sv2-playback-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+/* ── Audio Player ── */
+.sv2-audio-player {
   width: 100%;
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  background: rgba(6,182,212,0.08);
-  color: #06b6d4;
-  border: 1px solid rgba(6,182,212,0.25);
-  font-family: inherit;
   margin-bottom: 10px;
-  transition: background 0.15s;
+  border-radius: 10px;
+  height: 36px;
+  accent-color: #06b6d4;
 }
-
-.sv2-playback-btn:hover { background: rgba(6,182,212,0.16); }
 
 /* ── History Dots ── */
 .sv2-hist { margin-bottom: 10px; }
