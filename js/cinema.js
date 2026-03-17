@@ -29,10 +29,7 @@ class CinemaModule {
       <div class="cinema-wrap">
         <div class="cinema-video-box">
           <video id="cinema-video" playsinline style="width:100%;height:100%;object-fit:cover;background:#000;display:block;"></video>
-          <div id="cinema-loading" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;gap:12px;">
-            <div style="color:var(--text-3);font-size:0.75rem;letter-spacing:2px;">YÜKLENİYOR</div>
-            <div style="width:40px;height:2px;background:var(--cyan);animation:cinema-load 1.2s ease-in-out infinite alternate;border-radius:2px;"></div>
-          </div>
+          <div id="cinema-loading" style="display:none;"></div>
           <div id="cinema-play-prompt" style="position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);cursor:pointer;gap:12px;">
             <div style="width:60px;height:60px;border-radius:50%;background:var(--cyan);display:flex;align-items:center;justify-content:center;font-size:1.6rem;">▶</div>
             <div style="color:#fff;font-size:0.8rem;letter-spacing:1px;">OYNATMAK İÇİN DOKUN</div>
