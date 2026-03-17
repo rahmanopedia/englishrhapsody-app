@@ -171,8 +171,15 @@ class CinemaModule {
       subDiv.textContent = `"${entry.transcript}"`;
       overlay.appendChild(subDiv);
     }
+    // 1 doğru + 1 rastgele yanlış seçenek, karıştırılmış
+    const correct = entry.options.find(o => o.isCorrect);
+    const wrongs = entry.options.filter(o => !o.isCorrect);
+    const wrong = wrongs[Math.floor(Math.random() * wrongs.length)];
+    this._displayOptions = Math.random() < 0.5 ? [correct, wrong] : [wrong, correct];
+
     quizArea.style.display = 'grid';
-    quizArea.innerHTML = entry.options.map((opt, i) =>
+    quizArea.style.gridTemplateColumns = '1fr 1fr';
+    quizArea.innerHTML = this._displayOptions.map((opt, i) =>
       `<div class="cinema-option-card" onclick="cinemaMod._checkAnswer(${i})">${opt.text}</div>`
     ).join('');
     this.timer = 15;
@@ -191,9 +198,10 @@ class CinemaModule {
     this.canAnswer = false;
     clearInterval(this.timerInterval);
     const entry = CINEMA_DATA[this.currentIndex];
+    const opts = this._displayOptions || entry.options;
     const cards = this.el.querySelectorAll('.cinema-option-card');
     const pointsPopup = this.el.querySelector('#cinema-points');
-    const correctIndex = entry.options.findIndex(o => o.isCorrect);
+    const correctIndex = opts.findIndex(o => o.isCorrect);
     cards.forEach((card, i) => {
       if (i === correctIndex) card.classList.add('correct');
       else if (i === index) card.classList.add('wrong');
@@ -201,11 +209,17 @@ class CinemaModule {
     if (index === correctIndex) {
       const earned = this.isSubtitleOn ? Math.round(entry.points / 2) : entry.points;
       pointsPopup.textContent = `+${earned}`;
+      pointsPopup.style.color = '';
       pointsPopup.classList.add('show');
       const app = window._app || window.app;
       if (app && app.addXP) app.addXP(earned, 'medium', 'cinema');
+    } else if (index !== -1) {
+      const penalty = Math.round(entry.points / 4);
+      pointsPopup.textContent = `-${penalty}`;
+      pointsPopup.style.color = '#ff4d4d';
+      pointsPopup.classList.add('show');
     }
-    setTimeout(() => { pointsPopup.classList.remove('show'); this._nextVideo(); }, 2500);
+    setTimeout(() => { pointsPopup.classList.remove('show'); pointsPopup.style.color = ''; this._nextVideo(); }, 2500);
   }
 }
 
