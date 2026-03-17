@@ -593,39 +593,6 @@
   box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
 }
 
-/* ── Syllable Stress Guide (V2.2) ── */
-.sv2-stress-guide {
-  margin-top: 10px;
-  font-size: 0.82rem;
-  text-align: center;
-  line-height: 2;
-  letter-spacing: 0.01em;
-  color: #64748b;
-  min-height: 20px;
-}
-
-.sv2-sg-word {
-  display: inline;
-  margin: 0 2px;
-}
-
-.sv2-sg-stressed {
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-style: dotted;
-}
-
-.sv2-sg-unstressed {
-  color: #475569;
-}
-
-.sv2-sg-dot {
-  color: rgba(255, 255, 255, 0.2);
-  font-size: 0.7rem;
-  margin: 0 1px;
-}
-
 /* ── Fluency + WPM Metrics (V2.2) ── */
 .sv2-metrics {
   margin-bottom: 12px;

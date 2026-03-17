@@ -128,7 +128,6 @@ class SpeakV2Module {
 
         <div class="sv2-card" id="sv2-card">
           <p class="sv2-sentence" id="sv2-sentence">"${this._esc(this._currentSentence)}"</p>
-          <div class="sv2-stress-guide" id="sv2-stress-guide">${this._pronunciationGuide(this._currentSentence)}</div>
           <p class="sv2-live" id="sv2-live"></p>
         </div>
 
@@ -312,9 +311,6 @@ class SpeakV2Module {
 
     const sentEl = q('#sv2-sentence');
     if (sentEl) sentEl.textContent = `"${this._currentSentence}"`;
-
-    const guideEl = q('#sv2-stress-guide');
-    if (guideEl) guideEl.innerHTML = this._pronunciationGuide(this._currentSentence);
 
     const idxEl = q('#sv2-idx-num');
     if (idxEl) { idxEl.textContent = this.idx + 1; idxEl.style.color = cfg.color; }
@@ -549,90 +545,6 @@ class SpeakV2Module {
     const app = window._app || window.app;
     if (app && typeof app.addXP === 'function') app.addXP(xp, 'medium', 'speak');
     return xp;
-  }
-
-  // ─── Syllable Stress Guide ─────────────────────────────────────────────────
-
-  _pronunciationGuide(sentence) {
-    if (!sentence) return '';
-    const color = this._levelConfig[this.level].color;
-    return sentence.split(/(\s+)/).map(token => {
-      if (/^\s+$/.test(token)) return ' ';
-      const clean = token.replace(/[^a-zA-Z]/g, '');
-      if (!clean || clean.length <= 2) return `<span class="sv2-sg-word">${this._esc(token)}</span>`;
-
-      const syls = this._syllabifyWord(clean);
-      if (syls.length <= 1) return `<span class="sv2-sg-word">${this._esc(token)}</span>`;
-
-      const si  = this._stressIndex(clean, syls);
-      const pre = token.slice(0, token.indexOf(clean));
-      const suf = token.slice(token.indexOf(clean) + clean.length);
-
-      const inner = syls.map((s, i) => {
-        const dot = i < syls.length - 1 ? '<span class="sv2-sg-dot">·</span>' : '';
-        return i === si
-          ? `<span class="sv2-sg-stressed" style="color:${color};text-shadow:0 0 8px ${color}66">${s}</span>${dot}`
-          : `<span class="sv2-sg-unstressed">${s}</span>${dot}`;
-      }).join('');
-
-      return `${this._esc(pre)}<span class="sv2-sg-word">${inner}</span>${this._esc(suf)}`;
-    }).join('');
-  }
-
-  _syllabifyWord(word) {
-    const clean = word.replace(/[^a-zA-Z]/g, '');
-    const w     = clean.toLowerCase();
-    if (w.length <= 2) return [clean];
-
-    const isV = c => /[aeiouy]/.test(c);
-
-    // Find vowel group ranges
-    const vRanges = [];
-    let i = 0;
-    while (i < w.length) {
-      if (isV(w[i])) {
-        let j = i; while (j < w.length && isV(w[j])) j++;
-        vRanges.push([i, j]); i = j;
-      } else { i++; }
-    }
-
-    if (vRanges.length <= 1) return [clean];
-
-    // Determine split positions
-    const splits = [0];
-    for (let k = 0; k < vRanges.length - 1; k++) {
-      const curEnd  = vRanges[k][1];
-      const nextStart = vRanges[k + 1][0];
-      const conLen  = nextStart - curEnd;
-
-      if (conLen === 0)      splits.push(curEnd);   // adjacent vowel groups
-      else if (conLen === 1) splits.push(curEnd);   // V-CV
-      else                   splits.push(curEnd + 1); // VC-CV
-    }
-    splits.push(clean.length);
-
-    const parts = [];
-    for (let k = 0; k < splits.length - 1; k++) {
-      const p = clean.slice(splits[k], splits[k + 1]);
-      if (p) parts.push(p);
-    }
-    return parts.length ? parts : [clean];
-  }
-
-  _stressIndex(word, syllables) {
-    const n = syllables.length;
-    if (n <= 1) return 0;
-    const w = word.toLowerCase();
-
-    if (/tion$|sion$|cian$/.test(w))           return Math.max(0, n - 2);
-    if (/ic$/.test(w) && n >= 2)               return n - 2;
-    if (/ity$|ify$|ical$/.test(w) && n >= 3)   return n - 3;
-    if (/ious$|eous$|uous$/.test(w) && n >= 2) return n - 2;
-    if (/ment$|ness$|ful$|less$/.test(w))      return 0;
-    if (/ize$|ise$/.test(w) && n >= 3)         return n - 3;
-    if (/ate$/.test(w) && n >= 3)              return n - 3;
-    if (/ing$|ed$|er$|ly$/.test(w) && n >= 2) return 0;
-    return 0;
   }
 
   // ─── History (localStorage) ────────────────────────────────────────────────
