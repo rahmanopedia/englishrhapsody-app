@@ -1,8 +1,6 @@
 /**
- * RHAPSODY CINEMA — Video Veritabanı (v8.0)
- * Tüm klipler catbox.moe'da barındırılıyor — anında oynatma, sıfır bekleme.
- * Kaynak filmler: YouTube'dan yt-dlp+FFmpeg ile kesildi, catbox.moe'ya yüklendi.
- * Altyazılar doğrulanmış timestamp'lerle eşleştirildi.
+ * RHAPSODY CINEMA — Video Veritabanı (v9.0)
+ * Kısa sahneler: max 1-3 cümle, 8-16 saniye.
  */
 var CINEMA_DATA = [
 
@@ -19,8 +17,7 @@ var CINEMA_DATA = [
     transcript: "My mama always said life was like a box of chocolates. You never know what you're gonna get.",
     options: [
       { text: "Annem her zaman hayatın bir kutu çikolataya benzediğini söylerdi. Ne çıkacağını asla bilemezsin.", isCorrect: true },
-      { text: "Annem hayatın acı olduğunu ama güzel göründüğünü söylerdi.", isCorrect: false },
-      { text: "Hayat bir kutu çikolata gibidir, hepsinin tadı aynıdır.", isCorrect: false }
+      { text: "Annem hayatın acı olduğunu ama güzel göründüğünü söylerdi.", isCorrect: false }
     ],
     points: 16,
     category: "Drama"
@@ -33,16 +30,15 @@ var CINEMA_DATA = [
     id: 73,
     url: "https://files.catbox.moe/gzuj91.mp4",
     start: 0,
-    end: 22,
+    end: 15,
     film: "The Shawshank Redemption",
     year: 1994,
-    transcript: "Remember, Red, hope is a good thing, maybe the best of things. And no good thing ever dies.",
+    transcript: "Hope is a good thing, maybe the best of things. And no good thing ever dies.",
     options: [
-      { text: "Unutma Red, umut iyi bir şeydir, belki de en iyisi. Ve hiçbir iyi şey ölmez.", isCorrect: true },
-      { text: "Umut tehlikelidir, insanı hayal kırıklığına uğratır.", isCorrect: false },
-      { text: "Kötü şeyler de zamanla iyiye dönüşür, sabırla bekle.", isCorrect: false }
+      { text: "Umut iyi bir şeydir, belki de en iyisi. Ve hiçbir iyi şey ölmez.", isCorrect: true },
+      { text: "Umut tehlikelidir, insanı hayal kırıklığına uğratır.", isCorrect: false }
     ],
-    points: 18,
+    points: 16,
     category: "Drama"
   },
 
@@ -59,10 +55,9 @@ var CINEMA_DATA = [
     transcript: "Carpe diem. Seize the day, boys. Make your lives extraordinary.",
     options: [
       { text: "Carpe diem. Günü yakala, çocuklar. Hayatınızı olağanüstü kılın.", isCorrect: true },
-      { text: "Carpe diem, yani her şeyi yarına bırakın.", isCorrect: false },
-      { text: "Hayatınızı sıradan tutun, olağanüstü olmak tehlikelidir.", isCorrect: false }
+      { text: "Carpe diem, yani her şeyi yarına bırakın.", isCorrect: false }
     ],
-    points: 16,
+    points: 15,
     category: "Drama"
   },
 
@@ -73,16 +68,15 @@ var CINEMA_DATA = [
     id: 76,
     url: "https://files.catbox.moe/xi03zy.mp4",
     start: 0,
-    end: 20,
+    end: 12,
     film: "The Matrix",
     year: 1999,
-    transcript: "This is your last chance. After this, there is no turning back. You take the blue pill, the story ends. You take the red pill, you stay in Wonderland.",
+    transcript: "This is your last chance. After this, there is no turning back.",
     options: [
-      { text: "Bu son şansın. Bundan sonra geri dönüş yok. Mavi hapı alırsan hikaye biter. Kırmızı hapı alırsan Harikalar Diyarı'nda kalırsın.", isCorrect: true },
-      { text: "Hangi hapı alırsan al fark etmez, sonuç aynıdır.", isCorrect: false },
-      { text: "Kırmızı hap seni uyutacak, mavi hap ise gerçeği gösterecek.", isCorrect: false }
+      { text: "Bu son şansın. Bundan sonra geri dönüş yok.", isCorrect: true },
+      { text: "Bu ilk şansın. Bundan sonra her şey daha iyi olacak.", isCorrect: false }
     ],
-    points: 18,
+    points: 14,
     category: "Aksiyon"
   },
 
@@ -93,126 +87,110 @@ var CINEMA_DATA = [
     id: 77,
     url: "https://files.catbox.moe/3mhqt2.mp4",
     start: 0,
-    end: 45,
+    end: 14,
     film: "Good Will Hunting",
     year: 1997,
-    transcript: "It's not your fault. It's not your fault. It's not your fault.",
+    transcript: "It's not your fault. It's not your fault.",
     options: [
-      { text: "Bu senin hatan değil. Bu senin hatan değil. Bu senin hatan değil.", isCorrect: true },
-      { text: "Her şey senin hatan, bunu kabul et.", isCorrect: false },
-      { text: "Kimin hatası olduğu önemli değil artık.", isCorrect: false }
+      { text: "Bu senin hatan değil. Bu senin hatan değil.", isCorrect: true },
+      { text: "Her şey senin hatan. Bunu kabul etmelisin.", isCorrect: false }
     ],
-    points: 15,
+    points: 14,
     category: "Drama"
   },
 
-
   /* ══════════════════════════════════════════════════════════
-     BIRD BOX (2018) — Fair Use / Eğitim
-     Kaynak: https://www.youtube.com/watch?v=j5XghrgEFLw
+     BIRD BOX (2018) — Netflix
   ══════════════════════════════════════════════════════════ */
   {
     id: 78,
     url: "https://files.catbox.moe/dfsnzq.mp4",
     start: 0,
-    end: 24,
+    end: 12,
     film: "Bird Box",
     year: 2018,
-    transcript: "Under no circumstance are you allowed to take off your blindfold. Do not take your blindfold off. If you hear something in the woods, you tell me. If you hear something in the water, you tell me. But you never, ever take off your blindfold.",
+    transcript: "Under no circumstance are you allowed to take off your blindfold. Do not take your blindfold off.",
     options: [
-      { text: "Hiçbir koşulda göz bağını çıkarmanıza izin verilmiyor. Göz bağını çıkarma. Ormanda bir şey duyarsan bana söyle. Suda bir şey duyarsan bana söyle. Ama asla, asla göz bağını çıkarma.", isCorrect: true },
-      { text: "Göz bağını istediğinde çıkarabilirsin, sadece dikkatli ol ve sessiz kal.", isCorrect: false },
-      { text: "Tehlike geçince göz bağını çıkar ve etrafa bak, ne gördüğünü söyle.", isCorrect: false }
+      { text: "Hiçbir koşulda göz bağını çıkarmanıza izin verilmiyor. Göz bağını çıkarma.", isCorrect: true },
+      { text: "Tehlike geçince göz bağını çıkar ve etrafa bak.", isCorrect: false }
     ],
-    points: 17,
+    points: 15,
     category: "Gerilim"
   },
 
-
   /* ══════════════════════════════════════════════════════════
-     KNIVES OUT (2019) — Fair Use / Eğitim
-     Kaynak: https://www.youtube.com/watch?v=FRlGQL5BJjM
+     KNIVES OUT (2019) — Netflix
   ══════════════════════════════════════════════════════════ */
   {
     id: 79,
     url: "https://files.catbox.moe/snnhnj.mp4",
     start: 0,
-    end: 30,
+    end: 15,
     film: "Knives Out",
     year: 2019,
-    transcript: "There is at least one truly guilty party behind it all, guilty in the true sense of acting with malice and committing a heinous crime with selfish intent.",
+    transcript: "There is at least one truly guilty party behind it all, guilty in the true sense of acting with malice.",
     options: [
-      { text: "Tüm bunların arkasında en az bir gerçekten suçlu kişi var; kötü niyetle hareket etmek ve bencil amaçlarla iğrenç bir suç işlemek anlamında gerçekten suçlu.", isCorrect: true },
-      { text: "Herkes masumdur, bu bir kaza; kimse kasıtlı olarak kötü bir şey yapmadı.", isCorrect: false },
-      { text: "Suçlu kişi pişmandır ve her şeyi itiraf etmeye hazırdır.", isCorrect: false }
+      { text: "Tüm bunların arkasında gerçekten suçlu en az bir kişi var; kötü niyetle hareket etmiş.", isCorrect: true },
+      { text: "Herkes masumdur, bu bir kazadır; kimse kasıtlı kötülük yapmadı.", isCorrect: false }
     ],
-    points: 18,
+    points: 17,
     category: "Gizem"
   },
 
-
   /* ══════════════════════════════════════════════════════════
-     MARRIAGE STORY (2019) — Fair Use / Eğitim
-     Kaynak: https://www.youtube.com/watch?v=UPubdNMDGUM
+     MARRIAGE STORY (2019) — Netflix
   ══════════════════════════════════════════════════════════ */
   {
     id: 80,
     url: "https://files.catbox.moe/c8o6po.mp4",
     start: 0,
-    end: 40,
+    end: 12,
     film: "Marriage Story",
     year: 2019,
-    transcript: "You know what I love about Charlie? He loves being a dad. He cries easily in movies. He's very competitive. He's a great dresser. He takes all of my moods steadily.",
+    transcript: "He loves being a dad. He cries easily in movies.",
     options: [
-      { text: "Charlie hakkında ne sevdiğimi biliyor musun? Baba olmayı seviyor. Filmlerde kolayca ağlıyor. Çok rekabetçidir. Harika giyiniyor. Tüm ruh hallerimi sabırla karşılıyor.", isCorrect: true },
-      { text: "Charlie hakkında ne sevdiğimi biliyor musun? Hiçbir zaman evde olmaz ve beni umursamaz.", isCorrect: false },
-      { text: "Charlie sabırsız ve duygusuz biridir; kimseyle iyi geçinemez.", isCorrect: false }
+      { text: "Baba olmayı seviyor. Filmlerde kolayca ağlıyor.", isCorrect: true },
+      { text: "Baba olmaktan nefret ediyor. Filmlerde hiç ağlamıyor.", isCorrect: false }
     ],
-    points: 16,
+    points: 13,
     category: "Drama"
   },
 
-
   /* ══════════════════════════════════════════════════════════
-     EXTRACTION (2020) — Fair Use / Eğitim
-     Kaynak: https://www.youtube.com/watch?v=qGIgrU6lFD0
+     EXTRACTION (2020) — Netflix
   ══════════════════════════════════════════════════════════ */
   {
     id: 81,
     url: "https://files.catbox.moe/n3yrhr.mp4",
     start: 0,
-    end: 40,
+    end: 10,
     film: "Extraction",
     year: 2020,
     transcript: "You drown not by falling into the river, but by staying submerged in it.",
     options: [
       { text: "Nehre düşerek boğulmazsın; nehirde kalmaya devam ederek boğulursun.", isCorrect: true },
-      { text: "Nehre düştüğünde en hızlı şekilde yüzmeli ve kıyıya çıkmalısın.", isCorrect: false },
-      { text: "Nehirde boğulmak için önce suya girmen gerekir, düşmek yetmez.", isCorrect: false }
+      { text: "Nehre düşersen hemen yüz, yoksa boğulursun.", isCorrect: false }
     ],
     points: 15,
     category: "Aksiyon"
   },
 
-
   /* ══════════════════════════════════════════════════════════
-     HUSTLE (2022) — Fair Use / Eğitim
-     Kaynak: https://www.youtube.com/watch?v=Oyl40PC-dQ8
+     HUSTLE (2022) — Netflix
   ══════════════════════════════════════════════════════════ */
   {
     id: 82,
     url: "https://files.catbox.moe/7rmg07.mp4",
     start: 0,
-    end: 70,
+    end: 14,
     film: "Hustle",
     year: 2022,
-    transcript: "Do you love the game? I need to know. Do you love it? Because the game don't love you back.",
+    transcript: "Do you love the game? Because the game don't love you back.",
     options: [
-      { text: "Oyunu seviyor musun? Bilmem lazım. Onu seviyor musun? Çünkü oyun seni sevmiyor.", isCorrect: true },
-      { text: "Oyunu sevmek zorunda değilsin; para kazanmak için oynamak yeterlidir.", isCorrect: false },
-      { text: "Oyun seni sever ama sen onu sevmiyorsun, bu yüzden başaramıyorsun.", isCorrect: false }
+      { text: "Oyunu seviyor musun? Çünkü oyun seni sevmiyor.", isCorrect: true },
+      { text: "Oyunu sevmek zorunda değilsin, sadece para kazan.", isCorrect: false }
     ],
-    points: 15,
+    points: 14,
     category: "Spor"
   },
 
