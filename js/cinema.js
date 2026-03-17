@@ -83,17 +83,13 @@ class CinemaModule {
 
     v.preload = 'auto';
     v.src = entry.url;
+    v.load();
 
-    if (entry.start === 0) {
-      // Klip baştan başlıyor — hiç beklemeden oyna
+    const tryWhenReady = () => {
+      if (entry.start > 0) v.currentTime = entry.start;
       this._tryPlay(v, entry.end);
-    } else {
-      // Seek gerekiyor — sadece metadata bekle (seeked'i bekleme)
-      v.addEventListener('loadedmetadata', () => {
-        v.currentTime = entry.start;
-        this._tryPlay(v, entry.end);
-      }, { once: true });
-    }
+    };
+    v.addEventListener('canplay', tryWhenReady, { once: true });
   }
 
   _tryPlay(v, endTime) {
@@ -109,6 +105,8 @@ class CinemaModule {
     this.el.querySelector('#cinema-play-prompt').style.display = 'none';
     this.video.play().then(() => {
       this._watchEnd(this._pendingEndTime);
+    }).catch(() => {
+      this.el.querySelector('#cinema-play-prompt').style.display = 'flex';
     });
   }
 
