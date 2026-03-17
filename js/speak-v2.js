@@ -31,6 +31,7 @@ class SpeakV2Module {
 
     // Audio playback
     this._audioUrl = null;
+    this._audioEl = null;
     this._mediaRecorder = null;
     this._audioChunks = [];
 
@@ -275,7 +276,7 @@ class SpeakV2Module {
   _setLevel(level) {
     this._clearTimers(); this._stopAll(); window.speechSynthesis?.cancel();
     this.level = level; this.idx = 0;
-    this.status = 'idle'; this.result = null; this.liveTranscript = ''; this._audioUrl = null;
+    this.status = 'idle'; this.result = null; this.liveTranscript = ''; this._audioUrl = null; this._audioEl = null;
     this.sessionScores = []; this.streak = 0; this.sessionCount = 0; this._lowScoreMap = {};
     this._render();
   }
@@ -283,14 +284,14 @@ class SpeakV2Module {
   _prev() {
     this._clearTimers(); this._stopAll(); window.speechSynthesis?.cancel();
     this.idx = Math.max(0, this.idx - 1);
-    this.status = 'idle'; this.result = null; this.liveTranscript = ''; this._audioUrl = null;
+    this.status = 'idle'; this.result = null; this.liveTranscript = ''; this._audioUrl = null; this._audioEl = null;
     this._updateSentenceUI();
   }
 
   _next() {
     this._clearTimers(); this._stopAll(); window.speechSynthesis?.cancel();
     this.idx = this.shuffleMode ? this._shuffleNextIdx() : Math.min(this.idx + 1, this._sentences.length - 1);
-    this.status = 'idle'; this.result = null; this.liveTranscript = ''; this._audioUrl = null;
+    this.status = 'idle'; this.result = null; this.liveTranscript = ''; this._audioUrl = null; this._audioEl = null;
     this._updateSentenceUI();
     if (this.shadowMode) this._startShadow();
   }
@@ -717,8 +718,15 @@ class SpeakV2Module {
       const tryShow = () => {
         if (this._audioUrl) {
           pbBtn.style.display = 'flex';
-          pbBtn.onclick = () => { try { new Audio(this._audioUrl).play(); } catch {} };
-        } else if (attempts++ < 10) {
+          pbBtn.onclick = () => {
+            if (!this._audioEl) {
+              this._audioEl = new Audio();
+              this._audioEl.src = this._audioUrl;
+            }
+            this._audioEl.currentTime = 0;
+            this._audioEl.play().catch(() => {});
+          };
+        } else if (attempts++ < 15) {
           setTimeout(tryShow, 200);
         }
       };
@@ -760,7 +768,7 @@ class SpeakV2Module {
 
   _reset() {
     this._clearTimers(); this._stopAll(); window.speechSynthesis?.cancel();
-    this.status = 'idle'; this.result = null; this.liveTranscript = '';
+    this.status = 'idle'; this.result = null; this.liveTranscript = ''; this._audioEl = null;
 
     const live  = this.el?.querySelector('#sv2-live');  if (live)  live.textContent = '';
     const panel = this.el?.querySelector('#sv2-score-panel'); if (panel) panel.classList.remove('visible');
