@@ -633,4 +633,25 @@ var CINEMA_DATA = [
     category: "Aksiyon"
   },
 
+  /* ══════════════════════════════════════════════════════════
+     GOOD WILL HUNTING (1997) — Fair Use / Eğitim
+     Kaynak: https://www.youtube.com/watch?v=UYa6gbDcx18
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 73,
+    url: "https://files.catbox.moe/22plbu.mp4",
+    start: 0,
+    end: 18,
+    film: "Good Will Hunting",
+    year: 1997,
+    transcript: "It's not your fault. It's not your fault. It's not your fault.",
+    options: [
+      { text: "Bu senin hatan değil. Bu senin hatan değil. Bu senin hatan değil.", isCorrect: true },
+      { text: "Her şey senin hatan, bunu kabul et.", isCorrect: false },
+      { text: "Kimin hatası olduğu önemli değil artık.", isCorrect: false }
+    ],
+    points: 15,
+    category: "Drama"
+  },
+
 ];
