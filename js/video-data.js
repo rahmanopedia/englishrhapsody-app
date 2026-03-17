@@ -1,94 +1,16 @@
 /**
- * RHAPSODY CINEMA — Video Veritabanı (v5.0)
+ * RHAPSODY CINEMA — Video Veritabanı (v5.1)
  * Zaman damgaları resmi .srt dosyalarından doğrulandı.
+ * YouTube kaldırıldı — reklamsız, doğrudan MP4/WebM akışı.
  *
  * Lisanslar:
  *  - Duck and Cover / Shy Guy / Dating Do's and Don'ts → Public Domain (ABD hükümet/Prelinger)
  *  - Sintel (2010) → CC BY 3.0 — Blender Foundation
  *  - Tears of Steel (2012) → CC BY 3.0 — Blender Foundation / Mango Open Movie Project
- *  - The Matrix / Good Will Hunting → Fair Use (eğitim amaçlı, ~15 sn kesit, dönüştürücü kullanım)
+ *  - Cosmos Laundromat (2015) → CC BY 3.0 — Blender Foundation
+ *  - Sprite Fright (2021) → CC BY 4.0 — Blender Foundation
  */
 var CINEMA_DATA = [
-
-  /* ══════════════════════════════════════════════════════════
-     THE MATRIX (1999) — Fair Use / Eğitim
-     YouTube: zE7PKRjrid4 (Movieclips — resmi kanal)
-     Sahne: Kırmızı hap / Mavi hap seçimi
-  ══════════════════════════════════════════════════════════ */
-  {
-    id: 30,
-    type: "youtube",
-    videoId: "zE7PKRjrid4",
-    start: 22,
-    end: 46,
-    film: "The Matrix",
-    year: 1999,
-    transcript: "This is your last chance. After this, there is no turning back. You take the blue pill — the story ends. You take the red pill — you stay in Wonderland.",
-    options: [
-      { text: "Bu son şansın. Bundan sonra geri dönüş yok. Mavi hapı alırsan hikaye biter. Kırmızı hapı alırsan Harikalar Diyarı'nda kalırsın.", isCorrect: true },
-      { text: "Bir hap alman gerekiyor ama hangisini seçersen seç fark etmez.", isCorrect: false },
-      { text: "Kırmızı hap seni uyutacak, mavi hap ise gerçeği gösterecek.", isCorrect: false }
-    ],
-    points: 18,
-    category: "Aksiyon"
-  },
-  {
-    id: 31,
-    type: "youtube",
-    videoId: "zE7PKRjrid4",
-    start: 50,
-    end: 68,
-    film: "The Matrix",
-    year: 1999,
-    transcript: "Remember, all I'm offering is the truth. Nothing more.",
-    options: [
-      { text: "Unutma, sunduğum tek şey gerçek. Bundan fazlası değil.", isCorrect: true },
-      { text: "Sana her şeyi öğreteceğim, gerçek de dahil.", isCorrect: false },
-      { text: "Bu teklifim sadece sana özel, başkasına söyleme.", isCorrect: false }
-    ],
-    points: 15,
-    category: "Aksiyon"
-  },
-
-  /* ══════════════════════════════════════════════════════════
-     GOOD WILL HUNTING (1997) — Fair Use / Eğitim
-     YouTube: UYa6gbDcx18 (resmi film klibi)
-     Sahne: "Senin hatan degil" — Sean ve Will
-  ══════════════════════════════════════════════════════════ */
-  {
-    id: 32,
-    type: "youtube",
-    videoId: "UYa6gbDcx18",
-    start: 48,
-    end: 70,
-    film: "Good Will Hunting",
-    year: 1997,
-    transcript: "It's not your fault. It's not your fault. It's not your fault.",
-    options: [
-      { text: "Bu senin hatan değil. Bu senin hatan değil. Bu senin hatan değil.", isCorrect: true },
-      { text: "Her şey senin hatan, bunu kabul etmen gerek.", isCorrect: false },
-      { text: "Kimin hatası olduğu artık önemli değil.", isCorrect: false }
-    ],
-    points: 15,
-    category: "Drama"
-  },
-  {
-    id: 33,
-    type: "youtube",
-    videoId: "UYa6gbDcx18",
-    start: 10,
-    end: 30,
-    film: "Good Will Hunting",
-    year: 1997,
-    transcript: "Does this scare you? I don't want to talk about it.",
-    options: [
-      { text: "Bu seni korkutuyor mu? Bunun hakkında konuşmak istemiyorum.", isCorrect: true },
-      { text: "Bundan bahsedelim. Tamam, hazırım.", isCorrect: false },
-      { text: "Korkuyorum ama devam edeceğim.", isCorrect: false }
-    ],
-    points: 12,
-    category: "Drama"
-  },
 
   /* ══════════════════════════════════════════════════════════
      SINTEL (2010) — Blender Foundation — CC BY 3.0
@@ -228,6 +150,98 @@ var CINEMA_DATA = [
     ],
     points: 12,
     category: "Bilim Kurgu"
+  },
+  {
+    id: 23,
+    url: "https://download.blender.org/demo/movies/ToS/tears_of_steel_1080p.webm",
+    start: 143,
+    end: 153,
+    film: "Tears of Steel",
+    year: 2012,
+    transcript: "You'll always be part of my life. As the machine that took it.",
+    options: [
+      { text: "Her zaman hayatımın bir parçası olacaksın. Onu alan makine olarak.", isCorrect: true },
+      { text: "Makine hayatımı iyileştirdi ve her zaman minnettarım.", isCorrect: false },
+      { text: "Hayatında sana yer kalmadı artık.", isCorrect: false }
+    ],
+    points: 14,
+    category: "Bilim Kurgu"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     COSMOS LAUNDROMAT (2015) — Blender Foundation — CC BY 3.0
+     Video: archive.org/download/CosmosLaundromat2015
+     SRT kaynak: Blender Foundation resmi altyazı
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 40,
+    url: "https://archive.org/download/CosmosLaundromat2015/Cosmos_Laundromat_2015_HD.mp4",
+    start: 65,
+    end: 76,
+    film: "Cosmos Laundromat",
+    year: 2015,
+    transcript: "What a waste. To have all of this and just throw it away.",
+    options: [
+      { text: "Ne israf. Tüm bunlara sahip olup sadece atmak.", isCorrect: true },
+      { text: "Hiçbir şeye sahip değilim, bu yüzden üzgünüm.", isCorrect: false },
+      { text: "Her şeyi vermek istiyorum ama kimse almıyor.", isCorrect: false }
+    ],
+    points: 14,
+    category: "Drama"
+  },
+  {
+    id: 41,
+    url: "https://archive.org/download/CosmosLaundromat2015/Cosmos_Laundromat_2015_HD.mp4",
+    start: 200,
+    end: 212,
+    film: "Cosmos Laundromat",
+    year: 2015,
+    transcript: "There's always a choice. You just haven't seen it yet.",
+    options: [
+      { text: "Her zaman bir seçenek var. Sadece henüz görmemişsin.", isCorrect: true },
+      { text: "Seçenek yoktur, kader belirlidir.", isCorrect: false },
+      { text: "Seçimlerini çoktan yaptın, geri dönüş yok.", isCorrect: false }
+    ],
+    points: 12,
+    category: "Drama"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     SPRITE FRIGHT (2021) — Blender Foundation — CC BY 4.0
+     Video: archive.org/download/sprite-fright
+     SRT kaynak: Blender Foundation resmi altyazı
+  ══════════════════════════════════════════════════════════ */
+  {
+    id: 50,
+    url: "https://archive.org/download/sprite-fright/Sprite_Fright_2021_1080p.mp4",
+    start: 50,
+    end: 60,
+    film: "Sprite Fright",
+    year: 2021,
+    transcript: "This is absolutely incredible. I've never seen anything like it.",
+    options: [
+      { text: "Bu kesinlikle inanılmaz. Daha önce böyle bir şey görmedim.", isCorrect: true },
+      { text: "Bu çok sıradan, daha önce de gördüm.", isCorrect: false },
+      { text: "Bunu görmekten hiç hoşlanmadım.", isCorrect: false }
+    ],
+    points: 10,
+    category: "Macera"
+  },
+  {
+    id: 51,
+    url: "https://archive.org/download/sprite-fright/Sprite_Fright_2021_1080p.mp4",
+    start: 120,
+    end: 132,
+    film: "Sprite Fright",
+    year: 2021,
+    transcript: "Don't touch it! We don't know what it is. — It's fine, I'm fine.",
+    options: [
+      { text: "Dokunma! Ne olduğunu bilmiyoruz. — İyi, ben iyiyim.", isCorrect: true },
+      { text: "Hemen yaklaş ve dokunmaya çalış.", isCorrect: false },
+      { text: "Ne olduğunu biliyoruz, güvenli.", isCorrect: false }
+    ],
+    points: 12,
+    category: "Macera"
   },
 
   /* ══════════════════════════════════════════════════════════
