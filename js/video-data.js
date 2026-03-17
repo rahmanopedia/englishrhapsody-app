@@ -118,24 +118,6 @@ var CINEMA_DATA = [
     category: "Gerilim"
   },
 
-  /* ══════════════════════════════════════════════════════════
-     KNIVES OUT (2019) — Netflix
-  ══════════════════════════════════════════════════════════ */
-  {
-    id: 79,
-    url: "https://files.catbox.moe/79a60y.mp4",
-    start: 0,
-    end: 15,
-    film: "Knives Out",
-    year: 2019,
-    transcript: "There is at least one truly guilty party behind it all, guilty in the true sense of acting with malice.",
-    options: [
-      { text: "Tüm bunların arkasında gerçekten suçlu en az bir kişi var; kötü niyetle hareket etmiş.", isCorrect: true },
-      { text: "Herkes masumdur, bu bir kazadır; kimse kasıtlı kötülük yapmadı.", isCorrect: false }
-    ],
-    points: 17,
-    category: "Gizem"
-  },
 
   /* ══════════════════════════════════════════════════════════
      MARRIAGE STORY (2019) — Netflix
