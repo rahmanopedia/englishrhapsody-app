@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="css/speak-v2.css">
   <script src="js/video-data.js"></script>
   <script src="js/cinema.js"></script>
+  <script src="js/phrases.js"></script>
   <script src="js/speak-v2.js" defer></script>
 </head>
 <body class="rank-1">
@@ -563,6 +564,13 @@
           <span class="at-desc">Video Lab</span>
         </div>
       </div>
+      <div class="action-tile" data-action="navigate" data-target="phrases" style="background:linear-gradient(135deg,rgba(167,139,250,0.15),rgba(236,72,153,0.1));">
+        <span class="at-icon">💬</span>
+        <div class="at-text">
+          <span class="at-title">İfadeler</span>
+          <span class="at-desc">Film Alıntıları</span>
+        </div>
+      </div>
       <div class="action-tile" data-action="navigate" data-target="quantum">
         <span class="at-icon">⚛️</span>
         <div class="at-text">
@@ -594,6 +602,13 @@
     </div>
   </div>
   <div id="cinema-mount-point" class="cinema-mount"></div>
+</div>
+</template>
+
+<!-- İfadeler: Film alıntıları kart modu -->
+<template id="tpl-phrases">
+<div class="animate-in" style="height:100%;">
+  <div id="phrases-mount-point" style="height:100%;"></div>
 </div>
 </template>
 
@@ -1011,6 +1026,7 @@
 <script src="js/app.js" defer></script>
 <script src="js/video-data.js" defer></script>
 <script src="js/cinema.js" defer></script>
+<script src="js/phrases.js" defer></script>
 <script src="js/phrasal_verbs_ext.js" defer></script>
 <script src="js/phrasal_verbs_ext2.js" defer></script>
 
