@@ -376,7 +376,21 @@ class CinemaModule {
       window.cinemaMod.init(mount);
     }
   };
-  const observer = new MutationObserver(() => initPlugin());
-  observer.observe(document.body, { childList: true, subtree: true });
-  setTimeout(initPlugin, 1000);
+
+  // Primary: hook into cinema navigation click
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('[data-target="cinema"]');
+    if (btn) setTimeout(initPlugin, 80);
+  }, true);
+
+  // Fallback: MutationObserver for any other trigger
+  if (document.body) {
+    const observer = new MutationObserver(initPlugin);
+    observer.observe(document.body, { childList: true, subtree: true });
+  } else {
+    document.addEventListener('DOMContentLoaded', function () {
+      const observer = new MutationObserver(initPlugin);
+      observer.observe(document.body, { childList: true, subtree: true });
+    });
+  }
 })();

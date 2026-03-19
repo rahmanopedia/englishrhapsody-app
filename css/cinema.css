@@ -2,6 +2,26 @@
    RHAPSODY CINEMA — PREMIUM THEME
    ═══════════════════════════════════════════════════════════════ */
 
+/* Template shell */
+.cinema-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #000;
+}
+.cinema-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.8);
+  z-index: 10;
+}
+.cinema-title-area { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; }
+.cinema-icon-small { font-size: 1.1rem; }
+.cinema-label-main { font-size: 0.9rem; letter-spacing: 1px; }
+.cinema-mount { flex: 1; position: relative; overflow: hidden; min-height: 200px; }
+
 .cinema-wrap {
   max-width: 900px;
   margin: 0 auto;
