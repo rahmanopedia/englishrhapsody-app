@@ -96,7 +96,6 @@ class CinemaModule {
           bottom:24px;
           text-align:center;padding:0 20px 0;
           pointer-events:none;
-          transition:bottom 0.35s cubic-bezier(0.4,0,0.2,1);
           display:none;
         ">
           <div id="cine-subtitle-inner" style="
@@ -388,9 +387,7 @@ class CinemaModule {
       ? [{ text: q.correct, isRight: true }, { text: q.wrong, isRight: false }]
       : [{ text: q.wrong, isRight: false }, { text: q.correct, isRight: true }];
 
-    // Subtitle yukari, phrase'i vurgula
-    const sub = this.el.querySelector('#cine-subtitle');
-    sub.style.bottom = '300px';
+    // Subtitle altta kalsin, phrase'i vurgula
     this._showSubtitle(entry.transcript, q.phrase);
 
     // Dim overlay
