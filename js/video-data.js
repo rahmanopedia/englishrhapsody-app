@@ -143,7 +143,7 @@ var CINEMA_DATA = [
     questions: [
       { phrase: "I need to decide now.", correct: "Simdi karar vermem gerekiyor.", wrong: "Daha sonra karar veririm." },
       { phrase: "What's happening?", correct: "Ne oluyor?", wrong: "Ne istiyorsun?" },
-      { phrase: "Time is running out.", correct: "Zaman daruyor.", wrong: "Cok vaktimiz var." }
+      { phrase: "Time is running out.", correct: "Zaman daraliyor.", wrong: "Cok vaktimiz var." }
     ],
     points: 12,
     category: "Daily Life"
