@@ -66,4 +66,108 @@ var CINEMA_DATA = [
     category: "Food & Drink"
   },
 
+
+  {
+    id: 4,
+    url: "https://files.catbox.moe/y1qfml.mp4",
+    start: 0,
+    end: 8,
+    film: "Rhapsody Cinema",
+    transcript: "The car won't start. Let me see. This is bad.",
+    segments: [
+      { start: 1.34, text: "The car won't start. Let me see." },
+      { start: 6.38, text: "This is bad." }
+    ],
+    questions: [
+      { phrase: "The car won't start. Let me see.", correct: "Araba calısmiyor. Bakayim.", wrong: "Araba cok hizli gidiyor. Dikkat et." },
+      { phrase: "This is bad.", correct: "Bu kotu.", wrong: "Bu harika." }
+    ],
+    points: 12,
+    category: "Daily Life"
+  },
+
+  {
+    id: 5,
+    url: "https://files.catbox.moe/bsxeja.mp4",
+    start: 0,
+    end: 6,
+    film: "Rhapsody Cinema",
+    transcript: "What shall we watch? Maybe a comedy? Good idea.",
+    segments: [
+      { start: 0.76, text: "What shall we watch?" },
+      { start: 2.54, text: "Maybe a comedy?" },
+      { start: 4.22, text: "Good idea." }
+    ],
+    questions: [
+      { phrase: "What shall we watch?", correct: "Ne izleyelim?", wrong: "Ne yiyelim?" },
+      { phrase: "Maybe a comedy?", correct: "Belki bir komedi?", wrong: "Belki bir belgesel?" },
+      { phrase: "Good idea.", correct: "Iyi fikir.", wrong: "Kotu fikir." }
+    ],
+    points: 12,
+    category: "Daily Life"
+  },
+
+  {
+    id: 6,
+    url: "https://files.catbox.moe/9u78si.mp4",
+    start: 0,
+    end: 8,
+    film: "Rhapsody Cinema",
+    transcript: "I don't agree. Why? It's too risky.",
+    segments: [
+      { start: 1.00, text: "I don't agree." },
+      { start: 3.50, text: "Why?" },
+      { start: 4.92, text: "It's too risky." }
+    ],
+    questions: [
+      { phrase: "I don't agree.", correct: "Katilmiyorum.", wrong: "Tamamen katiliyorum." },
+      { phrase: "Why?", correct: "Neden?", wrong: "Ne zaman?" },
+      { phrase: "It's too risky.", correct: "Cok riskli.", wrong: "Cok guvenli." }
+    ],
+    points: 12,
+    category: "Daily Life"
+  },
+
+  {
+    id: 7,
+    url: "https://files.catbox.moe/d9n73h.mp4",
+    start: 0,
+    end: 10,
+    film: "Rhapsody Cinema",
+    transcript: "I need to decide now. What's happening? Time is running out.",
+    segments: [
+      { start: 0.00, text: "I need to decide now." },
+      { start: 1.80, text: "What's happening?" },
+      { start: 7.76, text: "Time is running out." }
+    ],
+    questions: [
+      { phrase: "I need to decide now.", correct: "Simdi karar vermem gerekiyor.", wrong: "Daha sonra karar veririm." },
+      { phrase: "What's happening?", correct: "Ne oluyor?", wrong: "Ne istiyorsun?" },
+      { phrase: "Time is running out.", correct: "Zaman daruyor.", wrong: "Cok vaktimiz var." }
+    ],
+    points: 12,
+    category: "Daily Life"
+  },
+
+  {
+    id: 8,
+    url: "https://files.catbox.moe/cs10hd.mp4",
+    start: 0,
+    end: 10,
+    film: "Rhapsody Cinema",
+    transcript: "Are you free tonight? Not really. Alright.",
+    segments: [
+      { start: 5.04, text: "Are you free tonight?" },
+      { start: 7.06, text: "Not really." },
+      { start: 8.44, text: "Alright." }
+    ],
+    questions: [
+      { phrase: "Are you free tonight?", correct: "Bu aksam musait misin?", wrong: "Bu aksam ne yapiyorsun?" },
+      { phrase: "Not really.", correct: "Pek sayilmaz.", wrong: "Evet, tabii ki." },
+      { phrase: "Alright.", correct: "Peki.", wrong: "Hayir." }
+    ],
+    points: 12,
+    category: "Daily Life"
+  },
+
 ];
