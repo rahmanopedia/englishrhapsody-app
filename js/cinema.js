@@ -17,6 +17,8 @@ class CinemaModule {
     this.syncTimer = null;
     this.subtitleShown = false;
     this._currentEntry = null;
+    this._qIdx = 0;
+    this._questions = [];
   }
 
   init(el) {
@@ -249,6 +251,8 @@ class CinemaModule {
     this._currentEntry = entry;
     this.selected = null;
     this.subtitleShown = false;
+    this._qIdx = 0;
+    this._questions = [];
     this.phase = 'loading';
 
     // Reset UI
@@ -348,34 +352,58 @@ class CinemaModule {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
+  _buildQuestions(entry) {
+    // Yeni format: entry.questions[]
+    if (entry.questions && entry.questions.length) {
+      return entry.questions.map(q => ({
+        phrase: q.phrase,
+        correct: q.correct,
+        wrong: q.wrong,
+      }));
+    }
+    // Eski format: entry.options[] ile tek soru
+    const correct = entry.options && entry.options.find(o => o.isCorrect);
+    const wrong = entry.options && entry.options.find(o => !o.isCorrect);
+    if (!correct) return [];
+    return [{ phrase: entry.transcript, correct: correct.text, wrong: wrong ? wrong.text : '—' }];
+  }
+
   _showQuestion() {
     const entry = this._currentEntry;
     if (!entry) return;
+
+    // Sorulari ilk geliste olustur
+    if (!this._questions.length) {
+      this._questions = this._buildQuestions(entry);
+      this._qIdx = 0;
+    }
+
+    if (this._qIdx >= this._questions.length) { this._nextClip(); return; }
+
     this.phase = 'question';
     this.selected = null;
 
-    const correct = entry.options.find(o => o.isCorrect);
-    const wrongs = entry.options.filter(o => !o.isCorrect);
-    if (!correct) { this._nextClip(); return; }
-
-    const wrong = wrongs[Math.floor(Math.random() * wrongs.length)] || { text: '—' };
+    const q = this._questions[this._qIdx];
     const opts = Math.random() < 0.5
-      ? [{ text: correct.text, isRight: true }, { text: wrong.text, isRight: false }]
-      : [{ text: wrong.text, isRight: false }, { text: correct.text, isRight: true }];
+      ? [{ text: q.correct, isRight: true }, { text: q.wrong, isRight: false }]
+      : [{ text: q.wrong, isRight: false }, { text: q.correct, isRight: true }];
 
-    // Move subtitle up
+    // Subtitle yukari, phrase'i vurgula
     const sub = this.el.querySelector('#cine-subtitle');
     sub.style.bottom = '300px';
-    this._showSubtitle(entry.transcript, entry.transcript);
+    this._showSubtitle(entry.transcript, q.phrase);
 
     // Dim overlay
     this._setDim(true);
 
-    // Phrase
-    const phrase = this.el.querySelector('#cine-phrase');
-    phrase.innerHTML = `<span style="color:#fbbf24;">"${this._esc(entry.transcript)}"</span> ne demek?`;
+    // Soru sayaci + phrase
+    const phraseEl = this.el.querySelector('#cine-phrase');
+    const counter = this._questions.length > 1
+      ? `<span style="color:rgba(245,158,11,0.6);font-size:0.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:block;text-align:center;margin-bottom:4px;">${this._qIdx + 1} / ${this._questions.length}</span>`
+      : '';
+    phraseEl.innerHTML = `${counter}<span style="color:#fbbf24;">"${this._esc(q.phrase)}"</span> ne demek?`;
 
-    // Choices
+    // Secenekler
     const choicesEl = this.el.querySelector('#cine-choices');
     choicesEl.innerHTML = opts.map((opt, i) => `
       <button class="cine-choice-btn" data-idx="${i}" data-right="${opt.isRight}" style="
@@ -393,7 +421,7 @@ class CinemaModule {
     `).join('');
 
     choicesEl.querySelectorAll('.cine-choice-btn').forEach(btn => {
-      btn.onclick = () => this._checkAnswer(btn, correct.text);
+      btn.onclick = () => this._checkAnswer(btn, q.correct);
     });
 
     // Hide actions, show progress
@@ -448,7 +476,8 @@ class CinemaModule {
     if (isRight && app && app.addXP) app.addXP(10, 'medium', 'cinema');
 
     // Show action buttons
-    this._showActionButtons();
+    const hasMore = this._qIdx + 1 < this._questions.length;
+    this._showActionButtons(hasMore);
   }
 
   _showResultBanner(isRight, correctText) {
@@ -482,8 +511,9 @@ class CinemaModule {
     if (banner) { banner.style.display = 'none'; banner.innerHTML = ''; }
   }
 
-  _showActionButtons() {
+  _showActionButtons(hasMoreQuestions) {
     const actions = this.el.querySelector('#cine-actions');
+    const nextLabel = hasMoreQuestions ? 'Sonraki Soru &#10095;' : 'Sonraki Sahne &#10095;';
     actions.innerHTML = `
       <button id="cine-replay" style="
         flex:1;padding:12px 0;border-radius:14px;
@@ -496,11 +526,19 @@ class CinemaModule {
         background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);
         color:#fff;font-size:0.82rem;font-weight:700;cursor:pointer;
         display:flex;align-items:center;justify-content:center;gap:6px;
-      ">Sonraki Sahne &#10095;</button>
+      ">${nextLabel}</button>
     `;
     actions.style.display = 'flex';
     actions.querySelector('#cine-replay').onclick = () => this._replayClip();
-    actions.querySelector('#cine-next').onclick = () => this._nextClip();
+    actions.querySelector('#cine-next').onclick = () => {
+      if (hasMoreQuestions) {
+        this._qIdx++;
+        this._hideResultBanner();
+        this._showQuestion();
+      } else {
+        this._nextClip();
+      }
+    };
   }
 
   _replayClip() {
@@ -511,6 +549,8 @@ class CinemaModule {
     this._setSubtitle(false);
     this.subtitleShown = false;
     this.selected = null;
+    this._qIdx = 0;
+    this._questions = [];
     this.phase = 'loading';
     this._setLoader(true);
     this.video.currentTime = this._currentEntry.start || 0;

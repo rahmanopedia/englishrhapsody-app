@@ -10,9 +10,22 @@ var CINEMA_DATA = [
     end: 8,
     film: "Rhapsody Cinema",
     transcript: "Excuse me, where's the bus stop? Go straight, then left. Thank you.",
-    options: [
-      { text: "Affedersiniz, otobus duragi nerede? Duz gidin, sonra sola. Tesekkurler.", isCorrect: true },
-      { text: "Affedersiniz, tren istasyonu nerede? Saga donun, sonra duz gidin.", isCorrect: false }
+    questions: [
+      {
+        phrase: "Excuse me, where's the bus stop?",
+        correct: "Affedersiniz, otobus duragi nerede?",
+        wrong: "Affedersiniz, tren istasyonu nerede?"
+      },
+      {
+        phrase: "Go straight, then left.",
+        correct: "Duz gidin, sonra sola.",
+        wrong: "Saga donun, sonra duz gidin."
+      },
+      {
+        phrase: "Thank you.",
+        correct: "Tesekkur ederim.",
+        wrong: "Ozur dilerim."
+      }
     ],
     points: 12,
     category: "Daily Life"
@@ -25,9 +38,22 @@ var CINEMA_DATA = [
     end: 10,
     film: "Rhapsody Cinema",
     transcript: "Did you finish the report? I'm working on it. I need it soon.",
-    options: [
-      { text: "Raporu bitirdin mi? Uzerinde calisiyorum. En kisa zamanda lazim.", isCorrect: true },
-      { text: "Raporu okudun mu? Henuz baslamadim. Yarin teslim ederim.", isCorrect: false }
+    questions: [
+      {
+        phrase: "Did you finish the report?",
+        correct: "Raporu bitirdin mi?",
+        wrong: "Raporu okudun mu?"
+      },
+      {
+        phrase: "I'm working on it.",
+        correct: "Uzerinde calisiyorum.",
+        wrong: "Henuz baslamadim."
+      },
+      {
+        phrase: "I need it soon.",
+        correct: "En kisa zamanda lazim.",
+        wrong: "Yarin teslim ederim."
+      }
     ],
     points: 12,
     category: "Work"
@@ -40,9 +66,22 @@ var CINEMA_DATA = [
     end: 11,
     film: "Rhapsody Cinema",
     transcript: "Can I get a latte? Anything else? That's all.",
-    options: [
-      { text: "Bir latte alabilir miyim? Baska bir sey? Hepsi bu.", isCorrect: true },
-      { text: "Bir kahve istiyorum. Ne istersiniz? Tesekkurler.", isCorrect: false }
+    questions: [
+      {
+        phrase: "Can I get a latte?",
+        correct: "Bir latte alabilir miyim?",
+        wrong: "Bir su alabilir miyim?"
+      },
+      {
+        phrase: "Anything else?",
+        correct: "Baska bir sey?",
+        wrong: "Nasil yardimci olabilirim?"
+      },
+      {
+        phrase: "That's all.",
+        correct: "Hepsi bu.",
+        wrong: "Devam edin lutfen."
+      }
     ],
     points: 12,
     category: "Food & Drink"
