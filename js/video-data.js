@@ -10,22 +10,15 @@ var CINEMA_DATA = [
     end: 8,
     film: "Rhapsody Cinema",
     transcript: "Excuse me, where's the bus stop? Go straight, then left. Thank you.",
+    segments: [
+      { start: 0.0,  text: "Excuse me, where's the bus stop?" },
+      { start: 4.8,  text: "Go straight, then left." },
+      { start: 6.92, text: "Thank you." }
+    ],
     questions: [
-      {
-        phrase: "Excuse me, where's the bus stop?",
-        correct: "Affedersiniz, otobus duragi nerede?",
-        wrong: "Affedersiniz, tren istasyonu nerede?"
-      },
-      {
-        phrase: "Go straight, then left.",
-        correct: "Duz gidin, sonra sola.",
-        wrong: "Saga donun, sonra duz gidin."
-      },
-      {
-        phrase: "Thank you.",
-        correct: "Tesekkur ederim.",
-        wrong: "Ozur dilerim."
-      }
+      { phrase: "Excuse me, where's the bus stop?", correct: "Affedersiniz, otobus duragi nerede?", wrong: "Affedersiniz, tren istasyonu nerede?" },
+      { phrase: "Go straight, then left.", correct: "Duz gidin, sonra sola.", wrong: "Saga donun, sonra duz gidin." },
+      { phrase: "Thank you.", correct: "Tesekkur ederim.", wrong: "Ozur dilerim." }
     ],
     points: 12,
     category: "Daily Life"
@@ -38,22 +31,15 @@ var CINEMA_DATA = [
     end: 10,
     film: "Rhapsody Cinema",
     transcript: "Did you finish the report? I'm working on it. I need it soon.",
+    segments: [
+      { start: 0.0, text: "Did you finish the report?" },
+      { start: 5.0, text: "I'm working on it." },
+      { start: 7.0, text: "I need it soon." }
+    ],
     questions: [
-      {
-        phrase: "Did you finish the report?",
-        correct: "Raporu bitirdin mi?",
-        wrong: "Raporu okudun mu?"
-      },
-      {
-        phrase: "I'm working on it.",
-        correct: "Uzerinde calisiyorum.",
-        wrong: "Henuz baslamadim."
-      },
-      {
-        phrase: "I need it soon.",
-        correct: "En kisa zamanda lazim.",
-        wrong: "Yarin teslim ederim."
-      }
+      { phrase: "Did you finish the report?", correct: "Raporu bitirdin mi?", wrong: "Raporu okudun mu?" },
+      { phrase: "I'm working on it.", correct: "Uzerinde calisiyorum.", wrong: "Henuz baslamadim." },
+      { phrase: "I need it soon.", correct: "En kisa zamanda lazim.", wrong: "Yarin teslim ederim." }
     ],
     points: 12,
     category: "Work"
@@ -66,22 +52,15 @@ var CINEMA_DATA = [
     end: 11,
     film: "Rhapsody Cinema",
     transcript: "Can I get a latte? Anything else? That's all.",
+    segments: [
+      { start: 0.0,  text: "Can I get a latte?" },
+      { start: 8.24, text: "Anything else?" },
+      { start: 9.24, text: "That's all." }
+    ],
     questions: [
-      {
-        phrase: "Can I get a latte?",
-        correct: "Bir latte alabilir miyim?",
-        wrong: "Bir su alabilir miyim?"
-      },
-      {
-        phrase: "Anything else?",
-        correct: "Baska bir sey?",
-        wrong: "Nasil yardimci olabilirim?"
-      },
-      {
-        phrase: "That's all.",
-        correct: "Hepsi bu.",
-        wrong: "Devam edin lutfen."
-      }
+      { phrase: "Can I get a latte?", correct: "Bir latte alabilir miyim?", wrong: "Bir su alabilir miyim?" },
+      { phrase: "Anything else?", correct: "Baska bir sey?", wrong: "Nasil yardimci olabilirim?" },
+      { phrase: "That's all.", correct: "Hepsi bu.", wrong: "Devam edin lutfen." }
     ],
     points: 12,
     category: "Food & Drink"

@@ -252,6 +252,7 @@ class CinemaModule {
     this.subtitleShown = false;
     this._qIdx = 0;
     this._questions = [];
+    this._lastSegIdx = -1;
     this.phase = 'loading';
 
     // Reset UI
@@ -303,17 +304,35 @@ class CinemaModule {
 
   _startSyncTimer(entry) {
     this._clearSync();
-    const subtitleDelay = entry.subtitleDelay || 0;
+    const segments = entry.segments || null;
     const endTime = entry.end;
     const v = this.video;
 
     this.syncTimer = setInterval(() => {
       if (!v) return;
       const t = v.currentTime;
-      if (!this.subtitleShown && t >= subtitleDelay) {
+
+      // Segment bazli altyazi senkronizasyonu
+      if (segments && segments.length) {
+        // Simdi hangi segment gosterilemeli?
+        let segIdx = -1;
+        for (let i = segments.length - 1; i >= 0; i--) {
+          if (t >= segments[i].start) { segIdx = i; break; }
+        }
+        if (segIdx !== this._lastSegIdx) {
+          this._lastSegIdx = segIdx;
+          if (segIdx >= 0) {
+            this._showSubtitle(segments[segIdx].text, null);
+          } else {
+            this._setSubtitle(false);
+          }
+        }
+      } else if (!this.subtitleShown) {
+        // Segment yoksa tum transcript'i goster
         this.subtitleShown = true;
         this._showSubtitle(entry.transcript, null);
       }
+
       if (t >= endTime) {
         this._clearSync();
         v.pause();
@@ -548,6 +567,7 @@ class CinemaModule {
     this.selected = null;
     this._qIdx = 0;
     this._questions = [];
+    this._lastSegIdx = -1;
     this.phase = 'loading';
     this._setLoader(true);
     this.video.currentTime = this._currentEntry.start || 0;
