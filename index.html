@@ -224,9 +224,9 @@
     <span class="m-icon m-modes-icon">⚡</span>
     <span>Modlar</span>
   </button>
-  <button class="m-nav-item" data-target="analytics">
+  <button class="m-nav-item" id="m-stats-btn">
     <span class="m-icon">📊</span>
-    <span>İstatistik</span>
+    <span>Veriler</span>
   </button>
 </nav>
 
@@ -255,6 +255,23 @@
     <button class="modes-drawer-item" data-target="synesthesia">
       <span class="mdi-icon">🌀</span>
       <span>Sinestezi</span>
+    </button>
+  </div>
+</div>
+
+<!-- Stats Drawer -->
+<div class="modes-drawer-backdrop" id="stats-drawer-backdrop"></div>
+<div class="modes-drawer" id="stats-drawer">
+  <div class="modes-drawer-handle"></div>
+  <div class="modes-drawer-title">Veriler</div>
+  <div class="modes-drawer-grid">
+    <button class="modes-drawer-item" data-target="analytics">
+      <span class="mdi-icon">📊</span>
+      <span>İstatistik</span>
+    </button>
+    <button class="modes-drawer-item" data-target="leaderboard">
+      <span class="mdi-icon">🏆</span>
+      <span>Sıralama</span>
     </button>
   </div>
 </div>
@@ -926,15 +943,6 @@
     <div id="badges-grid" class="badges-grid"></div>
   </div>
 
-  <!-- ── SIRALAMALI TABLO ── -->
-  <div class="an-section an-leaderboard-section">
-    <div class="an-section-hd">
-      <div class="an-section-title">🏆 Sıralama</div>
-      <div class="an-section-sub">Günlük · Haftalık · Aylık liderlik tablosu</div>
-    </div>
-    <div id="an-leaderboard-mount"></div>
-  </div>
-
   <!-- ── TEHLİKELİ BÖLGE ── -->
   <div class="an-section an-danger-zone">
     <div class="an-section-hd">
@@ -1079,28 +1087,36 @@
 })();
 </script>
 
-<!-- ── Analytics içinde leaderboard render ── -->
+<!-- ── Stats Drawer aç/kapat ── -->
 <script defer>
 (function(){
-  function tryRender(mount) {
-    var lm = window.leaderboardManager;
-    if(!lm || !lm.render) { setTimeout(function(){ tryRender(mount); }, 200); return; }
-    lm.unsubscribeAll();
-    lm.render(mount);
+  function openStatsDrawer() {
+    document.getElementById('stats-drawer').classList.add('open');
+    document.getElementById('stats-drawer-backdrop').classList.add('open');
   }
-  var obs = new MutationObserver(function() {
-    var mount = document.getElementById('an-leaderboard-mount');
-    if(mount && !mount._lbRendered) {
-      mount._lbRendered = true;
-      tryRender(mount);
+  function closeStatsDrawer() {
+    document.getElementById('stats-drawer').classList.remove('open');
+    document.getElementById('stats-drawer-backdrop').classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    if(e.target.closest('#m-stats-btn')) {
+      var isOpen = document.getElementById('stats-drawer').classList.contains('open');
+      isOpen ? closeStatsDrawer() : openStatsDrawer();
+      return;
     }
+    if(e.target.closest('#stats-drawer-backdrop')) { closeStatsDrawer(); return; }
+    if(e.target.closest('#stats-drawer .modes-drawer-item')) { closeStatsDrawer(); }
   });
-  window.addEventListener('load', function() {
-    obs.observe(document.body, { childList: true, subtree: true });
-    // Sayfa açıkken zaten varsa hemen render et
-    var mount = document.getElementById('an-leaderboard-mount');
-    if(mount && !mount._lbRendered) { mount._lbRendered = true; tryRender(mount); }
-  });
+  // Yukarı swipe ile kapat
+  var sy = 0;
+  document.getElementById('stats-drawer') && document.addEventListener('touchstart', function(e) {
+    var d = document.getElementById('stats-drawer');
+    if(d && d.classList.contains('open')) sy = e.touches[0].clientY;
+  }, {passive:true});
+  document.addEventListener('touchend', function(e) {
+    var d = document.getElementById('stats-drawer');
+    if(d && d.classList.contains('open') && e.changedTouches[0].clientY - sy > 60) closeStatsDrawer();
+  }, {passive:true});
 })();
 </script>
 
