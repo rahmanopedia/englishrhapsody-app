@@ -5,7 +5,7 @@
   .nexus-shell.nexus-intro-lock{
     height:calc(100dvh - var(--nav-h) - var(--mobile-nav-h) - env(safe-area-inset-bottom,0px) - 28px);
     overflow:hidden;
-    justify-content:center;
+    justify-content:flex-start;
   }
 
   /* Intro header */
