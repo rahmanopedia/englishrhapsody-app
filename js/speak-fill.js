@@ -32,10 +32,26 @@ class SpeakFillMode {
 
   // ── Veri ──────────────────────────────────────────────────────────────────
 
+  // Cümlenin gerçek zorluğunu hesapla (kelime sayısı + uzunluk + kelimenin CEFR seviyesi)
+  _sentenceLevel(sentence, wordCefr) {
+    const LNUM = { A1:1, A2:2, B1:3, B2:4, C1:5, C2:6 };
+    const words  = sentence.split(/\s+/);
+    const wc     = words.length;
+    const avgLen = words.reduce((s, w) => s + w.replace(/[^a-z]/gi, '').length, 0) / wc;
+    const lnum   = LNUM[wordCefr] || 3;
+    // Ağırlıklı skor: cümle uzunluğu %40 + kelime uzunluğu %20 + CEFR %40
+    const score  = wc * 0.5 + avgLen * 0.3 + lnum * 2.2;
+    if (score <  7)  return 'A1';
+    if (score < 11)  return 'A2';
+    if (score < 15)  return 'B1';
+    if (score < 19)  return 'B2';
+    if (score < 23)  return 'C1';
+    return 'C2';
+  }
+
   _buildItems() {
     const raw = [];
 
-    // WORDS + EX_TR: her kelimenin örnek cümlesi + Türkçe çevirisi + seviye
     if (typeof WORDS !== 'undefined') {
       const exTr = (typeof EX_TR !== 'undefined') ? EX_TR : {};
       for (const w of WORDS) {
@@ -48,7 +64,7 @@ class SpeakFillMode {
           sentence,
           tr,
           word:  w.en    || '',
-          level: w.level || 'B1',
+          level: this._sentenceLevel(sentence, w.level || 'B1'),
         });
       }
     }
@@ -62,14 +78,13 @@ class SpeakFillMode {
   }
 
   _setLevel(level) {
-    this._level = level;
-    this.idx    = 0;
+    this._level  = level;
+    this.idx     = 0;
     this.correct = 0;
     this.total   = 0;
     this.streak  = 0;
-    this.pool = this.items.filter(x => x.level === level);
-    // Yedek: seviyeye yakın sonuçlar
-    if (this.pool.length < 10) this.pool = this.items;
+    this.pool    = this.items.filter(x => x.level === level);
+    if (this.pool.length < 5) this.pool = this.items; // yedek
   }
 
   get _cur() { return this.pool[this.idx] || null; }
@@ -317,6 +332,13 @@ class SpeakFillMode {
     rec.onend = () => {
       this._stopAll();
       if (this.status !== 'done') {
+        if (!this.liveText.trim()) {
+          // Kullanıcı hiç konuşmadı — sadece uyarı ver, otomatik doldurmayı tetikleme
+          this.status = 'idle';
+          this._setMicUI('idle');
+          this._setStatus('Ses algılanamadı, tekrar dene.');
+          return;
+        }
         this.status = 'processing';
         this._setMicUI('processing');
         this._setStatus('Değerlendiriliyor…');
