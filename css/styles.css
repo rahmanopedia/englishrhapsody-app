@@ -8601,10 +8601,11 @@ body { overscroll-behavior-y: none; }
 @media (max-width: 768px) {
   .story-text {
     text-align: justify !important;
-    word-spacing: -0.12em !important;
+    word-spacing: -0.22em !important;
     hyphens: auto !important;
     -webkit-hyphens: auto !important;
     text-justify: inter-word !important;
+    font-size: 0.97em !important;
   }
   .story-text p { text-align: justify !important; }
 }
