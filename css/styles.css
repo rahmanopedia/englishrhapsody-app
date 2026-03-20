@@ -3867,6 +3867,21 @@ body.sidebar-closed .sidebar-tab {
 .an-weak-dot.fill { background: #f43f5e; }
 .an-weak-empty { font-size: 0.85rem; color: var(--text-2); padding: 12px 0; }
 
+/* ── Analytics içi Leaderboard — kompakt görünüm ── */
+.an-leaderboard-section #an-leaderboard-mount .lb-shell {
+  padding: 0 0 16px;
+  min-height: unset;
+  align-items: stretch;
+}
+.an-leaderboard-section #an-leaderboard-mount .lb-header { display: none; }
+.an-leaderboard-section #an-leaderboard-mount .lb-tabs {
+  margin-bottom: 16px;
+  align-self: center;
+}
+.an-leaderboard-section #an-leaderboard-mount .lb-list {
+  max-width: 100%;
+}
+
 /* ── Tehlikeli Bölge ── */
 .an-danger-zone { margin-top: 8px; }
 .an-danger-card {

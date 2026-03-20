@@ -256,10 +256,6 @@
       <span class="mdi-icon">🌀</span>
       <span>Sinestezi</span>
     </button>
-    <button class="modes-drawer-item" data-target="leaderboard">
-      <span class="mdi-icon">🏆</span>
-      <span>Sıralama</span>
-    </button>
   </div>
 </div>
 
@@ -936,12 +932,18 @@
     </div>
   </div>
 
-  <!-- ── BAŞARIMLAR ── -->
-  <div class="an-section">
+  <!-- ── BAŞARIMLAR (arka planda çalışır, gizli) ── -->
+  <div class="an-section" style="display:none">
+    <div id="badges-grid" class="badges-grid"></div>
+  </div>
+
+  <!-- ── SIRALAMALI TABLO ── -->
+  <div class="an-section an-leaderboard-section">
     <div class="an-section-hd">
-      <div class="an-section-title">🏅 Başarımlar</div>
+      <div class="an-section-title">🏆 Sıralama</div>
+      <div class="an-section-sub">Günlük · Haftalık · Aylık liderlik tablosu</div>
     </div>
-    <div id="badges-grid" class="badges-grid" style="margin-top:12px;"></div>
+    <div id="an-leaderboard-mount"></div>
   </div>
 
   <!-- ── TEHLİKELİ BÖLGE ── -->
@@ -1085,6 +1087,31 @@
   }
 
   window.addEventListener('load',setup);
+})();
+</script>
+
+<!-- ── Analytics içinde leaderboard render ── -->
+<script defer>
+(function(){
+  function tryRender(mount) {
+    var lm = window.leaderboardManager;
+    if(!lm || !lm.render) { setTimeout(function(){ tryRender(mount); }, 200); return; }
+    lm.unsubscribeAll();
+    lm.render(mount);
+  }
+  var obs = new MutationObserver(function() {
+    var mount = document.getElementById('an-leaderboard-mount');
+    if(mount && !mount._lbRendered) {
+      mount._lbRendered = true;
+      tryRender(mount);
+    }
+  });
+  window.addEventListener('load', function() {
+    obs.observe(document.body, { childList: true, subtree: true });
+    // Sayfa açıkken zaten varsa hemen render et
+    var mount = document.getElementById('an-leaderboard-mount');
+    if(mount && !mount._lbRendered) { mount._lbRendered = true; tryRender(mount); }
+  });
 })();
 </script>
 
