@@ -1,7 +1,8 @@
 /* English Rhapsody — Service Worker | Stale-While-Revalidate */
 'use strict';
 
-const CACHE_NAME  = 'er-v15';
+
+const CACHE_NAME  = 'er-v16';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -96,6 +97,7 @@ self.addEventListener('fetch', event => {
     // JS/CSS/images — stale-while-revalidate:
     // Cache'den anında servis et, arka planda güncelle
     event.respondWith(
+
       caches.open(CACHE_NAME).then(cache =>
         cache.match(event.request).then(cached => {
           const networkFetch = fetch(event.request).then(response => {
@@ -109,6 +111,21 @@ self.addEventListener('fetch', event => {
           return cached || networkFetch;
         })
       )
+      caches.open(CACHE_NAME).then(async cache => {
+        const cached = await cache.match(event.request);
+        const fetchPromise = fetch(event.request).then(response => {
+          if (shouldCache(response, url)) {
+            cache.put(event.request, response.clone());
+          }
+          return response;
+        }).catch(() => new Response('', { status: 503 }));
+
+        if (cached) {
+          fetchPromise; // fire-and-forget background update
+          return cached;
+        }
+        return fetchPromise;
+      })
     );
   } else {
     // Diğer (Firebase, API) — network-first
