@@ -143,6 +143,12 @@ class SpeakFillMode {
       </span>`
     ).join(' ');
 
+    // Kelime bankası — karışık sırada chip'ler
+    const shuffled = [...tokens].sort(() => Math.random() - 0.5);
+    const bankHtml = shuffled.map(t =>
+      `<span class="sfm-chip" data-word="${this._esc(t.clean)}">${this._esc(t.clean)}</span>`
+    ).join('');
+
     this.el.innerHTML = `
 <div class="sfm-wrap">
 
@@ -178,6 +184,9 @@ class SpeakFillMode {
 
     <!-- Türkçe cümle — büyük, belirgin -->
     <div class="sfm-tr-sentence">${this._esc(item.tr)}</div>
+
+    <!-- Kelime bankası -->
+    <div class="sfm-bank" id="sfm-bank">${bankHtml}</div>
 
     <!-- Ayırıcı -->
     <div class="sfm-divider"></div>
@@ -279,8 +288,11 @@ class SpeakFillMode {
     const item    = this._cur; if (!item) return;
     const tokens  = this._tokenize(item.sentence);
     this.filledWords = new Array(tokens.length).fill(false);
-    // Boşlukları temizle
+    // Boşlukları ve chip'leri temizle
     tokens.forEach((_, i) => this._clearSlot(i));
+    this.el?.querySelectorAll('.sfm-chip').forEach(c =>
+      c.classList.remove('sfm-chip-used', 'sfm-chip-ok', 'sfm-chip-auto')
+    );
     const q = s => this.el?.querySelector(s);
     const lv = q('#sfm-live');  if (lv) lv.textContent = '';
     const rs = q('#sfm-result'); if (rs) rs.style.display = 'none';
@@ -442,16 +454,17 @@ class SpeakFillMode {
     fill.textContent = word;
     fill.className   = `sfm-slot-fill sfm-slot-filled${anim === 'pop' ? ' sfm-slot-pop' : ''}`;
     if (dashes) dashes.style.display = 'none';
+    this._markChip(word, 'ok');
   }
 
   _fillSlotAuto(idx, word, punc) {
-    // Otomatik doldurma (TTS senkronize) — farklı renk/animasyon
     const fill   = this.el?.querySelector(`#sfm-fill-${idx}`);
     const dashes = this.el?.querySelector(`#sfm-slot-${idx} .sfm-slot-dashes`);
     if (!fill) return;
     fill.textContent = word;
     fill.className   = 'sfm-slot-fill sfm-slot-auto';
     if (dashes) dashes.style.display = 'none';
+    this._markChip(word, 'auto');
   }
 
   _clearSlot(idx) {
@@ -459,6 +472,18 @@ class SpeakFillMode {
     const dashes = this.el?.querySelector(`#sfm-slot-${idx} .sfm-slot-dashes`);
     if (fill)   { fill.textContent = ''; fill.className = 'sfm-slot-fill'; }
     if (dashes) dashes.style.display = '';
+  }
+
+  // Kelime bankasında ilgili chip'i işaretle
+  _markChip(word, type) {
+    const chips = this.el?.querySelectorAll('.sfm-chip:not(.sfm-chip-used)');
+    if (!chips) return;
+    for (const chip of chips) {
+      if (chip.dataset.word.toLowerCase() === word.toLowerCase()) {
+        chip.classList.add('sfm-chip-used', type === 'auto' ? 'sfm-chip-auto' : 'sfm-chip-ok');
+        break;
+      }
+    }
   }
 
   // ── Değerlendirme ve TTS ──────────────────────────────────────────────────
