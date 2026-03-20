@@ -1030,6 +1030,63 @@
 <script src="js/phrasal_verbs_ext2.js" defer></script>
 
 <script src="js/sw-register.js" defer></script>
+<script defer>
+(function(){
+  var MODE_VIEWS=new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement','cinema']);
+  var HIDE_MS=2000;
+
+  function setup(){
+    var app=window._app||window.app;
+    if(!app||!app._showMobileNav){setTimeout(setup,150);return;}
+
+    app._navLocked=false;
+
+    // _showMobileNav'i override et
+    app._showMobileNav=function(){
+      var nav=document.getElementById('mobile-nav');
+      var tab=document.getElementById('sidebar-tab');
+      if(!nav)return;
+      var inMode=MODE_VIEWS.has(app.session&&app.session.view);
+      // Mod ekranindayken ve kilit varsa tek dokunu yoksay
+      if(inMode&&app._navLocked)return;
+      nav.classList.remove('nav-hidden');
+      if(tab)tab.classList.remove('visible');
+      clearTimeout(app._navHideTimer);
+      if(inMode){
+        app._navHideTimer=setTimeout(function(){
+          // Timer atesklendiginde hala mod ekraninda miyiz?
+          if(MODE_VIEWS.has(app.session&&app.session.view)){
+            nav.classList.add('nav-hidden');
+            if(tab)tab.classList.add('visible');
+            app._navLocked=true;
+          }
+        },HIDE_MS);
+      } else {
+        app._navLocked=false;
+      }
+    };
+
+    // Cift dokunusla menüyü ac
+    var lastTap=0;
+    document.addEventListener('touchend',function(e){
+      if(e.target.closest('.mobile-nav,#mobile-nav,.m-nav-item'))return;
+      var now=Date.now();
+      if(now-lastTap<320){
+        var nav=document.getElementById('mobile-nav');
+        if(nav&&nav.classList.contains('nav-hidden')){
+          app._navLocked=false;
+          app._showMobileNav();
+        }
+        lastTap=0;
+      } else {
+        lastTap=now;
+      }
+    },{passive:true});
+  }
+
+  window.addEventListener('load',setup);
+})();
+</script>
 <!-- ── Veri Sıfırlama Onay Modalı (body'de sabit — her zaman erişilebilir) ── -->
 <div id="reset-confirm-modal" class="reset-modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="reset-modal-box">
