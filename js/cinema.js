@@ -227,6 +227,12 @@ class CinemaModule {
     `;
 
     this.video = this.el.querySelector('#cine-video');
+    this._preloader = document.createElement('video');
+    this._preloader.preload = 'auto';
+    this._preloader.muted = true;
+    this._preloader.style.display = 'none';
+    document.body.appendChild(this._preloader);
+
     this.el.querySelector('#cine-exit').onclick = () => this._exit();
     this.el.querySelector('#cine-tap').onclick = () => this._playAfterTap();
     this.el.querySelector('#cine-done-exit').onclick = () => this._exit();
@@ -300,6 +306,17 @@ class CinemaModule {
     this.phase = 'playing';
     const entry = this._currentEntry;
     this._startSyncTimer(entry);
+    this._preloadNext();
+  }
+
+  _preloadNext() {
+    const nextIndex = (this.clipIndex + 1) % this.clips.length;
+    if (nextIndex === this.clipIndex) return;
+    const nextUrl = this.clips[nextIndex].url;
+    if (this._preloader && this._preloader.src !== nextUrl) {
+      this._preloader.src = nextUrl;
+      this._preloader.load();
+    }
   }
 
   _startSyncTimer(entry) {
@@ -675,6 +692,7 @@ class CinemaModule {
   _exit() {
     this._clearSync();
     if (this.video) { this.video.pause(); this.video.src = ''; }
+    if (this._preloader) { this._preloader.src = ''; this._preloader.remove(); this._preloader = null; }
     const app = window._app || window.app;
     if (app && app.navigate) app.navigate('home');
     else {
