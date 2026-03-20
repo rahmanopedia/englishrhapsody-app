@@ -1153,6 +1153,50 @@
 
 <script src="js/sw-register.js" defer></script>
 
+<!-- ── Firebase AI Logic (Gemini) ── -->
+<script type="module" src="js/ai-logic.js"></script>
+
+<!-- ── AI Coach → Gemini patch ── -->
+<script defer>
+(function () {
+  // window._app hazır olunca AI Coach'u Gemini öncelikli yap
+  function patchCoach() {
+    if (!window._app || !window._fbAI) {
+      setTimeout(patchCoach, 500);
+      return;
+    }
+    var orig = window._app._callAICoach && window._app._callAICoach.bind(window._app);
+    if (!orig) return;
+
+    window._app._callAICoach = async function (target, spoken, missed, score) {
+      var panel = document.getElementById('ai-coach-panel');
+      if (panel) {
+        panel.style.display = 'block';
+        panel.innerHTML =
+          '<div class="coach-bubble"><div class="coach-meta">' +
+          '<span class="coach-name">AI Telaffuz Ko\u00e7u</span>' +
+          '<div class="coach-dots"><span></span><span></span><span></span></div>' +
+          '</div></div>';
+      }
+      try {
+        var text = await window._fbAI.coachFeedback(target, spoken, missed, score);
+        if (text && panel) {
+          panel.innerHTML =
+            '<div class="coach-bubble"><div class="coach-meta">' +
+            '<span class="coach-name">\u2728 Gemini Ko\u00e7u</span></div>' +
+            '<p class="coach-text" style="white-space:pre-wrap">' +
+            text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p></div>';
+          return;
+        }
+      } catch (e) { /* Gemini başarısız, Claude'a düş */ }
+      return orig(target, spoken, missed, score);
+    };
+    console.info('[AI Coach] Gemini aktif');
+  }
+  patchCoach();
+})();
+</script>
+
 <!-- ── Lazy Script Loader ── -->
 <script defer>
 (function () {
