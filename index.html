@@ -1243,6 +1243,10 @@
     _render: function(){
       var w = this.queue[this.idx];
       if(!w){ this._showResult(); return; }
+      // Her 10 kartta bir quiz — sadece masaüstü
+      if(this.idx > 0 && this.idx % 10 === 0 && window.innerWidth > 768){
+        this._showQuiz(); return;
+      }
       var card = document.getElementById('fc-card');
       if(!card) return;
       card.classList.remove('is-flipped','fc-out-up','fc-out-down','fc-glow-yes','fc-glow-no');
@@ -1256,6 +1260,62 @@
       var total = this.queue.length;
       document.getElementById('fc-counter').textContent = (this.idx+1) + ' / ' + total;
       document.getElementById('fc-prog').style.width = (this.idx / total * 100) + '%';
+    },
+
+    _showQuiz: function(){
+      var stage = document.getElementById('fc-stage');
+      if(!stage) return;
+      var w = this.queue[this.idx];
+      // Yanlış şık: queue'dan farklı bir kelime
+      var wrongs = this.queue.filter(function(x){ return x.en !== w.en; });
+      var wrong = wrongs[Math.floor(Math.random() * wrongs.length)] || {en: 'unknown', tr: '?'};
+      var choices = [w, wrong].sort(function(){ return Math.random() - 0.5; });
+      var self = this;
+      var total = this.queue.length;
+      document.getElementById('fc-counter').textContent = (this.idx+1) + ' / ' + total;
+      document.getElementById('fc-prog').style.width = (this.idx / total * 100) + '%';
+
+      var html = '<div class="fc-quiz-wrap">' +
+        '<div class="fc-quiz-label">🧩 Hızlı Quiz</div>' +
+        '<div class="fc-quiz-question">"<strong>' + w.tr + '</strong>" İngilizce nedir?</div>' +
+        '<div class="fc-quiz-choices">';
+      choices.forEach(function(c){
+        html += '<button class="fc-quiz-btn" data-correct="'+(c.en===w.en?'1':'0')+'">' + c.en + '</button>';
+      });
+      html += '</div></div>';
+
+      // Geçici olarak stage içine yerleştir (kart alanını koru)
+      var wrap = document.querySelector('.fc-card-wrap');
+      var existing = document.getElementById('fc-quiz-overlay');
+      if(existing) existing.remove();
+      var overlay = document.createElement('div');
+      overlay.id = 'fc-quiz-overlay';
+      overlay.className = 'fc-quiz-overlay';
+      overlay.innerHTML = html;
+      wrap.parentNode.insertBefore(overlay, wrap);
+      wrap.style.display = 'none';
+      document.querySelector('.fc-lbl-row') && (document.querySelector('.fc-lbl-row').style.display = 'none');
+      document.querySelector('.fc-btns') && (document.querySelector('.fc-btns').style.display = 'none');
+
+      overlay.querySelectorAll('.fc-quiz-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var correct = btn.dataset.correct === '1';
+          overlay.querySelectorAll('.fc-quiz-btn').forEach(function(b){
+            b.disabled = true;
+            if(b.dataset.correct === '1') b.classList.add('fc-quiz-correct');
+            else b.classList.add('fc-quiz-wrong');
+          });
+          setTimeout(function(){
+            overlay.remove();
+            wrap.style.display = '';
+            document.querySelector('.fc-lbl-row') && (document.querySelector('.fc-lbl-row').style.display = '');
+            document.querySelector('.fc-btns') && (document.querySelector('.fc-btns').style.display = '');
+            if(correct){ self.know++; } else { self.dontKnow++; }
+            self.idx++;
+            self._render();
+          }, 900);
+        });
+      });
     },
 
     _flip: function(){

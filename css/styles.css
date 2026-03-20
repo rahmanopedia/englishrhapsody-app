@@ -8513,6 +8513,28 @@ body { overscroll-behavior-y: none; }
 .fc-res-again{padding:13px;border-radius:13px;border:none;background:var(--cyan);color:#000;font-size:.95rem;font-weight:800;cursor:pointer}
 .fc-res-home{padding:11px;border-radius:13px;border:none;background:rgba(255,255,255,.07);color:var(--text-2);font-size:.88rem;font-weight:600;cursor:pointer}
 
+/* ── Desktop: kart genişliği ── */
+@media(min-width:769px){
+  .fc-card-wrap{max-width:560px}
+  .fc-lbl-row{max-width:560px}
+  .fc-btns{max-width:560px}
+  .fc-result{max-width:560px}
+  .fc-en{font-size:2.2rem}
+  .fc-tr{font-size:1.8rem}
+  .fc-ex{font-size:.9rem}
+  .fc-stage{padding:32px 40px;gap:20px}
+}
+
+/* ── Quiz overlay ── */
+.fc-quiz-overlay{width:100%;max-width:560px;background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(0,212,255,.07));border:1px solid rgba(139,92,246,.3);border-radius:22px;padding:32px 28px;display:flex;flex-direction:column;gap:20px}
+.fc-quiz-label{font-size:.7rem;font-weight:900;letter-spacing:.1em;color:var(--violet);text-transform:uppercase}
+.fc-quiz-question{font-size:1.25rem;font-weight:700;color:#fff;line-height:1.4}
+.fc-quiz-choices{display:flex;gap:12px}
+.fc-quiz-btn{flex:1;padding:16px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;transition:all .15s}
+.fc-quiz-btn:hover{background:rgba(139,92,246,.15);border-color:rgba(139,92,246,.4)}
+.fc-quiz-btn.fc-quiz-correct{background:rgba(16,185,129,.2);border-color:#34d399;color:#34d399}
+.fc-quiz-btn.fc-quiz-wrong{background:rgba(239,68,68,.15);border-color:#f87171;color:#f87171}
+
 /* ── Ekran geçiş animasyonları ── */
 @keyframes slideInFromRight {
   from { opacity: 0; transform: translateX(28px); }
