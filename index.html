@@ -1096,8 +1096,10 @@
     if(!shell) return;
     var isIntro = !!shell.querySelector('.nexus-mode-selector');
     var isSynth = !!shell.querySelector('.synth-game-container');
+    var isNetwork = !!shell.querySelector('#nexus-board');
     shell.classList.toggle('nexus-intro-lock', isIntro);
     shell.classList.toggle('nexus-synth-lock', isSynth);
+    shell.classList.toggle('nexus-network-lock', isNetwork);
   });
   window.addEventListener('load', function() {
     obs.observe(document.body, { childList:true, subtree:true });
