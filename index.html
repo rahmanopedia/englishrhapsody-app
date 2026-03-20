@@ -38,7 +38,9 @@
   <script src="https://www.google.com/recaptcha/api.js?render=6LfOLlMsAAAAAE4K1Xr0yVKAAp4FB6GSlacAdZKy" async defer></script>
   <link rel="stylesheet" href="css/cinema.css">
   <link rel="stylesheet" href="css/speak-v2.css">
+  <link rel="stylesheet" href="css/speak-fill.css">
   <script src="js/speak-v2.js" defer></script>
+  <script src="js/speak-fill.js" defer></script>
 </head>
 <body class="rank-1">
 
@@ -878,7 +880,19 @@
 <!-- Speaking -->
 <template id="tpl-speak">
 <div class="animate-in speak-container">
-  <div id="speak-mount-point"></div>
+  <!-- Tab şeridi -->
+  <div class="spk-tabs" id="spk-tab-row">
+    <button class="spk-tab spk-tab-on" data-tab="v2">🎙️ Cümle Tekrar</button>
+    <button class="spk-tab" data-tab="fill">📝 Boşluk Doldur</button>
+  </div>
+  <!-- Cümle Tekrar pane -->
+  <div id="spk-pane-v2" class="spk-pane">
+    <div id="speak-mount-point"></div>
+  </div>
+  <!-- Boşluk Doldur pane -->
+  <div id="spk-pane-fill" class="spk-pane" style="display:none">
+    <div id="speak-fill-point"></div>
+  </div>
 </div>
 </template>
 

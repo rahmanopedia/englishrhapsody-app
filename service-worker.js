@@ -1,7 +1,7 @@
 /* English Rhapsody — Service Worker | Network-first */
 'use strict';
 
-const CACHE_NAME  = 'er-v13';
+const CACHE_NAME  = 'er-v14';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -16,6 +16,7 @@ const STATIC_URLS = [
   '/css/reading.css',
   '/css/cinema.css',
   '/css/speak-v2.css',
+  '/css/speak-fill.css',
   '/css/writing.css',
   '/js/app.js',
   '/js/data.js',
@@ -44,6 +45,7 @@ const STATIC_URLS = [
   '/js/video-data.js',
   '/js/phrases.js',
   '/js/speak-v2.js',
+  '/js/speak-fill.js',
   '/firebase-messaging-sw.js',
 ];
 
