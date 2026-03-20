@@ -1,7 +1,7 @@
-/* English Rhapsody — Service Worker | Stale-while-revalidate */
+/* English Rhapsody — Service Worker | Network-first */
 'use strict';
 
-const CACHE_NAME  = 'er-v10';
+const CACHE_NAME  = 'er-v11';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -95,20 +95,16 @@ self.addEventListener('fetch', event => {
         .catch(() => caches.match(event.request).then(c => c || caches.match('/index.html')))
     );
   } else if (isAsset) {
-    // JS/CSS/images — cache-first + arka planda guncelle (stale-while-revalidate)
+    // JS/CSS/images — network-first: her zaman gunceli goster, offline'da cache
     event.respondWith(
-      caches.open(CACHE_NAME).then(cache =>
-        cache.match(event.request).then(cached => {
-          const fetchPromise = fetch(event.request).then(response => {
-            if (shouldCache(response, url)) {
-              cache.put(event.request, response.clone());
-            }
-            return response;
-          }).catch(() => null);
-          // Cache varsa aninda don, yoksa agi bekle
-          return cached || fetchPromise;
+      fetch(event.request)
+        .then(response => {
+          if (shouldCache(response, url)) {
+            caches.open(CACHE_NAME).then(c => c.put(event.request, response.clone()));
+          }
+          return response;
         })
-      )
+        .catch(() => caches.match(event.request).then(c => c || new Response('', { status: 408 })))
     );
   } else {
     // Diger (Firebase, API) — network-first
