@@ -57,7 +57,7 @@
     overflow:hidden;
     justify-content:flex-start;
   }
-  .nexus-display-container.network-compact{min-height:unset;padding:8px 14px;margin:4px auto;width:100%;box-sizing:border-box}
+  .nexus-display-container.network-compact{min-height:unset;padding:8px 14px;margin:16px auto 4px;width:100%;box-sizing:border-box}
   .nexus-task-progress{margin-bottom:4px}
   .nexus-question{font-size:0.95rem}
   .nexus-game-area{min-height:unset;margin-bottom:0;flex:1;width:100%}
