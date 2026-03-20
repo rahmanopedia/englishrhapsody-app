@@ -8597,13 +8597,16 @@ body { overscroll-behavior-y: none; }
 }
 .story-text p { color: #2c1e0f !important; text-align: justify !important; text-align-last: left !important; }
 
-/* Mobilde justify kelime boşluğunu genişletiyor — left hizalamasına geç */
+/* Mobilde justify boşluğunu sıkıştır, hece bölme aktif */
 @media (max-width: 768px) {
   .story-text {
-    text-align: left !important;
-    word-spacing: normal !important;
+    text-align: justify !important;
+    word-spacing: -0.12em !important;
+    hyphens: auto !important;
+    -webkit-hyphens: auto !important;
+    text-justify: inter-word !important;
   }
-  .story-text p { text-align: left !important; }
+  .story-text p { text-align: justify !important; }
 }
 
 /* Kelime tıklama hover: hafif sarı */
