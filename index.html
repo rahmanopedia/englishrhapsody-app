@@ -1117,6 +1117,48 @@
 })();
 </script>
 
+<!-- ── Geri tuşu + geçiş animasyonu ── -->
+<script defer>
+(function(){
+  var lastView = 'home';
+  var isPopping = false;
+
+  window.addEventListener('load', function(){
+    history.replaceState({view:'home'}, '');
+
+    var main = document.getElementById('main-content');
+    if(!main) return;
+
+    var obs = new MutationObserver(function(){
+      if(isPopping) return;
+      var app = window._app;
+      var view = (app && app.session && app.session.view) || 'home';
+      if(view === lastView) return;
+      lastView = view;
+      if(view === 'home'){
+        history.replaceState({view:'home'}, '');
+      } else {
+        history.pushState({view:view}, '');
+      }
+    });
+    obs.observe(main, {childList:true});
+  });
+
+  window.addEventListener('popstate', function(e){
+    isPopping = true;
+    var target = (e.state && e.state.view) || 'home';
+    lastView = target;
+
+    document.body.classList.add('navigating-back');
+    setTimeout(function(){ document.body.classList.remove('navigating-back'); }, 350);
+
+    var app = window._app;
+    if(app && app.navigate) app.navigate(target);
+    setTimeout(function(){ isPopping = false; }, 150);
+  });
+})();
+</script>
+
 <!-- ── Haptic feedback: doğru/yanlış titreşim ── -->
 <script defer>
 (function(){

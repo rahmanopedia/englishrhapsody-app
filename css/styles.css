@@ -8442,6 +8442,20 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .section-label { font-size: 0.72rem; margin-bottom: 10px; }
 }
 
+/* ── Ekran geçiş animasyonları ── */
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes slideInFromLeft {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (max-width: 768px) {
+  .animate-in { animation: slideInFromRight 0.28s cubic-bezier(0.22,1,0.36,1) both; }
+  body.navigating-back .animate-in { animation: slideInFromLeft 0.28s cubic-bezier(0.22,1,0.36,1) both !important; }
+}
+
 /* ── OLED Mobil: saf siyah arkaplan ── */
 @media (max-width: 768px) {
   body { background: #000; }
