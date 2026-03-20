@@ -1321,31 +1321,41 @@
       noBtn.onclick  = function(){ self._answer(false); };
       yesBtn.onclick = function(){ self._answer(true); };
 
-      // Swipe / tap
-      var startY = 0, startX = 0, moved = false;
+      // Swipe takibi
+      var startY = 0, startX = 0, touchMoved = false, lastTouchEnd = 0;
+
       card.addEventListener('touchstart', function(e){
         startY = e.touches[0].clientY;
         startX = e.touches[0].clientX;
-        moved = false;
+        touchMoved = false;
       }, {passive:true});
+
       card.addEventListener('touchmove', function(e){
         var dy = e.touches[0].clientY - startY;
         var dx = e.touches[0].clientX - startX;
-        if(Math.abs(dy) > 8 || Math.abs(dx) > 8) moved = true;
+        if(Math.abs(dy) > 12 || Math.abs(dx) > 12) touchMoved = true;
         if(Math.abs(dy) > 30 && self.flipped){
           card.classList.toggle('fc-glow-yes', dy < -30);
           card.classList.toggle('fc-glow-no',  dy > 30);
         }
       }, {passive:true});
+
       card.addEventListener('touchend', function(e){
         var dy = e.changedTouches[0].clientY - startY;
         card.classList.remove('fc-glow-yes','fc-glow-no');
-        if(!moved || Math.abs(dy) < 20){
+        lastTouchEnd = Date.now();
+        if(!touchMoved){
           self._flip();
         } else if(Math.abs(dy) >= 60 && self.flipped){
-          self._answer(dy < 0); // yukarı = biliyorum
+          self._answer(dy < 0);
         }
       }, {passive:true});
+
+      // Mouse click (masaüstü) — touchend'den hemen sonra gelen sentetik click'i engelle
+      card.addEventListener('click', function(){
+        if(Date.now() - lastTouchEnd < 500) return; // touch'tan sonra gelen click'i atla
+        self._flip();
+      });
     }
   };
 
