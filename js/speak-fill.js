@@ -612,37 +612,18 @@ class SpeakFillMode {
 
   // ── Dalga formu ───────────────────────────────────────────────────────────
 
-  async _startWave() {
-    try {
-      const stream  = await navigator.mediaDevices.getUserMedia({ audio: true });
-      this._stream  = stream;
-      const ctx     = new AudioContext(); this._audioCtx = ctx;
-      const src     = ctx.createMediaStreamSource(stream);
-      const an      = ctx.createAnalyser(); an.fftSize = 64; this._analyser = an;
-      src.connect(an);
-      const arr = new Uint8Array(an.frequencyBinCount);
-      const tick = () => {
-        if (!this._analyser) return;
-        this._analyser.getByteFrequencyData(arr);
-        for (let i = 0; i < 18; i++) {
-          const h = Math.max(4, (arr[Math.floor((i / 18) * arr.length)] / 255) * 44);
-          const b = this.el?.querySelector(`#sfb${i}`);
-          if (b) b.style.height = `${h}px`;
-        }
-        this._animFrame = requestAnimationFrame(tick);
-      };
-      tick();
-    } catch {
-      const tick = () => {
-        if (this.status !== 'recording') return;
-        for (let i = 0; i < 18; i++) {
-          const b = this.el?.querySelector(`#sfb${i}`);
-          if (b) b.style.height = `${4 + Math.random() * 36}px`;
-        }
-        this._animFrame = requestAnimationFrame(tick);
-      };
-      tick();
-    }
+  _startWave() {
+    // SpeechRecognition mikrofonu kullanırken getUserMedia çağırmıyoruz
+    // (mobilde çakışma yaratır). Random animasyon yeterli.
+    const tick = () => {
+      if (this.status !== 'recording') return;
+      for (let i = 0; i < 18; i++) {
+        const b = this.el?.querySelector(`#sfb${i}`);
+        if (b) b.style.height = `${4 + Math.random() * 36}px`;
+      }
+      this._animFrame = requestAnimationFrame(tick);
+    };
+    tick();
   }
 
   _resetBars() {
