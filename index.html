@@ -1137,6 +1137,16 @@
 <script src="js/notifications.js" defer></script>
 <script src="js/notification-settings.js" defer></script>
 <script src="js/remote-config.js" defer></script>
+<script defer>
+// Remote Config'den gemini_key ve coach_key oku
+(function waitRC() {
+  if (!window.remoteConfigManager?._rc) { setTimeout(waitRC, 500); return; }
+  var gk = window.remoteConfigManager._raw('gemini_key');
+  var ck = window.remoteConfigManager._raw('coach_key');
+  if (gk) window.remoteFlags.gemini_key = gk;
+  if (ck) window.remoteFlags.coach_key  = ck;
+})();
+</script>
 <script src="js/auth.js" defer></script>
 <script src="js/conversations.js" defer></script>
 <script src="js/data.js" defer></script>
