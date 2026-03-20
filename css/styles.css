@@ -8557,3 +8557,102 @@ body { overscroll-behavior-y: none; }
   .sidebar { background: #000; }
   .app-header { background: rgba(0,0,0,0.95); }
 }
+
+/* ══════════════════════════════════════════════
+   MOBİL KİTAP SAYFASI MODU — Okuma Atölyesi
+   ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Kağıt krem arka plan + hafif gölge */
+  .story-wrapper {
+    background: #f8f1e0 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.22), 0 1px 0 rgba(0,0,0,0.08) !important;
+    padding: 28px 22px 24px !important;
+    overflow: visible !important;
+  }
+  /* Ambient ışık efektlerini kapat */
+  .story-wrapper::before,
+  .story-wrapper::after { display: none !important; }
+
+  /* Hikaye başlığı: koyu kahverengi */
+  .story-title {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #3b2a14 !important;
+    background-clip: unset !important;
+    color: #3b2a14 !important;
+    font-size: 1.05rem !important;
+  }
+
+  /* Ana metin: koyu sepia, serif, kitap gibi */
+  .story-text {
+    color: #2c1e0f !important;
+    font-family: 'Georgia', 'Times New Roman', serif !important;
+    font-size: 1.08rem !important;
+    line-height: 1.9 !important;
+    letter-spacing: 0.01em !important;
+  }
+  .story-text p { color: #2c1e0f !important; }
+
+  /* Kelime tıklama hover: hafif sarı */
+  .story-text span.story-word:hover {
+    background: rgba(250,200,50,0.35) !important;
+    color: #1a0f00 !important;
+    text-shadow: none !important;
+  }
+
+  /* Vocab kelimeleri: sarı highlighter */
+  .story-vocab {
+    background: rgba(255,210,30,0.55) !important;
+    border-radius: 3px !important;
+    padding: 1px 3px !important;
+    color: #1a0f00 !important;
+    font-weight: 600 !important;
+  }
+
+  /* Annotation underlines: daha koyu (açık bg üzerinde görünür) */
+  .sw-v2.ann-type-word            { border-bottom-color: #1d4ed8bb !important; }
+  .sw-v2.ann-type-phrasal_verb    { border-bottom-color: #0891b2bb !important; }
+  .sw-v2.ann-type-idiom           { border-bottom-color: #7c3aedbb !important; }
+  .sw-v2.ann-type-collocation     { border-bottom-color: #065f46bb !important; }
+  .sw-v2.ann-type-grammar_structure { border-bottom-color: #b45309bb !important; }
+  .sw-v2:hover { background: rgba(250,200,50,0.3) !important; }
+
+  /* Hikaye nav ayraç rengi */
+  .story-nav {
+    border-bottom-color: rgba(60,40,20,0.12) !important;
+  }
+
+  /* Alt buton ayraç */
+  .story-nav-btns-bottom {
+    border-top-color: rgba(60,40,20,0.12) !important;
+  }
+  .story-nav-btns-bottom .btn {
+    background: rgba(60,40,20,0.06) !important;
+    color: #3b2a14 !important;
+    border-color: rgba(60,40,20,0.15) !important;
+  }
+
+  /* Quiz cloze seçenekleri */
+  .cloze-opt {
+    background: rgba(60,40,20,0.06) !important;
+    border-color: rgba(60,40,20,0.15) !important;
+    color: #2c1e0f !important;
+  }
+  .cloze-opt:hover {
+    border-color: #c8860a !important;
+    color: #7a4500 !important;
+    background: rgba(200,134,10,0.1) !important;
+  }
+  .cloze-opt.correct {
+    background: rgba(16,185,129,0.15) !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+  }
+  .cloze-opt.wrong {
+    background: rgba(239,68,68,0.12) !important;
+    border-color: #ef4444 !important;
+    color: #7f1d1d !important;
+  }
+}
