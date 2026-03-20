@@ -31,7 +31,7 @@ async function _tryFirebaseAI() {
     const app      = existing || initializeApp(cfg, 'er-ai');
     const ai       = getAI(app, { backend: new GoogleAIBackend() });
     _model = getGenerativeModel(ai, {
-      model: 'gemini-2.0-flash',
+      model: 'gemini-3-flash-preview',
       generationConfig: { maxOutputTokens: 250, temperature: 0.7 },
     });
 
@@ -59,7 +59,7 @@ async function _generateREST(prompt) {
   if (!key) throw new Error('Gemini API key bulunamadı — localStorage.setItem("sp_gemini_key","...") ile ekleyin');
 
   const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${key}`,
     {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
