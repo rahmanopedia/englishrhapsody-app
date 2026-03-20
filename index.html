@@ -907,29 +907,18 @@
   <!-- ── GRAFİKLER ── -->
   <div class="analytics-grid">
     <div class="card card-full">
-      <div class="card-title">📅 Son 90 Gün Aktivitesi</div>
-      <div id="heatmap-grid" class="heatmap-grid" style="margin-top:12px;"></div>
-      <div style="display:flex;gap:8px;align-items:center;margin-top:10px;font-size:0.72rem;color:rgba(255,255,255,0.35);">
-        <span>Az</span>
-        <div style="width:12px;height:12px;border-radius:3px;background:rgba(255,255,255,0.04);"></div>
-        <div class="hm-cell l1" style="width:12px;height:12px;border-radius:3px;"></div>
-        <div class="hm-cell l2" style="width:12px;height:12px;border-radius:3px;"></div>
-        <div class="hm-cell l3" style="width:12px;height:12px;border-radius:3px;"></div>
-        <span>Çok</span>
-      </div>
-    </div>
-    <div class="card card-full">
       <div class="card-title">📊 Son 7 Gün XP</div>
       <canvas id="week-chart" style="margin-top:12px;max-height:180px;"></canvas>
     </div>
-    <div class="card">
-      <div class="card-title">🗂️ Kategori Ustalığı</div>
-      <canvas id="cat-chart" style="margin-top:12px;"></canvas>
-    </div>
-    <div class="card">
+    <div class="card card-full">
       <div class="card-title">📈 CEFR Seviye Dağılımı</div>
       <canvas id="cefr-chart" style="margin-top:12px;"></canvas>
     </div>
+  </div>
+  <!-- gizli: uygulama mantığı için gerekli elementler -->
+  <div style="display:none">
+    <div id="heatmap-grid"></div>
+    <canvas id="cat-chart"></canvas>
   </div>
 
   <!-- ── BAŞARIMLAR (arka planda çalışır, gizli) ── -->
