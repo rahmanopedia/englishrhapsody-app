@@ -6845,6 +6845,24 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .qhc-arrow { font-size:1.4rem; color:var(--text-3); transition:transform 0.2s, color 0.2s; }
 .qhub-card:hover .qhc-arrow { transform:translateX(4px); color:var(--text-1); }
 
+@media(max-width:768px) {
+  .qhub-shell { padding:12px 14px; gap:10px; }
+  .qhub-header { padding:0; }
+  .qhub-logo { font-size:1.8rem; }
+  .qhub-title { font-size:1.1rem; letter-spacing:2px; margin:4px 0 2px; }
+  .qhub-sub { font-size:0.75rem; letter-spacing:0.5px; }
+  .qhub-stats-bar { padding:10px 16px; gap:20px; }
+  .qhs-val { font-size:1.1rem; }
+  .qhs-lbl { font-size:0.65rem; }
+  .qhub-grid { grid-template-columns:1fr; gap:8px; }
+  .qhub-card { padding:14px 16px; border-radius:16px; gap:12px; }
+  .qhc-icon { font-size:1.7rem; }
+  .qhc-body h2 { font-size:0.92rem; margin-bottom:2px; }
+  .qhc-body p { font-size:0.74rem; margin-bottom:7px; line-height:1.4; }
+  .qhc-tag { font-size:0.62rem; padding:2px 7px; }
+  .qhc-arrow { font-size:1.1rem; }
+}
+
 /* ── Shared Game Shell ───────────────────────────────────────── */
 .qgame-shell { width:100%; max-width:700px; margin:0 auto; padding:16px; display:flex; flex-direction:column; gap:16px; min-height:80vh; }
 .qgame-topbar { display:flex; align-items:center; gap:12px; }
