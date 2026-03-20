@@ -477,40 +477,18 @@ class SpeakV2Module {
     }
   }
 
-  async _startWaveform() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      this._stream = stream;
-      try {
-        const mime = ['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4','']
-          .find(t => !t || MediaRecorder.isTypeSupported(t)) || '';
-        this._mediaRecorder = new MediaRecorder(stream, mime ? { mimeType: mime } : {});
-        this._mediaRecorder.ondataavailable = e => { if (e.data.size > 0) this._audioChunks.push(e.data); };
-        this._mediaRecorder.start(100);
-      } catch {}
-      const ctx = new AudioContext(); this._audioCtx = ctx;
-      const src = ctx.createMediaStreamSource(stream);
-      const an  = ctx.createAnalyser(); an.fftSize = 64; this._analyser = an;
-      src.connect(an);
-      const arr = new Uint8Array(an.frequencyBinCount);
-      const tick = () => {
-        if (!this._analyser) return;
-        this._analyser.getByteFrequencyData(arr);
-        for (let i = 0; i < 20; i++) {
-          const h = Math.max(4, (arr[Math.floor((i / 20) * arr.length)] / 255) * 48);
-          const b = this.el?.querySelector(`#sv2-b${i}`); if (b) b.style.height = `${h}px`;
-        }
-        this._animFrame = requestAnimationFrame(tick);
-      };
-      tick();
-    } catch {
-      const tick = () => {
-        if (this.status !== 'recording') return;
-        for (let i = 0; i < 20; i++) { const b = this.el?.querySelector(`#sv2-b${i}`); if (b) b.style.height = `${4 + Math.random() * 36}px`; }
-        this._animFrame = requestAnimationFrame(tick);
-      };
-      tick();
-    }
+  _startWaveform() {
+    // SpeechRecognition mikrofonu kullanırken getUserMedia çağırmıyoruz
+    // (mobilde çakışma yaratır). Random animasyon yeterli.
+    const tick = () => {
+      if (this.status !== 'recording') return;
+      for (let i = 0; i < 20; i++) {
+        const b = this.el?.querySelector(`#sv2-b${i}`);
+        if (b) b.style.height = `${4 + Math.random() * 36}px`;
+      }
+      this._animFrame = requestAnimationFrame(tick);
+    };
+    tick();
   }
 
   // ─── Scoring ───────────────────────────────────────────────────────────────
