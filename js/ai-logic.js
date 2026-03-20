@@ -1,6 +1,6 @@
 /**
  * English Rhapsody — Firebase AI Logic (Gemini)
- * Google AI backend, Spark plan uyumlu, key gerekmez.
+ * Google AI backend, Spark plan uyumlu.
  * window._fbAI üzerinden kullanılır.
  */
 
@@ -13,21 +13,28 @@ const _config = {
   projectId:         'englishrhapsody-78866',
   storageBucket:     'englishrhapsody-78866.firebasestorage.app',
   messagingSenderId: '94842633226',
-  appId:             '1:94842633226:web:26f0f89fdf558b918eb3f3',
+  appId:             '1:94842633246:web:26f0f89fdf558b918eb3f3',
 };
 
 let _model = null;
+let _initError = null;
 
 function _getModel() {
   if (_model) return _model;
-  const existing = getApps().find(a => a.name === 'er-ai');
-  const app = existing || initializeApp(_config, 'er-ai');
-  const ai  = getAI(app, { backend: new GoogleAIBackend() });
-  _model = getGenerativeModel(ai, {
-    model: 'gemini-2.0-flash-lite',
-    generationConfig: { maxOutputTokens: 250, temperature: 0.7 },
-  });
-  return _model;
+  try {
+    const existing = getApps().find(a => a.name === 'er-ai');
+    const app = existing || initializeApp(_config, 'er-ai');
+    const ai  = getAI(app, { backend: new GoogleAIBackend() });
+    _model = getGenerativeModel(ai, {
+      model: 'gemini-2.0-flash-lite',
+      generationConfig: { maxOutputTokens: 250, temperature: 0.7 },
+    });
+    return _model;
+  } catch (e) {
+    _initError = e;
+    console.error('[Firebase AI] Model başlatılamadı:', e);
+    throw e;
+  }
 }
 
 async function _generate(prompt) {
@@ -36,7 +43,7 @@ async function _generate(prompt) {
   return result.response.text().trim();
 }
 
-// ── Public API ─────────────────────────────────────────────────────────────
+// ── Public API ──────────────────────────────────────────────────────────────
 
 window._fbAI = {
 
@@ -51,7 +58,7 @@ window._fbAI = {
     );
   },
 
-  /** Kelime açıklaması — kelimeye tıklandığında */
+  /** Kelime açıklaması */
   async explainWord(word, sentence) {
     return _generate(
       `İngilizce kelimeyi Türkçe açıkla:\n` +
@@ -61,10 +68,29 @@ window._fbAI = {
     );
   },
 
-  /** Genel serbest prompt */
-  async generate(prompt) {
-    return _generate(prompt);
+  /** Hata bilgisi */
+  getError() { return _initError; },
+
+  /** Genel prompt */
+  async generate(prompt) { return _generate(prompt); },
+
+  /** Test — konsolda: await window._fbAI.test() */
+  async test() {
+    try {
+      const r = await _generate('Merhaba de sadece.');
+      console.info('[Firebase AI] Test başarılı:', r);
+      return r;
+    } catch (e) {
+      console.error('[Firebase AI] Test başarısız:', e);
+      throw e;
+    }
   },
 };
 
-console.info('[Firebase AI] Gemini hazır ✓');
+// Başlatmayı hemen dene ve hatayı logla
+try {
+  _getModel();
+  console.info('[Firebase AI] Gemini hazır ✓ — test: await window._fbAI.test()');
+} catch (e) {
+  console.error('[Firebase AI] Başlatma hatası:', e.message);
+}
