@@ -1030,21 +1030,6 @@
 <script src="js/phrasal_verbs_ext2.js" defer></script>
 
 <script src="js/sw-register.js" defer></script>
-<script>
-// Mobilde cift tiklayinca menu tekrar acisin
-(function(){
-  var last=0;
-  document.addEventListener('touchend',function(e){
-    if(e.target.closest('.mobile-nav,#mobile-nav,button,a,input,textarea,.m-nav-item,.action-card,.mode-card,.card'))return;
-    var now=Date.now();
-    if(now-last<320){
-      var app=window._app||window.app;
-      if(app&&app._showMobileNav)app._showMobileNav();
-    }
-    last=now;
-  },{passive:true});
-})();
-</script>
 <!-- ── Veri Sıfırlama Onay Modalı (body'de sabit — her zaman erişilebilir) ── -->
 <div id="reset-confirm-modal" class="reset-modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="reset-modal-box">
