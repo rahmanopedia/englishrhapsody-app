@@ -525,9 +525,11 @@ class CinemaModule {
       }
     });
 
+    const xpBase = (window.remoteFlags?.xp_cinema_correct) || 10;
+
     if (isRight) {
       this._playSound('correct');
-      this.score += 10 + this.streak * 2;
+      this.score += xpBase + this.streak * 2;
       this.streak++;
       this._updateScoreBadge();
       this._showResultBanner(true, null);
@@ -538,9 +540,9 @@ class CinemaModule {
       this._showResultBanner(false, correctText);
     }
 
-    // XP feedback via app
+    // Uygulamanin XP sistemine entegre et
     const app = window._app || window.app;
-    if (isRight && app && app.addXP) app.addXP(10, 'medium', 'cinema');
+    if (isRight && app && app.addXP) app.addXP(xpBase, 'medium', 'cinema');
 
     // Show action buttons
     const hasMore = this._qIdx + 1 < this._questions.length;
