@@ -1,7 +1,7 @@
-/* English Rhapsody — Service Worker | Cache-first strategy */
+/* English Rhapsody — Service Worker | Stale-while-revalidate */
 'use strict';
 
-const CACHE_NAME  = 'er-v9';
+const CACHE_NAME  = 'er-v10';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -14,6 +14,9 @@ const STATIC_URLS = [
   '/css/dictionary.css',
   '/css/bridge.css',
   '/css/reading.css',
+  '/css/cinema.css',
+  '/css/speak-v2.css',
+  '/css/writing.css',
   '/js/app.js',
   '/js/data.js',
   '/js/auth.js',
@@ -36,10 +39,14 @@ const STATIC_URLS = [
   '/js/splash.js',
   '/js/stories-data.js',
   '/js/sw-register.js',
+  '/js/cinema.js',
+  '/js/video-data.js',
+  '/js/phrases.js',
+  '/js/speak-v2.js',
   '/firebase-messaging-sw.js',
 ];
 
-// Install: cache static assets
+// Install: cache all static assets
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -57,7 +64,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Cache validation helper — checks status, type, and content-type header
+// Cache validation helper
 function shouldCache(response, url) {
   if (!response || response.status !== 200) return false;
   if (response.type !== 'basic') return false;
@@ -68,37 +75,45 @@ function shouldCache(response, url) {
   return true;
 }
 
-// Fetch: HTML/JS/CSS → network-first (her zaman güncel), diğerleri → cache-first
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET' || event.request.url.startsWith('chrome-extension')) return;
 
   const url = event.request.url;
-  const isCore = url.includes('.html') || url.includes('.js') || url.includes('.css');
+  const isHTML = url.includes('.html') || url.endsWith('/');
+  const isAsset = url.includes('.js') || url.includes('.css') || url.includes('.png') || url.includes('.woff');
 
-  if (isCore) {
-    // Network-first: önce ağdan al, başarısız olursa cache'den sun
+  if (isHTML) {
+    // HTML — network-first: her zaman gunceli goster
     event.respondWith(
-      fetch(event.request).then(response => {
-        if (shouldCache(response, url)) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-        }
-        return response;
-      }).catch(() => caches.match(event.request).then(c => c || caches.match('/index.html')))
-    );
-  } else {
-    // Cache-first: resim, font vb.
-    event.respondWith(
-      caches.match(event.request).then(cached => {
-        if (cached) return cached;
-        return fetch(event.request).then(response => {
+      fetch(event.request)
+        .then(response => {
           if (shouldCache(response, url)) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+            caches.open(CACHE_NAME).then(c => c.put(event.request, response.clone()));
           }
           return response;
-        });
-      })
+        })
+        .catch(() => caches.match(event.request).then(c => c || caches.match('/index.html')))
+    );
+  } else if (isAsset) {
+    // JS/CSS/images — cache-first + arka planda guncelle (stale-while-revalidate)
+    event.respondWith(
+      caches.open(CACHE_NAME).then(cache =>
+        cache.match(event.request).then(cached => {
+          const fetchPromise = fetch(event.request).then(response => {
+            if (shouldCache(response, url)) {
+              cache.put(event.request, response.clone());
+            }
+            return response;
+          }).catch(() => null);
+          // Cache varsa aninda don, yoksa agi bekle
+          return cached || fetchPromise;
+        })
+      )
+    );
+  } else {
+    // Diger (Firebase, API) — network-first
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match(event.request))
     );
   }
 });
