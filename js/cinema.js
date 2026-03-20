@@ -746,6 +746,7 @@ class CinemaModule {
       const app = window._app || window.app;
       window.cinemaMod = new CinemaModule(app);
       window.cinemaMod.init(mount);
+      if (app && app._showMobileNav) app._showMobileNav();
     }
   };
 

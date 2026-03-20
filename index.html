@@ -1046,7 +1046,7 @@
       var nav=document.getElementById('mobile-nav');
       var tab=document.getElementById('sidebar-tab');
       if(!nav)return;
-      var inMode=MODE_VIEWS.has(app.session&&app.session.view);
+      var inMode=MODE_VIEWS.has(app.session&&app.session.view)||!!document.getElementById('cinema-mount-point');
       // Mod ekranindayken ve kilit varsa tek dokunu yoksay
       if(inMode&&app._navLocked)return;
       nav.classList.remove('nav-hidden');
@@ -1055,7 +1055,7 @@
       if(inMode){
         app._navHideTimer=setTimeout(function(){
           // Timer atesklendiginde hala mod ekraninda miyiz?
-          if(MODE_VIEWS.has(app.session&&app.session.view)){
+          if(MODE_VIEWS.has(app.session&&app.session.view)||!!document.getElementById('cinema-mount-point')){
             nav.classList.add('nav-hidden');
             if(tab)tab.classList.add('visible');
             app._navLocked=true;
