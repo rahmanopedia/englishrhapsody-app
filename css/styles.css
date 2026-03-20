@@ -3033,14 +3033,51 @@ body.sidebar-closed .sidebar-tab {
   background: rgba(244,63,94,0.08);
 }
 
-/* ── Cloze Options ── */
-.cloze-opts {
+/* ── Cloze Options — gizli (mini popup kullanılıyor) ── */
+.cloze-opts { display: none !important; }
+
+/* ── Cloze Mini Popup ── */
+.cloze-mini-popup {
+  position: fixed;
+  z-index: 99998;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding-top: 24px;
-  margin-top: 8px;
-  border-top: 1px solid rgba(var(--a4-rgb),0.1);
+  gap: 8px;
+  background: #1a1d27;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+  animation: clozePopIn 0.18s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes clozePopIn {
+  from { opacity:0; transform: scale(0.85) translateY(6px); }
+  to   { opacity:1; transform: scale(1)    translateY(0);   }
+}
+.cloze-mini-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.cloze-mini-btn:hover {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+.cloze-mini-btn.correct {
+  background: rgba(16,185,129,0.25);
+  border-color: rgba(52,211,153,0.5);
+  color: #34d399;
+}
+.cloze-mini-btn.wrong {
+  background: rgba(244,63,94,0.2);
+  border-color: rgba(244,63,94,0.4);
+  color: #fb7185;
 }
 .cloze-opt {
   padding: 9px 20px;

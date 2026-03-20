@@ -1088,6 +1088,143 @@
 })();
 </script>
 
+<!-- ── Egzersiz modu: mini 2-şıklı popup ── -->
+<script defer>
+(function(){
+  var _audioCtx = null;
+  function ctx() {
+    if(!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return _audioCtx;
+  }
+  function playChime() {
+    try {
+      var c = ctx(), o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(880, c.currentTime);
+      o.frequency.setValueAtTime(1320, c.currentTime + 0.08);
+      g.gain.setValueAtTime(0.35, c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.5);
+      o.start(c.currentTime); o.stop(c.currentTime + 0.5);
+    } catch(e){}
+  }
+  function playBuzz() {
+    try {
+      var c = ctx(), o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type = 'sawtooth';
+      o.frequency.setValueAtTime(140, c.currentTime);
+      g.gain.setValueAtTime(0.3, c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.38);
+      o.start(c.currentTime); o.stop(c.currentTime + 0.38);
+    } catch(e){}
+  }
+
+  function closePopup() {
+    var p = document.getElementById('cloze-mini-popup');
+    if(p) p.remove();
+  }
+
+  function getWrongOption(correctAnswer) {
+    // Diğer dolu olmayan boşlukların cevaplarından yanlış şık al
+    var others = Array.from(document.querySelectorAll('.cloze-blank:not(.filled)'))
+      .map(function(b){ return b.dataset.answer; })
+      .filter(function(w){ return w && w !== correctAnswer; });
+    if(!others.length) {
+      // Fallback: tüm cloze-opt data-word değerleri
+      others = Array.from(document.querySelectorAll('.cloze-opt[data-word]'))
+        .map(function(b){ return b.dataset.word; })
+        .filter(function(w){ return w !== correctAnswer; });
+    }
+    return others.length ? others[Math.floor(Math.random() * others.length)] : null;
+  }
+
+  function showChoices(blank) {
+    closePopup();
+    var answer = blank.dataset.answer;
+    var wrong = getWrongOption(answer);
+    if(!wrong) wrong = answer === 'the' ? 'a' : 'the'; // son çare fallback
+
+    var choices = [answer, wrong].sort(function(){ return Math.random() - 0.5; });
+
+    var popup = document.createElement('div');
+    popup.id = 'cloze-mini-popup';
+    popup.className = 'cloze-mini-popup';
+
+    choices.forEach(function(word) {
+      var btn = document.createElement('button');
+      btn.className = 'cloze-mini-btn';
+      btn.textContent = word;
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if(word === answer) {
+          btn.classList.add('correct');
+          playChime();
+          setTimeout(function() {
+            blank.textContent = answer;
+            blank.classList.add('filled');
+            blank.classList.remove('active');
+            blank.style.color = '';
+            closePopup();
+            var app = window._app || window.app;
+            if(app && app.addXP) {
+              var xp = (window.remoteFlags && window.remoteFlags.xp_reading_correct) || 10;
+              app.addXP(xp, 'easy');
+            }
+            if(app && app._checkStoryDone) app._checkStoryDone();
+          }, 220);
+        } else {
+          btn.classList.add('wrong');
+          playBuzz();
+          blank.classList.add('error');
+          setTimeout(function() {
+            blank.textContent = answer;
+            blank.classList.add('filled');
+            blank.classList.remove('active', 'error');
+            closePopup();
+          }, 600);
+        }
+      });
+      popup.appendChild(btn);
+    });
+
+    // Viewport'ta konumlandır
+    var rect = blank.getBoundingClientRect();
+    var left = Math.max(8, Math.min(rect.left, window.innerWidth - 220));
+    var top = rect.bottom + 8;
+    if(top + 60 > window.innerHeight) top = rect.top - 68;
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+
+    document.body.appendChild(popup);
+
+    // Dışarı tıklayınca kapat
+    setTimeout(function() {
+      document.addEventListener('click', function handler(e) {
+        if(!popup.contains(e.target) && e.target !== blank) {
+          closePopup();
+          blank.classList.remove('active');
+        }
+        document.removeEventListener('click', handler);
+      });
+    }, 50);
+  }
+
+  function setup() {
+    var app = window._app || window.app;
+    if(!app || !app._selectBlank) { setTimeout(setup, 150); return; }
+    app._selectBlank = function(e) {
+      if(e.classList.contains('filled')) return;
+      document.querySelectorAll('.cloze-blank').forEach(function(b){ b.classList.remove('active'); });
+      e.classList.add('active');
+      app._activeBlank = e;
+      showChoices(e);
+    };
+  }
+  window.addEventListener('load', setup);
+})();
+</script>
+
 <!-- ── Mobilde hikaye nav butonlarını alta taşı ── -->
 <script defer>
 (function(){
