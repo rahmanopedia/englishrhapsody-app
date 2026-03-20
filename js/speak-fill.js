@@ -21,7 +21,7 @@ class SpeakFillMode {
     this._analyser   = null;
     this._stream     = null;
     this._animFrame  = null;
-    this._ttsTimer   = null;
+    this._ttsTimers  = [];   // TTS timer array (birden fazla timer)
     this._isSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
 
     this._level   = 'A1';
@@ -378,7 +378,7 @@ class SpeakFillMode {
     if (this._animFrame) { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
     if (this._audioCtx)  { try { this._audioCtx.close(); } catch {} this._audioCtx = null; }
     if (this._stream)    { this._stream.getTracks().forEach(t => t.stop()); this._stream = null; }
-    if (this._ttsTimer)  { clearTimeout(this._ttsTimer); this._ttsTimer = null; }
+    this._ttsTimers.forEach(t => clearTimeout(t)); this._ttsTimers = [];
     window.speechSynthesis?.cancel();
     this._analyser = null;
     this._resetBars();
@@ -570,12 +570,12 @@ class SpeakFillMode {
     const avgWordMs = 380;
     tokens.forEach((t, i) => {
       if (!this.filledWords[i]) {
-        this._ttsTimer = setTimeout(() => {
+        this._ttsTimers.push(setTimeout(() => {
           if (!this.filledWords[i]) {
             this.filledWords[i] = true;
             this._fillSlotAuto(i, t.clean, t.punc);
           }
-        }, i * avgWordMs + 200);
+        }, i * avgWordMs + 200));
       }
     });
   }
@@ -584,10 +584,10 @@ class SpeakFillMode {
     const avgMs = 380;
     tokens.forEach((t, i) => {
       if (!this.filledWords[i]) {
-        setTimeout(() => {
+        this._ttsTimers.push(setTimeout(() => {
           this.filledWords[i] = true;
           this._fillSlotAuto(i, t.clean, t.punc);
-        }, i * avgMs + 100);
+        }, i * avgMs + 100));
       }
     });
   }
