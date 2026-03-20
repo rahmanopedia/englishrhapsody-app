@@ -2,7 +2,7 @@
   "hosting": {
     "site": "englishrhapsody-78866",
     "public": ".",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "scripts/**", "**/*.exe", "**/*.zip", "temp_*/**"],
     "rewrites": [{ "source": "**", "destination": "/index.html" }],
     "headers": [
       {
