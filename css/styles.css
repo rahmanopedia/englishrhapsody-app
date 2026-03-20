@@ -3099,10 +3099,15 @@ body.sidebar-closed .sidebar-tab {
   .shuffle-tab { padding: 7px 12px; font-size: 0.75rem; }
 
   /* Hikaye alanı */
-  .story-wrapper { padding: 18px 16px; }
-  .story-title { font-size: 1.1rem; }
-  .story-text { font-size: 1.05rem; line-height: 1.9; }
-  .story-text.quiz-mode { font-size: 1rem; }
+  .story-wrapper { padding: 20px 16px; }
+  .story-title { font-size: 1.15rem; }
+  .story-text {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+  }
+  .story-text p { margin-bottom: 1.15rem; }
+  .story-text.quiz-mode { font-size: 1.1rem; line-height: 1.7; }
 
   /* Cloze seçenekleri: her biri tam genişlikte */
   .cloze-opts { gap: 8px; padding-top: 18px; }
@@ -3137,8 +3142,9 @@ body.sidebar-closed .sidebar-tab {
   .rm-btn { font-size: 0.75rem; padding: 6px 8px; }
   .btn-play-audio { width: 100%; justify-content: center; }
 
-  .story-wrapper { padding: 14px 12px; }
-  .story-text { font-size: 0.98rem; line-height: 1.85; }
+  .story-wrapper { padding: 16px 14px; }
+  .story-text { font-size: 1.0625rem; line-height: 1.7; }
+  .story-text.quiz-mode { font-size: 1.0625rem; }
 
   .cloze-opt { flex: 1 1 100%; }
 
