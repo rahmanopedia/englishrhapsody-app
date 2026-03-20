@@ -466,6 +466,17 @@
     </div>
   </header>
 
+  <!-- PWA Install Banner -->
+  <div class="pwa-install-banner" id="pwa-banner">
+    <span class="pwa-install-icon">📲</span>
+    <div class="pwa-install-text">
+      <span class="pwa-install-title">Ana Ekrana Ekle</span>
+      <span class="pwa-install-sub">Uygulama gibi kullan, internet olmadan çalış</span>
+    </div>
+    <button class="pwa-install-btn" id="pwa-install-btn">Ekle</button>
+    <button class="pwa-install-close" id="pwa-banner-close">✕</button>
+  </div>
+
   <!-- 2. Hızlı İstatistikler (Şerit) -->
   <section class="home-stats-strip">
     <div class="stat-item">
@@ -543,6 +554,15 @@
       </div>
 
       <div id="colloc-tip-card" class="colloc-card-v2"></div>
+
+      <div class="fc-quick-card" data-action="navigate" data-target="flashcards">
+        <span class="fc-quick-icon">🃏</span>
+        <div class="fc-quick-text">
+          <span class="fc-quick-title">Hızlı Tekrar</span>
+          <span class="fc-quick-sub">Swipe ile biliyorum / bilmiyorum</span>
+        </div>
+        <span class="fc-quick-arrow">→</span>
+      </div>
     </div>
 
   </div>
@@ -610,6 +630,43 @@
     </div>
   </section>
 
+</div>
+</template>
+
+<!-- Hızlı Tekrar: Flashcard modu -->
+<template id="tpl-flashcards">
+<div class="animate-in fc-wrapper">
+  <div class="fc-topbar">
+    <button class="fc-exit-btn" data-action="navigate" data-target="home">← Merkez</button>
+    <span class="fc-counter-label" id="fc-counter">1 / 20</span>
+    <span class="fc-hint-top">↑ Biliyorum · ↓ Bilmiyorum</span>
+  </div>
+  <div class="fc-progress-track"><div class="fc-progress-fill" id="fc-prog" style="width:0%"></div></div>
+  <div class="fc-stage" id="fc-stage">
+    <div class="fc-card-wrap">
+      <div class="fc-card" id="fc-card">
+        <div class="fc-face fc-front">
+          <div class="fc-word-icon" id="fc-icon">📚</div>
+          <div class="fc-en" id="fc-en">—</div>
+          <div class="fc-ipa" id="fc-ipa"></div>
+          <span class="fc-flip-hint">Dokunarak çevir</span>
+        </div>
+        <div class="fc-face fc-back">
+          <span class="fc-lvl-badge" id="fc-lvl"></span>
+          <div class="fc-tr" id="fc-tr">—</div>
+          <div class="fc-ex" id="fc-ex"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-lbl-row">
+      <span class="fc-lbl-no">↓ Bilmiyorum</span>
+      <span class="fc-lbl-yes">↑ Biliyorum</span>
+    </div>
+    <div class="fc-btns">
+      <button class="fc-btn fc-no" id="fc-no-btn">✗ Bilmiyorum</button>
+      <button class="fc-btn fc-yes" id="fc-yes-btn">✓ Biliyorum</button>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -1113,6 +1170,197 @@
   });
   window.addEventListener('load', function() {
     obs.observe(document.body, { childList:true, subtree:true });
+  });
+})();
+</script>
+
+<!-- ── PWA Install Prompt ── -->
+<script>
+(function(){
+  var deferredPrompt = null;
+  function showBanner(){
+    var b = document.getElementById('pwa-banner');
+    if(b && !localStorage.getItem('pwa-dismissed')) b.classList.add('visible');
+  }
+  function hideBanner(){
+    var b = document.getElementById('pwa-banner');
+    if(b) b.classList.remove('visible');
+    localStorage.setItem('pwa-dismissed','1');
+  }
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    showBanner();
+  });
+  document.addEventListener('click', function(e){
+    if(e.target.closest('#pwa-install-btn')){
+      if(deferredPrompt){
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function(){ hideBanner(); deferredPrompt=null; });
+      }
+    }
+    if(e.target.closest('#pwa-banner-close')) hideBanner();
+  });
+  // iOS Safari: standalone değilse ve Safari ise göster
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isStandalone = window.navigator.standalone;
+  var isSafari = /safari/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent);
+  if(isIOS && !isStandalone && isSafari && !localStorage.getItem('pwa-dismissed')){
+    window.addEventListener('load', function(){
+      var b = document.getElementById('pwa-banner');
+      var sub = b && b.querySelector('.pwa-install-sub');
+      var btn = document.getElementById('pwa-install-btn');
+      if(!b) return;
+      if(sub) sub.textContent = 'Safari\'de Paylaş → Ana Ekrana Ekle';
+      if(btn) btn.style.display = 'none';
+      b.classList.add('visible');
+    });
+  }
+})();
+</script>
+
+<!-- ── Hızlı Tekrar (Flashcard) ── -->
+<script defer>
+(function(){
+  var fc = {
+    queue:[], idx:0, know:0, dontKnow:0, flipped:false,
+
+    init: function(){
+      var mastery = (window._app && window._app.state && window._app.state.get('mastery')) || {};
+      var words = window.WORDS || [];
+      var due = (window.SRS && words.length) ? window.SRS.getDue(words, mastery) : words;
+      // Karıştır, max 20
+      var pool = due.length >= 5 ? due : words;
+      this.queue = pool.slice().sort(function(){ return Math.random()-.5; }).slice(0,20);
+      this.idx = 0; this.know = 0; this.dontKnow = 0; this.flipped = false;
+      this._render();
+      this._bindEvents();
+    },
+
+    _render: function(){
+      var w = this.queue[this.idx];
+      if(!w){ this._showResult(); return; }
+      var card = document.getElementById('fc-card');
+      if(!card) return;
+      card.classList.remove('is-flipped','fc-out-up','fc-out-down','fc-glow-yes','fc-glow-no');
+      this.flipped = false;
+      document.getElementById('fc-icon').textContent = w.icon || '📚';
+      document.getElementById('fc-en').textContent   = w.en;
+      document.getElementById('fc-ipa').textContent  = w.ipa || '';
+      document.getElementById('fc-tr').textContent   = w.tr;
+      document.getElementById('fc-ex').textContent   = w.ex || '';
+      document.getElementById('fc-lvl').textContent  = w.level || '';
+      var total = this.queue.length;
+      document.getElementById('fc-counter').textContent = (this.idx+1) + ' / ' + total;
+      document.getElementById('fc-prog').style.width = (this.idx / total * 100) + '%';
+    },
+
+    _flip: function(){
+      var card = document.getElementById('fc-card');
+      if(!card) return;
+      this.flipped = !this.flipped;
+      card.classList.toggle('is-flipped', this.flipped);
+    },
+
+    _answer: function(know){
+      if(!this.flipped){ this._flip(); return; }
+      var word = this.queue[this.idx];
+      // SRS güncelle
+      if(window.SRS && window._app){
+        var mastery = window._app.state.get('mastery') || {};
+        mastery = window.SRS.update(mastery, word.id || word.en, know);
+        window._app.state.set('mastery', mastery);
+      }
+      if(know) this.know++; else this.dontKnow++;
+      var card = document.getElementById('fc-card');
+      card.classList.add(know ? 'fc-out-up' : 'fc-out-down');
+      var self = this;
+      setTimeout(function(){
+        self.idx++;
+        self._render();
+      }, 320);
+    },
+
+    _showResult: function(){
+      var stage = document.getElementById('fc-stage');
+      if(!stage) return;
+      var pct = Math.round(this.know / this.queue.length * 100);
+      var icon = pct >= 80 ? '🌟' : pct >= 50 ? '💪' : '📚';
+      stage.innerHTML =
+        '<div class="fc-result">' +
+          '<div class="fc-res-icon">'+icon+'</div>' +
+          '<div class="fc-res-title">Oturum Tamamlandı</div>' +
+          '<div class="fc-res-pct">'+pct+'%</div>' +
+          '<div class="fc-res-stats">' +
+            '<span class="fc-res-know">✓ '+this.know+' Bildim</span>' +
+            '<span class="fc-res-dont">✗ '+this.dontKnow+' Bilmedim</span>' +
+          '</div>' +
+          '<div class="fc-res-btns">' +
+            '<button class="fc-res-again">Tekrar Başlat</button>' +
+            '<button class="fc-res-home">Ana Menü</button>' +
+          '</div>' +
+        '</div>';
+      stage.querySelector('.fc-res-again').onclick = function(){ window._flashcards.init(); };
+      stage.querySelector('.fc-res-home').onclick  = function(){ window._app && window._app.navigate('home'); };
+    },
+
+    _bindEvents: function(){
+      var card = document.getElementById('fc-card');
+      var noBtn = document.getElementById('fc-no-btn');
+      var yesBtn = document.getElementById('fc-yes-btn');
+      if(!card) return;
+      var self = this;
+
+      // Butonlar
+      noBtn.onclick  = function(){ self._answer(false); };
+      yesBtn.onclick = function(){ self._answer(true); };
+
+      // Swipe / tap
+      var startY = 0, startX = 0, moved = false;
+      card.addEventListener('touchstart', function(e){
+        startY = e.touches[0].clientY;
+        startX = e.touches[0].clientX;
+        moved = false;
+      }, {passive:true});
+      card.addEventListener('touchmove', function(e){
+        var dy = e.touches[0].clientY - startY;
+        var dx = e.touches[0].clientX - startX;
+        if(Math.abs(dy) > 8 || Math.abs(dx) > 8) moved = true;
+        if(Math.abs(dy) > 30 && self.flipped){
+          card.classList.toggle('fc-glow-yes', dy < -30);
+          card.classList.toggle('fc-glow-no',  dy > 30);
+        }
+      }, {passive:true});
+      card.addEventListener('touchend', function(e){
+        var dy = e.changedTouches[0].clientY - startY;
+        card.classList.remove('fc-glow-yes','fc-glow-no');
+        if(!moved || Math.abs(dy) < 20){
+          self._flip();
+        } else if(Math.abs(dy) >= 60 && self.flipped){
+          self._answer(dy < 0); // yukarı = biliyorum
+        }
+      }, {passive:true});
+    }
+  };
+
+  window._flashcards = fc;
+
+  // fc-wrapper görününce init çalıştır
+  var obs = new MutationObserver(function(){
+    if(document.querySelector('.fc-wrapper') && document.getElementById('fc-card')){
+      window._flashcards.init();
+      obs.disconnect();
+      // Yeni navigate'de tekrar izle
+      var obs2 = new MutationObserver(function(){
+        if(document.querySelector('.fc-wrapper') && document.getElementById('fc-card')){
+          window._flashcards.init();
+        }
+      });
+      obs2.observe(document.getElementById('main-content'), {childList:true});
+    }
+  });
+  window.addEventListener('load', function(){
+    obs.observe(document.getElementById('main-content'), {childList:true});
   });
 })();
 </script>
