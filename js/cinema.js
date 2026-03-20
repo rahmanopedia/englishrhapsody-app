@@ -469,6 +469,38 @@ class CinemaModule {
     }));
   }
 
+  _playSound(type) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      if (type === 'correct') {
+        // Yükselen iki nota — neşeli chime
+        [[523.25, 0, 0.12], [783.99, 0.13, 0.22]].forEach(([freq, start, end]) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
+          gain.gain.setValueAtTime(0.35, ctx.currentTime + start);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + end);
+          osc.start(ctx.currentTime + start);
+          osc.stop(ctx.currentTime + end);
+        });
+      } else {
+        // Kısa alçalan titreşim — hata sesi
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.25);
+        gain.gain.setValueAtTime(0.25, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.25);
+      }
+    } catch(e) {}
+  }
+
   _checkAnswer(btn, correctText) {
     if (this.selected) return;
     this.selected = btn.dataset.right === 'true' ? 'correct' : 'wrong';
@@ -494,11 +526,13 @@ class CinemaModule {
     });
 
     if (isRight) {
+      this._playSound('correct');
       this.score += 10 + this.streak * 2;
       this.streak++;
       this._updateScoreBadge();
       this._showResultBanner(true, null);
     } else {
+      this._playSound('wrong');
       this.streak = 0;
       this._updateScoreBadge();
       this._showResultBanner(false, correctText);
