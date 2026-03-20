@@ -14,8 +14,8 @@
   .nexus-title{font-size:1.2rem;letter-spacing:2px;gap:8px}
   .v5-badge{font-size:.65rem;padding:3px 8px}
   .nexus-subtitle{font-size:.72rem;margin-top:3px}
-  .nexus-mode-selector{grid-template-columns:1fr;gap:8px;margin-top:10px;width:100%}
-  .nexus-mode-card{padding:12px 16px;border-radius:16px;flex-direction:row;text-align:left;gap:12px}
+  .nexus-mode-selector{grid-template-columns:1fr;gap:14px;margin-top:16px;width:100%}
+  .nexus-mode-card{padding:16px 18px;border-radius:16px;flex-direction:row;text-align:left;gap:14px}
   .nexus-mode-card:after{display:none}
   .nm-icon{font-size:2rem;margin-bottom:0;flex-shrink:0}
   .nm-title{font-size:0.92rem;margin-bottom:3px;letter-spacing:0.5px}
