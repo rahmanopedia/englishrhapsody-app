@@ -369,14 +369,13 @@ class SpeakV2Module {
     this.status = 'recording';
     this._updateMicState(); this._setStatusText('recording');
 
-    await this._startWaveform();
-
     const rec = new SR();
     this._recognition = rec;
     rec.lang = 'en-US'; rec.continuous = false; rec.interimResults = true; rec.maxAlternatives = 1;
 
     this._recordStart = Date.now();
-    rec.start();
+    rec.start();                  // Önce recognition başlat
+    this._startWaveform();        // Sonra görsel dalga (mic çakışmasını önler)
 
     rec.onresult = e => {
       let interim = '', final = '';

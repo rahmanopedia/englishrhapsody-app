@@ -289,7 +289,6 @@ class SpeakFillMode {
     this.liveText = '';
     this._setMicUI('recording');
     this._setStatus('<span class="sfm-dot"></span> Dinleniyor…');
-    await this._startWave();
 
     const rec = new SR();
     this._rec = rec;
@@ -297,7 +296,8 @@ class SpeakFillMode {
     rec.continuous      = false;
     rec.interimResults  = true;
     rec.maxAlternatives = 1;
-    rec.start();
+    rec.start();                 // Önce recognition başlat
+    this._startWave();           // Sonra görsel dalga (mic çakışmasını önler)
 
     rec.onresult = e => {
       let interim = '', final = '';
