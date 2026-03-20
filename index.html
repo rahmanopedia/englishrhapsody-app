@@ -1117,6 +1117,46 @@
 })();
 </script>
 
+<!-- ── Haptic feedback: doğru/yanlış titreşim ── -->
+<script defer>
+(function(){
+  if(!navigator.vibrate || window.innerWidth > 768) return;
+  var CORRECT = ['correct','solved','success','cipher-window correct','synth-slot success'];
+  var WRONG   = ['wrong','error'];
+  var obs = new MutationObserver(function(mutations){
+    for(var m of mutations){
+      if(m.type !== 'attributes') continue;
+      var el = m.target, old = m.oldValue || '', cur = el.className || '';
+      var addedCorrect = (cur.includes('correct') || cur.includes('solved') || cur.includes('success')) &&
+                         !old.includes('correct') && !old.includes('solved') && !old.includes('success');
+      var addedWrong   = (cur.includes('wrong') || (cur.includes('error') && !cur.includes('error-'))) &&
+                         !old.includes('wrong') && !old.includes('error');
+      if(addedCorrect) navigator.vibrate(40);
+      if(addedWrong)   navigator.vibrate([80,50,80]);
+    }
+  });
+  window.addEventListener('load', function(){
+    obs.observe(document.body, { subtree:true, attributes:true, attributeOldValue:true, attributeFilter:['class'] });
+  });
+})();
+</script>
+
+<!-- ── Pinch-zoom engeli: oyun ekranlarında ── -->
+<script defer>
+(function(){
+  if(window.innerWidth > 768) return;
+  var SEL = '.nexus-shell,.quantum-shell,.synesthesia-wrapper,.bridge-workspace,.cinema-wrapper';
+  document.addEventListener('touchmove', function(e){
+    if(e.touches.length < 2) return;
+    var el = e.target;
+    while(el){
+      if(el.matches && el.matches(SEL)){ e.preventDefault(); return; }
+      el = el.parentElement;
+    }
+  }, { passive: false });
+})();
+</script>
+
 <!-- ── Stats Drawer aç/kapat ── -->
 <script defer>
 (function(){

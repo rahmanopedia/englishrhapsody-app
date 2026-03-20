@@ -8415,10 +8415,10 @@ body.rank-6 { --theme-accent: #ff9d00; }
   #rank-icon { font-size: 1.5rem; }
   #rank-name { font-size: 0.85rem; }
   #rank-level { font-size: 0.65rem; }
-  .home-stats-strip { padding: 12px 10px; flex-wrap: wrap; }
-  .stat-item { flex: 1 1 calc(50% - 8px); }
-  .stat-item span { font-size: 1rem; }
-  .stat-item label { font-size: 0.6rem; }
+  .home-stats-strip { padding: 10px 8px; flex-wrap: nowrap; gap: 0; }
+  .stat-item { flex: 1; text-align: center; }
+  .stat-item span { font-size: 0.95rem; }
+  .stat-item label { font-size: 0.58rem; }
   .stat-sep { display: none; }
   .home-card-new { padding: 14px; border-radius: 16px; }
   .wod-card-v2 { padding: 16px; }
@@ -8440,4 +8440,12 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .action-tile { padding: 10px 8px; gap: 6px; }
   .at-title { font-size: 0.8rem; }
   .section-label { font-size: 0.72rem; margin-bottom: 10px; }
+}
+
+/* ── OLED Mobil: saf siyah arkaplan ── */
+@media (max-width: 768px) {
+  body { background: #000; }
+  .main-content { background: #000; }
+  .sidebar { background: #000; }
+  .app-header { background: rgba(0,0,0,0.95); }
 }
