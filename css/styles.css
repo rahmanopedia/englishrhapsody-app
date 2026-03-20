@@ -2965,11 +2965,24 @@ body.sidebar-closed .sidebar-tab {
   border-bottom-color: rgba(167,139,250,0.8);
 }
 .story-text span.story-word.playing {
-  background: linear-gradient(135deg, rgba(var(--a4-rgb),0.3), rgba(var(--a3-rgb),0.2));
+  background: rgba(16,185,129,0.28);
   color: #34d399;
-  border-radius: 6px;
-  box-shadow: 0 0 12px rgba(var(--a4-rgb),0.4);
+  border-radius: 5px;
+  box-shadow: 0 0 12px rgba(16,185,129,0.45);
   animation: rw-word-glow 1.5s ease-in-out infinite;
+  outline: 1.5px solid rgba(52,211,153,0.55);
+  display: inline;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@media (max-width: 768px) {
+  .story-text span.story-word.playing {
+    background: rgba(16,185,129,0.38) !important;
+    color: #6ee7b7 !important;
+    outline: 2px solid rgba(52,211,153,0.7) !important;
+    box-shadow: 0 0 16px rgba(16,185,129,0.5) !important;
+    border-radius: 4px !important;
+  }
 }
 
 /* ── Cloze Blanks ── */
