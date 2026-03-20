@@ -3114,6 +3114,29 @@ body.sidebar-closed .sidebar-tab {
   /* Hikaye alanı */
   .story-wrapper { padding: 20px 16px; }
   .story-title { font-size: 1.15rem; }
+
+  /* Mobilde rozet ve sayaç gizle */
+  .story-meta { display: none !important; }
+
+  /* story-nav: sadece başlık kalsın */
+  .story-nav { margin-bottom: 10px; padding-bottom: 10px; }
+  .story-nav-btns { display: none !important; }
+
+  /* Altta gösterilecek ileri/geri buton alanı */
+  .story-nav-btns-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 20px;
+    margin-top: 4px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .story-nav-btns-bottom .btn {
+    flex: 1;
+    justify-content: center;
+    padding: 11px 0;
+    font-size: 0.85rem;
+  }
   .story-text {
     font-size: 1.125rem;
     line-height: 1.75;

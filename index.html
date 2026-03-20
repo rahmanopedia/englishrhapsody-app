@@ -1088,6 +1088,38 @@
 })();
 </script>
 
+<!-- ── Mobilde hikaye nav butonlarını alta taşı ── -->
+<script defer>
+(function(){
+  if(window.innerWidth > 768) return;
+  function moveNavBtns() {
+    var wrapper = document.querySelector('.story-wrapper');
+    if(!wrapper) return;
+    var btns = wrapper.querySelector('.story-nav .story-nav-btns');
+    var content = wrapper.querySelector('.story-content-box');
+    if(!btns || !content) return;
+    // Zaten taşındıysa tekrar taşıma
+    if(wrapper.querySelector('.story-nav-btns-bottom')) return;
+    var bottom = document.createElement('div');
+    bottom.className = 'story-nav-btns-bottom';
+    // Buton içeriğini klonla
+    bottom.innerHTML = btns.innerHTML;
+    // Event delegation zaten app.js'de data-action ile çalışıyor
+    content.after(bottom);
+  }
+  var obs = new MutationObserver(function(muts) {
+    for(var m of muts) {
+      if(m.addedNodes.length) { moveNavBtns(); break; }
+    }
+  });
+  window.addEventListener('load', function() {
+    moveNavBtns();
+    var area = document.getElementById('story-area');
+    if(area) obs.observe(area, { childList: true, subtree: true });
+  });
+})();
+</script>
+
 <!-- ── Sesli okuma: mobilde oynayan kelimeyi takip et ── -->
 <script defer>
 (function(){
