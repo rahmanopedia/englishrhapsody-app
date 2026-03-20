@@ -224,7 +224,7 @@
     <span class="m-icon">🏠</span>
     <span>Merkez</span>
   </button>
-  <button class="m-nav-item" data-target="speak">
+  <button class="m-nav-item" id="m-speak-btn">
     <span class="m-icon">🎙️</span>
     <span>Konuş</span>
   </button>
@@ -284,6 +284,23 @@
     <button class="modes-drawer-item" data-target="leaderboard">
       <span class="mdi-icon">🏆</span>
       <span>Sıralama</span>
+    </button>
+  </div>
+</div>
+
+<!-- Speak Drawer -->
+<div class="modes-drawer-backdrop" id="speak-drawer-backdrop"></div>
+<div class="modes-drawer" id="speak-drawer">
+  <div class="modes-drawer-handle"></div>
+  <div class="modes-drawer-title">Konuşma Lab</div>
+  <div class="modes-drawer-grid">
+    <button class="modes-drawer-item" data-speak-tab="v2">
+      <span class="mdi-icon">🎙️</span>
+      <span>Cümle Tekrar</span>
+    </button>
+    <button class="modes-drawer-item" data-speak-tab="fill">
+      <span class="mdi-icon">📝</span>
+      <span>Boşluk Doldur</span>
     </button>
   </div>
 </div>
@@ -880,17 +897,39 @@
 <!-- Speaking -->
 <template id="tpl-speak">
 <div class="animate-in speak-container">
-  <!-- Tab şeridi -->
-  <div class="spk-tabs" id="spk-tab-row">
-    <button class="spk-tab spk-tab-on" data-tab="v2">🎙️ Cümle Tekrar</button>
-    <button class="spk-tab" data-tab="fill">📝 Boşluk Doldur</button>
+
+  <!-- Mod seçim ekranı -->
+  <div id="spk-picker" class="spk-picker">
+    <div class="spk-picker-title">Konuşma Lab</div>
+    <div class="spk-picker-sub">Bir mod seç</div>
+    <div class="spk-picker-cards">
+      <button class="spk-mode-card" onclick="window._speakSwitchTab('v2')">
+        <span class="spk-mc-icon">🎙️</span>
+        <div class="spk-mc-info">
+          <div class="spk-mc-name">Cümle Tekrar</div>
+          <div class="spk-mc-desc">Cümleleri dinle ve doğru telaffuzla tekrar et</div>
+        </div>
+        <svg class="spk-mc-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button class="spk-mode-card" onclick="window._speakSwitchTab('fill')">
+        <span class="spk-mc-icon">📝</span>
+        <div class="spk-mc-info">
+          <div class="spk-mc-name">Boşluk Doldur</div>
+          <div class="spk-mc-desc">Türkçeyi gör, İngilizce cümleyi söyle</div>
+        </div>
+        <svg class="spk-mc-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
   </div>
+
   <!-- Cümle Tekrar pane -->
-  <div id="spk-pane-v2" class="spk-pane">
+  <div id="spk-pane-v2" class="spk-pane" style="display:none">
+    <button class="spk-back-btn" onclick="window._speakShowPicker()">← Geri</button>
     <div id="speak-mount-point"></div>
   </div>
   <!-- Boşluk Doldur pane -->
   <div id="spk-pane-fill" class="spk-pane" style="display:none">
+    <button class="spk-back-btn" onclick="window._speakShowPicker()">← Geri</button>
     <div id="speak-fill-point"></div>
   </div>
 </div>
@@ -1570,6 +1609,46 @@
   document.addEventListener('touchend', function(e) {
     var d = document.getElementById('stats-drawer');
     if(d && d.classList.contains('open') && e.changedTouches[0].clientY - sy > 60) closeStatsDrawer();
+  }, {passive:true});
+})();
+</script>
+
+<!-- ── Speak Drawer aç/kapat ── -->
+<script defer>
+(function(){
+  function openSpeakDrawer() {
+    document.getElementById('speak-drawer').classList.add('open');
+    document.getElementById('speak-drawer-backdrop').classList.add('open');
+  }
+  function closeSpeakDrawer() {
+    document.getElementById('speak-drawer').classList.remove('open');
+    document.getElementById('speak-drawer-backdrop').classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    if(e.target.closest('#m-speak-btn')) {
+      var isOpen = document.getElementById('speak-drawer').classList.contains('open');
+      isOpen ? closeSpeakDrawer() : openSpeakDrawer();
+      return;
+    }
+    if(e.target.closest('#speak-drawer-backdrop')) { closeSpeakDrawer(); return; }
+    var item = e.target.closest('#speak-drawer [data-speak-tab]');
+    if(item) {
+      var tab = item.dataset.speakTab;
+      closeSpeakDrawer();
+      // Önce speak sayfasına git, sonra tab'ı seç
+      var navItem = document.querySelector('.nav-item[data-target="speak"]');
+      if(navItem) navItem.click();
+      setTimeout(function(){ window._speakSwitchTab && window._speakSwitchTab(tab); }, 250);
+    }
+  });
+  var sy = 0;
+  document.addEventListener('touchstart', function(e) {
+    var d = document.getElementById('speak-drawer');
+    if(d && d.classList.contains('open')) sy = e.touches[0].clientY;
+  }, {passive:true});
+  document.addEventListener('touchend', function(e) {
+    var d = document.getElementById('speak-drawer');
+    if(d && d.classList.contains('open') && e.changedTouches[0].clientY - sy > 60) closeSpeakDrawer();
   }, {passive:true});
 })();
 </script>

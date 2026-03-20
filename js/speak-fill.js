@@ -678,16 +678,26 @@ class SpeakFillMode {
   }
 }
 
-// ── TAB SİSTEMİ + OTOMATİK BAĞLANTI ─────────────────────────────────────────
+// ── MOD SEÇİM + OTOMATİK BAĞLANTI ───────────────────────────────────────────
 (function () {
+  // Picker ekranını göster (mod seçimine geri dön)
+  window._speakShowPicker = function () {
+    const picker = document.getElementById('spk-picker');
+    const pV2    = document.getElementById('spk-pane-v2');
+    const pFill  = document.getElementById('spk-pane-fill');
+    if (picker) picker.style.display = '';
+    if (pV2)    pV2.style.display    = 'none';
+    if (pFill)  pFill.style.display  = 'none';
+  };
+
+  // Bir mod seç ve yükle
   window._speakSwitchTab = function (tab) {
-    const pV2   = document.getElementById('spk-pane-v2');
-    const pFill = document.getElementById('spk-pane-fill');
-    document.querySelectorAll('.spk-tab').forEach(t =>
-      t.classList.toggle('spk-tab-on', t.dataset.tab === tab)
-    );
-    if (pV2)   pV2.style.display   = tab === 'v2'   ? '' : 'none';
-    if (pFill) pFill.style.display = tab === 'fill' ? '' : 'none';
+    const picker = document.getElementById('spk-picker');
+    const pV2    = document.getElementById('spk-pane-v2');
+    const pFill  = document.getElementById('spk-pane-fill');
+    if (picker) picker.style.display = 'none';
+    if (pV2)    pV2.style.display    = tab === 'v2'   ? '' : 'none';
+    if (pFill)  pFill.style.display  = tab === 'fill' ? '' : 'none';
     if (tab === 'fill') {
       const mount = document.getElementById('speak-fill-point');
       if (mount && !window.speakFillMod) {
@@ -697,17 +707,13 @@ class SpeakFillMode {
     }
   };
 
-  const bindTabs = () => {
-    const row = document.getElementById('spk-tab-row');
-    if (row && !row._sfmBound) {
-      row._sfmBound = true;
-      row.querySelectorAll('.spk-tab').forEach(btn =>
-        btn.addEventListener('click', () => window._speakSwitchTab(btn.dataset.tab))
-      );
+  // speak-v2 mount'u: picker gizlenince otomatik başlat
+  const obs = new MutationObserver(() => {
+    const mount = document.getElementById('speak-mount-point');
+    if (mount && mount.offsetParent !== null && (!window.speakV2Mod || window.speakV2Mod.el !== mount)) {
+      window.speakV2Mod = new (window.SpeakV2Module || (() => {}))();
+      if (window.speakV2Mod.init) window.speakV2Mod.init(mount);
     }
-  };
-
-  const obs = new MutationObserver(bindTabs);
+  });
   obs.observe(document.body, { childList: true, subtree: true });
-  setTimeout(bindTabs, 600);
 })();

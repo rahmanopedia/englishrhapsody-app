@@ -1,3 +1,39 @@
+/* ── KONUŞMA LAB MOD SEÇİCİ ─────────────────────────────────────────────── */
+.spk-picker {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 14px; padding: 40px 16px 24px;
+  max-width: 480px; margin: 0 auto;
+}
+.spk-picker-title { font-size: 1.5rem; font-weight: 800; color: #f1f5f9; letter-spacing: -0.02em; }
+.spk-picker-sub { font-size: 0.88rem; color: rgba(148,163,184,0.55); margin-top: -6px; }
+.spk-picker-cards { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 8px; }
+.spk-mode-card {
+  display: flex; align-items: center; gap: 16px; padding: 20px 18px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(15,23,42,0.96), rgba(10,14,28,0.98));
+  border: 1px solid rgba(255,255,255,0.09);
+  cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  text-align: left; width: 100%;
+}
+.spk-mode-card:hover {
+  border-color: rgba(6,182,212,0.4);
+  box-shadow: 0 4px 24px rgba(6,182,212,0.12);
+  transform: translateY(-1px);
+}
+.spk-mode-card:active { transform: translateY(0); }
+.spk-mc-icon { font-size: 2rem; flex-shrink: 0; }
+.spk-mc-info { flex: 1; }
+.spk-mc-name { font-size: 1.05rem; font-weight: 700; color: #f1f5f9; }
+.spk-mc-desc { font-size: 0.8rem; color: rgba(148,163,184,0.55); margin-top: 3px; }
+.spk-mc-arrow { color: rgba(148,163,184,0.35); flex-shrink: 0; }
+.spk-back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none; color: rgba(148,163,184,0.55);
+  font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  padding: 4px 0 14px; transition: color 0.18s;
+}
+.spk-back-btn:hover { color: #06b6d4; }
+
 /* ─── RHAPSODY SPEAK V2.1 ─── */
 
 .sv2-wrap {
