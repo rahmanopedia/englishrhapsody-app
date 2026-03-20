@@ -899,37 +899,58 @@
 <div class="animate-in speak-container">
 
   <!-- Mod seçim ekranı -->
-  <div id="spk-picker" class="spk-picker">
-    <div class="spk-picker-title">Konuşma Lab</div>
-    <div class="spk-picker-sub">Bir mod seç</div>
-    <div class="spk-picker-cards">
-      <button class="spk-mode-card" onclick="window._speakSwitchTab('v2')">
-        <span class="spk-mc-icon">🎙️</span>
-        <div class="spk-mc-info">
-          <div class="spk-mc-name">Cümle Tekrar</div>
-          <div class="spk-mc-desc">Cümleleri dinle ve doğru telaffuzla tekrar et</div>
+  <div id="spk-picker">
+    <div class="qhub-shell">
+      <div class="qhub-header">
+        <div class="qhub-logo">🎙️</div>
+        <h1 class="qhub-title">KONUŞMA LAB</h1>
+        <p class="qhub-sub">2 farklı mod ile İngilizce konuşma pratiği yap</p>
+      </div>
+      <div class="qhub-grid">
+        <div class="qhub-card blitz" onclick="window._speakSwitchTab('v2')">
+          <div class="qhc-glow"></div>
+          <div class="qhc-icon">🎙️</div>
+          <div class="qhc-body">
+            <h2>Cümle Tekrar</h2>
+            <p>Cümleleri dinle ve doğru telaffuzla tekrar et. Yapay zeka seni değerlendirsin.</p>
+            <div class="qhc-tags">
+              <span class="qhc-tag">Telaffuz</span>
+              <span class="qhc-tag">Dinleme</span>
+              <span class="qhc-tag amber">+XP</span>
+            </div>
+          </div>
+          <div class="qhc-arrow">→</div>
         </div>
-        <svg class="spk-mc-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <button class="spk-mode-card" onclick="window._speakSwitchTab('fill')">
-        <span class="spk-mc-icon">📝</span>
-        <div class="spk-mc-info">
-          <div class="spk-mc-name">Boşluk Doldur</div>
-          <div class="spk-mc-desc">Türkçeyi gör, İngilizce cümleyi söyle</div>
+        <div class="qhub-card scramble" onclick="window._speakSwitchTab('fill')">
+          <div class="qhc-glow"></div>
+          <div class="qhc-icon">📝</div>
+          <div class="qhc-body">
+            <h2>Boşluk Doldur</h2>
+            <p>Türkçeyi gör, boşlukları konuşarak doldur. Kelime bankasını kullan.</p>
+            <div class="qhc-tags">
+              <span class="qhc-tag">Konuşma</span>
+              <span class="qhc-tag">Gramer</span>
+              <span class="qhc-tag amber">+XP</span>
+            </div>
+          </div>
+          <div class="qhc-arrow">→</div>
         </div>
-        <svg class="spk-mc-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
+      </div>
     </div>
   </div>
 
   <!-- Cümle Tekrar pane -->
   <div id="spk-pane-v2" class="spk-pane" style="display:none">
-    <button class="spk-back-btn" onclick="window._speakShowPicker()">← Geri</button>
+    <div style="padding:10px 16px 0">
+      <button class="qback-btn" onclick="window._speakShowPicker()">← Geri</button>
+    </div>
     <div id="speak-mount-point"></div>
   </div>
   <!-- Boşluk Doldur pane -->
   <div id="spk-pane-fill" class="spk-pane" style="display:none">
-    <button class="spk-back-btn" onclick="window._speakShowPicker()">← Geri</button>
+    <div style="padding:10px 16px 0">
+      <button class="qback-btn" onclick="window._speakShowPicker()">← Geri</button>
+    </div>
     <div id="speak-fill-point"></div>
   </div>
 </div>
