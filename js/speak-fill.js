@@ -22,6 +22,7 @@ class SpeakFillMode {
     this._stream     = null;
     this._animFrame  = null;
     this._ttsTimers  = [];   // TTS timer array (birden fazla timer)
+    this._gen        = 0;    // Generation counter — navigasyonda artar, eski callback'leri iptal eder
     this._isSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
 
     this._level   = 'A1';
@@ -69,11 +70,6 @@ class SpeakFillMode {
       }
     }
 
-    // Karıştır
-    for (let i = raw.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [raw[i], raw[j]] = [raw[j], raw[i]];
-    }
     this.items = raw;
   }
 
@@ -379,6 +375,7 @@ class SpeakFillMode {
     if (this._audioCtx)  { try { this._audioCtx.close(); } catch {} this._audioCtx = null; }
     if (this._stream)    { this._stream.getTracks().forEach(t => t.stop()); this._stream = null; }
     this._ttsTimers.forEach(t => clearTimeout(t)); this._ttsTimers = [];
+    this._gen++;              // Tüm bekleyen callback'leri geçersiz kıl
     window.speechSynthesis?.cancel();
     this._analyser = null;
     this._resetBars();
@@ -535,15 +532,15 @@ class SpeakFillMode {
     if (!window.speechSynthesis) { this._autoFillFallback(tokens); return; }
 
     const item = this._cur; if (!item) return;
+    const gen  = this._gen;   // Bu cümlenin generation'ı — navigasyonda geçersiz olur
+
     const utt  = new SpeechSynthesisUtterance(item.sentence);
     utt.lang   = 'en-US';
     utt.rate   = 0.88;
 
-    let wordIdx = 0;
-
     utt.onboundary = e => {
+      if (this._gen !== gen) return;   // Navigasyon oldu, iptal
       if (e.name !== 'word') return;
-      // Mevcut kelime indeksini hesapla
       const spoken = item.sentence.substring(0, e.charIndex + e.charLength);
       const wi = spoken.trim().split(/\s+/).length - 1;
       if (wi < tokens.length && !this.filledWords[wi]) {
@@ -553,7 +550,7 @@ class SpeakFillMode {
     };
 
     utt.onend = () => {
-      // Kalan tüm boşlukları doldur
+      if (this._gen !== gen) return;   // Navigasyon oldu, iptal
       tokens.forEach((t, i) => {
         if (!this.filledWords[i]) {
           this.filledWords[i] = true;
@@ -562,15 +559,15 @@ class SpeakFillMode {
       });
     };
 
-    // onboundary bazı tarayıcılarda çalışmayabilir — fallback timer
-    utt.onerror = () => this._autoFillFallback(tokens);
+    utt.onerror = () => { if (this._gen === gen) this._autoFillFallback(tokens, gen); };
     window.speechSynthesis.speak(utt);
 
-    // Safari/bazı Chrome versiyonları için fallback: TTS süresiyle orantılı timer
+    // Fallback timer
     const avgWordMs = 380;
     tokens.forEach((t, i) => {
       if (!this.filledWords[i]) {
         this._ttsTimers.push(setTimeout(() => {
+          if (this._gen !== gen) return;   // Navigasyon oldu, iptal
           if (!this.filledWords[i]) {
             this.filledWords[i] = true;
             this._fillSlotAuto(i, t.clean, t.punc);
@@ -580,11 +577,13 @@ class SpeakFillMode {
     });
   }
 
-  _autoFillFallback(tokens) {
+  _autoFillFallback(tokens, gen) {
+    const g = gen ?? this._gen;
     const avgMs = 380;
     tokens.forEach((t, i) => {
       if (!this.filledWords[i]) {
         this._ttsTimers.push(setTimeout(() => {
+          if (this._gen !== g) return;   // Navigasyon oldu, iptal
           this.filledWords[i] = true;
           this._fillSlotAuto(i, t.clean, t.punc);
         }, i * avgMs + 100));
