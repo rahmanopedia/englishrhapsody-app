@@ -1,53 +1,95 @@
 /**
- * English Rhapsody — Firebase AI Logic (Gemini)
- * Google AI backend, Spark plan uyumlu.
- * window._fbAI üzerinden kullanılır.
+ * English Rhapsody — Gemini AI Entegrasyonu
+ *
+ * Öncelik sırası:
+ *  1. Firebase AI Logic (key gerekmez, konsol aktive edilmişse)
+ *  2. Google AI Studio REST API (sp_gemini_key localStorage'da varsa)
+ *  3. Hata — window._fbAI.getError() ile görülebilir
  */
 
-import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
-import { getAI, getGenerativeModel, GoogleAIBackend } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-ai.js';
+// ── 1. Firebase AI Logic denemesi ──────────────────────────────────────────
 
-const _config = {
-  apiKey:            'AIzaSyAF97SX_GlK7QMNhvhD5eFvS5a8FdApo_A',
-  authDomain:        'englishrhapsody-78866.firebaseapp.com',
-  projectId:         'englishrhapsody-78866',
-  storageBucket:     'englishrhapsody-78866.firebasestorage.app',
-  messagingSenderId: '94842633226',
-  appId:             '1:94842633226:web:26f0f89fdf558b918eb3f3',
-};
+let _model     = null;
+let _lastError = null;
 
-let _model = null;
-let _initError = null;
-
-function _getModel() {
-  if (_model) return _model;
+async function _tryFirebaseAI() {
   try {
+    const { initializeApp, getApps } =
+      await import('https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js');
+    const { getAI, getGenerativeModel, GoogleAIBackend } =
+      await import('https://www.gstatic.com/firebasejs/11.6.0/firebase-ai.js');
+
+    const cfg = {
+      apiKey:            'AIzaSyAF97SX_GlK7QMNhvhD5eFvS5a8FdApo_A',
+      authDomain:        'englishrhapsody-78866.firebaseapp.com',
+      projectId:         'englishrhapsody-78866',
+      storageBucket:     'englishrhapsody-78866.firebasestorage.app',
+      messagingSenderId: '94842633226',
+      appId:             '1:94842633226:web:26f0f89fdf558b918eb3f3',
+    };
     const existing = getApps().find(a => a.name === 'er-ai');
-    const app = existing || initializeApp(_config, 'er-ai');
-    const ai  = getAI(app, { backend: new GoogleAIBackend() });
+    const app      = existing || initializeApp(cfg, 'er-ai');
+    const ai       = getAI(app, { backend: new GoogleAIBackend() });
     _model = getGenerativeModel(ai, {
       model: 'gemini-2.0-flash-lite',
       generationConfig: { maxOutputTokens: 250, temperature: 0.7 },
     });
-    return _model;
+
+    // Bağlantı testi (kısa prompt)
+    const res = await _model.generateContent('ok');
+    res.response.text(); // hata fırlatırsa catch'e düşer
+    console.info('[Gemini] Firebase AI Logic aktif ✓');
+    return true;
   } catch (e) {
-    _initError = e;
-    console.error('[Firebase AI] Model başlatılamadı:', e);
-    throw e;
+    _lastError = e;
+    console.warn('[Gemini] Firebase AI Logic başarısız, REST API deneniyor...', e.message);
+    _model = null;
+    return false;
   }
 }
 
-async function _generate(prompt) {
-  const model  = _getModel();
-  const result = await model.generateContent(prompt);
-  return result.response.text().trim();
+// ── 2. Google AI Studio REST API ───────────────────────────────────────────
+
+function _getDirectKey() {
+  return (window.remoteFlags?.gemini_key) || localStorage.getItem('sp_gemini_key');
 }
 
-// ── Public API ──────────────────────────────────────────────────────────────
+async function _generateREST(prompt) {
+  const key = _getDirectKey();
+  if (!key) throw new Error('Gemini API key bulunamadı — localStorage.setItem("sp_gemini_key","...") ile ekleyin');
+
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${key}`,
+    {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: 250, temperature: 0.7 },
+      }),
+    }
+  );
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(`Gemini REST ${res.status}: ${err?.error?.message || res.statusText}`);
+  }
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
+}
+
+// ── Birleşik generate ──────────────────────────────────────────────────────
+
+async function _generate(prompt) {
+  if (_model) {
+    const result = await _model.generateContent(prompt);
+    return result.response.text().trim();
+  }
+  return _generateREST(prompt);
+}
+
+// ── Public API ─────────────────────────────────────────────────────────────
 
 window._fbAI = {
-
-  /** Telaffuz koçu — Speak modunda kullanılır */
   async coachFeedback(target, spoken, missed, score) {
     return _generate(
       `İngilizce telaffuz koçusun. Türk öğrenci:\n` +
@@ -57,40 +99,37 @@ window._fbAI = {
       `Türkçe, 2-3 cümle, somut öneri + teşvik. Emoji kullan. Çok kısa ol.`
     );
   },
-
-  /** Kelime açıklaması */
   async explainWord(word, sentence) {
     return _generate(
-      `İngilizce kelimeyi Türkçe açıkla:\n` +
-      `Kelime: "${word}"\n` +
+      `İngilizce kelimeyi Türkçe açıkla: "${word}"\n` +
       `${sentence ? `Cümle: "${sentence}"\n` : ''}` +
-      `Kısa tanım + bağlamda neden bu kelime + örnek kullanım. Türkçe, 3-4 cümle.`
+      `Kısa tanım + bağlamda kullanım + örnek. Türkçe, 3-4 cümle.`
     );
   },
-
-  /** Hata bilgisi */
-  getError() { return _initError; },
-
-  /** Genel prompt */
   async generate(prompt) { return _generate(prompt); },
-
-  /** Test — konsolda: await window._fbAI.test() */
+  getError()             { return _lastError; },
   async test() {
-    try {
-      const r = await _generate('Merhaba de sadece.');
-      console.info('[Firebase AI] Test başarılı:', r);
-      return r;
-    } catch (e) {
-      console.error('[Firebase AI] Test başarısız:', e);
-      throw e;
-    }
+    const r = await _generate('Merhaba de sadece.');
+    console.info('[Gemini] Test başarılı:', r);
+    return r;
   },
 };
 
-// Başlatmayı hemen dene ve hatayı logla
-try {
-  _getModel();
-  console.info('[Firebase AI] Gemini hazır ✓ — test: await window._fbAI.test()');
-} catch (e) {
-  console.error('[Firebase AI] Başlatma hatası:', e.message);
-}
+// ── Başlat ─────────────────────────────────────────────────────────────────
+
+(async () => {
+  const ok = await _tryFirebaseAI();
+  if (!ok) {
+    const key = _getDirectKey();
+    if (key) {
+      console.info('[Gemini] Google AI Studio REST API aktif ✓ (key bulundu)');
+    } else {
+      console.warn(
+        '[Gemini] Aktif değil.\n' +
+        'Seçenek 1 — Firebase konsolundan AI Logic aktive et (key gerekmez)\n' +
+        'Seçenek 2 — localStorage.setItem("sp_gemini_key", "AIza...") ile key gir\n' +
+        '           Key al: https://aistudio.google.com/app/apikey'
+      );
+    }
+  }
+})();
