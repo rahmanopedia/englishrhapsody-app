@@ -7776,6 +7776,7 @@ body.rank-6 { --theme-accent: #ff9d00; }
   gap: 20px !important;
 }
 
+.colloc-card-v2:empty { display: none !important; }
 .colloc-card-v2 {
   background: rgba(255,255,255,0.025) !important;
   border: 1px solid rgba(255,255,255,0.06) !important;
@@ -8457,13 +8458,14 @@ body { overscroll-behavior-y: none; }
 .pwa-install-close{background:none;border:none;color:var(--text-3);font-size:1rem;cursor:pointer;padding:4px;flex-shrink:0}
 
 /* ── Hızlı Tekrar kart (home) ── */
-.fc-quick-card{background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(236,72,153,.08));border:1px solid rgba(139,92,246,.2);border-radius:16px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .2s}
+.fc-quick-card{background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(236,72,153,.1));border:1px solid rgba(139,92,246,.3);border-radius:20px;padding:22px 20px;cursor:pointer;display:flex;align-items:center;gap:16px;transition:all .2s;box-shadow:0 4px 20px rgba(139,92,246,.1)}
+.fc-quick-card:hover{border-color:rgba(139,92,246,.5);box-shadow:0 6px 28px rgba(139,92,246,.18);transform:translateY(-2px)}
 .fc-quick-card:active{transform:scale(.97)}
-.fc-quick-icon{font-size:1.8rem;flex-shrink:0}
+.fc-quick-icon{font-size:2.4rem;flex-shrink:0}
 .fc-quick-text{flex:1}
-.fc-quick-title{font-size:.92rem;font-weight:700;color:#fff;display:block}
-.fc-quick-sub{font-size:.75rem;color:var(--text-3)}
-.fc-quick-arrow{color:var(--text-3);font-size:.9rem}
+.fc-quick-title{font-size:1.05rem;font-weight:800;color:#fff;display:block;margin-bottom:3px}
+.fc-quick-sub{font-size:.8rem;color:var(--text-2)}
+.fc-quick-arrow{color:rgba(139,92,246,.8);font-size:1.2rem;font-weight:700}
 
 /* ── Flashcard modu ── */
 .fc-wrapper{height:100%;display:flex;flex-direction:column;background:var(--bg, #0d0f14);font-family:Plus Jakarta Sans,sans-serif;overflow:hidden}
