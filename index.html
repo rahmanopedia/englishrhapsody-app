@@ -1120,6 +1120,39 @@
 })();
 </script>
 
+<!-- ── Mobilde hikaye kaydırma (swipe) ── -->
+<script defer>
+(function(){
+  if(window.innerWidth > 768) return;
+  var startX = 0, startY = 0;
+  var SWIPE_MIN = 50, ANGLE_MAX = 35;
+
+  document.addEventListener('touchstart', function(e) {
+    var t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if(!document.querySelector('.story-wrapper')) return;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - startX;
+    var dy = t.clientY - startY;
+    if(Math.abs(dx) < SWIPE_MIN) return;
+    if(Math.abs(dy) / Math.abs(dx) > Math.tan(ANGLE_MAX * Math.PI / 180)) return;
+    if(dx < 0) {
+      // sola kaydır → sonraki hikaye
+      var btn = document.querySelector('[data-action="next-story"]');
+      if(btn) btn.click();
+    } else {
+      // sağa kaydır → önceki hikaye
+      var btn = document.querySelector('[data-action="prev-story"]');
+      if(btn) btn.click();
+    }
+  }, { passive: true });
+})();
+</script>
+
 <!-- ── Sesli okuma: mobilde oynayan kelimeyi takip et ── -->
 <script defer>
 (function(){
