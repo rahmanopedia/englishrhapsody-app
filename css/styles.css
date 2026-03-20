@@ -4226,6 +4226,10 @@ body.rank-6 { --theme-accent: #ff9d00; }
   from { opacity:0; transform: scale(0.88) translateY(-12px); }
   to   { opacity:1; transform: scale(1) translateY(0); }
 }
+@keyframes popupSlideUp {
+  from { opacity:0; transform: translateY(100%); }
+  to   { opacity:1; transform: translateY(0); }
+}
 .word-def-popup {
   position: fixed;
   z-index: 9000;
@@ -4236,7 +4240,7 @@ body.rank-6 { --theme-accent: #ff9d00; }
   border-radius: 18px;
   padding: 22px;
   min-width: min(290px, calc(100vw - 32px));
-  max-width: min(360px, calc(100vw - 24px));
+  max-width: min(340px, calc(100vw - 24px));
   max-height: calc(100vh - 32px);
   overflow-y: auto;
   box-shadow:
@@ -4259,7 +4263,7 @@ body.rank-6 { --theme-accent: #ff9d00; }
 }
 .wdp-title-wrap { flex: 1; }
 .wdp-en {
-  font-size: 1.45rem;
+  font-size: 1.3rem;
   font-weight: 900;
   letter-spacing: -0.03em;
   background: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 100%);
@@ -4319,7 +4323,7 @@ body.rank-6 { --theme-accent: #ff9d00; }
   gap: 7px;
 }
 .wdp-colloc::before { content: '•'; color: #34d399; font-weight: 900; }
-.wdp-actions { margin-top: 16px; display: flex; gap: 8px; }
+.wdp-actions { margin-top: 14px; display: flex; gap: 8px; }
 .wdp-close {
   cursor: pointer;
   color: rgba(148,163,184,0.5);
@@ -4332,6 +4336,44 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .wdp-close:hover {
   color: var(--rose);
   background: rgba(244,63,94,0.1);
+}
+
+/* Mobil: popup alt tabaka (bottom sheet) */
+@media (max-width: 768px) {
+  .word-def-popup {
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: unset !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 18px 16px 28px !important;
+    max-height: 72vh !important;
+    animation: popupSlideUp 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275) both !important;
+  }
+  .wdp-en { font-size: 1.1rem !important; }
+  .wdp-tr { font-size: 0.95rem !important; margin: 7px 0 3px !important; }
+  .wdp-ipa { font-size: 0.75rem !important; }
+  .wdp-ex { font-size: 0.8rem !important; padding: 7px 10px !important; }
+  .wdp-label { font-size: 0.62rem !important; margin-bottom: 5px !important; }
+  .wdp-syn { font-size: 0.7rem !important; padding: 2px 8px !important; }
+  .wdp-colloc { font-size: 0.76rem !important; }
+  .wdp-section { margin-top: 9px !important; }
+  .wdp-header { margin-bottom: 10px !important; padding-bottom: 9px !important; }
+  .wdp-actions { margin-top: 10px !important; }
+}
+
+/* Masaüstü: popup daha kompakt */
+@media (min-width: 769px) {
+  .word-def-popup {
+    max-width: min(320px, calc(100vw - 32px)) !important;
+    padding: 18px !important;
+  }
+  .wdp-en { font-size: 1.25rem !important; }
+  .wdp-tr { font-size: 1rem !important; }
+  .wdp-ex { font-size: 0.84rem !important; }
 }
 
 /* Heatmap legend */
