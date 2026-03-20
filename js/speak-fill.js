@@ -33,17 +33,31 @@ class SpeakFillMode {
   // ── Veri ──────────────────────────────────────────────────────────────────
 
   _buildItems() {
-    if (typeof PHRASE_DICT === 'undefined') return;
     const raw = [];
-    for (const [phrase, data] of Object.entries(PHRASE_DICT)) {
-      if (!data.ex || data.ex.trim().split(/\s+/).length < 4) continue;
-      raw.push({
-        phrase,
-        sentence: data.ex.trim(),
-        tr:   data.tr   || '',
-        type: data.type || 'Kelime',
-      });
+
+    // WORDS + EX_TR: her kelimenin örnek cümlesi + Türkçe çevirisi
+    if (typeof WORDS !== 'undefined') {
+      const exTr = (typeof EX_TR !== 'undefined') ? EX_TR : {};
+      for (const w of WORDS) {
+        if (!w.ex) continue;
+        const sentence = w.ex.trim();
+        if (sentence.split(/\s+/).length < 4) continue;
+        const tr = exTr[w.id] || w.ex_tr || '';
+        if (!tr) continue;            // Türkçe çevirisi olmayan atla
+        raw.push({ sentence, tr, word: w.en || '' });
+      }
     }
+
+    // Yedek: PHRASE_DICT örnek cümleleri (Türkçe anlamıyla)
+    if (raw.length < 20 && typeof PHRASE_DICT !== 'undefined') {
+      for (const [phrase, data] of Object.entries(PHRASE_DICT)) {
+        if (!data.ex || !data.tr) continue;
+        const sentence = data.ex.trim();
+        if (sentence.split(/\s+/).length < 4) continue;
+        raw.push({ sentence, tr: data.tr, word: phrase });
+      }
+    }
+
     // Karıştır
     for (let i = raw.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -55,10 +69,7 @@ class SpeakFillMode {
   _setFilter(f) {
     this._filter = f;
     this.idx  = 0;
-    this.pool = f === 'all'
-      ? [...this.items]
-      : this.items.filter(x => x.type === f);
-    if (!this.pool.length) this.pool = [...this.items];
+    this.pool = [...this.items];
   }
 
   get _cur() { return this.pool[this.idx] || null; }
@@ -94,46 +105,21 @@ class SpeakFillMode {
     const tokens = this._tokenize(item.sentence);
     this.filledWords = new Array(tokens.length).fill(false);
 
-    const TYPE_COL = {
-      'Phrasal Verb':  { fg: '#06b6d4', bg: '#083344', bd: '#0891b255' },
-      'Deyim':         { fg: '#a78bfa', bg: '#1e1b4b', bd: '#7c3aed55' },
-      'Gramer Kalıbı': { fg: '#f59e0b', bg: '#1c1408', bd: '#b4530955' },
-      'Eylem Kalıbı':  { fg: '#34d399', bg: '#052e16', bd: '#06573055' },
-      'İsim Tamlaması':{ fg: '#f472b6', bg: '#2d0a1e', bd: '#be185d55' },
-      'Kelime':        { fg: '#60a5fa', bg: '#0f172a', bd: '#1d4ed855' },
-    };
-    const col = TYPE_COL[item.type] || TYPE_COL['Kelime'];
-
-    const FILTERS = [
-      { f:'all',           l:'Tümü'    },
-      { f:'Phrasal Verb',  l:'Phrasal' },
-      { f:'Deyim',         l:'Deyim'   },
-      { f:'Gramer Kalıbı', l:'Gramer'  },
-      { f:'Eylem Kalıbı',  l:'Eylem'   },
-    ];
-
     const pct  = Math.round((this.idx / Math.max(1, this.pool.length)) * 100);
     const bars = Array.from({ length: 18 }, (_, i) =>
       `<div class="sfm-bar" id="sfb${i}"></div>`).join('');
 
-    // Boşluk satırı — her kelime için tire bloğu
+    // Her kelime için tire boşluğu
     const blanksHtml = tokens.map((t, i) =>
-      `<span class="sfm-word-slot" id="sfm-slot-${i}" data-len="${t.clean.length}">
+      `<span class="sfm-word-slot" id="sfm-slot-${i}">
         <span class="sfm-slot-fill" id="sfm-fill-${i}"></span>
-        <span class="sfm-slot-dashes">${'—'.repeat(Math.max(1, Math.ceil(t.clean.length * 0.7)))}</span>
-        <span class="sfm-slot-punc">${t.punc}</span>
+        <span class="sfm-slot-dashes">${this._dashes(t.clean.length)}</span>${t.punc
+          ? `<span class="sfm-slot-punc">${t.punc}</span>` : ''}
       </span>`
     ).join(' ');
 
     this.el.innerHTML = `
 <div class="sfm-wrap">
-
-  <!-- Filtre -->
-  <div class="sfm-filters">
-    ${FILTERS.map(({ f, l }) =>
-      `<button class="sfm-filt${this._filter === f ? ' sfm-filt-on' : ''}" data-f="${f}">${l}</button>`
-    ).join('')}
-  </div>
 
   <!-- İstatistik + ilerleme -->
   <div class="sfm-topbar">
@@ -150,17 +136,11 @@ class SpeakFillMode {
   <!-- Ana kart -->
   <div class="sfm-card" id="sfm-card">
 
-    <!-- Rozet + tip -->
-    <div class="sfm-badge-row">
-      <span class="sfm-badge"
-        style="background:${col.bg};color:${col.fg};border-color:${col.bd}">
-        ${item.type}
-      </span>
-      <span class="sfm-phrase-key">${this._esc(item.phrase)}</span>
-    </div>
+    <!-- Türkçe cümle — büyük, belirgin -->
+    <div class="sfm-tr-sentence">${this._esc(item.tr)}</div>
 
-    <!-- Türkçe anlam — büyük ipucu -->
-    <div class="sfm-tr-main">${this._esc(item.tr)}</div>
+    <!-- Ayırıcı -->
+    <div class="sfm-divider"></div>
 
     <!-- Tire boşlukları -->
     <div class="sfm-blanks-area" id="sfm-blanks">${blanksHtml}</div>
@@ -176,8 +156,7 @@ class SpeakFillMode {
     <div class="sfm-mic-outer">
       <div class="sfm-ring sfm-ring-1" id="sfmr1"></div>
       <div class="sfm-ring sfm-ring-2" id="sfmr2"></div>
-      <button class="sfm-mic-btn" id="sfm-mic"
-        ${!this._isSupported ? 'disabled' : ''}>
+      <button class="sfm-mic-btn" id="sfm-mic" ${!this._isSupported ? 'disabled' : ''}>
         <span id="sfm-mic-ico">${this._micSvg(30)}</span>
       </button>
     </div>
@@ -188,33 +167,35 @@ class SpeakFillMode {
     </div>
   </div>
 
-  <!-- Sonuç alanı -->
+  <!-- Sonuç -->
   <div class="sfm-result" id="sfm-result" style="display:none">
     <div class="sfm-result-msg" id="sfm-result-msg"></div>
     <div class="sfm-result-btns">
-      <button class="sfm-rbtn sfm-rbtn-ghost"    id="sfm-retry">🔄 Tekrar</button>
-      <button class="sfm-rbtn sfm-rbtn-primary"  id="sfm-next">Sonraki →</button>
+      <button class="sfm-rbtn sfm-rbtn-ghost"   id="sfm-retry">🔄 Tekrar</button>
+      <button class="sfm-rbtn sfm-rbtn-primary" id="sfm-next">Sonraki →</button>
     </div>
   </div>
 
   <!-- Navigasyon -->
   <div class="sfm-nav">
     <button class="sfm-nav-btn" id="sfm-prev" ${this.idx === 0 ? 'disabled' : ''}>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M15 18l-6-6 6-6"/>
-      </svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
     </button>
     <button class="sfm-skip-btn" id="sfm-skip">Geç</button>
     <button class="sfm-nav-btn" id="sfm-fwd">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M9 18l6-6-6-6"/>
-      </svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
     </button>
   </div>
 
 </div>`;
 
     this._bind();
+  }
+
+  // Kelime uzunluğuna göre tire üret
+  _dashes(len) {
+    const count = Math.max(2, len);
+    return '<span class="sfm-dash"></span>'.repeat(count);
   }
 
   // ── Events ────────────────────────────────────────────────────────────────
@@ -227,13 +208,6 @@ class SpeakFillMode {
     q('#sfm-skip') ?.addEventListener('click', () => this._advance());
     q('#sfm-prev') ?.addEventListener('click', () => this._go(this.idx - 1));
     q('#sfm-fwd')  ?.addEventListener('click', () => this._advance());
-    this.el.querySelectorAll('.sfm-filt').forEach(btn =>
-      btn.addEventListener('click', () => {
-        this._stopAll();
-        this._setFilter(btn.dataset.f);
-        this._render();
-      })
-    );
   }
 
   // ── Navigasyon ────────────────────────────────────────────────────────────

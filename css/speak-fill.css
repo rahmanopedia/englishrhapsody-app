@@ -40,30 +40,6 @@
   margin: 0 auto;
 }
 
-/* ── Filtreler ── */
-.sfm-filters {
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-}
-.sfm-filt {
-  padding: 5px 11px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.04);
-  color: rgba(148,163,184,0.7);
-  font-size: 0.73rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.18s;
-  letter-spacing: 0.02em;
-}
-.sfm-filt:hover { border-color: rgba(6,182,212,0.3); color: #67e8f9; }
-.sfm-filt.sfm-filt-on {
-  background: rgba(6,182,212,0.13);
-  border-color: rgba(6,182,212,0.4);
-  color: #06b6d4;
-}
 
 /* ── Üst bar ── */
 .sfm-topbar { display: flex; flex-direction: column; gap: 6px; }
@@ -109,35 +85,23 @@
   box-shadow: 0 0 32px rgba(6,182,212,0.07);
 }
 
-/* Rozet satırı */
-.sfm-badge-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.sfm-badge {
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 99px;
-  border: 1px solid;
-}
-.sfm-phrase-key {
-  font-size: 0.82rem;
-  color: rgba(148,163,184,0.5);
-  font-style: italic;
+/* Türkçe cümle — büyük ve belirgin */
+.sfm-tr-sentence {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  text-align: center;
+  padding: 4px 0 6px;
 }
 
-/* Türkçe anlam — büyük ipucu */
-.sfm-tr-main {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #e2e8f0;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
+/* Ayırıcı */
+.sfm-divider {
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent, rgba(6,182,212,0.25), transparent);
+  margin: 0 -4px;
 }
 
 /* ── Boşluk alanı ── */
@@ -203,25 +167,30 @@
   animation: sfmWordFade 0.3s ease both;
 }
 
-/* Tire çizgisi */
+/* Tire çizgileri — her harf için ayrı küçük çizgi */
 .sfm-slot-dashes {
-  font-size: 1.05rem;
-  color: rgba(100,116,139,0.5);
-  letter-spacing: 1px;
-  line-height: 1;
-  margin-top: 2px;
-  user-select: none;
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  margin-top: 3px;
+}
+.sfm-dash {
+  display: inline-block;
+  width: 9px;
+  height: 2.5px;
+  background: rgba(100,116,139,0.45);
+  border-radius: 99px;
 }
 
 /* Noktalama */
 .sfm-slot-punc {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: rgba(148,163,184,0.35);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgba(148,163,184,0.4);
   font-family: 'Georgia', serif;
-  position: absolute;
-  right: -8px;
-  bottom: 0;
+  align-self: flex-end;
+  margin-left: 1px;
+  line-height: 1.3;
 }
 
 /* Canlı transkript */
