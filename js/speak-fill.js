@@ -24,7 +24,7 @@ class SpeakFillMode {
     this._ttsTimer   = null;
     this._isSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
 
-    this._filter  = 'all';
+    this._level   = 'A1';
     this.correct  = 0;
     this.total    = 0;
     this.streak   = 0;
@@ -35,7 +35,7 @@ class SpeakFillMode {
   _buildItems() {
     const raw = [];
 
-    // WORDS + EX_TR: her kelimenin örnek cümlesi + Türkçe çevirisi
+    // WORDS + EX_TR: her kelimenin örnek cümlesi + Türkçe çevirisi + seviye
     if (typeof WORDS !== 'undefined') {
       const exTr = (typeof EX_TR !== 'undefined') ? EX_TR : {};
       for (const w of WORDS) {
@@ -43,18 +43,13 @@ class SpeakFillMode {
         const sentence = w.ex.trim();
         if (sentence.split(/\s+/).length < 4) continue;
         const tr = exTr[w.id] || w.ex_tr || '';
-        if (!tr) continue;            // Türkçe çevirisi olmayan atla
-        raw.push({ sentence, tr, word: w.en || '' });
-      }
-    }
-
-    // Yedek: PHRASE_DICT örnek cümleleri (Türkçe anlamıyla)
-    if (raw.length < 20 && typeof PHRASE_DICT !== 'undefined') {
-      for (const [phrase, data] of Object.entries(PHRASE_DICT)) {
-        if (!data.ex || !data.tr) continue;
-        const sentence = data.ex.trim();
-        if (sentence.split(/\s+/).length < 4) continue;
-        raw.push({ sentence, tr: data.tr, word: phrase });
+        if (!tr) continue;
+        raw.push({
+          sentence,
+          tr,
+          word:  w.en    || '',
+          level: w.level || 'B1',
+        });
       }
     }
 
@@ -66,10 +61,15 @@ class SpeakFillMode {
     this.items = raw;
   }
 
-  _setFilter(f) {
-    this._filter = f;
-    this.idx  = 0;
-    this.pool = [...this.items];
+  _setLevel(level) {
+    this._level = level;
+    this.idx    = 0;
+    this.correct = 0;
+    this.total   = 0;
+    this.streak  = 0;
+    this.pool = this.items.filter(x => x.level === level);
+    // Yedek: seviyeye yakın sonuçlar
+    if (this.pool.length < 10) this.pool = this.items;
   }
 
   get _cur() { return this.pool[this.idx] || null; }
@@ -88,7 +88,7 @@ class SpeakFillMode {
   init(el) {
     this.el = el;
     this._buildItems();
-    this._setFilter('all');
+    this._setLevel('A1');
     this._render();
   }
 
@@ -105,6 +105,16 @@ class SpeakFillMode {
     const tokens = this._tokenize(item.sentence);
     this.filledWords = new Array(tokens.length).fill(false);
 
+    const LEVELS = ['A1','A2','B1','B2','C1','C2'];
+    const LEVEL_CFG = {
+      A1: { color:'#10b981', label:'Başlangıç'  },
+      A2: { color:'#06b6d4', label:'Temel'       },
+      B1: { color:'#3b82f6', label:'Orta Altı'   },
+      B2: { color:'#8b5cf6', label:'Orta Üstü'   },
+      C1: { color:'#f59e0b', label:'İleri'       },
+      C2: { color:'#ef4444', label:'Ustalaşmış'  },
+    };
+    const lcfg = LEVEL_CFG[this._level];
     const pct  = Math.round((this.idx / Math.max(1, this.pool.length)) * 100);
     const bars = Array.from({ length: 18 }, (_, i) =>
       `<div class="sfm-bar" id="sfb${i}"></div>`).join('');
@@ -121,15 +131,30 @@ class SpeakFillMode {
     this.el.innerHTML = `
 <div class="sfm-wrap">
 
-  <!-- İstatistik + ilerleme -->
+  <!-- Seviye seçimi -->
+  <div class="sfm-levels">
+    ${LEVELS.map(lv => `
+      <button class="sfm-lvl-btn${this._level === lv ? ' sfm-lvl-on' : ''}"
+        data-lv="${lv}"
+        style="${this._level === lv
+          ? `background:${LEVEL_CFG[lv].color}22;border-color:${LEVEL_CFG[lv].color}66;color:${LEVEL_CFG[lv].color}`
+          : ''}">
+        ${lv}
+      </button>`).join('')}
+  </div>
+
+  <!-- Seviye etiketi + istatistik -->
   <div class="sfm-topbar">
     <div class="sfm-stats">
+      <span class="sfm-level-pill" style="background:${lcfg.color}20;color:${lcfg.color};border-color:${lcfg.color}44">
+        ${this._level} — ${lcfg.label}
+      </span>
       <span class="sfm-stat-chip">🔥 <strong>${this.streak}</strong></span>
       <span class="sfm-stat-chip">✅ <strong>${this.correct}/${this.total}</strong></span>
       <span class="sfm-stat-chip"><strong>${this.idx + 1}</strong><em>/${this.pool.length}</em></span>
     </div>
     <div class="sfm-prog-track">
-      <div class="sfm-prog-fill" style="width:${pct}%"></div>
+      <div class="sfm-prog-fill" style="width:${pct}%;background:${lcfg.color}"></div>
     </div>
   </div>
 
@@ -208,6 +233,13 @@ class SpeakFillMode {
     q('#sfm-skip') ?.addEventListener('click', () => this._advance());
     q('#sfm-prev') ?.addEventListener('click', () => this._go(this.idx - 1));
     q('#sfm-fwd')  ?.addEventListener('click', () => this._advance());
+    this.el.querySelectorAll('.sfm-lvl-btn').forEach(btn =>
+      btn.addEventListener('click', () => {
+        this._stopAll();
+        this._setLevel(btn.dataset.lv);
+        this._render();
+      })
+    );
   }
 
   // ── Navigasyon ────────────────────────────────────────────────────────────

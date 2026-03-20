@@ -30,6 +30,43 @@
   color: rgba(241,245,249,0.8);
 }
 
+/* ── Seviye butonları ── */
+.sfm-levels {
+  display: flex;
+  gap: 6px;
+}
+.sfm-lvl-btn {
+  flex: 1;
+  padding: 8px 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.09);
+  background: rgba(255,255,255,0.04);
+  color: rgba(148,163,184,0.55);
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.04em;
+}
+.sfm-lvl-btn:hover:not(.sfm-lvl-on) {
+  background: rgba(255,255,255,0.08);
+  color: #f1f5f9;
+}
+.sfm-lvl-on {
+  font-weight: 900;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+/* Seviye pill */
+.sfm-level-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+  letter-spacing: 0.03em;
+}
+
 /* ── Sarmalayıcı ── */
 .sfm-wrap {
   display: flex;
