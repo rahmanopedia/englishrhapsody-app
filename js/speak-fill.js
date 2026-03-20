@@ -1,54 +1,50 @@
 /**
- * RHAPSODY SPEAK FILL MODE v1.0
- * "Boşluk Doldur" — Phrasal verb / idiom / phrase completion
- * Türkçe anlam görünür, İngilizce ifadenin sonu boşluktur.
- * Söyleyince boşluk canlı dolar; doğru → yeşil, yanlış → kırmızı + cevap.
+ * RHAPSODY SPEAK FILL v2.0 — "Boşluk Doldur"
+ * - Üstte Türkçe anlam/ipucu
+ * - Her kelime uzunluğuna göre tire boşluğu
+ * - Konuşurken doğru kelimeler sırayla boşluğa dolur
+ * - Yanlış/söylenemeyen boşluklar boş kalır
+ * - Bittikten sonra TTS tam cümleyi okurken kalan boşluklar senkronize dolur
  */
 class SpeakFillMode {
   constructor() {
-    this.el      = null;
-    this.items   = [];
-    this.pool    = [];
-    this.idx     = 0;
-    this.status  = 'idle';
+    this.el          = null;
+    this.items       = [];
+    this.pool        = [];
+    this.idx         = 0;
+    this.status      = 'idle';
     this.liveText    = '';
-    this.blankFilled = false;
+    this.filledWords = [];      // boolean array — her kelime dolu mu?
 
     this._rec        = null;
     this._audioCtx   = null;
     this._analyser   = null;
     this._stream     = null;
     this._animFrame  = null;
+    this._ttsTimer   = null;
     this._isSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
 
-    this._filter     = 'all';
-    this.correct     = 0;
-    this.total       = 0;
-    this.streak      = 0;
+    this._filter  = 'all';
+    this.correct  = 0;
+    this.total    = 0;
+    this.streak   = 0;
   }
 
-  // ── Data ────────────────────────────────────────────────────────────────────
+  // ── Veri ──────────────────────────────────────────────────────────────────
 
   _buildItems() {
     if (typeof PHRASE_DICT === 'undefined') return;
     const raw = [];
     for (const [phrase, data] of Object.entries(PHRASE_DICT)) {
-      const words = phrase.trim().split(/\s+/);
-      if (words.length < 2 || words.length > 5) continue;
-      // Show first word; hide the rest (the particle / completion)
-      const shown  = words[0];
-      const hidden = words.slice(1).join(' ');
-      if (!hidden || hidden.length < 2) continue;
+      if (!data.ex || data.ex.trim().split(/\s+/).length < 4) continue;
       raw.push({
         phrase,
-        shown,
-        hidden,
+        sentence: data.ex.trim(),
         tr:   data.tr   || '',
         type: data.type || 'Kelime',
-        ex:   data.ex   || '',
       });
     }
-    // Fisher-Yates shuffle
+    // Karıştır
     for (let i = raw.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [raw[i], raw[j]] = [raw[j], raw[i]];
@@ -58,7 +54,7 @@ class SpeakFillMode {
 
   _setFilter(f) {
     this._filter = f;
-    this.idx = 0;
+    this.idx  = 0;
     this.pool = f === 'all'
       ? [...this.items]
       : this.items.filter(x => x.type === f);
@@ -67,7 +63,16 @@ class SpeakFillMode {
 
   get _cur() { return this.pool[this.idx] || null; }
 
-  // ── Init ────────────────────────────────────────────────────────────────────
+  // Cümleyi kelimelere ayır (noktalama işaretini kelimeden ayır)
+  _tokenize(sentence) {
+    return sentence.split(/\s+/).map(w => {
+      const punc  = w.match(/[.,!?;:]+$/) ? w.match(/[.,!?;:]+$/)[0] : '';
+      const clean = w.replace(/[.,!?;:]+$/, '');
+      return { raw: w, clean, punc };
+    }).filter(t => t.clean.length > 0);
+  }
+
+  // ── Init ──────────────────────────────────────────────────────────────────
 
   init(el) {
     this.el = el;
@@ -76,55 +81,66 @@ class SpeakFillMode {
     this._render();
   }
 
-  // ── Render ──────────────────────────────────────────────────────────────────
+  // ── Render ────────────────────────────────────────────────────────────────
 
   _render() {
     if (!this.el) return;
     const item = this._cur;
     if (!item) {
-      this.el.innerHTML = '<p class="sfm-empty">Phrasal verb verisi yükleniyor…</p>';
+      this.el.innerHTML = '<p class="sfm-empty">Veri yükleniyor…</p>';
       return;
     }
 
+    const tokens = this._tokenize(item.sentence);
+    this.filledWords = new Array(tokens.length).fill(false);
+
     const TYPE_COL = {
-      'Phrasal Verb':  { bg: '#083344', fg: '#06b6d4', bd: '#0891b255' },
-      'Deyim':         { bg: '#1e1b4b', fg: '#a78bfa', bd: '#7c3aed55' },
-      'Gramer Kalıbı': { bg: '#1c1408', fg: '#f59e0b', bd: '#b4530955' },
-      'Eylem Kalıbı':  { bg: '#052e16', fg: '#34d399', bd: '#06573055' },
-      'İsim Tamlaması':{ bg: '#2d0a1e', fg: '#f472b6', bd: '#be185d55' },
-      'Kelime':        { bg: '#0f172a', fg: '#60a5fa', bd: '#1d4ed855' },
+      'Phrasal Verb':  { fg: '#06b6d4', bg: '#083344', bd: '#0891b255' },
+      'Deyim':         { fg: '#a78bfa', bg: '#1e1b4b', bd: '#7c3aed55' },
+      'Gramer Kalıbı': { fg: '#f59e0b', bg: '#1c1408', bd: '#b4530955' },
+      'Eylem Kalıbı':  { fg: '#34d399', bg: '#052e16', bd: '#06573055' },
+      'İsim Tamlaması':{ fg: '#f472b6', bg: '#2d0a1e', bd: '#be185d55' },
+      'Kelime':        { fg: '#60a5fa', bg: '#0f172a', bd: '#1d4ed855' },
     };
     const col = TYPE_COL[item.type] || TYPE_COL['Kelime'];
 
     const FILTERS = [
-      { f:'all',            label:'Tümü' },
-      { f:'Phrasal Verb',   label:'Phrasal' },
-      { f:'Deyim',          label:'Deyim' },
-      { f:'Gramer Kalıbı',  label:'Gramer' },
-      { f:'Eylem Kalıbı',   label:'Eylem' },
-      { f:'İsim Tamlaması', label:'İsim' },
+      { f:'all',           l:'Tümü'    },
+      { f:'Phrasal Verb',  l:'Phrasal' },
+      { f:'Deyim',         l:'Deyim'   },
+      { f:'Gramer Kalıbı', l:'Gramer'  },
+      { f:'Eylem Kalıbı',  l:'Eylem'   },
     ];
 
     const pct  = Math.round((this.idx / Math.max(1, this.pool.length)) * 100);
     const bars = Array.from({ length: 18 }, (_, i) =>
       `<div class="sfm-bar" id="sfb${i}"></div>`).join('');
 
+    // Boşluk satırı — her kelime için tire bloğu
+    const blanksHtml = tokens.map((t, i) =>
+      `<span class="sfm-word-slot" id="sfm-slot-${i}" data-len="${t.clean.length}">
+        <span class="sfm-slot-fill" id="sfm-fill-${i}"></span>
+        <span class="sfm-slot-dashes">${'—'.repeat(Math.max(1, Math.ceil(t.clean.length * 0.7)))}</span>
+        <span class="sfm-slot-punc">${t.punc}</span>
+      </span>`
+    ).join(' ');
+
     this.el.innerHTML = `
 <div class="sfm-wrap">
 
-  <!-- Filtre şeridi -->
-  <div class="sfm-filters" role="tablist">
-    ${FILTERS.map(({ f, label }) =>
-      `<button class="sfm-filt${this._filter === f ? ' sfm-filt-on' : ''}" data-f="${f}" role="tab">${label}</button>`
+  <!-- Filtre -->
+  <div class="sfm-filters">
+    ${FILTERS.map(({ f, l }) =>
+      `<button class="sfm-filt${this._filter === f ? ' sfm-filt-on' : ''}" data-f="${f}">${l}</button>`
     ).join('')}
   </div>
 
-  <!-- Üst bar: istatistik + ilerleme -->
+  <!-- İstatistik + ilerleme -->
   <div class="sfm-topbar">
     <div class="sfm-stats">
       <span class="sfm-stat-chip">🔥 <strong>${this.streak}</strong></span>
       <span class="sfm-stat-chip">✅ <strong>${this.correct}/${this.total}</strong></span>
-      <span class="sfm-stat-chip sfm-counter"><strong>${this.idx + 1}</strong><em>/${this.pool.length}</em></span>
+      <span class="sfm-stat-chip"><strong>${this.idx + 1}</strong><em>/${this.pool.length}</em></span>
     </div>
     <div class="sfm-prog-track">
       <div class="sfm-prog-fill" style="width:${pct}%"></div>
@@ -134,42 +150,25 @@ class SpeakFillMode {
   <!-- Ana kart -->
   <div class="sfm-card" id="sfm-card">
 
-    <!-- Tip rozeti -->
+    <!-- Rozet + tip -->
     <div class="sfm-badge-row">
       <span class="sfm-badge"
         style="background:${col.bg};color:${col.fg};border-color:${col.bd}">
         ${item.type}
       </span>
+      <span class="sfm-phrase-key">${this._esc(item.phrase)}</span>
     </div>
 
-    <!-- Türkçe anlam (ipucu) -->
-    <div class="sfm-tr-hint">${this._esc(item.tr)}</div>
+    <!-- Türkçe anlam — büyük ipucu -->
+    <div class="sfm-tr-main">${this._esc(item.tr)}</div>
 
-    <!-- İfade + boşluk -->
-    <div class="sfm-phrase-row" id="sfm-phrase-row">
-      <span class="sfm-shown">${this._esc(item.shown)}</span>
-      <span class="sfm-gap" id="sfm-gap">
-        <span class="sfm-gap-text" id="sfm-gap-text"></span>
-        <span class="sfm-gap-line" id="sfm-gap-line"></span>
-      </span>
-    </div>
+    <!-- Tire boşlukları -->
+    <div class="sfm-blanks-area" id="sfm-blanks">${blanksHtml}</div>
 
-    <!-- Canlı transcript (küçük) -->
+    <!-- Canlı sesli yazım -->
     <div class="sfm-live" id="sfm-live"></div>
 
-    <!-- Örnek cümle (gizli başlar) -->
-    <div class="sfm-ex" id="sfm-ex" style="display:none">
-      <span class="sfm-ex-lbl">Örnek</span>
-      <span class="sfm-ex-txt">${this._exHtml(item)}</span>
-    </div>
-
-    <!-- Doğru cevap ifşası (yanlış durumda) -->
-    <div class="sfm-reveal" id="sfm-reveal" style="display:none">
-      <span class="sfm-reveal-lbl">Doğru cevap</span>
-      <span class="sfm-reveal-word">${this._esc(item.phrase)}</span>
-    </div>
-
-  </div><!-- /sfm-card -->
+  </div>
 
   <!-- Mikrofon bölümü -->
   <div class="sfm-mic-section">
@@ -178,17 +177,14 @@ class SpeakFillMode {
       <div class="sfm-ring sfm-ring-1" id="sfmr1"></div>
       <div class="sfm-ring sfm-ring-2" id="sfmr2"></div>
       <button class="sfm-mic-btn" id="sfm-mic"
-        ${!this._isSupported ? 'disabled title="Chrome/Edge gereklidir"' : ''}>
+        ${!this._isSupported ? 'disabled' : ''}>
         <span id="sfm-mic-ico">${this._micSvg(30)}</span>
       </button>
     </div>
-    <div class="sfm-hint-row">
-      <button class="sfm-hint-btn" id="sfm-hint">💡 Örnek cümle</button>
-    </div>
     <div class="sfm-status" id="sfm-status">
       ${this._isSupported
-        ? 'Mikrofona bas ve ifadeyi söyle'
-        : '⚠️ Ses tanıma için Chrome veya Edge kullan'}
+        ? 'Mikrofona bas, İngilizce cümleyi söyle'
+        : '⚠️ Chrome / Edge gereklidir'}
     </div>
   </div>
 
@@ -196,8 +192,8 @@ class SpeakFillMode {
   <div class="sfm-result" id="sfm-result" style="display:none">
     <div class="sfm-result-msg" id="sfm-result-msg"></div>
     <div class="sfm-result-btns">
-      <button class="sfm-rbtn sfm-rbtn-ghost" id="sfm-retry">🔄 Tekrar</button>
-      <button class="sfm-rbtn sfm-rbtn-primary" id="sfm-next">Sonraki →</button>
+      <button class="sfm-rbtn sfm-rbtn-ghost"    id="sfm-retry">🔄 Tekrar</button>
+      <button class="sfm-rbtn sfm-rbtn-primary"  id="sfm-next">Sonraki →</button>
     </div>
   </div>
 
@@ -221,41 +217,16 @@ class SpeakFillMode {
     this._bind();
   }
 
-  // ── Helpers ─────────────────────────────────────────────────────────────────
-
-  _exHtml(item) {
-    if (!item.ex) return '';
-    const escaped = this._esc(item.ex);
-    const re = new RegExp(
-      item.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'
-    );
-    return escaped.replace(
-      new RegExp(this._esc(item.phrase).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'),
-      m => `<mark class="sfm-ex-hl">${m}</mark>`
-    );
-  }
-
-  _esc(s) {
-    return String(s || '')
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  _norm(s) {
-    return s.toLowerCase().replace(/[^a-z\s]/g, '').replace(/\s+/g, ' ').trim();
-  }
-
-  // ── Events ──────────────────────────────────────────────────────────────────
+  // ── Events ────────────────────────────────────────────────────────────────
 
   _bind() {
     const q = s => this.el.querySelector(s);
-    q('#sfm-mic')   ?.addEventListener('click',  () => this._toggleRec());
-    q('#sfm-hint')  ?.addEventListener('click',  () => this._showHint());
-    q('#sfm-retry') ?.addEventListener('click',  () => this._reset());
-    q('#sfm-next')  ?.addEventListener('click',  () => this._advance());
-    q('#sfm-skip')  ?.addEventListener('click',  () => this._advance());
-    q('#sfm-prev')  ?.addEventListener('click',  () => this._go(this.idx - 1));
-    q('#sfm-fwd')   ?.addEventListener('click',  () => this._advance());
+    q('#sfm-mic')  ?.addEventListener('click', () => this._toggleRec());
+    q('#sfm-retry')?.addEventListener('click', () => this._reset());
+    q('#sfm-next') ?.addEventListener('click', () => this._advance());
+    q('#sfm-skip') ?.addEventListener('click', () => this._advance());
+    q('#sfm-prev') ?.addEventListener('click', () => this._go(this.idx - 1));
+    q('#sfm-fwd')  ?.addEventListener('click', () => this._advance());
     this.el.querySelectorAll('.sfm-filt').forEach(btn =>
       btn.addEventListener('click', () => {
         this._stopAll();
@@ -265,7 +236,7 @@ class SpeakFillMode {
     );
   }
 
-  // ── Navigation ──────────────────────────────────────────────────────────────
+  // ── Navigasyon ────────────────────────────────────────────────────────────
 
   _advance() {
     this._stopAll();
@@ -274,30 +245,30 @@ class SpeakFillMode {
 
   _go(idx) {
     this._stopAll();
-    this.idx         = Math.max(0, Math.min(idx, this.pool.length - 1));
-    this.status      = 'idle';
-    this.liveText    = '';
-    this.blankFilled = false;
+    this.idx      = Math.max(0, Math.min(idx, this.pool.length - 1));
+    this.status   = 'idle';
+    this.liveText = '';
     this._render();
   }
 
   _reset() {
     this._stopAll();
-    this.status      = 'idle';
-    this.liveText    = '';
-    this.blankFilled = false;
+    this.status   = 'idle';
+    this.liveText = '';
+    const item    = this._cur; if (!item) return;
+    const tokens  = this._tokenize(item.sentence);
+    this.filledWords = new Array(tokens.length).fill(false);
+    // Boşlukları temizle
+    tokens.forEach((_, i) => this._clearSlot(i));
     const q = s => this.el?.querySelector(s);
-    const gt = q('#sfm-gap-text');  if (gt) { gt.textContent = ''; gt.className = 'sfm-gap-text'; }
-    const gl = q('#sfm-gap-line');  if (gl) gl.style.display = '';
-    const lv = q('#sfm-live');      if (lv) lv.textContent = '';
-    const rv = q('#sfm-reveal');    if (rv) rv.style.display = 'none';
-    const rs = q('#sfm-result');    if (rs) rs.style.display = 'none';
-    const cd = q('#sfm-card');      if (cd) cd.classList.remove('sfm-card-ok', 'sfm-card-fail');
+    const lv = q('#sfm-live');  if (lv) lv.textContent = '';
+    const rs = q('#sfm-result'); if (rs) rs.style.display = 'none';
+    const cd = q('#sfm-card');  if (cd) cd.classList.remove('sfm-card-done');
     this._setMicUI('idle');
-    this._setStatus('Mikrofona bas ve ifadeyi söyle');
+    this._setStatus('Mikrofona bas, İngilizce cümleyi söyle');
   }
 
-  // ── Recording ───────────────────────────────────────────────────────────────
+  // ── Kayıt ─────────────────────────────────────────────────────────────────
 
   _toggleRec() {
     if (this.status === 'recording') this._stopRec();
@@ -308,19 +279,17 @@ class SpeakFillMode {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) return;
 
-    this.status      = 'recording';
-    this.liveText    = '';
-    this.blankFilled = false;
+    this.status   = 'recording';
+    this.liveText = '';
     this._setMicUI('recording');
     this._setStatus('<span class="sfm-dot"></span> Dinleniyor…');
-
     await this._startWave();
 
     const rec = new SR();
     this._rec = rec;
-    rec.lang = 'en-US';
-    rec.continuous = false;
-    rec.interimResults = true;
+    rec.lang            = 'en-US';
+    rec.continuous      = false;
+    rec.interimResults  = true;
     rec.maxAlternatives = 1;
     rec.start();
 
@@ -331,7 +300,12 @@ class SpeakFillMode {
         if (e.results[i].isFinal) final += t; else interim += t;
       }
       this.liveText = (final || interim).trim();
-      this._onLive(this.liveText);
+      this._matchAndFill(this.liveText);
+
+      const lv = this.el?.querySelector('#sfm-live');
+      if (lv) lv.innerHTML = this.liveText
+        ? `<span class="sfm-live-txt">"${this._esc(this.liveText)}"</span>`
+        : '';
     };
 
     rec.onend = () => {
@@ -339,8 +313,8 @@ class SpeakFillMode {
       if (this.status !== 'done') {
         this.status = 'processing';
         this._setMicUI('processing');
-        this._setStatus('Analiz ediliyor…');
-        setTimeout(() => this._evaluate(), 350);
+        this._setStatus('Değerlendiriliyor…');
+        setTimeout(() => this._finalize(), 300);
       }
     };
 
@@ -349,7 +323,7 @@ class SpeakFillMode {
       this.status = 'idle';
       this._setMicUI('idle');
       this._setStatus(e.error === 'no-speech'
-        ? 'Ses algılanamadı, tekrar dene.'
+        ? 'Ses algılanamadı. Tekrar dene.'
         : '⚠️ Bir hata oluştu.');
     };
   }
@@ -364,81 +338,58 @@ class SpeakFillMode {
     if (this._animFrame) { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
     if (this._audioCtx)  { try { this._audioCtx.close(); } catch {} this._audioCtx = null; }
     if (this._stream)    { this._stream.getTracks().forEach(t => t.stop()); this._stream = null; }
+    if (this._ttsTimer)  { clearTimeout(this._ttsTimer); this._ttsTimer = null; }
+    window.speechSynthesis?.cancel();
     this._analyser = null;
     this._resetBars();
   }
 
-  // ── Live blank fill ─────────────────────────────────────────────────────────
+  // ── Kelime eşleştirme ─────────────────────────────────────────────────────
 
-  _onLive(text) {
-    const q = s => this.el?.querySelector(s);
+  _norm(s) {
+    return s.toLowerCase().replace(/[^a-z\s']/g, '').replace(/\s+/g, ' ').trim();
+  }
 
-    // Live transcript under phrase row
-    const lv = q('#sfm-live');
-    if (lv) lv.innerHTML = text
-      ? `<span class="sfm-live-txt">"${this._esc(text)}"</span>`
-      : '';
+  _matchAndFill(transcript) {
+    const item = this._cur; if (!item) return;
+    const tokens  = this._tokenize(item.sentence);
+    const spoken  = this._norm(transcript).split(' ').filter(Boolean);
 
-    if (!this.blankFilled) {
-      const item   = this._cur;
-      const spoken = this._norm(text);
-      const hidden = this._norm(item?.hidden || '');
+    // Sıralı eşleştirme: spoken kelimelerini target kelimeleriyle sırayla eşleştir
+    let si = 0;
+    tokens.forEach((t, ti) => {
+      if (si >= spoken.length) return;
+      const target = this._norm(t.clean);
+      if (!target) return;
 
-      if (item && spoken.includes(hidden)) {
-        // Hidden word detected mid-speech → snap fill
-        this.blankFilled = true;
-        this._fillGap(item.hidden, 'snap');
+      // Tam veya yakın eşleşme
+      if (this._wordMatch(spoken[si], target)) {
+        if (!this.filledWords[ti]) {
+          this.filledWords[ti] = true;
+          this._fillSlot(ti, t.clean, t.punc, 'pop');
+        }
+        si++;
       } else {
-        // Show partial text in gap
-        const gt = q('#sfm-gap-text');
-        if (gt) gt.textContent = text;
+        // Aynı pozisyondaki sonraki spoken kelimelerinde ara (1 kelime atlamaya izin ver)
+        if (si + 1 < spoken.length && this._wordMatch(spoken[si + 1], target)) {
+          if (!this.filledWords[ti]) {
+            this.filledWords[ti] = true;
+            this._fillSlot(ti, t.clean, t.punc, 'pop');
+          }
+          si += 2;
+        }
+        // Eşleşme yok — boş bırak, si ilerletme
       }
-    }
+    });
   }
 
-  _fillGap(word, mode) {
-    const q  = s => this.el?.querySelector(s);
-    const gt = q('#sfm-gap-text');
-    const gl = q('#sfm-gap-line');
-    if (gt) {
-      gt.textContent = word;
-      gt.className   = 'sfm-gap-text sfm-gap-ok' + (mode === 'snap' ? ' sfm-gap-pop' : '');
-    }
-    if (gl) gl.style.display = 'none';
-  }
-
-  // ── Evaluation ──────────────────────────────────────────────────────────────
-
-  _evaluate() {
-    const item = this._cur;
-    if (!item) return;
-
-    const spoken = this._norm(this.liveText);
-    const hidden = this._norm(item.hidden);
-    const full   = this._norm(item.phrase);
-
-    const correct =
-      spoken.includes(hidden) ||
-      spoken.includes(full) ||
-      this._fuzzy(spoken, hidden);
-
-    this.total++;
-    if (correct) { this.correct++; this.streak++; }
-    else         { this.streak = 0; }
-
-    // XP
-    const xp  = correct ? 5 : 1;
-    const app = window._app || window.app;
-    if (app && typeof app.addXP === 'function') app.addXP(xp, 'medium', 'speak-fill');
-
-    this._showResult(correct, xp, item);
-  }
-
-  _fuzzy(spoken, hidden) {
-    // Each word in hidden must appear in spoken or be 1 edit away
-    return hidden.split(' ').every(w =>
-      spoken.includes(w) || this._lev(spoken, w) <= 1
-    );
+  _wordMatch(spoken, target) {
+    if (!spoken || !target) return false;
+    if (spoken === target) return true;
+    // Uzunluk benzer ise Levenshtein mesafesine bak
+    if (Math.abs(spoken.length - target.length) > 3) return false;
+    const maxDist = target.length <= 4 ? 1 : target.length <= 7 ? 2 : 3;
+    return this._lev(spoken, target) <= maxDist;
   }
 
   _lev(a, b) {
@@ -454,53 +405,141 @@ class SpeakFillMode {
     return dp[m][n];
   }
 
-  // ── Show result ─────────────────────────────────────────────────────────────
+  // ── Boşluk UI ─────────────────────────────────────────────────────────────
 
-  _showResult(correct, xp, item) {
-    const q = s => this.el?.querySelector(s);
+  _fillSlot(idx, word, punc, anim) {
+    const fill  = this.el?.querySelector(`#sfm-fill-${idx}`);
+    const dashes = this.el?.querySelector(`#sfm-slot-${idx} .sfm-slot-dashes`);
+    if (!fill) return;
+    fill.textContent = word;
+    fill.className   = `sfm-slot-fill sfm-slot-filled${anim === 'pop' ? ' sfm-slot-pop' : ''}`;
+    if (dashes) dashes.style.display = 'none';
+  }
+
+  _fillSlotAuto(idx, word, punc) {
+    // Otomatik doldurma (TTS senkronize) — farklı renk/animasyon
+    const fill   = this.el?.querySelector(`#sfm-fill-${idx}`);
+    const dashes = this.el?.querySelector(`#sfm-slot-${idx} .sfm-slot-dashes`);
+    if (!fill) return;
+    fill.textContent = word;
+    fill.className   = 'sfm-slot-fill sfm-slot-auto';
+    if (dashes) dashes.style.display = 'none';
+  }
+
+  _clearSlot(idx) {
+    const fill   = this.el?.querySelector(`#sfm-fill-${idx}`);
+    const dashes = this.el?.querySelector(`#sfm-slot-${idx} .sfm-slot-dashes`);
+    if (fill)   { fill.textContent = ''; fill.className = 'sfm-slot-fill'; }
+    if (dashes) dashes.style.display = '';
+  }
+
+  // ── Değerlendirme ve TTS ──────────────────────────────────────────────────
+
+  _finalize() {
+    const item = this._cur; if (!item) return;
+    const tokens = this._tokenize(item.sentence);
+
+    const filledCount = this.filledWords.filter(Boolean).length;
+    const ratio       = filledCount / tokens.length;
+
+    this.total++;
+    const correct = ratio >= 0.6;
+    if (correct) { this.correct++; this.streak++; }
+    else         { this.streak = 0; }
+
+    // XP
+    const xp  = ratio >= 0.9 ? 10 : ratio >= 0.6 ? 5 : 2;
+    const app = window._app || window.app;
+    if (app && typeof app.addXP === 'function') app.addXP(xp, 'medium', 'speak-fill');
 
     this.status = 'done';
     this._setMicUI('idle');
     this._setStatus('');
 
-    const card = q('#sfm-card');
-    if (card) card.classList.add(correct ? 'sfm-card-ok' : 'sfm-card-fail');
-
-    if (correct) {
-      if (!this.blankFilled) this._fillGap(item.hidden, 'snap');
-    } else {
-      const gt = q('#sfm-gap-text');
-      if (gt) {
-        gt.textContent = this.liveText || '?';
-        gt.className   = 'sfm-gap-text sfm-gap-fail';
-      }
-      // Reveal answer
-      const rv = q('#sfm-reveal');
-      if (rv) { rv.style.display = ''; rv.classList.add('sfm-reveal-anim'); }
-    }
-
-    // Result message
-    const msg = q('#sfm-result-msg');
+    // Sonuç mesajı
+    const msg = this.el?.querySelector('#sfm-result-msg');
     if (msg) {
-      msg.innerHTML = correct
-        ? `<span class="sfm-ok-msg">✅ Harika! <strong>${this._esc(item.phrase)}</strong> <span class="sfm-xp">+${xp} XP</span></span>`
-        : `<span class="sfm-fail-msg">❌ Söylediğin: <em>"${this._esc(this.liveText || '?')}"</em></span>`;
+      const pct   = Math.round(ratio * 100);
+      const color = ratio >= 0.8 ? '#34d399' : ratio >= 0.5 ? '#f59e0b' : '#f87171';
+      const label = ratio >= 0.8 ? 'Harika!' : ratio >= 0.5 ? 'İyi gidiyor!' : 'Daha fazla pratik yap!';
+      msg.innerHTML = `
+        <span class="sfm-res-label" style="color:${color}">${label}</span>
+        <span class="sfm-res-pct" style="color:${color}">${pct}% doğru</span>
+        <span class="sfm-xp">+${xp} XP</span>`;
     }
 
-    const res = q('#sfm-result');
+    const res = this.el?.querySelector('#sfm-result');
     if (res) { res.style.display = ''; res.classList.add('sfm-result-anim'); }
+
+    const card = this.el?.querySelector('#sfm-card');
+    if (card) card.classList.add('sfm-card-done');
+
+    // TTS: tüm cümleyi oku, eksik boşlukları senkronize doldur
+    this._autoFillWithTTS(tokens);
   }
 
-  // ── Hint ────────────────────────────────────────────────────────────────────
+  _autoFillWithTTS(tokens) {
+    if (!window.speechSynthesis) { this._autoFillFallback(tokens); return; }
 
-  _showHint() {
-    const item = this._cur;
-    if (!item?.ex) return;
-    const ex = this.el?.querySelector('#sfm-ex');
-    if (ex) { ex.style.display = ''; ex.classList.add('sfm-hint-anim'); }
+    const item = this._cur; if (!item) return;
+    const utt  = new SpeechSynthesisUtterance(item.sentence);
+    utt.lang   = 'en-US';
+    utt.rate   = 0.88;
+
+    let wordIdx = 0;
+
+    utt.onboundary = e => {
+      if (e.name !== 'word') return;
+      // Mevcut kelime indeksini hesapla
+      const spoken = item.sentence.substring(0, e.charIndex + e.charLength);
+      const wi = spoken.trim().split(/\s+/).length - 1;
+      if (wi < tokens.length && !this.filledWords[wi]) {
+        this.filledWords[wi] = true;
+        this._fillSlotAuto(wi, tokens[wi].clean, tokens[wi].punc);
+      }
+    };
+
+    utt.onend = () => {
+      // Kalan tüm boşlukları doldur
+      tokens.forEach((t, i) => {
+        if (!this.filledWords[i]) {
+          this.filledWords[i] = true;
+          this._fillSlotAuto(i, t.clean, t.punc);
+        }
+      });
+    };
+
+    // onboundary bazı tarayıcılarda çalışmayabilir — fallback timer
+    utt.onerror = () => this._autoFillFallback(tokens);
+    window.speechSynthesis.speak(utt);
+
+    // Safari/bazı Chrome versiyonları için fallback: TTS süresiyle orantılı timer
+    const avgWordMs = 380;
+    tokens.forEach((t, i) => {
+      if (!this.filledWords[i]) {
+        this._ttsTimer = setTimeout(() => {
+          if (!this.filledWords[i]) {
+            this.filledWords[i] = true;
+            this._fillSlotAuto(i, t.clean, t.punc);
+          }
+        }, i * avgWordMs + 200);
+      }
+    });
   }
 
-  // ── Mic UI ──────────────────────────────────────────────────────────────────
+  _autoFillFallback(tokens) {
+    const avgMs = 380;
+    tokens.forEach((t, i) => {
+      if (!this.filledWords[i]) {
+        setTimeout(() => {
+          this.filledWords[i] = true;
+          this._fillSlotAuto(i, t.clean, t.punc);
+        }, i * avgMs + 100);
+      }
+    });
+  }
+
+  // ── Mic UI ────────────────────────────────────────────────────────────────
 
   _setMicUI(state) {
     const q   = s => this.el?.querySelector(s);
@@ -527,16 +566,14 @@ class SpeakFillMode {
       btn.disabled = !this._isSupported;
     }
 
-    // Bar colors
     for (let i = 0; i < 18; i++) {
       const b = q(`#sfb${i}`);
       if (!b) continue;
       b.style.background = state === 'recording'
-        ? 'linear-gradient(to top, #06b6d4, #67e8f9)'
+        ? 'linear-gradient(to top,#06b6d4,#67e8f9)'
         : 'rgba(255,255,255,0.1)';
       b.style.boxShadow = state === 'recording'
-        ? '0 0 5px rgba(6,182,212,0.55)'
-        : 'none';
+        ? '0 0 5px rgba(6,182,212,0.5)' : 'none';
     }
   }
 
@@ -545,7 +582,7 @@ class SpeakFillMode {
     if (el) el.innerHTML = html;
   }
 
-  // ── Waveform ────────────────────────────────────────────────────────────────
+  // ── Dalga formu ───────────────────────────────────────────────────────────
 
   async _startWave() {
     try {
@@ -568,7 +605,6 @@ class SpeakFillMode {
       };
       tick();
     } catch {
-      // Fallback: random bars
       const tick = () => {
         if (this.status !== 'recording') return;
         for (let i = 0; i < 18; i++) {
@@ -588,21 +624,24 @@ class SpeakFillMode {
     }
   }
 
-  // ── SVGs ────────────────────────────────────────────────────────────────────
+  // ── Yardımcılar ───────────────────────────────────────────────────────────
 
   _micSvg(s = 30) {
     return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
       <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
       <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-      <line x1="12" y1="19" x2="12" y2="23"/>
-      <line x1="8" y1="23" x2="16" y2="23"/>
+      <line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>
     </svg>`;
   }
-
   _stopSvg() {
     return `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
       <rect x="6" y="6" width="12" height="12" rx="2" fill="white"/>
     </svg>`;
+  }
+  _esc(s) {
+    return String(s || '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 }
 
@@ -616,8 +655,6 @@ class SpeakFillMode {
     );
     if (pV2)   pV2.style.display   = tab === 'v2'   ? '' : 'none';
     if (pFill) pFill.style.display = tab === 'fill' ? '' : 'none';
-
-    // Lazy init fill mode
     if (tab === 'fill') {
       const mount = document.getElementById('speak-fill-point');
       if (mount && !window.speakFillMod) {
@@ -637,7 +674,7 @@ class SpeakFillMode {
     }
   };
 
-  const observer = new MutationObserver(bindTabs);
-  observer.observe(document.body, { childList: true, subtree: true });
+  const obs = new MutationObserver(bindTabs);
+  obs.observe(document.body, { childList: true, subtree: true });
   setTimeout(bindTabs, 600);
 })();
