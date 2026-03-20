@@ -1,7 +1,7 @@
 /* English Rhapsody — Service Worker | Network-first */
 'use strict';
 
-const CACHE_NAME  = 'er-v11';
+const CACHE_NAME  = 'er-v12';
 const STATIC_URLS = [
   '/',
   '/index.html',
