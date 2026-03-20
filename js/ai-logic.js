@@ -13,7 +13,7 @@ const _config = {
   projectId:         'englishrhapsody-78866',
   storageBucket:     'englishrhapsody-78866.firebasestorage.app',
   messagingSenderId: '94842633226',
-  appId:             '1:94842633246:web:26f0f89fdf558b918eb3f3',
+  appId:             '1:94842633226:web:26f0f89fdf558b918eb3f3',
 };
 
 let _model = null;
