@@ -1095,7 +1095,9 @@
     var shell = document.querySelector('.nexus-shell');
     if(!shell) return;
     var isIntro = !!shell.querySelector('.nexus-mode-selector');
+    var isSynth = !!shell.querySelector('.synth-game-container');
     shell.classList.toggle('nexus-intro-lock', isIntro);
+    shell.classList.toggle('nexus-synth-lock', isSynth);
   });
   window.addEventListener('load', function() {
     obs.observe(document.body, { childList:true, subtree:true });
