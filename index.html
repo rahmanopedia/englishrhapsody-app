@@ -1087,6 +1087,54 @@
   window.addEventListener('load',setup);
 })();
 </script>
+
+<!-- ── Sesli okuma: mobilde oynayan kelimeyi takip et ── -->
+<script defer>
+(function(){
+  if(window.innerWidth > 768) return;
+  var _obs = null;
+
+  function scrollToWord(el) {
+    var container = document.querySelector('.main-content');
+    if(!container || !el) return;
+    var cRect = container.getBoundingClientRect();
+    var eRect = el.getBoundingClientRect();
+    // Kelimenin container içindeki mutlak konumu
+    var elTop = eRect.top - cRect.top + container.scrollTop;
+    // Ekranın %30'unda tutmak için hedef scroll
+    var target = elTop - (container.clientHeight * 0.30);
+    container.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+  }
+
+  function attachObserver() {
+    if(_obs) return;
+    var storyArea = document.getElementById('story-area');
+    if(!storyArea) return;
+    _obs = new MutationObserver(function(mutations) {
+      for(var i = 0; i < mutations.length; i++) {
+        var m = mutations[i];
+        if(m.type === 'attributes' && m.attributeName === 'class') {
+          var el = m.target;
+          if(el.classList.contains('playing')) {
+            scrollToWord(el);
+            break;
+          }
+        }
+      }
+    });
+    _obs.observe(storyArea, { subtree: true, attributes: true, attributeFilter: ['class'] });
+  }
+
+  // story-area dolduğunda observer'ı bağla
+  var bodyObs = new MutationObserver(function() {
+    if(document.getElementById('story-area')) attachObserver();
+  });
+  window.addEventListener('load', function() {
+    attachObserver();
+    bodyObs.observe(document.body, { childList: true, subtree: true });
+  });
+})();
+</script>
 <!-- ── Veri Sıfırlama Onay Modalı (body'de sabit — her zaman erişilebilir) ── -->
 <div id="reset-confirm-modal" class="reset-modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="reset-modal-box">
