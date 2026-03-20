@@ -3050,6 +3050,107 @@ body.sidebar-closed .sidebar-tab {
 }
 .cloze-opt.used { opacity: 0.25; pointer-events: none; }
 
+/* ── Reading Lab — Mobile Optimizations ──────────────────── */
+@media (max-width: 768px) {
+  /* Header: başlık + kontroller dikey sırala */
+  .rh-top {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+  .rh-left { gap: 10px; }
+  .rh-left-icon { font-size: 1.4rem; }
+  .rh-left h1 { font-size: 1.05rem; }
+  .rh-left p { font-size: 0.72rem; }
+
+  /* Sağ kontroller: yatay sırala, full genişlik */
+  .rh-right {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+  }
+  .reading-mode-toggle { flex: 1; }
+  .rm-btn {
+    padding: 7px 10px;
+    font-size: 0.78rem;
+    flex: 1;
+    text-align: center;
+  }
+  .btn-play-audio {
+    padding: 7px 12px;
+    font-size: 0.78rem;
+    gap: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-play-audio .audio-icon { font-size: 1rem; }
+
+  /* Seviye sekmeleri */
+  .rh-bottom { padding: 8px 12px; }
+  .rh-bottom .level-tabs { gap: 4px; flex-wrap: nowrap; }
+  .rh-bottom .level-tab { padding: 5px 10px; font-size: 0.75rem; }
+  .rh-bottom .shuffle-tab { padding: 5px 8px; font-size: 0.72rem; }
+
+  .level-tabs { padding: 4px; gap: 4px; }
+  .level-tab { padding: 7px 14px; font-size: 0.8rem; }
+  .shuffle-tab { padding: 7px 12px; font-size: 0.75rem; }
+
+  /* Hikaye alanı */
+  .story-wrapper { padding: 18px 16px; }
+  .story-title { font-size: 1.1rem; }
+  .story-text { font-size: 1.05rem; line-height: 1.9; }
+  .story-text.quiz-mode { font-size: 1rem; }
+
+  /* Cloze seçenekleri: her biri tam genişlikte */
+  .cloze-opts { gap: 8px; padding-top: 18px; }
+  .cloze-opt {
+    flex: 1 1 calc(50% - 4px);
+    padding: 10px 12px;
+    font-size: 0.82rem;
+    text-align: center;
+  }
+
+  /* Annotation popup: sağa/sola taşmasın */
+  .ann-popup {
+    width: calc(100vw - 32px);
+    max-width: 320px;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    right: auto !important;
+  }
+
+  /* Story navigation */
+  .story-nav { gap: 8px; margin-bottom: 14px; }
+  .story-nav-btns { gap: 4px; }
+  .story-meta { gap: 4px; }
+}
+
+@media (max-width: 480px) {
+  .rh-top { padding: 12px 14px; }
+  .rh-left h1 { font-size: 0.95rem; }
+
+  .rh-right { flex-wrap: wrap; }
+  .reading-mode-toggle { width: 100%; }
+  .rm-btn { font-size: 0.75rem; padding: 6px 8px; }
+  .btn-play-audio { width: 100%; justify-content: center; }
+
+  .story-wrapper { padding: 14px 12px; }
+  .story-text { font-size: 0.98rem; line-height: 1.85; }
+
+  .cloze-opt { flex: 1 1 100%; }
+
+  /* Küçük ekranda level tab scroll */
+  .rh-bottom .level-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .rh-bottom .level-tabs::-webkit-scrollbar { display: none; }
+}
+
 /* ── 22. Analytics View ───────────────────────────────────── */
 .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
 .analytics-grid .card-full { grid-column: 1 / -1; }
