@@ -655,6 +655,7 @@
           <span class="fc-lvl-badge" id="fc-lvl"></span>
           <div class="fc-tr" id="fc-tr">—</div>
           <div class="fc-ex" id="fc-ex"></div>
+          <div class="fc-ex-tr" id="fc-ex-tr"></div>
         </div>
       </div>
     </div>
@@ -1256,6 +1257,8 @@
       document.getElementById('fc-ipa').textContent  = w.ipa || '';
       document.getElementById('fc-tr').textContent   = w.tr;
       document.getElementById('fc-ex').textContent   = w.ex || '';
+      var exTrEl = document.getElementById('fc-ex-tr');
+      if(exTrEl){ exTrEl.textContent = w.ex_tr ? '(' + w.ex_tr + ')' : ''; }
       document.getElementById('fc-lvl').textContent  = w.level || '';
       var total = this.queue.length;
       document.getElementById('fc-counter').textContent = (this.idx+1) + ' / ' + total;
