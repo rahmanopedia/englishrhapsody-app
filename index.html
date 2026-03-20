@@ -1087,6 +1087,22 @@
 })();
 </script>
 
+<!-- ── Nexus intro scroll kilit (has() fallback) ── -->
+<script defer>
+(function(){
+  if(window.innerWidth > 768) return;
+  var obs = new MutationObserver(function() {
+    var shell = document.querySelector('.nexus-shell');
+    if(!shell) return;
+    var isIntro = !!shell.querySelector('.nexus-mode-selector');
+    shell.classList.toggle('nexus-intro-lock', isIntro);
+  });
+  window.addEventListener('load', function() {
+    obs.observe(document.body, { childList:true, subtree:true });
+  });
+})();
+</script>
+
 <!-- ── Stats Drawer aç/kapat ── -->
 <script defer>
 (function(){
