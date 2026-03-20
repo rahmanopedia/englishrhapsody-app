@@ -6846,7 +6846,13 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .qhub-card:hover .qhc-arrow { transform:translateX(4px); color:var(--text-1); }
 
 @media(max-width:768px) {
-  .qhub-shell { padding:12px 14px; gap:10px; }
+  #quantum-root { overflow:hidden; }
+  .qhub-shell {
+    padding:12px 14px;
+    gap:10px;
+    max-height:calc(100dvh - var(--nav-h) - var(--mobile-nav-h) - env(safe-area-inset-bottom,0px) - 28px);
+    overflow:hidden;
+  }
   .qhub-header { padding:0; }
   .qhub-logo { font-size:1.8rem; }
   .qhub-title { font-size:1.1rem; letter-spacing:2px; margin:4px 0 2px; }
