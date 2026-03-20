@@ -1226,9 +1226,12 @@
     queue:[], idx:0, know:0, dontKnow:0, flipped:false,
 
     init: function(){
-      var mastery = (window._app && window._app.state && window._app.state.get('mastery')) || {};
-      var words = window.WORDS || [];
-      var due = (window.SRS && words.length) ? window.SRS.getDue(words, mastery) : words;
+      var app = window._app || window.app;
+      var mastery = (app && app.state && app.state.get('mastery')) || {};
+      // WORDS ve SRS const ile tanımlı — window'a eklenmez, doğrudan eriş
+      var words = (typeof WORDS !== 'undefined' ? WORDS : (window.WORDS || []));
+      var srs   = (typeof SRS   !== 'undefined' ? SRS   : window.SRS) || null;
+      var due = (srs && words.length) ? srs.getDue(words, mastery) : words;
       // Karıştır, max 20
       var pool = due.length >= 5 ? due : words;
       this.queue = pool.slice().sort(function(){ return Math.random()-.5; }).slice(0,20);
@@ -1266,10 +1269,12 @@
       if(!this.flipped){ this._flip(); return; }
       var word = this.queue[this.idx];
       // SRS güncelle
-      if(window.SRS && window._app){
-        var mastery = window._app.state.get('mastery') || {};
-        mastery = window.SRS.update(mastery, word.id || word.en, know);
-        window._app.state.set('mastery', mastery);
+      var _app2 = window._app || window.app;
+      var _srs2 = (typeof SRS !== 'undefined' ? SRS : window.SRS) || null;
+      if(_srs2 && _app2){
+        var mastery = _app2.state.get('mastery') || {};
+        mastery = _srs2.update(mastery, word.id || word.en, know);
+        _app2.state.set('mastery', mastery);
       }
       if(know) this.know++; else this.dontKnow++;
       var card = document.getElementById('fc-card');
@@ -1284,7 +1289,8 @@
     _showResult: function(){
       var stage = document.getElementById('fc-stage');
       if(!stage) return;
-      var pct = Math.round(this.know / this.queue.length * 100);
+      var total = this.know + this.dontKnow;
+      var pct = total > 0 ? Math.round(this.know / total * 100) : 0;
       var icon = pct >= 80 ? '🌟' : pct >= 50 ? '💪' : '📚';
       stage.innerHTML =
         '<div class="fc-result">' +
