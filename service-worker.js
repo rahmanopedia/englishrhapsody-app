@@ -1,7 +1,7 @@
-/* English Rhapsody — Service Worker | Network-first */
+/* English Rhapsody — Service Worker | Stale-While-Revalidate */
 'use strict';
 
-const CACHE_NAME  = 'er-v14';
+const CACHE_NAME  = 'er-v15';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -24,28 +24,23 @@ const STATIC_URLS = [
   '/js/auth.js',
   '/js/storage.js',
   '/js/analytics.js',
-  '/js/bridge-data.js',
-  '/js/bridge.js',
-  '/js/conversations.js',
   '/js/firebase-config.js',
   '/js/leaderboard.js',
   '/js/nexus.js',
   '/js/notification-settings.js',
   '/js/notifications.js',
   '/js/phantom.js',
-  '/js/phrasal_verbs_ext.js',
-  '/js/phrasal_verbs_ext2.js',
-  '/js/quantum.js',
   '/js/reading-engine.js',
   '/js/remote-config.js',
   '/js/splash.js',
-  '/js/stories-data.js',
   '/js/sw-register.js',
   '/js/cinema.js',
   '/js/video-data.js',
   '/js/phrases.js',
   '/js/speak-v2.js',
   '/js/speak-fill.js',
+  '/js/conversations.js',
+  '/js/bridge.js',
   '/firebase-messaging-sw.js',
 ];
 
@@ -82,11 +77,11 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET' || event.request.url.startsWith('chrome-extension')) return;
 
   const url = event.request.url;
-  const isHTML = url.includes('.html') || url.endsWith('/');
+  const isHTML  = url.includes('.html') || url.endsWith('/');
   const isAsset = url.includes('.js') || url.includes('.css') || url.includes('.png') || url.includes('.woff');
 
   if (isHTML) {
-    // HTML — network-first: her zaman gunceli goster
+    // HTML — network-first: her zaman güncel göster
     event.respondWith(
       fetch(event.request)
         .then(response => {
@@ -98,19 +93,25 @@ self.addEventListener('fetch', event => {
         .catch(() => caches.match(event.request).then(c => c || caches.match('/index.html')))
     );
   } else if (isAsset) {
-    // JS/CSS/images — network-first: her zaman gunceli goster, offline'da cache
+    // JS/CSS/images — stale-while-revalidate:
+    // Cache'den anında servis et, arka planda güncelle
     event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          if (shouldCache(response, url)) {
-            caches.open(CACHE_NAME).then(c => c.put(event.request, response.clone()));
-          }
-          return response;
+      caches.open(CACHE_NAME).then(cache =>
+        cache.match(event.request).then(cached => {
+          const networkFetch = fetch(event.request).then(response => {
+            if (shouldCache(response, url)) {
+              cache.put(event.request, response.clone());
+            }
+            return response;
+          }).catch(() => null);
+
+          // Cache varsa anında dön, yoksa network bekle
+          return cached || networkFetch;
         })
-        .catch(() => caches.match(event.request).then(c => c || new Response('', { status: 408 })))
+      )
     );
   } else {
-    // Diger (Firebase, API) — network-first
+    // Diğer (Firebase, API) — network-first
     event.respondWith(
       fetch(event.request).catch(() => caches.match(event.request))
     );

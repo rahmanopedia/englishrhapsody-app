@@ -1145,17 +1145,96 @@
 <script src="js/nexus.js" defer></script>
 <script src="js/leaderboard.js" defer></script>
 <script src="js/bridge.js" defer></script>
-<script src="js/bridge-data.js" defer></script>
-<script src="js/quantum.js?v=1.0.51" defer></script>
 <script src="js/reading-engine.js" defer></script>
 <script src="js/app.js" defer></script>
 <script src="js/video-data.js" defer></script>
 <script src="js/cinema.js" defer></script>
 <script src="js/phrases.js" defer></script>
-<script src="js/phrasal_verbs_ext.js" defer></script>
-<script src="js/phrasal_verbs_ext2.js" defer></script>
 
 <script src="js/sw-register.js" defer></script>
+
+<!-- ── Lazy Script Loader ── -->
+<script defer>
+(function () {
+  // Moda özel script'ler — sadece o moda girildiğinde yüklenir
+  var LAZY = {
+    quantum: ['js/quantum.js'],
+    bridge:  ['js/bridge-data.js'],
+    nexus:   ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js'],
+    phrases: ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js'],
+  };
+
+  var loaded = new Set();
+  var pending = {};
+
+  function loadScript(src) {
+    if (loaded.has(src)) return Promise.resolve();
+    if (pending[src]) return pending[src];
+    pending[src] = new Promise(function (resolve) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = function () { loaded.add(src); delete pending[src]; resolve(); };
+      s.onerror = function () { loaded.add(src); delete pending[src]; resolve(); };
+      document.head.appendChild(s);
+    });
+    return pending[src];
+  }
+
+  function ensureScripts(target) {
+    var srcs = LAZY[target];
+    if (!srcs) return Promise.resolve();
+    return srcs.reduce(function (chain, src) {
+      return chain.then(function () { return loadScript(src); });
+    }, Promise.resolve());
+  }
+
+  function allLoaded(target) {
+    var srcs = LAZY[target];
+    return !srcs || srcs.every(function (s) { return loaded.has(s); });
+  }
+
+  // Capture phase: nav tıklanınca önce script'leri yükle, sonra navigate et
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-target]');
+    if (!el) return;
+    var target = el.dataset.target;
+    if (!target || !LAZY[target] || allLoaded(target)) return;
+
+    e.stopImmediatePropagation();
+    e.preventDefault();
+
+    // Açık drawer varsa kapat
+    document.querySelectorAll('.modes-drawer.open').forEach(function (d) { d.classList.remove('open'); });
+    document.querySelectorAll('.modes-drawer-backdrop.open').forEach(function (d) { d.classList.remove('open'); });
+
+    ensureScripts(target).then(function () {
+      if (window._app && window._app.navigate) {
+        window._app.navigate(target);
+      } else {
+        el.click();
+      }
+    });
+  }, true);
+
+  // Sayfa yüklendikten 3 saniye sonra lazy script'leri arka planda prefetch et
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      var seen = new Set();
+      Object.values(LAZY).forEach(function (srcs) {
+        srcs.forEach(function (src) {
+          if (seen.has(src) || loaded.has(src)) return;
+          seen.add(src);
+          var link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.as = 'script';
+          link.href = src;
+          document.head.appendChild(link);
+        });
+      });
+    }, 3000);
+  });
+})();
+</script>
 <script defer>
 (function(){
   var MODE_VIEWS=new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement','cinema']);
