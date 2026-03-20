@@ -1082,6 +1082,7 @@
 <script src="js/auth.js" defer></script>
 <script src="js/conversations.js" defer></script>
 <script src="js/data.js" defer></script>
+<script src="js/ex-tr-data.js" defer></script>
 <script src="js/phantom.js" defer></script>
 <script src="js/nexus.js" defer></script>
 <script src="js/leaderboard.js" defer></script>
@@ -1258,7 +1259,7 @@
       document.getElementById('fc-tr').textContent   = w.tr;
       document.getElementById('fc-ex').textContent   = w.ex || '';
       var exTrEl = document.getElementById('fc-ex-tr');
-      if(exTrEl){ exTrEl.textContent = w.ex_tr ? '(' + w.ex_tr + ')' : ''; }
+      if(exTrEl){ var exTrVal = (typeof EX_TR !== 'undefined' && w.id ? EX_TR[w.id] : null) || w.ex_tr || ''; exTrEl.textContent = exTrVal ? '(' + exTrVal + ')' : ''; }
       document.getElementById('fc-lvl').textContent  = w.level || '';
       var total = this.queue.length;
       document.getElementById('fc-counter').textContent = (this.idx+1) + ' / ' + total;
