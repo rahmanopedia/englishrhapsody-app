@@ -119,6 +119,14 @@ self.addEventListener('fetch', event => {
           }
           return response;
         }).catch(() => new Response('', { status: 503 }));
+      caches.open(CACHE_NAME).then(async cache => {
+        const cached = await cache.match(event.request);
+        const fetchPromise = fetch(event.request).then(response => {
+          if (shouldCache(response, url)) {
+            cache.put(event.request, response.clone());
+          }
+          return response;
+        }).catch(() => new Response('', { status: 503 }));
 
         if (cached) {
           fetchPromise; // fire-and-forget background update
