@@ -5479,6 +5479,98 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .synth-hint-btn, .synth-skip-btn, .synth-pause-btn { padding: 6px 10px; font-size: 0.72rem; }
 }
 
+/* ── Sinestezi Tam Ekran ─────────────────────────────────────── */
+.synesthesia-wrapper:fullscreen,
+.synesthesia-wrapper:-webkit-full-screen {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100dvh !important;
+  min-height: unset !important;
+  overflow: hidden !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+  background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #020617 100%) !important;
+}
+.synesthesia-wrapper:fullscreen .synth-topbar,
+.synesthesia-wrapper:-webkit-full-screen .synth-topbar {
+  flex-shrink: 0 !important;
+  padding: 12px 20px !important;
+}
+.synesthesia-wrapper:fullscreen .synth-intro,
+.synesthesia-wrapper:-webkit-full-screen .synth-intro {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  min-height: 0 !important;
+  justify-content: flex-start !important;
+}
+.synesthesia-wrapper:fullscreen .synth-chamber,
+.synesthesia-wrapper:-webkit-full-screen .synth-chamber {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  min-height: 0 !important;
+}
+
+/* Tam ekran dikey (portrait) — orb boyutu düzelt */
+@media (max-width: 768px) {
+  .synesthesia-wrapper:fullscreen .synth-core-container,
+  .synesthesia-wrapper:-webkit-full-screen .synth-core-container {
+    transform: scale(0.72) !important;
+    margin-bottom: -24px !important;
+    margin-top: -8px !important;
+  }
+  .synesthesia-wrapper:fullscreen .synth-target-tr,
+  .synesthesia-wrapper:-webkit-full-screen .synth-target-tr {
+    font-size: 1.75rem !important;
+  }
+}
+
+/* Tam ekran yatay (landscape) — kompakt düzen */
+@media (max-height: 500px) {
+  .synesthesia-wrapper:fullscreen,
+  .synesthesia-wrapper:-webkit-full-screen {
+    gap: 0 !important;
+    padding: 0 !important;
+  }
+  .synesthesia-wrapper:fullscreen .synth-topbar,
+  .synesthesia-wrapper:-webkit-full-screen .synth-topbar {
+    padding: 6px 14px !important;
+  }
+  .synesthesia-wrapper:fullscreen .synth-chamber,
+  .synesthesia-wrapper:-webkit-full-screen .synth-chamber {
+    padding: 4px 14px 8px !important;
+  }
+  .synesthesia-wrapper:fullscreen .synth-target-area,
+  .synesthesia-wrapper:-webkit-full-screen .synth-target-area {
+    margin-bottom: 4px !important;
+  }
+  .synesthesia-wrapper:fullscreen .synth-target-tr,
+  .synesthesia-wrapper:-webkit-full-screen .synth-target-tr {
+    font-size: 1.1rem !important;
+  }
+  .synesthesia-wrapper:fullscreen .synth-core-container,
+  .synesthesia-wrapper:-webkit-full-screen .synth-core-container {
+    transform: scale(0.45) !important;
+    margin-bottom: -55px !important;
+    margin-top: -22px !important;
+  }
+  .synesthesia-wrapper:fullscreen .synth-hint-action,
+  .synesthesia-wrapper:-webkit-full-screen .synth-hint-action {
+    margin-top: 4px !important;
+    gap: 8px !important;
+  }
+  .synesthesia-wrapper:fullscreen .synth-hint-btn,
+  .synesthesia-wrapper:fullscreen .synth-skip-btn,
+  .synesthesia-wrapper:fullscreen .synth-pause-btn,
+  .synesthesia-wrapper:-webkit-full-screen .synth-hint-btn,
+  .synesthesia-wrapper:-webkit-full-screen .synth-skip-btn,
+  .synesthesia-wrapper:-webkit-full-screen .synth-pause-btn {
+    padding: 6px 10px !important;
+    font-size: 0.72rem !important;
+  }
+}
+
 /* ── Klavye açık: sıkıştırılmış düzen (JS .keyboard-open sınıfı ekler) ── */
 .synesthesia-wrapper.keyboard-open .synth-core-container { display: none; }
 .synesthesia-wrapper.keyboard-open .synth-target-tr     { font-size: 1.5rem !important; }
