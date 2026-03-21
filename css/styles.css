@@ -7125,6 +7125,120 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .qhc-arrow { font-size:1.1rem; }
 }
 
+/* ── Quantum: Fullscreen ── */
+#quantum-root:fullscreen,
+#quantum-root:-webkit-full-screen {
+  background: var(--bg, #0a0a14);
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100dvh !important;
+  min-height: unset !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  box-sizing: border-box !important;
+  padding: 12px !important;
+}
+#quantum-root:fullscreen .qhub-shell,
+#quantum-root:-webkit-full-screen .qhub-shell {
+  max-height: unset !important;
+  overflow: visible !important;
+  flex: 1 !important;
+}
+#quantum-root:fullscreen .qgame-shell,
+#quantum-root:-webkit-full-screen .qgame-shell {
+  min-height: unset !important;
+  flex: 1 !important;
+}
+
+/* ── Quantum: Portrait telefon optimizasyonu ── */
+@media (orientation: portrait) and (max-width: 500px) {
+  #quantum-root { overflow-y: auto; }
+  .qhub-shell { padding: 12px !important; gap: 10px !important; max-height: unset !important; overflow: visible !important; }
+  .qhub-header { padding: 0 !important; }
+  .qhub-logo { font-size: 1.6rem !important; }
+  .qhub-title { font-size: 1rem !important; letter-spacing: 2px !important; margin: 2px 0 !important; }
+  .qhub-sub { font-size: 0.7rem !important; }
+  .qhub-stats-bar { padding: 8px 12px !important; gap: 14px !important; }
+  .qhs-val { font-size: 1rem !important; }
+  .qhub-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
+  .qhub-card { padding: 12px 14px !important; gap: 10px !important; border-radius: 14px !important; }
+  .qhc-icon { font-size: 1.5rem !important; }
+  .qhc-body h2 { font-size: 0.88rem !important; margin-bottom: 2px !important; }
+  .qhc-body p { font-size: 0.7rem !important; line-height: 1.3 !important; margin-bottom: 5px !important; }
+  .qhc-tag { font-size: 0.6rem !important; padding: 2px 6px !important; }
+  /* Game shell */
+  .qgame-shell { padding: 10px !important; gap: 10px !important; min-height: unset !important; }
+  .qgame-topbar { gap: 8px !important; }
+  .qback-btn { padding: 6px 10px !important; font-size: 0.75rem !important; }
+  .rush-time-val { font-size: 1.6rem !important; }
+  .rush-info-bar { padding: 8px 12px !important; gap: 8px !important; }
+  .rush-icon { font-size: 1.4rem !important; }
+  .rush-label { font-size: 0.78rem !important; }
+  .sc-drop-zone { min-height: 50px !important; padding: 10px 12px !important; }
+  .sc-word-pool { padding: 10px 12px !important; gap: 6px !important; }
+  .sc-word-chip, .sc-placed-chip { padding: 7px 11px !important; font-size: 0.82rem !important; }
+  .sc-check-btn { padding: 11px !important; font-size: 0.9rem !important; }
+}
+
+/* ── Quantum: Landscape telefon optimizasyonu ── */
+@media (orientation: landscape) and (max-height: 500px) {
+  #quantum-root {
+    height: 100dvh !important;
+    min-height: unset !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+  }
+  /* Hub: 2 kolon yatay */
+  .qhub-shell {
+    flex: 1 !important;
+    padding: 6px max(12px, env(safe-area-inset-right)) 6px max(12px, env(safe-area-inset-left)) !important;
+    gap: 6px !important;
+    max-height: unset !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    min-height: 0 !important;
+  }
+  .qhub-header { display: flex !important; align-items: center !important; gap: 8px !important; padding: 0 !important; }
+  .qhub-logo { font-size: 1.2rem !important; flex-shrink: 0 !important; }
+  .qhub-title { font-size: 0.82rem !important; letter-spacing: 1px !important; margin: 0 !important; }
+  .qhub-sub { display: none !important; }
+  .qhub-stats-bar { padding: 5px 10px !important; gap: 14px !important; }
+  .qhs-val { font-size: 0.9rem !important; }
+  .qhs-lbl { font-size: 0.58rem !important; }
+  .qhub-grid { grid-template-columns: 1fr 1fr !important; gap: 6px !important; }
+  .qhub-card { padding: 8px 12px !important; gap: 8px !important; border-radius: 12px !important; }
+  .qhc-icon { font-size: 1.2rem !important; }
+  .qhc-body h2 { font-size: 0.78rem !important; margin-bottom: 1px !important; }
+  .qhc-body p { font-size: 0.65rem !important; line-height: 1.25 !important; margin-bottom: 4px !important; }
+  .qhc-tag { font-size: 0.55rem !important; padding: 1px 5px !important; }
+  /* Game: kompakt, tek sütun ama dar */
+  .qgame-shell {
+    flex: 1 !important;
+    padding: 4px max(12px, env(safe-area-inset-right)) 4px max(12px, env(safe-area-inset-left)) !important;
+    gap: 6px !important;
+    min-height: unset !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .qgame-topbar { gap: 6px !important; }
+  .qback-btn { padding: 4px 8px !important; font-size: 0.7rem !important; }
+  .qtb-score { font-size: 0.95rem !important; }
+  .rush-time-val { font-size: 1.4rem !important; }
+  .rush-info-bar { padding: 5px 10px !important; gap: 6px !important; }
+  .rush-icon { font-size: 1.1rem !important; }
+  .rush-label { font-size: 0.72rem !important; }
+  .rush-actions { gap: 8px !important; }
+  .arena-feedback { min-height: 20px !important; padding: 4px 8px !important; font-size: 0.8rem !important; }
+  .sc-drop-zone { min-height: 40px !important; padding: 6px 10px !important; gap: 5px !important; }
+  .sc-word-pool { padding: 6px 10px !important; gap: 5px !important; min-height: 36px !important; }
+  .sc-word-chip, .sc-placed-chip { padding: 5px 9px !important; font-size: 0.75rem !important; }
+  .sc-check-btn { padding: 8px !important; font-size: 0.82rem !important; }
+  .sc-clear-btn { padding: 8px 10px !important; font-size: 0.8rem !important; }
+}
+
 /* ── Shared Game Shell ───────────────────────────────────────── */
 .qgame-shell { width:100%; max-width:700px; margin:0 auto; padding:16px; display:flex; flex-direction:column; gap:16px; min-height:80vh; }
 .qgame-topbar { display:flex; align-items:center; gap:12px; }
