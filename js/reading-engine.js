@@ -90,7 +90,7 @@ class ReadingEngine{constructor(n){this.app=n,this.activePopup=null,this._closeO
       m.addedNodes.forEach(node => {
         if (node.nodeType !== 1) return;
         const cls = node.classList;
-        if (cls.contains('word-def-popup') || cls.contains('ann-popup')) {
+        if (cls.contains('word-def-popup') || cls.contains('ann-popup') || cls.contains('cloze-mini-popup')) {
           fs.appendChild(node);
         }
       });
