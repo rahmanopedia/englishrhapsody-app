@@ -2,7 +2,7 @@
 'use strict';
 
 
-const CACHE_NAME  = 'er-v18';
+const CACHE_NAME  = 'er-v19';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -88,7 +88,8 @@ self.addEventListener('fetch', event => {
       fetch(event.request)
         .then(response => {
           if (shouldCache(response, url)) {
-            caches.open(CACHE_NAME).then(c => c.put(event.request, response.clone()));
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
           }
           return response;
         })

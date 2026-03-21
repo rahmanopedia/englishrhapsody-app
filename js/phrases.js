@@ -18,7 +18,7 @@ class PhrasesModule {
     // Collect all phrases from CINEMA_DATA
     const raw = CINEMA_DATA.map(entry => ({
       english: entry.transcript,
-      turkish: entry.options.find(o => o.isCorrect)?.text || '—',
+      turkish: entry.options?.find(o => o.isCorrect)?.text || '—',
       film: entry.film || '',
       year: entry.year || '',
       emoji: entry.category === 'Spor' ? '⚽' :
