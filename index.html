@@ -834,31 +834,42 @@
 <!-- Reading -->
 <template id="tpl-reading">
 <div class="animate-in reading-workshop-container" style="width:100%;min-height:100%;">
-  <div class="reading-header">
-    <div class="rh-top">
-      <div class="rh-left">
-        <div class="rh-left-icon">📖</div>
-        <div class="rh-left-text">
-          <h1>Okuma Atölyesi</h1>
-          <p>Kelimeleri bağlamda hisset, metinle öğren.</p>
-        </div>
+  <div class="reading-header" id="reading-header">
+    <div class="rh-handle" id="rh-handle">
+      <div class="rh-handle-left">
+        <span class="rh-handle-icon">📖</span>
+        <span class="rh-handle-label" id="rh-handle-label">Okuma Atölyesi</span>
       </div>
-      <div class="rh-right">
-        <div class="reading-mode-toggle">
-          <button class="rm-btn active" id="btn-mode-read" data-action="set-reading-mode" data-mode="read">📚 Okuma</button>
-          <button class="rm-btn" id="btn-mode-quiz" data-action="set-reading-mode" data-mode="quiz">🧩 Egzersiz</button>
-        </div>
-        <button class="btn btn-primary btn-play-audio" id="btn-play-story" data-action="play-story">
-          <span class="audio-icon">🎧</span> Sesli Dinle
-        </button>
-      </div>
+      <span class="rh-handle-chevron">▾</span>
     </div>
-    <div class="rh-bottom">
-      <div class="level-tabs">
-        <button class="level-tab active" data-action="set-reading-level" data-level="Kolay">🌱 Kolay</button>
-        <button class="level-tab" data-action="set-reading-level" data-level="Orta">📚 Orta</button>
-        <button class="level-tab" data-action="set-reading-level" data-level="İleri">🔥 İleri</button>
-        <button class="shuffle-tab" id="btn-shuffle" data-action="toggle-shuffle" title="Hikayeleri rastgele sırala">🔀 Karıştır</button>
+    <div class="rh-body">
+      <div class="rh-body-inner">
+        <div class="rh-top">
+          <div class="rh-left">
+            <div class="rh-left-icon">📖</div>
+            <div class="rh-left-text">
+              <h1>Okuma Atölyesi</h1>
+              <p>Kelimeleri bağlamda hisset, metinle öğren.</p>
+            </div>
+          </div>
+          <div class="rh-right">
+            <div class="reading-mode-toggle">
+              <button class="rm-btn active" id="btn-mode-read" data-action="set-reading-mode" data-mode="read">📚 Okuma</button>
+              <button class="rm-btn" id="btn-mode-quiz" data-action="set-reading-mode" data-mode="quiz">🧩 Egzersiz</button>
+            </div>
+            <button class="btn btn-primary btn-play-audio" id="btn-play-story" data-action="play-story">
+              <span class="audio-icon">🎧</span> Sesli Dinle
+            </button>
+          </div>
+        </div>
+        <div class="rh-bottom">
+          <div class="level-tabs">
+            <button class="level-tab active" data-action="set-reading-level" data-level="Kolay">🌱 Kolay</button>
+            <button class="level-tab" data-action="set-reading-level" data-level="Orta">📚 Orta</button>
+            <button class="level-tab" data-action="set-reading-level" data-level="İleri">🔥 İleri</button>
+            <button class="shuffle-tab" id="btn-shuffle" data-action="toggle-shuffle" title="Hikayeleri rastgele sırala">🔀 Karıştır</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

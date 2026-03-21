@@ -39,6 +39,54 @@ class ReadingEngine{constructor(n){this.app=n,this.activePopup=null,this._closeO
     if (req) req.call(el).catch(() => {});
   }
 
+  function _rdHeaderSetup(container) {
+    const header  = container.querySelector('.reading-header');
+    const handle  = container.querySelector('.rh-handle');
+    const label   = container.querySelector('#rh-handle-label');
+    if (!header || !handle) return;
+
+    let _autoClose = null;
+
+    function _updateLabel() {
+      if (!label) return;
+      const lvl  = header.querySelector('.level-tab.active');
+      const mode = header.querySelector('.rm-btn.active');
+      const parts = [
+        lvl  ? lvl.textContent.trim()  : '',
+        mode ? mode.textContent.trim() : ''
+      ].filter(Boolean);
+      label.textContent = parts.join(' · ') || 'Okuma Atölyesi';
+    }
+
+    function collapse() {
+      header.classList.add('rh-collapsed');
+      if (_autoClose) { clearTimeout(_autoClose); _autoClose = null; }
+      _updateLabel();
+    }
+
+    function expand() {
+      header.classList.remove('rh-collapsed');
+      if (_autoClose) clearTimeout(_autoClose);
+      _autoClose = setTimeout(collapse, 4000);
+    }
+
+    handle.addEventListener('click', () => {
+      header.classList.contains('rh-collapsed') ? expand() : collapse();
+    });
+
+    // Başlık içindeki butonlara (seviye, mod vb.) tıklayınca timer'ı sıfırla
+    header.addEventListener('click', e => {
+      if (e.target.closest('.rh-handle')) return;
+      if (!header.classList.contains('rh-collapsed')) {
+        if (_autoClose) clearTimeout(_autoClose);
+        _autoClose = setTimeout(collapse, 4000);
+      }
+    });
+
+    // Başlangıçta kapalı
+    collapse();
+  }
+
   function _rdInit(el) {
     if (_rdEl === el) return;
     _rdEl = el;
@@ -48,6 +96,7 @@ class ReadingEngine{constructor(n){this.app=n,this.activePopup=null,this._closeO
     _rdOrient = () => _rdEnterFs(el);
     window.addEventListener('resize', _rdOrient, { passive: true });
     if (window.attachQuickMenuTrigger) window.attachQuickMenuTrigger(el);
+    _rdHeaderSetup(el);
   }
 
   function _rdDestroy() {
