@@ -2,7 +2,7 @@
 'use strict';
 
 
-const CACHE_NAME  = 'er-v17';
+const CACHE_NAME  = 'er-v18';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -98,28 +98,6 @@ self.addEventListener('fetch', event => {
     // JS/CSS/images — stale-while-revalidate:
     // Cache'den anında servis et, arka planda güncelle
     event.respondWith(
-
-      caches.open(CACHE_NAME).then(cache =>
-        cache.match(event.request).then(cached => {
-          const networkFetch = fetch(event.request).then(response => {
-            if (shouldCache(response, url)) {
-              cache.put(event.request, response.clone());
-            }
-            return response;
-          }).catch(() => null);
-
-          // Cache varsa anında dön, yoksa network bekle
-          return cached || networkFetch;
-        })
-      )
-      caches.open(CACHE_NAME).then(async cache => {
-        const cached = await cache.match(event.request);
-        const fetchPromise = fetch(event.request).then(response => {
-          if (shouldCache(response, url)) {
-            cache.put(event.request, response.clone());
-          }
-          return response;
-        }).catch(() => new Response('', { status: 503 }));
       caches.open(CACHE_NAME).then(async cache => {
         const cached = await cache.match(event.request);
         const fetchPromise = fetch(event.request).then(response => {
