@@ -5415,28 +5415,28 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .synth-session-picker { margin-bottom: 18px; }
   .synth-start-btn { padding: 14px 32px; font-size: 1rem; }
 
-  /* Game chamber: tam alan, scroll güvenliği */
+  /* Game chamber: öğeleri ekrana eşit dağıt, scroll yok */
   .synth-chamber {
     flex: 1;
-    overflow-y: auto;
+    overflow: hidden;
     overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    padding: 6px calc(14px + env(safe-area-inset-right, 0px)) 10px calc(14px + env(safe-area-inset-left, 0px));
-    justify-content: flex-start;
+    padding: 2px calc(14px + env(safe-area-inset-right, 0px)) 4px calc(14px + env(safe-area-inset-left, 0px));
+    justify-content: space-evenly;
     gap: 0;
   }
 
   /* Word display alanı */
-  .synth-target-area { margin-bottom: 10px; }
-  .synth-target-tr { font-size: 1.65rem; }
-  .synth-word-meta { gap: 6px; margin-bottom: 8px; }
-  .synth-word-icon { font-size: 1.2rem; }
+  .synth-target-area { margin-bottom: 0; }
+  .synth-target-tr { font-size: 1.55rem; }
+  .synth-word-meta { gap: 6px; margin-bottom: 4px; }
+  .synth-word-icon { font-size: 1.1rem; }
+  #synth-ex { font-size: 0.8rem; margin-top: 4px; }
 
-  /* Orb: küçült */
+  /* Orb: layout alanını scale ile eşitle (200px → 130px) */
   .synth-core-container {
     transform: scale(0.65);
-    margin-bottom: -30px; /* negatif margin — scale küçüldüğünde boşluk kalmasın */
-    margin-top: -10px;
+    margin-top: -35px;
+    margin-bottom: -35px;
   }
 
   /* Harf alanı */
@@ -5447,24 +5447,28 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .synth-input-area.word-xxl span { font-size: 0.85rem; width: 10px; }
 
   /* Alt butonlar (dinle / geç / duraklat) */
-  .synth-hint-action { margin-top: 8px; gap: 10px; }
+  .synth-hint-action { margin-top: 0; gap: 8px; }
   .synth-hint-btn, .synth-skip-btn, .synth-pause-btn {
-    padding: 8px 14px;
-    font-size: 0.78rem;
+    padding: 8px 12px;
+    font-size: 0.76rem;
   }
 
+  /* Tap-hint butonu */
+  .synth-tap-hint { padding: 8px 20px; font-size: 0.8rem; }
+
   /* Seçme modu butonları */
-  .synth-choice-btn { padding: 14px 10px; gap: 4px; }
-  .sc-emoji { font-size: 1.4rem; }
-  .sc-en { font-size: 0.95rem; }
+  .synth-choice-btn { padding: 12px 10px; gap: 4px; }
+  .sc-emoji { font-size: 1.35rem; }
+  .sc-en { font-size: 0.9rem; }
 }
 
 /* Çok küçük ekranlar (≤400px — SE, A02, vs.) */
 @media (max-width: 400px) {
   .synth-topbar { padding: 8px 10px; }
-  .synth-target-tr { font-size: 1.45rem; }
-  .synth-core-container { transform: scale(0.58); margin-bottom: -40px; margin-top: -14px; }
+  .synth-target-tr { font-size: 1.35rem; }
+  .synth-core-container { transform: scale(0.55); margin-top: -45px; margin-bottom: -45px; }
   .synth-hint-btn, .synth-skip-btn, .synth-pause-btn { padding: 6px 10px; font-size: 0.72rem; }
+  #synth-ex { display: none; } /* çok küçük ekranda örnek cümle gizle */
 }
 
 /* Landscape mobil: yatay yoğun düzen */
@@ -5512,10 +5516,21 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .synesthesia-wrapper:fullscreen .synth-chamber,
 .synesthesia-wrapper:-webkit-full-screen .synth-chamber {
   flex: 1 !important;
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch !important;
+  overflow: hidden !important;
   min-height: 0 !important;
+  justify-content: space-evenly !important;
+  padding: 2px 14px 4px !important;
 }
+.synesthesia-wrapper:fullscreen .synth-target-area,
+.synesthesia-wrapper:-webkit-full-screen .synth-target-area { margin-bottom: 0 !important; }
+.synesthesia-wrapper:fullscreen .synth-core-container,
+.synesthesia-wrapper:-webkit-full-screen .synth-core-container {
+  transform: scale(0.65) !important;
+  margin-top: -35px !important;
+  margin-bottom: -35px !important;
+}
+.synesthesia-wrapper:fullscreen .synth-hint-action,
+.synesthesia-wrapper:-webkit-full-screen .synth-hint-action { margin-top: 0 !important; }
 
 /* Tam ekran dikey (portrait) — orb boyutu düzelt */
 @media (max-width: 768px) {
