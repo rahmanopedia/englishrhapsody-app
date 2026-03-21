@@ -54,7 +54,7 @@ class BridgeModule {
               <p style="margin:0; font-size:0.7rem; color:var(--text-3); text-transform:uppercase;">Akıllı Keşif Modu</p>
             </div>
           </div>
-          <div class="bridge-header-stats">
+          <div class="bridge-stat-group">
             <div class="bridge-stat-item" id="b-stat-count">✨ ${this.bridgeCount}</div>
             <div class="bridge-stat-item" id="b-stat-streak">🔥 ${this.streakData.count}</div>
             <button class="bridge-trigger-btn" style="width:40px; height:40px; font-size:1.2rem;" id="b-quiz-btn">🎯</button>
@@ -69,7 +69,7 @@ class BridgeModule {
             <textarea class="bridge-textarea" id="b-text" placeholder="Bir ifade yaz veya oka bas!"></textarea>
             <div class="bridge-examples">${examplesHtml}</div>
           </div>
-          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;">
+          <div class="bridge-trigger-col" style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;">
             <button class="bridge-trigger-btn" id="b-trigger" title="Yeni İfade Keşfet">➔</button>
             <span style="font-size:0.6rem; color:var(--text-3); font-weight:700;">KEŞFET</span>
           </div>
@@ -327,7 +327,8 @@ class BridgeModule {
     document.body.appendChild(ov);
     const render = () => {
       if (i >= qs.length) {
-        ov.innerHTML = `<div class="bridge-panel" style="text-align:center; padding:40px;"><h2>Bitti!</h2><p style="font-size:2rem;">${sc}/${qs.length}</p><button class="bridge-cat-chip active" onclick="this.parentElement.parentElement.remove()">Kapat</button></div>`;
+        ov.innerHTML = `<div class="bridge-panel" style="text-align:center; padding:40px;"><h2>Bitti!</h2><p style="font-size:2rem;">${sc}/${qs.length}</p><button class="bridge-cat-chip active" id="bq-close-btn">Kapat</button></div>`;
+        ov.querySelector('#bq-close-btn').addEventListener('click', () => ov.remove());
         this.app.addXP(sc * 20, "medium");
         return;
       }
