@@ -3295,9 +3295,32 @@ body.sidebar-closed .sidebar-tab {
 .reading-workshop-container:fullscreen,
 .reading-workshop-container:-webkit-full-screen {
   background: var(--bg, #0a0a14);
-  overflow-y: auto;
+  display: flex !important;
+  flex-direction: column !important;
   height: 100dvh !important;
+  min-height: unset !important;
+  overflow: hidden !important;
+  gap: 10px !important;
   padding: 14px !important;
+  box-sizing: border-box !important;
+}
+.reading-workshop-container:fullscreen .reading-header,
+.reading-workshop-container:-webkit-full-screen .reading-header {
+  flex-shrink: 0 !important;
+}
+.reading-workshop-container:fullscreen .story-wrapper,
+.reading-workshop-container:-webkit-full-screen .story-wrapper {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  min-height: 0 !important;
+}
+.reading-workshop-container:fullscreen .story-wrapper::before,
+.reading-workshop-container:fullscreen .story-wrapper::after,
+.reading-workshop-container:-webkit-full-screen .story-wrapper::before,
+.reading-workshop-container:-webkit-full-screen .story-wrapper::after {
+  display: none;
 }
 
 /* ── Okuma: Portrait telefon optimizasyonu ── */
@@ -3324,41 +3347,47 @@ body.sidebar-closed .sidebar-tab {
 @media (orientation: landscape) and (max-height: 500px) {
   .reading-workshop-container {
     height: 100dvh !important;
+    min-height: unset !important;
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 6px !important;
     padding: 6px max(14px, env(safe-area-inset-right)) 6px max(14px, env(safe-area-inset-left)) !important;
+    box-sizing: border-box !important;
   }
-  /* Header: tek satır, kompakt */
-  .reading-header { flex-shrink: 0 !important; border-radius: 12px !important; }
+  /* Header: kompakt, açılır-kapanır ile zaten küçük */
+  .reading-header { flex-shrink: 0 !important; border-radius: 10px !important; }
+  .rh-handle { padding: 7px 14px !important; }
   .rh-top {
     padding: 8px 14px !important;
     flex-wrap: nowrap !important;
     gap: 8px !important;
   }
-  .rh-left-icon { font-size: 1.2rem !important; }
-  .rh-left h1 { font-size: 0.88rem !important; }
+  .rh-left-icon { font-size: 1.1rem !important; }
+  .rh-left h1 { font-size: 0.85rem !important; }
   .rh-left p { display: none !important; }
   .rh-right { flex-direction: row !important; align-items: center !important; gap: 6px !important; flex-wrap: nowrap !important; }
   .reading-mode-toggle { padding: 3px !important; }
-  .rm-btn { font-size: 0.68rem !important; padding: 5px 7px !important; }
-  .btn-play-audio { padding: 5px 10px !important; font-size: 0.72rem !important; white-space: nowrap !important; }
+  .rm-btn { font-size: 0.65rem !important; padding: 4px 7px !important; }
+  .btn-play-audio { padding: 4px 9px !important; font-size: 0.7rem !important; white-space: nowrap !important; }
   .rh-bottom { padding: 4px 14px !important; }
-  .rh-bottom .level-tab { padding: 3px 8px !important; font-size: 0.7rem !important; }
-  .rh-bottom .shuffle-tab { padding: 3px 7px !important; font-size: 0.68rem !important; }
-  /* Story: kalan yüksekliği doldur, scroll edilebilir */
+  .rh-bottom .level-tab { padding: 3px 8px !important; font-size: 0.68rem !important; }
+  .rh-bottom .shuffle-tab { padding: 3px 7px !important; font-size: 0.65rem !important; }
+  /* Story: kalan yüksekliği doldur, yalnızca story-wrapper scroll eder */
   .story-wrapper {
     flex: 1 !important;
     overflow-y: auto !important;
-    padding: 12px 16px !important;
-    border-radius: 12px !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 10px 14px !important;
+    border-radius: 10px !important;
     min-height: 0 !important;
   }
-  .story-title { font-size: 1rem !important; }
-  .story-nav { margin-bottom: 8px !important; padding-bottom: 8px !important; }
-  .story-text { font-size: 0.92rem !important; line-height: 1.65 !important; }
-  .story-text p { margin-bottom: 0.8rem !important; }
+  .story-wrapper::before, .story-wrapper::after { display: none !important; }
+  .story-title { font-size: 0.95rem !important; }
+  .story-nav { margin-bottom: 6px !important; padding-bottom: 6px !important; }
+  .story-text { font-size: 0.88rem !important; line-height: 1.6 !important; }
+  .story-text p { margin-bottom: 0.7rem !important; }
 }
 
 /* ── 22. Analytics View ───────────────────────────────────── */
