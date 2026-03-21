@@ -5479,6 +5479,11 @@ body.rank-6 { --theme-accent: #ff9d00; }
   .synth-hint-btn, .synth-skip-btn, .synth-pause-btn { padding: 6px 10px; font-size: 0.72rem; }
 }
 
+/* Double-tap zoom ve nav engeli */
+.synth-chamber, #ph-chamber {
+  touch-action: manipulation;
+}
+
 /* ── Sinestezi Tam Ekran ─────────────────────────────────────── */
 .synesthesia-wrapper:fullscreen,
 .synesthesia-wrapper:-webkit-full-screen {
