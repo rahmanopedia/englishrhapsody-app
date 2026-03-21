@@ -187,52 +187,7 @@ exports.sendDailyReminders = onSchedule(
 // ── Manual Admin Trigger — HTTP callable for testing ──────────
 
 const { onCall, HttpsError } = require('firebase-functions/v2/https');
-const { defineSecret } = require('firebase-functions/params');
 const { getAuth } = require('firebase-admin/auth');
-
-// ── AI Coach Proxy ─────────────────────────────────────────────
-// ANTHROPIC_KEY secret'ini ayarlamak için:
-//   firebase functions:secrets:set ANTHROPIC_KEY
-// Ardından: firebase deploy --only functions
-
-const anthropicKey = defineSecret('ANTHROPIC_KEY');
-
-exports.coachProxy = onCall(
-  { region: 'europe-west1', secrets: [anthropicKey] },
-  async (req) => {
-    if (!req.auth) throw new HttpsError('unauthenticated', 'Login required');
-
-    const { sentence, transcript, missed, score } = req.data || {};
-    if (!sentence) throw new HttpsError('invalid-argument', 'sentence required');
-
-    const key = anthropicKey.value();
-    if (!key) throw new HttpsError('failed-precondition', 'Coach not configured');
-
-    const missed_list = Array.isArray(missed) ? missed.slice(0, 5) : [];
-    const prompt = `İngilizce telaffuz koçusun. Türk öğrenci:\nHedef cümle: "${sentence}"\nÖğrencinin söylediği: "${transcript || ''}"\nHatalı kelimeler: ${JSON.stringify(missed_list)}\nSkor: ${score || 0}/100\nTürkçe, 2-3 cümle, somut öneri + teşvik. Emoji kullan. Çok kısa ol.`;
-
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'x-api-key': key,
-          'anthropic-version': '2023-06-01',
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 200,
-          messages: [{ role: 'user', content: prompt }],
-        }),
-      });
-      const data = await res.json();
-      const text = data?.content?.[0]?.text?.trim() || '';
-      return { text };
-    } catch (e) {
-      throw new HttpsError('internal', 'Coach request failed');
-    }
-  }
-);
 
 exports.sendTestNotification = onCall({ region: 'europe-west1' }, async (req) => {
   // Must be called by a Firebase Admin user (set custom claims on backend)
