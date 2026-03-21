@@ -2,7 +2,7 @@
 'use strict';
 
 
-const CACHE_NAME  = 'er-v19';
+const CACHE_NAME  = 'er-v53';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -27,6 +27,7 @@ const STATIC_URLS = [
   '/js/analytics.js',
   '/js/firebase-config.js',
   '/js/leaderboard.js',
+  '/js/quick-menu.js',
   '/js/nexus.js',
   '/js/notification-settings.js',
   '/js/notifications.js',
@@ -42,7 +43,7 @@ const STATIC_URLS = [
   '/js/speak-fill.js',
   '/js/conversations.js',
   '/js/bridge.js',
-  '/js/boot.js',
+  /* boot.js intentionally excluded — always network-first */
   '/firebase-messaging-sw.js',
 ];
 
@@ -59,7 +60,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+      Promise.all(keys.filter(k => k !== CACHE_NAME && k !== 'pwa-meta-v1').map(k => caches.delete(k))))
     ).then(() => self.clients.claim())
   );
 });
@@ -96,6 +97,20 @@ self.addEventListener('fetch', event => {
         .catch(() => caches.match(event.request).then(c => c || caches.match('/index.html')))
     );
   } else if (isAsset) {
+    // boot.js — her zaman network-first (kritik PWA mantığı içeriyor)
+    const isBootJs = url.includes('/js/boot.js');
+    if (isBootJs) {
+      event.respondWith(
+        fetch(event.request).then(response => {
+          if (shouldCache(response, url)) {
+            caches.open(CACHE_NAME).then(c => c.put(event.request, response.clone()));
+          }
+          return response;
+        }).catch(() => caches.match(event.request))
+      );
+      return;
+    }
+
     // JS/CSS/images — stale-while-revalidate:
     // Cache'den anında servis et, arka planda güncelle
     event.respondWith(

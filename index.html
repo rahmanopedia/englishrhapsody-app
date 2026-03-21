@@ -468,16 +468,6 @@
     </div>
   </header>
 
-  <!-- PWA Install Banner -->
-  <div class="pwa-install-banner" id="pwa-banner">
-    <span class="pwa-install-icon">📲</span>
-    <div class="pwa-install-text">
-      <span class="pwa-install-title">Ana Ekrana Ekle</span>
-      <span class="pwa-install-sub">Uygulama gibi kullan, internet olmadan çalış</span>
-    </div>
-    <button class="pwa-install-btn" id="pwa-install-btn">Ekle</button>
-    <button class="pwa-install-close" id="pwa-banner-close">✕</button>
-  </div>
 
   <!-- 2. Hızlı İstatistikler (Şerit) -->
   <section class="home-stats-strip">
@@ -843,7 +833,7 @@
 
 <!-- Reading -->
 <template id="tpl-reading">
-<div class="animate-in reading-workshop-container">
+<div class="animate-in reading-workshop-container" style="width:100%;min-height:100%;">
   <div class="reading-header">
     <div class="rh-top">
       <div class="rh-left">
@@ -879,7 +869,7 @@
 
 <!-- Speaking -->
 <template id="tpl-speak">
-<div class="animate-in speak-container">
+<div class="animate-in speak-container" style="width:100%;min-height:100%;">
 
   <!-- Mod seçim ekranı -->
   <div id="spk-picker">
@@ -1087,12 +1077,6 @@
 </div>
 </template>
 
-<!-- Placement Test -->
-<template id="tpl-placement">
-<div class="placement-shell animate-in">
-  <div class="pl-wrap" id="pl-wrap"></div>
-</div>
-</template>
 
 <!-- Nexus: Phrasal Verb Mod -->
 <template id="tpl-nexus">
@@ -1140,6 +1124,7 @@
 <script src="js/data.js" defer></script>
 <script src="js/ex-tr-data.js" defer></script>
 <script src="js/phantom.js" defer></script>
+<script src="js/quick-menu.js" defer></script>
 <script src="js/nexus.js" defer></script>
 <script src="js/leaderboard.js" defer></script>
 <script src="js/bridge.js" defer></script>
@@ -1151,7 +1136,7 @@
 
 <script src="js/sw-register.js" defer></script>
 
-<script src="js/boot.js" defer></script>
+<script src="js/boot.js?v=30" defer></script>
 
 <!-- ── Veri Sıfırlama Onay Modalı (body'de sabit — her zaman erişilebilir) ── -->
 <div id="reset-confirm-modal" class="reset-modal" style="display:none" data-action="close-modal-backdrop">

@@ -657,6 +657,37 @@
   opacity: 0.85;
 }
 
+/* ── Portrait phone optimization ── */
+@media (orientation: portrait) and (max-width: 500px) {
+  .sv2-wrap {
+    padding: 16px 12px 90px !important;
+  }
+  .sv2-levels { margin-bottom: 14px !important; }
+  .sv2-settings { margin-bottom: 8px !important; }
+  .sv2-stats { margin-bottom: 8px !important; }
+  .sv2-card {
+    padding: 16px !important;
+    margin-bottom: 10px !important;
+    min-height: 70px !important;
+    border-radius: 12px !important;
+  }
+  .sv2-sentence { font-size: 1rem !important; line-height: 1.45 !important; }
+  .sv2-nav { margin-bottom: 12px !important; }
+  .sv2-audio-btns { gap: 14px !important; margin-bottom: 16px !important; }
+  .sv2-aico { width: 40px !important; height: 40px !important; border-radius: 11px !important; }
+  .sv2-mic-section { gap: 12px !important; }
+  .sv2-mic-wrap { width: 100px !important; height: 100px !important; }
+  .sv2-mic-btn { width: 66px !important; height: 66px !important; }
+  .sv2-waveform { height: 36px !important; }
+  .sv2-score-card {
+    padding: 12px !important;
+    gap: 12px !important;
+    margin-bottom: 8px !important;
+    border-radius: 12px !important;
+  }
+  .sv2-result-btns { gap: 8px !important; }
+}
+
 /* ── Sentence History (V2.2) ── */
 .sv2-sent-hist {
   margin-bottom: 10px;

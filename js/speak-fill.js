@@ -101,6 +101,15 @@ class SpeakFillMode {
     this._buildItems();
     this._setLevel('A1');
     this._render();
+    this._initOrientation();
+  }
+
+  _initOrientation() {
+    try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch(e) {}
+  }
+
+  destroy() {
+    if (this.el) this.el.innerHTML = '';
   }
 
   // ── Render ────────────────────────────────────────────────────────────────
@@ -680,7 +689,69 @@ class SpeakFillMode {
 
 // ── MOD SEÇİM + OTOMATİK BAĞLANTI ───────────────────────────────────────────
 (function () {
-  // Picker ekranını göster (mod seçimine geri dön)
+  // ── Tam ekran + yön yönetimi ────────────────────────────────────────────
+  let _speakOrientHandler = null;
+  let _speakContainer     = null;
+
+  function _enterFs(el) {
+    if (!el || document.fullscreenElement || document.webkitFullscreenElement) return;
+    const req = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (req) req.call(el).catch(() => {});
+  }
+
+  function _speakInit(container) {
+    if (_speakContainer === container) return;
+    _speakContainer = container;
+    try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch(e) {}
+    _enterFs(container);
+    if (_speakOrientHandler) window.removeEventListener('resize', _speakOrientHandler);
+    _speakOrientHandler = () => _enterFs(container);
+    window.addEventListener('resize', _speakOrientHandler, { passive: true });
+    if (window.attachQuickMenuTrigger) window.attachQuickMenuTrigger(container);
+  }
+
+  function _speakDestroy() {
+    if (_speakOrientHandler) { window.removeEventListener('resize', _speakOrientHandler); _speakOrientHandler = null; }
+    _speakContainer = null;
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      const exit = document.exitFullscreen || document.webkitExitFullscreen;
+      if (exit) exit.call(document).catch(() => {});
+    }
+    try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(() => {}); } catch(e) {}
+  }
+
+  // ── app.navigate monkey-patch: bridge gibi senkron tam ekran ───────────
+  // app.js, navigate() içinde bridge/nexus init'ini senkron çağırıyor.
+  // Speak için aynı pattern'i buradan uyguluyoruz.
+  function _patchNavigate() {
+    const app = window._app;
+    if (!app || !app.navigate || app.__speakPatched) return;
+    app.__speakPatched = true;
+    const _orig = app.navigate.bind(app);
+    app.navigate = function (target) {
+      _orig(target);
+      if (target === 'speak') {
+        // navigate() template'i DOM'a ekledi — container şimdi mevcut
+        const c = document.querySelector('.speak-container');
+        if (c) _speakInit(c);
+      } else if (_speakContainer) {
+        // Başka sayfaya gidildi — temizle
+        _speakDestroy();
+      }
+    };
+  }
+
+  // app.js deferred, IIFE çalışınca hazır olabilir ya da olmayabilir
+  if (window._app) {
+    _patchNavigate();
+  } else {
+    // app hazır olmadıysa kısa bekle
+    const waitApp = setInterval(() => {
+      if (window._app) { clearInterval(waitApp); _patchNavigate(); }
+    }, 50);
+  }
+
+  // ── Picker ekranını göster ──────────────────────────────────────────────
   window._speakShowPicker = function () {
     const picker = document.getElementById('spk-picker');
     const pV2    = document.getElementById('spk-pane-v2');
@@ -688,9 +759,10 @@ class SpeakFillMode {
     if (picker) picker.style.display = '';
     if (pV2)    pV2.style.display    = 'none';
     if (pFill)  pFill.style.display  = 'none';
+    if (_speakContainer) _enterFs(_speakContainer);
   };
 
-  // Bir mod seç ve yükle
+  // ── Bir mod seç ve yükle ────────────────────────────────────────────────
   window._speakSwitchTab = function (tab) {
     const picker = document.getElementById('spk-picker');
     const pV2    = document.getElementById('spk-pane-v2');
@@ -705,9 +777,10 @@ class SpeakFillMode {
         window.speakFillMod.init(mount);
       }
     }
+    if (_speakContainer) _enterFs(_speakContainer);
   };
 
-  // speak-v2 mount'u: picker gizlenince otomatik başlat
+  // ── speak-v2 observer (speak-container için monkey-patch yeterli) ───────
   const obs = new MutationObserver(() => {
     const mount = document.getElementById('speak-mount-point');
     if (mount && mount.offsetParent !== null && (!window.speakV2Mod || window.speakV2Mod.el !== mount)) {

@@ -442,3 +442,95 @@
   .sfm-ring-1       { width:82px !important; height:82px !important; }
   .sfm-ring-2       { width:100px !important; height:100px !important; }
 }
+
+/* ── Portrait phone optimization ── */
+@media (orientation: portrait) and (max-width: 500px) {
+  .sfm-wrap {
+    gap: 8px !important;
+    padding-bottom: 16px !important;
+  }
+  .sfm-levels { gap: 4px !important; }
+  .sfm-lvl-btn { padding: 6px 4px !important; font-size: 0.72rem !important; }
+  .sfm-card {
+    padding: 14px 12px 12px !important;
+    gap: 10px !important;
+    border-radius: 16px !important;
+  }
+  .sfm-tr-sentence { font-size: 1.1rem !important; line-height: 1.4 !important; padding: 2px 0 4px !important; }
+  .sfm-bank { gap: 5px !important; padding: 2px 0 6px !important; }
+  .sfm-chip { padding: 5px 10px !important; font-size: 0.8rem !important; }
+  .sfm-blanks-area { gap: 4px 7px !important; min-height: 44px !important; }
+  .sfm-slot-fill { font-size: 1.1rem !important; }
+  .sfm-mic-section { gap: 8px !important; }
+  .sfm-wave { height: 36px !important; }
+  .sfm-mic-outer { width: 70px !important; height: 70px !important; }
+  .sfm-mic-btn { width: 60px !important; height: 60px !important; }
+  .sfm-ring-1 { width: 76px !important; height: 76px !important; }
+  .sfm-ring-2 { width: 94px !important; height: 94px !important; }
+  .sfm-nav { gap: 8px !important; }
+}
+
+/* ── Landscape phone optimization ── */
+@media (orientation: landscape) and (max-height: 500px) {
+  #spk-pane-fill, #spk-pane-v2 {
+    height: 100dvh !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  /* Compact back button row */
+  #spk-pane-fill > div:first-child,
+  #spk-pane-v2 > div:first-child {
+    padding: 6px max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left)) !important;
+    flex-shrink: 0 !important;
+  }
+  #speak-fill-point {
+    flex: 1 !important;
+    overflow: hidden !important;
+    min-height: 0 !important;
+  }
+  .sfm-wrap {
+    max-width: 100% !important;
+    padding: 6px max(12px, env(safe-area-inset-right)) 6px max(12px, env(safe-area-inset-left)) !important;
+    gap: 6px !important;
+    display: grid !important;
+    grid-template-columns: 1fr 160px !important;
+    grid-template-rows: auto auto 1fr auto auto !important;
+    grid-template-areas:
+      "levels levels"
+      "topbar topbar"
+      "card   mic"
+      "card   nav"
+      "result result" !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    align-items: start !important;
+  }
+  .sfm-levels  { grid-area: levels !important; flex-wrap: nowrap !important; overflow-x: auto !important; gap: 4px !important; }
+  .sfm-lvl-btn { padding: 5px 8px !important; font-size: 0.7rem !important; white-space: nowrap !important; }
+  .sfm-topbar  { grid-area: topbar !important; }
+  .sfm-card    { grid-area: card !important; overflow-y: auto !important; align-self: stretch !important; }
+  .sfm-card .sfm-tr-sentence { font-size: 1.05rem !important; }
+  .sfm-card .sfm-chip { padding: 4px 9px !important; font-size: 0.78rem !important; }
+  .sfm-mic-section {
+    grid-area: mic !important;
+    padding: 0 0 6px !important;
+    justify-content: center !important;
+  }
+  .sfm-wave { height: 28px !important; }
+  .sfm-mic-outer { width: 64px !important; height: 64px !important; }
+  .sfm-mic-btn { width: 56px !important; height: 56px !important; }
+  .sfm-ring-1 { width: 72px !important; height: 72px !important; }
+  .sfm-ring-2 { width: 88px !important; height: 88px !important; }
+  .sfm-result  { grid-area: result !important; }
+  .sfm-nav     { grid-area: nav !important; justify-content: center !important; }
+  .sfm-stat-chip { font-size: 0.7rem !important; padding: 2px 7px !important; }
+}
+
+/* ── Fullscreen: speak-container fills the screen ── */
+.speak-container:fullscreen,
+.speak-container:-webkit-full-screen {
+  background: var(--bg, #0a0a14);
+  overflow-y: auto;
+  height: 100dvh !important;
+}
