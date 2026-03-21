@@ -5769,6 +5769,8 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .sfs-label { font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; }
 
 /* ── Native Keyboard Input (görünmez, telefonun klavyesini tetikler) ── */
+.synth-native-input::-webkit-search-cancel-button,
+.synth-native-input::-webkit-search-decoration { display: none; }
 .synth-native-input {
   position: fixed;
   bottom: 45%;
