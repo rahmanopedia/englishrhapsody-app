@@ -5512,6 +5512,17 @@ body.rank-6 { --theme-accent: #ff9d00; }
   min-height: 0 !important;
 }
 
+/* Fullscreen'de VKB her zaman altta */
+.synesthesia-wrapper:fullscreen .synth-vkb,
+.synesthesia-wrapper:-webkit-full-screen .synth-vkb {
+  flex-shrink: 0 !important;
+}
+/* Fullscreen'de synth-chamber scroll edebilsin, VKB sabit kalsın */
+.synesthesia-wrapper:fullscreen .synth-chamber,
+.synesthesia-wrapper:-webkit-full-screen .synth-chamber {
+  overflow-y: auto !important;
+}
+
 /* Tam ekran dikey (portrait) — orb boyutu düzelt */
 @media (max-width: 768px) {
   .synesthesia-wrapper:fullscreen .synth-core-container,
@@ -6161,6 +6172,50 @@ body.rank-6 { --theme-accent: #ff9d00; }
   transform: scale(1.04);
   box-shadow: 0 10px 28px rgba(var(--a1-rgb),0.4);
 }
+
+/* ── Sinestezi Custom VKB (Phantom tarzı) ─────────────────── */
+.synth-vkb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 7px 14px;
+  background: rgba(2, 5, 9, 0.97);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  box-sizing: border-box;
+}
+.vkb-row {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+.vkb-key {
+  min-width: 30px;
+  height: 40px;
+  padding: 0 7px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 7px;
+  color: #f0f6ff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.1s, transform 0.08s;
+  text-transform: uppercase;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.vkb-key:active { transform: scale(0.86); background: rgba(255,255,255,0.14); }
+.vkb-key.key-ok  { background: rgba(74,222,128,0.15) !important; border-color: #4ade80 !important; color: #4ade80 !important; }
+.vkb-key.key-err { background: rgba(239,68,68,0.15)  !important; border-color: #ef4444 !important; color: #ef4444 !important; }
+.vkb-space { min-width: 88px; font-size: 0.7rem; letter-spacing: 0.06em; color: #8b9cb8; }
+.vkb-hint  { min-width: 70px; font-size: 0.72rem; color: var(--cyan);  border-color: rgba(0,212,255,0.22); }
+.vkb-skip  { min-width: 60px; font-size: 0.72rem; color: var(--amber); border-color: rgba(245,158,11,0.22); }
 
 /* VKB action row (pause + hint + skip) */
 .vkb-action-row {
