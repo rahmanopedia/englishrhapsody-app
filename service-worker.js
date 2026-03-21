@@ -2,7 +2,7 @@
 'use strict';
 
 
-const CACHE_NAME  = 'er-v16';
+const CACHE_NAME  = 'er-v17';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -42,6 +42,7 @@ const STATIC_URLS = [
   '/js/speak-fill.js',
   '/js/conversations.js',
   '/js/bridge.js',
+  '/js/boot.js',
   '/firebase-messaging-sw.js',
 ];
 
