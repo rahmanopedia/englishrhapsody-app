@@ -26,7 +26,7 @@ class ReadingEngine{constructor(n){this.app=n,this.activePopup=null,this._closeO
           <div class="ann-example-tr">${n.example_sentence_tr}</div>
         `:""}
       </div>
-    `,document.body.appendChild(e),this.activePopup=e;const o=t.getBoundingClientRect();let l=o.left+window.scrollX,u=o.bottom+window.scrollY+8;l+e.offsetWidth>window.innerWidth-10&&(l=window.innerWidth-e.offsetWidth-10),u+e.offsetHeight>window.innerHeight-10&&(u=o.top+window.scrollY-e.offsetHeight-8),e.style.left=Math.max(10,l)+"px",e.style.top=u+"px",e.querySelector(".ann-popup-close").onclick=()=>this.closePopup(),this._closeOnAction=c=>{e.contains(c.target)||this.closePopup()},document.addEventListener("mousedown",this._closeOnAction)}closePopup(){this._closeOnAction&&(document.removeEventListener("mousedown",this._closeOnAction),this._closeOnAction=null),this.activePopup&&(this.activePopup.remove(),this.activePopup=null,document.querySelectorAll(".ann-active").forEach(n=>n.classList.remove("ann-active")))}_escapeHTML(n){const t=document.createElement("div");return t.textContent=n,t.innerHTML}}window.ReadingEngine=ReadingEngine;
+    `,(document.fullscreenElement||document.webkitFullscreenElement||document.body).appendChild(e),this.activePopup=e;const o=t.getBoundingClientRect();let l=o.left+window.scrollX,u=o.bottom+window.scrollY+8;l+e.offsetWidth>window.innerWidth-10&&(l=window.innerWidth-e.offsetWidth-10),u+e.offsetHeight>window.innerHeight-10&&(u=o.top+window.scrollY-e.offsetHeight-8),e.style.left=Math.max(10,l)+"px",e.style.top=u+"px",e.querySelector(".ann-popup-close").onclick=()=>this.closePopup(),this._closeOnAction=c=>{e.contains(c.target)||this.closePopup()},document.addEventListener("mousedown",this._closeOnAction)}closePopup(){this._closeOnAction&&(document.removeEventListener("mousedown",this._closeOnAction),this._closeOnAction=null),this.activePopup&&(this.activePopup.remove(),this.activePopup=null,document.querySelectorAll(".ann-active").forEach(n=>n.classList.remove("ann-active")))}_escapeHTML(n){const t=document.createElement("div");return t.textContent=n,t.innerHTML}}window.ReadingEngine=ReadingEngine;
 
 /* ── Okuma modu: tam ekran + yön yönetimi ── */
 (function () {
@@ -78,4 +78,23 @@ class ReadingEngine{constructor(n){this.app=n,this.activePopup=null,this._closeO
 
   if (window._app) { _patch(); }
   else { const t = setInterval(() => { if (window._app) { clearInterval(t); _patch(); } }, 50); }
+
+  /* ── Fullscreen popup relay ──
+     word-def-popup / ann-popup are appended to document.body by app.js,
+     but in fullscreen only the fullscreen element's subtree is painted.
+     Move any popup from body into the fullscreen element immediately. */
+  const _popupObs = new MutationObserver(mutations => {
+    const fs = document.fullscreenElement || document.webkitFullscreenElement;
+    if (!fs) return;
+    mutations.forEach(m => {
+      m.addedNodes.forEach(node => {
+        if (node.nodeType !== 1) return;
+        const cls = node.classList;
+        if (cls.contains('word-def-popup') || cls.contains('ann-popup')) {
+          fs.appendChild(node);
+        }
+      });
+    });
+  });
+  _popupObs.observe(document.body, { childList: true });
 })();
