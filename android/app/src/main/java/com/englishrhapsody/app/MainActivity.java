@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
@@ -27,7 +26,7 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // NativeSpeech plugin'ini kaydet — super.onCreate'dan önce olmalı
+        // NativeSpeech plugin — super.onCreate'dan önce kayıt edilmeli
         registerPlugin(SpeechPlugin.class);
         super.onCreate(savedInstanceState);
 
@@ -40,7 +39,7 @@ public class MainActivity extends BridgeActivity {
             WindowManager.LayoutParams.FLAG_SECURE
         );
 
-        // System bar gizleme davranışı: kenardan kaydırınca geçici göster
+        // System bar gizleme: kenardan kaydırınca geçici göster
         View decorView = getWindow().getDecorView();
         insetsController = new WindowInsetsControllerCompat(getWindow(), decorView);
         insetsController.setSystemBarsBehavior(
@@ -53,10 +52,6 @@ public class MainActivity extends BridgeActivity {
             ActivityCompat.requestPermissions(this,
                 new String[]{ Manifest.permission.RECORD_AUDIO }, 1);
         }
-
-        // JavascriptInterface ile native speech bridge'i WebView'a bağla
-        WebView webView = getBridge().getWebView();
-        webView.addJavascriptInterface(new SpeechBridge(this, webView), "AndroidSpeech");
 
         // 3 saniye sonra status bar + nav bar gizle
         hideHandler.postDelayed(hideSystemBars, 3000);

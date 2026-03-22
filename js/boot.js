@@ -2,44 +2,12 @@
    Inline script blocks extracted from index.html for CSP compliance.
    Loaded via <script src="js/boot.js" defer></script> */
 
-/* ── 0. Android native speech bridge ── */
+/* ── 0. NativeSpeech Capacitor plugin kaydı ── */
 (function () {
-  if (!window.AndroidSpeech) {
-    // Capacitor plugin fallback
-    if (window.Capacitor && typeof window.Capacitor.registerPlugin === 'function') {
-      window.Capacitor.Plugins = window.Capacitor.Plugins || {};
-      window.Capacitor.Plugins.NativeSpeech = window.Capacitor.registerPlugin('NativeSpeech');
-    }
-    return;
+  if (window.Capacitor && typeof window.Capacitor.registerPlugin === 'function') {
+    window.Capacitor.Plugins = window.Capacitor.Plugins || {};
+    window.Capacitor.Plugins.NativeSpeech = window.Capacitor.registerPlugin('NativeSpeech');
   }
-
-  // JavascriptInterface native metodlarını önce kaydet
-  var _nativeStart = window.AndroidSpeech.start.bind(window.AndroidSpeech);
-  var _nativeStop  = window.AndroidSpeech.stop.bind(window.AndroidSpeech);
-
-  // Event listener sistemi
-  var _listeners = {};
-  window._androidSpeechEvent = function (type, data) {
-    var cbs = _listeners[type] || [];
-    cbs.forEach(function (cb) { try { cb(data); } catch(e) {} });
-  };
-
-  // speak-fill.js / speak-v2.js'in beklediği arayüzü ekle
-  window.AndroidSpeech.addListener = function (type, cb) {
-    _listeners[type] = _listeners[type] || [];
-    _listeners[type].push(cb);
-    return Promise.resolve({ remove: function () {
-      _listeners[type] = (_listeners[type] || []).filter(function (f) { return f !== cb; });
-    }});
-  };
-  window.AndroidSpeech.removeAllListeners = function () { _listeners = {}; };
-  window.AndroidSpeech.start = function () { _nativeStart(); return Promise.resolve(); };
-  window.AndroidSpeech.stop  = function () { _nativeStop();  return Promise.resolve(); };
-
-  // Capacitor plugin arayüzüyle uyumlu hale getir
-  window.Capacitor = window.Capacitor || {};
-  window.Capacitor.Plugins = window.Capacitor.Plugins || {};
-  window.Capacitor.Plugins.NativeSpeech = window.AndroidSpeech;
 })();
 
 /* ── 1. Lazy Script Loader ── */
