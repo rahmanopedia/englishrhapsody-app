@@ -15,8 +15,8 @@
   var LAZY = {
     quantum: ['js/quantum.js'],
     bridge:  ['js/bridge-data.js'],
-    nexus:   ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js'],
-    phrases: ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js'],
+    nexus:   ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
+    phrases: ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
   };
 
   var loaded = new Set();

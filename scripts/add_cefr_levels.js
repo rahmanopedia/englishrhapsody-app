@@ -185,12 +185,13 @@ function processFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
   let count = 0;
 
+  // Only process entries that do NOT already have a level field
   content = content.replace(
-    /^(\s+'([^']+)':\s+)\{\s*type:'Phrasal Verb',/gm,
-    (match, prefix, phrase) => {
+    /^(\s+'([^']+)':\s+)\{(\s*type:'Phrasal Verb',)(?!\s*level:)/gm,
+    (match, prefix, phrase, opening) => {
       const level = LEVELS[phrase] || 'B1';
       count++;
-      return `${prefix}{ type:'Phrasal Verb', level:'${level}',`;
+      return `${prefix}{${opening} level:'${level}',`;
     }
   );
 
