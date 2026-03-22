@@ -176,19 +176,25 @@ class BridgeModule {
   _smartDiscovery() {
     if (!window.BRIDGE_DATA) return;
     
-    // Seviyeyi al (varsayılan 1)
-    const level = this.app.state?.get ? this.app.state.get('level') : 1;
+    // Kullanıcının CEFR seviyesini al, sayısal seviyeye dönüştür
+    const cefrLevel = window._app?.state?.get('cefrLevel') || 'B1';
+    const _cefrMap = { A1: 1, A2: 5, B1: 12, B2: 18, C1: 25, C2: 30 };
+    const level = _cefrMap[cefrLevel] || 12;
     let pool = window.BRIDGE_DATA;
 
     // Kategori seçiliyse filtrele
     if (this.activeCategory) pool = pool.filter(x => x.category === this.activeCategory);
 
-    // Seviyeye göre zorluk filtreleme (Simülasyon)
-    // 1-10: Basit, 11-20: Orta, 21+: Deyimsel
+    // CEFR seviyesine göre zorluk filtreleme
+    // A1/A2 (1-9): Basit-nötr ifadeler
+    // B1/B2 (10-22): Orta, dönüşümlü
+    // C1/C2 (23+): Tüm kayıtlar
     if (level < 10) {
-      pool = pool.filter(x => x.register === 'neutral' || x.bridges.some(b => b.bridge_type === 'direct'));
-    } else if (level < 20) {
-      pool = pool.filter(x => x.register === 'informal' || x.bridges.some(b => b.bridge_type === 'transform'));
+      const filtered = pool.filter(x => x.register === 'neutral' || x.bridges.some(b => b.bridge_type === 'direct'));
+      if (filtered.length >= 5) pool = filtered;
+    } else if (level < 22) {
+      const filtered = pool.filter(x => x.register === 'informal' || x.bridges.some(b => b.bridge_type === 'transform'));
+      if (filtered.length >= 5) pool = filtered;
     }
 
     // Havuz boşsa hepsini kullan

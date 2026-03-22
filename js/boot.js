@@ -779,3 +779,29 @@ document.addEventListener('click', function(e) {
   if(act === 'do-reset-user-data'){ window._app && window._app._doResetUserData && window._app._doResetUserData(); return; }
   if(act === 'close-modal-backdrop') { if(e.target === el) el.style.display = 'none'; return; }
 });
+
+/* ── 14. CEFR seviyesine göre okuma ve konuşma zorluğunu otomatik set et ── */
+(function() {
+  var READING_MAP = {A1:'Kolay', A2:'Kolay', B1:'Orta', B2:'Orta', C1:'İleri', C2:'İleri'};
+  var SPEAK_MAP   = {A1:'easy',  A2:'easy',  B1:'medium', B2:'medium', C1:'hard', C2:'hard'};
+  function applyDefaults(target) {
+    var app = window._app;
+    if (!app || !app.state) return;
+    var cefr = app.state.get('cefrLevel');
+    if (!cefr) return;
+    if (target === 'reading') app.state.set('readingLevel', READING_MAP[cefr] || 'Orta');
+    if (target === 'speak')   app.state.set('speakDiff',    SPEAK_MAP[cefr]  || 'medium');
+  }
+  function patch() {
+    var app = window._app;
+    if (!app || !app.navigate || app.__cefrNavPatched) return;
+    app.__cefrNavPatched = true;
+    var orig = app.navigate.bind(app);
+    app.navigate = function(target) { applyDefaults(target); orig(target); };
+  }
+  if (window._app) {
+    patch();
+  } else {
+    var t = setInterval(function() { if (window._app) { clearInterval(t); patch(); } }, 100);
+  }
+})();
