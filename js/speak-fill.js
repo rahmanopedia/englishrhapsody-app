@@ -22,7 +22,7 @@ class SpeakFillMode {
     this._gen        = 0;    // Generation counter — navigasyonda artar, eski callback'leri iptal eder
     this._isSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition || window.Capacitor?.Plugins?.NativeSpeech);
 
-    this._level   = 'A1';
+    this._level   = 'B1'; // init() içinde cefrLevel ile güncellenir
     this.correct  = 0;
     this.total    = 0;
     this.streak   = 0;

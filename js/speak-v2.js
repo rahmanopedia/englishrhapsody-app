@@ -63,9 +63,19 @@ class SpeakV2Module {
 
   // ─── Init ──────────────────────────────────────────────────────────────────
 
+  // CEFR → easy/medium/hard eşleme
+  _cefrToDiff(cefr) {
+    if (['A1','A2'].includes(cefr)) return 'easy';
+    if (['B1','B2'].includes(cefr)) return 'medium';
+    return 'hard'; // C1, C2
+  }
+
   async init(el) {
     this.el = el;
     if (typeof SPEAK_CHALLENGES === 'undefined') await this._loadData();
+    const userCefr = window._app?.state?.get('cefrLevel') || 'B1';
+    this.level = this._cefrToDiff(userCefr);
+    this._userCefr = userCefr;
     this._render();
   }
 
@@ -89,13 +99,6 @@ class SpeakV2Module {
     this.el.innerHTML = `
       <div class="sv2-wrap">
 
-        <div class="sv2-levels">
-          ${['easy','medium','hard'].map(k => `
-            <button class="sv2-level-btn${k === this.level ? ' active' : ''}" data-level="${k}">
-              ${cfg[k].label}
-            </button>`).join('')}
-        </div>
-
         <div class="sv2-settings">
           <button class="sv2-toggle${this.shuffleMode  ? ' on' : ''}" id="sv2-t-shuffle">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
@@ -112,11 +115,13 @@ class SpeakV2Module {
         </div>
 
         <div class="sv2-stats">
-          <span class="sv2-stat">🔥 <strong id="sv2-streak-num">${this.streak}</strong> seri</span>
+          <span class="sv2-cefr-pill" style="background:${lc.color}20;color:${lc.color};border:1px solid ${lc.color}44">${this._userCefr || 'B1'} — ${lc.label}</span>
+          <span class="sv2-stat-sep">·</span>
+          <span class="sv2-stat">🔥 <strong id="sv2-streak-num">${this.streak}</strong></span>
           <span class="sv2-stat-sep">·</span>
           <span class="sv2-stat">📊 <strong id="sv2-avg-num">${this._avgScore !== null ? this._avgScore + '%' : '—'}</strong></span>
           <span class="sv2-stat-sep">·</span>
-          <span class="sv2-stat">✅ <strong id="sv2-count-num">${this.sessionCount}</strong> cümle</span>
+          <span class="sv2-stat">✅ <strong id="sv2-count-num">${this.sessionCount}</strong></span>
         </div>
 
         <div class="sv2-card" id="sv2-card">
@@ -235,9 +240,6 @@ class SpeakV2Module {
   _bindEvents() {
     if (!this.el) return;
     const q = id => this.el.querySelector(id);
-
-    this.el.querySelectorAll('.sv2-level-btn').forEach(btn =>
-      btn.addEventListener('click', () => this._setLevel(btn.dataset.level)));
 
     q('#sv2-t-shuffle')?.addEventListener('click', () => {
       this.shuffleMode = !this.shuffleMode;
