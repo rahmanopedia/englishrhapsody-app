@@ -1,29 +1,146 @@
-class ReadingEngine{constructor(e){this.app=e,this.activePopup=null,this._closeOnAction=null}markupStory(e){if(!e.annotations||e.annotations.length===0){const l=e.text.replace(/\{([^}]+)\}/g,"$1");return this.app._markupText(l,"story-word")}const s=e.text,c=e.annotations,a=Array.from({length:s.length},()=>[]);c.forEach((l,n)=>{(l.spans||[{start:l.start_index,end:l.end_index}]).forEach(t=>{for(let i=t.start;i<t.end;i++)a[i].push(n)})});let u="",d=0;for(;d<s.length;){const l=a[d];let n=d+1;for(;n<s.length&&this._arraysEqual(a[n],l);)n++;const t=s.substring(d,n);if(l.length===0)u+=this.app._markupText(t,"story-word");else{const i=l[l.length-1],r=l.join(","),o=["sw-v2",`ann-type-${c[i].annotation_type||"word"}`];u+=`<span class="${o.join(" ")}" data-ann-id="${i}" data-all-ids="${r}">${this._escapeHTML(t)}</span>`}d=n}return u}_arraysEqual(e,s){if(e.length!==s.length)return!1;for(let c=0;c<e.length;c++)if(e[c]!==s[c])return!1;return!0}handleAnnotationClick(e,s,c){this.activePopup&&this.closePopup();const a=s.dataset.annId;document.querySelectorAll(`.sw-v2[data-ann-id="${a}"]`).forEach(u=>{u.classList.add("ann-active")}),e.surface_form&&this.app.speakWord(e.surface_form,1),this._renderPopup(e,s,c),this.app.audio.play("pop")}_renderPopup(e,s,c){const a=document.createElement("div");a.className="ann-popup animate-pop";const u={word:"Kelime",phrasal_verb:"Deyimsel Fiil",idiom:"Deyim",collocation:"Kal\u0131p \u0130fade",noun_phrase:"\u0130sim Tamlamas\u0131",grammar_structure:"Gramer Yap\u0131s\u0131",relative_clause:"S\u0131fat C\xFCmleci\u011Fi",verb_phrase:"Fiil Grubu",prepositional_phrase:"Edat Grubu"},d={word:"#1d4ed8",phrasal_verb:"#0891b2",idiom:"#7c3aed",collocation:"#065f46",noun_phrase:"#be185d",grammar_structure:"#b45309",relative_clause:"#4338ca",verb_phrase:"#0369a1",prepositional_phrase:"#475569"},l=u[e.annotation_type]||"Bilgi",n=d[e.annotation_type]||"#374151",t=e.individual_meanings&&e.individual_meanings.length?`<div class="ann-divider"></div>
+class ReadingEngine{constructor(n){this.app=n,this.activePopup=null,this._closeOnAction=null}markupStory(n){if(!n.annotations||n.annotations.length===0){const a=n.text.replace(/\{([^}]+)\}/g,"$1");return this.app._markupText(a,"story-word")}const t=n.text,i=n.annotations,e=Array.from({length:t.length},()=>[]);i.forEach((a,s)=>{(a.spans||[{start:a.start_index,end:a.end_index}]).forEach(o=>{for(let l=o.start;l<o.end;l++)e[l].push(s)})});let d="",r=0;for(;r<t.length;){const a=e[r];let s=r+1;for(;s<t.length&&this._arraysEqual(e[s],a);)s++;const p=t.substring(r,s);if(a.length===0)d+=this.app._markupText(p,"story-word");else{const o=a[a.length-1],l=a.join(","),c=["sw-v2",`ann-type-${i[o].annotation_type||"word"}`];d+=`<span class="${c.join(" ")}" data-ann-id="${o}" data-all-ids="${l}">${this._escapeHTML(p)}</span>`}r=s}return d}_arraysEqual(n,t){if(n.length!==t.length)return!1;for(let i=0;i<n.length;i++)if(n[i]!==t[i])return!1;return!0}handleAnnotationClick(n,t,i){this.activePopup&&this.closePopup();const e=t.dataset.annId;document.querySelectorAll(`.sw-v2[data-ann-id="${e}"]`).forEach(d=>{d.classList.add("ann-active")}),n.surface_form&&this.app.speakWord(n.surface_form,1),this._renderPopup(n,t,i),this.app.audio.play("pop")}_renderPopup(n,t,i){const e=document.createElement("div");e.className="ann-popup animate-pop";const d={word:"Kelime",phrasal_verb:"Deyimsel Fiil",idiom:"Deyim",collocation:"Kal\u0131p \u0130fade",noun_phrase:"\u0130sim Tamlamas\u0131",grammar_structure:"Gramer Yap\u0131s\u0131",relative_clause:"S\u0131fat C\xFCmleci\u011Fi",verb_phrase:"Fiil Grubu",prepositional_phrase:"Edat Grubu"},r={word:"#1d4ed8",phrasal_verb:"#0891b2",idiom:"#7c3aed",collocation:"#065f46",noun_phrase:"#be185d",grammar_structure:"#b45309",relative_clause:"#4338ca",verb_phrase:"#0369a1",prepositional_phrase:"#475569"},a=d[n.annotation_type]||"Bilgi",s=r[n.annotation_type]||"#374151",p=n.individual_meanings&&n.individual_meanings.length?`<div class="ann-divider"></div>
          <div class="ann-individual-label">Kelime Kelime</div>
          <div class="ann-individuals">
-           ${e.individual_meanings.map(h=>`
+           ${n.individual_meanings.map(c=>`
              <div class="ann-ind-row">
-               <span class="ann-ind-word">${h.word}</span>
+               <span class="ann-ind-word">${c.word}</span>
                <span class="ann-ind-sep">\u2192</span>
-               <span class="ann-ind-meaning">${h.meaning}</span>
-               ${h.note?`<span class="ann-ind-note">${h.note}</span>`:""}
+               <span class="ann-ind-meaning">${c.meaning}</span>
+               ${c.note?`<span class="ann-ind-note">${c.note}</span>`:""}
              </div>
            `).join("")}
-         </div>`:"";a.innerHTML=`
+         </div>`:"";e.innerHTML=`
       <div class="ann-popup-header">
-        <div class="ann-type-badge" style="background: ${n}">${l}</div>
+        <div class="ann-type-badge" style="background: ${s}">${a}</div>
         <button class="ann-popup-close">\u2715</button>
       </div>
       <div class="ann-popup-body">
-        <div class="ann-surface">${e.surface_form}</div>
-        <div class="ann-meaning">${e.contextual_turkish_meaning}</div>
-        <div class="ann-explanation">${e.short_explanation_tr}</div>
-        ${t}
-        ${e.example_sentence_en?`
+        <div class="ann-surface">${n.surface_form}</div>
+        <div class="ann-meaning">${n.contextual_turkish_meaning}</div>
+        <div class="ann-explanation">${n.short_explanation_tr}</div>
+        ${p}
+        ${n.example_sentence_en?`
           <div class="ann-divider"></div>
           <div class="ann-example-label">\xD6rnek C\xFCmle</div>
-          <div class="ann-example-en">${e.example_sentence_en}</div>
-          <div class="ann-example-tr">${e.example_sentence_tr}</div>
+          <div class="ann-example-en">${n.example_sentence_en}</div>
+          <div class="ann-example-tr">${n.example_sentence_tr}</div>
         `:""}
       </div>
-    `,(document.fullscreenElement||document.webkitFullscreenElement||document.body).appendChild(a),this.activePopup=a;const i=s.getBoundingClientRect();let r=i.left+window.scrollX,o=i.bottom+window.scrollY+8;r+a.offsetWidth>window.innerWidth-10&&(r=window.innerWidth-a.offsetWidth-10),o+a.offsetHeight>window.innerHeight-10&&(o=i.top+window.scrollY-a.offsetHeight-8),a.style.left=Math.max(10,r)+"px",a.style.top=o+"px",a.querySelector(".ann-popup-close").onclick=()=>this.closePopup(),this._closeOnAction=h=>{a.contains(h.target)||this.closePopup()},document.addEventListener("mousedown",this._closeOnAction)}closePopup(){this._closeOnAction&&(document.removeEventListener("mousedown",this._closeOnAction),this._closeOnAction=null),this.activePopup&&(this.activePopup.remove(),this.activePopup=null,document.querySelectorAll(".ann-active").forEach(e=>e.classList.remove("ann-active")))}_escapeHTML(e){const s=document.createElement("div");return s.textContent=e,s.innerHTML}}window.ReadingEngine=ReadingEngine,(function(){let p=null,e=null;function s(n){if(!n||document.fullscreenElement||document.webkitFullscreenElement)return;const t=document.documentElement,i=t.requestFullscreen||t.webkitRequestFullscreen;i&&i.call(t).catch(()=>{})}function c(n){const t=n.querySelector(".reading-header"),i=n.querySelector(".rh-handle"),r=n.querySelector("#rh-handle-label");if(!t||!i)return;let o=null;function h(){if(!r)return;const v=t.querySelector(".level-tab.active"),f=t.querySelector(".rm-btn.active"),w=[v?v.textContent.trim():"",f?f.textContent.trim():""].filter(Boolean);r.textContent=w.join(" \xB7 ")||"Okuma At\xF6lyesi"}function m(){t.classList.add("rh-collapsed"),o&&(clearTimeout(o),o=null),h()}function _(){t.classList.remove("rh-collapsed"),o&&clearTimeout(o),o=setTimeout(m,4e3)}i.addEventListener("click",()=>{t.classList.contains("rh-collapsed")?_():m()}),t.addEventListener("click",v=>{v.target.closest(".rh-handle")||t.classList.contains("rh-collapsed")||(o&&clearTimeout(o),o=setTimeout(m,4e3))}),m()}function a(n){if(e!==n){e=n;try{screen.orientation&&screen.orientation.unlock&&screen.orientation.unlock()}catch(t){}s(n),p&&window.removeEventListener("resize",p),p=()=>s(n),window.addEventListener("resize",p,{passive:!0}),window.attachQuickMenuTrigger&&window.attachQuickMenuTrigger(n),c(n)}}function u(){p&&(window.removeEventListener("resize",p),p=null),e=null;try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock("portrait").catch(()=>{})}catch(n){}}function d(){const n=window._app;if(!n||!n.navigate||n.__rdPatched)return;n.__rdPatched=!0;const t=n.navigate.bind(n);n.navigate=function(i){if(t(i),i==="reading"){const r=document.querySelector(".reading-workshop-container");r&&a(r)}else e&&u()}}if(window._app)d();else{const n=setInterval(()=>{window._app&&(clearInterval(n),d())},50)}new MutationObserver(n=>{const t=document.fullscreenElement||document.webkitFullscreenElement;t&&n.forEach(i=>{i.addedNodes.forEach(r=>{if(r.nodeType!==1)return;const o=r.classList;(o.contains("word-def-popup")||o.contains("ann-popup")||o.contains("cloze-mini-popup"))&&t.appendChild(r)})})}).observe(document.body,{childList:!0})})();
+    `,(document.fullscreenElement||document.webkitFullscreenElement||document.body).appendChild(e),this.activePopup=e;const o=t.getBoundingClientRect();let l=o.left+window.scrollX,u=o.bottom+window.scrollY+8;l+e.offsetWidth>window.innerWidth-10&&(l=window.innerWidth-e.offsetWidth-10),u+e.offsetHeight>window.innerHeight-10&&(u=o.top+window.scrollY-e.offsetHeight-8),e.style.left=Math.max(10,l)+"px",e.style.top=u+"px",e.querySelector(".ann-popup-close").onclick=()=>this.closePopup(),this._closeOnAction=c=>{e.contains(c.target)||this.closePopup()},document.addEventListener("mousedown",this._closeOnAction)}closePopup(){this._closeOnAction&&(document.removeEventListener("mousedown",this._closeOnAction),this._closeOnAction=null),this.activePopup&&(this.activePopup.remove(),this.activePopup=null,document.querySelectorAll(".ann-active").forEach(n=>n.classList.remove("ann-active")))}_escapeHTML(n){const t=document.createElement("div");return t.textContent=n,t.innerHTML}}window.ReadingEngine=ReadingEngine;
+
+/* ── Okuma modu: tam ekran + yön yönetimi ── */
+(function () {
+  let _rdOrient = null;
+  let _rdEl     = null;
+
+  function _rdEnterFs(el) {
+    if (!el || document.fullscreenElement || document.webkitFullscreenElement) return;
+    const fsEl = document.documentElement;
+    const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
+    if (req) req.call(fsEl).catch(() => {});
+  }
+
+  function _rdHeaderSetup(container) {
+    const header  = container.querySelector('.reading-header');
+    const handle  = container.querySelector('.rh-handle');
+    const label   = container.querySelector('#rh-handle-label');
+    if (!header || !handle) return;
+
+    let _autoClose = null;
+
+    function _updateLabel() {
+      if (!label) return;
+      const lvl  = header.querySelector('.level-tab.active');
+      const mode = header.querySelector('.rm-btn.active');
+      const parts = [
+        lvl  ? lvl.textContent.trim()  : '',
+        mode ? mode.textContent.trim() : ''
+      ].filter(Boolean);
+      label.textContent = parts.join(' · ') || 'Okuma Atölyesi';
+    }
+
+    function collapse() {
+      header.classList.add('rh-collapsed');
+      if (_autoClose) { clearTimeout(_autoClose); _autoClose = null; }
+      _updateLabel();
+    }
+
+    function expand() {
+      header.classList.remove('rh-collapsed');
+      if (_autoClose) clearTimeout(_autoClose);
+      _autoClose = setTimeout(collapse, 4000);
+    }
+
+    handle.addEventListener('click', () => {
+      header.classList.contains('rh-collapsed') ? expand() : collapse();
+    });
+
+    // Başlık içindeki butonlara (seviye, mod vb.) tıklayınca timer'ı sıfırla
+    header.addEventListener('click', e => {
+      if (e.target.closest('.rh-handle')) return;
+      if (!header.classList.contains('rh-collapsed')) {
+        if (_autoClose) clearTimeout(_autoClose);
+        _autoClose = setTimeout(collapse, 4000);
+      }
+    });
+
+    // Başlangıçta kapalı
+    collapse();
+  }
+
+  function _rdInit(el) {
+    if (_rdEl === el) return;
+    _rdEl = el;
+    try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch(e) {}
+    _rdEnterFs(el);
+    if (_rdOrient) window.removeEventListener('resize', _rdOrient);
+    _rdOrient = () => _rdEnterFs(el);
+    window.addEventListener('resize', _rdOrient, { passive: true });
+    if (window.attachQuickMenuTrigger) window.attachQuickMenuTrigger(el);
+    _rdHeaderSetup(el);
+  }
+
+  function _rdDestroy() {
+    if (_rdOrient) { window.removeEventListener('resize', _rdOrient); _rdOrient = null; }
+    _rdEl = null;
+    try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(() => {}); } catch(e) {}
+  }
+
+  function _patch() {
+    const app = window._app;
+    if (!app || !app.navigate || app.__rdPatched) return;
+    app.__rdPatched = true;
+    const _orig = app.navigate.bind(app);
+    app.navigate = function (target) {
+      _orig(target);
+      if (target === 'reading') {
+        const c = document.querySelector('.reading-workshop-container');
+        if (c) _rdInit(c);
+      } else if (_rdEl) {
+        _rdDestroy();
+      }
+    };
+  }
+
+  if (window._app) { _patch(); }
+  else { const t = setInterval(() => { if (window._app) { clearInterval(t); _patch(); } }, 50); }
+
+  /* ── Fullscreen popup relay ──
+     word-def-popup / ann-popup are appended to document.body by app.js,
+     but in fullscreen only the fullscreen element's subtree is painted.
+     Move any popup from body into the fullscreen element immediately. */
+  const _popupObs = new MutationObserver(mutations => {
+    const fs = document.fullscreenElement || document.webkitFullscreenElement;
+    if (!fs) return;
+    mutations.forEach(m => {
+      m.addedNodes.forEach(node => {
+        if (node.nodeType !== 1) return;
+        const cls = node.classList;
+        if (cls.contains('word-def-popup') || cls.contains('ann-popup') || cls.contains('cloze-mini-popup')) {
+          fs.appendChild(node);
+        }
+      });
+    });
+  });
+  _popupObs.observe(document.body, { childList: true });
+})();

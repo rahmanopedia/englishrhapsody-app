@@ -204,6 +204,9 @@
       <a class="nav-item" data-target="leaderboard">
         <span class="nav-icon">🏆</span> Sıralama
       </a>
+      <a class="nav-item" data-target="download">
+        <span class="nav-icon">📲</span> Uygulamayı İndir
+      </a>
     </nav>
     <div class="sidebar-footer">
       <div class="sf-user">
@@ -272,6 +275,10 @@
       <span class="mdi-icon">🎬</span>
       <span>Sinema</span>
     </button>
+    <button class="modes-drawer-item" data-target="download">
+      <span class="mdi-icon">📲</span>
+      <span>İndir</span>
+    </button>
   </div>
 </div>
 
@@ -283,7 +290,7 @@
   <div class="modes-drawer-grid">
     <button class="modes-drawer-item" data-target="analytics">
       <span class="mdi-icon">📊</span>
-      <span>İstatistik</span>
+      <span>Analitik</span>
     </button>
     <button class="modes-drawer-item" data-target="leaderboard">
       <span class="mdi-icon">🏆</span>
@@ -1117,6 +1124,69 @@
 <div class="animate-in" id="bridge-root" style="width:100%;min-height:100%;"></div>
 </template>
 
+
+<!-- İndir -->
+<template id="tpl-download">
+<div class="dl-page animate-in">
+  <div class="dl-hero">
+    <div class="dl-logo">📱</div>
+    <h1 class="dl-title">Uygulamayı İndir</h1>
+    <p class="dl-sub">English Rhapsody'yi telefonuna yükle, internet olmadan da çalış.</p>
+  </div>
+
+  <!-- Android -->
+  <div class="dl-card" id="dl-android-card">
+    <div class="dl-card-header">
+      <span class="dl-platform-icon">🤖</span>
+      <div>
+        <div class="dl-platform-name">Android</div>
+        <div class="dl-platform-sub">APK dosyası — Chrome, Samsung Browser</div>
+      </div>
+    </div>
+    <a class="dl-btn dl-btn-android" href="https://github.com/rahmanopedia/englishrhapsody-app/releases/download/v1.0.0/english-rhapsody.apk" download="english-rhapsody.apk">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      APK İndir (11 MB)
+    </a>
+    <div class="dl-steps">
+      <div class="dl-step"><span class="dl-step-n">1</span> Butona bas, APK indir</div>
+      <div class="dl-step"><span class="dl-step-n">2</span> "Bilinmeyen kaynaklara izin ver" çık → İzin ver</div>
+      <div class="dl-step"><span class="dl-step-n">3</span> İndirilen APK'ya dokun → Yükle</div>
+    </div>
+  </div>
+
+  <!-- iOS -->
+  <div class="dl-card" id="dl-ios-card">
+    <div class="dl-card-header">
+      <span class="dl-platform-icon"></span>
+      <div>
+        <div class="dl-platform-name">iPhone / iPad</div>
+        <div class="dl-platform-sub">Safari ile Ana Ekrana Ekle</div>
+      </div>
+    </div>
+    <div class="dl-ios-note">iOS'ta APK yoktur — ama Safari üzerinden uygulamayı ana ekrana ekleyebilirsin. Tam uygulama gibi çalışır.</div>
+    <div class="dl-steps">
+      <div class="dl-step"><span class="dl-step-n">1</span> Bu sayfayı <strong>Safari</strong>'de aç</div>
+      <div class="dl-step"><span class="dl-step-n">2</span> Alt menüden <strong>Paylaş</strong> <span class="dl-share-icon">⎙</span> simgesine dokun</div>
+      <div class="dl-step"><span class="dl-step-n">3</span> <strong>"Ana Ekrana Ekle"</strong> seç → Ekle</div>
+      <div class="dl-step"><span class="dl-step-n">4</span> Ana ekrandan English Rhapsody ikonuna dokun 🎉</div>
+    </div>
+  </div>
+
+  <div class="dl-version">v1.0 · englishrhapsody.app</div>
+</div>
+<script>
+(function(){
+  const ua = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isAndroid = /Android/i.test(ua);
+  const android = document.getElementById('dl-android-card');
+  const ios = document.getElementById('dl-ios-card');
+  // Mobilde sadece ilgili platformu öne çıkar
+  if (isIOS && android) android.classList.add('dl-card-secondary');
+  if (isAndroid && ios) ios.classList.add('dl-card-secondary');
+})();
+</script>
+</template>
 
 <!-- External Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" crossorigin="anonymous" defer></script>

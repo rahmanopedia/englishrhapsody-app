@@ -9,7 +9,7 @@
     "predeploy": [],
     "site": "englishrhapsody-78866",
     "public": ".",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "scripts/**", "**/*.exe", "**/*.zip", "**/*.bin", "**/*.bat", "**/*.sh", "dist/**", "android/**", "temp_*/**"],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "scripts/**", "**/*.exe", "**/*.zip", "**/*.bin", "**/*.bat", "**/*.sh", "**/*.apk", "dist/**", "android/**", "temp_*/**", "upload-apk.js", "english-rhapsody.apk"],
     "rewrites": [{ "source": "**", "destination": "/index.html" }],
     "headers": [
       {
