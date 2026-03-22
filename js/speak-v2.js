@@ -96,29 +96,27 @@ class SpeakV2Module {
             </button>`).join('')}
         </div>
 
-        <!-- Settings + Stats tek satırda -->
-        <div class="sv2-topbar">
-          <div class="sv2-settings">
-            <button class="sv2-toggle${this.shuffleMode  ? ' on' : ''}" id="sv2-t-shuffle">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
-              Karıştır
-            </button>
-            <button class="sv2-toggle${this.autoAdvance  ? ' on' : ''}" id="sv2-t-auto">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              Otomatik
-            </button>
-            <button class="sv2-toggle${this.shadowMode   ? ' on' : ''}" id="sv2-t-shadow">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              Gölge
-            </button>
-          </div>
-          <div class="sv2-stats">
-            <span class="sv2-stat">🔥 <strong id="sv2-streak-num">${this.streak}</strong></span>
-            <span class="sv2-stat-sep">·</span>
-            <span class="sv2-stat">📊 <strong id="sv2-avg-num">${this._avgScore !== null ? this._avgScore + '%' : '—'}</strong></span>
-            <span class="sv2-stat-sep">·</span>
-            <span class="sv2-stat">✅ <strong id="sv2-count-num">${this.sessionCount}</strong></span>
-          </div>
+        <div class="sv2-settings">
+          <button class="sv2-toggle${this.shuffleMode  ? ' on' : ''}" id="sv2-t-shuffle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+            Karıştır
+          </button>
+          <button class="sv2-toggle${this.autoAdvance  ? ' on' : ''}" id="sv2-t-auto">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Otomatik
+          </button>
+          <button class="sv2-toggle${this.shadowMode   ? ' on' : ''}" id="sv2-t-shadow">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Gölge
+          </button>
+        </div>
+
+        <div class="sv2-stats">
+          <span class="sv2-stat">🔥 <strong id="sv2-streak-num">${this.streak}</strong> seri</span>
+          <span class="sv2-stat-sep">·</span>
+          <span class="sv2-stat">📊 <strong id="sv2-avg-num">${this._avgScore !== null ? this._avgScore + '%' : '—'}</strong></span>
+          <span class="sv2-stat-sep">·</span>
+          <span class="sv2-stat">✅ <strong id="sv2-count-num">${this.sessionCount}</strong> cümle</span>
         </div>
 
         <div class="sv2-card" id="sv2-card">
@@ -126,33 +124,33 @@ class SpeakV2Module {
           <p class="sv2-live" id="sv2-live"></p>
         </div>
 
-        <!-- Nav + Audio tek satırda -->
-        <div class="sv2-controls">
+        <div class="sv2-nav">
           <button class="sv2-nav-btn" id="sv2-prev"${this.idx === 0 && !this.shuffleMode ? ' disabled' : ''}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
-          <div class="sv2-audio-btns">
-            <button class="sv2-audio-btn sv2-btn-play" id="sv2-play">
-              <span class="sv2-aico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
-              <small>Play</small>
-            </button>
-            <button class="sv2-audio-btn sv2-btn-slow" id="sv2-slow">
-              <span class="sv2-aico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-              <small>Yavaş</small>
-            </button>
-            <button class="sv2-audio-btn sv2-btn-repeat" id="sv2-repeat">
-              <span class="sv2-aico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg></span>
-              <small>Tekrar</small>
-            </button>
-          </div>
+          <span class="sv2-counter">
+            Cümle <strong id="sv2-idx-num" style="color:${lc.color}">${this.idx + 1}</strong>
+            / <span style="color:#f1f5f9">1000</span>
+          </span>
           <button class="sv2-nav-btn" id="sv2-next">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
           </button>
         </div>
-        <p class="sv2-counter">
-          Cümle <strong id="sv2-idx-num" style="color:${lc.color}">${this.idx + 1}</strong>
-          / <span style="color:#f1f5f9">1000</span>
-        </p>
+
+        <div class="sv2-audio-btns">
+          <button class="sv2-audio-btn sv2-btn-play" id="sv2-play">
+            <span class="sv2-aico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+            <small>Play</small>
+          </button>
+          <button class="sv2-audio-btn sv2-btn-slow" id="sv2-slow">
+            <span class="sv2-aico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+            <small>Yavaş</small>
+          </button>
+          <button class="sv2-audio-btn sv2-btn-repeat" id="sv2-repeat">
+            <span class="sv2-aico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg></span>
+            <small>Tekrar</small>
+          </button>
+        </div>
 
         <div class="sv2-mic-section">
           ${!this._isSupported ? `<div class="sv2-unsupported">⚠️ Ses tanıma Chrome veya Edge'de çalışır.</div>` : ''}
