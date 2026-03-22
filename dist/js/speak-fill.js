@@ -440,7 +440,7 @@ class SpeakFillMode {
   // Sadece recognition + animasyonu durdurur, status'u idle'a çeker
   _cleanupRec() {
     if (this._rec) { try { this._rec.stop(); } catch {} this._rec = null; }
-    if (this._animFrame) { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
+    if (this._animFrame) { clearTimeout(this._animFrame); this._animFrame = null; }
     this._resetBars();
     this.status = 'idle';
     this._setMicUI('idle');
@@ -454,7 +454,7 @@ class SpeakFillMode {
   // Navigasyon / seviye değişimi gibi sert durumlar — her şeyi iptal eder
   _stopAll() {
     if (this._rec) { try { this._rec.stop(); } catch {} this._rec = null; }
-    if (this._animFrame) { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
+    if (this._animFrame) { clearTimeout(this._animFrame); this._animFrame = null; }
     this._ttsTimers.forEach(t => clearTimeout(t));
     this._ttsTimers = [];
     this._gen++;
@@ -718,15 +718,15 @@ class SpeakFillMode {
   // ── Dalga formu ───────────────────────────────────────────────────────────
 
   _startWave() {
-    // SpeechRecognition mikrofonu kullanırken getUserMedia çağırmıyoruz
-    // (mobilde çakışma yaratır). Random animasyon yeterli.
+    const bars = [];
+    for (let i = 0; i < 18; i++) {
+      const b = this.el?.querySelector(`#sfb${i}`);
+      if (b) bars.push(b);
+    }
     const tick = () => {
       if (this.status !== 'recording') return;
-      for (let i = 0; i < 18; i++) {
-        const b = this.el?.querySelector(`#sfb${i}`);
-        if (b) b.style.height = `${4 + Math.random() * 36}px`;
-      }
-      this._animFrame = requestAnimationFrame(tick);
+      for (const b of bars) b.style.height = `${4 + Math.random() * 36}px`;
+      this._animFrame = setTimeout(tick, 100);
     };
     tick();
   }

@@ -559,7 +559,7 @@ class SpeakV2Module {
   // Recognition + animasyonu durdurur, status'u idle'a çeker
   _cleanupRec() {
     if (this._recognition) { try { this._recognition.stop(); } catch {} this._recognition = null; }
-    if (this._animFrame)   { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
+    if (this._animFrame)   { clearTimeout(this._animFrame); this._animFrame = null; }
     this._resetBars();
     this.status = 'idle';
     this._updateMicState();
@@ -568,7 +568,7 @@ class SpeakV2Module {
   // Navigasyon / seviye değişimi — her şeyi iptal eder
   _stopAll() {
     if (this._recognition) { try { this._recognition.stop(); } catch {} this._recognition = null; }
-    if (this._animFrame)   { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
+    if (this._animFrame)   { clearTimeout(this._animFrame); this._animFrame = null; }
     this._gen = (this._gen || 0) + 1;
     this._resetBars();
   }
@@ -586,15 +586,15 @@ class SpeakV2Module {
   }
 
   _startWaveform() {
-    // SpeechRecognition mikrofonu kullanırken getUserMedia çağırmıyoruz
-    // (mobilde çakışma yaratır). Random animasyon yeterli.
+    const bars = [];
+    for (let i = 0; i < 20; i++) {
+      const b = this.el?.querySelector(`#sv2-b${i}`);
+      if (b) bars.push(b);
+    }
     const tick = () => {
       if (this.status !== 'recording') return;
-      for (let i = 0; i < 20; i++) {
-        const b = this.el?.querySelector(`#sv2-b${i}`);
-        if (b) b.style.height = `${4 + Math.random() * 36}px`;
-      }
-      this._animFrame = requestAnimationFrame(tick);
+      for (const b of bars) b.style.height = `${4 + Math.random() * 36}px`;
+      this._animFrame = setTimeout(tick, 100);
     };
     tick();
   }
