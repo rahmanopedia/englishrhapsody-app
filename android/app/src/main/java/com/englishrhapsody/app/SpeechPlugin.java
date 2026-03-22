@@ -2,6 +2,8 @@ package com.englishrhapsody.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -17,40 +19,44 @@ public class SpeechPlugin extends Plugin implements RecognitionListener {
 
     private SpeechRecognizer speechRecognizer;
     private boolean active = false;
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
-    private void destroyRecognizer() {
-        if (speechRecognizer != null) {
-            speechRecognizer.cancel();
-            speechRecognizer.destroy();
-            speechRecognizer = null;
-        }
-        active = false;
+    private Intent buildIntent() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+        return intent;
     }
 
     @PluginMethod
     public void start(PluginCall call) {
-        getActivity().runOnUiThread(() -> {
-            // Eğer analiz/dinleme sürecindeyse önce iptal et
-            destroyRecognizer();
-
-            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getContext());
-            speechRecognizer.setRecognitionListener(this);
-            active = true;
-
-            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
-            intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-            intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
-
-            speechRecognizer.startListening(intent);
+        handler.post(() -> {
+            if (speechRecognizer == null) {
+                // İlk kez: oluştur ve hemen başlat
+                speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getContext());
+                speechRecognizer.setRecognitionListener(this);
+                active = true;
+                speechRecognizer.startListening(buildIntent());
+            } else {
+                // Mevcut recognizer var: iptal et, 200ms bekle, tekrar başlat
+                speechRecognizer.cancel();
+                active = false;
+                handler.postDelayed(() -> {
+                    if (speechRecognizer != null) {
+                        active = true;
+                        speechRecognizer.startListening(buildIntent());
+                    }
+                }, 200);
+            }
         });
         call.resolve();
     }
 
     @PluginMethod
     public void stop(PluginCall call) {
-        getActivity().runOnUiThread(() -> {
+        handler.post(() -> {
             if (speechRecognizer != null && active) {
                 speechRecognizer.stopListening();
             }
@@ -82,8 +88,10 @@ public class SpeechPlugin extends Plugin implements RecognitionListener {
     @Override
     public void onError(int error) {
         active = false;
-        // ERROR_CLIENT (5) = cancel() çağrısından gelir — sessizce yoksay
+        // ERROR_CLIENT (5) = cancel() çağrısından — yoksay
         if (error == SpeechRecognizer.ERROR_CLIENT) return;
+        // ERROR_RECOGNIZER_BUSY (8) = önceki session henüz kapanmadı — yoksay
+        if (error == 8) return;
 
         String code;
         switch (error) {
