@@ -16,22 +16,34 @@ import java.util.ArrayList;
 public class SpeechPlugin extends Plugin implements RecognitionListener {
 
     private SpeechRecognizer speechRecognizer;
+    private boolean active = false;
+
+    private void destroyRecognizer() {
+        if (speechRecognizer != null) {
+            speechRecognizer.cancel();
+            speechRecognizer.destroy();
+            speechRecognizer = null;
+        }
+        active = false;
+    }
 
     @PluginMethod
     public void start(PluginCall call) {
         getActivity().runOnUiThread(() -> {
-            if (speechRecognizer != null) {
-                speechRecognizer.destroy();
-                speechRecognizer = null;
-            }
+            // Eğer analiz/dinleme sürecindeyse önce iptal et
+            destroyRecognizer();
+
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getContext());
             speechRecognizer.setRecognitionListener(this);
+            active = true;
 
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
             intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
             intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+            // Cihaz üzerinde (offline) tanıma — Google sunucusuna gönderme
+            intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true);
 
             speechRecognizer.startListening(intent);
         });
@@ -41,7 +53,7 @@ public class SpeechPlugin extends Plugin implements RecognitionListener {
     @PluginMethod
     public void stop(PluginCall call) {
         getActivity().runOnUiThread(() -> {
-            if (speechRecognizer != null) {
+            if (speechRecognizer != null && active) {
                 speechRecognizer.stopListening();
             }
         });
@@ -50,6 +62,7 @@ public class SpeechPlugin extends Plugin implements RecognitionListener {
 
     @Override
     public void onResults(Bundle results) {
+        active = false;
         ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String text = (matches != null && !matches.isEmpty()) ? matches.get(0) : "";
         JSObject data = new JSObject();
@@ -70,13 +83,15 @@ public class SpeechPlugin extends Plugin implements RecognitionListener {
 
     @Override
     public void onError(int error) {
+        active = false;
+        // ERROR_CLIENT (5) = cancel() çağrısından gelir — sessizce yoksay
+        if (error == SpeechRecognizer.ERROR_CLIENT) return;
+
         String code;
         switch (error) {
             case SpeechRecognizer.ERROR_NO_MATCH:
             case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
                 code = "no-speech"; break;
-            case SpeechRecognizer.ERROR_CLIENT:
-                code = "aborted"; break;
             default:
                 code = "service-not-available"; break;
         }
@@ -92,5 +107,4 @@ public class SpeechPlugin extends Plugin implements RecognitionListener {
     @Override public void onBufferReceived(byte[] buffer) {}
     @Override public void onEndOfSpeech() {}
     @Override public void onEvent(int eventType, Bundle params) {}
-
 }

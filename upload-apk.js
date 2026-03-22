@@ -1,9 +1,18 @@
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-
 const { execSync } = require('child_process');
-const TOKEN = (execSync('echo "protocol=https\nhost=github.com" | git credential fill').toString().match(/password=(.+)/) || [])[1]?.trim();
+
+// Token'ı git credential manager'dan al
+function getToken() {
+  const out = execSync('printf "protocol=https\\nhost=github.com\\n" | git credential fill').toString();
+  const match = out.match(/password=(.+)/);
+  return match ? match[1].trim() : null;
+}
+
+const TOKEN = getToken();
+if (!TOKEN) { console.error('Token alınamadı'); process.exit(1); }
+
 const OWNER = 'rahmanopedia';
 const REPO = 'englishrhapsody-app';
 const RELEASE_ID = 299921723;
@@ -30,7 +39,6 @@ const BASE_HEADERS = {
 };
 
 async function main() {
-  // Get release assets
   const rel = await request('GET', 'api.github.com', '/repos/' + OWNER + '/' + REPO + '/releases/' + RELEASE_ID, BASE_HEADERS);
   const release = JSON.parse(rel.body);
   for (const asset of release.assets || []) {
@@ -40,7 +48,6 @@ async function main() {
     }
   }
 
-  // Upload new APK
   const apkData = fs.readFileSync(APK_PATH);
   console.log('APK size:', apkData.length);
   const uploadHeaders = {
