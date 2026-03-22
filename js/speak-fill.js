@@ -777,7 +777,6 @@ class SpeakFillMode {
     _speakContainer = container;
     try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch(e) {}
     _enterFs(container);
-    setTimeout(_updateSpeakPickerXP, 100);
     if (_speakOrientHandler) window.removeEventListener('resize', _speakOrientHandler);
     _speakOrientHandler = () => _enterFs(container);
     window.addEventListener('resize', _speakOrientHandler, { passive: true });
@@ -821,25 +820,6 @@ class SpeakFillMode {
     }, 50);
   }
 
-  // ── Haftalık XP hedefini picker'da güncelle ─────────────────────────────
-  function _updateSpeakPickerXP() {
-    const goal = (window.remoteFlags?.weeklyXPGoal) ?? 120;
-    const history = window.app?.state?.get('history') || {};
-    let weekXP = 0;
-    const now = Date.now();
-    for (let d = 0; d < 7; d++) {
-      const key = new Date(now - d * 86400000).toISOString().split('T')[0];
-      weekXP += (history[key] || 0);
-    }
-    const pct = Math.min(100, Math.round(weekXP / goal * 100));
-    const goalEl = document.getElementById('spk-xp-goal-lbl');
-    const doneEl = document.getElementById('spk-xp-done-lbl');
-    const fillEl = document.getElementById('spk-xp-fill');
-    if (goalEl) goalEl.textContent = `Haftalık Hedef: ${goal} XP`;
-    if (doneEl) doneEl.textContent = `Tamamlanan: ${weekXP} XP`;
-    if (fillEl) fillEl.style.width = `${pct}%`;
-  }
-
   // ── Picker ekranını göster ──────────────────────────────────────────────
   window._speakShowPicker = function () {
     const picker = document.getElementById('spk-picker');
@@ -849,7 +829,6 @@ class SpeakFillMode {
     if (pV2)    pV2.style.display    = 'none';
     if (pFill)  pFill.style.display  = 'none';
     if (_speakContainer) _enterFs(_speakContainer);
-    _updateSpeakPickerXP();
   };
 
   // ── Bir mod seç ve yükle ────────────────────────────────────────────────
