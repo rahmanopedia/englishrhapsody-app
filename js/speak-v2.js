@@ -7,7 +7,8 @@
 class SpeakV2Module {
   constructor() {
     this.el = null;
-    this.level = 'easy';
+    this._userCefr = 'B1';
+    this._pool = [];
     this.idx = 0;
     this.status = 'idle';
     this.result = null;
@@ -43,18 +44,20 @@ class SpeakV2Module {
   // ─── Config ────────────────────────────────────────────────────────────────
 
   get _levelConfig() {
-    return {
-      easy:   { label: 'Beginner',     color: '#10b981', glow: 'rgba(16,185,129,0.4)' },
-      medium: { label: 'Intermediate', color: '#06b6d4', glow: 'rgba(6,182,212,0.4)'  },
-      hard:   { label: 'Advanced',     color: '#7c3aed', glow: 'rgba(124,58,237,0.4)' },
+    const map = {
+      A1: { label: 'Başlangıç',  color: '#10b981', glow: 'rgba(16,185,129,0.4)'  },
+      A2: { label: 'Temel',      color: '#06b6d4', glow: 'rgba(6,182,212,0.4)'   },
+      B1: { label: 'Orta Altı',  color: '#3b82f6', glow: 'rgba(59,130,246,0.4)'  },
+      B2: { label: 'Orta Üstü',  color: '#8b5cf6', glow: 'rgba(139,92,246,0.4)'  },
+      C1: { label: 'İleri',      color: '#f59e0b', glow: 'rgba(245,158,11,0.4)'  },
+      C2: { label: 'Ustalaşmış', color: '#ef4444', glow: 'rgba(239,68,68,0.4)'   },
     };
+    return map[this._userCefr] || map['B1'];
   }
 
-  get _sentences() {
-    try { return SPEAK_CHALLENGES[this.level] || []; } catch { return []; }
-  }
+  get _sentences() { return this._pool; }
 
-  get _currentSentence() { return this._sentences[this.idx] || ''; }
+  get _currentSentence() { return this._pool[this.idx] || ''; }
 
   get _avgScore() {
     if (!this.sessionScores.length) return null;
@@ -63,37 +66,39 @@ class SpeakV2Module {
 
   // ─── Init ──────────────────────────────────────────────────────────────────
 
-  // CEFR → easy/medium/hard eşleme
-  _cefrToDiff(cefr) {
-    if (['A1','A2'].includes(cefr)) return 'easy';
-    if (['B1','B2'].includes(cefr)) return 'medium';
-    return 'hard'; // C1, C2
+  // WORDS'dan kullanıcının CEFR seviyesine göre cümle havuzu oluştur
+  _buildPool(cefr) {
+    if (typeof WORDS === 'undefined') return;
+    const LEVELS = ['A1','A2','B1','B2','C1','C2'];
+    const collect = (lvl) => WORDS
+      .filter(w => w.level === lvl && w.ex && w.ex.trim().split(/\s+/).length >= 4)
+      .map(w => w.ex.trim());
+
+    let pool = collect(cefr);
+
+    // Havuz çok küçükse komşu seviyeleri de ekle
+    if (pool.length < 20) {
+      const i = LEVELS.indexOf(cefr);
+      if (i > 0) pool = pool.concat(collect(LEVELS[i - 1]));
+      if (i < LEVELS.length - 1) pool = pool.concat(collect(LEVELS[i + 1]));
+    }
+
+    // Tekrar eden cümleleri temizle ve karıştır
+    this._pool = [...new Set(pool)].sort(() => Math.random() - 0.5);
   }
 
   async init(el) {
     this.el = el;
-    if (typeof SPEAK_CHALLENGES === 'undefined') await this._loadData();
-    const userCefr = window._app?.state?.get('cefrLevel') || 'B1';
-    this.level = this._cefrToDiff(userCefr);
-    this._userCefr = userCefr;
+    this._userCefr = window._app?.state?.get('cefrLevel') || 'B1';
+    this._buildPool(this._userCefr);
     this._render();
-  }
-
-  _loadData() {
-    return new Promise(resolve => {
-      const s = document.createElement('script');
-      s.src = 'js/stories-data.js';
-      s.onload = resolve; s.onerror = resolve;
-      document.head.appendChild(s);
-    });
   }
 
   // ─── Render ────────────────────────────────────────────────────────────────
 
   _render() {
     if (!this.el) return;
-    const cfg  = this._levelConfig;
-    const lc   = cfg[this.level];
+    const lc   = this._levelConfig;
     const circ = 2 * Math.PI * 28;
 
     this.el.innerHTML = `
@@ -135,7 +140,7 @@ class SpeakV2Module {
           </button>
           <span class="sv2-counter">
             Cümle <strong id="sv2-idx-num" style="color:${lc.color}">${this.idx + 1}</strong>
-            / <span style="color:#f1f5f9">1000</span>
+            / <span style="color:#f1f5f9">${this._pool.length}</span>
           </span>
           <button class="sv2-nav-btn" id="sv2-next">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
@@ -232,9 +237,9 @@ class SpeakV2Module {
   }
 
   _applyLevelStyle() {
-    const cfg  = this._levelConfig[this.level];
+    const lc   = this._levelConfig;
     const card = this.el?.querySelector('#sv2-card');
-    if (card) card.style.boxShadow = `0 0 40px ${cfg.glow.replace('0.4','0.12')}, inset 0 1px 0 rgba(255,255,255,0.06)`;
+    if (card) card.style.boxShadow = `0 0 40px ${lc.glow.replace('0.4','0.12')}, inset 0 1px 0 rgba(255,255,255,0.06)`;
   }
 
   _bindEvents() {
@@ -267,13 +272,6 @@ class SpeakV2Module {
 
   // ─── Navigation ────────────────────────────────────────────────────────────
 
-  _setLevel(level) {
-    this._clearTimers(); this._stopAll(); window.speechSynthesis?.cancel();
-    this.level = level; this.idx = 0;
-    this.status = 'idle'; this.result = null; this.liveTranscript = ''; this._audioUrl = null; this._audioEl = null;
-    this.sessionScores = []; this.streak = 0; this.sessionCount = 0; this._lowScoreMap = {};
-    this._render();
-  }
 
   _prev() {
     this._clearTimers(); this._stopAll(); window.speechSynthesis?.cancel();
@@ -301,14 +299,14 @@ class SpeakV2Module {
   }
 
   _updateSentenceUI() {
-    const cfg = this._levelConfig[this.level];
+    const lc  = this._levelConfig;
     const q   = id => this.el?.querySelector(id);
 
     const sentEl = q('#sv2-sentence');
     if (sentEl) sentEl.textContent = `"${this._currentSentence}"`;
 
     const idxEl = q('#sv2-idx-num');
-    if (idxEl) { idxEl.textContent = this.idx + 1; idxEl.style.color = cfg.color; }
+    if (idxEl) { idxEl.textContent = this.idx + 1; idxEl.style.color = lc.color; }
 
     const prev = q('#sv2-prev');
     if (prev) prev.disabled = this.idx === 0 && !this.shuffleMode;
@@ -670,7 +668,7 @@ class SpeakV2Module {
 
   // ─── History (localStorage) ────────────────────────────────────────────────
 
-  _histKey()  { return `sv2_${this.level}_${this.idx}`; }
+  _histKey()  { return `sv2_${this._userCefr}_${this.idx}`; }
 
   _saveToHistory(entry) {
     try {
