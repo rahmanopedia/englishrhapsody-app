@@ -96,7 +96,8 @@ class SpeakFillMode {
   init(el) {
     this.el = el;
     this._buildItems();
-    this._setLevel('A1');
+    const userCefr = window._app?.state?.get('cefrLevel') || 'B1';
+    this._setLevel(userCefr);
     this._render();
     this._initOrientation();
   }
@@ -122,7 +123,6 @@ class SpeakFillMode {
     const tokens = this._tokenize(item.sentence);
     this.filledWords = new Array(tokens.length).fill(false);
 
-    const LEVELS = ['A1','A2','B1','B2','C1','C2'];
     const LEVEL_CFG = {
       A1: { color:'#10b981', label:'Başlangıç'  },
       A2: { color:'#06b6d4', label:'Temel'       },
@@ -131,7 +131,7 @@ class SpeakFillMode {
       C1: { color:'#f59e0b', label:'İleri'       },
       C2: { color:'#ef4444', label:'Ustalaşmış'  },
     };
-    const lcfg = LEVEL_CFG[this._level];
+    const lcfg = LEVEL_CFG[this._level] || LEVEL_CFG['B1'];
     const pct  = Math.round((this.idx / Math.max(1, this.pool.length)) * 100);
     const bars = Array.from({ length: 18 }, (_, i) =>
       `<div class="sfm-bar" id="sfb${i}"></div>`).join('');
@@ -153,18 +153,6 @@ class SpeakFillMode {
 
     this.el.innerHTML = `
 <div class="sfm-wrap">
-
-  <!-- Seviye seçimi -->
-  <div class="sfm-levels">
-    ${LEVELS.map(lv => `
-      <button class="sfm-lvl-btn${this._level === lv ? ' sfm-lvl-on' : ''}"
-        data-lv="${lv}"
-        style="${this._level === lv
-          ? `background:${LEVEL_CFG[lv].color}22;border-color:${LEVEL_CFG[lv].color}66;color:${LEVEL_CFG[lv].color}`
-          : ''}">
-        ${lv}
-      </button>`).join('')}
-  </div>
 
   <!-- Seviye etiketi + istatistik -->
   <div class="sfm-topbar">
@@ -259,13 +247,6 @@ class SpeakFillMode {
     q('#sfm-skip') ?.addEventListener('click', () => this._advance());
     q('#sfm-prev') ?.addEventListener('click', () => this._go(this.idx - 1));
     q('#sfm-fwd')  ?.addEventListener('click', () => this._advance());
-    this.el.querySelectorAll('.sfm-lvl-btn').forEach(btn =>
-      btn.addEventListener('click', () => {
-        this._stopAll();
-        this._setLevel(btn.dataset.lv);
-        this._render();
-      })
-    );
   }
 
   // ── Navigasyon ────────────────────────────────────────────────────────────
