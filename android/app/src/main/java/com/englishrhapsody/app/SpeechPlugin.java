@@ -42,8 +42,6 @@ public class SpeechPlugin extends Plugin implements RecognitionListener {
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
             intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
             intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
-            // Cihaz üzerinde (offline) tanıma — Google sunucusuna gönderme
-            intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true);
 
             speechRecognizer.startListening(intent);
         });
