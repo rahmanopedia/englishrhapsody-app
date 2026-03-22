@@ -2,6 +2,14 @@
    Inline script blocks extracted from index.html for CSP compliance.
    Loaded via <script src="js/boot.js" defer></script> */
 
+/* ── 0. Capacitor native plugin kaydı ── */
+(function () {
+  if (window.Capacitor && typeof window.Capacitor.registerPlugin === 'function') {
+    window.Capacitor.Plugins = window.Capacitor.Plugins || {};
+    window.Capacitor.Plugins.NativeSpeech = window.Capacitor.registerPlugin('NativeSpeech');
+  }
+})();
+
 /* ── 1. Lazy Script Loader ── */
 (function () {
   var LAZY = {
