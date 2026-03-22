@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
@@ -52,6 +53,10 @@ public class MainActivity extends BridgeActivity {
             ActivityCompat.requestPermissions(this,
                 new String[]{ Manifest.permission.RECORD_AUDIO }, 1);
         }
+
+        // JavascriptInterface ile native speech bridge'i WebView'a bağla
+        WebView webView = getBridge().getWebView();
+        webView.addJavascriptInterface(new SpeechBridge(this, webView), "AndroidSpeech");
 
         // 3 saniye sonra status bar + nav bar gizle
         hideHandler.postDelayed(hideSystemBars, 3000);
