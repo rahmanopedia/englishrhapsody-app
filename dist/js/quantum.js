@@ -2472,6 +2472,12 @@ class QuantumMode {
   addXP(n, diff = 'hard')   { if(this.app?.addXP) this.app.addXP(n, diff); }
   confetti() { if(typeof confetti==='function') confetti({particleCount:160,spread:90,origin:{y:0.6},colors:['#00d4ff','#7c3aed','#ec4899']}); }
 
+  _bindHub() {
+    this.root.querySelectorAll('.qhub-card[data-game]').forEach(card => {
+      card.addEventListener('click', () => this.startGame(card.dataset.game));
+    });
+  }
+
   renderHub() {
     const wins  = localStorage.getItem('q_wins')  || '0';
     const best  = localStorage.getItem('q_best')  || '—';
@@ -2493,7 +2499,7 @@ class QuantumMode {
 
   <div class="qhub-grid">
 
-    <div class="qhub-card blitz" onclick="window._qmode.startGame('rush')">
+    <div class="qhub-card blitz" data-game="rush">
       <div class="qhc-glow"></div>
       <div class="qhc-icon">⚡</div>
       <div class="qhc-body">
@@ -2508,7 +2514,7 @@ class QuantumMode {
       <div class="qhc-arrow">→</div>
     </div>
 
-    <div class="qhub-card scramble" onclick="window._qmode.startGame('scramble')">
+    <div class="qhub-card scramble" data-game="scramble">
       <div class="qhc-glow"></div>
       <div class="qhc-icon">🧩</div>
       <div class="qhc-body">
@@ -2525,6 +2531,7 @@ class QuantumMode {
 
   </div>
 </div>`;
+    this._bindHub();
   }
 
   startGame(type) {
@@ -2566,7 +2573,7 @@ class SentenceRush {
     this.root.innerHTML=`
 <div class="qgame-shell" id="rush-shell">
   <div class="qgame-topbar">
-    <button class="qback-btn" onclick="window._rush._stopTimer(); window._qmode.backToHub();">← Hub</button>
+    <button class="qback-btn" id="rush-back-btn">← Hub</button>
     <div class="rush-time-wrap">
       <span class="rush-time-val" id="rush-time">20</span>
       <span class="rush-time-lbl">s</span>
@@ -2591,14 +2598,17 @@ class SentenceRush {
   <div class="sc-word-pool" id="rush-pool"></div>
 
   <div class="rush-actions">
-    <button class="sc-clear-btn" onclick="window._rush.clear()">↺ Sıfırla</button>
-    <button class="sc-check-btn" onclick="window._rush.check()">✓ Gönder</button>
+    <button class="sc-clear-btn" id="rush-clear-btn">↺ Sıfırla</button>
+    <button class="sc-check-btn" id="rush-check-btn">✓ Gönder</button>
   </div>
 
   <div class="arena-feedback" id="rush-feedback"></div>
 </div>`;
 
     window._rush=this;
+    document.getElementById('rush-back-btn').addEventListener('click', () => { this._stopTimer(); this.qm.backToHub(); });
+    document.getElementById('rush-clear-btn').addEventListener('click', () => this.clear());
+    document.getElementById('rush-check-btn').addEventListener('click', () => this.check());
     this._newSentence();
   }
 
@@ -2736,6 +2746,8 @@ class SentenceRush {
     }
     window.analyticsManager?.lessonComplete('quantum_rush', this.score);
     this.root.innerHTML=_resultHTML('⚡','Sentence Rush',won,this.score,`${this.solved}/10 cümle çözüldü`,finalXP,'rush');
+    document.getElementById('qres-replay').addEventListener('click', () => this.qm.startGame('rush'));
+    document.getElementById('qres-hub').addEventListener('click', () => this.qm.backToHub());
   }
 }
 
@@ -2757,7 +2769,7 @@ class SentenceScramble {
     this.root.innerHTML=`
 <div class="qgame-shell" id="ss-shell">
   <div class="qgame-topbar">
-    <button class="qback-btn" onclick="window._ss._stopTimer(); window._qmode.backToHub();">← Hub</button>
+    <button class="qback-btn" id="ss-back-btn">← Hub</button>
     <div class="qgame-topbar-center">
       <span class="qtb-label">Round</span>
       <span class="qtb-val" id="ss-round">1/8</span>
@@ -2790,14 +2802,17 @@ class SentenceScramble {
   <div class="sc-word-pool" id="ss-pool"></div>
 
   <div class="sc-controls">
-    <button class="sc-clear-btn" onclick="window._ss.clear()">↺ Sıfırla</button>
-    <button class="sc-check-btn" onclick="window._ss.check()">✓ Gönder</button>
+    <button class="sc-clear-btn" id="ss-clear-btn">↺ Sıfırla</button>
+    <button class="sc-check-btn" id="ss-check-btn">✓ Gönder</button>
   </div>
 
   <div class="arena-feedback" id="ss-feedback"></div>
 </div>`;
 
     window._ss=this;
+    document.getElementById('ss-back-btn').addEventListener('click', () => { this._stopTimer(); this.qm.backToHub(); });
+    document.getElementById('ss-clear-btn').addEventListener('click', () => this.clear());
+    document.getElementById('ss-check-btn').addEventListener('click', () => this.check());
     this._newRound();
   }
 
@@ -2954,6 +2969,8 @@ class SentenceScramble {
     }
     window.analyticsManager?.lessonComplete('quantum_scramble', this.score);
     this.root.innerHTML=_resultHTML('🧩','Sentence Scramble',won,this.score,`${this.maxRound} cümle`,finalXP,'scramble');
+    document.getElementById('qres-replay').addEventListener('click', () => this.qm.startGame('scramble'));
+    document.getElementById('qres-hub').addEventListener('click', () => this.qm.backToHub());
   }
 }
 
@@ -2967,10 +2984,59 @@ function _resultHTML(icon,game,won,score,sub,xp,gameKey){
   <div class="qresult-sub">${game} · ${sub}</div>
   <div class="qresult-xp">+${xp} XP kazandın!</div>
   <div class="qresult-btns">
-    <button class="qres-btn primary" onclick="window._qmode.startGame('${gameKey}')">🔄 Tekrar Oyna</button>
-    <button class="qres-btn ghost" onclick="window._qmode.backToHub()">← Hub</button>
+    <button class="qres-btn primary" id="qres-replay">🔄 Tekrar Oyna</button>
+    <button class="qres-btn ghost" id="qres-hub">← Hub</button>
   </div>
 </div>`;
 }
 
 window.QuantumMode = QuantumMode;
+
+/* ── Quantum: tam ekran + yön yönetimi ── */
+(function () {
+  let _qOrient = null;
+  let _qEl     = null;
+
+  function _qEnterFs(el) {
+    if (!el || document.fullscreenElement || document.webkitFullscreenElement) return;
+    const fsEl = document.documentElement;
+    const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
+    if (req) req.call(fsEl).catch(() => {});
+  }
+
+  function _qInit(el) {
+    if (_qEl === el) return;
+    _qEl = el;
+    try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch(e) {}
+    _qEnterFs(el);
+    if (_qOrient) window.removeEventListener('resize', _qOrient);
+    _qOrient = () => _qEnterFs(el);
+    window.addEventListener('resize', _qOrient, { passive: true });
+    if (window.attachQuickMenuTrigger) window.attachQuickMenuTrigger(el);
+  }
+
+  function _qDestroy() {
+    if (_qOrient) { window.removeEventListener('resize', _qOrient); _qOrient = null; }
+    _qEl = null;
+    try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(() => {}); } catch(e) {}
+  }
+
+  function _patch() {
+    const app = window._app;
+    if (!app || !app.navigate || app.__qPatched) return;
+    app.__qPatched = true;
+    const _orig = app.navigate.bind(app);
+    app.navigate = function (target) {
+      _orig(target);
+      if (target === 'quantum') {
+        const c = document.getElementById('quantum-root');
+        if (c) _qInit(c);
+      } else if (_qEl) {
+        _qDestroy();
+      }
+    };
+  }
+
+  if (window._app) { _patch(); }
+  else { const t = setInterval(() => { if (window._app) { clearInterval(t); _patch(); } }, 50); }
+})();

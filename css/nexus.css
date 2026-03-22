@@ -79,4 +79,142 @@
   .synth-pool{gap:7px;max-width:100%}
   .synth-orb{padding:7px 14px;font-size:0.85rem;border-radius:60px}
 }
-@media(max-width:700px){.nexus-title{font-size:1.5rem;letter-spacing:3px}.nexus-mode-selector{grid-template-columns:1fr;gap:14px;margin-top:16px}.nexus-mode-card{padding:22px 18px}.synth-reactor{flex-direction:column;padding:22px;gap:12px}.synth-slot{width:180px;height:54px}.synth-sentence{font-size:1.2rem;padding:16px}.nexus-game-area{overflow:hidden;max-width:100%}.nexus-hud{right:8px;top:10px}.nexus-stat{padding:7px 12px;font-size:.78rem}}@media(max-width:480px){.nexus-title{font-size:1.25rem;letter-spacing:2px}.nexus-hud{right:6px;top:8px;gap:6px}.nexus-stat{padding:5px 10px;font-size:.72rem}.nexus-display-container{width:95%;padding:12px 14px}.nexus-particle-node{width:74px;height:74px;font-size:.78rem}.nexus-core-node{width:96px;height:96px;font-size:1.25rem}.cipher-sentence-box{padding:18px 16px;font-size:1.1rem}.cipher-lock-mechanism{padding:16px}.cipher-dial{width:160px}}.nexus-net-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}.nexus-line.ambient-line{stroke:#a78bfa33;stroke-width:1;stroke-dasharray:4 8;animation:nx-ambient-dash 3s linear infinite}@keyframes nx-ambient-dash{to{stroke-dashoffset:-36}}.nx-spark-ring{position:absolute;inset:-22px;border-radius:50%;pointer-events:none;z-index:0}.nx-spark-ring:before,.nx-spark-ring:after{content:"";position:absolute;inset:0;border-radius:50%}.nx-spark-ring:before{background:conic-gradient(transparent 0deg,rgba(167,139,250,.55) 4deg,transparent 8deg,transparent 88deg,rgba(167,139,250,.55) 92deg,transparent 96deg,transparent 178deg,rgba(167,139,250,.55) 182deg,transparent 186deg,transparent 268deg,rgba(167,139,250,.55) 272deg,transparent 276deg);animation:nx-spark-spin 5s linear infinite}.nx-spark-ring:after{background:conic-gradient(transparent 0deg,rgba(245,211,112,.4) 3deg,transparent 6deg,transparent 43deg,rgba(245,211,112,.4) 46deg,transparent 49deg,transparent 133deg,rgba(245,211,112,.4) 136deg,transparent 139deg,transparent 223deg,rgba(245,211,112,.4) 226deg,transparent 229deg,transparent 313deg,rgba(245,211,112,.4) 316deg,transparent 319deg);animation:nx-spark-spin 7s linear infinite reverse}@keyframes nx-spark-spin{to{transform:rotate(360deg)}}.nx-known-badge{position:absolute;top:-7px;right:-7px;width:22px;height:22px;background:linear-gradient(135deg,#10b981,#059669);border-radius:50%;font-size:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;box-shadow:0 0 10px #10b981cc,0 2px 6px #0006;animation:nx-badge-pop .35s cubic-bezier(.34,1.56,.64,1) both;z-index:15;pointer-events:none}@keyframes nx-badge-pop{0%{transform:scale(0) rotate(-45deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}.nexus-particle-node.solved{background:linear-gradient(135deg,#10b98138,#10b98114);border-color:#10b981;border-width:2px;color:#34d399;font-weight:800;box-shadow:0 0 0 5px #10b9811f,0 0 28px #10b9818c,inset 0 1px #ffffff1f;transform:scale(1.14);pointer-events:none;animation:nx-solved-shimmer 2.5s ease-in-out infinite}@keyframes nx-solved-shimmer{0%,to{box-shadow:0 0 0 5px #10b9811f,0 0 28px #10b9818c,inset 0 1px #ffffff1f}50%{box-shadow:0 0 0 8px #10b9812e,0 0 42px #34d399bf,inset 0 1px #ffffff2e}}.nexus-display-container.network-compact{min-height:90px;padding:14px 24px;margin:8px auto}
+@media(max-width:700px){.nexus-title{font-size:1.5rem;letter-spacing:3px}.nexus-mode-selector{grid-template-columns:1fr;gap:14px;margin-top:16px}.nexus-mode-card{padding:22px 18px}.synth-reactor{flex-direction:column;padding:22px;gap:12px}.synth-slot{width:180px;height:54px}.synth-sentence{font-size:1.2rem;padding:16px}.nexus-game-area{overflow:hidden;max-width:100%}.nexus-hud{right:8px;top:10px}.nexus-stat{padding:7px 12px;font-size:.78rem}}@media(max-width:480px){.nexus-title{font-size:1.25rem;letter-spacing:2px}.nexus-hud{right:6px;top:8px;gap:6px}.nexus-stat{padding:5px 10px;font-size:.72rem}.nexus-display-container{width:95%;padding:12px 14px}.nexus-particle-node{width:74px;height:74px;font-size:.78rem}.nexus-core-node{width:96px;height:96px;font-size:1.25rem}.cipher-sentence-box{padding:18px 16px;font-size:1.1rem}.cipher-lock-mechanism{padding:16px}.cipher-dial{width:160px}}/* ── Landscape phone optimization ── */
+@media (orientation: landscape) and (max-height: 500px) {
+  /* Shell: fullscreen height, scroll allowed */
+  .nexus-shell {
+    min-height: 100dvh !important;
+    height: 100dvh !important;
+    overflow-y: auto !important;
+    padding: 0 max(16px, env(safe-area-inset-right)) !important;
+    padding-left: max(16px, env(safe-area-inset-left)) !important;
+    box-sizing: border-box;
+  }
+
+  /* Compact header */
+  .nexus-header { padding: 6px 0 4px !important; }
+  .nexus-header:after { margin: 4px auto 0 !important; }
+  .nexus-title { font-size: 1rem !important; letter-spacing: 2px !important; gap: 6px !important; }
+  .nexus-subtitle { font-size: 0.65rem !important; margin-top: 2px !important; }
+  .v5-badge { font-size: 0.6rem !important; padding: 2px 6px !important; }
+
+  /* Intro mode selector: 3 cards in a row */
+  .nexus-mode-selector {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+    margin-top: 8px !important;
+    width: 100% !important;
+  }
+  .nexus-mode-card {
+    padding: 12px 10px !important;
+    border-radius: 14px !important;
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 6px !important;
+  }
+  .nm-icon { font-size: 1.6rem !important; margin-bottom: 4px !important; }
+  .nm-title { font-size: 0.8rem !important; margin-bottom: 0 !important; letter-spacing: 0 !important; }
+  .nm-desc { display: none !important; }
+
+  /* HUD: smaller, repositioned */
+  .nexus-hud { top: 8px !important; right: max(8px, env(safe-area-inset-right)) !important; gap: 4px !important; }
+  .nexus-stat { padding: 4px 10px !important; font-size: 0.7rem !important; }
+
+  /* Cipher screen: two-column layout */
+  .cipher-sentence-box {
+    font-size: 0.85rem !important;
+    padding: 8px 12px !important;
+    margin: 4px 0 !important;
+    border-radius: 10px !important;
+    line-height: 1.4 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .cipher-hint { font-size: 0.68rem !important; margin-top: 6px !important; padding-top: 6px !important; }
+  .cipher-lock-mechanism {
+    flex-direction: row !important;
+    padding: 8px 10px !important;
+    gap: 6px !important;
+    border-radius: 14px !important;
+    margin: 4px 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .cipher-dial { flex: 1 !important; min-width: 0 !important; width: 0 !important; gap: 5px !important; }
+  .cipher-nav-btn { width: 28px !important; height: 28px !important; font-size: 0.72rem !important; border-radius: 7px !important; }
+  .cipher-window { height: 40px !important; font-size: 0.88rem !important; border-radius: 8px !important; }
+  .cipher-engage-btn { padding: 8px 0 !important; font-size: 0.75rem !important; letter-spacing: 1.5px !important; border-radius: 10px !important; margin: 4px 0 !important; }
+
+  /* Synthesis screen */
+  .synth-game-container { margin-top: 0 !important; }
+  .synth-sentence {
+    font-size: 0.8rem !important;
+    padding: 7px 10px !important;
+    margin-bottom: 5px !important;
+    border-radius: 10px !important;
+    line-height: 1.35 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .synth-reactor {
+    flex-direction: row !important;
+    padding: 8px !important;
+    gap: 6px !important;
+    border-radius: 14px !important;
+    margin-bottom: 5px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .synth-slot { height: 38px !important; font-size: 0.72rem !important; }
+  .synth-plus { font-size: 1rem !important; }
+  .synth-pool { gap: 5px !important; }
+  .synth-orb { padding: 5px 12px !important; font-size: 0.78rem !important; border-radius: 40px !important; }
+
+  /* Network screen: 2-column layout (question left, graph right) */
+  .nexus-shell:has(#nexus-board),
+  .nexus-shell.nexus-network-lock {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+  .nexus-shell:has(#nexus-board) .nexus-header { display: none !important; }
+  .nexus-shell:has(#nexus-board) .nexus-bg-stars { display: none !important; }
+  .nexus-shell:has(#nexus-board) .nexus-display-container,
+  .nexus-shell:has(#nexus-board) .nexus-display-container.network-compact {
+    width: 36% !important;
+    flex-shrink: 0 !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    border-radius: 0 16px 16px 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 14px max(14px, env(safe-area-inset-right)) 14px max(14px, env(safe-area-inset-left)) !important;
+    min-height: unset !important;
+  }
+  .nexus-shell:has(#nexus-board) .nexus-task-progress { margin-bottom: 6px !important; }
+  .nexus-shell:has(#nexus-board) .nexus-question { font-size: 0.95rem !important; text-align: left !important; }
+  .nexus-shell:has(#nexus-board) .nexus-example-text { font-size: 0.78rem !important; }
+  .nexus-shell:has(#nexus-board) #nexus-board {
+    flex: 1 !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    margin-right: max(0px, env(safe-area-inset-right)) !important;
+  }
+  .nexus-shell:has(#nexus-board) .nexus-hud {
+    top: 8px !important;
+    right: max(8px, env(safe-area-inset-right)) !important;
+  }
+  .nexus-core-node { width: 62px !important; height: 62px !important; font-size: 0.85rem !important; }
+  .nexus-particle-node { width: 52px !important; height: 52px !important; font-size: 0.65rem !important; padding: 4px !important; }
+}
+
+.nexus-net-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}.nexus-line.ambient-line{stroke:#a78bfa33;stroke-width:1;stroke-dasharray:4 8;animation:nx-ambient-dash 3s linear infinite}@keyframes nx-ambient-dash{to{stroke-dashoffset:-36}}.nx-spark-ring{position:absolute;inset:-22px;border-radius:50%;pointer-events:none;z-index:0}.nx-spark-ring:before,.nx-spark-ring:after{content:"";position:absolute;inset:0;border-radius:50%}.nx-spark-ring:before{background:conic-gradient(transparent 0deg,rgba(167,139,250,.55) 4deg,transparent 8deg,transparent 88deg,rgba(167,139,250,.55) 92deg,transparent 96deg,transparent 178deg,rgba(167,139,250,.55) 182deg,transparent 186deg,transparent 268deg,rgba(167,139,250,.55) 272deg,transparent 276deg);animation:nx-spark-spin 5s linear infinite}.nx-spark-ring:after{background:conic-gradient(transparent 0deg,rgba(245,211,112,.4) 3deg,transparent 6deg,transparent 43deg,rgba(245,211,112,.4) 46deg,transparent 49deg,transparent 133deg,rgba(245,211,112,.4) 136deg,transparent 139deg,transparent 223deg,rgba(245,211,112,.4) 226deg,transparent 229deg,transparent 313deg,rgba(245,211,112,.4) 316deg,transparent 319deg);animation:nx-spark-spin 7s linear infinite reverse}@keyframes nx-spark-spin{to{transform:rotate(360deg)}}.nx-known-badge{position:absolute;top:-7px;right:-7px;width:22px;height:22px;background:linear-gradient(135deg,#10b981,#059669);border-radius:50%;font-size:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;box-shadow:0 0 10px #10b981cc,0 2px 6px #0006;animation:nx-badge-pop .35s cubic-bezier(.34,1.56,.64,1) both;z-index:15;pointer-events:none}@keyframes nx-badge-pop{0%{transform:scale(0) rotate(-45deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}.nexus-particle-node.solved{background:linear-gradient(135deg,#10b98138,#10b98114);border-color:#10b981;border-width:2px;color:#34d399;font-weight:800;box-shadow:0 0 0 5px #10b9811f,0 0 28px #10b9818c,inset 0 1px #ffffff1f;transform:scale(1.14);pointer-events:none;animation:nx-solved-shimmer 2.5s ease-in-out infinite}@keyframes nx-solved-shimmer{0%,to{box-shadow:0 0 0 5px #10b9811f,0 0 28px #10b9818c,inset 0 1px #ffffff1f}50%{box-shadow:0 0 0 8px #10b9812e,0 0 42px #34d399bf,inset 0 1px #ffffff2e}}.nexus-display-container.network-compact{min-height:90px;padding:14px 24px;margin:8px auto}

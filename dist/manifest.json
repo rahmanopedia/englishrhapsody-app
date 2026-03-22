@@ -1,16 +1,28 @@
 {
   "name": "English Rhapsody",
-  "short_name": "Rhapsody",
+  "short_name": "Eng. Rhapsody",
   "description": "Professional English learning app with SRS flashcards, speaking lab and reading stories.",
+  "id": "/",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#070a0f",
   "theme_color": "#00d4ff",
   "orientation": "portrait-primary",
   "icons": [
-    { "src": "https://img.icons8.com/nolan/192/graduation-cap.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "https://img.icons8.com/nolan/512/graduation-cap.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
   "categories": ["education", "lifestyle"],
-  "lang": "en"
+  "lang": "en",
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://englishrhapsody.app/manifest.json"
+    },
+    {
+      "platform": "webapp",
+      "url": "https://englishrhapsody-78866.web.app/manifest.json"
+    }
+  ],
+  "prefer_related_applications": false
 }

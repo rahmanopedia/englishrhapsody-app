@@ -27,6 +27,7 @@ class CinemaModule {
     this.clips = this._shuffle([...CINEMA_DATA]);
     this._render();
     this._loadClip();
+    this._initOrientation();
   }
 
   _shuffle(arr) {
@@ -167,7 +168,7 @@ class CinemaModule {
         </div>
 
         <!-- Header -->
-        <div style="
+        <div id="cine-exit-wrap" style="
           position:absolute;top:0;left:0;right:0;z-index:20;
           display:flex;align-items:center;justify-content:space-between;
           padding:14px 14px 0;
@@ -725,10 +726,48 @@ class CinemaModule {
     done.style.display = 'flex';
   }
 
+  _initOrientation() {
+    /* Allow device rotation in cinema mode */
+    try {
+      if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+    } catch(e) {}
+
+    const enterFs = () => {
+      const root = this.el && this.el.querySelector('#cine-root');
+      if (!root) return;
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        const fsEl = document.documentElement;
+        const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
+        if (req) req.call(fsEl).catch(() => {});
+      }
+    };
+    enterFs();
+    this._onOrientChange = () => enterFs();
+
+    window.addEventListener('resize', this._onOrientChange, { passive: true });
+
+    /* Double-tap: navigasyon menüsü */
+    const root = this.el && this.el.querySelector('#cine-root');
+    if (root && window.attachQuickMenuTrigger) window.attachQuickMenuTrigger(root);
+  }
+
   _exit() {
     this._clearSync();
     if (this.video) { this.video.pause(); this.video.src = ''; }
     if (this._preloader) { this._preloader.src = ''; this._preloader.remove(); this._preloader = null; }
+
+    if (this._onOrientChange) {
+      window.removeEventListener('resize', this._onOrientChange);
+      this._onOrientChange = null;
+    }
+
+    /* Restore portrait lock */
+    try {
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('portrait').catch(() => {});
+      }
+    } catch(e) {}
+
     const app = window._app || window.app;
     if (app && app.navigate) app.navigate('home');
     else {

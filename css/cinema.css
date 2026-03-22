@@ -147,3 +147,103 @@
 @media (max-width: 768px) {
   .cinema-quiz-area { grid-template-columns: 1fr; }
 }
+
+/* ── Landscape phone optimization ── */
+.cine-landscape #cine-question {
+  padding: 8px max(20px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left)) !important;
+  gap: 6px !important;
+}
+
+/* 2-column choices in landscape */
+.cine-landscape #cine-choices {
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+}
+
+.cine-landscape #cine-choices > * {
+  flex: 1 1 calc(50% - 3px) !important;
+  min-width: 0 !important;
+  padding: 10px 8px !important;
+  font-size: 0.8rem !important;
+}
+
+/* Compact phrase text */
+.cine-landscape #cine-phrase {
+  font-size: 0.88rem !important;
+  line-height: 1.3 !important;
+}
+
+/* Compact progress + actions */
+.cine-landscape #cine-progress { padding-top: 0 !important; }
+.cine-landscape #cine-actions { margin-top: 0 !important; }
+
+/* Subtitle higher to avoid overlap with compact panel */
+.cine-landscape #cine-subtitle { bottom: 36% !important; }
+
+/* Source label: safe area aware in landscape */
+.cine-landscape #cine-source { top: 50px !important; left: max(12px, env(safe-area-inset-left)) !important; }
+
+/* Header safe area in landscape (notch/punch-hole) */
+.cine-landscape #cine-exit-wrap {
+  padding-left: max(14px, env(safe-area-inset-left)) !important;
+  padding-right: max(14px, env(safe-area-inset-right)) !important;
+}
+
+/* ── Portrait phone optimization ── */
+@media (orientation: portrait) and (max-width: 500px) {
+  /* Soru paneli: kompakt */
+  #cine-question {
+    padding: 14px 12px max(20px, env(safe-area-inset-bottom)) !important;
+    gap: 8px !important;
+    background: linear-gradient(to top, rgba(6,6,16,0.98) 80%, transparent 100%) !important;
+  }
+
+  /* Tutma çubuğu */
+  #cine-question::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.2);
+    margin: 0 auto -2px;
+  }
+
+  /* Phrase metni */
+  #cine-phrase {
+    font-size: 0.9rem !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Seçenekler: 2 kolon grid */
+  #cine-choices {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+  }
+
+  #cine-choices .cine-choice-btn {
+    width: 100% !important;
+    padding: 10px 8px !important;
+    font-size: 0.78rem !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    line-height: 1.3 !important;
+  }
+
+  #cine-choices .cine-btn-icon { display: none !important; }
+
+  /* Aksiyon butonları */
+  #cine-actions { gap: 6px !important; margin-top: 0 !important; }
+  #cine-progress { padding-top: 2px !important; }
+
+  /* Altyazı */
+  #cine-subtitle { bottom: 20px !important; }
+
+  /* Header */
+  #cine-exit-wrap {
+    padding: 10px max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left)) !important;
+  }
+}

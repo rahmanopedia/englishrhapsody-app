@@ -1,7 +1,8 @@
-/* English Rhapsody — Service Worker | Cache-first strategy */
+/* English Rhapsody — Service Worker | Network-First */
 'use strict';
 
-const CACHE_NAME  = 'er-v9';
+
+const CACHE_NAME  = 'er-v74';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -14,32 +15,39 @@ const STATIC_URLS = [
   '/css/dictionary.css',
   '/css/bridge.css',
   '/css/reading.css',
+  '/css/cinema.css',
+  '/css/speak-v2.css',
+  '/css/speak-fill.css',
+  '/css/writing.css',
   '/js/app.js',
   '/js/data.js',
+  '/js/ex-tr-data.js',
   '/js/auth.js',
   '/js/storage.js',
   '/js/analytics.js',
-  '/js/bridge-data.js',
-  '/js/bridge.js',
-  '/js/conversations.js',
   '/js/firebase-config.js',
   '/js/leaderboard.js',
+  '/js/quick-menu.js',
   '/js/nexus.js',
   '/js/notification-settings.js',
   '/js/notifications.js',
   '/js/phantom.js',
-  '/js/phrasal_verbs_ext.js',
-  '/js/phrasal_verbs_ext2.js',
-  '/js/quantum.js',
   '/js/reading-engine.js',
   '/js/remote-config.js',
   '/js/splash.js',
-  '/js/stories-data.js',
   '/js/sw-register.js',
+  '/js/cinema.js',
+  '/js/video-data.js',
+  '/js/phrases.js',
+  '/js/speak-v2.js',
+  '/js/speak-fill.js',
+  '/js/conversations.js',
+  '/js/bridge.js',
+  /* boot.js intentionally excluded — always network-first */
   '/firebase-messaging-sw.js',
 ];
 
-// Install: cache static assets
+// Install: cache all static assets
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -52,12 +60,12 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+      Promise.all(keys.filter(k => k !== CACHE_NAME && k !== 'pwa-meta-v1').map(k => caches.delete(k))))
     ).then(() => self.clients.claim())
   );
 });
 
-// Cache validation helper — checks status, type, and content-type header
+// Cache validation helper
 function shouldCache(response, url) {
   if (!response || response.status !== 200) return false;
   if (response.type !== 'basic') return false;
@@ -68,37 +76,56 @@ function shouldCache(response, url) {
   return true;
 }
 
-// Fetch: HTML/JS/CSS → network-first (her zaman güncel), diğerleri → cache-first
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET' || event.request.url.startsWith('chrome-extension')) return;
 
   const url = event.request.url;
-  const isCore = url.includes('.html') || url.includes('.js') || url.includes('.css');
+  const isHTML  = url.includes('.html') || url.endsWith('/');
+  const isAsset = url.includes('.js') || url.includes('.css') || url.includes('.png') || url.includes('.woff');
 
-  if (isCore) {
-    // Network-first: önce ağdan al, başarısız olursa cache'den sun
+  if (isHTML) {
+    // HTML — network-first: her zaman güncel göster
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          if (shouldCache(response, url)) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request).then(c => c || caches.match('/index.html')))
+    );
+  } else if (isAsset) {
+    // boot.js — her zaman network-first (kritik PWA mantığı içeriyor)
+    const isBootJs = url.includes('/js/boot.js');
+    if (isBootJs) {
+      event.respondWith(
+        fetch(event.request).then(response => {
+          if (shouldCache(response, url)) {
+            caches.open(CACHE_NAME).then(c => c.put(event.request, response.clone()));
+          }
+          return response;
+        }).catch(() => caches.match(event.request))
+      );
+      return;
+    }
+
+    // JS/CSS/images — network-first:
+    // Her zaman ağdan taze al, offline için cache'e düş
     event.respondWith(
       fetch(event.request).then(response => {
         if (shouldCache(response, url)) {
           const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
         }
         return response;
-      }).catch(() => caches.match(event.request).then(c => c || caches.match('/index.html')))
+      }).catch(() => caches.match(event.request))
     );
   } else {
-    // Cache-first: resim, font vb.
+    // Diğer (Firebase, API) — network-first
     event.respondWith(
-      caches.match(event.request).then(cached => {
-        if (cached) return cached;
-        return fetch(event.request).then(response => {
-          if (shouldCache(response, url)) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          }
-          return response;
-        });
-      })
+      fetch(event.request).catch(() => caches.match(event.request))
     );
   }
 });

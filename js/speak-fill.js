@@ -17,13 +17,10 @@ class SpeakFillMode {
     this.filledWords = [];      // boolean array — her kelime dolu mu?
 
     this._rec        = null;
-    this._audioCtx   = null;
-    this._analyser   = null;
-    this._stream     = null;
     this._animFrame  = null;
     this._ttsTimers  = [];   // TTS timer array (birden fazla timer)
     this._gen        = 0;    // Generation counter — navigasyonda artar, eski callback'leri iptal eder
-    this._isSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+    this._isSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition || window.Capacitor?.Plugins?.NativeSpeech);
 
     this._level   = 'A1';
     this.correct  = 0;
@@ -309,29 +306,84 @@ class SpeakFillMode {
   // ── Kayıt ─────────────────────────────────────────────────────────────────
 
   _toggleRec() {
-    if (this.status === 'recording') this._stopRec();
-    else { this._reset(); this._startRec(); }
+    if (this.status === 'recording') {
+      this._stopRec();
+    } else {
+      this._reset();
+      this._startRec();
+    }
   }
 
-  async _startRec() {
+  _startRec() {
+    const NS = window.Capacitor?.Plugins?.NativeSpeech;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) return;
+    if (!NS && !SR) return;
+
+    this._gen++;
+    const myGen = this._gen;
 
     this.status   = 'recording';
     this.liveText = '';
     this._setMicUI('recording');
     this._setStatus('<span class="sfm-dot"></span> Dinleniyor…');
+    this._startWave();
 
+    // ── Native Capacitor path ──────────────────────────────────────
+    if (NS) {
+      this._rec = { stop: () => NS.stop().catch(() => {}), _native: true };
+      const updateLive = text => {
+        this.liveText = text;
+        this._matchAndFill(text);
+        const lv = this.el?.querySelector('#sfm-live');
+        if (lv) lv.innerHTML = text ? `<span class="sfm-live-txt">"${this._esc(text)}"</span>` : '';
+      };
+      Promise.all([
+        NS.addListener('partial', e => { if (this._gen === myGen) updateLive(e.text); }),
+        NS.addListener('result',  e => { if (this._gen === myGen) updateLive(e.text); }),
+        NS.addListener('error',   e => {
+          if (this._gen !== myGen) return;
+          this._gen++;
+          NS.removeAllListeners();
+          this._cleanupRec();
+          const msgs = {
+            'not-allowed': '⚠️ Mikrofon izni reddedildi.',
+            'no-speech':   'Ses algılanamadı. Tekrar dene.',
+            'network':     '⚠️ İnternet bağlantısı gerekli.',
+            'busy':        '⚠️ Mikrofon başka uygulama tarafından kullanılıyor.',
+          };
+          this._setStatus(msgs[e.code] || '⚠️ Hata: ' + e.code);
+        }),
+        NS.addListener('end', () => {
+          if (this._gen !== myGen) return;
+          const text = this.liveText;
+          NS.removeAllListeners();
+          this._cleanupRec();
+          if (!text.trim()) { this._setStatus('Ses algılanamadı, tekrar dene.'); return; }
+          this.status = 'processing';
+          this._setMicUI('processing');
+          this._setStatus('Değerlendiriliyor…');
+          const gen = this._gen;
+          setTimeout(() => { if (this._gen === gen) this._finalize(); }, 300);
+        }),
+      ]).then(() => NS.start().catch(err => {
+        this._gen++;
+        NS.removeAllListeners();
+        this._cleanupRec();
+        this._setStatus('⚠️ Mikrofon başlatılamadı: ' + err.message);
+      }));
+      return;
+    }
+
+    // ── Web SpeechRecognition path (tarayıcı) ──────────────────────
     const rec = new SR();
     this._rec = rec;
     rec.lang            = 'en-US';
     rec.continuous      = false;
     rec.interimResults  = true;
     rec.maxAlternatives = 1;
-    rec.start();                 // Önce recognition başlat
-    this._startWave();           // Sonra görsel dalga (mic çakışmasını önler)
 
     rec.onresult = e => {
+      if (this._gen !== myGen) return;
       let interim = '', final = '';
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const t = e.results[i][0].transcript;
@@ -339,54 +391,74 @@ class SpeakFillMode {
       }
       this.liveText = (final || interim).trim();
       this._matchAndFill(this.liveText);
-
       const lv = this.el?.querySelector('#sfm-live');
       if (lv) lv.innerHTML = this.liveText
         ? `<span class="sfm-live-txt">"${this._esc(this.liveText)}"</span>`
         : '';
     };
 
-    rec.onend = () => {
-      this._stopAll();
-      if (this.status !== 'done') {
-        if (!this.liveText.trim()) {
-          // Kullanıcı hiç konuşmadı — sadece uyarı ver, otomatik doldurmayı tetikleme
-          this.status = 'idle';
-          this._setMicUI('idle');
-          this._setStatus('Ses algılanamadı, tekrar dene.');
-          return;
-        }
-        this.status = 'processing';
-        this._setMicUI('processing');
-        this._setStatus('Değerlendiriliyor…');
-        setTimeout(() => this._finalize(), 300);
-      }
-    };
-
     rec.onerror = e => {
-      this._stopAll();
-      this.status = 'idle';
-      this._setMicUI('idle');
-      this._setStatus(e.error === 'no-speech'
-        ? 'Ses algılanamadı. Tekrar dene.'
-        : '⚠️ Bir hata oluştu.');
+      if (this._gen !== myGen) return;
+      this._gen++;
+      this._cleanupRec();
+      const msgs = {
+        'not-allowed':    '⚠️ Mikrofon izni gerekli. Adres çubuğundaki kilit ikonuna tıkla → Mikrofon → İzin ver.',
+        'no-speech':      'Ses algılanamadı. Tekrar dene.',
+        'audio-capture':  '⚠️ Mikrofon bulunamadı veya başka uygulama kullanıyor.',
+        'network':        '⚠️ İnternet bağlantısı gerekli.',
+        'aborted':        '',
+      };
+      const msg = msgs[e.error];
+      if (msg !== undefined) this._setStatus(msg);
+      else this._setStatus('⚠️ Hata: ' + e.error);
     };
+
+    rec.onend = () => {
+      if (this._gen !== myGen) return;
+      const text = this.liveText;
+      this._cleanupRec();
+      if (!text.trim()) {
+        this._setStatus('Ses algılanamadı, tekrar dene.');
+        return;
+      }
+      this.status = 'processing';
+      this._setMicUI('processing');
+      this._setStatus('Değerlendiriliyor…');
+      const gen = this._gen;
+      setTimeout(() => { if (this._gen === gen) this._finalize(); }, 300);
+    };
+
+    try {
+      rec.start();
+    } catch (err) {
+      this._gen++;
+      this._cleanupRec();
+      this._setStatus('⚠️ Mikrofon başlatılamadı: ' + err.message);
+    }
   }
 
-  _stopRec() {
-    try { this._rec?.stop(); } catch {}
-    this._stopAll();
-  }
-
-  _stopAll() {
-    if (this._rec)       { try { this._rec.stop(); } catch {} this._rec = null; }
+  // Sadece recognition + animasyonu durdurur, status'u idle'a çeker
+  _cleanupRec() {
+    if (this._rec) { try { this._rec.stop(); } catch {} this._rec = null; }
     if (this._animFrame) { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
-    if (this._audioCtx)  { try { this._audioCtx.close(); } catch {} this._audioCtx = null; }
-    if (this._stream)    { this._stream.getTracks().forEach(t => t.stop()); this._stream = null; }
-    this._ttsTimers.forEach(t => clearTimeout(t)); this._ttsTimers = [];
-    this._gen++;              // Tüm bekleyen callback'leri geçersiz kıl
+    this._resetBars();
+    this.status = 'idle';
+    this._setMicUI('idle');
+  }
+
+  // Kullanıcı stop'a bastığında — onend işlemi devam eder (konuşma işlenir)
+  _stopRec() {
+    if (this._rec) { try { this._rec.stop(); } catch {} }
+  }
+
+  // Navigasyon / seviye değişimi gibi sert durumlar — her şeyi iptal eder
+  _stopAll() {
+    if (this._rec) { try { this._rec.stop(); } catch {} this._rec = null; }
+    if (this._animFrame) { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
+    this._ttsTimers.forEach(t => clearTimeout(t));
+    this._ttsTimers = [];
+    this._gen++;
     window.speechSynthesis?.cancel();
-    this._analyser = null;
     this._resetBars();
   }
 
@@ -695,8 +767,9 @@ class SpeakFillMode {
 
   function _enterFs(el) {
     if (!el || document.fullscreenElement || document.webkitFullscreenElement) return;
-    const req = el.requestFullscreen || el.webkitRequestFullscreen;
-    if (req) req.call(el).catch(() => {});
+    const fsEl = document.documentElement;
+    const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
+    if (req) req.call(fsEl).catch(() => {});
   }
 
   function _speakInit(container) {
@@ -713,10 +786,6 @@ class SpeakFillMode {
   function _speakDestroy() {
     if (_speakOrientHandler) { window.removeEventListener('resize', _speakOrientHandler); _speakOrientHandler = null; }
     _speakContainer = null;
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-      const exit = document.exitFullscreen || document.webkitExitFullscreen;
-      if (exit) exit.call(document).catch(() => {});
-    }
     try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(() => {}); } catch(e) {}
   }
 

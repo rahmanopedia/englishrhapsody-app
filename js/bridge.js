@@ -26,6 +26,36 @@ class BridgeModule {
   init(el) {
     this.el = el;
     this._render();
+    this._initOrientation();
+  }
+
+  _initOrientation() {
+    try {
+      if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+    } catch(e) {}
+
+    const enterFs = () => {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        const fsEl = document.documentElement;
+        const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
+        if (req) req.call(fsEl).catch(() => {});
+      }
+    };
+    enterFs();
+    this._orientHandler = () => enterFs();
+    window.addEventListener('resize', this._orientHandler, { passive: true });
+    if (window.attachQuickMenuTrigger) window.attachQuickMenuTrigger(this.el);
+  }
+
+  destroy() {
+    if (this._orientHandler) {
+      window.removeEventListener('resize', this._orientHandler);
+      this._orientHandler = null;
+    }
+    try {
+      if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(() => {});
+    } catch(e) {}
+    if (this.el) this.el.innerHTML = '';
   }
 
   _render() {

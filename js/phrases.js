@@ -1,35 +1,105 @@
 /**
- * RHAPSODY İFADELER — v1.0
- * Film alıntılarını kart çevirerek öğret (İngilizce → Türkçe)
+ * ╔════════════════════════════════════════════════════════════╗
+ * ║   RHAPSODY PHRASE THEATER  ·  v3.0                        ║
+ * ║   3 Mod · Sinematik Atmosfer · Mastery Takibi             ║
+ * ╚════════════════════════════════════════════════════════════╝
  */
+
+const PTH_GENRES = {
+  /* Türkçe kategoriler */
+  'Aksiyon':     { cls: 'action',   icon: '⚔️',  label: 'Aksiyon' },
+  'Bilim Kurgu': { cls: 'scifi',    icon: '🚀',  label: 'Bilim Kurgu' },
+  'Komedi':      { cls: 'comedy',   icon: '😄',  label: 'Komedi' },
+  'Drama':       { cls: 'drama',    icon: '🎭',  label: 'Drama' },
+  'Romantik':    { cls: 'romance',  icon: '💕',  label: 'Romantik' },
+  'Müzikal':     { cls: 'musical',  icon: '🎵',  label: 'Müzikal' },
+  'Gerilim':     { cls: 'thriller', icon: '🔪',  label: 'Gerilim' },
+  'Spor':        { cls: 'sport',    icon: '⚽',  label: 'Spor' },
+  'Animasyon':   { cls: 'anim',     icon: '✨',  label: 'Animasyon' },
+  /* İngilizce kategoriler */
+  'Daily Life':  { cls: 'comedy',   icon: '🏠',  label: 'Günlük Hayat' },
+  'Work':        { cls: 'drama',    icon: '💼',  label: 'İş Hayatı' },
+  'Food & Drink':{ cls: 'comedy',   icon: '🍽️',  label: 'Yemek & İçecek' },
+  'Travel':      { cls: 'scifi',    icon: '✈️',  label: 'Seyahat' },
+  'Shopping':    { cls: 'musical',  icon: '🛍️',  label: 'Alışveriş' },
+  'Health':      { cls: 'thriller', icon: '❤️',  label: 'Sağlık' },
+  'Education':   { cls: 'default',  icon: '📚',  label: 'Eğitim' },
+  'Sports':      { cls: 'sport',    icon: '⚽',  label: 'Spor' },
+  'Technology':  { cls: 'scifi',    icon: '💻',  label: 'Teknoloji' },
+  'Nature':      { cls: 'thriller', icon: '🌿',  label: 'Doğa' },
+};
+const PTH_DEFAULT_GENRE = { cls: 'default', icon: '🎬', label: 'Film' };
+const MASTERY_COLORS = ['pth-m0', 'pth-m1', 'pth-m2', 'pth-m3'];
+
 class PhrasesModule {
   constructor(app) {
-    this.app = app;
-    this.el = null;
-    this.phrases = [];
-    this.index = 0;
-    this.revealed = false;
+    this.app   = app;
+    this.el    = null;
+    this.data  = [];          // all phrases
+    this.idx   = 0;
+    this.mode  = 'cinema';    // 'cinema' | 'fillblank' | 'multichoice'
+    this.revealed    = false;
+    this.mastery     = JSON.parse(localStorage.getItem('pth-mastery')   || '{}');
+    this.favorites   = new Set(JSON.parse(localStorage.getItem('pth-favs') || '[]'));
+    this.session     = { correct: 0, wrong: 0 };
+    this._txStart    = 0;
+    this._tyStart    = 0;
+    this._blankMeta  = null;   // { answers[], indices[], filled[] }
+    this._speakTimer = null;
   }
+
+  /* ──────────────────────── INIT ──────────────────────── */
 
   init(el) {
     this.el = el;
-    if (typeof CINEMA_DATA === 'undefined' || !CINEMA_DATA.length) return;
-
-    // Collect all phrases from CINEMA_DATA
-    const raw = CINEMA_DATA.map(entry => ({
-      english: entry.transcript,
-      turkish: entry.options?.find(o => o.isCorrect)?.text || '—',
-      film: entry.film || '',
-      year: entry.year || '',
-      emoji: entry.category === 'Spor' ? '⚽' :
-             entry.category === 'Aksiyon' ? '🎬' :
-             entry.category === 'Bilim Kurgu' ? '🚀' :
-             entry.category === 'Müzikal' ? '🎵' : '🎬',
-    }));
-
-    this.phrases = this._shuffle(raw);
-    this.index = 0;
+    if (typeof CINEMA_DATA === 'undefined' || !CINEMA_DATA.length) {
+      el.innerHTML = '<div style="color:#fff;padding:60px 20px;text-align:center;font-size:1.1rem">Veri yükleniyor…</div>';
+      return;
+    }
+    this._loadData();
     this._render();
+  }
+
+  _loadData() {
+    const raw = [];
+    let uid = 0;
+
+    for (const entry of CINEMA_DATA) {
+      const genre = PTH_GENRES[entry.category] || PTH_DEFAULT_GENRE;
+      const film  = entry.film || 'Rhapsody Cinema';
+      const year  = entry.year || '';
+
+      // Her sorudan ayrı bir kart oluştur
+      if (Array.isArray(entry.questions)) {
+        for (const q of entry.questions) {
+          if (q.phrase && q.correct) {
+            raw.push({
+              id:    `p${uid++}`,
+              en:    q.phrase.trim(),
+              tr:    q.correct.trim(),
+              wrong: q.wrong ? [q.wrong.trim()] : [],
+              film, year, genre,
+            });
+          }
+        }
+      }
+
+      // options[] yapısını da destekle (karma veri için)
+      if (Array.isArray(entry.options)) {
+        const correct = entry.options.find(o => o.isCorrect);
+        if (entry.transcript && correct) {
+          raw.push({
+            id:    `p${uid++}`,
+            en:    entry.transcript.trim(),
+            tr:    correct.text.trim(),
+            wrong: entry.options.filter(o => !o.isCorrect).map(o => o.text),
+            film, year, genre,
+          });
+        }
+      }
+    }
+
+    this.data = this._shuffle(raw.filter(e => e.en && e.tr));
   }
 
   _shuffle(arr) {
@@ -41,204 +111,600 @@ class PhrasesModule {
     return a;
   }
 
+  /* ──────────────────────── MAIN RENDER ──────────────────────── */
+
   _render() {
     this.el.innerHTML = `
-      <div id="phrases-root" style="
-        position:fixed;inset:0;z-index:200;background:#0f0f1a;
-        display:flex;flex-direction:column;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;
-      ">
-        <!-- Header -->
-        <div style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:16px 16px 0;">
-          <button id="phr-exit" style="
-            background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);
-            border:none;border-radius:12px;padding:8px 14px;
-            color:#fff;font-weight:700;font-size:0.8rem;cursor:pointer;
-          ">← Geri</button>
-          <div style="text-align:center;">
-            <div style="color:#fff;font-weight:900;font-size:0.95rem;">💬 İfadeler</div>
-            <div id="phr-counter" style="color:rgba(255,255,255,0.45);font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;"></div>
-          </div>
-          <div style="width:60px;"></div>
+      <div class="pth-root" id="pth-root">
+
+        <!-- Atmospheric Background -->
+        <div class="pth-atm" id="pth-atm">
+          <div class="pth-orb pth-orb-a"></div>
+          <div class="pth-orb pth-orb-b"></div>
+          <div class="pth-orb pth-orb-c"></div>
         </div>
 
-        <!-- Progress bar -->
-        <div style="margin:10px 16px 0;height:3px;border-radius:3px;background:rgba(255,255,255,0.1);overflow:hidden;">
-          <div id="phr-progress" style="height:100%;border-radius:3px;background:linear-gradient(90deg,#a78bfa,#ec4899);transition:width 0.4s;"></div>
+        <!-- Top Bar -->
+        <div class="pth-topbar">
+          <button class="pth-exit-btn" id="pth-exit" aria-label="Geri">‹</button>
+          <div class="pth-topbar-mid">
+            <div class="pth-logo-line">🎬 Phrase Theater</div>
+            <div class="pth-counter" id="pth-counter"></div>
+          </div>
+          <button class="pth-fav-btn" id="pth-fav" aria-label="Favorilere ekle">♡</button>
         </div>
 
-        <!-- Card area -->
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px;gap:16px;">
-
-          <!-- Main card -->
-          <div id="phr-card" style="width:100%;border-radius:24px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);cursor:pointer;" onclick="window.phrasesMod._handleTap()">
-            <!-- English side -->
-            <div id="phr-top" style="
-              position:relative;display:flex;flex-direction:column;
-              align-items:center;justify-content:center;
-              padding:36px 24px;gap:12px;min-height:180px;
-            ">
-              <!-- Film badge -->
-              <div id="phr-film" style="
-                background:rgba(0,0,0,0.3);border-radius:20px;
-                padding:5px 14px;font-size:0.7rem;font-weight:700;
-                color:rgba(255,255,255,0.85);letter-spacing:0.5px;
-              "></div>
-
-              <!-- English text -->
-              <div id="phr-english" style="
-                color:#fff;font-weight:900;text-align:center;line-height:1.35;
-                font-size:1.35rem;text-shadow:0 2px 12px rgba(0,0,0,0.4);
-              "></div>
-
-              <!-- Tap hint -->
-              <div id="phr-hint" style="
-                color:rgba(255,255,255,0.5);font-size:0.72rem;font-weight:700;
-              ">👆 Türkçesini görmek için dokun</div>
-            </div>
-
-            <!-- Turkish reveal -->
-            <div id="phr-bottom" style="
-              background:rgba(255,255,255,0.97);
-              display:none;flex-direction:column;
-              align-items:center;justify-content:center;
-              padding:24px;gap:6px;
-            ">
-              <div style="color:#94a3b8;font-size:0.65rem;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;">Türkçesi</div>
-              <div id="phr-turkish" style="
-                color:#1e293b;font-weight:900;text-align:center;
-                font-size:1.2rem;line-height:1.4;
-              "></div>
-            </div>
-          </div>
-
-          <!-- Action buttons (shown after reveal) -->
-          <div id="phr-actions" style="width:100%;display:none;flex-direction:row;gap:10px;">
-            <button id="phr-speak" onclick="window.phrasesMod._speak()" style="
-              background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.15);
-              border-radius:14px;padding:14px 18px;color:#fff;font-size:1rem;cursor:pointer;
-            ">🔊</button>
-            <button id="phr-next" onclick="window.phrasesMod._next()" style="
-              flex:1;background:linear-gradient(135deg,#a78bfa,#ec4899);
-              border:none;border-radius:14px;padding:14px;
-              color:#fff;font-weight:900;font-size:0.95rem;cursor:pointer;
-              box-shadow:0 6px 20px rgba(167,139,250,0.35);
-            ">Sonraki →</button>
-          </div>
-
-          <!-- Dot indicators -->
-          <div id="phr-dots" style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:280px;"></div>
+        <!-- Mode Tabs -->
+        <div class="pth-tabs">
+          <button class="pth-tab active" data-mode="cinema">🎬 Sinema</button>
+          <button class="pth-tab" data-mode="fillblank">✏️ Boşluk</button>
+          <button class="pth-tab" data-mode="multichoice">🎯 Seçim</button>
         </div>
-      </div>
-    `;
 
-    this.el.querySelector('#phr-exit').onclick = () => this._exit();
-    this._updateCard();
+        <!-- Progress -->
+        <div class="pth-prog-track">
+          <div class="pth-prog-fill" id="pth-prog" style="width:0%"></div>
+        </div>
+
+        <!-- Card Stage -->
+        <div class="pth-stage">
+          <div class="pth-card-wrap" id="pth-wrap"></div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div class="pth-nav">
+          <button class="pth-nav-btn" id="pth-prev" aria-label="Önceki">←</button>
+          <div class="pth-dots-row" id="pth-dots"></div>
+          <button class="pth-nav-btn" id="pth-next-btn" aria-label="Sonraki">→</button>
+        </div>
+
+      </div>`;
+
+    this._bindShell();
+    this._drawCard();
   }
 
-  _updateCard() {
-    const p = this.phrases[this.index];
+  _bindShell() {
+    const q = id => this.el.querySelector(id);
+
+    q('#pth-exit').onclick = () => this._exit();
+    q('#pth-fav').onclick  = () => this._toggleFav();
+
+    this.el.querySelectorAll('.pth-tab').forEach(tab => {
+      tab.onclick = () => {
+        this.el.querySelectorAll('.pth-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        this.mode     = tab.dataset.mode;
+        this.revealed = false;
+        this._drawCard();
+      };
+    });
+
+    q('#pth-prev').onclick     = () => this._go(-1);
+    q('#pth-next-btn').onclick = () => this._go(+1);
+
+    const root = q('#pth-root');
+    root.addEventListener('touchstart', e => {
+      this._txStart = e.touches[0].clientX;
+      this._tyStart = e.touches[0].clientY;
+    }, { passive: true });
+    root.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - this._txStart;
+      const dy = e.changedTouches[0].clientY - this._tyStart;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 52) {
+        this._go(dx < 0 ? +1 : -1);
+      }
+    }, { passive: true });
+  }
+
+  /* ──────────────────────── ATMOSPHERE ──────────────────────── */
+
+  _setAtmosphere() {
+    const p   = this.data[this.idx];
+    const atm = this.el.querySelector('#pth-atm');
+    if (!atm || !p) return;
+    atm.className = `pth-atm pth-g-${p.genre.cls}`;
+  }
+
+  /* ──────────────────────── CARD DRAW ──────────────────────── */
+
+  _drawCard(dir = 'in') {
+    const p = this.data[this.idx];
     if (!p) { this._showDone(); return; }
 
-    this.revealed = false;
-    const progress = (this.index / this.phrases.length) * 100;
-
-    this.el.querySelector('#phr-counter').textContent = `${this.index + 1} / ${this.phrases.length}`;
-    this.el.querySelector('#phr-progress').style.width = `${progress}%`;
-    this.el.querySelector('#phr-english').textContent = `"${p.english}"`;
-    this.el.querySelector('#phr-film').textContent = p.film ? `🎬 ${p.film}${p.year ? ' · ' + p.year : ''}` : '🎬';
-    this.el.querySelector('#phr-turkish').textContent = p.turkish;
-
-    // Show/hide bottom
-    this.el.querySelector('#phr-bottom').style.display = 'none';
-    this.el.querySelector('#phr-hint').style.display = 'block';
-    this.el.querySelector('#phr-actions').style.display = 'none';
-
-    // Card gradient
-    const GRADIENTS = [
-      'linear-gradient(135deg,#667eea,#764ba2)',
-      'linear-gradient(135deg,#f093fb,#f5576c)',
-      'linear-gradient(135deg,#4facfe,#00f2fe)',
-      'linear-gradient(135deg,#43e97b,#38f9d7)',
-      'linear-gradient(135deg,#fa709a,#fee140)',
-      'linear-gradient(135deg,#a18cd1,#fbc2eb)',
-      'linear-gradient(135deg,#fd7043,#ff8a65)',
-      'linear-gradient(135deg,#667eea,#ec4899)',
-    ];
-    this.el.querySelector('#phr-top').style.background = GRADIENTS[this.index % GRADIENTS.length];
-
-    // Dots
+    this._setAtmosphere();
+    this._updateTopbar();
     this._renderDots();
 
-    // Auto-speak
-    this._speak();
-  }
+    const wrap = this.el.querySelector('#pth-wrap');
+    wrap.innerHTML = '';
 
-  _handleTap() {
-    if (this.revealed) return;
-    this.revealed = true;
-    this.el.querySelector('#phr-bottom').style.display = 'flex';
-    this.el.querySelector('#phr-hint').style.display = 'none';
-    this.el.querySelector('#phr-actions').style.display = 'flex';
-  }
+    const card = document.createElement('div');
+    card.className = 'pth-card';
 
-  _speak() {
-    const p = this.phrases[this.index];
-    if (!p) return;
-    if (typeof speechSynthesis === 'undefined') return;
-    speechSynthesis.cancel();
-    const utt = new SpeechSynthesisUtterance(p.english);
-    utt.lang = 'en-US';
-    utt.rate = 0.85;
-    const voices = speechSynthesis.getVoices();
-    const enVoice = voices.find(v => v.lang.startsWith('en'));
-    if (enVoice) utt.voice = enVoice;
-    speechSynthesis.speak(utt);
-  }
+    if (this.mode === 'cinema')      card.innerHTML = this._cinemaTpl(p);
+    else if (this.mode === 'fillblank')   card.innerHTML = this._fillBlankTpl(p);
+    else                             card.innerHTML = this._multiChoiceTpl(p);
 
-  _next() {
-    if (this.index + 1 >= this.phrases.length) {
-      this._showDone();
-    } else {
-      this.index++;
-      this._updateCard();
+    wrap.appendChild(card);
+    requestAnimationFrame(() => card.classList.add('pth-card-in'));
+
+    this._bindCard(card, p);
+
+    // Auto-speak in cinema mode
+    if (this.mode === 'cinema') {
+      clearTimeout(this._speakTimer);
+      this._speakTimer = setTimeout(() => this._speak(p.en), 320);
     }
   }
 
-  _renderDots() {
-    const dots = this.el.querySelector('#phr-dots');
-    dots.innerHTML = this.phrases.map((_, i) =>
-      `<div style="
-        width:6px;height:6px;border-radius:50%;
-        background:${i < this.index ? '#a78bfa' : i === this.index ? '#ec4899' : 'rgba(255,255,255,0.15)'};
-        transform:${i === this.index ? 'scale(1.5)' : 'scale(1)'};
-        transition:all 0.3s;
-      "></div>`
-    ).join('');
+  _animOut(dir, cb) {
+    const card = this.el.querySelector('.pth-card');
+    if (!card) { cb(); return; }
+    card.classList.add(dir > 0 ? 'pth-card-out-l' : 'pth-card-out-r');
+    setTimeout(cb, 260);
   }
 
-  _showDone() {
-    const root = this.el.querySelector('#phrases-root');
-    if (!root) return;
-    root.innerHTML = `
-      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:32px;text-align:center;">
-        <div style="font-size:5rem;">🎉</div>
-        <div style="color:#fff;font-size:2rem;font-weight:900;">Tebrikler!</div>
-        <div style="color:rgba(255,255,255,0.6);font-size:1rem;font-weight:600;">
-          ${this.phrases.length} film alıntısını tamamladın!
+  _go(dir) {
+    const next = this.idx + dir;
+    if (next < 0 || next >= this.data.length) return;
+    this._animOut(dir, () => {
+      this.idx      = next;
+      this.revealed = false;
+      this._drawCard(dir);
+    });
+  }
+
+  /* ──────────────────────── TOP BAR ──────────────────────── */
+
+  _updateTopbar() {
+    const p = this.data[this.idx];
+    const counter = this.el.querySelector('#pth-counter');
+    const fav     = this.el.querySelector('#pth-fav');
+    const prog    = this.el.querySelector('#pth-prog');
+    const prev    = this.el.querySelector('#pth-prev');
+    const nextB   = this.el.querySelector('#pth-next-btn');
+
+    if (counter) counter.textContent = `${this.idx + 1} / ${this.data.length}`;
+    if (fav && p) {
+      const isFav = this.favorites.has(p.id);
+      fav.textContent = isFav ? '♥' : '♡';
+      fav.classList.toggle('is-fav', isFav);
+    }
+    if (prog)  prog.style.width = `${(this.idx / Math.max(1, this.data.length - 1)) * 100}%`;
+    if (prev)  prev.disabled = this.idx === 0;
+    if (nextB) nextB.disabled = this.idx >= this.data.length - 1;
+  }
+
+  _renderDots() {
+    const dots  = this.el.querySelector('#pth-dots');
+    if (!dots) return;
+    const total = this.data.length;
+    const MAX   = 9;
+    const half  = Math.floor(MAX / 2);
+    let   start = Math.max(0, Math.min(this.idx - half, total - MAX));
+    const end   = Math.min(total, start + MAX);
+
+    dots.innerHTML = Array.from({ length: end - start }, (_, i) => {
+      const ri   = start + i;
+      const m    = Math.min(3, this.mastery[this.data[ri]?.id] || 0);
+      const isCur= ri === this.idx;
+      return `<div class="pth-dot ${isCur ? 'cur' : MASTERY_COLORS[m]}"></div>`;
+    }).join('');
+  }
+
+  /* ──────────────────────── CINEMA MODE ──────────────────────── */
+
+  _cinemaTpl(p) {
+    return `
+      <div class="pth-genre-badge">${p.genre.icon} ${p.genre.label}</div>
+
+      <div class="pth-quote-zone" id="pth-quote-zone">
+        <div class="pth-qm pth-qm-open">&ldquo;</div>
+        <div class="pth-quote-en">${this._esc(p.en)}</div>
+        <div class="pth-qm pth-qm-close">&rdquo;</div>
+
+        <div class="pth-film-credit">
+          <div class="pth-film-glow"></div>
+          <span class="pth-film-name">${this._esc(p.film)}</span>
+          ${p.year ? `<span class="pth-film-year">${p.year}</span>` : ''}
         </div>
-        <button onclick="window.phrasesMod._exit()" style="
-          background:linear-gradient(135deg,#a78bfa,#ec4899);border:none;
-          border-radius:20px;padding:16px 36px;color:#fff;font-weight:900;font-size:1rem;
-          cursor:pointer;box-shadow:0 8px 24px rgba(167,139,250,0.4);
-        ">Ana Menüye Dön</button>
+
+        <div class="pth-tap-hint" id="pth-tap-hint">
+          <div class="pth-tap-pulse"></div>
+          Türkçesini görmek için dokun
+        </div>
       </div>
-    `;
+
+      <div class="pth-tr-panel" id="pth-tr-panel">
+        <div class="pth-tr-lbl">Türkçesi</div>
+        <div class="pth-tr-text">${this._esc(p.tr)}</div>
+      </div>
+
+      <div class="pth-cine-ctrl" id="pth-cine-ctrl">
+        <button class="pth-btn-no"    id="pth-btn-no">😕 Bilmiyorum</button>
+        <button class="pth-btn-audio" id="pth-btn-audio">🔊</button>
+        <button class="pth-btn-know"  id="pth-btn-know">✓ Biliyorum</button>
+      </div>`;
+  }
+
+  _bindCard(card, p) {
+    const q = id => card.querySelector(id);
+
+    if (this.mode === 'cinema') {
+      q('#pth-quote-zone').onclick = () => this._reveal();
+      q('#pth-btn-no')?.addEventListener('click',    e => { e.stopPropagation(); this._rate(false); });
+      q('#pth-btn-know')?.addEventListener('click',  e => { e.stopPropagation(); this._rate(true);  });
+      q('#pth-btn-audio')?.addEventListener('click', e => { e.stopPropagation(); this._speak(p.en, q('#pth-btn-audio')); });
+
+    } else if (this.mode === 'fillblank') {
+      card.querySelectorAll('.pth-chip').forEach(c => {
+        c.addEventListener('click', () => this._fillChip(c, card));
+      });
+      q('#pth-fb-check')?.addEventListener('click', () => this._checkFill(card, p));
+      q('#pth-fb-skip')?.addEventListener('click',  () => this._go(+1));
+      q('#pth-sm-audio')?.addEventListener('click', () => this._speak(p.en));
+
+    } else {
+      card.querySelectorAll('.pth-mc-opt').forEach(opt => {
+        opt.addEventListener('click', () => this._pickMC(opt, card, p));
+      });
+      q('#pth-mc-audio')?.addEventListener('click', () => this._speak(p.en));
+    }
+  }
+
+  /* ── Cinema: reveal + rate ── */
+
+  _reveal() {
+    if (this.revealed) return;
+    this.revealed = true;
+
+    const hint  = this.el.querySelector('#pth-tap-hint');
+    const panel = this.el.querySelector('#pth-tr-panel');
+    const ctrl  = this.el.querySelector('#pth-cine-ctrl');
+
+    if (hint)  hint.style.display = 'none';
+    if (panel) {
+      panel.style.display = 'flex';
+      requestAnimationFrame(() => panel.classList.add('pth-tr-show'));
+    }
+    if (ctrl) {
+      ctrl.style.display = 'flex';
+      requestAnimationFrame(() => ctrl.classList.add('pth-ctrl-show'));
+    }
+  }
+
+  _rate(knew) {
+    const p = this.data[this.idx];
+    if (!p) return;
+    const prev = this.mastery[p.id] || 0;
+    if (knew) {
+      this.mastery[p.id] = Math.min(3, prev + 1);
+      this.session.correct++;
+      if (this.app?.addXP) this.app.addXP(5, 'easy');
+    } else {
+      this.mastery[p.id] = Math.max(0, prev - 1);
+      this.session.wrong++;
+    }
+    this._saveMastery();
+    this._go(+1);
+  }
+
+  /* ──────────────────────── FILL BLANK MODE ──────────────────────── */
+
+  _fillBlankTpl(p) {
+    const words   = p.en.split(/(\s+)/);            // keeps spaces
+    const tokens  = words.filter(w => /\S/.test(w)); // only real words
+    const count   = Math.min(Math.max(1, Math.floor(tokens.length / 4)), 3);
+
+    // Pick indices among longest words
+    const cands = tokens
+      .map((w, i) => ({ w: w.replace(/[^a-zA-Z']/g, ''), i }))
+      .filter(x => x.w.length >= 4)
+      .sort((a, b) => b.w.length - a.w.length);
+
+    const blankIndices = cands.slice(0, count).map(c => c.i);
+    const answers      = blankIndices.map(i => tokens[i].replace(/[^a-zA-Z']/g, ''));
+
+    this._blankMeta = { answers, indices: blankIndices, filled: new Array(count).fill(null) };
+
+    // Build phrase display
+    let bIdx = 0;
+    const phraseHtml = tokens.map((w, i) => {
+      const pos = blankIndices.indexOf(i);
+      if (pos !== -1) {
+        const dashes = '·'.repeat(w.replace(/[^a-zA-Z']/g, '').length);
+        return `<span class="pth-blank" data-pos="${pos}" data-idx="${i}">${dashes}</span>`;
+      }
+      return `<span class="pth-static-word">${this._esc(w)}</span>`;
+    }).join(' ');
+
+    // Chips: correct + wrong decoys
+    const correctChips = answers.slice();
+    const wrongChips   = this._wrongWords(correctChips, 4);
+    const chips        = this._shuffle([...correctChips, ...wrongChips]);
+
+    return `
+      <div class="pth-fb-head">
+        <div class="pth-genre-badge">${p.genre.icon} ${p.genre.label}</div>
+        <span class="pth-fb-filmname">${this._esc(p.film)}</span>
+      </div>
+
+      <div class="pth-fb-tr-box">
+        <div class="pth-fb-tr-lbl">Türkçesi</div>
+        <div class="pth-fb-tr-txt">${this._esc(p.tr)}</div>
+      </div>
+
+      <div class="pth-fb-phrase" id="pth-phrase">${phraseHtml}</div>
+
+      <div class="pth-chips" id="pth-chips">
+        ${chips.map(w => `<button class="pth-chip">${this._esc(w)}</button>`).join('')}
+      </div>
+
+      <div class="pth-fb-foot">
+        <button class="pth-fb-skip" id="pth-fb-skip">Geç →</button>
+        <button class="pth-sm-audio" id="pth-sm-audio">🔊</button>
+        <button class="pth-fb-check" id="pth-fb-check" disabled>Kontrol Et</button>
+      </div>`;
+  }
+
+  _fillChip(chip, card) {
+    if (chip.classList.contains('used')) return;
+    const blanks  = [...card.querySelectorAll('.pth-blank')].filter(b => !b.dataset.filled);
+    if (!blanks.length) return;
+
+    const blank   = blanks[0];
+    const pos     = parseInt(blank.dataset.pos);
+    this._blankMeta.filled[pos] = chip.textContent;
+
+    blank.textContent = chip.textContent;
+    blank.dataset.filled = '1';
+    blank.classList.add('filled');
+    chip.classList.add('used');
+
+    // Enable check when all filled
+    const allFilled = [...card.querySelectorAll('.pth-blank')].every(b => b.dataset.filled);
+    const checkBtn  = card.querySelector('#pth-fb-check');
+    if (checkBtn) checkBtn.disabled = !allFilled;
+  }
+
+  _checkFill(card, p) {
+    const checkBtn = card.querySelector('#pth-fb-check');
+    if (checkBtn?.textContent === 'Sonraki →') { this._go(+1); return; }
+
+    const { answers, filled } = this._blankMeta;
+    let allOk = true;
+
+    card.querySelectorAll('.pth-blank').forEach(blank => {
+      const pos      = parseInt(blank.dataset.pos);
+      const userAns  = (filled[pos] || '').toLowerCase().replace(/[^a-z']/g, '');
+      const correct  = (answers[pos] || '').toLowerCase();
+      if (userAns === correct) {
+        blank.classList.add('correct');
+      } else {
+        blank.classList.add('wrong');
+        blank.textContent = answers[pos] + ' ✓';
+        allOk = false;
+      }
+    });
+
+    if (allOk) {
+      this.session.correct++;
+      const prev = this.mastery[p.id] || 0;
+      this.mastery[p.id] = Math.min(3, prev + 1);
+      if (this.app?.addXP) this.app.addXP(8, 'easy');
+    } else {
+      this.session.wrong++;
+    }
+    this._saveMastery();
+
+    if (checkBtn) {
+      checkBtn.textContent = 'Sonraki →';
+      checkBtn.disabled    = false;
+    }
+  }
+
+  _wrongWords(correct, n) {
+    const seen = new Set(correct.map(w => w.toLowerCase()));
+    const pool = [];
+    for (const ph of this.data) {
+      if (pool.length >= n * 4) break;
+      for (const w of ph.en.split(/\s+/)) {
+        const clean = w.replace(/[^a-zA-Z']/g, '');
+        if (clean.length >= 4 && !seen.has(clean.toLowerCase())) {
+          pool.push(clean);
+          seen.add(clean.toLowerCase());
+        }
+      }
+    }
+    return this._shuffle(pool).slice(0, n);
+  }
+
+  /* ──────────────────────── MULTI CHOICE MODE ──────────────────────── */
+
+  _multiChoiceTpl(p) {
+    const options = this._mcOptions(p);
+    return `
+      <div class="pth-mc-head">
+        <div class="pth-genre-badge">${p.genre.icon} ${p.genre.label}</div>
+        <button class="pth-sm-audio" id="pth-mc-audio">🔊</button>
+      </div>
+
+      <div class="pth-mc-quote-box">
+        <div class="pth-mc-qm">&ldquo;</div>
+        <div class="pth-mc-en">${this._esc(p.en)}</div>
+        <div class="pth-mc-film">${this._esc(p.film)}${p.year ? ' · ' + p.year : ''}</div>
+      </div>
+
+      <div class="pth-mc-label">Doğru Türkçe karşılığı seç</div>
+
+      <div class="pth-mc-opts">
+        ${options.map((o, i) => `
+          <button class="pth-mc-opt" data-correct="${o.correct}">
+            <span class="pth-opt-key">${'ABCD'[i]}</span>
+            <span class="pth-opt-txt">${this._esc(o.text)}</span>
+          </button>`).join('')}
+      </div>`;
+  }
+
+  _mcOptions(p) {
+    const seen  = new Set([p.tr.toLowerCase()]);
+    const wrong = [];
+
+    // Önce bu kartın kendi wrong seçeneklerini kullan
+    for (const w of (p.wrong || [])) {
+      if (w && !seen.has(w.toLowerCase())) {
+        wrong.push({ text: w, correct: false });
+        seen.add(w.toLowerCase());
+      }
+    }
+
+    // Eksik kalan için diğer kartların doğru cevaplarından doldur
+    if (wrong.length < 3) {
+      for (const other of this._shuffle([...this.data])) {
+        if (other.id === p.id) continue;
+        const key = other.tr.toLowerCase();
+        if (!seen.has(key)) { wrong.push({ text: other.tr, correct: false }); seen.add(key); }
+        if (wrong.length >= 3) break;
+      }
+    }
+
+    return this._shuffle([{ text: p.tr, correct: true }, ...wrong.slice(0, 3)]);
+  }
+
+  _pickMC(opt, card, p) {
+    const isCorrect = opt.dataset.correct === 'true';
+    card.querySelectorAll('.pth-mc-opt').forEach(o => {
+      o.disabled = true;
+      if (o.dataset.correct === 'true')    o.classList.add('opt-correct');
+      else if (o === opt && !isCorrect)    o.classList.add('opt-wrong');
+    });
+
+    if (isCorrect) {
+      this.session.correct++;
+      this.mastery[p.id] = Math.min(3, (this.mastery[p.id] || 0) + 1);
+      if (this.app?.addXP) this.app.addXP(5, 'easy');
+    } else {
+      this.session.wrong++;
+    }
+    this._saveMastery();
+    setTimeout(() => this._go(+1), 1100);
+  }
+
+  /* ──────────────────────── FAVORITES ──────────────────────── */
+
+  _toggleFav() {
+    const p   = this.data[this.idx];
+    if (!p) return;
+    const btn = this.el.querySelector('#pth-fav');
+    if (this.favorites.has(p.id)) {
+      this.favorites.delete(p.id);
+    } else {
+      this.favorites.add(p.id);
+      btn?.classList.add('pth-fav-pop');
+      setTimeout(() => btn?.classList.remove('pth-fav-pop'), 450);
+    }
+    localStorage.setItem('pth-favs', JSON.stringify([...this.favorites]));
+    this._updateTopbar();
+  }
+
+  /* ──────────────────────── AUDIO ──────────────────────── */
+
+  _speak(text, btn) {
+    if (!text || typeof speechSynthesis === 'undefined') return;
+    speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang  = 'en-US';
+    utt.rate  = 0.87;
+    const voices = speechSynthesis.getVoices();
+    const v = voices.find(x => x.lang.startsWith('en-') && !x.name.includes('Google')) ||
+              voices.find(x => x.lang.startsWith('en'));
+    if (v) utt.voice = v;
+    if (btn) {
+      btn.classList.add('playing');
+      utt.onend = () => btn.classList.remove('playing');
+    }
+    speechSynthesis.speak(utt);
+  }
+
+  /* ──────────────────────── DONE SCREEN ──────────────────────── */
+
+  _showDone() {
+    const { correct, wrong } = this.session;
+    const total   = correct + wrong;
+    const pct     = total > 0 ? Math.round((correct / total) * 100) : 0;
+    const mastered = Object.values(this.mastery).filter(v => v >= 3).length;
+    const icon     = pct >= 80 ? '🏆' : pct >= 50 ? '⭐' : '💪';
+    const title    = pct >= 80 ? 'Muhteşem!' : pct >= 50 ? 'Harika İş!' : 'Devam Et!';
+
+    const root = this.el.querySelector('#pth-root');
+    if (!root) return;
+
+    root.innerHTML = `
+      <div class="pth-atm pth-g-musical">
+        <div class="pth-orb pth-orb-a"></div>
+        <div class="pth-orb pth-orb-b"></div>
+      </div>
+      <div class="pth-done-root">
+        <div class="pth-done-content">
+          <div class="pth-done-icon">${icon}</div>
+          <div class="pth-done-title">${title}</div>
+          <div class="pth-done-sub">${this.data.length} ifadenin tamamı gezildi</div>
+
+          <div class="pth-done-stats">
+            <div class="pth-ds">
+              <div class="pth-ds-val" style="color:#34d399">${correct}</div>
+              <div class="pth-ds-lbl">Doğru</div>
+            </div>
+            <div class="pth-ds">
+              <div class="pth-ds-val" style="color:#f87171">${wrong}</div>
+              <div class="pth-ds-lbl">Yanlış</div>
+            </div>
+            <div class="pth-ds">
+              <div class="pth-ds-val" style="color:#f59e0b">${pct}%</div>
+              <div class="pth-ds-lbl">Başarı</div>
+            </div>
+            <div class="pth-ds">
+              <div class="pth-ds-val" style="color:#a78bfa">${mastered}</div>
+              <div class="pth-ds-lbl">Öğrenildi</div>
+            </div>
+          </div>
+
+          <div class="pth-done-btns">
+            <button class="pth-done-primary" id="pth-done-retry">🔄 Tekrar Oyna</button>
+            <button class="pth-done-ghost"   id="pth-done-home">← Ana Menüye Dön</button>
+          </div>
+        </div>
+      </div>`;
+
+    root.querySelector('#pth-done-retry').onclick = () => {
+      this.idx      = 0;
+      this.revealed = false;
+      this.session  = { correct: 0, wrong: 0 };
+      this.data     = this._shuffle(this.data);
+      this._render();
+    };
+    root.querySelector('#pth-done-home').onclick = () => this._exit();
+  }
+
+  /* ──────────────────────── HELPERS ──────────────────────── */
+
+  _saveMastery() {
+    localStorage.setItem('pth-mastery', JSON.stringify(this.mastery));
+  }
+
+  _esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
 
   _exit() {
     if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
     const app = window._app || window.app;
-    if (app && app.navigate) app.navigate('home');
+    if (app?.navigate) app.navigate('home');
     else {
       const btn = document.querySelector('[data-action="navigate"][data-target="home"]');
       if (btn) btn.click();
@@ -246,17 +712,15 @@ class PhrasesModule {
   }
 }
 
-// ── AUTO-INIT ──
+/* ── AUTO-INIT ── */
 (function () {
-  const initPlugin = () => {
+  const boot = () => {
     const mount = document.getElementById('phrases-mount-point');
     if (mount && (!window.phrasesMod || window.phrasesMod.el !== mount)) {
-      const app = window._app || window.app;
-      window.phrasesMod = new PhrasesModule(app);
+      window.phrasesMod = new PhrasesModule(window._app || window.app);
       window.phrasesMod.init(mount);
     }
   };
-  const observer = new MutationObserver(() => initPlugin());
-  observer.observe(document.body, { childList: true, subtree: true });
-  setTimeout(initPlugin, 1000);
+  new MutationObserver(boot).observe(document.body, { childList: true, subtree: true });
+  setTimeout(boot, 800);
 })();

@@ -1,7 +1,58 @@
 {
+  "functions": {
+    "source": "functions"
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  },
   "hosting": {
+    "predeploy": [],
+    "site": "englishrhapsody-78866",
     "public": ".",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": [{ "source": "**", "destination": "/index.html" }]
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "scripts/**", "**/*.exe", "**/*.zip", "**/*.bin", "**/*.bat", "**/*.sh", "dist/**", "android/**", "temp_*/**"],
+    "rewrites": [{ "source": "**", "destination": "/index.html" }],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          { "key": "X-Frame-Options",           "value": "DENY" },
+          { "key": "X-Content-Type-Options",     "value": "nosniff" },
+          { "key": "X-XSS-Protection",           "value": "1; mode=block" },
+          { "key": "Referrer-Policy",            "value": "no-referrer" },
+          { "key": "Permissions-Policy",         "value": "display-capture=(), camera=(), microphone=(), clipboard-read=(), clipboard-write=(self)" },
+          { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+          { "key": "Cross-Origin-Resource-Policy","value": "same-origin" },
+          { "key": "Content-Security-Policy",    "value": "frame-ancestors 'none'" }
+        ]
+      },
+      {
+        "source": "/index.html",
+        "headers": [{ "key": "Cache-Control", "value": "no-cache, must-revalidate" }]
+      },
+      {
+        "source": "**/*.js",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+      },
+      {
+        "source": "**/*.css",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+      },
+      {
+        "source": "/emoji3d/**",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, immutable" }]
+      },
+      {
+        "source": "**/*.@(png|jpg|jpeg|gif|webp|svg|ico)",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+      },
+      {
+        "source": "**/*.@(woff|woff2|ttf|otf)",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, immutable" }]
+      },
+      {
+        "source": "/manifest.json",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+      }
+    ]
   }
 }

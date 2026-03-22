@@ -29,23 +29,15 @@ class SpeakV2Module {
     // Timing
     this._recordStart = 0;
 
-    // Audio playback
-    this._audioUrl = null;
-    this._audioEl = null;
-    this._mediaRecorder = null;
-    this._audioChunks = [];
-
     // Timers
     this._shadowTimer = null;
     this._autoTimer = null;
 
     // Speech API refs
     this._recognition = null;
-    this._audioCtx = null;
-    this._analyser = null;
-    this._stream = null;
     this._animFrame = null;
-    this._isSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+    this._gen = 0;
+    this._isSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition || window.Capacitor?.Plugins?.NativeSpeech);
   }
 
   // ─── Config ────────────────────────────────────────────────────────────────
@@ -357,27 +349,107 @@ class SpeakV2Module {
   // ─── Recording ─────────────────────────────────────────────────────────────
 
   _toggleRecord() {
-    if (this.status === 'recording') this._stopRecording();
-    else { this._reset(); this._startRecording(); }
+    if (this.status === 'recording') {
+      this._stopRecording();
+    } else {
+      this._reset();
+      this._startRecording();
+    }
   }
 
-  async _startRecording() {
+  _startRecording() {
+    const NS = window.Capacitor?.Plugins?.NativeSpeech;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) return;
+    if (!NS && !SR) return;
 
-    this.result = null; this.liveTranscript = ''; this._audioChunks = [];
+    this._gen = (this._gen || 0) + 1;
+    const myGen = this._gen;
+
+    this.result = null;
+    this.liveTranscript = '';
     this.status = 'recording';
-    this._updateMicState(); this._setStatusText('recording');
+    this._recordStart = Date.now();
+    this._updateMicState();
+    this._setStatusText('recording');
 
+    // ── Native Capacitor path ──────────────────────────────────────
+    if (NS) {
+      this._recognition = { stop: () => NS.stop().catch(() => {}), _native: true };
+      const setErr = (msg) => {
+        const el = this.el?.querySelector('#sv2-status');
+        if (el) { el.className = 'sv2-status sv2-s-err'; el.innerHTML = msg; }
+      };
+      Promise.all([
+        NS.addListener('partial', e => {
+          if (this._gen !== myGen) return;
+          this.liveTranscript = e.text;
+          const live = this.el?.querySelector('#sv2-live');
+          if (live) live.textContent = `"${e.text}"`;
+        }),
+        NS.addListener('result', e => {
+          if (this._gen !== myGen) return;
+          this.liveTranscript = e.text;
+          const live = this.el?.querySelector('#sv2-live');
+          if (live) live.textContent = `"${e.text}"`;
+        }),
+        NS.addListener('error', e => {
+          if (this._gen !== myGen) return;
+          this._gen++;
+          NS.removeAllListeners();
+          this._cleanupRec();
+          const msgs = {
+            'not-allowed': '⚠️ Mikrofon izni reddedildi.',
+            'no-speech':   'Ses algılanamadı. Tekrar dene.',
+            'network':     '⚠️ İnternet bağlantısı gerekli.',
+            'busy':        '⚠️ Mikrofon başka uygulama tarafından kullanılıyor.',
+          };
+          setErr(msgs[e.code] || '⚠️ Hata: ' + e.code);
+        }),
+        NS.addListener('end', () => {
+          if (this._gen !== myGen) return;
+          const durationMs = Date.now() - this._recordStart;
+          const spoken = this.liveTranscript.trim();
+          NS.removeAllListeners();
+          this._cleanupRec();
+          if (!spoken) { this._setStatusText('idle'); return; }
+          this.status = 'processing';
+          this._updateMicState();
+          this._setStatusText('processing');
+          const gen = this._gen;
+          setTimeout(() => {
+            if (this._gen !== gen) return;
+            const scored  = this._score(this._currentSentence, spoken);
+            const wpm     = this._calcWPM(spoken, durationMs);
+            const fluency = this._calcFluency(scored.score, wpm, this._currentSentence, spoken);
+            this.result = { transcript: spoken, wpm, fluency, ...scored };
+            this.status = 'done';
+            this.sessionScores.push(scored.score);
+            if (this.sessionScores.length > 20) this.sessionScores.shift();
+            this.sessionCount++;
+            this._updateMicState();
+            this._renderResult();
+            this._saveProgress();
+          }, 300);
+        }),
+      ]).then(() => NS.start().catch(err => {
+        this._gen++;
+        NS.removeAllListeners();
+        this._cleanupRec();
+        setErr('⚠️ Mikrofon başlatılamadı: ' + err.message);
+      }));
+      return;
+    }
+
+    // ── Web SpeechRecognition path (tarayıcı) ──────────────────────
     const rec = new SR();
     this._recognition = rec;
-    rec.lang = 'en-US'; rec.continuous = false; rec.interimResults = true; rec.maxAlternatives = 1;
-
-    this._recordStart = Date.now();
-    rec.start();                  // Önce recognition başlat
-    this._startWaveform();        // Sonra görsel dalga (mic çakışmasını önler)
+    rec.lang            = 'en-US';
+    rec.continuous      = false;
+    rec.interimResults  = true;
+    rec.maxAlternatives = 1;
 
     rec.onresult = e => {
+      if (this._gen !== myGen) return;
       let interim = '', final = '';
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const t = e.results[i][0].transcript;
@@ -388,14 +460,41 @@ class SpeakV2Module {
       if (live && this.liveTranscript) live.textContent = `"${this.liveTranscript}"`;
     };
 
-    rec.onend = () => {
-      const durationMs = Date.now() - this._recordStart;
-      this.status = 'processing';
-      this._stopAll(); this._updateMicState(); this._setStatusText('processing');
+    rec.onerror = e => {
+      if (this._gen !== myGen) return;
+      this._gen++;
+      this._cleanupRec();
+      const msgs = {
+        'not-allowed':   '⚠️ Mikrofon izni gerekli. Adres çubuğundaki kilit ikonuna tıkla → Mikrofon → İzin ver.',
+        'no-speech':     'Ses algılanamadı. Tekrar dene.',
+        'audio-capture': '⚠️ Mikrofon bulunamadı veya başka uygulama kullanıyor.',
+        'network':       '⚠️ İnternet bağlantısı gerekli.',
+        'aborted':       '',
+      };
+      const el = this.el?.querySelector('#sv2-status');
+      const msg = msgs[e.error];
+      if (el && msg !== undefined) { el.className = 'sv2-status sv2-s-err'; el.innerHTML = msg; }
+      else if (el) { el.className = 'sv2-status sv2-s-err'; el.innerHTML = '⚠️ Hata: ' + e.error; }
+    };
 
+    rec.onend = () => {
+      if (this._gen !== myGen) return;
+      const durationMs = Date.now() - this._recordStart;
+      const spoken = this.liveTranscript.trim();
+      this._cleanupRec();
+
+      if (!spoken) {
+        this._setStatusText('idle');
+        return;
+      }
+
+      this.status = 'processing';
+      this._updateMicState();
+      this._setStatusText('processing');
+
+      const gen = this._gen;
       setTimeout(() => {
-        const spoken = this.liveTranscript.trim();
-        if (!spoken) { this.status = 'idle'; this._updateMicState(); this._setStatusText('idle'); return; }
+        if (this._gen !== gen) return;
 
         const scored  = this._score(this._currentSentence, spoken);
         const wpm     = this._calcWPM(spoken, durationMs);
@@ -404,26 +503,24 @@ class SpeakV2Module {
         this.result = { transcript: spoken, wpm, fluency, ...scored };
         this.status = 'done';
 
-        // Session tracking
         this.sessionScores.push(scored.score);
         if (this.sessionScores.length > 20) this.sessionScores.shift();
         this.sessionCount++;
         this.streak = scored.score >= 50 ? this.streak + 1 : 0;
 
-        // Spaced repetition
         const prev = this._lowScoreMap[this.idx];
         if (prev === undefined || scored.score < prev) this._lowScoreMap[this.idx] = scored.score;
 
-        // XP
         const xp = this._awardXP(scored.score);
         this.result.xp = xp;
 
-        // Save to history
         this._saveToHistory({ score: scored.score, wpm, fluency,
           date: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' }) });
 
-        this._updateMicState(); this._setStatusText('done');
-        this._updateStats(); this._showScore();
+        this._updateMicState();
+        this._setStatusText('done');
+        this._updateStats();
+        this._showScore();
 
         if (this.autoAdvance && scored.score >= 80) {
           this._autoTimer = setTimeout(() => this._next(), 2000);
@@ -431,37 +528,37 @@ class SpeakV2Module {
       }, 400);
     };
 
-    rec.onerror = e => {
-      this._stopAll();
-      this.status = e.error === 'no-speech' ? 'idle' : 'error';
-      this._updateMicState(); this._setStatusText(this.status);
-    };
+    try {
+      rec.start();
+    } catch (err) {
+      this._gen++;
+      this._cleanupRec();
+      const el = this.el?.querySelector('#sv2-status');
+      if (el) { el.className = 'sv2-status sv2-s-err'; el.innerHTML = '⚠️ Mikrofon başlatılamadı: ' + err.message; }
+      return;
+    }
+    this._startWaveform();
   }
 
+  // Kullanıcı stop'a bastığında — onend devam eder, konuşma işlenir
   _stopRecording() {
-    try { this._recognition?.stop(); } catch {}
-    this._stopAll();
+    if (this._recognition) { try { this._recognition.stop(); } catch {} }
   }
 
+  // Recognition + animasyonu durdurur, status'u idle'a çeker
+  _cleanupRec() {
+    if (this._recognition) { try { this._recognition.stop(); } catch {} this._recognition = null; }
+    if (this._animFrame)   { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
+    this._resetBars();
+    this.status = 'idle';
+    this._updateMicState();
+  }
+
+  // Navigasyon / seviye değişimi — her şeyi iptal eder
   _stopAll() {
     if (this._recognition) { try { this._recognition.stop(); } catch {} this._recognition = null; }
     if (this._animFrame)   { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
-    if (this._mediaRecorder && this._mediaRecorder.state !== 'inactive') {
-      const mr = this._mediaRecorder;
-      mr.onstop = () => {
-        if (this._audioChunks.length) {
-          if (this._audioUrl) URL.revokeObjectURL(this._audioUrl);
-          this._audioUrl = URL.createObjectURL(
-            new Blob(this._audioChunks, { type: mr.mimeType || 'audio/webm' })
-          );
-        }
-      };
-      try { mr.stop(); } catch {}
-    }
-    this._mediaRecorder = null;
-    if (this._audioCtx) { try { this._audioCtx.close(); } catch {} this._audioCtx = null; }
-    if (this._stream)   { this._stream.getTracks().forEach(t => t.stop()); this._stream = null; }
-    this._analyser = null;
+    this._gen = (this._gen || 0) + 1;
     this._resetBars();
   }
 

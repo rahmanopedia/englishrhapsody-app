@@ -38,6 +38,7 @@
   <link rel="stylesheet" href="css/cinema.css">
   <link rel="stylesheet" href="css/speak-v2.css">
   <link rel="stylesheet" href="css/speak-fill.css">
+  <link rel="stylesheet" href="css/phrases.css">
   <script src="js/speak-v2.js" defer></script>
   <script src="js/speak-fill.js" defer></script>
 </head>
@@ -123,6 +124,9 @@
   <!-- Sağ alt köşe sparkle -->
   <div class="sp-sparkle">✦</div>
 
+  <!-- Telif yazısı -->
+  <div class="sp-copyright">© 2026 English Rhapsody. All rights reserved.</div>
+
 </div>
 
 <script src="js/splash.js"></script>
@@ -200,6 +204,9 @@
       <a class="nav-item" data-target="leaderboard">
         <span class="nav-icon">🏆</span> Sıralama
       </a>
+      <a class="nav-item" data-target="download">
+        <span class="nav-icon">📲</span> Uygulamayı İndir
+      </a>
     </nav>
     <div class="sidebar-footer">
       <div class="sf-user">
@@ -210,6 +217,7 @@
           <div class="sf-bar"><div class="sf-bar-fill" id="sf-xp-fill" style="width:0%"></div></div>
         </div>
       </div>
+      <div class="sf-copyright" title="Kullanım Şartları">© 2026 English Rhapsody. All rights reserved.</div>
     </div>
   </aside>
 
@@ -267,6 +275,10 @@
       <span class="mdi-icon">🎬</span>
       <span>Sinema</span>
     </button>
+    <button class="modes-drawer-item" data-target="download">
+      <span class="mdi-icon">📲</span>
+      <span>İndir</span>
+    </button>
   </div>
 </div>
 
@@ -278,7 +290,7 @@
   <div class="modes-drawer-grid">
     <button class="modes-drawer-item" data-target="analytics">
       <span class="mdi-icon">📊</span>
-      <span>İstatistik</span>
+      <span>Analitik</span>
     </button>
     <button class="modes-drawer-item" data-target="leaderboard">
       <span class="mdi-icon">🏆</span>
@@ -1113,6 +1125,69 @@
 </template>
 
 
+<!-- İndir -->
+<template id="tpl-download">
+<div class="dl-page animate-in">
+  <div class="dl-hero">
+    <div class="dl-logo">📱</div>
+    <h1 class="dl-title">Uygulamayı İndir</h1>
+    <p class="dl-sub">English Rhapsody'yi telefonuna yükle, internet olmadan da çalış.</p>
+  </div>
+
+  <!-- Android -->
+  <div class="dl-card" id="dl-android-card">
+    <div class="dl-card-header">
+      <span class="dl-platform-icon">🤖</span>
+      <div>
+        <div class="dl-platform-name">Android</div>
+        <div class="dl-platform-sub">APK dosyası — Chrome, Samsung Browser</div>
+      </div>
+    </div>
+    <a class="dl-btn dl-btn-android" href="https://github.com/rahmanopedia/englishrhapsody-app/releases/download/v1.0.0/english-rhapsody.apk" download="english-rhapsody.apk">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      APK İndir (11 MB)
+    </a>
+    <div class="dl-steps">
+      <div class="dl-step"><span class="dl-step-n">1</span> Butona bas, APK indir</div>
+      <div class="dl-step"><span class="dl-step-n">2</span> "Bilinmeyen kaynaklara izin ver" çık → İzin ver</div>
+      <div class="dl-step"><span class="dl-step-n">3</span> İndirilen APK'ya dokun → Yükle</div>
+    </div>
+  </div>
+
+  <!-- iOS -->
+  <div class="dl-card" id="dl-ios-card">
+    <div class="dl-card-header">
+      <span class="dl-platform-icon"></span>
+      <div>
+        <div class="dl-platform-name">iPhone / iPad</div>
+        <div class="dl-platform-sub">Safari ile Ana Ekrana Ekle</div>
+      </div>
+    </div>
+    <div class="dl-ios-note">iOS'ta APK yoktur — ama Safari üzerinden uygulamayı ana ekrana ekleyebilirsin. Tam uygulama gibi çalışır.</div>
+    <div class="dl-steps">
+      <div class="dl-step"><span class="dl-step-n">1</span> Bu sayfayı <strong>Safari</strong>'de aç</div>
+      <div class="dl-step"><span class="dl-step-n">2</span> Alt menüden <strong>Paylaş</strong> <span class="dl-share-icon">⎙</span> simgesine dokun</div>
+      <div class="dl-step"><span class="dl-step-n">3</span> <strong>"Ana Ekrana Ekle"</strong> seç → Ekle</div>
+      <div class="dl-step"><span class="dl-step-n">4</span> Ana ekrandan English Rhapsody ikonuna dokun 🎉</div>
+    </div>
+  </div>
+
+  <div class="dl-version">v1.0 · englishrhapsody.app</div>
+</div>
+<script>
+(function(){
+  const ua = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isAndroid = /Android/i.test(ua);
+  const android = document.getElementById('dl-android-card');
+  const ios = document.getElementById('dl-ios-card');
+  // Mobilde sadece ilgili platformu öne çıkar
+  if (isIOS && android) android.classList.add('dl-card-secondary');
+  if (isAndroid && ios) ios.classList.add('dl-card-secondary');
+})();
+</script>
+</template>
+
 <!-- External Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous" defer></script>
@@ -1149,8 +1224,76 @@
 <script src="js/phrases.js" defer></script>
 
 <script src="js/sw-register.js" defer></script>
+<script src="js/security-logger.js" defer></script>
 
 <script src="js/boot.js?v=30" defer></script>
+
+<!-- ── Kullanım Şartları Modalı ── -->
+<div id="tos-modal" class="tos-modal" style="display:none">
+  <div class="tos-box">
+    <div class="tos-header">
+      <div class="tos-logo">⚖️</div>
+      <h2 class="tos-title">Kullanım Şartları</h2>
+      <p class="tos-subtitle">Son güncelleme: Mart 2026</p>
+      <button class="tos-close">✕</button>
+    </div>
+    <div class="tos-body">
+
+      <div class="tos-section">
+        <h3>1. Fikri Mülkiyet ve Telif Hakkı</h3>
+        <p>English Rhapsody platformundaki tüm içerikler — metinler, görseller, ses dosyaları, videolar, alıştırmalar, sorular ve tasarım öğeleri — <strong>© 2026 English Rhapsody</strong> adına telif hakkıyla korunmaktadır. İçeriklerimiz Fikir ve Sanat Eserleri Kanunu kapsamında yasal güvence altındadır.</p>
+      </div>
+
+      <div class="tos-section tos-highlight">
+        <h3>🚫 2. İçerik Kopyalama Yasağı</h3>
+        <ul>
+          <li>Platformdaki hiçbir içerik <strong>kısmen veya tamamen kopyalanamaz.</strong></li>
+          <li>Ekran görüntüsü, ekran kaydı veya herhangi bir yöntemle içerik çoğaltılamaz.</li>
+          <li>Otomatik araçlar (bot, scraper, crawler) ile veri toplanamaz.</li>
+          <li>İçerikler basılı veya dijital ortamda yeniden dağıtılamaz.</li>
+        </ul>
+      </div>
+
+      <div class="tos-section tos-highlight">
+        <h3>🔒 3. İzinsiz Kullanım Yasağı</h3>
+        <ul>
+          <li>Platformun tamamı veya herhangi bir bölümü <strong>önceden yazılı izin alınmadan</strong> ticari amaçla kullanılamaz.</li>
+          <li>English Rhapsody içerikleri başka bir web sitesi, uygulama veya platformda yayınlanamaz.</li>
+          <li>Marka adı, logosu ve tasarım öğeleri izinsiz kullanılamaz.</li>
+          <li>İçerikler çevrilip farklı bir dilde yeniden yayınlanamaz.</li>
+        </ul>
+      </div>
+
+      <div class="tos-section">
+        <h3>📚 4. Eğitim Amaçlı Kullanım Sınırları</h3>
+        <ul>
+          <li>Platform yalnızca <strong>kişisel dil öğrenimi</strong> amacıyla kullanılabilir.</li>
+          <li>Öğretmenler, platformu sınıf ortamında gösterim amaçlı kullanabilir; ancak içerik çoğaltıp dağıtamaz.</li>
+          <li>Kurs, seminer veya eğitim materyali üretmek amacıyla içerik alıntılanamaz.</li>
+          <li>Akademik çalışmalarda kaynak gösterilerek <em>kısa alıntı</em> (max 2 cümle) yapılabilir.</li>
+        </ul>
+      </div>
+
+      <div class="tos-section">
+        <h3>5. Hesap Güvenliği</h3>
+        <ul>
+          <li>Hesabınızı başkasıyla paylaşamazsınız.</li>
+          <li>Hile, XP manipülasyonu veya sistemi istismar girişimleri hesabın kalıcı kapatılmasıyla sonuçlanır.</li>
+          <li>Şüpheli aktivite tespit edildiğinde hesabınız uyarısız askıya alınabilir.</li>
+        </ul>
+      </div>
+
+      <div class="tos-section">
+        <h3>6. İhlal Durumunda</h3>
+        <p>Bu şartların ihlali halinde English Rhapsody; hesabı kapatma, yasal yollara başvurma ve tazminat talep etme haklarını saklı tutar. İletişim: <strong>info@englishrhapsody.com</strong></p>
+      </div>
+
+    </div>
+    <div class="tos-footer">
+      <button class="tos-accept-btn">Anladım, Kapat</button>
+    </div>
+  </div>
+</div>
 
 <!-- ── Veri Sıfırlama Onay Modalı (body'de sabit — her zaman erişilebilir) ── -->
 <div id="reset-confirm-modal" class="reset-modal" style="display:none" data-action="close-modal-backdrop">
@@ -1169,5 +1312,6 @@
   </div>
 </div>
 
+<script src="js/security.js"></script>
 </body>
 </html>

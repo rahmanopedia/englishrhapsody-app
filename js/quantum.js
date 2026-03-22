@@ -2999,8 +2999,9 @@ window.QuantumMode = QuantumMode;
 
   function _qEnterFs(el) {
     if (!el || document.fullscreenElement || document.webkitFullscreenElement) return;
-    const req = el.requestFullscreen || el.webkitRequestFullscreen;
-    if (req) req.call(el).catch(() => {});
+    const fsEl = document.documentElement;
+    const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
+    if (req) req.call(fsEl).catch(() => {});
   }
 
   function _qInit(el) {
@@ -3017,10 +3018,6 @@ window.QuantumMode = QuantumMode;
   function _qDestroy() {
     if (_qOrient) { window.removeEventListener('resize', _qOrient); _qOrient = null; }
     _qEl = null;
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-      const exit = document.exitFullscreen || document.webkitExitFullscreen;
-      if (exit) exit.call(document).catch(() => {});
-    }
     try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(() => {}); } catch(e) {}
   }
 

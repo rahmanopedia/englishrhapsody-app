@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">English Rhapsody</string>
+    <string name="title_activity_main">English Rhapsody</string>
+    <string name="package_name">com.englishrhapsody.app</string>
+    <string name="custom_url_scheme">com.englishrhapsody.app</string>
+</resources>

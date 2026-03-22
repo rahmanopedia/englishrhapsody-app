@@ -445,9 +445,24 @@
 
 /* ── Portrait phone optimization ── */
 @media (orientation: portrait) and (max-width: 500px) {
+  #spk-pane-fill {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100svh !important;
+  }
+  #speak-fill-point {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
   .sfm-wrap {
+    flex: 1 !important;
     gap: 8px !important;
     padding-bottom: 16px !important;
+  }
+  .sfm-mic-section {
+    margin-top: auto !important;
+    gap: 8px !important;
   }
   .sfm-levels { gap: 4px !important; }
   .sfm-lvl-btn { padding: 6px 4px !important; font-size: 0.72rem !important; }
@@ -461,7 +476,6 @@
   .sfm-chip { padding: 5px 10px !important; font-size: 0.8rem !important; }
   .sfm-blanks-area { gap: 4px 7px !important; min-height: 44px !important; }
   .sfm-slot-fill { font-size: 1.1rem !important; }
-  .sfm-mic-section { gap: 8px !important; }
   .sfm-wave { height: 36px !important; }
   .sfm-mic-outer { width: 70px !important; height: 70px !important; }
   .sfm-mic-btn { width: 60px !important; height: 60px !important; }

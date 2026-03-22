@@ -35,8 +35,9 @@ class ReadingEngine{constructor(n){this.app=n,this.activePopup=null,this._closeO
 
   function _rdEnterFs(el) {
     if (!el || document.fullscreenElement || document.webkitFullscreenElement) return;
-    const req = el.requestFullscreen || el.webkitRequestFullscreen;
-    if (req) req.call(el).catch(() => {});
+    const fsEl = document.documentElement;
+    const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
+    if (req) req.call(fsEl).catch(() => {});
   }
 
   function _rdHeaderSetup(container) {
@@ -102,10 +103,6 @@ class ReadingEngine{constructor(n){this.app=n,this.activePopup=null,this._closeO
   function _rdDestroy() {
     if (_rdOrient) { window.removeEventListener('resize', _rdOrient); _rdOrient = null; }
     _rdEl = null;
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-      const exit = document.exitFullscreen || document.webkitExitFullscreen;
-      if (exit) exit.call(document).catch(() => {});
-    }
     try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(() => {}); } catch(e) {}
   }
 

@@ -119,6 +119,8 @@
       if(now-lastTap<320){
         var nav=document.getElementById('mobile-nav');
         if(nav&&nav.classList.contains('nav-hidden')){
+          // Modlardayken double-tap → sadece NAVIGASYON sheet açılsın, mobile nav açılmasın
+          if(document.body.classList.contains('er-in-mode')){lastTap=0;return;}
           app._navLocked=false;
           app._showMobileNav();
         }
@@ -150,47 +152,8 @@
   });
 })();
 
-/* ── 4. PWA Install Prompt ── */
-(function(){
-  var deferredPrompt = null;
-  function showBanner(){
-    var b = document.getElementById('pwa-banner');
-    if(b && !localStorage.getItem('pwa-dismissed')) b.classList.add('visible');
-  }
-  function hideBanner(){
-    var b = document.getElementById('pwa-banner');
-    if(b) b.classList.remove('visible');
-    localStorage.setItem('pwa-dismissed','1');
-  }
-  window.addEventListener('beforeinstallprompt', function(e){
-    e.preventDefault();
-    deferredPrompt = e;
-    showBanner();
-  });
-  document.addEventListener('click', function(e){
-    if(e.target.closest('#pwa-install-btn')){
-      if(deferredPrompt){
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(function(){ hideBanner(); deferredPrompt=null; });
-      }
-    }
-    if(e.target.closest('#pwa-banner-close')) hideBanner();
-  });
-  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  var isStandalone = window.navigator.standalone;
-  var isSafari = /safari/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent);
-  if(isIOS && !isStandalone && isSafari && !localStorage.getItem('pwa-dismissed')){
-    window.addEventListener('load', function(){
-      var b = document.getElementById('pwa-banner');
-      var sub = b && b.querySelector('.pwa-install-sub');
-      var btn = document.getElementById('pwa-install-btn');
-      if(!b) return;
-      if(sub) sub.textContent = 'Safari\'de Paylaş → Ana Ekrana Ekle';
-      if(btn) btn.style.display = 'none';
-      b.classList.add('visible');
-    });
-  }
-})();
+/* ── 4. PWA Install Prompt — devre dışı ── */
+window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); });
 
 /* ── 5. Flashcard Game ── */
 (function(){
