@@ -426,10 +426,21 @@ class SpeakV2Module {
             this.sessionScores.push(scored.score);
             if (this.sessionScores.length > 20) this.sessionScores.shift();
             this.sessionCount++;
+            this.streak = scored.score >= 50 ? this.streak + 1 : 0;
+            const prev = this._lowScoreMap[this.idx];
+            if (prev === undefined || scored.score < prev) this._lowScoreMap[this.idx] = scored.score;
+            const xp = this._awardXP(scored.score);
+            this.result.xp = xp;
+            this._saveToHistory({ score: scored.score, wpm, fluency,
+              date: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' }) });
             this._updateMicState();
-            this._renderResult();
-            this._saveProgress();
-          }, 300);
+            this._setStatusText('done');
+            this._updateStats();
+            this._showScore();
+            if (this.autoAdvance && scored.score >= 80) {
+              this._autoTimer = setTimeout(() => this._next(), 2000);
+            }
+          }, 400);
         }),
       ]).then(() => NS.start().catch(err => {
         this._gen++;
