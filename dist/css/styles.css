@@ -6560,7 +6560,24 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .speak-container {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  flex: 1;
+  min-height: 100%;
+  gap: 0;
+}
+
+/* Picker: tam yükseklik + dikey ortalama, scroll yok */
+#spk-picker {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#spk-picker .qhub-shell {
+  width: 100%;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 /* ── Lab Header ───────────────────────────────────────────── */
