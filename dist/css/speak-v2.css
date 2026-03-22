@@ -1,16 +1,25 @@
 /* ─── RHAPSODY SPEAK V2.1 ─── */
 
 .sv2-wrap {
-  padding: 24px 16px 120px;
+  padding: 16px 16px 80px;
   max-width: 540px;
   margin: 0 auto;
+}
+
+/* ── Topbar: Settings + Stats bir arada ── */
+.sv2-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
 }
 
 /* ── Settings Toggles ── */
 .sv2-settings {
   display: flex;
-  gap: 6px;
-  margin-bottom: 12px;
+  gap: 5px;
+  margin-bottom: 0;
 }
 
 .sv2-toggle {
@@ -42,10 +51,11 @@
 .sv2-stats {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 14px;
-  font-size: 0.74rem;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 0;
+  font-size: 0.72rem;
+  flex-shrink: 0;
 }
 
 .sv2-stat { color: #64748b; }
@@ -125,7 +135,7 @@
 .sv2-levels {
   display: flex;
   gap: 8px;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
 }
 
 .sv2-level-btn {
@@ -194,12 +204,12 @@
   min-height: 0;
 }
 
-/* ── Navigation ── */
-.sv2-nav {
+/* ── Controls: Nav + Audio tek satır ── */
+.sv2-controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 6px;
 }
 
 .sv2-nav-btn {
@@ -226,16 +236,19 @@
 }
 
 .sv2-counter {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #94a3b8;
+  text-align: center;
+  margin: 0 0 12px;
+  display: block;
 }
 
 /* ── Audio Buttons ── */
 .sv2-audio-btns {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-bottom: 24px;
+  gap: 14px;
+  margin-bottom: 0;
 }
 
 .sv2-audio-btn {
@@ -660,25 +673,26 @@
 /* ── Portrait phone optimization ── */
 @media (orientation: portrait) and (max-width: 500px) {
   .sv2-wrap {
-    padding: 16px 12px 90px !important;
+    padding: 12px 12px 70px !important;
   }
-  .sv2-levels { margin-bottom: 14px !important; }
-  .sv2-settings { margin-bottom: 8px !important; }
-  .sv2-stats { margin-bottom: 8px !important; }
+  .sv2-levels { margin-bottom: 8px !important; }
+  .sv2-topbar { margin-bottom: 8px !important; }
+  .sv2-toggle { padding: 6px 5px !important; font-size: 0.68rem !important; }
   .sv2-card {
-    padding: 16px !important;
-    margin-bottom: 10px !important;
-    min-height: 70px !important;
+    padding: 14px !important;
+    margin-bottom: 8px !important;
+    min-height: 60px !important;
     border-radius: 12px !important;
   }
-  .sv2-sentence { font-size: 1rem !important; line-height: 1.45 !important; }
-  .sv2-nav { margin-bottom: 12px !important; }
-  .sv2-audio-btns { gap: 14px !important; margin-bottom: 16px !important; }
-  .sv2-aico { width: 40px !important; height: 40px !important; border-radius: 11px !important; }
-  .sv2-mic-section { gap: 12px !important; }
-  .sv2-mic-wrap { width: 100px !important; height: 100px !important; }
-  .sv2-mic-btn { width: 66px !important; height: 66px !important; }
-  .sv2-waveform { height: 36px !important; }
+  .sv2-sentence { font-size: 0.95rem !important; line-height: 1.4 !important; }
+  .sv2-controls { margin-bottom: 4px !important; }
+  .sv2-counter { margin-bottom: 8px !important; font-size: 0.75rem !important; }
+  .sv2-audio-btns { gap: 10px !important; }
+  .sv2-aico { width: 38px !important; height: 38px !important; border-radius: 10px !important; }
+  .sv2-mic-section { gap: 10px !important; }
+  .sv2-mic-wrap { width: 90px !important; height: 90px !important; }
+  .sv2-mic-btn { width: 60px !important; height: 60px !important; }
+  .sv2-waveform { height: 32px !important; }
   .sv2-score-card {
     padding: 12px !important;
     gap: 12px !important;
