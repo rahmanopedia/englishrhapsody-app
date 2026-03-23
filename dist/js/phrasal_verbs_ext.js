@@ -116,7 +116,7 @@ Object.assign(PHRASE_DICT, {
   'deal with':       { type:'Phrasal Verb', level:'B1', tr:'ele almak; başa çıkmak',         ex:'We must deal with this problem immediately.' },
 
   // ── DO ──
-  'do away with':    { type:'Phrasal Verb', level:'C1', tr:'kaldırmak, ortadan kaldırmak',   ex:'They should do away with that old rule.' },
+  'do away with':    { type:'Phrasal Verb', level:'B2', tr:'kaldırmak, ortadan kaldırmak',   ex:'They should do away with that old rule.' },
   'do up':           { type:'Phrasal Verb', level:'B1', tr:'tazelemek; iliklemek; paketlemek', ex:'She did up the old house beautifully.' },
   'do without':      { type:'Phrasal Verb', level:'B2', tr:'olmadan yaşamak, vazgeçmek',     ex:'We can do without the extra sugar.' },
   'do over':         { type:'Phrasal Verb', level:'B1', tr:'yeniden yapmak',                 ex:'You will have to do it over from scratch.' },
@@ -419,7 +419,7 @@ Object.assign(PHRASE_DICT, {
   'stand for':       { type:'Phrasal Verb', level:'B1', tr:'temsil etmek; katlanmak',       ex:'What does this acronym stand for?' },
   'stand in for':    { type:'Phrasal Verb', level:'B2', tr:'yerine geçmek',                 ex:'Can you stand in for me at the meeting?' },
   'stand out':       { type:'Phrasal Verb', level:'B1', tr:'öne çıkmak, dikkat çekmek',     ex:'Her red coat made her stand out in the crowd.' },
-  'stand up for':    { type:'Phrasal Verb', level:'C1', tr:'savunmak, destek olmak',        ex:'Always stand up for what you believe in.' },
+  'stand up for':    { type:'Phrasal Verb', level:'B2', tr:'savunmak, destek olmak',        ex:'Always stand up for what you believe in.' },
   'stand up to':     { type:'Phrasal Verb', level:'B2', tr:'karşı çıkmak; dayanmak',        ex:'He stood up to the bully at school.' },
 
   // ── SWITCH ──
@@ -528,7 +528,7 @@ Object.assign(PHRASE_DICT, {
   'act up':          { type:'Phrasal Verb', level:'B2', tr:'yaramazlık etmek; sorun çıkarmak', ex:'My knee is acting up again.' },
 
   // ── ALLOW ──
-  'allow for':       { type:'Phrasal Verb', level:'C1', tr:'hesaba katmak',                 ex:'Allow for delays when planning the journey.' },
+  'allow for':       { type:'Phrasal Verb', level:'B2', tr:'hesaba katmak',                 ex:'Allow for delays when planning the journey.' },
   'allow in':        { type:'Phrasal Verb', level:'B1', tr:'içeri almak',                   ex:'Children are not allowed in this area.' },
 
   // ── ASK ──
@@ -582,7 +582,7 @@ Object.assign(PHRASE_DICT, {
   'cover up':        { type:'Phrasal Verb', level:'B1', tr:'üstünü örtmek; gizlemek',       ex:'They tried to cover up the scandal.' },
 
   // ── CRACK ──
-  'crack down on':   { type:'Phrasal Verb', level:'C1', tr:'önlem almak, sıkıştırmak',      ex:'Police cracked down on street crime.' },
+  'crack down on':   { type:'Phrasal Verb', level:'B2', tr:'önlem almak, sıkıştırmak',      ex:'Police cracked down on street crime.' },
   'crack up':        { type:'Phrasal Verb', level:'B1', tr:'kahkahaya boğulmak; çökmek',    ex:'The joke made everyone crack up.' },
 
   // ── CROSS ──
@@ -672,11 +672,11 @@ Object.assign(PHRASE_DICT, {
   'mix up':          { type:'Phrasal Verb', level:'B1', tr:'karıştırmak; birbirine karıştırmak', ex:'I always mix up their names.' },
 
   // ── NARROW ──
-  'narrow down':     { type:'Phrasal Verb', level:'C1', tr:'daraltmak, azaltmak (seçenekler)', ex:'Narrow down your options to three.' },
+  'narrow down':     { type:'Phrasal Verb', level:'B2', tr:'daraltmak, azaltmak (seçenekler)', ex:'Narrow down your options to three.' },
 
   // ── OPT ──
   'opt in':          { type:'Phrasal Verb', level:'B1', tr:'dahil olmayı seçmek',           ex:'Opt in to receive our newsletter.' },
-  'opt out':         { type:'Phrasal Verb', level:'C1', tr:'çekilmeyi seçmek',              ex:'You can opt out of the scheme at any time.' },
+  'opt out':         { type:'Phrasal Verb', level:'B2', tr:'çekilmeyi seçmek',              ex:'You can opt out of the scheme at any time.' },
 
   // ── OWN ──
   'own up':          { type:'Phrasal Verb', level:'B1', tr:'itiraf etmek',                  ex:'He finally owned up to his mistake.' },
@@ -716,7 +716,7 @@ Object.assign(PHRASE_DICT, {
   'ring up':         { type:'Phrasal Verb', level:'B1', tr:'telefon etmek',                 ex:'Ring up the restaurant to book a table.' },
 
   // ── RULE ──
-  'rule out':        { type:'Phrasal Verb', level:'C1', tr:'ihtimal dışı bırakmak',         ex:'The doctor ruled out a serious illness.' },
+  'rule out':        { type:'Phrasal Verb', level:'B2', tr:'ihtimal dışı bırakmak',         ex:'The doctor ruled out a serious illness.' },
 
   // ── SAVE ──
   'save up':         { type:'Phrasal Verb', level:'A2', tr:'para biriktirmek',               ex:'She is saving up for a new laptop.' },
@@ -869,7 +869,7 @@ Object.assign(PHRASE_DICT, {
   'zone out':        { type:'Phrasal Verb', level:'B1', tr:'düşüncelere dalmak, kopuk olmak', ex:'She zoned out during the dull lecture.' },
 
   // ── ACCOUNT ──
-  'account for':     { type:'Phrasal Verb', level:'C1', tr:'açıklamak; teşkil etmek',      ex:'How do you account for the missing funds?' },
+  'account for':     { type:'Phrasal Verb', level:'B2', tr:'açıklamak; teşkil etmek',      ex:'How do you account for the missing funds?' },
 
   // ── AGREE ──
   'agree on':        { type:'Phrasal Verb', level:'B2', tr:'üzerinde anlaşmak',             ex:'We finally agreed on a price.' },
@@ -1205,7 +1205,7 @@ Object.assign(PHRASE_DICT, {
 
   // ── FLAG ──
   'flag down':       { type:'Phrasal Verb', level:'B1', tr:'el sallayarak durdurmak',      ex:'She flagged down a passing taxi.' },
-  'flag up':         { type:'Phrasal Verb', level:'C1', tr:'dikkat çekmek; belirtmek',     ex:'Please flag up any concerns early.' },
+  'flag up':         { type:'Phrasal Verb', level:'B2', tr:'dikkat çekmek; belirtmek',     ex:'Please flag up any concerns early.' },
 
   // ── FLARE ──
   'flare up':        { type:'Phrasal Verb', level:'B1', tr:'alevlenmek; aniden bozulmak',  ex:'The old injury flared up during training.' },
@@ -1336,7 +1336,7 @@ Object.assign(PHRASE_DICT, {
 
   // ── PHASE ──
   'phase in':        { type:'Phrasal Verb', level:'B1', tr:'kademeli olarak uygulamak',    ex:'The new policy will be phased in over a year.' },
-  'phase out':       { type:'Phrasal Verb', level:'C1', tr:'kademeli olarak kaldırmak',    ex:'Old technology is being phased out.' },
+  'phase out':       { type:'Phrasal Verb', level:'B2', tr:'kademeli olarak kaldırmak',    ex:'Old technology is being phased out.' },
 
   // ── PHONE ──
   'phone back':      { type:'Phrasal Verb', level:'B1', tr:'geri aramak',                   ex:'Phone back when you are free.' },
@@ -1480,7 +1480,7 @@ Object.assign(PHRASE_DICT, {
   'touch upon':      { type:'Phrasal Verb', level:'B1', tr:'kısaca değinmek',              ex:'He touched upon many interesting points.' },
 
   // ── TRICKLE ──
-  'trickle down':    { type:'Phrasal Verb', level:'C2', tr:'damlaya damlaya inmek; yayılmak', ex:'Wealth should trickle down to all levels.' },
+  'trickle down':    { type:'Phrasal Verb', level:'B2', tr:'damlaya damlaya inmek; yayılmak', ex:'Wealth should trickle down to all levels.' },
   'trickle in':      { type:'Phrasal Verb', level:'B1', tr:'yavaş yavaş gelmek',           ex:'Replies trickled in over the following days.' },
 
   // ── TYPE ──

@@ -864,3 +864,49 @@ document.addEventListener('click', function(e) {
 
   waitAndCheck();
 })();
+
+/* ── 15. Offline / Online detection banner ── */
+(function(){
+  var banner = document.getElementById('offline-banner');
+  if(!banner) return;
+  function update(){
+    if(navigator.onLine){
+      banner.classList.remove('visible');
+    } else {
+      banner.textContent = '📡 İnternet bağlantısı yok';
+      banner.classList.add('visible');
+    }
+  }
+  window.addEventListener('online',  update);
+  window.addEventListener('offline', update);
+  update();
+})();
+
+/* ── 16. Keyboard viewport adjustment ── */
+(function(){
+  if(!window.visualViewport || window.innerWidth > 768) return;
+  var root = document.documentElement;
+  var lastKb = 0;
+  function onViewportResize(){
+    var kb = Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop);
+    var rounded = Math.round(kb);
+    if(rounded === lastKb) return;
+    lastKb = rounded;
+    root.style.setProperty('--kb-height', rounded + 'px');
+  }
+  window.visualViewport.addEventListener('resize', onViewportResize);
+  window.visualViewport.addEventListener('scroll', onViewportResize);
+})();
+
+/* ── 17. Context menu prevention on game elements ── */
+(function(){
+  if(window.innerWidth > 768) return;
+  var SEL = '.nexus-shell,.quantum-shell,.synesthesia-wrapper,.bridge-workspace,.cinema-wrapper,.arena-shell,.fc-card-wrap';
+  document.addEventListener('contextmenu', function(e){
+    var el = e.target;
+    while(el){
+      if(el.matches && el.matches(SEL)){ e.preventDefault(); return; }
+      el = el.parentElement;
+    }
+  });
+})();

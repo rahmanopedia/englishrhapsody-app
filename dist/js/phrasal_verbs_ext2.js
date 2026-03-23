@@ -6,7 +6,7 @@ Object.assign(PHRASE_DICT, {
   'abandon to':       { type:'Phrasal Verb', level:'C1', tr:'kaderine terk etmek',              ex:'They abandoned the town to the floodwaters.' },
 
   // ── ABIDE ──
-  'abide by':         { type:'Phrasal Verb', level:'C1', tr:'uymak, bağlı kalmak',              ex:'You must abide by the rules of the competition.' },
+  'abide by':         { type:'Phrasal Verb', level:'B2', tr:'uymak, bağlı kalmak',              ex:'You must abide by the rules of the competition.' },
   'abide with':       { type:'Phrasal Verb', level:'C1', tr:'katlanmak, tahammül etmek',        ex:'I cannot abide with such rudeness.' },
 
   // ── ACHE ──
@@ -31,7 +31,7 @@ Object.assign(PHRASE_DICT, {
 
   // ── BAIL ──
   'bail out':         { type:'Phrasal Verb', level:'B1', tr:'kurtarmak; kefaletle serbest bırakmak', ex:'The government bailed out the struggling bank.' },
-  'bail on':          { type:'Phrasal Verb', level:'C1', tr:'birini yarı yolda bırakmak',       ex:'He bailed on us at the last minute.' },
+  'bail on':          { type:'Phrasal Verb', level:'B2', tr:'birini yarı yolda bırakmak',       ex:'He bailed on us at the last minute.' },
 
   // ── BAN ──
   'ban from':         { type:'Phrasal Verb', level:'B1', tr:'yasaklamak (-den)',                 ex:'She was banned from driving for a year.' },
@@ -83,7 +83,7 @@ Object.assign(PHRASE_DICT, {
   'block up':         { type:'Phrasal Verb', level:'B1', tr:'tıkamak, kapatmak',               ex:'Leaves blocked up the gutters.' },
 
   // ── BOG ──
-  'bog down':         { type:'Phrasal Verb', level:'C1', tr:'yavaşlatmak, batağa çekmek',      ex:'Do not let paperwork bog you down.' },
+  'bog down':         { type:'Phrasal Verb', level:'B2', tr:'yavaşlatmak, batağa çekmek',      ex:'Do not let paperwork bog you down.' },
 
   // ── BOOT ──
   'boot out':         { type:'Phrasal Verb', level:'B1', tr:'kovmak, dışarı atmak',             ex:'He was booted out of the club for fighting.' },
@@ -315,9 +315,9 @@ Object.assign(PHRASE_DICT, {
   'dwell on':         { type:'Phrasal Verb', level:'C1', tr:'üzerinde durmak, takılmak',      ex:'Do not dwell on past mistakes.' },
 
   // ── EASE ──
-  'ease off':         { type:'Phrasal Verb', level:'C1', tr:'azalmak; yavaşlamak',            ex:'The rain eased off in the afternoon.' },
+  'ease off':         { type:'Phrasal Verb', level:'B2', tr:'azalmak; yavaşlamak',            ex:'The rain eased off in the afternoon.' },
   'ease out':         { type:'Phrasal Verb', level:'B1', tr:'yavaşça uzaklaştırmak',          ex:'He was eased out of his position.' },
-  'ease up':          { type:'Phrasal Verb', level:'C1', tr:'gevşemek; yavaşlamak',           ex:'Ease up — you are working too hard.' },
+  'ease up':          { type:'Phrasal Verb', level:'B2', tr:'gevşemek; yavaşlamak',           ex:'Ease up — you are working too hard.' },
 
   // ── EGG ──
   'egg on':           { type:'Phrasal Verb', level:'B1', tr:'kışkırtmak, tahrik etmek',       ex:'His friends egged him on to take the dare.' },
@@ -582,7 +582,7 @@ Object.assign(PHRASE_DICT, {
   'lie ahead':        { type:'Phrasal Verb', level:'B1', tr:'ileride beklemek',               ex:'Nobody knows what lies ahead.' },
   'lie behind':       { type:'Phrasal Verb', level:'B1', tr:'gerçek neden olmak',             ex:'What lies behind his sudden decision?' },
   'lie down':         { type:'Phrasal Verb', level:'A1', tr:'uzanmak, yatmak',                ex:'Lie down and rest for a while.' },
-  'lie low':          { type:'Phrasal Verb', level:'C1', tr:'sineye çekmek, ortalıktan çekilmek', ex:'He lay low after the scandal broke.' },
+  'lie low':          { type:'Phrasal Verb', level:'B2', tr:'sineye çekmek, ortalıktan çekilmek', ex:'He lay low after the scandal broke.' },
 
   // ── LIGHTEN ──
   'lighten up':       { type:'Phrasal Verb', level:'B1', tr:'gevşemek; neşelenmek',           ex:'Lighten up — it is just a game.' },
@@ -632,7 +632,7 @@ Object.assign(PHRASE_DICT, {
   'mount up':         { type:'Phrasal Verb', level:'B1', tr:'birikmek, artmak',               ex:'The bills were mounting up rapidly.' },
 
   // ── NARROW ──
-  'narrow down':      { type:'Phrasal Verb', level:'C1', tr:'daraltmak, sayıyı azaltmak',     ex:'Let us narrow down the candidates to three.' },
+  'narrow down':      { type:'Phrasal Verb', level:'B2', tr:'daraltmak, sayıyı azaltmak',     ex:'Let us narrow down the candidates to three.' },
 
   // ── NATTER ──
   'natter on':        { type:'Phrasal Verb', level:'B1', tr:'durmadan gevezelik etmek',       ex:'She nattered on for an hour about nothing.' },
@@ -761,7 +761,7 @@ Object.assign(PHRASE_DICT, {
 
   // ── REASON ──
   'reason out':       { type:'Phrasal Verb', level:'B1', tr:'mantıkla çözüme kavuşturmak',   ex:'She reasoned out the problem step by step.' },
-  'reason with':      { type:'Phrasal Verb', level:'C1', tr:'mantık yoluyla ikna etmek',      ex:'It is impossible to reason with him when he is angry.' },
+  'reason with':      { type:'Phrasal Verb', level:'B2', tr:'mantık yoluyla ikna etmek',      ex:'It is impossible to reason with him when he is angry.' },
 
   // ── RECALL ──
   'recall to':        { type:'Phrasal Verb', level:'B1', tr:'geri çağırmak; hatırlatmak',    ex:'The product was recalled to the factory.' },
@@ -943,7 +943,7 @@ Object.assign(PHRASE_DICT, {
   'stick by':         { type:'Phrasal Verb', level:'B1', tr:'destek olmaya devam etmek',      ex:'She stuck by him through all the difficulties.' },
   'stick out':        { type:'Phrasal Verb', level:'B1', tr:'uzanmak; öne çıkmak; göze çarpmak', ex:'Your red umbrella really sticks out.' },
   'stick to':         { type:'Phrasal Verb', level:'B1', tr:'sadık kalmak; bağlı kalmak',     ex:'Stick to the plan we agreed on.' },
-  'stick up for':     { type:'Phrasal Verb', level:'C1', tr:'savunmak, desteklemek',          ex:'You should stick up for yourself more.' },
+  'stick up for':     { type:'Phrasal Verb', level:'B2', tr:'savunmak, desteklemek',          ex:'You should stick up for yourself more.' },
   'stick with':       { type:'Phrasal Verb', level:'B1', tr:'devam etmek; vazgeçmemek',       ex:'Stick with the original idea — it is good.' },
 
   // ── STIR ──
@@ -1110,7 +1110,7 @@ Object.assign(PHRASE_DICT, {
   'walk away from':   { type:'Phrasal Verb', level:'B2', tr:'bırakıp gitmek',                ex:'He walked away from a profitable deal.' },
   'walk into':        { type:'Phrasal Verb', level:'B1', tr:'çarpmak; beklenmedik şekilde girmek', ex:'She walked straight into the glass door.' },
   'walk off':         { type:'Phrasal Verb', level:'B1', tr:'yürüyerek gitmek; yürüyerek sindirmek', ex:'He walked off his bad mood in the park.' },
-  'walk out on':      { type:'Phrasal Verb', level:'C1', tr:'terk etmek',                     ex:'She walked out on her job without notice.' },
+  'walk out on':      { type:'Phrasal Verb', level:'B2', tr:'terk etmek',                     ex:'She walked out on her job without notice.' },
   'walk through':     { type:'Phrasal Verb', level:'B1', tr:'adım adım anlatmak; geçmek',    ex:'Let me walk you through the process.' },
 
   // ── WATER ──

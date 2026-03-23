@@ -2391,12 +2391,66 @@ function generateTurkishTranslation(sc, time, flow, voice, pol) {
     : `${side.subj} ${side.agent} ${verb}.`;
 }
 
+// ── CEFR level map for each grammar structure ─────────────────────
+// Keys: "time:flow:voice"  (voice omitted key = active default)
+const GRAMMAR_LEVEL_MAP = {
+  // ── Active voice ──────────────────────────────────────────────
+  'pres:simp:act':       'A1',
+  'pres:cont:act':       'A2',
+  'past:simp:act':       'A2',
+  'fut:simp:act':        'A2',
+  'fut:going_to:act':    'A2',
+  'modal:can:act':       'A2',
+  'pres:perf:act':       'B1',
+  'past:cont:act':       'B1',
+  'past:used_to:act':    'B1',
+  'modal:could:act':     'B1',
+  'modal:should:act':    'B1',
+  'modal:must:act':      'B1',
+  'modal:might:act':     'B1',
+  'modal:may:act':       'B1',
+  'modal:would:act':     'B1',
+  'pres:perf_cont:act':  'B2',
+  'past:perf:act':       'B2',
+  'fut:cont:act':        'B2',
+  'past:perf_cont:act':  'C1',
+  'fut:perf:act':        'C1',
+  'fut:perf_cont:act':   'C2',
+  // ── Passive voice ─────────────────────────────────────────────
+  'pres:simp:pass':      'B1',
+  'past:simp:pass':      'B1',
+  'pres:cont:pass':      'B2',
+  'pres:perf:pass':      'B2',
+  'fut:simp:pass':       'B2',
+  'past:cont:pass':      'B2',
+  'modal:can:pass':      'B2',
+  'modal:could:pass':    'B2',
+  'modal:should:pass':   'B2',
+  'modal:must:pass':     'B2',
+  'modal:might:pass':    'B2',
+  'modal:may:pass':      'B2',
+  'modal:would:pass':    'B2',
+  'pres:perf_cont:pass': 'C1',
+  'past:perf:pass':      'C1',
+  'fut:cont:pass':       'C1',
+  'fut:going_to:pass':   'C1',
+  'past:perf_cont:pass': 'C2',
+  'fut:perf:pass':       'C2',
+  'fut:perf_cont:pass':  'C2',
+};
+
+function grammarLevel(s) {
+  const key = `${s.time}:${s.flow}:${s.voice}`;
+  return GRAMMAR_LEVEL_MAP[key] || '';
+}
+
 function stateLabel(s) {
-  const tl = TR_LABELS.time[s.time]  || s.time;
-  const fl = TR_LABELS.flow[s.flow]  || s.flow;
-  const pl = TR_LABELS.pol[s.pol]    || s.pol;
-  const vl = TR_LABELS.voice[s.voice]|| s.voice;
-  return `${pl} · ${tl} ${fl} · ${vl}`;
+  const tl  = TR_LABELS.time[s.time]  || s.time;
+  const fl  = TR_LABELS.flow[s.flow]  || s.flow;
+  const pl  = TR_LABELS.pol[s.pol]    || s.pol;
+  const vl  = TR_LABELS.voice[s.voice]|| s.voice;
+  const lvl = grammarLevel(s);
+  return lvl ? `${lvl} · ${pl} · ${tl} ${fl} · ${vl}` : `${pl} · ${tl} ${fl} · ${vl}`;
 }
 
 // ── Random state generator ────────────────────────────────────────
