@@ -418,7 +418,7 @@
 
 /* ── Portrait phone optimization ── */
 @media (orientation: portrait) and (max-width: 500px) {
-  #spk-pane-fill {
+  #spk-pane-fill:not([style*="display: none"]):not([style*="display:none"]) {
     display: flex !important;
     flex-direction: column !important;
     min-height: 100svh !important;
@@ -458,7 +458,8 @@
 
 /* ── Landscape phone optimization ── */
 @media (orientation: landscape) and (max-height: 500px) {
-  #spk-pane-fill, #spk-pane-v2 {
+  #spk-pane-fill:not([style*="display: none"]):not([style*="display:none"]),
+  #spk-pane-v2:not([style*="display: none"]):not([style*="display:none"]) {
     height: 100dvh !important;
     overflow: hidden !important;
     display: flex !important;
