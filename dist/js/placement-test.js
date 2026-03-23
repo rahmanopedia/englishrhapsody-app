@@ -58,11 +58,22 @@ class PlacementTest {
           <strong>~2 dakika</strong> sürer, uygulamamızdaki gerçek kelimelerden oluşur.
         </p>
         <button class="pt-btn pt-btn-primary" id="pt-start">Teste Başla</button>
-        <button class="pt-btn pt-btn-ghost"  id="pt-skip">Şimdi Değil — B1 ile devam et</button>
+        <div class="pt-skip-label">Test yapmadan devam et:</div>
+        <div class="pt-skip-row">
+          <button class="pt-btn pt-btn-level" id="pt-skip-a1">
+            <span class="pt-skip-badge" style="background:#10b98120;color:#10b981;border-color:#10b98140">A1</span>
+            Yeni Başlayan
+          </button>
+          <button class="pt-btn pt-btn-level" id="pt-skip-b1">
+            <span class="pt-skip-badge" style="background:#3b82f620;color:#3b82f6;border-color:#3b82f640">B1</span>
+            Orta Seviye
+          </button>
+        </div>
       </div>
     `);
-    this._on('pt-start', () => this._beginTest());
-    this._on('pt-skip',  () => this._finish('B1', true));
+    this._on('pt-start',   () => this._beginTest());
+    this._on('pt-skip-a1', () => this._finish('A1', true));
+    this._on('pt-skip-b1', () => this._finish('B1', true));
   }
 
   _beginTest() {

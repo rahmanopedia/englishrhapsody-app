@@ -81,6 +81,43 @@
 
 .pt-btn-ghost:hover { background: rgba(255,255,255,0.1); color: rgba(241,245,249,0.7); }
 
+.pt-skip-label {
+  font-size: 0.78rem;
+  color: rgba(241,245,249,0.35);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.pt-skip-row {
+  display: flex;
+  gap: 8px;
+}
+
+.pt-btn-level {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(241,245,249,0.6);
+  font-size: 0.8rem;
+  border-radius: 12px;
+}
+
+.pt-btn-level:hover { background: rgba(255,255,255,0.08); color: #f1f5f9; }
+
+.pt-skip-badge {
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 8px;
+  border: 1px solid;
+  letter-spacing: 0.05em;
+}
+
 /* ── Level transition ── */
 .pt-card-transition {
   padding: 48px 28px;
