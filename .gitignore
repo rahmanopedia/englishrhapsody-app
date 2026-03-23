@@ -27,6 +27,9 @@ Thumbs.db
 *.swp
 *.swo
 
+# API Keys
+js/keys.js
+
 # Project specific
 generate_diverse_data.js
 generate_high_quality_conversations.js

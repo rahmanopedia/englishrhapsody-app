@@ -7676,6 +7676,10 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .mc-divider { font-size:0.72rem; font-weight:800; color:var(--text-3); text-transform:uppercase; letter-spacing:2px; margin-bottom:8px; }
 .mc-tr { font-size:1.3rem; font-weight:800; color:#a78bfa; margin-bottom:6px; }
 .mc-tense { font-size:0.75rem; color:var(--text-3); font-weight:600; letter-spacing:0.5px; }
+.mc-deepl-btn { margin-top:10px; background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.3); color:var(--cyan); padding:5px 14px; border-radius:99px; font-size:0.78rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+.mc-deepl-btn:hover { background:rgba(0,212,255,0.2); border-color:var(--cyan); }
+.mc-deepl-btn:disabled { opacity:0.5; cursor:default; }
+.mc-deepl-result { margin-top:8px; font-size:1rem; font-weight:700; color:var(--cyan); min-height:0; }
 
 /* ══════════════════════════════════════════════════════════════
    LEADERBOARD

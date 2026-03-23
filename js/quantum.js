@@ -2447,14 +2447,33 @@ function showMeaningCard(shellId, parts, tr, tenseLabel) {
   if (!shell) return;
   const old = shell.querySelector('.meaning-card');
   if (old) old.remove();
+  const enText = parts.map(p=>p.w).join(' ');
   const card = document.createElement('div');
   card.className = 'meaning-card';
   card.innerHTML = `
     <div class="mc-en">${parts.map(p=>`<span class="qw-${p.c}">${p.w}</span>`).join(' ')}</div>
     <div class="mc-divider">🇹🇷 Türkçe Anlamı</div>
     <div class="mc-tr">${tr}</div>
-    <div class="mc-tense">${tenseLabel}</div>`;
+    <div class="mc-tense">${tenseLabel}</div>
+    <button class="mc-deepl-btn" data-en="${enText.replace(/"/g,'&quot;')}">🌐 DeepL Çeviri</button>
+    <div class="mc-deepl-result"></div>`;
   shell.appendChild(card);
+  card.querySelector('.mc-deepl-btn').addEventListener('click', async function() {
+    if (!window.DEEPL_KEY) { this.textContent = '⚠️ Key yok'; return; }
+    this.disabled = true; this.textContent = '⏳';
+    try {
+      const r = await fetch('https://api-free.deepl.com/v2/translate', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({auth_key: window.DEEPL_KEY, text: this.dataset.en, target_lang: 'TR'})
+      });
+      const d = await r.json();
+      const res = d.translations?.[0]?.text || 'Çeviri alınamadı';
+      this.closest('.meaning-card').querySelector('.mc-deepl-result').textContent = res;
+      this.textContent = '🌐 DeepL';
+    } catch(e) { this.textContent = '⚠️ Hata'; }
+    this.disabled = false;
+  });
   requestAnimationFrame(()=>card.classList.add('mc-show'));
 }
 
