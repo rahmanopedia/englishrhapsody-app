@@ -153,6 +153,7 @@
 @media (max-width: 768px) {
   .bridge-workspace { grid-template-columns: 1fr; }
   .bridge-trigger-col { transform: rotate(90deg); padding: 10px 0; }
+  .bridge-wrap { padding-bottom: calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px) + 16px); }
 }
 
 /* ── Portrait fullscreen: hide browser chrome ── */

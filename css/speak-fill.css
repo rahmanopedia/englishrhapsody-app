@@ -431,7 +431,7 @@
   .sfm-wrap {
     flex: 1 !important;
     gap: 8px !important;
-    padding-bottom: 16px !important;
+    padding-bottom: calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px) + 16px) !important;
   }
   .sfm-mic-section {
     margin-top: auto !important;

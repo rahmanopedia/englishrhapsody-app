@@ -6,6 +6,12 @@
   margin: 0 auto;
 }
 
+@media (max-width: 768px) {
+  .sv2-wrap {
+    padding-bottom: calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px) + 24px);
+  }
+}
+
 /* ── Settings Toggles ── */
 .sv2-settings {
   display: flex;
@@ -627,7 +633,7 @@
 /* ── Portrait phone optimization ── */
 @media (orientation: portrait) and (max-width: 500px) {
   .sv2-wrap {
-    padding: 16px 12px 90px !important;
+    padding: 16px 12px calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px) + 24px) !important;
   }
   .sv2-settings { margin-bottom: 8px !important; }
   .sv2-stats { margin-bottom: 8px !important; }

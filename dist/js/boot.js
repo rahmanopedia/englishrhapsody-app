@@ -15,8 +15,9 @@
   var LAZY = {
     quantum: ['js/quantum.js'],
     bridge:  ['js/bridge-data.js'],
-    nexus:   ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js'],
-    phrases: ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js'],
+    nexus:   ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
+    phrases: ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
+    grammar: ['js/grammar_data.js', 'js/grammar.js'],
   };
 
   var loaded = new Set();
@@ -779,3 +780,53 @@ document.addEventListener('click', function(e) {
   if(act === 'do-reset-user-data'){ window._app && window._app._doResetUserData && window._app._doResetUserData(); return; }
   if(act === 'close-modal-backdrop') { if(e.target === el) el.style.display = 'none'; return; }
 });
+
+/* ── 14. CEFR seviyesine göre okuma ve konuşma zorluğunu otomatik set et ── */
+(function() {
+  var READING_MAP = {A1:'Kolay', A2:'Kolay', B1:'Orta', B2:'Orta', C1:'İleri', C2:'İleri'};
+  var SPEAK_MAP   = {A1:'easy',  A2:'easy',  B1:'medium', B2:'medium', C1:'hard', C2:'hard'};
+  function applyDefaults(target) {
+    var app = window._app;
+    if (!app || !app.state) return;
+    var cefr = app.state.get('cefrLevel');
+    if (!cefr) return;
+    if (target === 'reading') app.state.set('readingLevel', READING_MAP[cefr] || 'Orta');
+    if (target === 'speak')   app.state.set('speakDiff',    SPEAK_MAP[cefr]  || 'medium');
+  }
+  function patch() {
+    var app = window._app;
+    if (!app || !app.navigate || app.__cefrNavPatched) return;
+    app.__cefrNavPatched = true;
+    var orig = app.navigate.bind(app);
+    app.navigate = function(target) {
+      applyDefaults(target);
+      orig(target);
+      if (target === 'grammar') {
+        var root = document.getElementById('grammar-root');
+        if (root && typeof GrammarMode !== 'undefined') {
+          window.grammarMod = new GrammarMode(window._app);
+          window.grammarMod.init(root);
+        }
+      }
+    };
+
+    // Live CEFR sync: patch state.set so readingLevel/speakDiff
+    // update immediately whenever cefrLevel is changed.
+    if (!app.state.__cefrStatePatched) {
+      app.state.__cefrStatePatched = true;
+      var origSet = app.state.set.bind(app.state);
+      app.state.set = function(key, val, sync) {
+        origSet(key, val, sync);
+        if (key === 'cefrLevel' && val) {
+          origSet('readingLevel', READING_MAP[val] || 'Orta');
+          origSet('speakDiff',    SPEAK_MAP[val]   || 'medium');
+        }
+      };
+    }
+  }
+  if (window._app) {
+    patch();
+  } else {
+    var t = setInterval(function() { if (window._app) { clearInterval(t); patch(); } }, 100);
+  }
+})();

@@ -5796,10 +5796,10 @@ var BRIDGE_DATA = [
       "değerli göster",
       "hemen kabul etme"
     ],
-    "english_primary": "Selling themselves short (TERSİ: underselling)",
+    "english_primary": "Playing hard to get",
     "alternatives": [
-      "Playing it cool",
-      "Knowing their worth"
+      "Knowing their worth",
+      "Playing it cool"
     ],
     "register": "informal",
     "bridges": [
@@ -7342,10 +7342,10 @@ var BRIDGE_DATA = [
       "başarmak",
       "nihayet"
     ],
-    "english_primary": "Break the ice / Break the cycle",
+    "english_primary": "Break the curse",
     "alternatives": [
-      "Finally break through",
-      "A stroke of luck"
+      "Break the bad luck streak",
+      "Finally break through"
     ],
     "register": "informal",
     "bridges": [
@@ -7622,10 +7622,10 @@ var BRIDGE_DATA = [
       "zayıf nokta",
       "en önemli yer"
     ],
-    "english_primary": "Hit a nerve",
+    "english_primary": "Hit the nail on the head",
     "alternatives": [
-      "Hit the nail on the head",
-      "Targeted the weak spot"
+      "Found the weak spot",
+      "Targeted the vital point"
     ],
     "register": "neutral",
     "bridges": [
@@ -10198,9 +10198,9 @@ var BRIDGE_DATA = [
       "küslük",
       "eskisi gibi değil"
     ],
-    "english_primary": "Was on thin ice",
+    "english_primary": "Things got cold between us",
     "alternatives": [
-      "Had a chilly relationship",
+      "There's a chill between us",
       "Drifted apart"
     ],
     "register": "informal",

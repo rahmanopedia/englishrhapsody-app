@@ -30,33 +30,6 @@
   color: rgba(241,245,249,0.8);
 }
 
-/* ── Seviye butonları ── */
-.sfm-levels {
-  display: flex;
-  gap: 6px;
-}
-.sfm-lvl-btn {
-  flex: 1;
-  padding: 8px 4px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.09);
-  background: rgba(255,255,255,0.04);
-  color: rgba(148,163,184,0.55);
-  font-size: 0.78rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.18s;
-  letter-spacing: 0.04em;
-}
-.sfm-lvl-btn:hover:not(.sfm-lvl-on) {
-  background: rgba(255,255,255,0.08);
-  color: #f1f5f9;
-}
-.sfm-lvl-on {
-  font-weight: 900;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-}
-
 /* Seviye pill */
 .sfm-level-pill {
   font-size: 0.72rem;
@@ -458,14 +431,13 @@
   .sfm-wrap {
     flex: 1 !important;
     gap: 8px !important;
-    padding-bottom: 16px !important;
+    padding-bottom: calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px) + 16px) !important;
   }
   .sfm-mic-section {
     margin-top: auto !important;
     gap: 8px !important;
   }
-  .sfm-levels { gap: 4px !important; }
-  .sfm-lvl-btn { padding: 6px 4px !important; font-size: 0.72rem !important; }
+
   .sfm-card {
     padding: 14px 12px 12px !important;
     gap: 10px !important;
@@ -509,9 +481,8 @@
     gap: 6px !important;
     display: grid !important;
     grid-template-columns: 1fr 160px !important;
-    grid-template-rows: auto auto 1fr auto auto !important;
+    grid-template-rows: auto 1fr auto auto !important;
     grid-template-areas:
-      "levels levels"
       "topbar topbar"
       "card   mic"
       "card   nav"
@@ -520,8 +491,6 @@
     overflow: hidden !important;
     align-items: start !important;
   }
-  .sfm-levels  { grid-area: levels !important; flex-wrap: nowrap !important; overflow-x: auto !important; gap: 4px !important; }
-  .sfm-lvl-btn { padding: 5px 8px !important; font-size: 0.7rem !important; white-space: nowrap !important; }
   .sfm-topbar  { grid-area: topbar !important; }
   .sfm-card    { grid-area: card !important; overflow-y: auto !important; align-self: stretch !important; }
   .sfm-card .sfm-tr-sentence { font-size: 1.05rem !important; }
