@@ -830,3 +830,37 @@ document.addEventListener('click', function(e) {
     var t = setInterval(function() { if (window._app) { clearInterval(t); patch(); } }, 100);
   }
 })();
+
+// ── Placement Test: ilk girişte seviye belirle ────────────────────────────
+(function() {
+  function maybeShowPlacementTest(app) {
+    if (typeof PlacementTest === 'undefined') return;
+    var cefrLevel = app.state.get('cefrLevel');
+    if (cefrLevel) return; // zaten belirlenmiş
+
+    var container = document.getElementById('pt-container');
+    if (!container) return;
+    container.style.display = 'block';
+
+    var test = new PlacementTest();
+    test.show(container, function(level) {
+      // Sonucu kaydet
+      app.state.set('cefrLevel', level);
+      container.style.display = 'none';
+      container.innerHTML = '';
+    });
+  }
+
+  // App ve WORDS yüklenince kontrol et
+  function waitAndCheck() {
+    var app = window._app;
+    if (!app || typeof WORDS === 'undefined') {
+      setTimeout(waitAndCheck, 300);
+      return;
+    }
+    // Firebase auth beklenmesi için kısa gecikme
+    setTimeout(function() { maybeShowPlacementTest(app); }, 1200);
+  }
+
+  waitAndCheck();
+})();
