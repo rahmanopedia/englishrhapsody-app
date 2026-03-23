@@ -416,12 +416,15 @@
   .sfm-ring-2       { width:100px !important; height:100px !important; }
 }
 
-/* ── Portrait: kart kompakt üstte, mikrofon kalan alanda ortada ── */
+/* ── Portrait: tam viewport'a sabitlenmiş, kaydırma yok ── */
 @media (orientation: portrait) and (max-width: 500px) {
   #spk-pane-fill:not([style*="display: none"]):not([style*="display:none"]) {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 50 !important;
     display: flex !important;
     flex-direction: column !important;
-    height: 100svh !important;
+    background: var(--bg, #0a0a14) !important;
     overflow: hidden !important;
   }
   #speak-fill-point {
@@ -475,7 +478,10 @@
 @media (orientation: landscape) and (max-height: 500px) {
   #spk-pane-fill:not([style*="display: none"]):not([style*="display:none"]),
   #spk-pane-v2:not([style*="display: none"]):not([style*="display:none"]) {
-    height: 100dvh !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 50 !important;
+    background: var(--bg, #0a0a14) !important;
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
