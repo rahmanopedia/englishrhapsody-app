@@ -474,7 +474,7 @@
   .sfm-status { font-size: 0.8rem !important; }
 }
 
-/* ── Landscape: 2 sütun — sol kart, sağ mikrofon ortalı ── */
+/* ── Landscape: tam ekran sabitlenmiş, kart + mikrofon yan yana ── */
 @media (orientation: landscape) and (max-height: 500px) {
   #spk-pane-fill:not([style*="display: none"]):not([style*="display:none"]),
   #spk-pane-v2:not([style*="display: none"]):not([style*="display:none"]) {
@@ -486,61 +486,88 @@
     display: flex !important;
     flex-direction: column !important;
   }
+  /* Back button satırı — ince */
   #spk-pane-fill > div:first-child,
   #spk-pane-v2 > div:first-child {
-    padding: 5px max(10px, env(safe-area-inset-right)) 0 max(10px, env(safe-area-inset-left)) !important;
+    padding: 5px max(12px, env(safe-area-inset-left)) 2px max(12px, env(safe-area-inset-left)) !important;
     flex-shrink: 0 !important;
   }
   #speak-fill-point {
     flex: 1 !important;
     overflow: hidden !important;
     min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
+  /* Ana sarmalayıcı: stats üstte, altında kart+mikrofon+nav */
   .sfm-wrap {
+    flex: 1 !important;
+    min-height: 0 !important;
     max-width: 100% !important;
-    height: 100% !important;
     overflow: hidden !important;
-    padding: 4px max(10px, env(safe-area-inset-right)) 6px max(10px, env(safe-area-inset-left)) !important;
-    gap: 0 10px !important;
-    display: grid !important;
-    grid-template-columns: 1fr 140px !important;
-    grid-template-rows: auto 1fr auto !important;
-    grid-template-areas:
-      "topbar  topbar"
-      "card    mic"
-      "result  nav" !important;
-    align-items: stretch !important;
+    padding: 0 max(14px, env(safe-area-inset-right)) 6px max(14px, env(safe-area-inset-left)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
   }
-  .sfm-topbar { grid-area: topbar !important; padding-bottom: 4px !important; }
+  /* Stats satırı — tek satır kompakt */
+  .sfm-topbar {
+    flex-shrink: 0 !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .sfm-stats { flex-wrap: nowrap !important; }
+  .sfm-stat-chip { font-size: 0.72rem !important; padding: 3px 8px !important; }
+  .sfm-prog-track { display: none !important; }
+  /* İçerik alanı: kart sol, mikrofon sağ — flex row */
   .sfm-card {
-    grid-area: card !important;
-    align-self: stretch !important;
+    flex: 1 !important;
+    min-height: 0 !important;
     overflow-y: auto !important;
     border-radius: 14px !important;
-    padding: 12px 14px 10px !important;
+    padding: 12px 16px 10px !important;
     gap: 8px !important;
+    /* Mikrofon ile yan yana — wrapper yok, float kullanmadan */
+    width: calc(100% - 180px) !important;
+    float: left !important;
+    margin-right: 12px !important;
+    box-sizing: border-box !important;
   }
-  .sfm-card .sfm-tr-sentence { font-size: 1rem !important; padding: 0 0 2px !important; }
-  .sfm-card .sfm-bank  { gap: 4px !important; padding: 0 0 2px !important; }
-  .sfm-card .sfm-chip  { padding: 4px 9px !important; font-size: 0.77rem !important; }
-  .sfm-card .sfm-blanks-area { gap: 4px 6px !important; min-height: 36px !important; }
-  /* Mikrofon sütunu: wave gizle, içeriği ortala */
+  .sfm-tr-sentence { font-size: 1.05rem !important; padding: 0 0 4px !important; line-height: 1.35 !important; }
+  .sfm-bank  { gap: 5px !important; padding: 0 0 4px !important; }
+  .sfm-chip  { padding: 5px 11px !important; font-size: 0.8rem !important; }
+  .sfm-blanks-area { gap: 5px 8px !important; min-height: 40px !important; }
+  .sfm-slot-fill { font-size: 1.05rem !important; }
+  /* Mikrofon sütunu: sağda sabit genişlik, dikeyde ortada */
   .sfm-mic-section {
-    grid-area: mic !important;
-    justify-content: center !important;
+    position: absolute !important;
+    right: max(14px, env(safe-area-inset-right)) !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 160px !important;
+    display: flex !important;
+    flex-direction: column !important;
     align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
     padding: 0 !important;
-    gap: 8px !important;
   }
   .sfm-wave   { display: none !important; }
-  .sfm-result { grid-area: result !important; }
-  .sfm-nav    { grid-area: nav !important; justify-content: center !important; align-items: flex-end !important; padding-bottom: 4px !important; }
-  .sfm-mic-outer { width: 72px !important; height: 72px !important; }
-  .sfm-mic-btn   { width: 62px !important; height: 62px !important; }
-  .sfm-ring-1 { width: 80px !important; height: 80px !important; }
-  .sfm-ring-2 { width: 96px !important; height: 96px !important; }
-  .sfm-stat-chip { font-size: 0.7rem !important; padding: 2px 7px !important; }
-  .sfm-status { font-size: 0.75rem !important; text-align: center !important; }
+  .sfm-mic-outer { width: 80px !important; height: 80px !important; }
+  .sfm-mic-btn   { width: 70px !important; height: 70px !important; }
+  .sfm-ring-1 { width: 90px !important; height: 90px !important; }
+  .sfm-ring-2 { width: 108px !important; height: 108px !important; }
+  .sfm-status { font-size: 0.75rem !important; text-align: center !important; max-width: 130px !important; }
+  /* Sonuç ve nav */
+  .sfm-result { clear: left !important; }
+  .sfm-nav {
+    clear: left !important;
+    flex-shrink: 0 !important;
+    justify-content: flex-end !important;
+    padding-right: 168px !important;
+    gap: 8px !important;
+  }
 }
 
 /* ── Fullscreen: speak-container fills the screen ── */
