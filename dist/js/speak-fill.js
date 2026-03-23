@@ -71,13 +71,11 @@ class SpeakFillMode {
   }
 
   _setLevel(level) {
-    this._level  = level;
     this.idx     = 0;
     this.correct = 0;
     this.total   = 0;
     this.streak  = 0;
-    this.pool    = this.items.filter(x => x.level === level);
-    if (this.pool.length < 5) this.pool = this.items; // yedek
+    this.pool    = this.items; // tüm seviyeler, shuffle ile karışık gelir
   }
 
   get _cur() { return this.pool[this.idx] || null; }
@@ -131,7 +129,7 @@ class SpeakFillMode {
       C1: { color:'#f59e0b', label:'İleri'       },
       C2: { color:'#ef4444', label:'Ustalaşmış'  },
     };
-    const lcfg = LEVEL_CFG[this._level] || LEVEL_CFG['B1'];
+    const lcfg = LEVEL_CFG[item.level] || LEVEL_CFG['B1'];
     const pct  = Math.round((this.idx / Math.max(1, this.pool.length)) * 100);
     const bars = Array.from({ length: 18 }, (_, i) =>
       `<div class="sfm-bar" id="sfb${i}"></div>`).join('');
@@ -158,7 +156,7 @@ class SpeakFillMode {
   <div class="sfm-topbar">
     <div class="sfm-stats">
       <span class="sfm-level-pill" style="background:${lcfg.color}20;color:${lcfg.color};border-color:${lcfg.color}44">
-        ${this._level} — ${lcfg.label}
+        ${item.level} — ${lcfg.label}
       </span>
       <span class="sfm-stat-chip">🔥 <strong>${this.streak}</strong></span>
       <span class="sfm-stat-chip">✅ <strong>${this.correct}/${this.total}</strong></span>
