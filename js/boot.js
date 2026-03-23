@@ -13,7 +13,7 @@
 /* ── 1. Lazy Script Loader ── */
 (function () {
   var LAZY = {
-    quantum: ['js/quantum.js'],
+    quantum: ['js/quantum.js?v=5'],
     bridge:  ['js/bridge-data.js'],
     nexus:   ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
     phrases: ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
