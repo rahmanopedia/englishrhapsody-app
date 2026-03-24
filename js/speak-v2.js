@@ -66,21 +66,45 @@ class SpeakV2Module {
 
   // ─── Init ──────────────────────────────────────────────────────────────────
 
+  // Cümlenin gerçek zorluğunu kelime sayısı + uzunluk + CEFR'e göre hesapla
+  _sentenceLevel(sentence, wordCefr) {
+    const LNUM = { A1:1, A2:2, B1:3, B2:4, C1:5, C2:6 };
+    const words  = sentence.split(/\s+/);
+    const wc     = words.length;
+    const avgLen = words.reduce((s, w) => s + w.replace(/[^a-z]/gi, '').length, 0) / wc;
+    const lnum   = LNUM[wordCefr] || 3;
+    const score  = wc * 0.5 + avgLen * 0.3 + lnum * 2.2;
+    if (score <  7)  return 'A1';
+    if (score < 11)  return 'A2';
+    if (score < 15)  return 'B1';
+    if (score < 19)  return 'B2';
+    if (score < 23)  return 'C1';
+    return 'C2';
+  }
+
   // WORDS'dan kullanıcının CEFR seviyesine göre cümle havuzu oluştur
   _buildPool(cefr) {
     if (typeof WORDS === 'undefined') return;
     const LEVELS = ['A1','A2','B1','B2','C1','C2'];
+    const cefrIdx = LEVELS.indexOf(cefr);
+
+    // Cümleyi hem kelime seviyesi hem gerçek cümle zorluğuna göre filtrele
     const collect = (lvl) => WORDS
       .filter(w => w.level === lvl && w.ex && w.ex.trim().split(/\s+/).length >= 4)
+      .filter(w => {
+        const sl    = this._sentenceLevel(w.ex.trim(), w.level);
+        const slIdx = LEVELS.indexOf(sl);
+        // Cümle zorluğu kullanıcı seviyesini geçmesin (daha kolay cümleler OK)
+        return slIdx <= cefrIdx;
+      })
       .map(w => w.ex.trim());
 
     let pool = collect(cefr);
 
     // Havuz çok küçükse komşu seviyeleri de ekle
     if (pool.length < 20) {
-      const i = LEVELS.indexOf(cefr);
-      if (i > 0) pool = pool.concat(collect(LEVELS[i - 1]));
-      if (i < LEVELS.length - 1) pool = pool.concat(collect(LEVELS[i + 1]));
+      if (cefrIdx > 0) pool = pool.concat(collect(LEVELS[cefrIdx - 1]));
+      if (cefrIdx < LEVELS.length - 1) pool = pool.concat(collect(LEVELS[cefrIdx + 1]));
     }
 
     // Tekrar eden cümleleri temizle ve karıştır

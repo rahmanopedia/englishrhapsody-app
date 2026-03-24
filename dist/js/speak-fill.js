@@ -75,7 +75,12 @@ class SpeakFillMode {
     this.correct = 0;
     this.total   = 0;
     this.streak  = 0;
-    this.pool    = this.items; // tüm seviyeler, shuffle ile karışık gelir
+    const LEVELS = ['A1','A2','B1','B2','C1','C2'];
+    const cefrIdx = LEVELS.indexOf(level);
+    // Cümle zorluğu kullanıcı seviyesini geçmesin
+    let filtered = this.items.filter(item => LEVELS.indexOf(item.level) <= cefrIdx);
+    if (filtered.length < 20) filtered = this.items; // fallback
+    this.pool = filtered.sort(() => Math.random() - 0.5);
   }
 
   get _cur() { return this.pool[this.idx] || null; }
