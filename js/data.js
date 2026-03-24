@@ -583,7 +583,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Akademik",
     "icon": "💰",
-    "ex": "The government appropriated the land for a new road.",
+    "ex": "Please choose appropriate clothing for the job interview.",
     "syns": [],
     "colloc": []
   },
@@ -2299,7 +2299,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Teknoloji",
     "icon": "🩹",
-    "ex": "The patch fixes several security vulnerabilities.",
+    "ex": "She sewed a colourful patch onto her old denim jacket.",
     "syns": [],
     "colloc": []
   },
@@ -2623,7 +2623,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Teknoloji",
     "icon": "📸",
-    "ex": "Take a snapshot of the database before the update.",
+    "ex": "She took a quick snapshot of the sunset from the balcony.",
     "syns": [],
     "colloc": []
   },
@@ -11755,7 +11755,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Akademik",
     "icon": "📚",
-    "ex": "It took her a while to figure out how the new software worked.",
+    "ex": "It took her a while to figure out how to use the new coffee machine.",
     "syns": [],
     "colloc": []
   },
@@ -16423,7 +16423,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Kişisel Gelişim",
     "icon": "🌱",
-    "ex": "She put a great deal of effort into learning the new software system.",
+    "ex": "She put a great deal of effort into learning how to play the piano.",
     "syns": [],
     "colloc": []
   },
@@ -20251,7 +20251,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Ev/Günlük",
     "icon": "🏠",
-    "ex": "The software update improved performance and fixed several known bugs.",
+    "ex": "The new software made it much easier to organise and share photos.",
     "syns": [],
     "colloc": []
   },
@@ -22459,7 +22459,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Sanat",
     "icon": "🎨",
-    "ex": "The new system is easy to operate once you understand the basic functions.",
+    "ex": "The machine is easy to operate once you have read the instructions.",
     "syns": [],
     "colloc": []
   },
@@ -31423,7 +31423,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Toplum",
     "icon": "🏛️",
-    "ex": "The integration of new software improved the team's overall efficiency.",
+    "ex": "The integration of new students into the class went very smoothly.",
     "syns": [],
     "colloc": []
   },
@@ -32191,7 +32191,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Akademik",
     "icon": "📚",
-    "ex": "The release of the new software update fixed several reported bugs.",
+    "ex": "The release of her debut album was met with excellent reviews.",
     "syns": [],
     "colloc": []
   },
@@ -35299,7 +35299,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Teknoloji",
     "icon": "💻",
-    "ex": "Write clean and readable code.",
+    "ex": "She used a secret code to write private messages in her diary.",
     "syns": [],
     "colloc": []
   },
@@ -46231,7 +46231,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Teknoloji",
     "icon": "💻",
-    "ex": "The image has high pixel resolution.",
+    "ex": "The screen displays millions of tiny pixels to create a sharp image.",
     "syns": [],
     "colloc": []
   },
@@ -49063,7 +49063,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Eylem Kalıbı",
     "icon": "🔗",
-    "ex": "Try out the new software.",
+    "ex": "Why not try out the new café that opened on the high street?",
     "syns": [],
     "colloc": []
   },
@@ -51199,7 +51199,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Akademik",
     "icon": "📚",
-    "ex": "Measure the variables accurately.",
+    "ex": "She carefully measured the room before buying new furniture.",
     "syns": [],
     "colloc": []
   },
@@ -58723,7 +58723,7 @@ const WORDS = [
     "level": "B1",
     "cat": "Meslekler",
     "icon": "👔",
-    "ex": "The programmer fixed the bug.",
+    "ex": "The programmer worked late into the night to finish the new website.",
     "syns": [],
     "colloc": []
   },
