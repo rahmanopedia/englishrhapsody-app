@@ -1136,3 +1136,33 @@ document.addEventListener('click', function(e) {
     }, 1000);
   });
 })();
+
+/* ── 20. Arkadaş / Sosyal Sistem ── */
+(function(){
+  var _loaded = false;
+
+  function loadFriendsJS(){
+    if(_loaded) return;
+    _loaded = true;
+    var s    = document.createElement('script');
+    s.src    = 'js/friends.js';
+    s.onload = function(){
+      if(window.FriendsManager) window.FriendsManager.init();
+    };
+    s.onerror = function(){ _loaded = false; }; /* allow retry */
+    document.head.appendChild(s);
+  }
+
+  window.addEventListener('load', function(){
+    /* Observe for leaderboard tabs appearing */
+    var obs = new MutationObserver(function(){
+      if(document.querySelector('.lb-tabs')) loadFriendsJS();
+    });
+    var mc = document.getElementById('main-content');
+    if(mc) obs.observe(mc, { childList: true, subtree: true });
+    /* Already on leaderboard? */
+    setTimeout(function(){
+      if(document.querySelector('.lb-tabs')) loadFriendsJS();
+    }, 1200);
+  });
+})();
