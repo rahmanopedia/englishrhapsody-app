@@ -113,6 +113,22 @@ service cloud.firestore {
                     && resource.data.uid == request.auth.uid;
     }
 
+    // ── Meydan Okumalar (gelen bildirimler) ──────────────────
+    // Herhangi bir oturum açmış kullanıcı başkasına meydan okuma gönderebilir
+    match /users/{userId}/challenges/{challengeId} {
+      // Sahibi okuyabilir / silebilir
+      allow read, delete: if isOwner(userId);
+      // Gönderen kendi uid'iyle eşleşen challenge yazabilir (challengeId == kendi uid)
+      allow create: if request.auth != null
+                    && request.auth.uid == challengeId
+                    && request.resource.data.keys().hasAll(['fromUid','fromName','type','sentAt','status'])
+                    && request.resource.data.keys().size() <= 10
+                    && request.resource.data.fromUid == request.auth.uid
+                    && request.resource.data.fromUid is string
+                    && request.resource.data.type is string
+                    && request.resource.data.status == 'pending';
+    }
+
     // ── Güvenlik Olayları ────────────────────────────────────
     match /security_events/{eventId} {
       // Herhangi bir oturum açmış kullanıcı olay yazabilir (kendi olayı)
