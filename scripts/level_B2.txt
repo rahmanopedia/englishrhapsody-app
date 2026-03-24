@@ -1,0 +1,1932 @@
+artificial intelligence
+machine learning
+big data
+internet of things
+cloud computing
+virtual reality
+augmented reality
+cryptocurrency
+bitcoin
+metaverse
+cybersecurity
+hacker
+firewall
+malware
+phishing
+facial recognition
+automation
+robotics
+drone
+fintech
+edtech
+healthtech
+frontend
+backend
+full stack
+agile
+scrum
+kanban
+sprint
+backlog
+repository
+commit
+branch
+merge
+pull request
+container
+scalability
+latency
+bandwidth
+decryption
+hashing
+proxy
+vpn
+endpoint
+legacy system
+deployment
+production
+staging
+sandbox
+virtual machine
+uptime
+downtime
+package manager
+dependency
+framework
+open source
+proprietary software
+multi-factor authentication
+encryption key
+token
+responsive design
+wireframe
+prototype
+mockup
+ide
+vcs
+bitbucket
+gitlab
+standup meeting
+retrospective
+velocity
+user story
+acceptance criteria
+mvp
+ab testing
+conversion rate
+churn rate
+high performance
+thread
+asynchronous
+inflation
+deflation
+recession
+depression
+gdp
+interest rate
+monetary policy
+fiscal policy
+deficit
+surplus
+liquidity
+asset
+liability
+equity
+dividends
+shareholder
+stock market
+bull market
+bear market
+portfolio
+diversification
+leverage
+commodity
+hedge fund
+insider trading
+mortgage
+foreclosure
+bankruptcy
+insolvency
+merger
+acquisition
+monopoly
+cartel
+protectionism
+tariff
+quota
+embargo
+sanctions
+austerity
+privatization
+nationalization
+subsidy
+stimulus
+bailout
+microeconomics
+macroeconomics
+opportunity cost
+comparative advantage
+supply and demand
+equilibrium
+utility
+marginal
+public good
+free rider
+behavioral economics
+nudge
+human capital
+social capital
+intellectual property
+patent
+trademark
+copyright
+royalty
+outsourcing
+offshoring
+globalization
+trade barrier
+free trade
+fair trade
+sovereign debt
+debt restructuring
+credit rating
+default
+bond
+yield
+maturity
+capital gain
+capital loss
+volatility
+speculation
+hedging
+futures
+options
+swap
+underwriting
+ipo
+blue chip
+index fund
+etf
+mutual fund
+pension fund
+capitalism
+socialism
+communism
+mixed economy
+command economy
+market economy
+brain drain
+foreign direct investment
+remittance
+microfinance
+sustainability
+circular economy
+green economy
+shadow economy
+black market
+money laundering
+tax evasion
+tax haven
+inequality
+poverty line
+standard of living
+cost of living
+purchasing power
+universal basic income
+attorney
+biologist
+blacksmith
+chemist
+economist
+editor
+geologist
+historian
+journalist
+judge
+optician
+pharmacist
+politician
+professor
+psychologist
+surgeon
+technician
+translator
+veterinary
+zoologist
+web developer
+data scientist
+marketing manager
+sales representative
+customer service agent
+human resources manager
+project manager
+financial advisor
+real estate agent
+social media manager
+copywriter
+ux designer
+content creator
+event planner
+travel agent
+physiotherapist
+occupational therapist
+speech therapist
+paramedic
+radiologist
+hvac technician
+welder
+machinist
+mason
+roofer
+surveyor
+landscaper
+bouncer
+bodyguard
+curator
+archivist
+interpreter
+subtitler
+voice actor
+news anchor
+meteorologist
+clergyman
+missionary
+philosopher
+sociologist
+anthropologist
+archaeologist
+paleontologist
+astronomer
+physicist
+mathematician
+statistician
+underwriter
+broker
+trader
+loan officer
+notary
+clerk of court
+bailiff
+paralegal
+prosecutor
+defense lawyer
+diplomat
+ambassador
+consul
+synagogue
+peninsula
+archipelago
+gulf
+strait
+cape
+plain
+plateau
+savanna
+tundra
+glacier
+tsunami
+hurricane
+tornado
+atmosphere
+equator
+latitude
+longitude
+hemisphere
+arctic
+antarctic
+territory
+boundary
+delta
+estuary
+lagoon
+reef
+fjord
+canyon
+gorge
+cliff
+marsh
+swamp
+prairie
+steppe
+highland
+lowland
+metropolis
+rural
+urban
+settlement
+province
+altimeter
+altitude
+elevation
+topography
+cartography
+equinox
+solstice
+tide
+current
+erosion
+sediment
+tectonics
+fault
+epicenter
+aftershock
+magma
+lava
+geyser
+hot spring
+basin
+tributary
+confluence
+upstream
+downstream
+reservoir
+irrigation
+agriculture
+cultivation
+harvest
+livestock
+mineral
+petroleum
+natural gas
+renewable energy
+solar power
+wind power
+hydroelectric
+geothermal
+biofuel
+deforestation
+biodiversity
+ecosystem
+habitat
+global warming
+ozone layer
+greenhouse effect
+carbon footprint
+conservation
+preservation
+endangered
+extinct
+migration
+abstract
+deliberate
+adequate
+inadequate
+ambitious
+ancient
+anonymous
+apparent
+capable
+chaotic
+conscious
+constant
+content
+courageous
+critical
+crucial
+deadly
+decent
+delicate
+desperate
+diligent
+diverse
+efficient
+elegant
+experienced
+external
+extreme
+faithful
+fatal
+feeble
+feminine
+fierce
+flexible
+laissez faire
+give in
+give away
+look after
+look forward to
+look back
+get over
+get along with
+get rid of
+get used to
+get away
+put off
+put up with
+put out
+put down
+take over
+turn up
+turn down
+turn into
+come across
+come back
+go back
+go ahead
+goes for
+make up
+break out
+run out of
+run into
+carry on
+hold on
+fill in
+paid off
+woke up
+cut off
+check in
+add up
+depend on
+led to
+listen to
+result in
+grapple with
+deal with
+succeed in
+apply for
+contribute to
+clashes with
+away from
+impact on
+known for
+answered with
+lives in
+confined to
+pressure on
+good at
+capable of
+potential for
+under the weather
+beat around the bush
+bite the bullet
+once in a blue moon
+see eye to eye
+sit on the fence
+in the nick of time
+blessing in disguise
+keep your chin up
+on the ball
+the tip of the iceberg
+through thick and thin
+up in the air
+back to square one
+in hot water
+look on the bright side
+make ends meet
+read between the lines
+stand your ground
+have a ball
+cost an arm and a leg
+miss the boat
+bite off more than you can chew
+easier said than done
+kill two birds
+let the cat out of the bag
+has to
+would like to
+as though
+because of
+for instance
+at the moment
+in time
+good night
+will not
+did not
+have not
+ought not to
+look away
+public opinion
+public sector
+public safety
+civil rights
+gender equality
+freedom of speech
+freedom of press
+national security
+law enforcement
+working class
+upper class
+social media
+global issue
+climate change
+air pollution
+noise pollution
+sea level
+rain forest
+fossil fuel
+coral reef
+economic growth
+economic crisis
+living standards
+quality of life
+unemployment rate
+inflation rate
+death rate
+population growth
+private sector
+job market
+mental health
+heart rate
+nervous system
+healthy diet
+higher education
+creative thinking
+decision making
+body language
+online learning
+search engine
+spare time
+hard work
+open air
+self confidence
+age gap
+accumulate
+aesthetically
+ai
+chords
+collection
+contradictory
+crisis
+dedication
+defense
+determined
+discomfort
+dismiss
+disrupting
+dissonance
+distractions
+earlier
+emotions
+enhancement
+flour
+fortitude
+gadgets
+implementation
+incorporating
+inevitable
+investigations
+landfills
+librarians
+microplastics
+mimic
+modification
+modifying
+navigate
+novels
+occupations
+opinion
+organisms
+peaks
+physiology
+plastic
+polymers
+processor
+psychological
+rationalize
+reactions
+recycling
+relieved
+resource
+retraining
+shells
+smartphone
+sprawl
+steep
+summit
+tenet
+threat
+tranquility
+tutorials
+view
+waste
+yoga
+collaborative
+absence
+absolute
+access
+accurate
+acknowledge
+acquire
+action
+adapt
+admire
+advance
+advocate
+affordable
+algorithm
+argue
+associate
+attempt
+automate
+barely
+beneath
+cognitive
+collective
+college
+course
+critic
+crowd
+data
+democracy
+economics
+employ
+ethical
+extraordinary
+fear
+infrastructure
+insight
+inspire
+knowledge
+labour
+literature
+loss
+mentor
+movement
+narrative
+neural
+oil
+oral
+organisation
+outcome
+philosophy
+platform
+process
+property
+psychology
+rational
+response
+sense
+solution
+specific
+stage
+system
+worker
+clearly
+colleague
+criminal
+crucially
+dedicated
+develop
+distinct
+dramatically
+effective
+electric
+embrace
+emission
+encode
+exhibition
+exploit
+expression
+fate
+field
+form
+fragmented
+friendship
+generally
+genuine
+golden
+grace
+grant
+habits
+harmful
+highlight
+hit
+household
+ideas
+impossible
+individual
+influence
+initiative
+journalism
+kick
+level
+lifelong
+longitudinal
+machine
+managing
+manufacturing
+mass
+mechanism
+mere
+method
+microscopic
+mixture
+moment
+multinational
+nevertheless
+newsfeed
+norm
+note
+owner
+past
+pioneer
+population
+pose
+powerful
+primarily
+professional
+punishment
+race
+rarely
+recognise
+record
+reflect
+regulate
+reject
+rent
+represent
+result
+revenue
+ritual
+rough
+rule
+rush
+sandcastle
+scale
+score
+seat
+sector
+seek
+sensory
+serious
+serve
+shape
+signal
+speech
+spontaneous
+staff
+straight
+strengthen
+studies
+supplies
+sustainable
+tail
+tears
+thoroughly
+thoughtful
+treat
+trigger
+typically
+underlying
+unit
+valid
+variable
+vast
+viral
+warn
+weeds
+woodworking
+workforce
+worth
+quick
+enable
+fundamental
+particularly
+simultaneous
+happen
+initially
+originally
+outrage
+ownership
+passive
+perceive
+pessimistic
+policymaker
+portable
+precise
+predictor
+prioritise
+proactive
+program
+progressive
+proponent
+protect
+purchase
+purely
+pursue
+rail
+rainy
+range
+rebuild
+regulatory
+reinforce
+relatively
+remain
+render
+resolve
+restrict
+select
+sequence
+sniff
+sourdough
+spark
+spatial
+sponsor
+stoic
+stretch
+stringent
+structural
+structure
+substantial
+susceptible
+switch
+synthetic
+technique
+technological
+teeth
+tendency
+tension
+theorist
+thinker
+threshold
+topic
+toxin
+trace
+trail
+transform
+transition
+transparency
+unfocused
+unprecedented
+vacation
+vertical
+wakefulness
+weak
+wifi
+broad
+create
+due
+further
+harm
+honest
+identify
+include
+indicator
+inform
+interpret
+ladder
+land
+latter
+locked
+logic
+mode
+motivate
+multiple
+operation
+original
+particular
+pattern
+point
+practical
+profession
+purpose
+push
+reasonable
+relation
+separate
+smart
+sort
+status
+steady
+step
+stream
+sufficient
+support
+survive
+task
+tray
+unequal
+useful
+willing
+wonder
+eventually
+gallery
+systematic
+demonstrate
+dilemma
+globalisation
+medical
+organised
+panic
+pitch
+profoundly
+rest
+single
+agency
+alteration
+amplify
+anchor
+base
+beyond
+bind
+bit
+bold
+brave
+catastrophe
+chat
+cheer
+civic
+claim
+climb
+cognition
+commemorate
+compatible
+compelling
+computational
+concentrate
+confront
+constitute
+construct
+contend
+contentious
+contest
+conventional
+convergence
+corporate
+corporation
+correlate
+credibility
+critically
+crowdfunding
+cute
+decision-making
+deem
+define
+demand
+democratic
+designer
+difference
+diplomacy
+directly
+disorder
+disproportionate
+distinction
+disuse
+domain
+doubt
+dressed
+ecological
+embed
+enrich
+equivalent
+eradicate
+expense
+expert
+explicit
+expose
+facilitate
+fact
+finish
+forecast
+foundational
+fulfil
+furthermore
+glad
+govern
+hands
+hereditary
+holistic
+hypothetical
+identities
+immense
+immune
+impair
+implement
+infinite
+inhabit
+innovative
+institutional
+integration
+jurisdiction
+legislative
+line
+linguistic
+lower
+lunar
+marketer
+material
+mathematics
+maximise
+mission
+net
+openly
+optional
+organise
+origin
+oversight
+panoramic
+particle
+partisan
+passionate
+perform
+philosophically
+planetary
+practise
+praise
+sell
+tech
+systematically
+direct
+having
+acoustic
+advised
+behavior
+catastrophic
+confidently
+confined
+corner
+cried
+drawn
+emergence
+emphasizes
+environmentally
+exposure
+fact-checking
+immediate
+inevitably
+overconsumption
+perfectly
+debt
+expenditure
+transaction
+currency
+therapy
+prescription
+allergy
+vaccine
+obesity
+diabetes
+cancer
+hardware
+server
+database
+interface
+browser
+virus
+debug
+species
+drought
+flood
+pesticide
+organic
+parliament
+jury
+lawyer
+trial
+rights
+constitution
+corruption
+poverty
+discrimination
+immigration
+refugee
+welfare
+perseverance
+resilience
+sculpture
+portrait
+canvas
+mural
+playwright
+curriculum
+scholarship
+thesis
+literacy
+assessment
+coherent
+elaborate
+implicit
+integral
+inherent
+manifest
+parameter
+perspective
+dimension
+implication
+contradiction
+predominant
+dividend
+entrepreneur
+deregulation
+5G
+data privacy
+microservice
+cardiovascular
+metabolism
+sedentary
+cholesterol
+antibiotic
+chronic disease
+epidemic
+pandemic
+mortality
+morbidity
+clinical
+pathogen
+rehabilitation
+telemedicine
+legislation
+sanction
+treaty
+alliance
+censorship
+impeachment
+civil war
+lobbying
+observation
+theory
+molecule
+atom
+electron
+proton
+neutron
+gravity
+evolution
+genetics
+chromosome
+photosynthesis
+chemical reaction
+periodic table
+radioactive
+relativity
+resentment
+remorse
+nostalgia
+euphoria
+empathy
+compassion
+optimism
+pessimism
+enthusiasm
+apathy
+athletics
+tournament
+stamina
+endurance
+agility
+qualifier
+championship
+substitute
+penalty
+offside
+doping
+warm-up
+gymnastics
+urbanization
+social mobility
+multiculturalism
+secularism
+nationalism
+feminism
+activism
+philanthropy
+bring off
+come forward
+draw on
+fall apart
+get across
+give rise to
+go back on
+lay off
+live up to
+make for
+narrow down
+opt out
+phase out
+pull off
+put forward
+rule out
+run through
+set back
+stand out
+wear off
+turmeric
+saffron
+solar panel
+wind turbine
+hydropower
+nuclear energy
+oil field
+coal mine
+biomass
+desalination
+ore
+influencer
+binge-watch
+soundtrack
+blockbuster
+sitcom
+sequel
+prequel
+spin-off
+plot twist
+assert
+mediate
+paraphrase
+consecutive
+adjacent
+allocate
+anticipate
+arbitrary
+deduce
+derive
+enforce
+enhance
+infer
+integrate
+justify
+overlap
+artery
+fracture
+nausea
+dizziness
+fatigue
+insomnia
+camouflage
+symbiosis
+nocturnal
+venom
+syllabus
+semester
+faculty
+enroll
+undergraduate
+postgraduate
+dissertation
+plagiarism
+citation
+peer review
+hypothesis testing
+psychiatrist
+radiographer
+probation officer
+forensic scientist
+analogy
+assertion
+benchmark
+causal
+coherence
+commentary
+comprehensive
+credible
+critique
+cumulative
+dominant
+dynamic
+extensive
+fluctuate
+hierarchy
+inconsistent
+inference
+linear
+neutral
+notable
+ongoing
+preliminary
+prevalent
+principal
+reliable
+replicate
+rigorous
+scope
+selective
+subjective
+theoretical
+transparent
+viable
+awe
+bliss
+despair
+ecstasy
+guilt
+humility
+indifference
+irritation
+longing
+pity
+rage
+regret
+shame
+sorrow
+suspicion
+sympathy
+tenderness
+terror
+vulnerability
+profit
+overhead
+turnover
+net income
+gross profit
+balance sheet
+cash flow
+depreciate
+quarterly
+fiscal year
+audit
+invoice
+contract
+loan
+fund
+verdict
+appeal
+bail
+testimony
+prosecute
+acquit
+convict
+parole
+fraud
+bribery
+nucleus
+membrane
+enzyme
+hormone
+mutation
+compound
+acid
+oxidation
+conductivity
+friction
+momentum
+acceleration
+density
+wavelength
+watercolour
+charcoal
+bronze
+mosaic
+fresco
+etching
+installation
+commissioned
+contemporary art
+performance art
+abstract art
+prejudice
+stereotype
+social justice
+empowerment
+solidarity
+assimilation
+diversity
+inclusion
+exclusion
+minority
+self-awareness
+mindfulness
+assertiveness
+gratitude
+integrity
+patience
+persistence
+leadership
+time management
+virtue
+conscience
+spirituality
+pilgrimage
+scripture
+theology
+atheist
+secular
+special effects
+screenplay
+cast
+debut
+box office
+ratings
+episode
+series
+cliffhanger
+chronology
+epoch
+approximate
+imminent
+concise
+metaphor
+irony
+sarcasm
+dialect
+accent
+fluency
+bilingual
+multilingual
+pomegranate
+artichoke
+asparagus
+radish
+macaron
+mousse
+sorbet
+fondue
+tapas
+paella
+risotto
+quiche
+couscous
+falafel
+hummus
+estate
+detached house
+semi-detached
+terrace
+studio flat
+penthouse
+renovation
+extension
+conservatory
+utility room
+loft
+cellar
+attic
+driveway
+patio
+Yangtze
+Ganges
+subcontinent
+analogue
+compression
+protocol
+cloud storage
+streaming service
+user interface
+SEO
+affirmative
+aggregate
+annotate
+applicable
+apt
+complexity
+conceive
+concede
+connotation
+counterpart
+disregard
+encompass
+endorse
+entail
+equate
+excerpts
+exemplary
+exhaustive
+fluctuation
+guiding principle
+hinder
+intervene
+invariably
+legitimate
+lenient
+mandate
+nominal
+normalise
+obsolete
+optimise
+orientation
+plausible
+radical
+rationale
+resonate
+skew
+speculate
+stagnate
+subordinate
+tangible
+tentative
+terminate
+transformative
+validate
+versatile
+dialysis
+inflammation
+placebo
+prognosis
+concussion
+disqualification
+handicap
+knockout stage
+league
+pacemaker
+podium
+relegation
+rematch
+seeding
+sportsmanship
+spectator
+balance of trade
+business cycle
+compound interest
+consumer price index
+disposable income
+exchange rate
+income distribution
+biometric
+data breach
+e-commerce
+GPS
+hyperlink
+incognito mode
+LAN
+metadata
+open-source software
+abide by
+blow over
+boil down to
+branch out
+brush up on
+call for
+cave in
+clamp down on
+come about
+come up against
+cut back
+die down
+dig into
+drag on
+draw back
+drive at
+fall for
+fend off
+flesh out
+follow through
+gear up for
+get ahead
+give way to
+gloss over
+go under
+hammer out
+hang back
+hit on
+hold out for
+iron out
+keep at
+lash out
+loom over
+look down on
+make do with
+miss out on
+pan out
+pass off as
+pin down
+pitch in
+play down
+pull through
+push through
+read into
+scale up
+see off
+see through
+set aside
+sink in
+speak out
+spell out
+stir up
+stumble upon
+sweep under the rug
+talk into
+tide over
+tip off
+touch on
+write off
+zero in on
+in accordance with
+in contrast to
+in light of
+on the basis of
+to a great extent
+with regard to
+by means of
+biome
+floodplain
+mangrove
+oxbow lake
+rift valley
+silt
+watershed
+centrifuge
+combustion
+diffusion
+half-life
+inorganic
+organic compound
+polymer
+potential energy
+civil law
+common law
+criminal law
+contract law
+environmental law
+international law
+precedent
+negligence
+bureaucracy
+caste system
+class struggle
+cosmopolitan
+demographics
+diaspora
+grassroots
+social contract
+accreditation
+aptitude test
+blended learning
+e-learning
+formative assessment
+rote learning
+seminar
+term paper
+vocational training
+dogma
+free will
+idealism
+materialism
+monotheism
+polytheism
+pragmatism
+adaptive learning
+boundary setting
+burnout
+constructive criticism
+deliberate practice
+positive affirmation
+self-compassion
+self-discipline
+self-reflection
+stress management
+work-life balance
+calligraphy
+ceramics
+choreography
+collage
+digital art
+folk art
+graffiti
+installation art
+printmaking
+adhere
+affirm
+attribute
+comply
+confine
+convey
+correspond
+decline
+denote
+discriminate
+dispute
+distribute
+exclude
+expand
+imply
+initiate
+persist
+predict
+retain
+simulate
+specify
+uncover
+enquire
+insist
+object
+outline
+reassure
+urge
+biannual
+momentary
+numerical
+overdue
+premature
+prolonged
+sporadic
+timely
+uranium
+lithium
+groundwater
+abundant
+acute
+adverse
+affluent
+arid
+beneficial
+biased
+bleak
+candid
+complacent
+concurrent
+conducive
+controversial
+counterproductive
+debatable
+decisive
+deficient
+detrimental
+devout
+diminishing
+discreet
+distant
+dubious
+enduring
+erratic
+excessive
+exclusive
+feasible
+finite
+fragile
+frugal
+harsh
+hierarchical
+hostile
+humane
+impartial
+insignificant
+interdependent
+intriguing
+irrational
+irreversible
+lucrative
+mandatory
+modest
+negligible
+optimal
+persevering
+pivotal
+proportional
+redundant
+remarkable
+restrictive
+scarce
+sensitive
+sparse
+stable
+stark
+subtle
+tedious
+trivial
+unanimous
+vigorous
+volatile
+vulnerable
+aftermath
+breakthrough
+clarity
+consensus
+constraint
+controversy
+deduction
+elaboration
+emphasis
+flaw
+groundwork
+hindrance
+incentive
+inconsistency
+nuance
+premise
+proposition
+reconciliation
+refinement
+restraint
+rigour
+scrutiny
+synthesis
+trajectory
+uncertainty
+undertaking
+ambiguity
+counterfeit
+demise
+deplete
+deter
+eccentric
+efficacy
+evoke
+hypocritical
+inconceivable
+jargon
+lax
+momentous
+mundane
+notorious
+ominous
+opaque
+perplexed
+pious
+placid
+reckless
+resilient
+resolute
+sentimental
+skeptical
+solemn
+stealthy
+steadfast
+sullen
+treacherous
+turbulent
+vex
+vile
+wary
+whimsical
+laboratory
+radiation
+regulation
+authority
+tribunal
+immunity
+equality
+reform
+litigation
+arbitration
+masterpiece
+harmony
+composition
+protagonist
+theme
+tuition
+faith
+prayer
+morality
+ideology
+magnetism
+poetry
+wetland
+ambition
+assertive
+mentorship
+substitution
+injury time
+semifinal
+tone
+rebuttal
+hypertension
+stroke
+marginalization
+cohesion
+extinction
+pollination
+adaptation
+broadband
+secularization
+transcendence
+orchestra
+symphony
+opera
+ballet
+costume
+applause
+fall back on
+take stock of
+wear out
+wind up
+biodegradable
+overpopulation
+typography
+magnitude
+subsequent
+reaction
+semiconductor
+debugging
+rendering
+drastic
+formidable
+geography
+physical education
+biology
+chemistry
+physics
+sociology
+dribble
+header
+freekick
+goalpost
+goalkeeper
+defender
+striker
+midfielder
+antibiotics
+dosage
+relapse
+remission
+prosecution
+carry out research
+draw a conclusion
+conduct a survey
+raise awareness
+take into account
+bear in mind
+take for granted
+make progress
+lose track of
+antagonize
+aspire
+attain
+avert
+avid
+belated
+benefactor
+bizarre
+blatant
+brittle
+cynical
+divisive
+earnest

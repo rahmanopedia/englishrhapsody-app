@@ -1,0 +1,659 @@
+smart device
+bug
+version
+backup
+accountant
+butcher
+chef
+clerk
+dentist
+florist
+gardener
+hairdresser
+model
+musician
+nurse
+receptionist
+secretary
+soldier
+writer
+garbage collector
+janitor
+security guard
+cashier
+teller
+dining room
+garage
+balcony
+roof
+ceiling
+stairs
+furniture
+sofa
+wardrobe
+desk
+shelf
+carpet
+curtain
+mirror
+refrigerator
+freezer
+oven
+microwave
+dishwasher
+washing machine
+vacuum cleaner
+iron
+toaster
+kettle
+pan
+pot
+blanket
+pillow
+sheet
+towel
+shampoo
+toothpaste
+razor
+comb
+hairbrush
+makeup
+perfume
+trousers
+jacket
+coat
+underwear
+gloves
+scarf
+belt
+tie
+glasses
+wallet
+newspaper
+magazine
+envelope
+stamp
+credit card
+receipt
+bakery
+pharmacy
+airplane
+airport
+station
+cinema
+theater
+museum
+post office
+church
+continent
+valley
+desert
+island
+bay
+jungle
+poles
+region
+border
+coast
+shore
+cave
+capital
+state
+globe
+mouth
+environment
+calm
+careful
+careless
+certain
+cheerful
+clever
+confused
+cool
+correct
+curious
+dangerous
+deep
+delicious
+different
+difficult
+dirty
+dry
+early
+empty
+even
+excellent
+excited
+expensive
+fair
+false
+famous
+fantastic
+favorite
+final
+fit
+flat
+look for
+looking for
+look at
+get up
+get on
+get off
+put on
+put away
+take away
+turn on
+turn off
+come out
+come up
+go out
+go through
+went to
+went down
+walked into
+wait for
+arrived at
+used to
+going to
+be able to
+as soon as
+as well as
+even if
+such as
+for example
+by the way
+each other
+next to
+on time
+at the end
+good evening
+can not
+could not
+should not
+do not
+does not
+was not
+were not
+had not
+may not
+might not
+not yet
+looked under
+looked behind
+looked away
+looked down
+looked up
+looked across
+look under
+look behind
+look over
+walked under
+walked behind
+walked away
+walked back
+walked past
+walked up
+walked over
+ran under
+ran inside
+ran around
+ran past
+ran through
+ran out
+ran into
+went inside
+went behind
+went around
+went through
+went in
+went out
+went up
+came under
+came around
+came out
+came back
+came over
+sat under
+sat inside
+sat behind
+sat back
+sat around
+stood up
+stood behind
+stood outside
+stood back
+stood around
+climbed over
+climbed down
+jumped over
+jumped in
+jumped out
+jumped up
+fell behind
+fell over
+fell down
+fell out
+hid behind
+hid under
+hid inside
+hide under
+fast food
+team work
+everyday life
+social life
+traffic jam
+good luck
+good news
+bad news
+first aid
+age group
+giraffe
+guitar
+hiking
+information
+month
+price
+scared
+season
+smell
+summer
+terrible
+activity
+adventure
+age
+allow
+art
+autumn
+birth
+breakfast
+busy
+camping
+candle
+cereal
+chocolate
+club
+coal
+community
+competition
+dinner
+dream
+drive
+email
+evidence
+fashion
+festival
+film
+fresh
+function
+grass
+hour
+housing
+idea
+important
+improve
+knee
+list
+memory
+neighbourhood
+pain
+party
+produce
+recipe
+routine
+safe
+simple
+solar
+stress
+sugar
+tent
+voice
+weekend
+wonderful
+wood
+youngest
+area
+arrive
+beautiful
+days
+device
+discover
+forgot
+gain
+ground
+healthy
+helpful
+hours
+itself
+lively
+lonely
+national
+neighbour
+passengers
+pick
+plant
+pleased
+possible
+problem
+repeat
+sandwich
+silver
+skipped
+slightly
+snack
+someone
+soup
+stepping
+sunny
+text
+user
+volunteer
+wake
+wide
+woke
+favourite
+minute
+herself
+later
+several
+whole
+ever
+recent
+centre
+english
+immediately
+members
+pair
+pasta
+plenty
+rabbit
+reachable
+reason
+relate
+second
+session
+similar
+slight
+touch
+twenty
+volume
+ways
+wet
+become
+check
+cut
+enough
+hero
+homework
+load
+message
+miss
+next
+set
+somehow
+stick
+trouble
+type
+wrote
+planner
+act
+birthday
+colorful
+gift
+invite
+order
+rely
+runner
+bear
+behave
+body
+bottle
+count
+cry
+cue
+delete
+edit
+everywhere
+finger
+indoor
+labor
+loaf
+mean
+neck
+ones
+post
+skip
+tenth
+thirty
+twenty-minute
+wi-fi
+others
+believe
+blew
+discussions
+organized
+thirty-five
+understood
+drawer
+bucket
+brush
+scissors
+hammer
+nail
+broom
+fridge
+stove
+sink
+tap
+grape
+melon
+peach
+pear
+plum
+cherry
+coconut
+fig
+pineapple
+avocado
+cauliflower
+celery
+spinach
+pumpkin
+mushroom
+butterfly
+bee
+ant
+spider
+worm
+frog
+turtle
+eagle
+owl
+wolf
+fox
+whale
+dolphin
+shark
+midnight
+noon
+dawn
+dusk
+quarter
+dozen
+chalk
+ruler
+rubber
+folder
+timetable
+dictionary
+goal
+court
+racket
+bat
+helmet
+medal
+trophy
+cough
+appointment
+discount
+queue
+cash
+purse
+label
+garbage
+police officer
+babysitter
+port
+waterfall
+meadow
+slope
+cable
+charger
+keyboard
+mouse
+printer
+scanner
+headphones
+camera
+password
+download
+upload
+update
+copy
+proud
+jealous
+bored
+shy
+apologise
+promise
+refuse
+agree
+disagree
+cartoon
+comedy
+concert
+parade
+circus
+puppet
+fairground
+firework
+minor
+section
+luggage
+passport
+check-in
+seatbelt
+thumb
+chest
+stomach
+skin
+bone
+swimming pool
+changing room
+winner
+loser
+interest
+carrot
+onion
+garlic
+lime
+mango
+papaya
+kiwi
+mint
+chilli
+curry
+jam
+ketchup
+olive oil
+biscuit
+cracker
+muffin
+donut
+pudding
+newsagent
+department store
+fitting room
+button
+pocket
+hood
+block
+slow down
+clinic
+ambulance
+emergency
+weight
+height
+gym
+gardening
+baking
+theatre
+playground
+sports centre
+countryside
+borrow
+cancel
+fix
+receive
+share
+describe
+monthly
+copper
+cotton
+silk
+wool
+leather
+actor
+subject
+classroom
+board
+reference
+movie
+dance
+photograph
+hobby
+tennis
+basketball
+volleyball
+skiing
+match
+glue
+notebook
+textbook
+quiz
+stone
+metal
+calendar
+spring
+winter
+puzzle
+toy
+picnic
+barbecue
+surprise
+celebrate
+guard
+certificate
+corn
+plane
+ship
+motorcycle
+truck
+ferry
+neighbor
+stranger
+marriage
+child
+adult
+teenager
+tablet
+take care
+sit down
+stand up
+come in
+hurry up
+wash
+vacuum
+tidy
+lift
+drop
+shake
