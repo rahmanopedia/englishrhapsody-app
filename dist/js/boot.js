@@ -910,3 +910,97 @@ document.addEventListener('click', function(e) {
     }
   });
 })();
+
+/* ── 18. SRS Görünürlüğü ── */
+(function(){
+  function getDue(){
+    try {
+      var mastery = window._app && window._app.state && window._app.state.get('mastery');
+      if(!mastery || !window.SRS || !window.WORDS) return 0;
+      return window.SRS.getDue(window.WORDS, mastery).length;
+    } catch(e){ return 0; }
+  }
+
+  function updateBadges(){
+    var n = getDue();
+    // Modes drawer badge (Sinestezi button)
+    var b = document.getElementById('srs-drawer-badge');
+    if(b){ b.textContent = n > 99 ? '99+' : String(n); b.style.display = n > 0 ? '' : 'none'; }
+    // Sidebar badge (desktop) — already has ac-due-badge, also update it if needed
+    var b2 = document.getElementById('ac-due-badge');
+    if(b2 && n > 0 && b2.style.display === 'none'){ b2.textContent = n > 99 ? '99+' : String(n); b2.style.display = ''; }
+  }
+
+  function injectSynthChip(){
+    var picker = document.querySelector('.synth-session-picker');
+    if(!picker || picker.querySelector('.srs-due-chip')) return;
+    var n = getDue();
+    var chip = document.createElement('div');
+    chip.className = 'srs-due-chip';
+    if(n > 0){
+      chip.innerHTML = '📅 <strong>' + n + '</strong> kelime tekrara düştü — oturum başlayınca önce bunlar gelir';
+      chip.style.background = 'rgba(0,212,255,0.07)';
+      chip.style.borderColor = 'rgba(0,212,255,0.25)';
+      chip.style.color = 'var(--cyan)';
+    } else {
+      chip.innerHTML = '✅ Tüm kelimeler güncel — yeni kelimeler sırada';
+      chip.style.background = 'rgba(16,185,129,0.07)';
+      chip.style.borderColor = 'rgba(16,185,129,0.25)';
+      chip.style.color = '#10b981';
+    }
+    picker.insertBefore(chip, picker.firstChild);
+  }
+
+  function injectHomeCard(){
+    var main = document.getElementById('main-content');
+    if(!main) return;
+    var existing = document.getElementById('srs-home-card');
+    if(existing) { existing.parentNode && existing.parentNode.removeChild(existing); }
+    var n = getDue();
+    if(n < 1) return;
+    // Only inject if home view is visible
+    var app = window._app;
+    if(!app || !app.session || app.session.view !== 'home') return;
+    // Find a good anchor — the first child of main-content
+    var first = main.firstElementChild;
+    if(!first) return;
+    var card = document.createElement('div');
+    card.id = 'srs-home-card';
+    card.className = 'srs-home-card';
+    card.innerHTML =
+      '<div class="srs-home-icon">📅</div>' +
+      '<div class="srs-home-text">' +
+        '<strong>' + n + ' kelime</strong> bugün tekrara düştü' +
+      '</div>' +
+      '<button class="srs-home-btn" id="srs-home-go">Başla →</button>' +
+      '<button class="srs-home-x" id="srs-home-x">✕</button>';
+    main.insertBefore(card, first);
+    document.getElementById('srs-home-go').addEventListener('click', function(){
+      card.parentNode && card.parentNode.removeChild(card);
+      if(window._app && window._app.navigate) window._app.navigate('learn');
+    });
+    document.getElementById('srs-home-x').addEventListener('click', function(){
+      card.parentNode && card.parentNode.removeChild(card);
+    });
+  }
+
+  function init(){
+    updateBadges();
+    setInterval(updateBadges, 60000);
+
+    var obs = new MutationObserver(function(){
+      injectSynthChip();
+      injectHomeCard();
+      updateBadges();
+    });
+    var mc = document.getElementById('main-content');
+    if(mc) obs.observe(mc, { childList: true, subtree: true });
+  }
+
+  // Wait for app + WORDS to be ready
+  function waitReady(){
+    if(window._app && window.WORDS && window.SRS){ init(); }
+    else { setTimeout(waitReady, 400); }
+  }
+  window.addEventListener('load', function(){ setTimeout(waitReady, 800); });
+})();
