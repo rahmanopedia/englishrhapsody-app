@@ -2491,7 +2491,7 @@ const WORDS = [
     "level": "B2",
     "cat": "Teknoloji",
     "icon": "📍",
-    "ex": "The API has several public endpoints.",
+    "ex": "The bus route has several endpoints across the city.",
     "syns": [],
     "colloc": []
   },
@@ -2575,7 +2575,7 @@ const WORDS = [
     "level": "B2",
     "cat": "Kaynaklar",
     "icon": "🏭",
-    "ex": "The bug was found in the production environment.",
+    "ex": "The new film is currently in production and will be released next year.",
     "syns": [],
     "colloc": []
   },
@@ -2803,7 +2803,7 @@ const WORDS = [
     "level": "B2",
     "cat": "Teknoloji",
     "icon": "🎟️",
-    "ex": "The API requires a bearer token for access.",
+    "ex": "She gave him a small gift as a token of her gratitude.",
     "syns": [],
     "colloc": []
   },
@@ -16675,7 +16675,7 @@ const WORDS = [
     "level": "B2",
     "cat": "Bilim",
     "icon": "🔬",
-    "ex": "The engineers are modifying the software to fix the reported bugs.",
+    "ex": "The engineers are modifying the bridge design to make it safer.",
     "syns": [],
     "colloc": []
   },
