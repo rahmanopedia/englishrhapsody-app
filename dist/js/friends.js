@@ -98,19 +98,15 @@
      UI
   ══════════════════════════════════════════════ */
 
-  var _tabInjected = false;
-
   function injectTab(){
-    if(_tabInjected) return;
     var tabs = document.querySelector('.lb-tabs');
     if(!tabs) return;
-    if(tabs.querySelector('[data-period="friends"]')) return;
+    if(tabs.querySelector('[data-period="friends"]')) return; /* already in DOM */
     var btn = document.createElement('button');
     btn.className = 'lb-tab';
     btn.setAttribute('data-period', 'friends');
     btn.textContent = '👫 Arkadaşlar';
     tabs.appendChild(btn);
-    _tabInjected = true;
   }
 
   function renderFriendsPanel(){

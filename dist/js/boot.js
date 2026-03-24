@@ -1153,16 +1153,21 @@ document.addEventListener('click', function(e) {
     document.head.appendChild(s);
   }
 
+  function tryInjectTab(){
+    if(_loaded && window.FriendsManager) window.FriendsManager.init();
+    else if(!_loaded) loadFriendsJS();
+  }
+
   window.addEventListener('load', function(){
-    /* Observe for leaderboard tabs appearing */
+    /* Observe for leaderboard tabs appearing (every visit) */
     var obs = new MutationObserver(function(){
-      if(document.querySelector('.lb-tabs')) loadFriendsJS();
+      if(document.querySelector('.lb-tabs')) tryInjectTab();
     });
     var mc = document.getElementById('main-content');
     if(mc) obs.observe(mc, { childList: true, subtree: true });
     /* Already on leaderboard? */
     setTimeout(function(){
-      if(document.querySelector('.lb-tabs')) loadFriendsJS();
+      if(document.querySelector('.lb-tabs')) tryInjectTab();
     }, 1200);
   });
 })();
