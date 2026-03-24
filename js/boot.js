@@ -1004,3 +1004,135 @@ document.addEventListener('click', function(e) {
   }
   window.addEventListener('load', function(){ setTimeout(waitReady, 800); });
 })();
+
+/* ── 19. Günün Yolu (Daily Learning Path) ── */
+(function(){
+  var PATHS = {
+    A1: [{t:'learn',   l:'Kelime Öğren', i:'🌀'}, {t:'bridge',  l:'Çeviri Yap',    i:'🌉'}, {t:'speak',   l:'Konuş',     i:'🎙️'}],
+    A2: [{t:'learn',   l:'Kelime Öğren', i:'🌀'}, {t:'reading', l:'Metin Oku',      i:'📖'}, {t:'speak',   l:'Konuş',     i:'🎙️'}],
+    B1: [{t:'learn',   l:'Kelime Öğren', i:'🌀'}, {t:'reading', l:'Metin Oku',      i:'📖'}, {t:'quantum', l:'Cümle Kur', i:'⚛️'}, {t:'speak', l:'Konuş', i:'🎙️'}],
+    B2: [{t:'learn',   l:'Kelime Öğren', i:'🌀'}, {t:'reading', l:'Metin Oku',      i:'📖'}, {t:'quantum', l:'Cümle Kur', i:'⚛️'}, {t:'speak', l:'Konuş', i:'🎙️'}],
+    C1: [{t:'learn',   l:'Kelime Öğren', i:'🌀'}, {t:'nexus',   l:'Phrasal Verbs',  i:'✨'}, {t:'reading', l:'Metin Oku', i:'📖'}, {t:'speak', l:'Konuş', i:'🎙️'}],
+    C2: [{t:'learn',   l:'Kelime Öğren', i:'🌀'}, {t:'nexus',   l:'Phrasal Verbs',  i:'✨'}, {t:'reading', l:'Metin Oku', i:'📖'}, {t:'speak', l:'Konuş', i:'🎙️'}]
+  };
+
+  var TODAY = new Date().toISOString().split('T')[0];
+  var SKEY  = 'er_path_' + TODAY;
+
+  function getVisited(){ try{ return JSON.parse(localStorage.getItem(SKEY)||'[]'); }catch(e){ return []; } }
+  function saveVisit(t){ var v=getVisited(); if(v.indexOf(t)<0){ v.push(t); localStorage.setItem(SKEY,JSON.stringify(v)); } }
+
+  function getSteps(){
+    var app = window._app;
+    var lvl = (app && app.state && app.state.get('cefrLevel')) || 'B1';
+    var steps = (PATHS[lvl] || PATHS['B1']).slice();
+    try {
+      var m = app && app.state && app.state.get('mastery');
+      if(m && window.SRS && window.WORDS){
+        var due = window.SRS.getDue(window.WORDS, m).length;
+        if(due >= 5) steps[0] = {t:'learn', l:'Tekrar ('+due+')', i:'📅'};
+      }
+    }catch(e){}
+    return steps;
+  }
+
+  function renderCard(){
+    var col = document.querySelector('.home-col-main');
+    if(!col) return;
+
+    var old = document.getElementById('dp-card');
+    if(old) old.parentNode && old.parentNode.removeChild(old);
+
+    var steps   = getSteps();
+    var visited = getVisited();
+    var doneCount = 0;
+    for(var i=0;i<steps.length;i++){ if(visited.indexOf(steps[i].t)>=0) doneCount++; }
+    var allDone = doneCount === steps.length;
+    var nextIdx = -1;
+    for(var j=0;j<steps.length;j++){ if(visited.indexOf(steps[j].t)<0){ nextIdx=j; break; } }
+
+    var card = document.createElement('div');
+    card.id = 'dp-card';
+    card.className = 'home-card-new dp-card';
+
+    var hdr = '<div class="dp-hdr">' +
+      '<span class="dp-title">🗺️ Günün Yolu</span>' +
+      (allDone
+        ? '<span class="dp-badge-done">✅ Tamamlandı!</span>'
+        : '<span class="dp-badge-prog">'+doneCount+' / '+steps.length+'</span>') +
+      '</div>';
+
+    var bar = '';
+    if(!allDone){
+      var pct = Math.round(doneCount/steps.length*100);
+      bar = '<div class="dp-bar"><div class="dp-bar-fill" style="width:'+pct+'%"></div></div>';
+    }
+
+    var stepsHtml = '<div class="dp-steps">';
+    for(var k=0;k<steps.length;k++){
+      var s   = steps[k];
+      var done = visited.indexOf(s.t) >= 0;
+      var act  = (k === nextIdx);
+      var cls  = 'dp-step' + (done?' dp-done':'') + (act?' dp-active':'');
+      stepsHtml +=
+        '<button class="'+cls+'" data-dp-target="'+s.t+'">' +
+          '<div class="dp-num">'+(done?'✓':(k+1))+'</div>' +
+          '<div class="dp-s-icon">'+s.i+'</div>' +
+          '<div class="dp-s-label">'+s.l+'</div>' +
+        '</button>' +
+        (k < steps.length-1 ? '<div class="dp-arr'+(done?' dp-arr-done':'')+'">&rsaquo;</div>' : '');
+    }
+    stepsHtml += '</div>';
+
+    if(allDone){
+      stepsHtml += '<div class="dp-congrats">Harika! Bugünün tüm adımlarını tamamladın 🎉</div>';
+    }
+
+    card.innerHTML = hdr + bar + stepsHtml;
+
+    // Insert before 3rd card ("Günlük Görevler") or append
+    var cards = col.querySelectorAll(':scope > .home-card-new');
+    if(cards.length >= 2 && cards[1].nextSibling){
+      col.insertBefore(card, cards[1].nextSibling);
+    } else {
+      col.appendChild(card);
+    }
+
+    // Click handlers
+    card.querySelectorAll('[data-dp-target]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var tgt = btn.getAttribute('data-dp-target');
+        if(tgt && window._app && window._app.navigate) window._app.navigate(tgt);
+      });
+    });
+  }
+
+  // Patch navigate: track visits + refresh card on home
+  function patchNav(){
+    var app = window._app;
+    if(!app || !app.navigate || app.__dpPatched) return;
+    app.__dpPatched = true;
+    var _orig = app.navigate.bind(app);
+    app.navigate = function(tgt){
+      _orig(tgt);
+      var trackable = {learn:1, speak:1, reading:1, quantum:1, bridge:1, nexus:1};
+      if(trackable[tgt]) setTimeout(function(){ saveVisit(tgt); renderCard(); }, 200);
+      if(tgt === 'home')  setTimeout(renderCard, 150);
+    };
+  }
+
+  // MutationObserver: inject when home-col-main appears
+  var _obs = new MutationObserver(function(){
+    var col = document.querySelector('.home-col-main');
+    if(col && !document.getElementById('dp-card')) renderCard();
+  });
+
+  window.addEventListener('load', function(){
+    var mc = document.getElementById('main-content');
+    if(mc) _obs.observe(mc, {childList:true, subtree:true});
+    setTimeout(function(){
+      patchNav();
+      renderCard();
+    }, 1000);
+  });
+})();
