@@ -2395,7 +2395,7 @@ const WORDS = [
     "level": "C2",
     "cat": "Akademik",
     "icon": "🎼",
-    "ex": "Kubernetes handles container orchestration.",
+    "ex": "The conductor's orchestration of the symphony left the audience breathless.",
     "syns": [],
     "colloc": []
   },
@@ -58963,7 +58963,7 @@ const WORDS = [
     "level": "C2",
     "cat": "Bilim",
     "icon": "🔬",
-    "ex": "Recursion is common in algorithms.",
+    "ex": "The recursion of motifs throughout the novel creates a profound sense of fate.",
     "syns": [],
     "colloc": []
   },
