@@ -170,4 +170,132 @@ var CINEMA_DATA = [
     category: "Daily Life"
   },
 
+  // ── AI Generated Clips (Batch 2) ──────────────────────────────
+
+  {
+    id: 9,
+    url: "https://files.catbox.moe/n76qnv.mp4",
+    start: 0,
+    end: 15,
+    film: "Rhapsody Cinema",
+    transcript: "I can't do this. Come on, you've got this. I'll try again.",
+    segments: [
+      { start: 4.42, text: "I can't do this." },
+      { start: 5.50, text: "Come on, you've got this." },
+      { start: 6.66, text: "I'll try again." }
+    ],
+    questions: [
+      { phrase: "I can't do this.", correct: "Bunu yapamam.", wrong: "Bunu yapabilirim." },
+      { phrase: "Come on, you've got this.", correct: "Hadi, başarabilirsin.", wrong: "Vazgeç, çok zor." },
+      { phrase: "I'll try again.", correct: "Tekrar deneyeceğim.", wrong: "Pes ediyorum." }
+    ],
+    points: 12,
+    category: "Daily Life"
+  },
+
+  {
+    id: 10,
+    url: "https://files.catbox.moe/lzd24u.mp4",
+    start: 0,
+    end: 15,
+    film: "Rhapsody Cinema",
+    transcript: "Nice event, huh? Yeah, it's a good way to break the ice. Exactly.",
+    segments: [
+      { start: 6.06, text: "Nice event, huh?" },
+      { start: 7.64, text: "Yeah, it's a good way to break the ice." },
+      { start: 10.00, text: "Exactly." }
+    ],
+    questions: [
+      { phrase: "Nice event, huh?", correct: "Güzel bir etkinlik, değil mi?", wrong: "Sıkıcı bir etkinlik, değil mi?" },
+      { phrase: "It's a good way to break the ice.", correct: "Buz kırmak için iyi bir yol.", wrong: "Tartışmak için iyi bir fırsat." },
+      { phrase: "Exactly.", correct: "Kesinlikle.", wrong: "Hiç de değil." }
+    ],
+    points: 12,
+    category: "Social"
+  },
+
+  {
+    id: 11,
+    url: "https://files.catbox.moe/sfiqrv.mp4",
+    start: 0,
+    end: 15,
+    film: "Rhapsody Cinema",
+    transcript: "There's a problem with my room. What seems to be the issue? The air conditioning isn't working.",
+    segments: [
+      { start: 3.10, text: "There's a problem with my room." },
+      { start: 4.82, text: "What seems to be the issue?" },
+      { start: 7.68, text: "The air conditioning isn't working." }
+    ],
+    questions: [
+      { phrase: "There's a problem with my room.", correct: "Odamda bir sorun var.", wrong: "Odamı değiştirmek istiyorum." },
+      { phrase: "What seems to be the issue?", correct: "Sorun nedir?", wrong: "Ne yapmamı istersiniz?" },
+      { phrase: "The air conditioning isn't working.", correct: "Klima çalışmıyor.", wrong: "Oda çok küçük." }
+    ],
+    points: 12,
+    category: "Travel"
+  },
+
+  {
+    id: 12,
+    url: "https://files.catbox.moe/w19fkv.mp4",
+    start: 0,
+    end: 15,
+    film: "Rhapsody Cinema",
+    transcript: "This is getting out of hand. Yeah, it's too crowded. We should leave.",
+    segments: [
+      { start: 3.20, text: "This is getting out of hand." },
+      { start: 4.52, text: "Yeah, it's too crowded." },
+      { start: 6.10, text: "We should leave." }
+    ],
+    questions: [
+      { phrase: "This is getting out of hand.", correct: "Bu kontrolden çıkıyor.", wrong: "Bu çok eğlenceli." },
+      { phrase: "It's too crowded.", correct: "Çok kalabalık.", wrong: "Çok sessiz." },
+      { phrase: "We should leave.", correct: "Gitmeliyiz.", wrong: "Kalmaya devam edelim." }
+    ],
+    points: 12,
+    category: "Daily Life"
+  },
+
+  {
+    id: 13,
+    url: "https://files.catbox.moe/t7qpf6.mp4",
+    start: 0,
+    end: 15,
+    film: "Rhapsody Cinema",
+    transcript: "Can you keep an eye on him for a minute? Of course. I'll be right back.",
+    segments: [
+      { start: 3.50, text: "Can you keep an eye on him for a minute?" },
+      { start: 5.60, text: "Of course." },
+      { start: 6.54, text: "I'll be right back." }
+    ],
+    questions: [
+      { phrase: "Can you keep an eye on him for a minute?", correct: "Bir dakika ona göz kulak olabilir misin?", wrong: "Onu bir yere götürür müsün?" },
+      { phrase: "Of course.", correct: "Tabii ki.", wrong: "Hayır, yapamam." },
+      { phrase: "I'll be right back.", correct: "Hemen döneceğim.", wrong: "Biraz geç kalacağım." }
+    ],
+    points: 12,
+    category: "Daily Life"
+  },
+
+  {
+    id: 14,
+    url: "https://files.catbox.moe/32amjr.mp4",
+    start: 0,
+    end: 15,
+    film: "Rhapsody Cinema",
+    transcript: "I can't figure this out. Let me take a look. Be my guest.",
+    segments: [
+      { start: 6.00, text: "I can't figure this out." },
+      { start: 8.00, text: "Let me take a look." },
+      { start: 9.74, text: "Be my guest." }
+    ],
+    questions: [
+      { phrase: "I can't figure this out.", correct: "Bunu çözemiyorum.", wrong: "Bunu kolayca yapabilirim." },
+      { phrase: "Let me take a look.", correct: "Bir bakayım.", wrong: "Sana yardım edemem." },
+      { phrase: "Be my guest.", correct: "Buyurun / Tabii ki.", wrong: "Hayır, dokunma." }
+    ],
+    points: 12,
+    category: "Work"
+  },
+
 ];

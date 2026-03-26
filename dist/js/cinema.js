@@ -1,51 +1,9 @@
-/**
- * RHAPSODY CINEMA — v5.0
- * Kids-app style UX: loading overlay, subtitle highlight, dim overlay,
- * score/streak header, result banner, replay/next buttons, progress bar, done screen.
- */
-class CinemaModule {
-  constructor(app) {
-    this.app = app;
-    this.el = null;
-    this.video = null;
-    this.clips = [];
-    this.clipIndex = 0;
-    this.score = 0;
-    this.streak = 0;
-    this.selected = null;
-    this.phase = 'idle'; // idle | loading | playing | question | result | done
-    this.syncTimer = null;
-    this.subtitleShown = false;
-    this._currentEntry = null;
-    this._qIdx = 0;
-    this._questions = [];
-  }
-
-  init(el) {
-    this.el = el;
-    if (typeof CINEMA_DATA === 'undefined' || !CINEMA_DATA.length) return;
-    this.clips = this._shuffle([...CINEMA_DATA]);
-    this._render();
-    this._loadClip();
-    this._initOrientation();
-  }
-
-  _shuffle(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
-
-  _render() {
-    this.el.innerHTML = `
+class CinemaModule{constructor(e){this.app=e,this.el=null,this.video=null,this.clips=[],this.clipIndex=0,this.score=0,this.streak=0,this.selected=null,this.phase="idle",this.syncTimer=null,this.subtitleShown=!1,this._currentEntry=null,this._qIdx=0,this._questions=[]}init(e){this.el=e,!(typeof CINEMA_DATA=="undefined"||!CINEMA_DATA.length)&&(this.clips=this._shuffle([...CINEMA_DATA]),this._render(),this._loadClip(),this._initOrientation())}_shuffle(e){const t=[...e];for(let i=t.length-1;i>0;i--){const n=Math.floor(Math.random()*(i+1));[t[i],t[n]]=[t[n],t[i]]}return t}_render(){this.el.innerHTML=`
       <div id="cine-root" style="
         position:fixed;inset:0;z-index:200;background:#000;
         display:flex;flex-direction:column;overflow:hidden;
       ">
-        <!-- Video — tam ekran arkaplan -->
+        <!-- Video \u2014 tam ekran arkaplan -->
         <video id="cine-video" playsinline style="
           position:absolute;inset:0;width:100%;height:100%;
           object-fit:cover;background:#000;
@@ -147,7 +105,7 @@ class CinemaModule {
           display:none;flex-direction:column;align-items:center;justify-content:center;
           text-align:center;padding:32px;gap:20px;
         ">
-          <div style="font-size:5rem;">🎬</div>
+          <div style="font-size:5rem;">\u{1F3AC}</div>
           <div id="cine-done-title" style="
             font-size:2.5rem;font-weight:900;color:#fff;line-height:1.1;
           ">Harika!</div>
@@ -182,7 +140,7 @@ class CinemaModule {
           ">&#8592;</button>
           <div style="text-align:center;">
             <div style="color:#fff;font-weight:900;font-size:1.05rem;letter-spacing:0.5px;">
-              🎬 Cinema Mode
+              \u{1F3AC} Cinema Mode
             </div>
             <div id="cine-counter" style="
               color:#f59e0b;font-size:0.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
@@ -225,222 +183,8 @@ class CinemaModule {
           100% { transform: translateX(-50%) translateY(-30px) scale(1); opacity:0; }
         }
       </style>
-    `;
-
-    this.video = this.el.querySelector('#cine-video');
-    this._preloader = document.createElement('video');
-    this._preloader.preload = 'auto';
-    this._preloader.muted = true;
-    this._preloader.style.display = 'none';
-    document.body.appendChild(this._preloader);
-
-    this.el.querySelector('#cine-exit').onclick = () => this._exit();
-    this.el.querySelector('#cine-tap').onclick = () => this._playAfterTap();
-    this.el.querySelector('#cine-done-exit').onclick = () => this._exit();
-
-    this.video.addEventListener('canplay', () => {
-      if (this.phase === 'loading') this._startPlaying();
-    });
-    this.video.addEventListener('ended', () => {
-      this._clearSync();
-      if (this.phase === 'playing') this._showQuestion();
-    });
-    this.video.addEventListener('error', () => {
-      this._clearSync();
-      if (this.phase === 'playing' || this.phase === 'loading') this._showQuestion();
-    });
-  }
-
-  _loadClip() {
-    if (!this.clips.length) return;
-    const entry = this.clips[this.clipIndex % this.clips.length];
-    this._currentEntry = entry;
-    this.selected = null;
-    this.subtitleShown = false;
-    this._qIdx = 0;
-    this._questions = [];
-    this._lastSegIdx = -1;
-    this.phase = 'loading';
-
-    // Reset UI
-    this._setLoader(true);
-    this._setDim(false);
-    this._setSubtitle(false);
-    this._hideQuestion();
-    this._hideDone();
-    this._hideTap();
-    this._hideResultBanner();
-
-    // Header
-    const counter = this.el.querySelector('#cine-counter');
-    counter.textContent = `Sahne ${(this.clipIndex % this.clips.length) + 1} / ${this.clips.length}`;
-
-    // Source badge
-    const src = this.el.querySelector('#cine-source');
-    if (entry.film) {
-      src.textContent = `\uD83C\uDFAC ${entry.film}${entry.year ? ' \u00B7 ' + entry.year : ''}`;
-      src.style.display = 'block';
-    } else {
-      src.style.display = 'none';
-    }
-
-    this._clearSync();
-    this.video.src = entry.url;
-    this.video.load();
-
-    const startTime = entry.start || 0;
-    if (startTime > 0) {
-      this.video.addEventListener('loadedmetadata', () => {
-        this.video.currentTime = startTime;
-      }, { once: true });
-    }
-
-    this.video.play().catch(() => {
-      this._setLoader(false);
-      this._showTap();
-      this._pendingEntry = entry;
-    });
-  }
-
-  _startPlaying() {
-    this._setLoader(false);
-    this.phase = 'playing';
-    const entry = this._currentEntry;
-    this._startSyncTimer(entry);
-    this._preloadNext();
-  }
-
-  _preloadNext() {
-    const nextIndex = (this.clipIndex + 1) % this.clips.length;
-    if (nextIndex === this.clipIndex) return;
-    const nextUrl = this.clips[nextIndex].url;
-    if (this._preloader && this._preloader.src !== nextUrl) {
-      this._preloader.src = nextUrl;
-      this._preloader.load();
-    }
-  }
-
-  _startSyncTimer(entry) {
-    this._clearSync();
-    const segments = entry.segments || null;
-    const endTime = entry.end;
-    const v = this.video;
-
-    this.syncTimer = setInterval(() => {
-      if (!v) return;
-      const t = v.currentTime;
-
-      // Segment bazli altyazi senkronizasyonu
-      if (segments && segments.length) {
-        // Simdi hangi segment gosterilemeli?
-        let segIdx = -1;
-        for (let i = segments.length - 1; i >= 0; i--) {
-          if (t >= segments[i].start) { segIdx = i; break; }
-        }
-        if (segIdx !== this._lastSegIdx) {
-          this._lastSegIdx = segIdx;
-          if (segIdx >= 0) {
-            this._showSubtitle(segments[segIdx].text, null);
-          } else {
-            this._setSubtitle(false);
-          }
-        }
-      } else if (!this.subtitleShown) {
-        // Segment yoksa tum transcript'i goster
-        this.subtitleShown = true;
-        this._showSubtitle(entry.transcript, null);
-      }
-
-      if (t >= endTime) {
-        this._clearSync();
-        v.pause();
-        if (this.phase === 'playing') this._showQuestion();
-      }
-    }, 100);
-  }
-
-  _clearSync() {
-    if (this.syncTimer) { clearInterval(this.syncTimer); this.syncTimer = null; }
-  }
-
-  _showSubtitle(text, highlight) {
-    const sub = this.el.querySelector('#cine-subtitle');
-    const inner = this.el.querySelector('#cine-subtitle-inner');
-    sub.style.display = 'block';
-
-    if (highlight) {
-      const idx = text.toLowerCase().indexOf(highlight.toLowerCase());
-      if (idx !== -1) {
-        const before = this._esc(text.slice(0, idx));
-        const match = this._esc(text.slice(idx, idx + highlight.length));
-        const after = this._esc(text.slice(idx + highlight.length));
-        inner.innerHTML = `${before}<span style="background:#f59e0b;color:#1a1a1a;border-radius:6px;padding:1px 5px;margin:0 1px;">${match}</span>${after}`;
-      } else {
-        inner.textContent = text;
-      }
-    } else {
-      inner.style.color = '#fff';
-      inner.textContent = text;
-    }
-  }
-
-  _esc(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-
-  _buildQuestions(entry) {
-    // Yeni format: entry.questions[]
-    if (entry.questions && entry.questions.length) {
-      return entry.questions.map(q => ({
-        phrase: q.phrase,
-        correct: q.correct,
-        wrong: q.wrong,
-      }));
-    }
-    // Eski format: entry.options[] ile tek soru
-    const correct = entry.options && entry.options.find(o => o.isCorrect);
-    const wrong = entry.options && entry.options.find(o => !o.isCorrect);
-    if (!correct) return [];
-    return [{ phrase: entry.transcript, correct: correct.text, wrong: wrong ? wrong.text : '—' }];
-  }
-
-  _showQuestion() {
-    const entry = this._currentEntry;
-    if (!entry) return;
-
-    // Sorulari ilk geliste olustur
-    if (!this._questions.length) {
-      this._questions = this._buildQuestions(entry);
-      this._qIdx = 0;
-    }
-
-    if (this._qIdx >= this._questions.length) { this._nextClip(); return; }
-
-    this.phase = 'question';
-    this.selected = null;
-
-    const q = this._questions[this._qIdx];
-    const opts = Math.random() < 0.5
-      ? [{ text: q.correct, isRight: true }, { text: q.wrong, isRight: false }]
-      : [{ text: q.wrong, isRight: false }, { text: q.correct, isRight: true }];
-
-    // Subtitle altta kalsin, phrase'i vurgula
-    this._showSubtitle(entry.transcript, q.phrase);
-
-    // Dim overlay
-    this._setDim(true);
-
-    // Soru sayaci + phrase
-    const phraseEl = this.el.querySelector('#cine-phrase');
-    const counter = this._questions.length > 1
-      ? `<span style="color:rgba(245,158,11,0.6);font-size:0.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:block;text-align:center;margin-bottom:4px;">${this._qIdx + 1} / ${this._questions.length}</span>`
-      : '';
-    phraseEl.innerHTML = `${counter}<span style="color:#fbbf24;">"${this._esc(q.phrase)}"</span> ne demek?`;
-
-    // Secenekler
-    const choicesEl = this.el.querySelector('#cine-choices');
-    choicesEl.innerHTML = opts.map((opt, i) => `
-      <button class="cine-choice-btn" data-idx="${i}" data-right="${opt.isRight}" style="
+    `,this.video=this.el.querySelector("#cine-video"),this._preloader=document.createElement("video"),this._preloader.preload="auto",this._preloader.muted=!0,this._preloader.style.display="none",document.body.appendChild(this._preloader),this.el.querySelector("#cine-exit").onclick=()=>this._exit(),this.el.querySelector("#cine-tap").onclick=()=>this._playAfterTap(),this.el.querySelector("#cine-done-exit").onclick=()=>this._exit(),this.video.addEventListener("canplay",()=>{this.phase==="loading"&&this._startPlaying()}),this.video.addEventListener("ended",()=>{this._clearSync(),this.phase==="playing"&&this._showQuestion()}),this.video.addEventListener("error",()=>{this._clearSync(),(this.phase==="playing"||this.phase==="loading")&&this._showQuestion()})}_loadClip(){if(!this.clips.length)return;const e=this.clips[this.clipIndex%this.clips.length];this._currentEntry=e,this.selected=null,this.subtitleShown=!1,this._qIdx=0,this._questions=[],this._lastSegIdx=-1,this.phase="loading",this._setLoader(!0),this._setDim(!1),this._setSubtitle(!1),this._hideQuestion(),this._hideDone(),this._hideTap(),this._hideResultBanner();const t=this.el.querySelector("#cine-counter");t.textContent=`Sahne ${this.clipIndex%this.clips.length+1} / ${this.clips.length}`;const i=this.el.querySelector("#cine-source");e.film?(i.textContent=`\u{1F3AC} ${e.film}${e.year?" \xB7 "+e.year:""}`,i.style.display="block"):i.style.display="none",this._clearSync(),this.video.src=e.url,this.video.load();const n=e.start||0;n>0&&this.video.addEventListener("loadedmetadata",()=>{this.video.currentTime=n},{once:!0}),this.video.play().catch(()=>{this._setLoader(!1),this._showTap(),this._pendingEntry=e})}_startPlaying(){this._setLoader(!1),this.phase="playing";const e=this._currentEntry;this._startSyncTimer(e),this._preloadNext()}_preloadNext(){const e=(this.clipIndex+1)%this.clips.length;if(e===this.clipIndex)return;const t=this.clips[e].url;this._preloader&&this._preloader.src!==t&&(this._preloader.src=t,this._preloader.load())}_startSyncTimer(e){this._clearSync();const t=e.segments||null,i=e.end,n=this.video;this.syncTimer=setInterval(()=>{if(!n)return;const r=n.currentTime;if(t&&t.length){let s=-1;for(let o=t.length-1;o>=0;o--)if(r>=t[o].start){s=o;break}s!==this._lastSegIdx&&(this._lastSegIdx=s,s>=0?this._showSubtitle(t[s].text,null):this._setSubtitle(!1))}else this.subtitleShown||(this.subtitleShown=!0,this._showSubtitle(e.transcript,null));r>=i&&(this._clearSync(),n.pause(),this.phase==="playing"&&this._showQuestion())},100)}_clearSync(){this.syncTimer&&(clearInterval(this.syncTimer),this.syncTimer=null)}_showSubtitle(e,t){const i=this.el.querySelector("#cine-subtitle"),n=this.el.querySelector("#cine-subtitle-inner");if(i.style.display="block",t){const r=e.toLowerCase().indexOf(t.toLowerCase());if(r!==-1){const s=this._esc(e.slice(0,r)),o=this._esc(e.slice(r,r+t.length)),l=this._esc(e.slice(r+t.length));n.innerHTML=`${s}<span style="background:#f59e0b;color:#1a1a1a;border-radius:6px;padding:1px 5px;margin:0 1px;">${o}</span>${l}`}else n.textContent=e}else n.style.color="#fff",n.textContent=e}_esc(e){return e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}_buildQuestions(e){if(e.questions&&e.questions.length)return e.questions.map(n=>({phrase:n.phrase,correct:n.correct,wrong:n.wrong}));const t=e.options&&e.options.find(n=>n.isCorrect),i=e.options&&e.options.find(n=>!n.isCorrect);return t?[{phrase:e.transcript,correct:t.text,wrong:i?i.text:"\u2014"}]:[]}_showQuestion(){const e=this._currentEntry;if(!e)return;if(this._questions.length||(this._questions=this._buildQuestions(e),this._qIdx=0),this._qIdx>=this._questions.length){this._nextClip();return}this.phase="question",this.selected=null;const t=this._questions[this._qIdx],i=Math.random()<.5?[{text:t.correct,isRight:!0},{text:t.wrong,isRight:!1}]:[{text:t.wrong,isRight:!1},{text:t.correct,isRight:!0}];this._showSubtitle(e.transcript,t.phrase),this._setDim(!0);const n=this.el.querySelector("#cine-phrase"),r=this._questions.length>1?`<span style="color:rgba(245,158,11,0.6);font-size:0.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:block;text-align:center;margin-bottom:4px;">${this._qIdx+1} / ${this._questions.length}</span>`:"";n.innerHTML=`${r}<span style="color:#fbbf24;">"${this._esc(t.phrase)}"</span> ne demek?`;const s=this.el.querySelector("#cine-choices");s.innerHTML=i.map((l,a)=>`
+      <button class="cine-choice-btn" data-idx="${a}" data-right="${l.isRight}" style="
         width:100%;padding:14px 16px;border-radius:14px;
         background:rgba(255,255,255,0.08);
         border:1.5px solid rgba(255,255,255,0.18);
@@ -449,142 +193,26 @@ class CinemaModule {
         display:flex;align-items:center;justify-content:space-between;
         transition:background 0.18s,border-color 0.18s;line-height:1.4;
       ">
-        <span>${this._esc(opt.text)}</span>
+        <span>${this._esc(l.text)}</span>
         <span class="cine-btn-icon" style="font-size:1.1rem;"></span>
       </button>
-    `).join('');
-
-    choicesEl.querySelectorAll('.cine-choice-btn').forEach(btn => {
-      btn.onclick = () => this._checkAnswer(btn, q.correct);
-    });
-
-    // Hide actions, show progress
-    this.el.querySelector('#cine-actions').style.display = 'none';
-    this._renderProgress();
-
-    // Slide up panel
-    const panel = this.el.querySelector('#cine-question');
-    panel.style.display = 'flex';
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      panel.style.transform = 'translateY(0)';
-    }));
-  }
-
-  _playSound(type) {
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      if (type === 'correct') {
-        // Yükselen iki nota — neşeli chime
-        [[523.25, 0, 0.12], [783.99, 0.13, 0.22]].forEach(([freq, start, end]) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.connect(gain); gain.connect(ctx.destination);
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
-          gain.gain.setValueAtTime(0.35, ctx.currentTime + start);
-          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + end);
-          osc.start(ctx.currentTime + start);
-          osc.stop(ctx.currentTime + end);
-        });
-      } else {
-        // Kısa alçalan titreşim — hata sesi
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(220, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.25);
-        gain.gain.setValueAtTime(0.25, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.25);
-      }
-    } catch(e) {}
-  }
-
-  _checkAnswer(btn, correctText) {
-    if (this.selected) return;
-    this.selected = btn.dataset.right === 'true' ? 'correct' : 'wrong';
-    this.phase = 'result';
-
-    const isRight = btn.dataset.right === 'true';
-    const allBtns = this.el.querySelectorAll('.cine-choice-btn');
-
-    allBtns.forEach(b => {
-      b.style.pointerEvents = 'none';
-      const icon = b.querySelector('.cine-btn-icon');
-      if (b.dataset.right === 'true') {
-        b.style.background = 'rgba(52,211,153,0.18)';
-        b.style.borderColor = '#34d399';
-        b.style.color = '#34d399';
-        icon.textContent = '\u2713';
-      } else if (b === btn) {
-        b.style.background = 'rgba(248,113,113,0.18)';
-        b.style.borderColor = '#f87171';
-        b.style.color = '#f87171';
-        icon.textContent = '\u2717';
-      }
-    });
-
-    const xpBase = (window.remoteFlags?.xp_cinema_correct) || 10;
-
-    if (isRight) {
-      this._playSound('correct');
-      this.score += xpBase + this.streak * 2;
-      this.streak++;
-      this._updateScoreBadge();
-      this._showResultBanner(true, null);
-    } else {
-      this._playSound('wrong');
-      this.streak = 0;
-      this._updateScoreBadge();
-      this._showResultBanner(false, correctText);
-    }
-
-    // Uygulamanin XP sistemine entegre et
-    const app = window._app || window.app;
-    if (isRight && app && app.addXP) app.addXP(xpBase, 'medium', 'cinema');
-
-    // Show action buttons
-    const hasMore = this._qIdx + 1 < this._questions.length;
-    this._showActionButtons(hasMore);
-  }
-
-  _showResultBanner(isRight, correctText) {
-    const banner = this.el.querySelector('#cine-result-banner');
-    if (isRight) {
-      banner.innerHTML = `
+    `).join(""),s.querySelectorAll(".cine-choice-btn").forEach(l=>{l.onclick=()=>this._checkAnswer(l,t.correct)}),this.el.querySelector("#cine-actions").style.display="none",this._renderProgress();const o=this.el.querySelector("#cine-question");o.style.display="flex",requestAnimationFrame(()=>requestAnimationFrame(()=>{o.style.transform="translateY(0)"}))}_playSound(e){try{const t=new(window.AudioContext||window.webkitAudioContext);if(e==="correct")[[523.25,0,.12],[783.99,.13,.22]].forEach(([i,n,r])=>{const s=t.createOscillator(),o=t.createGain();s.connect(o),o.connect(t.destination),s.type="sine",s.frequency.setValueAtTime(i,t.currentTime+n),o.gain.setValueAtTime(.35,t.currentTime+n),o.gain.exponentialRampToValueAtTime(.001,t.currentTime+r),s.start(t.currentTime+n),s.stop(t.currentTime+r)});else{const i=t.createOscillator(),n=t.createGain();i.connect(n),n.connect(t.destination),i.type="sawtooth",i.frequency.setValueAtTime(220,t.currentTime),i.frequency.exponentialRampToValueAtTime(110,t.currentTime+.25),n.gain.setValueAtTime(.25,t.currentTime),n.gain.exponentialRampToValueAtTime(.001,t.currentTime+.25),i.start(t.currentTime),i.stop(t.currentTime+.25)}}catch(t){}}_checkAnswer(e,t){var l;if(this.selected)return;this.selected=e.dataset.right==="true"?"correct":"wrong",this.phase="result";const i=e.dataset.right==="true";this.el.querySelectorAll(".cine-choice-btn").forEach(a=>{a.style.pointerEvents="none";const d=a.querySelector(".cine-btn-icon");a.dataset.right==="true"?(a.style.background="rgba(52,211,153,0.18)",a.style.borderColor="#34d399",a.style.color="#34d399",d.textContent="\u2713"):a===e&&(a.style.background="rgba(248,113,113,0.18)",a.style.borderColor="#f87171",a.style.color="#f87171",d.textContent="\u2717")});const r=((l=window.remoteFlags)==null?void 0:l.xp_cinema_correct)||10;i?(this._playSound("correct"),this.score+=r+this.streak*2,this.streak++,this._updateScoreBadge(),this._showResultBanner(!0,null)):(this._playSound("wrong"),this.streak=0,this._updateScoreBadge(),this._showResultBanner(!1,t));const s=window._app||window.app;i&&s&&s.addXP&&s.addXP(r,"medium","cinema");const o=this._qIdx+1<this._questions.length;this._showActionButtons(o)}_showResultBanner(e,t){const i=this.el.querySelector("#cine-result-banner");e?i.innerHTML=`
         <div style="animation:cine-pop 1.6s forwards;">
           <div style="font-size:3.5rem;">&#10024;</div>
           <div style="font-size:1.8rem;font-weight:900;color:#34d399;
             text-shadow:0 2px 12px rgba(0,0,0,0.9);">Harika!</div>
         </div>
-      `;
-    } else {
-      banner.innerHTML = `
+      `:i.innerHTML=`
         <div>
           <div style="font-size:2.8rem;">&#128543;</div>
           <div style="font-size:1.2rem;font-weight:900;color:#f87171;
             text-shadow:0 2px 12px rgba(0,0,0,0.9);">Dogrusu:</div>
           <div style="font-size:1.1rem;font-weight:900;color:#fbbf24;
             text-shadow:0 2px 12px rgba(0,0,0,0.9);max-width:260px;line-height:1.3;margin-top:4px;">
-            ${this._esc(correctText)}
+            ${this._esc(t)}
           </div>
         </div>
-      `;
-    }
-    banner.style.display = 'block';
-  }
-
-  _hideResultBanner() {
-    const banner = this.el.querySelector('#cine-result-banner');
-    if (banner) { banner.style.display = 'none'; banner.innerHTML = ''; }
-  }
-
-  _showActionButtons(hasMoreQuestions) {
-    const actions = this.el.querySelector('#cine-actions');
-    const nextLabel = hasMoreQuestions ? 'Sonraki Soru &#10095;' : 'Sonraki Sahne &#10095;';
-    actions.innerHTML = `
+      `,i.style.display="block"}_hideResultBanner(){const e=this.el.querySelector("#cine-result-banner");e&&(e.style.display="none",e.innerHTML="")}_showActionButtons(e){const t=this.el.querySelector("#cine-actions"),i=e?"Sonraki Soru &#10095;":"Sonraki Sahne &#10095;";t.innerHTML=`
       <button id="cine-replay" style="
         flex:1;padding:12px 0;border-radius:14px;
         background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
@@ -596,211 +224,5 @@ class CinemaModule {
         background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);
         color:#fff;font-size:0.82rem;font-weight:700;cursor:pointer;
         display:flex;align-items:center;justify-content:center;gap:6px;
-      ">${nextLabel}</button>
-    `;
-    actions.style.display = 'flex';
-    actions.querySelector('#cine-replay').onclick = () => this._replayClip();
-    actions.querySelector('#cine-next').onclick = () => {
-      if (hasMoreQuestions) {
-        this._qIdx++;
-        this._hideResultBanner();
-        this._showQuestion();
-      } else {
-        this._nextClip();
-      }
-    };
-  }
-
-  _replayClip() {
-    this._clearSync();
-    this._hideResultBanner();
-    this._setDim(false);
-    this._hideQuestion();
-    this._setSubtitle(false);
-    this.subtitleShown = false;
-    this.selected = null;
-    this._qIdx = 0;
-    this._questions = [];
-    this._lastSegIdx = -1;
-    this.phase = 'loading';
-    this._setLoader(true);
-    this.video.currentTime = this._currentEntry.start || 0;
-    this.video.play().then(() => {
-      this._startPlaying();
-    }).catch(() => {
-      this._setLoader(false);
-      this._showTap();
-      this._pendingEntry = this._currentEntry;
-    });
-  }
-
-  _renderProgress() {
-    const prog = this.el.querySelector('#cine-progress');
-    prog.innerHTML = this.clips.map((_, i) => {
-      let color;
-      if (i < this.clipIndex) color = '#34d399';
-      else if (i === this.clipIndex) color = '#f59e0b';
-      else color = 'rgba(255,255,255,0.12)';
-      return `<div style="flex:1;height:3px;border-radius:4px;background:${color};transition:background 0.3s;"></div>`;
-    }).join('');
-  }
-
-  _updateScoreBadge() {
-    this.el.querySelector('#cine-score-val').textContent = this.score;
-    const streakEl = this.el.querySelector('#cine-streak-val');
-    if (this.streak >= 2) {
-      streakEl.textContent = `x${this.streak}`;
-      streakEl.style.display = 'inline';
-    } else {
-      streakEl.style.display = 'none';
-    }
-  }
-
-  _hideQuestion() {
-    const panel = this.el.querySelector('#cine-question');
-    if (!panel) return;
-    panel.style.transform = 'translateY(100%)';
-    setTimeout(() => { panel.style.display = 'none'; }, 400);
-  }
-
-  _hideDone() {
-    const done = this.el.querySelector('#cine-done');
-    if (done) done.style.display = 'none';
-  }
-
-  _showTap() {
-    const tap = this.el.querySelector('#cine-tap');
-    if (tap) tap.style.display = 'flex';
-  }
-
-  _hideTap() {
-    const tap = this.el.querySelector('#cine-tap');
-    if (tap) tap.style.display = 'none';
-  }
-
-  _setLoader(show) {
-    const el = this.el.querySelector('#cine-loader');
-    if (el) el.style.display = show ? 'flex' : 'none';
-  }
-
-  _setDim(show) {
-    const el = this.el.querySelector('#cine-dim');
-    if (el) el.style.display = show ? 'block' : 'none';
-  }
-
-  _setSubtitle(show) {
-    const el = this.el.querySelector('#cine-subtitle');
-    if (el) el.style.display = show ? 'block' : 'none';
-  }
-
-  _playAfterTap() {
-    this._hideTap();
-    const entry = this._pendingEntry;
-    const v = this.video;
-    const doPlay = () => {
-      v.play().then(() => this._startPlaying()).catch(() => this._showTap());
-    };
-    if (v.readyState >= 3) doPlay();
-    else v.addEventListener('canplay', doPlay, { once: true });
-  }
-
-  _nextClip() {
-    this._clearSync();
-    this._hideResultBanner();
-    this.clipIndex++;
-    if (this.clipIndex >= this.clips.length) {
-      this._showDone();
-      return;
-    }
-    setTimeout(() => this._loadClip(), 400);
-  }
-
-  _showDone() {
-    this.phase = 'done';
-    this._setLoader(false);
-    this._setDim(false);
-    this._hideQuestion();
-    const done = this.el.querySelector('#cine-done');
-    done.querySelector('#cine-done-sub').textContent = `${this.clips.length} sahneden gectiniz!`;
-    done.querySelector('#cine-done-score').textContent = `${this.score} puan`;
-    done.style.display = 'flex';
-  }
-
-  _initOrientation() {
-    /* Allow device rotation in cinema mode */
-    try {
-      if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
-    } catch(e) {}
-
-    const enterFs = () => {
-      const root = this.el && this.el.querySelector('#cine-root');
-      if (!root) return;
-      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        const fsEl = document.documentElement;
-        const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
-        if (req) req.call(fsEl).catch(() => {});
-      }
-    };
-    enterFs();
-    this._onOrientChange = () => enterFs();
-
-    window.addEventListener('resize', this._onOrientChange, { passive: true });
-
-    /* Double-tap: navigasyon menüsü */
-    const root = this.el && this.el.querySelector('#cine-root');
-    if (root && window.attachQuickMenuTrigger) window.attachQuickMenuTrigger(root);
-  }
-
-  _exit() {
-    this._clearSync();
-    if (this.video) { this.video.pause(); this.video.src = ''; }
-    if (this._preloader) { this._preloader.src = ''; this._preloader.remove(); this._preloader = null; }
-
-    if (this._onOrientChange) {
-      window.removeEventListener('resize', this._onOrientChange);
-      this._onOrientChange = null;
-    }
-
-    /* Restore portrait lock */
-    try {
-      if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('portrait').catch(() => {});
-      }
-    } catch(e) {}
-
-    const app = window._app || window.app;
-    if (app && app.navigate) app.navigate('home');
-    else {
-      const btn = document.querySelector('[data-action="navigate"][data-target="home"]');
-      if (btn) btn.click();
-    }
-  }
-}
-
-// ── AUTO-INIT ──
-(function () {
-  const initPlugin = () => {
-    const mount = document.getElementById('cinema-mount-point');
-    if (mount && (!window.cinemaMod || window.cinemaMod.el !== mount)) {
-      const app = window._app || window.app;
-      window.cinemaMod = new CinemaModule(app);
-      window.cinemaMod.init(mount);
-      if (app && app._showMobileNav) app._showMobileNav();
-    }
-  };
-
-  document.addEventListener('click', function (e) {
-    const btn = e.target.closest('[data-target="cinema"]');
-    if (btn) setTimeout(initPlugin, 80);
-  }, true);
-
-  if (document.body) {
-    const observer = new MutationObserver(initPlugin);
-    observer.observe(document.body, { childList: true, subtree: true });
-  } else {
-    document.addEventListener('DOMContentLoaded', function () {
-      const observer = new MutationObserver(initPlugin);
-      observer.observe(document.body, { childList: true, subtree: true });
-    });
-  }
-})();
+      ">${i}</button>
+    `,t.style.display="flex",t.querySelector("#cine-replay").onclick=()=>this._replayClip(),t.querySelector("#cine-next").onclick=()=>{e?(this._qIdx++,this._hideResultBanner(),this._showQuestion()):this._nextClip()}}_replayClip(){this._clearSync(),this._hideResultBanner(),this._setDim(!1),this._hideQuestion(),this._setSubtitle(!1),this.subtitleShown=!1,this.selected=null,this._qIdx=0,this._questions=[],this._lastSegIdx=-1,this.phase="loading",this._setLoader(!0),this.video.currentTime=this._currentEntry.start||0,this.video.play().then(()=>{this._startPlaying()}).catch(()=>{this._setLoader(!1),this._showTap(),this._pendingEntry=this._currentEntry})}_renderProgress(){const e=this.el.querySelector("#cine-progress");e.innerHTML=this.clips.map((t,i)=>{let n;return i<this.clipIndex?n="#34d399":i===this.clipIndex?n="#f59e0b":n="rgba(255,255,255,0.12)",`<div style="flex:1;height:3px;border-radius:4px;background:${n};transition:background 0.3s;"></div>`}).join("")}_updateScoreBadge(){this.el.querySelector("#cine-score-val").textContent=this.score;const e=this.el.querySelector("#cine-streak-val");this.streak>=2?(e.textContent=`x${this.streak}`,e.style.display="inline"):e.style.display="none"}_hideQuestion(){const e=this.el.querySelector("#cine-question");e&&(e.style.transform="translateY(100%)",setTimeout(()=>{e.style.display="none"},400))}_hideDone(){const e=this.el.querySelector("#cine-done");e&&(e.style.display="none")}_showTap(){const e=this.el.querySelector("#cine-tap");e&&(e.style.display="flex")}_hideTap(){const e=this.el.querySelector("#cine-tap");e&&(e.style.display="none")}_setLoader(e){const t=this.el.querySelector("#cine-loader");t&&(t.style.display=e?"flex":"none")}_setDim(e){const t=this.el.querySelector("#cine-dim");t&&(t.style.display=e?"block":"none")}_setSubtitle(e){const t=this.el.querySelector("#cine-subtitle");t&&(t.style.display=e?"block":"none")}_playAfterTap(){this._hideTap();const e=this._pendingEntry,t=this.video,i=()=>{t.play().then(()=>this._startPlaying()).catch(()=>this._showTap())};t.readyState>=3?i():t.addEventListener("canplay",i,{once:!0})}_nextClip(){if(this._clearSync(),this._hideResultBanner(),this.clipIndex++,this.clipIndex>=this.clips.length){this._showDone();return}setTimeout(()=>this._loadClip(),400)}_showDone(){this.phase="done",this._setLoader(!1),this._setDim(!1),this._hideQuestion();const e=this.el.querySelector("#cine-done");e.querySelector("#cine-done-sub").textContent=`${this.clips.length} sahneden gectiniz!`,e.querySelector("#cine-done-score").textContent=`${this.score} puan`,e.style.display="flex"}_initOrientation(){try{screen.orientation&&screen.orientation.unlock&&screen.orientation.unlock()}catch(i){}const e=()=>{if(this.el&&this.el.querySelector("#cine-root")&&!document.fullscreenElement&&!document.webkitFullscreenElement){const n=document.documentElement,r=n.requestFullscreen||n.webkitRequestFullscreen;r&&r.call(n).catch(()=>{})}};e(),this._onOrientChange=()=>e(),window.addEventListener("resize",this._onOrientChange,{passive:!0});const t=this.el&&this.el.querySelector("#cine-root");t&&window.attachQuickMenuTrigger&&window.attachQuickMenuTrigger(t)}_exit(){this._clearSync(),this.video&&(this.video.pause(),this.video.src=""),this._preloader&&(this._preloader.src="",this._preloader.remove(),this._preloader=null),this._onOrientChange&&(window.removeEventListener("resize",this._onOrientChange),this._onOrientChange=null);try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock("portrait").catch(()=>{})}catch(t){}const e=window._app||window.app;if(e&&e.navigate)e.navigate("home");else{const t=document.querySelector('[data-action="navigate"][data-target="home"]');t&&t.click()}}}(function(){const c=()=>{const e=document.getElementById("cinema-mount-point");if(e&&(!window.cinemaMod||window.cinemaMod.el!==e)){const t=window._app||window.app;window.cinemaMod=new CinemaModule(t),window.cinemaMod.init(e),t&&t._showMobileNav&&t._showMobileNav()}};document.addEventListener("click",function(e){e.target.closest('[data-target="cinema"]')&&setTimeout(c,80)},!0),document.body?new MutationObserver(c).observe(document.body,{childList:!0,subtree:!0}):document.addEventListener("DOMContentLoaded",function(){new MutationObserver(c).observe(document.body,{childList:!0,subtree:!0})})})();
