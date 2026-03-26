@@ -185,9 +185,9 @@ var CINEMA_DATA = [
       { start: 6.66, text: "I'll try again." }
     ],
     questions: [
-      { phrase: "I can't do this.", correct: "Bunu yapamam.", wrong: "Bunu yapabilirim." },
-      { phrase: "Come on, you've got this.", correct: "Hadi, başarabilirsin.", wrong: "Vazgeç, çok zor." },
-      { phrase: "I'll try again.", correct: "Tekrar deneyeceğim.", wrong: "Pes ediyorum." }
+      { phrase: "I can't do this.", correct: "Bunu yapamam.", wrong: "Bunu yapmak zorunda değilim." },
+      { phrase: "Come on, you've got this.", correct: "Hadi, sen bunu başarabilirsin.", wrong: "Hadi, bunu birlikte yapalım." },
+      { phrase: "I'll try again.", correct: "Tekrar deneyeceğim.", wrong: "Sonraya bırakıyorum." }
     ],
     points: 12,
     category: "Daily Life"
@@ -206,9 +206,9 @@ var CINEMA_DATA = [
       { start: 10.00, text: "Exactly." }
     ],
     questions: [
-      { phrase: "Nice event, huh?", correct: "Güzel bir etkinlik, değil mi?", wrong: "Sıkıcı bir etkinlik, değil mi?" },
-      { phrase: "It's a good way to break the ice.", correct: "Buz kırmak için iyi bir yol.", wrong: "Tartışmak için iyi bir fırsat." },
-      { phrase: "Exactly.", correct: "Kesinlikle.", wrong: "Hiç de değil." }
+      { phrase: "Nice event, huh?", correct: "Güzel bir etkinlik, değil mi?", wrong: "Bu etkinliğe ne zaman geldin?" },
+      { phrase: "It's a good way to break the ice.", correct: "Yabancılığı gidermek için güzel bir yol.", wrong: "Sorunu çözmek için iyi bir yöntem." },
+      { phrase: "Exactly.", correct: "Kesinlikle / Aynen öyle.", wrong: "Tam olarak değil." }
     ],
     points: 12,
     category: "Social"
@@ -248,9 +248,9 @@ var CINEMA_DATA = [
       { start: 6.10, text: "We should leave." }
     ],
     questions: [
-      { phrase: "This is getting out of hand.", correct: "Bu kontrolden çıkıyor.", wrong: "Bu çok eğlenceli." },
-      { phrase: "It's too crowded.", correct: "Çok kalabalık.", wrong: "Çok sessiz." },
-      { phrase: "We should leave.", correct: "Gitmeliyiz.", wrong: "Kalmaya devam edelim." }
+      { phrase: "This is getting out of hand.", correct: "Bu artık kontrolden çıkıyor.", wrong: "Bu giderek daha ilginç bir hal alıyor." },
+      { phrase: "It's too crowded.", correct: "Çok kalabalık.", wrong: "Hava çok sıkıcı." },
+      { phrase: "We should leave.", correct: "Gitmeliyiz.", wrong: "Burada biraz daha duralım." }
     ],
     points: 12,
     category: "Daily Life"
@@ -269,9 +269,9 @@ var CINEMA_DATA = [
       { start: 6.54, text: "I'll be right back." }
     ],
     questions: [
-      { phrase: "Can you keep an eye on him for a minute?", correct: "Bir dakika ona göz kulak olabilir misin?", wrong: "Onu bir yere götürür müsün?" },
-      { phrase: "Of course.", correct: "Tabii ki.", wrong: "Hayır, yapamam." },
-      { phrase: "I'll be right back.", correct: "Hemen döneceğim.", wrong: "Biraz geç kalacağım." }
+      { phrase: "Can you keep an eye on him for a minute?", correct: "Bir dakika ona göz kulak olur musun?", wrong: "Onu bir dakika eğlendirir misin?" },
+      { phrase: "Of course.", correct: "Tabii ki / Elbette.", wrong: "Şu an müsait değilim." },
+      { phrase: "I'll be right back.", correct: "Hemen geri döneceğim.", wrong: "Biraz sonra görüşürüz." }
     ],
     points: 12,
     category: "Daily Life"
@@ -290,9 +290,9 @@ var CINEMA_DATA = [
       { start: 9.74, text: "Be my guest." }
     ],
     questions: [
-      { phrase: "I can't figure this out.", correct: "Bunu çözemiyorum.", wrong: "Bunu kolayca yapabilirim." },
-      { phrase: "Let me take a look.", correct: "Bir bakayım.", wrong: "Sana yardım edemem." },
-      { phrase: "Be my guest.", correct: "Buyurun / Tabii ki.", wrong: "Hayır, dokunma." }
+      { phrase: "I can't figure this out.", correct: "Bunu bir türlü çözemedim.", wrong: "Bunu nasıl yapacağımı tam olarak biliyorum." },
+      { phrase: "Let me take a look.", correct: "Bir bakayım / İzin ver bakayım.", wrong: "Bunu sen halledersin." },
+      { phrase: "Be my guest.", correct: "Buyurun, tabii ki / Çekinme.", wrong: "Şu an uygun bir zaman değil." }
     ],
     points: 12,
     category: "Work"
