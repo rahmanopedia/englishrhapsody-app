@@ -266,20 +266,33 @@
   })();
 
   /* ── Double-tap helper ── */
+  const INTERACTIVE = 'button,a,input,select,textarea,label,[role="button"],[role="tab"],[role="option"],[tabindex]';
+  function _isInteractive(el) {
+    return !!(el && el.closest && el.closest(INTERACTIVE));
+  }
+
   window.attachQuickMenuTrigger = function (container) {
-    /* Mobile: touch double-tap */
+    /* Mobile: touch double-tap — sadece boş alanlarda tetikle */
     let lastTap = 0;
+    let lastTarget = null;
     container.addEventListener('touchend', function (e) {
+      // Buton veya interaktif elemana basıldıysa yoksay
+      if (_isInteractive(e.target)) { lastTap = 0; return; }
       const now = Date.now();
-      if (now - lastTap < 320) {
+      const gap = now - lastTap;
+      if (gap < 320 && gap > 30) {
         e.preventDefault();
         window.showQuickMenu(container);
+        lastTap = 0;
+        return;
       }
       lastTap = now;
+      lastTarget = e.target;
     }, { passive: false });
 
-    /* Desktop: dblclick */
-    container.addEventListener('dblclick', function () {
+    /* Desktop: dblclick — sadece boş alanlarda tetikle */
+    container.addEventListener('dblclick', function (e) {
+      if (_isInteractive(e.target)) return;
       window.showQuickMenu(container);
     });
   };
