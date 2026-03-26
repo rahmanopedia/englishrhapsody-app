@@ -398,6 +398,8 @@ class SpeakV2Module {
 
     // ── Native Capacitor path ──────────────────────────────────────
     if (NS) {
+      // Önceki session'dan kalan listener'ları temizle (leak önlemi)
+      NS.removeAllListeners().catch(() => {});
       this._recognition = { stop: () => NS.stop().catch(() => {}), _native: true };
       const setErr = (msg) => {
         const el = this.el?.querySelector('#sv2-status');

@@ -6,9 +6,9 @@ class BridgeModule {
   constructor(app) {
     this.app = app;
     this.el = null;
-    this.collection = JSON.parse(localStorage.getItem('bridge_collection') || '[]');
-    this.bridgeCount = parseInt(localStorage.getItem('bridge_count') || '0');
-    this.streakData = JSON.parse(localStorage.getItem('bridge_streak') || '{"count":0,"lastDate":""}');
+    try { this.collection = JSON.parse(localStorage.getItem('bridge_collection') || '[]'); } catch { this.collection = []; }
+    try { this.bridgeCount = parseInt(localStorage.getItem('bridge_count') || '0'); } catch { this.bridgeCount = 0; }
+    try { this.streakData = JSON.parse(localStorage.getItem('bridge_streak') || '{"count":0,"lastDate":""}'); } catch { this.streakData = {count:0,lastDate:''}; }
     this.currentData = null;
     this.activeCategory = null;
 
@@ -222,7 +222,7 @@ class BridgeModule {
       this.currentData = { originalTR: query, ...match.entry };
       this._renderResult();
       this.bridgeCount++;
-      localStorage.setItem('bridge_count', this.bridgeCount);
+      try { localStorage.setItem('bridge_count', this.bridgeCount); } catch { /**/ }
       this.el.querySelector('#b-stat-count').textContent = `✨ ${this.bridgeCount}`;
       this._updateStreak();
     } else {
@@ -308,7 +308,7 @@ class BridgeModule {
   _saveToColl() {
     if (!this.currentData || this.collection.some(x => x.originalTR === this.currentData.originalTR)) return;
     this.collection.unshift(this.currentData);
-    localStorage.setItem('bridge_collection', JSON.stringify(this.collection));
+    try { localStorage.setItem('bridge_collection', JSON.stringify(this.collection)); } catch { /**/ }
     UI.toast("Koleksiyona eklendi!");
     this._renderCollection();
   }
@@ -327,7 +327,7 @@ class BridgeModule {
     if (this.streakData.lastDate === t) return;
     this.streakData.count = (this.streakData.lastDate === y) ? this.streakData.count + 1 : 1;
     this.streakData.lastDate = t;
-    localStorage.setItem('bridge_streak', JSON.stringify(this.streakData));
+    try { localStorage.setItem('bridge_streak', JSON.stringify(this.streakData)); } catch { /**/ }
     this.el.querySelector('#b-stat-streak').textContent = `🔥 ${this.streakData.count}`;
   }
 
@@ -365,7 +365,7 @@ class BridgeModule {
       if (i >= qs.length) {
         ov.innerHTML = `<div class="bridge-panel" style="text-align:center; padding:40px;"><h2>Bitti!</h2><p style="font-size:2rem;">${sc}/${qs.length}</p><button class="bridge-cat-chip active" id="bq-close-btn">Kapat</button></div>`;
         ov.querySelector('#bq-close-btn').addEventListener('click', () => ov.remove());
-        this.app.addXP(sc * 20, "medium", "bridge");
+        if (this.app?.addXP) this.app.addXP(sc * 20, "medium", "bridge");
         return;
       }
       const q = qs[i];

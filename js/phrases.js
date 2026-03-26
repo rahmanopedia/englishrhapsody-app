@@ -39,8 +39,8 @@ class PhrasesModule {
     this.idx   = 0;
     this.mode  = 'cinema';    // 'cinema' | 'fillblank' | 'multichoice'
     this.revealed    = false;
-    this.mastery     = JSON.parse(localStorage.getItem('pth-mastery')   || '{}');
-    this.favorites   = new Set(JSON.parse(localStorage.getItem('pth-favs') || '[]'));
+    try { this.mastery = JSON.parse(localStorage.getItem('pth-mastery') || '{}'); } catch { this.mastery = {}; }
+    try { this.favorites = new Set(JSON.parse(localStorage.getItem('pth-favs') || '[]')); } catch { this.favorites = new Set(); }
     this.session     = { correct: 0, wrong: 0 };
     this._txStart    = 0;
     this._tyStart    = 0;
@@ -216,7 +216,8 @@ class PhrasesModule {
     this._updateTopbar();
     this._renderDots();
 
-    const wrap = this.el.querySelector('#pth-wrap');
+    const wrap = this.el?.querySelector('#pth-wrap');
+    if (!wrap) return;
     wrap.innerHTML = '';
 
     const card = document.createElement('div');
