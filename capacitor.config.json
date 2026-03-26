@@ -8,6 +8,7 @@
     "webContentsDebuggingEnabled": false
   },
   "server": {
-    "androidScheme": "https"
+    "androidScheme": "https",
+    "url": "https://englishrhapsody-78866.web.app"
   }
 }

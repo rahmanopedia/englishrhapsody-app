@@ -381,7 +381,7 @@ class PhrasesModule {
     if (knew) {
       this.mastery[p.id] = Math.min(3, prev + 1);
       this.session.correct++;
-      if (this.app?.addXP) this.app.addXP(5, 'easy');
+      if (this.app?.addXP) this.app.addXP(5, 'easy', 'phrases');
     } else {
       this.mastery[p.id] = Math.max(0, prev - 1);
       this.session.wrong++;
@@ -492,7 +492,7 @@ class PhrasesModule {
       this.session.correct++;
       const prev = this.mastery[p.id] || 0;
       this.mastery[p.id] = Math.min(3, prev + 1);
-      if (this.app?.addXP) this.app.addXP(8, 'easy');
+      if (this.app?.addXP) this.app.addXP(8, 'easy', 'phrases');
     } else {
       this.session.wrong++;
     }
@@ -583,7 +583,7 @@ class PhrasesModule {
     if (isCorrect) {
       this.session.correct++;
       this.mastery[p.id] = Math.min(3, (this.mastery[p.id] || 0) + 1);
-      if (this.app?.addXP) this.app.addXP(5, 'easy');
+      if (this.app?.addXP) this.app.addXP(5, 'easy', 'phrases');
     } else {
       this.session.wrong++;
     }

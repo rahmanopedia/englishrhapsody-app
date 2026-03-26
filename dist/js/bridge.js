@@ -365,7 +365,7 @@ class BridgeModule {
       if (i >= qs.length) {
         ov.innerHTML = `<div class="bridge-panel" style="text-align:center; padding:40px;"><h2>Bitti!</h2><p style="font-size:2rem;">${sc}/${qs.length}</p><button class="bridge-cat-chip active" id="bq-close-btn">Kapat</button></div>`;
         ov.querySelector('#bq-close-btn').addEventListener('click', () => ov.remove());
-        this.app.addXP(sc * 20, "medium");
+        this.app.addXP(sc * 20, "medium", "bridge");
         return;
       }
       const q = qs[i];

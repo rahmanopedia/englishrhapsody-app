@@ -613,7 +613,7 @@ window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); 
             var app = window._app || window.app;
             if(app && app.addXP) {
               var xp = (window.remoteFlags && window.remoteFlags.xp_reading_correct) || 10;
-              app.addXP(xp, 'easy');
+              app.addXP(xp, 'easy', 'story');
             }
             if(app && app._checkStoryDone) app._checkStoryDone();
           }, 220);

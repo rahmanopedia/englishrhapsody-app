@@ -82,13 +82,24 @@ class PlacementTest {
     this._startStage();
   }
 
-  _startStage() {
+  _startStage(skipCount = 0) {
+    // Tüm seviyelerde kelime yoksa sonsuz döngüyü engelle
+    if (skipCount >= this._LEVELS.length) {
+      this._finish('A1');
+      return;
+    }
+
     const level = this._LEVELS[this._levelIdx];
     const pool  = [...(this._byLevel[level] || [])].sort(() => Math.random() - 0.5);
 
     if (pool.length < this._PER_STAGE) {
-      // Bu seviyede yeterli kelime yok → geç
-      this._advanceStage(true);
+      // Bu seviyede yeterli kelime yok → seviyeyi pas/fail saymadan atla
+      if (this._levelIdx < this._LEVELS.length - 1) {
+        this._levelIdx++;
+        this._startStage(skipCount + 1);
+      } else {
+        this._finish('C2');
+      }
       return;
     }
 
@@ -120,13 +131,21 @@ class PlacementTest {
 
     // Çeldirici seçenekler — aynı seviyeden farklı kelimeler
     const pool       = this._byLevel[level].filter(w => w.en !== word.en);
-    const distractors = [...pool].sort(() => Math.random() - 0.5).slice(0, 3);
+    let distractors  = [...pool].sort(() => Math.random() - 0.5).slice(0, 3);
+    // Aynı seviyede yeterli kelime yoksa diğer seviyelerden tamamla
+    if (distractors.length < 3 && typeof WORDS !== 'undefined') {
+      const used  = new Set([word.en, ...distractors.map(d => d.en)]);
+      const extra = WORDS.filter(w => w.tr && w.en && !used.has(w.en))
+                         .sort(() => Math.random() - 0.5)
+                         .slice(0, 3 - distractors.length);
+      distractors = [...distractors, ...extra];
+    }
     const options    = [...distractors.map(w => w.tr), word.tr].sort(() => Math.random() - 0.5);
 
     // Toplam soru tahmini için: en fazla A1→C2 = 18
     const approxTotal = this._LEVELS.length * this._PER_STAGE;
     const qNum = this._totalAsked + this._questionIdx + 1;
-    const pct  = Math.min(Math.round(qNum / approxTotal * 100), 95);
+    const pct  = Math.min(Math.round(qNum / approxTotal * 100), 100);
 
     this._html(`
       <div class="pt-card">

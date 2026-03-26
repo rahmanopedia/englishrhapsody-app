@@ -2528,7 +2528,7 @@ class QuantumMode {
 
   init(root) { this.root=root; window._qmode=this; this.renderHub(); }
   destroy()  { this.root.innerHTML=''; }
-  addXP(n, diff = 'hard')   { if(this.app?.addXP) this.app.addXP(n, diff); }
+  addXP(n, diff = 'hard')   { if(this.app?.addXP) this.app.addXP(n, diff, 'quantum'); }
   confetti() { if(typeof confetti==='function') confetti({particleCount:160,spread:90,origin:{y:0.6},colors:['#00d4ff','#7c3aed','#ec4899']}); }
 
   _bindHub() {
@@ -2691,6 +2691,8 @@ class SentenceRush {
     this._feedback('⏱️ Süre doldu!','wrong');
     const tr=generateTurkishTranslation(this.sc,this.st.time,this.st.flow,this.st.voice,this.st.pol);
     showMeaningCard('rush-shell',this.parts,tr,stateLabel(this.st));
+    const app=window._app||window.app;
+    if(app&&typeof app.addXP==='function') app.addXP(2,'low','quantum');
     setTimeout(()=>this._newSentence(),5000);
   }
 
@@ -2997,6 +2999,8 @@ class SentenceScramble {
     document.getElementById('ss-lives').textContent='❤️'.repeat(this.lives)+'🖤'.repeat(3-this.lives);
     const tr=generateTurkishTranslation(this.sc,this.st.time,this.st.flow,this.st.voice,this.st.pol);
     showMeaningCard('ss-shell',this.parts,tr,stateLabel(this.st));
+    const app=window._app||window.app;
+    if(app&&typeof app.addXP==='function') app.addXP(1,'low','quantum');
     this._busy=true;
     if(this.lives<=0){ setTimeout(()=>this._over(false),2800); return; }
     setTimeout(()=>this._newRound(),2800);

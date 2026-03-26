@@ -431,6 +431,7 @@ class SpeakV2Module {
         }),
         NS.addListener('end', () => {
           if (this._gen !== myGen) return;
+          const gen = myGen; // race condition fix: myGen'i sabitle, _gen sonradan artsa bile güvenli
           const durationMs = Date.now() - this._recordStart;
           const spoken = this.liveTranscript.trim();
           NS.removeAllListeners();
@@ -439,7 +440,6 @@ class SpeakV2Module {
           this.status = 'processing';
           this._updateMicState();
           this._setStatusText('processing');
-          const gen = this._gen;
           setTimeout(() => {
             if (this._gen !== gen) return;
             const scored  = this._score(this._currentSentence, spoken);
@@ -450,7 +450,7 @@ class SpeakV2Module {
             this.sessionScores.push(scored.score);
             if (this.sessionScores.length > 20) this.sessionScores.shift();
             this.sessionCount++;
-            this.streak = scored.score >= 50 ? this.streak + 1 : 0;
+            this.streak = scored.score >= 60 ? this.streak + 1 : 0;
             const prev = this._lowScoreMap[this.idx];
             if (prev === undefined || scored.score < prev) this._lowScoreMap[this.idx] = scored.score;
             const xp = this._awardXP(scored.score);
@@ -541,7 +541,7 @@ class SpeakV2Module {
         this.sessionScores.push(scored.score);
         if (this.sessionScores.length > 20) this.sessionScores.shift();
         this.sessionCount++;
-        this.streak = scored.score >= 50 ? this.streak + 1 : 0;
+        this.streak = scored.score >= 60 ? this.streak + 1 : 0;
 
         const prev = this._lowScoreMap[this.idx];
         if (prev === undefined || scored.score < prev) this._lowScoreMap[this.idx] = scored.score;
@@ -787,7 +787,9 @@ class SpeakV2Module {
 
     // Fluency + WPM metrics
     const metricsEl = panel.querySelector('#sv2-metrics');
-    if (metricsEl && wpm > 0) {
+    if (metricsEl && wpm === 0) {
+      metricsEl.innerHTML = '<p class="sv2-retry-hint">Konuşma algılanamadı — tekrar dene</p>';
+    } else if (metricsEl && wpm > 0) {
       const wpmColor  = wpm >= 80 && wpm <= 140 ? '#10b981' : wpm >= 60 ? '#f59e0b' : '#ef4444';
       const wpmLabel  = wpm >= 130 ? 'Çok hızlı' : wpm >= 80 ? 'İyi tempo' : wpm >= 50 ? 'Biraz yavaş' : 'Çok yavaş';
       const flColor   = fluency >= 80 ? '#10b981' : fluency >= 55 ? '#f59e0b' : '#ef4444';

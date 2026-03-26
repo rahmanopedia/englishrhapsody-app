@@ -79,7 +79,12 @@ class SpeakFillMode {
     const cefrIdx = LEVELS.indexOf(level);
     // Cümle zorluğu kullanıcı seviyesini geçmesin
     let filtered = this.items.filter(item => LEVELS.indexOf(item.level) <= cefrIdx);
-    if (filtered.length < 20) filtered = this.items; // fallback
+    if (filtered.length < 20) {
+      // Yeterli cümle yoksa bir üst seviyeye kadar genişlet
+      const expandIdx = Math.min(cefrIdx + 1, LEVELS.length - 1);
+      filtered = this.items.filter(item => LEVELS.indexOf(item.level) <= expandIdx);
+    }
+    if (filtered.length < 20) filtered = this.items; // son çare: tüm cümleler
     this.pool = filtered.sort(() => Math.random() - 0.5);
   }
 
@@ -562,8 +567,9 @@ class SpeakFillMode {
     if (correct) { this.correct++; this.streak++; }
     else         { this.streak = 0; }
 
-    // XP
-    const xp  = ratio >= 0.9 ? 10 : ratio >= 0.6 ? 5 : 2;
+    // XP (streak bonusu: her 5. doğruda +3)
+    let xp = ratio >= 0.9 ? 10 : ratio >= 0.6 ? 5 : 2;
+    if (correct && this.streak > 0 && this.streak % 5 === 0) xp += 3;
     const app = window._app || window.app;
     if (app && typeof app.addXP === 'function') app.addXP(xp, 'medium', 'speak-fill');
 

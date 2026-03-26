@@ -2,7 +2,7 @@
 'use strict';
 
 
-const CACHE_NAME  = 'er-v74';
+const CACHE_NAME  = 'er-v75';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -86,7 +86,7 @@ self.addEventListener('fetch', event => {
   if (isHTML) {
     // HTML — network-first: her zaman güncel göster
     event.respondWith(
-      fetch(event.request)
+      fetch(new Request(event.request, { cache: 'no-cache' }))
         .then(response => {
           if (shouldCache(response, url)) {
             const clone = response.clone();
@@ -101,7 +101,7 @@ self.addEventListener('fetch', event => {
     const isBootJs = url.includes('/js/boot.js');
     if (isBootJs) {
       event.respondWith(
-        fetch(event.request).then(response => {
+        fetch(new Request(event.request, { cache: 'no-cache' })).then(response => {
           if (shouldCache(response, url)) {
             caches.open(CACHE_NAME).then(c => c.put(event.request, response.clone()));
           }
@@ -111,10 +111,11 @@ self.addEventListener('fetch', event => {
       return;
     }
 
-    // JS/CSS/images — network-first:
-    // Her zaman ağdan taze al, offline için cache'e düş
+    // JS/CSS/images — network-first + HTTP cache bypass:
+    // cache:'no-cache' → tarayıcı HTTP cache'ini atlayıp sunucuya gider,
+    // ETag/If-Modified-Since ile 304 fast-path veya yeni içerik döner.
     event.respondWith(
-      fetch(event.request).then(response => {
+      fetch(new Request(event.request, { cache: 'no-cache' })).then(response => {
         if (shouldCache(response, url)) {
           const clone = response.clone();
           caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
