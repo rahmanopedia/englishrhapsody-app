@@ -11,7 +11,7 @@ const DIST = path.join(__dirname, 'dist');
 
 // These dirs/files are NEVER copied to dist
 const EXCLUDE_DIRS = new Set(['node_modules', '.git', 'dist', 'functions',
-  'scripts', 'temp_data', 'temp_video_render', '.firebase']);
+  'scripts', 'temp_data', 'temp_video_render', '.firebase', 'android']);
 // Dev-only root JS files that should NOT be deployed
 const EXCLUDE_ROOT_JS = new Set(['build.js', 'analyze2.js', 'audit.js', 'patch.js',
   'scan.js', 'super_clean.js', 'update_db.js', 'expand_vocabulary.js',
@@ -22,7 +22,7 @@ const EXCLUDE_FILES = new Set(['package.json', 'package-lock.json',
   'remote_config.json', 'ntuser.dat', 'ntuser.ini', 'akia.ini',
   'AGENTS.md', 'words-list.txt', 'phrases-list.txt', '.gitignore',
   'lh-report3.json']);
-const EXCLUDE_EXTS = new Set(['.blf', '.log1', '.log2', '.regtrans-ms']);
+const EXCLUDE_EXTS = new Set(['.blf', '.log1', '.log2', '.regtrans-ms', '.apk', '.idsig', '.keystore']);
 
 // Skip JS minification for huge pure-data files — gzip handles compression
 const SKIP_MINIFY_JS = new Set([
@@ -110,7 +110,10 @@ async function build() {
   const t0 = Date.now();
   console.log('🔨 Building English Rhapsody (esbuild)...\n');
 
-  if (fs.existsSync(DIST)) fs.rmSync(DIST, { recursive: true });
+  if (fs.existsSync(DIST)) {
+    try { fs.rmSync(DIST, { recursive: true }); }
+    catch { /* EPERM on Windows — temizlenemeyen dosyalar varsa atla */ }
+  }
   mkdirp(DIST);
 
   // Copy root-level files (index.html, manifest.json, sw.js, icons, etc.)
