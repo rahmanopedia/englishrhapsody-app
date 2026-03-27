@@ -9503,6 +9503,14 @@ input, textarea { -webkit-user-select: text !important; -moz-user-select: text !
 
 /* ── İndir Sayfası ─────────────────────────────────────────── */
 .dl-page { max-width: 540px; margin: 0 auto; padding: 24px 16px 48px; }
+.dl-back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none;
+  color: var(--text-3); font-size: 0.88rem; font-weight: 600;
+  cursor: pointer; padding: 6px 0; margin-bottom: 4px;
+  transition: color 0.15s;
+}
+.dl-back-btn:hover { color: var(--text-1); }
 .dl-hero { text-align: center; padding: 32px 0 24px; }
 .dl-logo { font-size: 56px; margin-bottom: 12px; }
 .dl-title { font-size: 26px; font-weight: 800; color: #f1f5f9; margin: 0 0 8px; }
