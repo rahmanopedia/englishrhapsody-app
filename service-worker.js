@@ -2,7 +2,7 @@
 'use strict';
 
 
-const CACHE_NAME  = 'er-v75';
+const CACHE_NAME  = 'er-v76';
 const STATIC_URLS = [
   '/',
   '/index.html',
