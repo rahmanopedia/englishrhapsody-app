@@ -7932,6 +7932,18 @@ body.rank-6 { --theme-accent: #ff9d00; }
   font-weight: 600;
   color: rgba(255,255,255,0.55);
 }
+.lb-cefr-badge {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: rgba(124,58,237,0.25);
+  color: #a78bfa;
+  vertical-align: middle;
+}
 
 .lb-mr-val {
   font-size: 1.1rem;
