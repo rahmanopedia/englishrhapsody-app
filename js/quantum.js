@@ -3069,38 +3069,6 @@ function _resultHTML(icon,game,won,score,sub,xp,gameKey){
 </div>`;
 }
 
-window.QuantumMode = QuantumMode;
-
-/* ── Quantum: tam ekran + yön yönetimi ── */
-(function () {
-  let _qOrient = null;
-  let _qEl     = null;
-
-  function _qEnterFs(el) {
-    if (!el || document.fullscreenElement || document.webkitFullscreenElement) return;
-    const fsEl = document.documentElement;
-    const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
-    if (req) req.call(fsEl).catch(() => {});
-  }
-
-  function _qInit(el) {
-    if (_qEl === el) return;
-    _qEl = el;
-    try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch(e) {}
-    _qEnterFs(el);
-    if (_qOrient) window.removeEventListener('resize', _qOrient);
-    _qOrient = () => _qEnterFs(el);
-    window.addEventListener('resize', _qOrient, { passive: true });
-    if (window.attachQuickMenuTrigger) window.attachQuickMenuTrigger(el);
-  }
-
-  function _qDestroy() {
-    if (_qOrient) { window.removeEventListener('resize', _qOrient); _qOrient = null; }
-    _qEl = null;
-    try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(() => {}); } catch(e) {}
-  }
-
-  
 // ════════════════════════════════════════════════════════════════
 //  GRAMMAR QUEST — 60-question A1→C2 bank
 // ════════════════════════════════════════════════════════════════
@@ -3422,6 +3390,39 @@ class GrammarQuest {
     document.getElementById('gq-hub').addEventListener('click',    () => this.qm.backToHub());
   }
 }
+
+window.QuantumMode = QuantumMode;
+
+/* ── Quantum: tam ekran + yön yönetimi ── */
+(function () {
+  let _qOrient = null;
+  let _qEl     = null;
+
+  function _qEnterFs(el) {
+    if (!el || document.fullscreenElement || document.webkitFullscreenElement) return;
+    const fsEl = document.documentElement;
+    const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
+    if (req) req.call(fsEl).catch(() => {});
+  }
+
+  function _qInit(el) {
+    if (_qEl === el) return;
+    _qEl = el;
+    try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch(e) {}
+    _qEnterFs(el);
+    if (_qOrient) window.removeEventListener('resize', _qOrient);
+    _qOrient = () => _qEnterFs(el);
+    window.addEventListener('resize', _qOrient, { passive: true });
+    if (window.attachQuickMenuTrigger) window.attachQuickMenuTrigger(el);
+  }
+
+  function _qDestroy() {
+    if (_qOrient) { window.removeEventListener('resize', _qOrient); _qOrient = null; }
+    _qEl = null;
+    try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(() => {}); } catch(e) {}
+  }
+
+  
 
 function _patch() {
     const app = window._app;
