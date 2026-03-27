@@ -12,7 +12,7 @@
     { id: 'spk_a1_04', en: 'play',  level: 'A1', ex: 'We play football on weekends.',        ex_tr: 'Hafta sonları futbol oynarız.' },
     { id: 'spk_a1_05', en: 'name',  level: 'A1', ex: 'My name is Emma.',                     ex_tr: 'Benim adım Emma.' },
     { id: 'spk_a1_06', en: 'book',  level: 'A1', ex: 'The book is on the table.',            ex_tr: 'Kitap masanın üzerinde.' },
-    { id: 'spk_a1_07', en: 'have',  level: 'A1', ex: 'I have two brothers.',                 ex_tr: 'İki erkek kardeşim var.' },
+    { id: 'spk_a1_07', en: 'have',  level: 'A1', ex: 'I have a sister and a brother.',        ex_tr: 'Bir kız ve bir erkek kardeşim var.' },
     { id: 'spk_a1_08', en: 'drink', level: 'A1', ex: 'She drinks tea in the morning.',       ex_tr: 'O, sabahları çay içer.' },
     { id: 'spk_a1_09', en: 'work',  level: 'A1', ex: 'He works in a shop.',                  ex_tr: 'O, bir dükkanada çalışır.' },
     { id: 'spk_a1_10', en: 'small', level: 'A1', ex: 'The cat is very small.',               ex_tr: 'Kedi çok küçük.' },
