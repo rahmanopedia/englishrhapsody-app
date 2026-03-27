@@ -1,0 +1,28 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Firebase
+.firebase/
+firebase-debug.log*
+.runtimeconfig.json
+firestore-debug.log*
+ui-debug.log*
+
+# Environment (NOT keys.js — it must be deployed to hosting)
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Scripts (build-time only)
+scripts/
