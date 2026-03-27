@@ -13,11 +13,13 @@
 /* ── 1. Lazy Script Loader ── */
 (function () {
   var LAZY = {
-    quantum: ['js/quantum.js?v=5'],
+    quantum: ['js/quantum.js?v=6'],
     bridge:  ['js/bridge-data.js'],
     nexus:   ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
-    phrases: ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
+    phrases: ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js', 'js/phrases.js'],
     grammar: ['js/grammar_data.js', 'js/grammar.js'],
+    learn:   ['js/ex-tr-data.js'],
+    cinema:  ['js/video-data.js', 'js/cinema.js'],
   };
 
   var loaded = new Set();

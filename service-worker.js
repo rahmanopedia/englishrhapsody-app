@@ -2,7 +2,7 @@
 'use strict';
 
 
-const CACHE_NAME  = 'er-v87';
+const CACHE_NAME  = 'er-v88';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -21,7 +21,6 @@ const STATIC_URLS = [
   '/css/writing.css',
   '/js/app.js',
   '/js/data.js',
-  '/js/ex-tr-data.js',
   '/js/auth.js',
   '/js/storage.js',
   '/js/analytics.js',
@@ -36,9 +35,6 @@ const STATIC_URLS = [
   '/js/remote-config.js',
   '/js/splash.js',
   '/js/sw-register.js',
-  '/js/cinema.js',
-  '/js/video-data.js',
-  '/js/phrases.js',
   '/js/speak-v2.js',
   '/js/speak-fill.js',
   '/js/conversations.js',
