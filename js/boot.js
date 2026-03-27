@@ -83,7 +83,17 @@
     });
   }, true);
 
+  // pointerenter: nav item'ın üzerine gelince scripti yüklemeye başla
+  document.addEventListener('pointerenter', function (e) {
+    var el = e.target.closest('[data-target]');
+    if (!el) return;
+    var target = el.dataset.target;
+    if (!target || !LAZY[target] || allLoaded(target)) return;
+    ensureScripts(target);
+  }, { capture: true });
+
   window.addEventListener('load', function () {
+    // Prefetch: 800ms sonra tüm lazy scriptleri tarayıcıya bildir
     setTimeout(function () {
       var seen = new Set();
       Object.values(LAZY).forEach(function (srcs) {
@@ -97,7 +107,21 @@
           document.head.appendChild(link);
         });
       });
-    }, 3000);
+    }, 800);
+
+    // Idle: tarayıcı boşta iken en çok kullanılan modları sessizce yükle
+    var idleTargets = ['quantum', 'learn', 'cinema', 'bridge'];
+    var idleFn = function () {
+      var target = idleTargets.shift();
+      if (!target) return;
+      if (!allLoaded(target)) ensureScripts(target);
+      if (idleTargets.length) {
+        if (window.requestIdleCallback) requestIdleCallback(idleFn, { timeout: 5000 });
+        else setTimeout(idleFn, 2000);
+      }
+    };
+    if (window.requestIdleCallback) requestIdleCallback(idleFn, { timeout: 4000 });
+    else setTimeout(idleFn, 4000);
   });
 })();
 
