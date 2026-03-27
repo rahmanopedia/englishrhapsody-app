@@ -3112,12 +3112,12 @@ const GRAMMAR_QUEST_Q = [
   { level:'A1', topic:'a / an',         q:'She eats ___ apple every morning.',       c:['a','an','the','—'],               a:1,  hint:'"an" before vowel sounds' },
   { level:'A1', topic:'have / has',     q:'She ___ two cats.',                       c:['have','has','had','having'],       a:1,  hint:'he/she/it + has' },
   { level:'A1', topic:'plurals',        q:'There are three ___ in the park.',        c:['child','childs','children','childrens'], a:2, hint:'"child" → irregular plural "children"' },
-  { level:'A1', topic:'prepositions',   q:'I wake up ___ 7 o'clock.',               c:['in','on','at','by'],               a:2,  hint:'"at" for clock times' },
+  { level:'A1', topic:'prepositions',   q:"I wake up ___ 7 o'clock.",               c:['in','on','at','by'],               a:2,  hint:'"at" for clock times' },
   { level:'A1', topic:'this / these',  q:'___ are my friends.',                     c:['This','That','These','It'],        a:2,  hint:'"these" for plural near you' },
   { level:'A1', topic:'present simple', q:'She ___ to school every day.',            c:['go','goes','going','gone'],        a:1,  hint:'he/she/it + verb+s' },
-  { level:'A1', topic:'possessives',    q:'___ name is Anna.',                       c:['She','Her','Hers','She's'],       a:1,  hint:'possessive adjective before a noun' },
+  { level:'A1', topic:'possessives',    q:'___ name is Anna.',                       c:['She','Her','Hers',"She's"],       a:1,  hint:'possessive adjective before a noun' },
   { level:'A1', topic:'there is/are',   q:'There ___ a book on the table.',         c:['are','is','were','have'],          a:1,  hint:'"there is" for singular noun' },
-  { level:'A1', topic:'object pronouns',q:'Can you help ___? I don't understand.',  c:['I','me','my','mine'],              a:1,  hint:'"me" is the object pronoun for "I"' },
+  { level:'A1', topic:'object pronouns',q:"Can you help ___? I don't understand.",  c:['I','me','my','mine'],              a:1,  hint:'"me" is the object pronoun for "I"' },
 
   // ── A2 ──────────────────────────────────────────────────────
   { level:'A2', topic:'comparative',    q:'Tom is ___ than his brother.',            c:['tall','taller','tallest','more tall'],  a:1, hint:'short adj + -er + than' },
@@ -3150,7 +3150,7 @@ const GRAMMAR_QUEST_Q = [
   { level:'B2', topic:'wish + past',    q:'I wish I ___ more free time.',            c:['have','had','would have','has'],     a:1,  hint:'"wish" + past simple = unreal present wish' },
   { level:'B2', topic:'despite',        q:'___ being tired, she finished the project.',c:['Although','Despite','Even','However'], a:1, hint:'"despite" + noun/-ing (no clause)' },
   { level:'B2', topic:'present perfect passive',q:'A new airport ___ recently.',    c:['has built','is being built','has been built','was built'], a:2, hint:'present perfect passive: has/have been + pp' },
-  { level:'B2', topic:'remember + to-inf',q:'Remember ___ the door when you leave.',c:['lock','locking','to lock','locked'],  a:2,  hint:'"remember to do" = don't forget to do (future)' },
+  { level:'B2', topic:'remember + to-inf',q:'Remember ___ the door when you leave.',c:['lock','locking','to lock','locked'],  a:2,  hint:'"remember to do" = don\'t forget to do (future)' },
   { level:'B2', topic:'modal perfect',  q:'He ___ the keys — his car is gone.',      c:['must take','must have taken','should take','had to take'], a:1, hint:'past deduction: must have + past participle' },
   { level:'B2', topic:'suggest + -ing', q:'She suggested ___ a break.',              c:['to take','taking','take','that take'], a:1, hint:'"suggest" + gerund (not to-infinitive)' },
   { level:'B2', topic:'impersonal passive',q:'___ that the project will be delayed.',c:['It has expected','It is expected','It expects','It was expecting'], a:1, hint:'"It is + reported/expected/believed + that..."' },
@@ -3162,10 +3162,10 @@ const GRAMMAR_QUEST_Q = [
   { level:'C1', topic:'causative have', q:'I had my car ___ at the garage.',          c:['repair','repaired','to repair','repairing'], a:1, hint:'"have sth done": have + object + past participle' },
   { level:'C1', topic:'subjunctive',    q:'The doctor suggested that he ___ more exercise.',c:['takes','take','took','should takes'], a:1, hint:'subjunctive: that + subject + base verb (no -s)' },
   { level:'C1', topic:'cleft sentence', q:'It was ___ who solved the problem.',       c:['he','him','his','himself'],             a:0,  hint:'It-cleft: It was + subject pronoun + who' },
-  { level:'C1', topic:'had better',     q:'You had better ___ or you'll miss the train.',c:['hurry','to hurry','hurrying','hurried'], a:0, hint:'"had better" + bare infinitive (no "to")' },
-  { level:'C1', topic:'whatever',       q:'___ happens, I'll support you.',           c:['Whatever','However','Whenever','Whichever'], a:0, hint:'"whatever" = no matter what' },
+  { level:'C1', topic:'had better',     q:"You had better ___ or you'll miss the train.",c:['hurry','to hurry','hurrying','hurried'], a:0, hint:'"had better" + bare infinitive (no "to")' },
+  { level:'C1', topic:'whatever',       q:"___ happens, I'll support you.",           c:['Whatever','However','Whenever','Whichever'], a:0, hint:'"whatever" = no matter what' },
   { level:'C1', topic:'seem + to have', q:'The committee seems ___ a decision.',      c:['to reach','to have reached','reaching','to be reached'], a:1, hint:'"seem to have + pp" = appears that it has happened' },
-  { level:'C1', topic:'wish + would',   q:'I wish my neighbour ___ play loud music at night.',c:['doesn't','wouldn't','won't','didn't'], a:1, hint:'"wish + would" = complaint about present habit' },
+  { level:'C1', topic:'wish + would',   q:'I wish my neighbour ___ play loud music at night.',c:["doesn't","wouldn't","won't","didn't"], a:1, hint:'"wish + would" = complaint about present habit' },
 
   // ── C2 ──────────────────────────────────────────────────────
   { level:'C2', topic:'formal subjunctive',q:'It is vital that every student ___ present.',c:['is','be','are','was'], a:1, hint:'formal subjunctive: It is vital/essential that + subject + base verb' },
