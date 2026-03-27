@@ -7407,12 +7407,59 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .qhub-card.scramble:hover { border-color:rgba(var(--a4-rgb),0.5); box-shadow:0 8px 30px rgba(var(--a4-rgb),0.15); }
 .qhub-card.boss { border-color:rgba(244,63,94,0.2); }
 .qhub-card.boss:hover { border-color:rgba(244,63,94,0.5); box-shadow:0 8px 30px rgba(244,63,94,0.15); }
+.qhub-card.grammar { border-color:rgba(16,185,129,0.2); }
+.qhub-card.grammar:hover { border-color:rgba(16,185,129,0.5); box-shadow:0 8px 30px rgba(16,185,129,0.15); }
+.qhc-tag.green { background:rgba(16,185,129,0.15); color:#10b981; }
 
 .qhc-glow { position:absolute; inset:0; border-radius:20px; opacity:0; transition:opacity 0.3s; pointer-events:none; }
 .arena .qhc-glow { background:radial-gradient(circle at 20% 50%,rgba(var(--a1-rgb),0.08),transparent 60%); }
 .blitz .qhc-glow { background:radial-gradient(circle at 20% 50%,rgba(var(--a3-rgb),0.08),transparent 60%); }
 .scramble .qhc-glow { background:radial-gradient(circle at 20% 50%,rgba(var(--a4-rgb),0.08),transparent 60%); }
 .boss .qhc-glow { background:radial-gradient(circle at 20% 50%,rgba(244,63,94,0.08),transparent 60%); }
+.grammar .qhc-glow { background:radial-gradient(circle at 20% 50%,rgba(16,185,129,0.08),transparent 60%); }
+
+/* ── Grammar Quest UI ────────────────────────────────────────────── */
+.gq-shell { display:flex; flex-direction:column; height:100%; }
+.gq-topbar { display:flex; align-items:center; gap:12px; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,0.06); }
+.gq-prog-wrap { flex:1; display:flex; align-items:center; gap:8px; }
+.gq-prog-bar { flex:1; height:5px; background:rgba(255,255,255,0.07); border-radius:4px; overflow:hidden; }
+.gq-prog-fill { height:100%; background:linear-gradient(90deg,#10b981,#00d4ff); border-radius:4px; transition:width 0.4s ease; }
+.gq-prog-lbl { font-size:0.72rem; color:#64748b; font-weight:600; white-space:nowrap; }
+.gq-xp-disp { font-size:0.85rem; font-weight:700; color:#10b981; white-space:nowrap; min-width:52px; text-align:right; }
+
+.gq-card { background:var(--bg-elevated,#0f172a); border:1px solid rgba(255,255,255,0.07); border-radius:18px; padding:20px; animation:obFadeIn 0.25s ease; }
+.gq-meta { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+.gq-lv-badge { font-size:0.7rem; font-weight:800; padding:3px 9px; border-radius:8px; border:1px solid; letter-spacing:0.04em; }
+.gq-topic { font-size:0.75rem; color:#64748b; font-weight:600; }
+.gq-qtext { font-size:1.05rem; font-weight:700; color:#f1f5f9; line-height:1.55; margin-bottom:18px; }
+.gq-blank { display:inline-block; min-width:48px; border-bottom:2px solid #00d4ff; color:#00d4ff; text-align:center; margin:0 4px; }
+
+.gq-choices { display:flex; flex-direction:column; gap:9px; margin-bottom:14px; }
+.gq-choice {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09);
+  border-radius:12px; padding:13px 16px;
+  color:#cbd5e1; font-size:0.92rem; font-weight:600;
+  text-align:left; cursor:pointer;
+  transition:background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.gq-choice:hover:not([disabled]) { background:rgba(16,185,129,0.12); border-color:rgba(16,185,129,0.35); color:#f1f5f9; transform:translateX(3px); }
+.gq-choice.gq-correct { background:rgba(16,185,129,0.18) !important; border-color:#10b981 !important; color:#6ee7b7 !important; }
+.gq-choice.gq-wrong   { background:rgba(244,63,94,0.14)  !important; border-color:#f43f5e !important; color:#fda4af !important; }
+
+.gq-feedback { min-height:36px; font-size:0.85rem; }
+.gq-fb-ok  { color:#10b981; font-weight:700; }
+.gq-fb-no  { color:#f43f5e; font-weight:700; }
+.gq-hint   { color:#94a3b8; font-size:0.78rem; margin-top:5px; font-style:italic; }
+
+.gq-result { text-align:center; padding:24px 0; }
+.gq-res-circle { width:120px; height:120px; border-radius:50%; border:4px solid; margin:0 auto 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.gq-res-score { font-size:1.6rem; font-weight:900; line-height:1; }
+.gq-res-pct   { font-size:0.85rem; font-weight:700; opacity:0.8; }
+.gq-res-msg   { font-size:1.05rem; font-weight:700; color:#f1f5f9; margin-bottom:6px; }
+.gq-res-xp    { font-size:0.85rem; color:#10b981; font-weight:600; margin-bottom:20px; }
+.gq-res-actions { display:flex; gap:10px; justify-content:center; }
+.gq-btn-replay { background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); }
+.gq-btn-hub    { background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); }
 .qhub-card:hover .qhc-glow { opacity:1; }
 
 .qhc-icon { font-size:2.2rem; flex-shrink:0; filter:drop-shadow(0 0 12px rgba(255,255,255,0.3)); }

@@ -2588,6 +2588,21 @@ class QuantumMode {
       <div class="qhc-arrow">→</div>
     </div>
 
+    <div class="qhub-card grammar" data-game="grammar">
+      <div class="qhc-glow"></div>
+      <div class="qhc-icon">📐</div>
+      <div class="qhc-body">
+        <h2>Grammar Quest</h2>
+        <p>A1'den C2'ye tüm gramer yapıları. Doğru formu seç, CEFR seviyeni kanıtla!</p>
+        <div class="qhc-tags">
+          <span class="qhc-tag">10 Soru</span>
+          <span class="qhc-tag">A1 → C2</span>
+          <span class="qhc-tag green">+120 XP</span>
+        </div>
+      </div>
+      <div class="qhc-arrow">→</div>
+    </div>
+
   </div>
 </div>`;
     this._bindHub();
@@ -2597,6 +2612,7 @@ class QuantumMode {
     this.root.innerHTML='';
     if (type==='rush')     new SentenceRush(this).start();
     if (type==='scramble') new SentenceScramble(this).start();
+    if (type==='grammar')  new GrammarQuest(this).start();
   }
 
   backToHub() { this.renderHub(); }
@@ -3084,7 +3100,258 @@ window.QuantumMode = QuantumMode;
     try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(() => {}); } catch(e) {}
   }
 
-  function _patch() {
+  
+// ════════════════════════════════════════════════════════════════
+//  GRAMMAR QUEST — 60-question A1→C2 bank
+// ════════════════════════════════════════════════════════════════
+
+const GRAMMAR_QUEST_Q = [
+
+  // ── A1 ──────────────────────────────────────────────────────
+  { level:'A1', topic:'to be',          q:'My name ___ Tom.',                       c:['am','is','are','be'],             a:1,  hint:'He/She/It + is' },
+  { level:'A1', topic:'a / an',         q:'She eats ___ apple every morning.',       c:['a','an','the','—'],               a:1,  hint:'"an" before vowel sounds' },
+  { level:'A1', topic:'have / has',     q:'She ___ two cats.',                       c:['have','has','had','having'],       a:1,  hint:'he/she/it + has' },
+  { level:'A1', topic:'plurals',        q:'There are three ___ in the park.',        c:['child','childs','children','childrens'], a:2, hint:'"child" → irregular plural "children"' },
+  { level:'A1', topic:'prepositions',   q:'I wake up ___ 7 o'clock.',               c:['in','on','at','by'],               a:2,  hint:'"at" for clock times' },
+  { level:'A1', topic:'this / these',  q:'___ are my friends.',                     c:['This','That','These','It'],        a:2,  hint:'"these" for plural near you' },
+  { level:'A1', topic:'present simple', q:'She ___ to school every day.',            c:['go','goes','going','gone'],        a:1,  hint:'he/she/it + verb+s' },
+  { level:'A1', topic:'possessives',    q:'___ name is Anna.',                       c:['She','Her','Hers','She's'],       a:1,  hint:'possessive adjective before a noun' },
+  { level:'A1', topic:'there is/are',   q:'There ___ a book on the table.',         c:['are','is','were','have'],          a:1,  hint:'"there is" for singular noun' },
+  { level:'A1', topic:'object pronouns',q:'Can you help ___? I don't understand.',  c:['I','me','my','mine'],              a:1,  hint:'"me" is the object pronoun for "I"' },
+
+  // ── A2 ──────────────────────────────────────────────────────
+  { level:'A2', topic:'comparative',    q:'Tom is ___ than his brother.',            c:['tall','taller','tallest','more tall'],  a:1, hint:'short adj + -er + than' },
+  { level:'A2', topic:'superlative',    q:'It is ___ mountain in the world.',        c:['high','higher','the highest','most high'], a:2, hint:'the + adj + -est' },
+  { level:'A2', topic:'going to',       q:'Look at those clouds. It ___ rain.',      c:['will','is going to','goes to','shall'],    a:1, hint:'evidence in present → "going to"' },
+  { level:'A2', topic:'past simple',    q:'I ___ a great film last night.',          c:['see','seen','saw','have seen'],     a:2,  hint:'irregular past: see → saw' },
+  { level:'A2', topic:'can',            q:'She ___ speak three languages.',          c:['can','cans','able to','could to'],  a:0,  hint:'"can" never takes -s' },
+  { level:'A2', topic:'how much/many',  q:'___ milk do you need?',                   c:['How many','How much','What','Which'], a:1, hint:'"milk" is uncountable → how much' },
+  { level:'A2', topic:'enjoy + -ing',   q:'Do you enjoy ___ to music?',              c:['listen','to listen','listening','listened'], a:2, hint:'"enjoy" is always followed by -ing' },
+  { level:'A2', topic:'past continuous',q:'I ___ when you called.',                  c:['slept','was sleeping','sleep','am sleeping'], a:1, hint:'action in progress when another happened' },
+  { level:'A2', topic:'pres. continuous',q:'Look! The dog ___ in the garden.',       c:['play','plays','is playing','playing'], a:2, hint:'"look!" signals action right now' },
+  { level:'A2', topic:'like + -ing',    q:'I like ___ photos on my phone.',          c:['take','to take','taking','took'],   a:2,  hint:'"like" can take -ing (habitual enjoyment)' },
+
+  // ── B1 ──────────────────────────────────────────────────────
+  { level:'B1', topic:'present perfect',q:'I ___ to Paris three times.',             c:['went','have been','was','had been'],  a:1, hint:'life experience → present perfect' },
+  { level:'B1', topic:'1st conditional',q:'If you study hard, you ___ the exam.',    c:['pass','will pass','would pass','are passing'], a:1, hint:'If + present simple → will + base verb' },
+  { level:'B1', topic:'since / for',    q:'She has worked here ___ 2019.',           c:['for','since','from','during'],       a:1,  hint:'"since" + point in time; "for" + duration' },
+  { level:'B1', topic:'relative clause',q:'The man ___ lives next door is very kind.',c:['which','who','what','where'],       a:1,  hint:'"who" for people' },
+  { level:'B1', topic:'reported speech',q:'He said he ___ tired.',                   c:['is','was','were','has been'],        a:1,  hint:'backshift: is → was' },
+  { level:'B1', topic:'gerund as subject',q:'___ is good for your health.',          c:['To exercise','Exercising','Exercise','Exercised'], a:1, hint:'gerund (-ing) as subject is very common' },
+  { level:'B1', topic:'used to',        q:'She ___ live in London but she moved.',   c:['was used to','used to','is used to','got used to'], a:1, hint:'"used to" for past habits (no longer true)' },
+  { level:'B1', topic:'already/yet',    q:'Have you finished your homework ___?',    c:['just','already','yet','still'],      a:2,  hint:'"yet" in negative/question: Has he arrived yet?' },
+  { level:'B1', topic:'past perfect',   q:'By the time I arrived, she ___.',         c:['left','has left','had left','was left'], a:2, hint:'past perfect = earlier of two past events' },
+  { level:'B1', topic:'should',         q:'You look tired. You ___ get some rest.',  c:['must to','should','ought','had better to'], a:1, hint:'"should" + base verb (no "to")' },
+
+  // ── B2 ──────────────────────────────────────────────────────
+  { level:'B2', topic:'2nd conditional',q:'If I ___ you, I would apologize.',        c:['am','were','was','had been'],        a:1,  hint:'2nd conditional: If + were/past (not "was")' },
+  { level:'B2', topic:'reported question',q:'She asked me where I ___.',             c:['live','lived','had lived','was living'], a:1, hint:'reported question: backshift present → past' },
+  { level:'B2', topic:'passive voice',  q:'The letter ___ by John yesterday.',       c:['was written','wrote','has been written','is written'], a:0, hint:'past passive: was/were + past participle' },
+  { level:'B2', topic:'wish + past',    q:'I wish I ___ more free time.',            c:['have','had','would have','has'],     a:1,  hint:'"wish" + past simple = unreal present wish' },
+  { level:'B2', topic:'despite',        q:'___ being tired, she finished the project.',c:['Although','Despite','Even','However'], a:1, hint:'"despite" + noun/-ing (no clause)' },
+  { level:'B2', topic:'present perfect passive',q:'A new airport ___ recently.',    c:['has built','is being built','has been built','was built'], a:2, hint:'present perfect passive: has/have been + pp' },
+  { level:'B2', topic:'remember + to-inf',q:'Remember ___ the door when you leave.',c:['lock','locking','to lock','locked'],  a:2,  hint:'"remember to do" = don't forget to do (future)' },
+  { level:'B2', topic:'modal perfect',  q:'He ___ the keys — his car is gone.',      c:['must take','must have taken','should take','had to take'], a:1, hint:'past deduction: must have + past participle' },
+  { level:'B2', topic:'suggest + -ing', q:'She suggested ___ a break.',              c:['to take','taking','take','that take'], a:1, hint:'"suggest" + gerund (not to-infinitive)' },
+  { level:'B2', topic:'impersonal passive',q:'___ that the project will be delayed.',c:['It has expected','It is expected','It expects','It was expecting'], a:1, hint:'"It is + reported/expected/believed + that..."' },
+
+  // ── C1 ──────────────────────────────────────────────────────
+  { level:'C1', topic:'3rd conditional',q:'If I had known earlier, I ___ helped you.',c:['would have','will have','had','would'], a:0, hint:'3rd conditional: would have + past participle' },
+  { level:'C1', topic:'inversion',      q:'___ I heard such a beautiful song.',      c:['Rarely have','Rarely did','Never has','Seldom was'], a:0, hint:'negative adv. + auxiliary + subject (inversion)' },
+  { level:'C1', topic:'mixed conditional',q:'If I had studied harder, I ___ a better job now.',c:['would had','would have','would have had','will have'], a:1, hint:'mixed: past unreal condition → present result' },
+  { level:'C1', topic:'causative have', q:'I had my car ___ at the garage.',          c:['repair','repaired','to repair','repairing'], a:1, hint:'"have sth done": have + object + past participle' },
+  { level:'C1', topic:'subjunctive',    q:'The doctor suggested that he ___ more exercise.',c:['takes','take','took','should takes'], a:1, hint:'subjunctive: that + subject + base verb (no -s)' },
+  { level:'C1', topic:'cleft sentence', q:'It was ___ who solved the problem.',       c:['he','him','his','himself'],             a:0,  hint:'It-cleft: It was + subject pronoun + who' },
+  { level:'C1', topic:'had better',     q:'You had better ___ or you'll miss the train.',c:['hurry','to hurry','hurrying','hurried'], a:0, hint:'"had better" + bare infinitive (no "to")' },
+  { level:'C1', topic:'whatever',       q:'___ happens, I'll support you.',           c:['Whatever','However','Whenever','Whichever'], a:0, hint:'"whatever" = no matter what' },
+  { level:'C1', topic:'seem + to have', q:'The committee seems ___ a decision.',      c:['to reach','to have reached','reaching','to be reached'], a:1, hint:'"seem to have + pp" = appears that it has happened' },
+  { level:'C1', topic:'wish + would',   q:'I wish my neighbour ___ play loud music at night.',c:['doesn't','wouldn't','won't','didn't'], a:1, hint:'"wish + would" = complaint about present habit' },
+
+  // ── C2 ──────────────────────────────────────────────────────
+  { level:'C2', topic:'formal subjunctive',q:'It is vital that every student ___ present.',c:['is','be','are','was'], a:1, hint:'formal subjunctive: It is vital/essential that + subject + base verb' },
+  { level:'C2', topic:'negative inversion',q:'Not only ___ late, but he also forgot his notes.',c:['he was','was he','he had','had he'], a:1, hint:'"Not only" at the start → inversion: aux + subject' },
+  { level:'C2', topic:'double comparative',q:'___ you practice, ___ you improve.',    c:['The more / the more','More / more','The most / the most','More / better'], a:0, hint:'"The + comparative… the + comparative" structure' },
+  { level:'C2', topic:'fronting',        q:'"___ he ran as fast as he could."',       c:['Despite tired being','Tired though he was','Although tired','Tired despite'], a:1, hint:'concessive fronting: Adj + though + subject + verb' },
+  { level:'C2', topic:'nominalization',  q:'The ___ of the new law caused controversy.',c:['implement','implementing','implementation','implemented'], a:2, hint:'noun form of a verb: implement → implementation' },
+  { level:'C2', topic:'as if + past',    q:'She talks as if she ___ everything.',      c:['knows','knew','has known','had known'], a:1, hint:'"as if" + past simple = unreal present comparison' },
+  { level:'C2', topic:'having + pp',     q:'___ the error, the engineer restarted the system.',c:['Having identified','Identifying','To identify','Identified'], a:0, hint:'"Having + pp" clause = after completing an action' },
+  { level:'C2', topic:'passive infinitive',q:'The results are due ___ next week.',    c:['announce','to announce','to be announced','being announced'], a:2, hint:'passive infinitive: to be + past participle' },
+  { level:'C2', topic:'only when inversion',q:'Only when she left ___ he realize his mistake.',c:['he did','did he','had he','was he'], a:1, hint:'"Only when" at start → inversion in main clause' },
+  { level:'C2', topic:'concessive clause',q:'Much ___ I admire his work, I disagree with this decision.',c:['as','though','despite','although'], a:0, hint:'"Much as I..." = formal concessive structure' },
+];
+
+// ────────────────────────────────────────────────────────────────
+class GrammarQuest {
+  constructor(qm) {
+    this.qm       = qm;
+    this.root     = qm.root;
+    this.questions = [];
+    this.idx      = 0;
+    this.score    = 0;
+    this.xp       = 0;
+    this.answered = false;
+  }
+
+  start() {
+    const cefrLv = this.qm.app && this.qm.app.state
+      ? (this.qm.app.state.get('cefrLevel') || 'B1')
+      : 'B1';
+    const CEFR_ORDER = ['A1','A2','B1','B2','C1','C2'];
+    const userIdx = CEFR_ORDER.indexOf(cefrLv);
+
+    // Shuffle per-level buckets
+    const byLevel = {};
+    GRAMMAR_QUEST_Q.forEach(q => {
+      if (!byLevel[q.level]) byLevel[q.level] = [];
+      byLevel[q.level].push(q);
+    });
+    Object.values(byLevel).forEach(arr => arr.sort(() => Math.random() - 0.5));
+
+    // Ensure at least 1 question from each level up to (userLevel + 1)
+    const pickedSet = new Set();
+    const picked = [];
+    const maxIdx = Math.min(userIdx + 1, CEFR_ORDER.length - 1);
+    CEFR_ORDER.slice(0, maxIdx + 1).forEach(lv => {
+      const pool = byLevel[lv];
+      if (pool && pool.length) {
+        const q = pool.pop();
+        picked.push(q);
+        pickedSet.add(q);
+      }
+    });
+
+    // Fill to 10 with remaining questions (weighted toward user level)
+    const remaining = [];
+    CEFR_ORDER.forEach((lv, li) => {
+      const pool = byLevel[lv] || [];
+      const weight = li <= userIdx + 1 ? 2 : 1; // prefer user's range
+      pool.forEach(q => { for (let w = 0; w < weight; w++) remaining.push(q); });
+    });
+    remaining.sort(() => Math.random() - 0.5);
+
+    while (picked.length < 10 && remaining.length > 0) {
+      const q = remaining.pop();
+      if (!pickedSet.has(q)) { picked.push(q); pickedSet.add(q); }
+    }
+
+    this.questions = picked.sort(() => Math.random() - 0.5);
+    this.idx = 0; this.score = 0; this.xp = 0;
+    this._renderShell();
+    this._renderQuestion();
+  }
+
+  _renderShell() {
+    this.root.innerHTML = `
+<div class="gq-shell" id="gq-shell">
+  <div class="gq-topbar">
+    <button class="qback-btn" id="gq-back">← Hub</button>
+    <div class="gq-prog-wrap">
+      <div class="gq-prog-bar"><div class="gq-prog-fill" id="gq-pfill" style="width:0%"></div></div>
+      <span class="gq-prog-lbl" id="gq-prog-lbl">0 / ${this.questions.length}</span>
+    </div>
+    <span class="gq-xp-disp" id="gq-xp">0 XP</span>
+  </div>
+  <div id="gq-body" style="padding:16px"></div>
+</div>`;
+    document.getElementById('gq-back').addEventListener('click', () => this.qm.backToHub());
+  }
+
+  _renderQuestion() {
+    const q     = this.questions[this.idx];
+    const total = this.questions.length;
+    const pct   = Math.round(this.idx / total * 100);
+    document.getElementById('gq-pfill').style.width  = pct + '%';
+    document.getElementById('gq-prog-lbl').textContent = `${this.idx} / ${total}`;
+    this.answered = false;
+
+    const lvCol = { A1:'#10b981',A2:'#4ade80',B1:'#00d4ff',B2:'#6366f1',C1:'#7c3aed',C2:'#f43f5e' };
+    const col   = lvCol[q.level] || '#00d4ff';
+    const qText = q.q.replace('___', '<span class="gq-blank">___</span>');
+
+    document.getElementById('gq-body').innerHTML = `
+<div class="gq-card">
+  <div class="gq-meta">
+    <span class="gq-lv-badge" style="background:${col}22;color:${col};border-color:${col}55">${q.level}</span>
+    <span class="gq-topic">${q.topic}</span>
+  </div>
+  <div class="gq-qtext">${qText}</div>
+  <div class="gq-choices" id="gq-choices">
+    ${q.c.map((ch, i) => `<button class="gq-choice" data-i="${i}">${ch}</button>`).join('')}
+  </div>
+  <div class="gq-feedback" id="gq-fb"></div>
+</div>`;
+
+    document.getElementById('gq-choices').querySelectorAll('.gq-choice').forEach(btn => {
+      btn.addEventListener('click', () => this._answer(parseInt(btn.dataset.i)));
+    });
+  }
+
+  _answer(idx) {
+    if (this.answered) return;
+    this.answered = true;
+    const q       = this.questions[this.idx];
+    const correct = idx === q.a;
+    const btns    = document.querySelectorAll('.gq-choice');
+
+    btns.forEach((b, i) => {
+      b.setAttribute('disabled', true);
+      if (i === q.a)              b.classList.add('gq-correct');
+      else if (i === idx)         b.classList.add('gq-wrong');
+    });
+
+    const xpMap = { A1:3, A2:5, B1:8, B2:10, C1:12, C2:15 };
+    const earned = correct ? (xpMap[q.level] || 8) : 0;
+    if (correct) { this.score++; this.xp += earned; }
+    document.getElementById('gq-xp').textContent = this.xp + ' XP';
+
+    const fb = document.getElementById('gq-fb');
+    if (correct) {
+      fb.innerHTML = `<span class="gq-fb-ok">✓ Doğru! +${earned} XP</span><div class="gq-hint">${q.hint}</div>`;
+    } else {
+      fb.innerHTML = `<span class="gq-fb-no">✗ Yanlış — Doğrusu: <strong>${q.c[q.a]}</strong></span><div class="gq-hint">${q.hint}</div>`;
+    }
+
+    setTimeout(() => {
+      this.idx++;
+      if (this.idx < this.questions.length) this._renderQuestion();
+      else this._showResult();
+    }, 1500);
+  }
+
+  _showResult() {
+    const total = this.questions.length;
+    const pct   = Math.round(this.score / total * 100);
+    const col   = pct >= 80 ? '#10b981' : pct >= 60 ? '#00d4ff' : '#f43f5e';
+    const msg   = pct >= 80 ? '🎉 Muhteşem!' : pct >= 60 ? '💪 İyi gidiyorsun!' : '📚 Pratik yapmaya devam!';
+
+    this.qm.addXP(this.xp, 'normal');
+    this.qm.recordGame();
+    if (pct >= 80) this.qm.recordWin();
+    this.qm.recordBest(this.xp);
+
+    document.getElementById('gq-pfill').style.width = '100%';
+    document.getElementById('gq-prog-lbl').textContent = `${total} / ${total}`;
+
+    document.getElementById('gq-body').innerHTML = `
+<div class="gq-result">
+  <div class="gq-res-circle" style="border-color:${col}">
+    <div class="gq-res-score" style="color:${col}">${this.score}/${total}</div>
+    <div class="gq-res-pct" style="color:${col}">%${pct}</div>
+  </div>
+  <div class="gq-res-msg">${msg}</div>
+  <div class="gq-res-xp">+${this.xp} XP kazandın</div>
+  <div class="gq-res-actions">
+    <button class="btn gq-btn-replay" id="gq-replay">↺ Tekrar</button>
+    <button class="btn gq-btn-hub"    id="gq-hub">← Hub</button>
+  </div>
+</div>`;
+
+    document.getElementById('gq-replay').addEventListener('click', () => new GrammarQuest(this.qm).start());
+    document.getElementById('gq-hub').addEventListener('click',    () => this.qm.backToHub());
+  }
+}
+
+function _patch() {
     const app = window._app;
     if (!app || !app.navigate || app.__qPatched) return;
     app.__qPatched = true;
