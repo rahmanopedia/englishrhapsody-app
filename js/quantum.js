@@ -3178,6 +3178,78 @@ const GRAMMAR_QUEST_Q = [
   { level:'C2', topic:'passive infinitive',q:'The results are due ___ next week.',    c:['announce','to announce','to be announced','being announced'], a:2, hint:'passive infinitive: to be + past participle' },
   { level:'C2', topic:'only when inversion',q:'Only when she left ___ he realize his mistake.',c:['he did','did he','had he','was he'], a:1, hint:'"Only when" at start → inversion in main clause' },
   { level:'C2', topic:'concessive clause',q:'Much ___ I admire his work, I disagree with this decision.',c:['as','though','despite','although'], a:0, hint:'"Much as I..." = formal concessive structure' },
+
+  // ── A1 (extra) ───────────────────────────────────────────────
+  { level:'A1', topic:'to be negative',   q:'She ___ a doctor. She\'s a teacher.',                c:['isn\'t','aren\'t','not is','don\'t is'],          a:0, hint:'"she" → isn\'t (is + not)' },
+  { level:'A1', topic:'to be question',   q:'"___ she your sister?" "Yes, she is."',               c:['Is','Are','Do','Does'],                              a:0, hint:'"she" → Is she...?' },
+  { level:'A1', topic:'in/on/at time',    q:'My birthday is ___ July.',                            c:['in','on','at','during'],                             a:0, hint:'"in" + month/year/season' },
+  { level:'A1', topic:'in/on/at place',   q:'The cat is ___ the box.',                             c:['in','on','at','by'],                                 a:0, hint:'"in" = inside something' },
+  { level:'A1', topic:'imperative',       q:'"___ the door, please." (command)',                   c:['Opens','Open','Opening','Opened'],                   a:1, hint:'imperatives use the base form of the verb' },
+  { level:'A1', topic:'there are',        q:'There ___ many people at the party.',                 c:['is','are','was','have'],                             a:1, hint:'"there are" for plural nouns' },
+  { level:'A1', topic:'negation',         q:'I ___ like coffee. I prefer tea.',                    c:['don\'t','doesn\'t','not','am not'],                a:0, hint:'"I/you/we/they" → don\'t' },
+  { level:'A1', topic:'do/does',          q:'"___ you speak English?" "Yes, I do."',               c:['Are','Do','Does','Have'],                            a:1, hint:'"Do" for I/you/we/they questions' },
+  { level:'A1', topic:'where from',       q:'Where ___ you from?',                                 c:['are','is','do','does'],                              a:0, hint:'"Where are you from?" — to be, not do' },
+  { level:'A1', topic:'demonstratives',  q:'___ are my books. (pointing to a nearby pile)',        c:['This','That','These','It'],                          a:2, hint:'"these" = plural + nearby' },
+
+  // ── A2 (extra) ───────────────────────────────────────────────
+  { level:'A2', topic:'past simple reg.', q:'She ___ her homework last night.',                    c:['finish','finishing','finished','has finished'],      a:2, hint:'regular past simple: verb + -ed' },
+  { level:'A2', topic:'too + adj',        q:'This coffee is ___ hot to drink.',                    c:['too','enough','very','so'],                          a:0, hint:'"too + adj + to-inf" = excessively' },
+  { level:'A2', topic:'would like',       q:'I ___ a cup of tea, please.',                         c:['like','would like','am liking','liked'],             a:1, hint:'"would like" = polite request' },
+  { level:'A2', topic:'pres. continuous', q:'Be quiet! The baby ___.',                             c:['sleeps','is sleeping','sleeping','has slept'],       a:1, hint:'action happening right now → present continuous' },
+  { level:'A2', topic:'there were',       q:'___ many students at the party last night.',          c:['There was','There were','There are','It was'],       a:1, hint:'"there were" for plural past' },
+  { level:'A2', topic:'possessive \'s',  q:'That is ___ bag.',                                    c:['John','Johns','John\'s','Johnes'],                  a:2, hint:'add apostrophe + s for possession' },
+  { level:'A2', topic:'but (contrast)',   q:'I like coffee ___ I don\'t like tea.',               c:['and','but','so','because'],                         a:1, hint:'"but" connects contrasting ideas' },
+  { level:'A2', topic:'adj + enough',     q:'She isn\'t old ___ to vote.',                        c:['enough old','enough','old enough','too old'],        a:2, hint:'"adj + enough + to-inf" (not "enough + adj")' },
+  { level:'A2', topic:'comparative',      q:'They arrived ___ than expected.',                     c:['early','earlier','earliest','more early'],           a:1, hint:'short adj + -er for comparisons' },
+  { level:'A2', topic:'frequency adv.',   q:'He ___ watches the news at night.',                   c:['always','ever','yet','already'],                    a:0, hint:'"always/often/never" = adverbs of frequency' },
+
+  // ── B1 (extra) ───────────────────────────────────────────────
+  { level:'B1', topic:'ever in questions',q:'Have you ___ tried sushi?',                           c:['never','ever','already','just'],                    a:1, hint:'"ever" in present perfect questions = at any time' },
+  { level:'B1', topic:'might',            q:'It might ___ tomorrow — bring an umbrella.',          c:['rain','rains','raining','to rain'],                  a:0, hint:'modal + bare infinitive (no -s, no to)' },
+  { level:'B1', topic:'decide + to-inf',  q:'She decided ___ a new job.',                          c:['find','finding','to find','found'],                  a:2, hint:'"decide" is followed by to-infinitive' },
+  { level:'B1', topic:'such + a/an',      q:'It was ___ a boring film that I fell asleep.',        c:['so','such','too','very'],                            a:1, hint:'"such + a/an + adj + noun" (not "so")' },
+  { level:'B1', topic:'adj + enough',     q:'She isn\'t old ___ to stay out late.',               c:['enough','too','very','quite'],                      a:0, hint:'"old enough to..." — adjective before "enough"' },
+  { level:'B1', topic:'present passive',  q:'English ___ in many countries.',                      c:['spoke','is spoken','speaks','has spoken'],           a:1, hint:'present simple passive: is/are + past participle' },
+  { level:'B1', topic:'want + obj + inf', q:'She wants me ___ her.',                               c:['help','helping','to help','helped'],                 a:2, hint:'"want + object + to-infinitive"' },
+  { level:'B1', topic:'although',         q:'___ it was raining, we went for a walk.',             c:['Despite','Although','However','Because'],            a:1, hint:'"although" + full clause; "despite" + noun/-ing' },
+  { level:'B1', topic:'reflexive pronoun',q:'He hurt ___ while cooking.',                          c:['him','his','himself','hisself'],                     a:2, hint:'"himself" = reflexive pronoun for "he"' },
+  { level:'B1', topic:'just',             q:'She has ___ left. You missed her by a minute.',       c:['already','just','yet','ever'],                      a:1, hint:'"just" = a moment ago (present perfect)' },
+
+  // ── B2 (extra) ───────────────────────────────────────────────
+  { level:'B2', topic:'wish + would',     q:'I wish you ___ stop making that noise.',              c:['will','would','could','should'],                    a:1, hint:'"wish + would" expresses annoyance at sb\'s habit' },
+  { level:'B2', topic:'past perf. cont.',  q:'She was exhausted because she ___ all day.',         c:['worked','has been working','had been working','was working'], a:2, hint:'cause of past exhaustion → past perfect continuous' },
+  { level:'B2', topic:'it\'s time',       q:'It\'s time we ___ home.',                           c:['go','went','going','to go'],                        a:1, hint:'"it\'s time + subject + past simple" (not present)' },
+  { level:'B2', topic:'conditional inversion',q:'"___ you need any help, call me."',              c:['If','Should','Would','Were'],                        a:1, hint:'"Should you need..." = formal "If you need..." (inversion)' },
+  { level:'B2', topic:'be used to',        q:'She ___ working nights — she\'s done it for years.',c:['is used to','used to','gets used to','was used to'], a:0, hint:'"be used to + -ing" = accustomed to (not past habit)' },
+  { level:'B2', topic:'do emphasis',       q:'She did eventually ___ the project.',                c:['finish','finished','finishing','to finish'],         a:0, hint:'"did + base verb" adds emphasis' },
+  { level:'B2', topic:'reported command',  q:'The teacher told us ___ our phones.',                c:['switch off','to switch off','switching off','switched off'], a:1, hint:'"tell + obj + to-infinitive"' },
+  { level:'B2', topic:'no sooner',         q:'No ___ had I arrived than the problems started.',    c:['sooner','longer','further','more'],                  a:0, hint:'"No sooner had... than..." = as soon as' },
+  { level:'B2', topic:'the + comp.',       q:'The bigger the house, ___ it is to clean.',          c:['the harder','harder','the hard','more hard'],        a:0, hint:'"The + comparative, the + comparative" structure' },
+  { level:'B2', topic:'impersonal passive',q:'He is ___ to speak several languages.',              c:['said','told','reported','considered'],               a:0, hint:'"He is said to..." = It is said that he...' },
+
+  // ── C1 (extra) ───────────────────────────────────────────────
+  { level:'C1', topic:'no sooner inversion',q:'No sooner ___ I sat down than the phone rang.',    c:['did','had','have','was'],                            a:1, hint:'"No sooner had + subject + pp + than..."' },
+  { level:'C1', topic:'scarcely inversion',q:'Scarcely ___ sat down when the alarm went off.',    c:['I had','had I','I was','was I'],                     a:1, hint:'"Scarcely had + subject..." (inversion with negative adv.)' },
+  { level:'C1', topic:'however',           q:'"___ hard I try, I can\'t solve this."',           c:['Whatever','However','Whenever','Wherever'],          a:1, hint:'"However + adj/adv + subject + verb" = no matter how' },
+  { level:'C1', topic:'prep + which',      q:'The house in ___ I grew up has been demolished.',   c:['which','that','where','what'],                       a:0, hint:'preposition + "which" in formal relative clauses' },
+  { level:'C1', topic:'were to',           q:'"If she ___ call, tell her I\'m busy."',           c:['were to','was to','is to','would'],                  a:0, hint:'"If + subject + were to + verb" = formal/unlikely condition' },
+  { level:'C1', topic:'insist + subjunctive',q:'He insisted that the proposal ___ reconsidered.', c:['is','be','was','had been'],                          a:1, hint:'subjunctive after "insist/demand/suggest + that"' },
+  { level:'C1', topic:'would sooner',      q:'I would sooner ___ alone than in a group.',         c:['travel','to travel','travelling','have travelled'],  a:0, hint:'"would sooner + bare infinitive" = preference' },
+  { level:'C1', topic:'passive reporting', q:'She is believed ___ the area last night.',          c:['to leave','to have left','leaving','having left'],   a:1, hint:'"is believed to have + pp" = past inference (passive)' },
+  { level:'C1', topic:'come what may',     q:'"Come what ___, I\'ll stand by you."',             c:['may','might','will','can'],                          a:0, hint:'"Come what may" = whatever happens (fixed expression)' },
+  { level:'C1', topic:'perfect gerund',    q:'Only after ___ the contract did he read it.',        c:['sign','signing','having signed','to sign'],          a:2, hint:'"after + having + pp" = completed action before another' },
+
+  // ── C2 (extra) ───────────────────────────────────────────────
+  { level:'C2', topic:'wh-cleft',          q:'"___ surprised me most was his calm reaction."',    c:['That','What','Which','It'],                          a:1, hint:'"What + clause + was/is..." = wh-cleft for emphasis' },
+  { level:'C2', topic:'demand + subjunctive',q:'He demanded that the report ___ submitted.',      c:['is','be','was','submit'],                            a:1, hint:'formal subjunctive: demand/require/insist that + base verb' },
+  { level:'C2', topic:'auxiliary echo',    q:'She can play the piano and so ___ her sister.',     c:['can','does','is','has'],                             a:0, hint:'"so + aux + subject" mirrors the previous auxiliary' },
+  { level:'C2', topic:'so + adj inversion',q:'"___ the traffic that we arrived two hours late."', c:['So heavy was','So heavy','Such was','So was heavy'], a:0, hint:'"So + adj + was + subject..." = extreme degree + inversion' },
+  { level:'C2', topic:'as...as',           q:'She works ___ hard as her brother.',                c:['as','so','more','than'],                             a:0, hint:'"as + adj/adv + as" for equality comparisons' },
+  { level:'C2', topic:'no point',          q:'There is no point ___ about it now — it\'s done.', c:['to worry','worrying','worry','having to worry'],     a:1, hint:'"there is no point + gerund (-ing)"' },
+  { level:'C2', topic:'past perf. passive',q:'The documents ___ before the meeting.',             c:['had been destroyed','have been destroyed','were being destroyed','had destroyed'], a:0, hint:'past perfect passive: had been + past participle' },
+  { level:'C2', topic:'hardly anyone',     q:'He spoke so quietly that ___ could hear him.',      c:['hardly anyone','almost someone','barely someone','scarcely someone'], a:0, hint:'"hardly anyone" = almost nobody (negative meaning)' },
+  { level:'C2', topic:'double comparative',q:'The longer you wait, ___ it becomes.',              c:['the harder','harder','more harder','the more hard'], a:0, hint:'"The + comparative... the + comparative" = parallel increase' },
+  { level:'C2', topic:'much as',           q:'"Much ___ I try, I can\'t seem to get it right."',c:['as','though','although','however'],                  a:0, hint:'"Much as I try" = although I try hard (formal concessive)' },
 ];
 
 // ────────────────────────────────────────────────────────────────
