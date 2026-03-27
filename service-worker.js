@@ -2,7 +2,7 @@
 'use strict';
 
 
-const CACHE_NAME  = 'er-v82';
+const CACHE_NAME  = 'er-v83';
 const STATIC_URLS = [
   '/',
   '/index.html',
@@ -46,6 +46,11 @@ const STATIC_URLS = [
   /* boot.js intentionally excluded — always network-first */
   '/firebase-messaging-sw.js',
 ];
+
+// Message handler: main thread'den SKIP_WAITING gelebilir
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
+});
 
 // Install: cache all static assets
 self.addEventListener('install', event => {

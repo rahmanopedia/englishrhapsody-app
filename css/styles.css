@@ -9660,3 +9660,87 @@ input, textarea { -webkit-user-select: text !important; -moz-user-select: text !
   border-radius:10px;
 }
 
+/* ── CEFR Onboarding Overlay ─────────────────────────────────────────── */
+#ob-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.82);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: obFadeIn 0.35s ease;
+}
+@keyframes obFadeIn { from { opacity:0 } to { opacity:1 } }
+
+.ob-modal {
+  background: #0f172a;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  width: 100%; max-width: 460px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+}
+
+.ob-header {
+  text-align: center;
+  padding: 28px 24px 20px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(0,212,255,0.08));
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.ob-logo { font-size: 36px; margin-bottom: 8px; }
+.ob-title { font-size: 1.2rem; font-weight: 800; color: #f1f5f9; margin: 0 0 6px; }
+.ob-sub { font-size: 0.82rem; color: #94a3b8; margin: 0; }
+
+.ob-body { padding: 24px; }
+
+.ob-progress {
+  height: 4px; background: rgba(255,255,255,0.08);
+  border-radius: 4px; margin-bottom: 20px; overflow: hidden;
+}
+.ob-progress-fill {
+  height: 100%; background: linear-gradient(90deg, #6366f1, #00d4ff);
+  border-radius: 4px; transition: width 0.4s ease;
+}
+
+.ob-qnum { font-size: 0.72rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+.ob-qtext { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 18px; line-height: 1.5; }
+
+.ob-choices { display: flex; flex-direction: column; gap: 9px; }
+.ob-choice {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #cbd5e1; font-size: 0.9rem; font-weight: 500;
+  text-align: left; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.ob-choice:hover:not([disabled]) { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4); color: #f1f5f9; }
+.ob-choice.ob-correct { background: rgba(16,185,129,0.18) !important; border-color: #10b981 !important; color: #6ee7b7 !important; }
+.ob-choice.ob-wrong   { background: rgba(244,63,94,0.15) !important;  border-color: #f43f5e !important; color: #fda4af !important; }
+
+.ob-result { text-align: center; padding: 16px 0; }
+.ob-result-lv { font-size: 3rem; font-weight: 900; margin-bottom: 8px; }
+.ob-result-msg { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; }
+.ob-result-sub { font-size: 0.82rem; color: #64748b; margin-bottom: 24px; }
+.ob-start-btn { width: 100%; padding: 14px; font-size: 0.95rem; font-weight: 700; }
+
+/* ── SW Update Banner ────────────────────────────────────────────────── */
+#sw-update-banner {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  z-index: 8888;
+  background: #1e293b;
+  border: 1px solid rgba(99,102,241,0.4);
+  border-radius: 14px;
+  padding: 12px 18px;
+  display: flex; align-items: center; gap: 12px;
+  font-size: 0.85rem; color: #cbd5e1;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  animation: obFadeIn 0.3s ease;
+}
+#sw-update-banner button {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border: none; border-radius: 8px;
+  padding: 7px 14px; color: #fff;
+  font-size: 0.8rem; font-weight: 700; cursor: pointer;
+  white-space: nowrap;
+}
+
