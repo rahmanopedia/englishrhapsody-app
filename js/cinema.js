@@ -91,6 +91,15 @@ class CinemaModule {
           letter-spacing:0.3px;display:none;
         "></div>
 
+        <!-- CEFR rozeti (sol ust, kaynağın yanına) -->
+        <div id="cine-cefr-badge" style="
+          position:absolute;top:68px;right:12px;z-index:15;
+          background:rgba(124,58,237,0.85);backdrop-filter:blur(8px);
+          border-radius:8px;padding:4px 9px;
+          color:#fff;font-size:0.68rem;font-weight:900;
+          letter-spacing:0.8px;display:none;
+        "></div>
+
         <!-- Altyazi -->
         <div id="cine-subtitle" style="
           position:absolute;left:0;right:0;z-index:15;
@@ -282,6 +291,17 @@ class CinemaModule {
       src.style.display = 'block';
     } else {
       src.style.display = 'none';
+    }
+
+    // CEFR badge
+    const cefrBadge = this.el.querySelector('#cine-cefr-badge');
+    if (cefrBadge) {
+      if (entry.cefr) {
+        cefrBadge.textContent = entry.cefr;
+        cefrBadge.style.display = 'inline-block';
+      } else {
+        cefrBadge.style.display = 'none';
+      }
     }
 
     this._clearSync();

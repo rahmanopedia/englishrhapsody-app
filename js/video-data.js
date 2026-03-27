@@ -21,7 +21,8 @@ var CINEMA_DATA = [
       { phrase: "Thank you.", correct: "Tesekkur ederim.", wrong: "Ozur dilerim." }
     ],
     points: 12,
-    category: "Daily Life"
+    category: "Daily Life",
+    cefr: "A1"
   },
 
   {
@@ -42,7 +43,8 @@ var CINEMA_DATA = [
       { phrase: "I need it soon.", correct: "En kisa zamanda lazim.", wrong: "Yarin teslim ederim." }
     ],
     points: 12,
-    category: "Work"
+    category: "Work",
+    cefr: "A2"
   },
 
   {
@@ -63,7 +65,8 @@ var CINEMA_DATA = [
       { phrase: "That's all.", correct: "Hepsi bu.", wrong: "Devam edin lutfen." }
     ],
     points: 12,
-    category: "Food & Drink"
+    category: "Food & Drink",
+    cefr: "A1"
   },
 
 
@@ -83,7 +86,8 @@ var CINEMA_DATA = [
       { phrase: "This is bad.", correct: "Bu kotu.", wrong: "Bu harika." }
     ],
     points: 12,
-    category: "Daily Life"
+    category: "Daily Life",
+    cefr: "A1"
   },
 
   {
@@ -104,7 +108,8 @@ var CINEMA_DATA = [
       { phrase: "Good idea.", correct: "Iyi fikir.", wrong: "Kotu fikir." }
     ],
     points: 12,
-    category: "Daily Life"
+    category: "Daily Life",
+    cefr: "A1"
   },
 
   {
@@ -125,7 +130,8 @@ var CINEMA_DATA = [
       { phrase: "It's too risky.", correct: "Cok riskli.", wrong: "Cok guvenli." }
     ],
     points: 12,
-    category: "Daily Life"
+    category: "Daily Life",
+    cefr: "A2"
   },
 
   {
@@ -146,7 +152,8 @@ var CINEMA_DATA = [
       { phrase: "Time is running out.", correct: "Zaman daraliyor.", wrong: "Cok vaktimiz var." }
     ],
     points: 12,
-    category: "Daily Life"
+    category: "Daily Life",
+    cefr: "B1"
   },
 
   {
@@ -167,7 +174,8 @@ var CINEMA_DATA = [
       { phrase: "Alright.", correct: "Peki.", wrong: "Hayir." }
     ],
     points: 12,
-    category: "Daily Life"
+    category: "Daily Life",
+    cefr: "A2"
   },
 
   // ── AI Generated Clips (Batch 2) ──────────────────────────────
@@ -190,7 +198,8 @@ var CINEMA_DATA = [
       { phrase: "I'll try again.", correct: "Tekrar deneyeceğim.", wrong: "Sonraya bırakıyorum." }
     ],
     points: 12,
-    category: "Daily Life"
+    category: "Daily Life",
+    cefr: "A2"
   },
 
   {
@@ -211,7 +220,8 @@ var CINEMA_DATA = [
       { phrase: "Exactly.", correct: "Kesinlikle / Aynen öyle.", wrong: "Tam olarak değil." }
     ],
     points: 12,
-    category: "Social"
+    category: "Social",
+    cefr: "B1"
   },
 
   {
@@ -232,7 +242,8 @@ var CINEMA_DATA = [
       { phrase: "The air conditioning isn't working.", correct: "Klima çalışmıyor.", wrong: "Oda çok küçük." }
     ],
     points: 12,
-    category: "Travel"
+    category: "Travel",
+    cefr: "B1"
   },
 
   {
@@ -253,7 +264,8 @@ var CINEMA_DATA = [
       { phrase: "We should leave.", correct: "Gitmeliyiz.", wrong: "Burada biraz daha duralım." }
     ],
     points: 12,
-    category: "Daily Life"
+    category: "Daily Life",
+    cefr: "B1"
   },
 
   {
@@ -274,7 +286,8 @@ var CINEMA_DATA = [
       { phrase: "I'll be right back.", correct: "Hemen geri döneceğim.", wrong: "Biraz sonra görüşürüz." }
     ],
     points: 12,
-    category: "Daily Life"
+    category: "Daily Life",
+    cefr: "B1"
   },
 
   {
@@ -295,7 +308,8 @@ var CINEMA_DATA = [
       { phrase: "Be my guest.", correct: "Buyurun, tabii ki / Çekinme.", wrong: "Şu an uygun bir zaman değil." }
     ],
     points: 12,
-    category: "Work"
+    category: "Work",
+    cefr: "B1"
   },
 
 ];
