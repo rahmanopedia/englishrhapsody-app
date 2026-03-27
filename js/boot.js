@@ -41,15 +41,22 @@
   function ensureScripts(target) {
     var srcs = LAZY[target];
     if (!srcs) return Promise.resolve();
-    return srcs.reduce(function (chain, src) {
-      return chain.then(function () { return loadScript(src); });
-    }, Promise.resolve());
+    return Promise.all(srcs.map(function (src) { return loadScript(src); }));
   }
 
   function allLoaded(target) {
     var srcs = LAZY[target];
     return !srcs || srcs.every(function (s) { return loaded.has(s); });
   }
+
+  // pointerdown: tıklamadan önce script yüklemeyi başlat (300ms kazanç)
+  document.addEventListener('pointerdown', function (e) {
+    var el = e.target.closest('[data-target]');
+    if (!el) return;
+    var target = el.dataset.target;
+    if (!target || !LAZY[target] || allLoaded(target)) return;
+    ensureScripts(target);
+  }, { passive: true, capture: true });
 
   document.addEventListener('click', function (e) {
     var el = e.target.closest('[data-target]');
@@ -62,6 +69,10 @@
 
     document.querySelectorAll('.modes-drawer.open').forEach(function (d) { d.classList.remove('open'); });
     document.querySelectorAll('.modes-drawer-backdrop.open').forEach(function (d) { d.classList.remove('open'); });
+
+    // Hemen görsel feedback — script yüklenmeyi bekleme
+    document.querySelectorAll('.nav-item.active, .m-nav-item.active').forEach(function (n) { n.classList.remove('active'); });
+    el.classList.add('active');
 
     ensureScripts(target).then(function () {
       if (window._app && window._app.navigate) {
