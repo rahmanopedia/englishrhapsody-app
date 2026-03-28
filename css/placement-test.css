@@ -81,6 +81,15 @@
 
 .pt-btn-ghost:hover { background: rgba(255,255,255,0.1); color: rgba(241,245,249,0.7); }
 
+.pt-btn-retry {
+  background: rgba(255,255,255,0.06);
+  color: rgba(241,245,249,0.45);
+  font-size: 0.82rem;
+  margin-top: 6px;
+}
+
+.pt-btn-retry:hover { background: rgba(255,255,255,0.1); color: rgba(241,245,249,0.65); }
+
 .pt-skip-label {
   font-size: 0.78rem;
   color: rgba(241,245,249,0.35);
@@ -116,6 +125,63 @@
   border-radius: 8px;
   border: 1px solid;
   letter-spacing: 0.05em;
+}
+
+/* ── Welcome how-row ── */
+.pt-how-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 20px;
+  flex-wrap: wrap;
+}
+
+.pt-how-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.72rem;
+  color: rgba(241,245,249,0.5);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 7px 10px;
+  min-width: 64px;
+}
+
+.pt-how-item span:first-child { font-size: 1.1rem; }
+
+.pt-how-plus {
+  font-size: 1rem;
+  color: rgba(241,245,249,0.2);
+  font-weight: 700;
+}
+
+/* ── Stage tracker dots ── */
+.pt-stage-tracker {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.pt-stage-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: transparent;
+}
+
+.pt-sdot-pass  { background: #10b981; border-color: #10b981; }
+.pt-sdot-fail  { background: rgba(239,68,68,0.6); border-color: rgba(239,68,68,0.6); }
+.pt-sdot-current { animation: pt-pulse 1.2s ease-in-out infinite; }
+
+@keyframes pt-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
 }
 
 /* ── Level transition ── */
@@ -272,6 +338,173 @@
 .pt-opt-wrong .pt-opt-letter {
   background: rgba(239,68,68,0.3);
   color: #ef4444;
+}
+
+/* ── Question type badge ── */
+.pt-q-type {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+/* ── Live score dots (per-question) ── */
+.pt-qdot-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.pt-qdot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.pt-qdot-empty { background: rgba(255,255,255,0.12); }
+.pt-qdot-ok    { transform: scale(1.15); }
+.pt-qdot-fail  { background: rgba(239,68,68,0.55); }
+
+/* ── Grammar fill-in-blank block ── */
+.pt-grammar-block {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 20px 22px 16px;
+  margin-bottom: 18px;
+}
+
+.pt-grammar-q {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.pt-blank {
+  display: inline-block;
+  min-width: 60px;
+  border-bottom: 2px solid;
+  padding: 0 4px;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* ── Stage summary card ── */
+.pt-card-summary { padding: 36px 28px; }
+
+.pt-sum-level {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+}
+
+.pt-sum-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.pt-sum-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  transition: transform 0.2s;
+}
+
+.pt-sum-dot-ok   { transform: scale(1.1); }
+.pt-sum-dot-fail { background: rgba(239,68,68,0.45); }
+
+.pt-sum-verdict {
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.pt-verdict-pass { background: rgba(16,185,129,0.15); color: #10b981; }
+.pt-verdict-fail { background: rgba(239,68,68,0.12); color: #ef4444; }
+.pt-verdict-tie  { background: rgba(245,158,11,0.15); color: #f59e0b; }
+
+.pt-sum-next {
+  font-size: 0.8rem;
+  color: rgba(241,245,249,0.4);
+  margin-top: 4px;
+}
+
+/* ── History box in result screen ── */
+.pt-history-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 12px 0 8px;
+  text-align: left;
+}
+
+.pt-history-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(241,245,249,0.3);
+  margin-bottom: 10px;
+}
+
+.pt-hist-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+
+.pt-hist-lvl {
+  font-size: 0.78rem;
+  font-weight: 800;
+  width: 26px;
+  flex-shrink: 0;
+}
+
+.pt-hist-dots {
+  display: flex;
+  gap: 3px;
+  flex: 1;
+}
+
+.pt-hist-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.pt-hist-dot-fail { background: rgba(255,255,255,0.12); }
+
+.pt-hist-score {
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.pt-hist-pass { color: #10b981; }
+.pt-hist-fail { color: rgba(239,68,68,0.7); }
+
+/* ── Transition subtitle ── */
+.pt-transition-sub {
+  font-size: 0.78rem;
+  color: rgba(241,245,249,0.4);
+  margin-top: 4px;
 }
 
 /* ── Example sentence ── */

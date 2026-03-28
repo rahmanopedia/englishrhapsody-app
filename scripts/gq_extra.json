@@ -1,0 +1,1952 @@
+[
+  {
+    "level": "A2",
+    "topic": "used to",
+    "q": "She ___ live in Paris, but now she lives in London.",
+    "c": [
+      "uses to",
+      "used to",
+      "was used to",
+      "is used to"
+    ],
+    "a": 1,
+    "hint": "\"used to\" for past habits no longer true"
+  },
+  {
+    "level": "A2",
+    "topic": "too",
+    "q": "The coffee is ___ hot to drink.",
+    "c": [
+      "enough",
+      "too",
+      "very",
+      "so"
+    ],
+    "a": 1,
+    "hint": "\"too\" = more than needed, negative result"
+  },
+  {
+    "level": "A2",
+    "topic": "all",
+    "q": "___ my sisters are doctors. There are three of them.",
+    "c": [
+      "Both",
+      "All",
+      "Every",
+      "Each"
+    ],
+    "a": 1,
+    "hint": "\"all\" for three or more"
+  },
+  {
+    "level": "A2",
+    "topic": "whose",
+    "q": "___ car is parked outside?",
+    "c": [
+      "Who",
+      "Whom",
+      "Whose",
+      "Who's"
+    ],
+    "a": 2,
+    "hint": "\"whose\" = asking about owner"
+  },
+  {
+    "level": "A2",
+    "topic": "who",
+    "q": "The man ___ called you is my uncle.",
+    "c": [
+      "which",
+      "who",
+      "whom",
+      "whose"
+    ],
+    "a": 1,
+    "hint": "\"who\" for people"
+  },
+  {
+    "level": "A2",
+    "topic": "must",
+    "q": "You ___ wear a seatbelt. It is the law.",
+    "c": [
+      "must",
+      "should",
+      "might",
+      "could"
+    ],
+    "a": 0,
+    "hint": "\"must\" = strong obligation/law"
+  },
+  {
+    "level": "A2",
+    "topic": "present perfect",
+    "q": "Have you ever ___ sushi?",
+    "c": [
+      "eat",
+      "ate",
+      "eating",
+      "eaten"
+    ],
+    "a": 3,
+    "hint": "have + past participle"
+  },
+  {
+    "level": "A2",
+    "topic": "so",
+    "q": "I was tired ___ I went to bed early.",
+    "c": [
+      "because",
+      "so",
+      "but",
+      "although"
+    ],
+    "a": 1,
+    "hint": "\"so\" introduces a result"
+  },
+  {
+    "level": "A2",
+    "topic": "will",
+    "q": "I think it ___ rain tomorrow.",
+    "c": [
+      "will",
+      "is going to",
+      "shall",
+      "would"
+    ],
+    "a": 0,
+    "hint": "prediction without evidence → will"
+  },
+  {
+    "level": "A2",
+    "topic": "irregular past",
+    "q": "She ___ her keys yesterday.",
+    "c": [
+      "loosed",
+      "lose",
+      "lost",
+      "has lost"
+    ],
+    "a": 2,
+    "hint": "irregular past: lose → lost"
+  },
+  {
+    "level": "A2",
+    "topic": "mustn't",
+    "q": "You ___ smoke here. It is forbidden.",
+    "c": [
+      "don't have to",
+      "mustn't",
+      "shouldn't have",
+      "needn't"
+    ],
+    "a": 1,
+    "hint": "\"mustn't\" = prohibition"
+  },
+  {
+    "level": "A2",
+    "topic": "at",
+    "q": "We arrived ___ the airport at noon.",
+    "c": [
+      "in",
+      "on",
+      "at",
+      "to"
+    ],
+    "a": 2,
+    "hint": "\"at\" for specific locations"
+  },
+  {
+    "level": "A2",
+    "topic": "mind + -ing",
+    "q": "I don't mind ___ late.",
+    "c": [
+      "work",
+      "to work",
+      "working",
+      "worked"
+    ],
+    "a": 2,
+    "hint": "\"mind\" always takes -ing"
+  },
+  {
+    "level": "A2",
+    "topic": "should",
+    "q": "You look tired. You ___ go to bed.",
+    "c": [
+      "must",
+      "should",
+      "will",
+      "can"
+    ],
+    "a": 1,
+    "hint": "\"should\" = advice"
+  },
+  {
+    "level": "A2",
+    "topic": "neither",
+    "q": "I don't like spinach. ___ do I.",
+    "c": [
+      "So",
+      "Neither",
+      "Either",
+      "Both"
+    ],
+    "a": 1,
+    "hint": "\"neither do I\" agrees with a negative"
+  },
+  {
+    "level": "A2",
+    "topic": "question tags",
+    "q": "She is your sister, ___ she?",
+    "c": [
+      "is",
+      "isn't",
+      "wasn't",
+      "doesn't"
+    ],
+    "a": 1,
+    "hint": "positive statement → negative tag"
+  },
+  {
+    "level": "A2",
+    "topic": "since",
+    "q": "I have lived here ___ 2010.",
+    "c": [
+      "for",
+      "since",
+      "during",
+      "ago"
+    ],
+    "a": 1,
+    "hint": "\"since\" + point in time"
+  },
+  {
+    "level": "A2",
+    "topic": "let's",
+    "q": "___ go to the cinema tonight!",
+    "c": [
+      "We",
+      "Let's",
+      "Let us to",
+      "Shall we to"
+    ],
+    "a": 1,
+    "hint": "let's = let us (suggestion)"
+  },
+  {
+    "level": "A2",
+    "topic": "had better",
+    "q": "You ___ take an umbrella. It looks cloudy.",
+    "c": [
+      "had better",
+      "would better",
+      "should have",
+      "will better"
+    ],
+    "a": 0,
+    "hint": "\"had better\" = strong advice"
+  },
+  {
+    "level": "A2",
+    "topic": "prefer to",
+    "q": "I prefer tea ___ coffee.",
+    "c": [
+      "than",
+      "to",
+      "over than",
+      "from"
+    ],
+    "a": 1,
+    "hint": "\"prefer X to Y\""
+  },
+  {
+    "level": "A2",
+    "topic": "reflexive",
+    "q": "She hurt ___ while cooking.",
+    "c": [
+      "her",
+      "herself",
+      "hers",
+      "she"
+    ],
+    "a": 1,
+    "hint": "subject = object → reflexive pronoun"
+  },
+  {
+    "level": "A2",
+    "topic": "much",
+    "q": "There isn't ___ time left.",
+    "c": [
+      "many",
+      "much",
+      "few",
+      "little"
+    ],
+    "a": 1,
+    "hint": "\"time\" uncountable → much"
+  },
+  {
+    "level": "A2",
+    "topic": "before",
+    "q": "Brush your teeth ___ you go to bed.",
+    "c": [
+      "after",
+      "before",
+      "when",
+      "until"
+    ],
+    "a": 1,
+    "hint": "\"before\" = earlier than"
+  },
+  {
+    "level": "A2",
+    "topic": "past simple",
+    "q": "I ___ him last Monday.",
+    "c": [
+      "have seen",
+      "saw",
+      "have saw",
+      "seen"
+    ],
+    "a": 1,
+    "hint": "specific past time → simple past"
+  },
+  {
+    "level": "A2",
+    "topic": "offer to",
+    "q": "She offered ___ help me.",
+    "c": [
+      "to",
+      "to help",
+      "helping",
+      "help"
+    ],
+    "a": 1,
+    "hint": "\"offer\" takes to + infinitive"
+  },
+  {
+    "level": "A2",
+    "topic": "some",
+    "q": "Could I have ___ information?",
+    "c": [
+      "an",
+      "a",
+      "some",
+      "many"
+    ],
+    "a": 2,
+    "hint": "\"information\" is uncountable → some"
+  },
+  {
+    "level": "A2",
+    "topic": "not as...as",
+    "q": "This film is ___ as boring as the last one.",
+    "c": [
+      "more",
+      "not",
+      "as",
+      "so"
+    ],
+    "a": 1,
+    "hint": "\"not as + adj + as\" = less than"
+  },
+  {
+    "level": "A2",
+    "topic": "would you like",
+    "q": "___ to order now, or do you need more time?",
+    "c": [
+      "Do you like",
+      "Would you like",
+      "Are you liking",
+      "Do you want"
+    ],
+    "a": 1,
+    "hint": "\"would you like\" = polite offer"
+  },
+  {
+    "level": "A2",
+    "topic": "after + gerund",
+    "q": "___ finishing her homework, she watched TV.",
+    "c": [
+      "After",
+      "Before",
+      "While",
+      "Although"
+    ],
+    "a": 0,
+    "hint": "\"after + gerund\" for completed action"
+  },
+  {
+    "level": "A2",
+    "topic": "each other",
+    "q": "Tom and Lisa love ___.",
+    "c": [
+      "themselves",
+      "each other",
+      "one another",
+      "both b and c"
+    ],
+    "a": 3,
+    "hint": "both \"each other\" and \"one another\" are correct"
+  },
+  {
+    "level": "B1",
+    "topic": "passive",
+    "q": "The letter ___ yesterday.",
+    "c": [
+      "wrote",
+      "was written",
+      "has written",
+      "is writing"
+    ],
+    "a": 1,
+    "hint": "passive: was/were + past participle"
+  },
+  {
+    "level": "B1",
+    "topic": "reported speech",
+    "q": "She said she ___ tired.",
+    "c": [
+      "is",
+      "was",
+      "has been",
+      "would be"
+    ],
+    "a": 1,
+    "hint": "backshift: is → was in reported speech"
+  },
+  {
+    "level": "B1",
+    "topic": "2nd conditional",
+    "q": "If I ___ more money, I would travel the world.",
+    "c": [
+      "have",
+      "had",
+      "would have",
+      "will have"
+    ],
+    "a": 1,
+    "hint": "2nd cond: if + past simple"
+  },
+  {
+    "level": "B1",
+    "topic": "gerund as subject",
+    "q": "___ in the morning is good for you.",
+    "c": [
+      "Exercise",
+      "To exercising",
+      "Exercising",
+      "Exercises"
+    ],
+    "a": 2,
+    "hint": "gerund (-ing) as subject"
+  },
+  {
+    "level": "B1",
+    "topic": "past perfect",
+    "q": "By the time she arrived, we ___ lunch.",
+    "c": [
+      "finished",
+      "had finished",
+      "have finished",
+      "finish"
+    ],
+    "a": 1,
+    "hint": "\"by the time\" → past perfect for earlier action"
+  },
+  {
+    "level": "B1",
+    "topic": "be used to",
+    "q": "I ___ being nervous at exams, but now I'm fine.",
+    "c": [
+      "am used to",
+      "used to",
+      "got used to",
+      "use to"
+    ],
+    "a": 0,
+    "hint": "\"am used to\" = accustomed to now"
+  },
+  {
+    "level": "B1",
+    "topic": "despite",
+    "q": "___ being tired, she finished the project.",
+    "c": [
+      "Although",
+      "Despite",
+      "Even",
+      "However"
+    ],
+    "a": 1,
+    "hint": "\"despite\" + noun/gerund (no clause)"
+  },
+  {
+    "level": "B1",
+    "topic": "don't need to",
+    "q": "You don't ___ bring anything. We have everything.",
+    "c": [
+      "need",
+      "need to",
+      "have to",
+      "must"
+    ],
+    "a": 1,
+    "hint": "\"don't need to\" = no obligation"
+  },
+  {
+    "level": "B1",
+    "topic": "wish + could",
+    "q": "I wish I ___ speak French.",
+    "c": [
+      "can",
+      "could",
+      "would",
+      "will"
+    ],
+    "a": 1,
+    "hint": "\"wish + could\" for present ability we lack"
+  },
+  {
+    "level": "B1",
+    "topic": "so that",
+    "q": "She studied hard ___ she could pass the exam.",
+    "c": [
+      "so",
+      "so that",
+      "in order",
+      "for"
+    ],
+    "a": 1,
+    "hint": "\"so that\" expresses purpose with a clause"
+  },
+  {
+    "level": "B1",
+    "topic": "enough to",
+    "q": "She isn't old ___ to vote.",
+    "c": [
+      "enough",
+      "too",
+      "so",
+      "very"
+    ],
+    "a": 0,
+    "hint": "\"old enough to\" = has sufficient age"
+  },
+  {
+    "level": "B1",
+    "topic": "indirect question",
+    "q": "Do you know ___ she lives?",
+    "c": [
+      "where",
+      "Where",
+      "that where",
+      "what"
+    ],
+    "a": 0,
+    "hint": "indirect question → no inversion: where she lives"
+  },
+  {
+    "level": "B1",
+    "topic": "look forward to",
+    "q": "I'm looking forward ___ seeing you.",
+    "c": [
+      "to",
+      "for",
+      "at",
+      "in"
+    ],
+    "a": 0,
+    "hint": "\"look forward to\" + gerund"
+  },
+  {
+    "level": "B1",
+    "topic": "present perfect cont.",
+    "q": "I ___ for two hours.",
+    "c": [
+      "am studying",
+      "was studying",
+      "have been studying",
+      "had studied"
+    ],
+    "a": 2,
+    "hint": "how long up to now → present perfect continuous"
+  },
+  {
+    "level": "B1",
+    "topic": "make someone do",
+    "q": "She made her son ___ his homework.",
+    "c": [
+      "do",
+      "to do",
+      "doing",
+      "done"
+    ],
+    "a": 0,
+    "hint": "\"make someone do\" (no to)"
+  },
+  {
+    "level": "B1",
+    "topic": "passive + by",
+    "q": "The cake ___ by my grandmother.",
+    "c": [
+      "baked",
+      "was baked",
+      "has baked",
+      "bakes"
+    ],
+    "a": 1,
+    "hint": "passive + by + agent"
+  },
+  {
+    "level": "B1",
+    "topic": "might",
+    "q": "She ___ be at home — I'm not sure.",
+    "c": [
+      "must",
+      "might",
+      "should",
+      "will"
+    ],
+    "a": 1,
+    "hint": "\"might\" = possibility, not certain"
+  },
+  {
+    "level": "B1",
+    "topic": "ask someone to",
+    "q": "He asked me ___ the door.",
+    "c": [
+      "close",
+      "closing",
+      "to close",
+      "closed"
+    ],
+    "a": 2,
+    "hint": "\"ask someone to do\""
+  },
+  {
+    "level": "B1",
+    "topic": "hardly",
+    "q": "I ___ slept last night. I was so worried.",
+    "c": [
+      "hardly",
+      "hard",
+      "never",
+      "scarcely not"
+    ],
+    "a": 0,
+    "hint": "\"hardly\" = almost not at all"
+  },
+  {
+    "level": "B1",
+    "topic": "should have",
+    "q": "You ___ told me earlier. Now it's too late.",
+    "c": [
+      "should",
+      "should have",
+      "had to",
+      "ought"
+    ],
+    "a": 1,
+    "hint": "\"should have + pp\" = past criticism/regret"
+  },
+  {
+    "level": "B1",
+    "topic": "present passive",
+    "q": "English ___ in many countries.",
+    "c": [
+      "speaks",
+      "is spoken",
+      "has spoken",
+      "speaking"
+    ],
+    "a": 1,
+    "hint": "present simple passive: is/are + pp"
+  },
+  {
+    "level": "B1",
+    "topic": "while",
+    "q": "I met him ___ I was walking in the park.",
+    "c": [
+      "while",
+      "during",
+      "when",
+      "as soon as"
+    ],
+    "a": 0,
+    "hint": "\"while\" + past continuous background"
+  },
+  {
+    "level": "B1",
+    "topic": "a few",
+    "q": "I have ___ friends here — only two or three.",
+    "c": [
+      "few",
+      "a few",
+      "little",
+      "a little"
+    ],
+    "a": 1,
+    "hint": "\"a few\" = some (positive meaning)"
+  },
+  {
+    "level": "B1",
+    "topic": "it's time",
+    "q": "It's time you ___ to the dentist.",
+    "c": [
+      "go",
+      "went",
+      "had gone",
+      "would go"
+    ],
+    "a": 1,
+    "hint": "\"it's time + past simple\" = should do now"
+  },
+  {
+    "level": "B1",
+    "topic": "as...as",
+    "q": "She is ___ tall ___ her father.",
+    "c": [
+      "so...that",
+      "as...as",
+      "such...that",
+      "too...to"
+    ],
+    "a": 1,
+    "hint": "\"as + adj + as\" for equality"
+  },
+  {
+    "level": "B1",
+    "topic": "no matter how",
+    "q": "___ how hard I try, I always make mistakes.",
+    "c": [
+      "Although",
+      "No matter",
+      "Despite",
+      "Even"
+    ],
+    "a": 1,
+    "hint": "\"no matter how\" = regardless of degree"
+  },
+  {
+    "level": "B2",
+    "topic": "the more...the better",
+    "q": "The more you practice, ___ you become.",
+    "c": [
+      "the better",
+      "better",
+      "more better",
+      "the more good"
+    ],
+    "a": 0,
+    "hint": "\"the more...the better\" double comparative"
+  },
+  {
+    "level": "B1",
+    "topic": "needn't have",
+    "q": "You ___ cooked so much. There were only three of us.",
+    "c": [
+      "needn't",
+      "didn't need to",
+      "needn't have",
+      "mustn't have"
+    ],
+    "a": 2,
+    "hint": "\"needn't have + pp\" = unnecessary action done"
+  },
+  {
+    "level": "B1",
+    "topic": "provided that",
+    "q": "You can borrow my car ___ you return it by evening.",
+    "c": [
+      "provided that",
+      "as far as",
+      "even if",
+      "in case"
+    ],
+    "a": 0,
+    "hint": "\"provided that\" = on condition that"
+  },
+  {
+    "level": "B1",
+    "topic": "unless",
+    "q": "I'll help you ___ you ask me nicely.",
+    "c": [
+      "if",
+      "unless",
+      "until",
+      "even if"
+    ],
+    "a": 1,
+    "hint": "\"unless\" = if not"
+  },
+  {
+    "level": "B2",
+    "topic": "mixed conditional",
+    "q": "If I ___ harder at school, I would have a better job now.",
+    "c": [
+      "studied",
+      "had studied",
+      "would study",
+      "study"
+    ],
+    "a": 1,
+    "hint": "mixed cond: past unreal → present result"
+  },
+  {
+    "level": "B2",
+    "topic": "not only inversion",
+    "q": "Not only ___ he apologize, he also sent flowers.",
+    "c": [
+      "he did",
+      "did he",
+      "he has",
+      "has he"
+    ],
+    "a": 1,
+    "hint": "negative inversion: not only + auxiliary + subject"
+  },
+  {
+    "level": "B2",
+    "topic": "admit + gerund",
+    "q": "He ___ having stolen the money.",
+    "c": [
+      "admitted",
+      "suggested",
+      "recommended",
+      "insisted"
+    ],
+    "a": 0,
+    "hint": "\"admit + gerund\" = confess"
+  },
+  {
+    "level": "B2",
+    "topic": "cleft: what",
+    "q": "___ I need is a long holiday.",
+    "c": [
+      "That",
+      "What",
+      "Which",
+      "Who"
+    ],
+    "a": 1,
+    "hint": "\"what\" cleft to emphasize object"
+  },
+  {
+    "level": "B2",
+    "topic": "modal passive",
+    "q": "The report ___ by Friday.",
+    "c": [
+      "must finish",
+      "must be finished",
+      "must have finished",
+      "must finishing"
+    ],
+    "a": 1,
+    "hint": "modal passive: must + be + pp"
+  },
+  {
+    "level": "B2",
+    "topic": "causative",
+    "q": "She ___ her car serviced last week.",
+    "c": [
+      "had",
+      "got",
+      "both a and b",
+      "made"
+    ],
+    "a": 2,
+    "hint": "\"have/get + obj + pp\" = causative"
+  },
+  {
+    "level": "B2",
+    "topic": "wish + past perfect",
+    "q": "I wish I ___ so much time yesterday.",
+    "c": [
+      "don't waste",
+      "hadn't wasted",
+      "didn't waste",
+      "wouldn't waste"
+    ],
+    "a": 1,
+    "hint": "\"wish + past perfect\" for past regrets"
+  },
+  {
+    "level": "B2",
+    "topic": "never inversion",
+    "q": "Never ___ seen such a beautiful sunset.",
+    "c": [
+      "I have",
+      "have I",
+      "I had",
+      "had I"
+    ],
+    "a": 1,
+    "hint": "fronted negative → subject-auxiliary inversion"
+  },
+  {
+    "level": "B2",
+    "topic": "relative: where",
+    "q": "The hotel ___ we stayed was excellent.",
+    "c": [
+      "which",
+      "where",
+      "that",
+      "in which"
+    ],
+    "a": 1,
+    "hint": "\"where\" for places (= in which)"
+  },
+  {
+    "level": "B2",
+    "topic": "reduced relative",
+    "q": "The man ___ at the door is my lawyer.",
+    "c": [
+      "who is standing",
+      "standing",
+      "who stands",
+      "stood"
+    ],
+    "a": 1,
+    "hint": "reduced relative: omit 'who is'"
+  },
+  {
+    "level": "B2",
+    "topic": "whatever",
+    "q": "___ you decide, I will support you.",
+    "c": [
+      "Whatever",
+      "Whenever",
+      "Whoever",
+      "However"
+    ],
+    "a": 0,
+    "hint": "\"whatever\" = no matter what"
+  },
+  {
+    "level": "B2",
+    "topic": "must have",
+    "q": "She looks pale. She ___ been ill.",
+    "c": [
+      "must have",
+      "should have",
+      "would have",
+      "may"
+    ],
+    "a": 0,
+    "hint": "\"must have + pp\" = logical deduction about past"
+  },
+  {
+    "level": "B2",
+    "topic": "hardly...when",
+    "q": "Hardly ___ we arrived ___ it started raining.",
+    "c": [
+      "had...when",
+      "have...than",
+      "did...when",
+      "were...than"
+    ],
+    "a": 0,
+    "hint": "\"hardly had...when\" = almost immediately after"
+  },
+  {
+    "level": "B2",
+    "topic": "mandative subjunctive",
+    "q": "The doctor insisted that he ___ in hospital.",
+    "c": [
+      "stays",
+      "stay",
+      "stayed",
+      "would stay"
+    ],
+    "a": 1,
+    "hint": "formal subjunctive: that + subject + bare infinitive"
+  },
+  {
+    "level": "B2",
+    "topic": "as if",
+    "q": "She speaks ___ she knows everything.",
+    "c": [
+      "like",
+      "as if",
+      "as",
+      "so as"
+    ],
+    "a": 1,
+    "hint": "\"as if\" introduces unreal manner"
+  },
+  {
+    "level": "B2",
+    "topic": "despite",
+    "q": "___ the heavy rain, they continued playing.",
+    "c": [
+      "Although",
+      "Despite",
+      "Even though",
+      "However"
+    ],
+    "a": 1,
+    "hint": "\"despite\" + noun/gerund, no verb"
+  },
+  {
+    "level": "B2",
+    "topic": "it is said that",
+    "q": "___ that the project will be delayed.",
+    "c": [
+      "It is said",
+      "It says",
+      "They are said",
+      "People say"
+    ],
+    "a": 0,
+    "hint": "\"it is said that...\" impersonal passive"
+  },
+  {
+    "level": "B2",
+    "topic": "would rather + past",
+    "q": "I'd rather you ___ tell him the truth.",
+    "c": [
+      "don't",
+      "didn't",
+      "won't",
+      "hadn't"
+    ],
+    "a": 1,
+    "hint": "\"would rather + subject + past simple\""
+  },
+  {
+    "level": "B2",
+    "topic": "the + comparative",
+    "q": "___ sooner we leave, the better.",
+    "c": [
+      "A",
+      "The",
+      "Ø",
+      "This"
+    ],
+    "a": 1,
+    "hint": "\"the + comparative...the + comparative\""
+  },
+  {
+    "level": "B2",
+    "topic": "be used to: present",
+    "q": "I ___ waking up early. It doesn't bother me.",
+    "c": [
+      "am used to",
+      "used to",
+      "was used to",
+      "get use to"
+    ],
+    "a": 0,
+    "hint": "\"am used to\" = accustomed to (present)"
+  },
+  {
+    "level": "B2",
+    "topic": "present perfect passive",
+    "q": "The documents ___ before the meeting.",
+    "c": [
+      "have prepared",
+      "were prepared",
+      "have been prepared",
+      "prepared"
+    ],
+    "a": 2,
+    "hint": "present perfect passive: have been + pp"
+  },
+  {
+    "level": "B2",
+    "topic": "not until inversion",
+    "q": "Not until she got home ___ she realise her mistake.",
+    "c": [
+      "she did",
+      "did she",
+      "had she",
+      "has she"
+    ],
+    "a": 1,
+    "hint": "fronted 'not until' → inversion"
+  },
+  {
+    "level": "B2",
+    "topic": "should inversion",
+    "q": "___ you need any help, don't hesitate to call.",
+    "c": [
+      "If",
+      "Were",
+      "Should",
+      "Had"
+    ],
+    "a": 2,
+    "hint": "\"should you need\" = formal if inversion"
+  },
+  {
+    "level": "B2",
+    "topic": "still + negative",
+    "q": "She ___ arrived yet.",
+    "c": [
+      "hasn't already",
+      "already hasn't",
+      "hasn't still",
+      "still hasn't"
+    ],
+    "a": 3,
+    "hint": "\"still\" before negated auxiliary"
+  },
+  {
+    "level": "B2",
+    "topic": "only if",
+    "q": "I will come ___ you invite me personally.",
+    "c": [
+      "unless",
+      "if only",
+      "only if",
+      "even if"
+    ],
+    "a": 2,
+    "hint": "\"only if\" = sole condition"
+  },
+  {
+    "level": "B2",
+    "topic": "such...that",
+    "q": "It was ___ a good film ___ we saw it twice.",
+    "c": [
+      "so...that",
+      "such...that",
+      "too...to",
+      "very...that"
+    ],
+    "a": 1,
+    "hint": "\"such + a/an + adj + noun + that\""
+  },
+  {
+    "level": "B2",
+    "topic": "is said to",
+    "q": "He ___ to be the best surgeon in the country.",
+    "c": [
+      "is said",
+      "says",
+      "is saying",
+      "has said"
+    ],
+    "a": 0,
+    "hint": "\"is said to\" personal passive reporting"
+  },
+  {
+    "level": "B2",
+    "topic": "seemed to have",
+    "q": "They ___ to have forgotten the meeting.",
+    "c": [
+      "seem",
+      "appears",
+      "seemed",
+      "are seeming"
+    ],
+    "a": 2,
+    "hint": "\"seemed to have + pp\" = past appearance"
+  },
+  {
+    "level": "B2",
+    "topic": "despite + noun",
+    "q": "___ his experience, he failed the interview.",
+    "c": [
+      "Despite",
+      "Although",
+      "However",
+      "Nevertheless"
+    ],
+    "a": 0,
+    "hint": "\"despite\" + noun phrase (no verb)"
+  },
+  {
+    "level": "C1",
+    "topic": "mandative subjunctive",
+    "q": "It is vital that every student ___ the regulations.",
+    "c": [
+      "knows",
+      "know",
+      "to know",
+      "should knows"
+    ],
+    "a": 1,
+    "hint": "mandative subjunctive: that + bare infinitive"
+  },
+  {
+    "level": "C1",
+    "topic": "no sooner...than",
+    "q": "No sooner ___ he left than the phone rang.",
+    "c": [
+      "when",
+      "had",
+      "has",
+      "did"
+    ],
+    "a": 1,
+    "hint": "\"no sooner had + subject + pp ... than\""
+  },
+  {
+    "level": "C1",
+    "topic": "ellipsis: so can",
+    "q": "She can play the piano and so ___ I.",
+    "c": [
+      "can",
+      "do",
+      "am",
+      "have"
+    ],
+    "a": 0,
+    "hint": "auxiliary echoes the previous clause"
+  },
+  {
+    "level": "C1",
+    "topic": "complex passive",
+    "q": "The results are believed ___ fraudulent.",
+    "c": [
+      "being",
+      "to be",
+      "that they are",
+      "be"
+    ],
+    "a": 1,
+    "hint": "\"believe + object + to be\" → passive: are believed to be"
+  },
+  {
+    "level": "C1",
+    "topic": "perfect gerund",
+    "q": "I recall ___ him at that conference years ago.",
+    "c": [
+      "meeting",
+      "to meet",
+      "having met",
+      "met"
+    ],
+    "a": 2,
+    "hint": "\"recall + having + pp\" stresses prior completion"
+  },
+  {
+    "level": "C1",
+    "topic": "nominal relative: what",
+    "q": "___ he did next surprised everyone.",
+    "c": [
+      "That",
+      "Which",
+      "What",
+      "How"
+    ],
+    "a": 2,
+    "hint": "\"what he did\" = the thing that he did"
+  },
+  {
+    "level": "C1",
+    "topic": "succeed in",
+    "q": "She succeeded ___ persuading the board.",
+    "c": [
+      "to",
+      "in",
+      "at",
+      "for"
+    ],
+    "a": 1,
+    "hint": "\"succeed in + gerund\""
+  },
+  {
+    "level": "C1",
+    "topic": "were to",
+    "q": "If the president ___ to resign, chaos would follow.",
+    "c": [
+      "was",
+      "were",
+      "would be",
+      "had been"
+    ],
+    "a": 1,
+    "hint": "\"were to\" for hypothetical/formal conditions"
+  },
+  {
+    "level": "C1",
+    "topic": "can't have",
+    "q": "They can't ___ the train — I saw them leave late.",
+    "c": [
+      "catch",
+      "have caught",
+      "be catching",
+      "caught"
+    ],
+    "a": 1,
+    "hint": "\"can't have + pp\" = negative logical deduction"
+  },
+  {
+    "level": "C1",
+    "topic": "urge someone to",
+    "q": "She urged us ___ a decision immediately.",
+    "c": [
+      "making",
+      "make",
+      "to make",
+      "that we make"
+    ],
+    "a": 2,
+    "hint": "\"urge someone to + infinitive\""
+  },
+  {
+    "level": "C1",
+    "topic": "only later inversion",
+    "q": "___ did we realise how serious the problem was.",
+    "c": [
+      "Only later",
+      "Later only",
+      "Not only",
+      "Barely"
+    ],
+    "a": 0,
+    "hint": "\"only later + inversion\" for emphasis"
+  },
+  {
+    "level": "C1",
+    "topic": "participle clause",
+    "q": "___ by the noise, she woke up suddenly.",
+    "c": [
+      "Startled",
+      "Being startled",
+      "Having startled",
+      "Startling"
+    ],
+    "a": 0,
+    "hint": "past participle clause for passive action"
+  },
+  {
+    "level": "C1",
+    "topic": "as long as",
+    "q": "You may leave ___ you finish the report first.",
+    "c": [
+      "as long as",
+      "as far as",
+      "so much as",
+      "in case"
+    ],
+    "a": 0,
+    "hint": "\"as long as\" = on the condition that"
+  },
+  {
+    "level": "C1",
+    "topic": "have difficulty",
+    "q": "She has difficulty ___ decisions under pressure.",
+    "c": [
+      "make",
+      "to make",
+      "making",
+      "in make"
+    ],
+    "a": 2,
+    "hint": "\"have difficulty + gerund\""
+  },
+  {
+    "level": "C1",
+    "topic": "goes without saying",
+    "q": "It goes without ___ that punctuality matters.",
+    "c": [
+      "saying",
+      "to say",
+      "say",
+      "said"
+    ],
+    "a": 0,
+    "hint": "fixed expression: goes without saying"
+  },
+  {
+    "level": "C1",
+    "topic": "the reason why",
+    "q": "The reason ___ she resigned remains unclear.",
+    "c": [
+      "why",
+      "for which",
+      "both a and b",
+      "that"
+    ],
+    "a": 2,
+    "hint": "\"the reason why\" or \"the reason for which\" both correct"
+  },
+  {
+    "level": "C1",
+    "topic": "concessive inversion",
+    "q": "Tired ___ she was, she kept working.",
+    "c": [
+      "as",
+      "although",
+      "despite",
+      "even though"
+    ],
+    "a": 0,
+    "hint": "\"adj + as + subject + verb\" = concessive inversion"
+  },
+  {
+    "level": "C1",
+    "topic": "should: formal conditional",
+    "q": "___ you require further information, please contact us.",
+    "c": [
+      "If",
+      "Should",
+      "Were",
+      "Had"
+    ],
+    "a": 1,
+    "hint": "\"should you require\" = formal conditional"
+  },
+  {
+    "level": "C1",
+    "topic": "scarcely...when",
+    "q": "Scarcely ___ she entered the room when the lights went out.",
+    "c": [
+      "had",
+      "has",
+      "did",
+      "was"
+    ],
+    "a": 0,
+    "hint": "\"scarcely had + subject + pp ... when\""
+  },
+  {
+    "level": "C1",
+    "topic": "it is high time",
+    "q": "It is high time we ___ something about pollution.",
+    "c": [
+      "do",
+      "did",
+      "have done",
+      "to do"
+    ],
+    "a": 1,
+    "hint": "\"it is high time + past subjunctive\""
+  },
+  {
+    "level": "C1",
+    "topic": "is said to be",
+    "q": "The cause of the fire ___ to be electrical.",
+    "c": [
+      "is said",
+      "is told",
+      "says",
+      "is spoken"
+    ],
+    "a": 0,
+    "hint": "\"is said to be\" = impersonal reporting passive"
+  },
+  {
+    "level": "C1",
+    "topic": "rather than + bare inf",
+    "q": "She chose to walk ___ take a taxi.",
+    "c": [
+      "instead",
+      "rather than",
+      "other than",
+      "than"
+    ],
+    "a": 1,
+    "hint": "\"rather than + bare infinitive\""
+  },
+  {
+    "level": "C1",
+    "topic": "resent being",
+    "q": "I resent ___ taken for granted.",
+    "c": [
+      "to be",
+      "being",
+      "to being",
+      "be"
+    ],
+    "a": 1,
+    "hint": "\"resent + being + pp\""
+  },
+  {
+    "level": "C1",
+    "topic": "hardly any",
+    "q": "There is ___ hope of recovery, according to doctors.",
+    "c": [
+      "barely no",
+      "hardly any",
+      "almost no",
+      "almost none"
+    ],
+    "a": 1,
+    "hint": "\"hardly any\" = very little (no double negative)"
+  },
+  {
+    "level": "C1",
+    "topic": "so as not to",
+    "q": "She whispered ___ not wake the baby.",
+    "c": [
+      "so as to",
+      "so as not to",
+      "in order to",
+      "to"
+    ],
+    "a": 1,
+    "hint": "\"so as not to\" = negative purpose"
+  },
+  {
+    "level": "C1",
+    "topic": "complex cleft",
+    "q": "It was ___ he was hiding that puzzled the detective.",
+    "c": [
+      "what",
+      "which",
+      "that",
+      "the thing"
+    ],
+    "a": 0,
+    "hint": "\"what\" cleft for unknown emphasized element"
+  },
+  {
+    "level": "C1",
+    "topic": "on which",
+    "q": "This is the project ___ I've been working.",
+    "c": [
+      "that",
+      "on which",
+      "on",
+      "both b and c"
+    ],
+    "a": 3,
+    "hint": "both 'on which' and 'working on' are correct"
+  },
+  {
+    "level": "C1",
+    "topic": "ellipsis: had to",
+    "q": "She didn't want to leave, but she had ___.",
+    "c": [
+      "to",
+      "to do",
+      "do",
+      "done"
+    ],
+    "a": 0,
+    "hint": "ellipsis after modal: had to (do omitted)"
+  },
+  {
+    "level": "C1",
+    "topic": "be about to",
+    "q": "The train is ___ depart. Hurry up!",
+    "c": [
+      "about to",
+      "going to",
+      "just",
+      "almost"
+    ],
+    "a": 0,
+    "hint": "\"be about to\" = immediate near future"
+  },
+  {
+    "level": "B1",
+    "topic": "provided that",
+    "q": "You can borrow my car ___ you return it by evening.",
+    "c": [
+      "provided that",
+      "as far as",
+      "even if",
+      "in case"
+    ],
+    "a": 0,
+    "hint": "\"provided that\" = on condition that"
+  },
+  {
+    "level": "C1",
+    "topic": "needn't have",
+    "q": "You ___ cooked so much. There were only three of us.",
+    "c": [
+      "needn't",
+      "didn't need to",
+      "needn't have",
+      "mustn't have"
+    ],
+    "a": 2,
+    "hint": "\"needn't have + pp\" = unnecessary action done"
+  },
+  {
+    "level": "C2",
+    "topic": "rhetorical inversion",
+    "q": "So shocked ___ the team that no one spoke for a minute.",
+    "c": [
+      "was",
+      "were",
+      "is",
+      "had been"
+    ],
+    "a": 0,
+    "hint": "subject-verb inversion after fronted predicative adjective"
+  },
+  {
+    "level": "C2",
+    "topic": "literary subjunctive",
+    "q": "If truth ___ told, I never trusted him.",
+    "c": [
+      "is",
+      "be",
+      "was",
+      "were"
+    ],
+    "a": 1,
+    "hint": "formal/literary: 'if truth be told'"
+  },
+  {
+    "level": "C2",
+    "topic": "double comparative",
+    "q": "___ you hurry, ___ likely you are to succeed.",
+    "c": [
+      "More...the more",
+      "The faster...the less",
+      "The more...the",
+      "The sooner...the more"
+    ],
+    "a": 3,
+    "hint": "\"the sooner...the more\" double comparative"
+  },
+  {
+    "level": "C2",
+    "topic": "absolute construction",
+    "q": "___ that, she walked out of the room.",
+    "c": [
+      "With saying",
+      "Having said",
+      "After said",
+      "To say"
+    ],
+    "a": 1,
+    "hint": "perfect participle clause: having + pp"
+  },
+  {
+    "level": "C2",
+    "topic": "would: past refusal",
+    "q": "He ___ not listen to anyone's advice. That was his downfall.",
+    "c": [
+      "would",
+      "could",
+      "should",
+      "might"
+    ],
+    "a": 0,
+    "hint": "\"would not\" in narrative = past refusal"
+  },
+  {
+    "level": "C2",
+    "topic": "epistemic hedging",
+    "q": "It ___ be argued that automation increases inequality.",
+    "c": [
+      "can",
+      "could",
+      "might",
+      "all of the above"
+    ],
+    "a": 3,
+    "hint": "all three are valid epistemic hedges in academic writing"
+  },
+  {
+    "level": "C2",
+    "topic": "subject: gerund or inf",
+    "q": "___ to maintain objectivity is the journalist's duty.",
+    "c": [
+      "Trying",
+      "To try",
+      "Both a and b",
+      "Try"
+    ],
+    "a": 2,
+    "hint": "both gerund and infinitive can function as subject"
+  },
+  {
+    "level": "C2",
+    "topic": "as it were",
+    "q": "He became, ___, the beating heart of the organisation.",
+    "c": [
+      "as if",
+      "as it were",
+      "so to speak",
+      "both b and c"
+    ],
+    "a": 3,
+    "hint": "both 'as it were' and 'so to speak' are correct"
+  },
+  {
+    "level": "C2",
+    "topic": "only by + gerund",
+    "q": "Only by ___ harder could she have achieved her goals.",
+    "c": [
+      "working",
+      "work",
+      "to work",
+      "worked"
+    ],
+    "a": 0,
+    "hint": "\"only by + gerund\" triggers inversion in main clause"
+  },
+  {
+    "level": "C2",
+    "topic": "anaphoric this",
+    "q": "The new policy was unpopular. ___ led to widespread protests.",
+    "c": [
+      "This",
+      "It",
+      "Which",
+      "The latter"
+    ],
+    "a": 0,
+    "hint": "\"this\" refers back to a whole situation"
+  },
+  {
+    "level": "C2",
+    "topic": "formal register",
+    "q": "We regret to inform you that your application ___ unsuccessful.",
+    "c": [
+      "was",
+      "has been",
+      "had been",
+      "all are correct"
+    ],
+    "a": 3,
+    "hint": "all forms used depending on formality nuance"
+  },
+  {
+    "level": "C2",
+    "topic": "cleft: it is who/that",
+    "q": "It ___ John ___ broke the window, not Peter.",
+    "c": [
+      "is...who",
+      "was...that",
+      "is...that",
+      "both a and c"
+    ],
+    "a": 3,
+    "hint": "both 'it is...who' and 'it is...that' are standard"
+  },
+  {
+    "level": "C2",
+    "topic": "causative passive",
+    "q": "She ___ her manuscript reviewed by three experts.",
+    "c": [
+      "had",
+      "got",
+      "both a and b",
+      "has got"
+    ],
+    "a": 2,
+    "hint": "\"have/get + obj + pp\" both correct"
+  },
+  {
+    "level": "C2",
+    "topic": "conditional blend",
+    "q": "If you ___ the memo, you would know about the changes.",
+    "c": [
+      "had read",
+      "have read",
+      "read",
+      "would have read"
+    ],
+    "a": 0,
+    "hint": "past perfect in if-clause → present consequence"
+  },
+  {
+    "level": "C2",
+    "topic": "fronting for emphasis",
+    "q": "___ a more devoted teacher I have never encountered.",
+    "c": [
+      "Such",
+      "What",
+      "So",
+      "How"
+    ],
+    "a": 0,
+    "hint": "\"such + noun phrase\" fronted for rhetorical emphasis"
+  },
+  {
+    "level": "C2",
+    "topic": "reach a decision",
+    "q": "The committee ___ a unanimous decision.",
+    "c": [
+      "did",
+      "made",
+      "took",
+      "reached"
+    ],
+    "a": 3,
+    "hint": "\"reach a decision\" is the precise collocation"
+  },
+  {
+    "level": "C2",
+    "topic": "discourse markers",
+    "q": "The plan seemed perfect; ___, it failed miserably.",
+    "c": [
+      "however",
+      "nevertheless",
+      "nonetheless",
+      "all of the above"
+    ],
+    "a": 3,
+    "hint": "all three are correct contrasting discourse markers"
+  },
+  {
+    "level": "C2",
+    "topic": "nominal gerund",
+    "q": "His constant ___ about money annoyed everyone.",
+    "c": [
+      "complain",
+      "complaining",
+      "to complain",
+      "complained"
+    ],
+    "a": 1,
+    "hint": "nominal gerund as subject complement"
+  },
+  {
+    "level": "C2",
+    "topic": "appositive: the fact that",
+    "q": "The fact ___ he resigned surprised us all.",
+    "c": [
+      "that",
+      "which",
+      "what",
+      "why"
+    ],
+    "a": 0,
+    "hint": "\"the fact that\" — appositive noun clause"
+  },
+  {
+    "level": "C2",
+    "topic": "lexical hedging",
+    "q": "The results ___ suggest a link between diet and mood.",
+    "c": [
+      "seem to",
+      "appear to",
+      "would seem to",
+      "all of the above"
+    ],
+    "a": 3,
+    "hint": "all are acceptable lexical hedges in academic writing"
+  },
+  {
+    "level": "C2",
+    "topic": "whoever as subject",
+    "q": "___ arrives first should start without me.",
+    "c": [
+      "Whoever",
+      "Whomever",
+      "Whatever",
+      "Whenever"
+    ],
+    "a": 0,
+    "hint": "\"whoever\" = the person who (subject role)"
+  },
+  {
+    "level": "C2",
+    "topic": "concessive inversion",
+    "q": "Try ___ she might, she couldn't solve the puzzle.",
+    "c": [
+      "as",
+      "however",
+      "though",
+      "both a and c"
+    ],
+    "a": 3,
+    "hint": "\"try as she might\" and \"try though she might\" both work"
+  },
+  {
+    "level": "C2",
+    "topic": "nominalization",
+    "q": "The ___ of living standards in the region was dramatic.",
+    "c": [
+      "rise",
+      "rising",
+      "raise",
+      "arising"
+    ],
+    "a": 0,
+    "hint": "\"rise\" as a noun (nominalization)"
+  },
+  {
+    "level": "C2",
+    "topic": "little did",
+    "q": "Little ___ I know what was about to happen.",
+    "c": [
+      "did",
+      "do",
+      "have",
+      "had"
+    ],
+    "a": 0,
+    "hint": "\"little did I know\" = emphatic inversion"
+  },
+  {
+    "level": "C2",
+    "topic": "wh-cleft past",
+    "q": "What surprised me most ___ how calm she was.",
+    "c": [
+      "is",
+      "was",
+      "were",
+      "had been"
+    ],
+    "a": 1,
+    "hint": "wh-cleft: What...was (past reference)"
+  },
+  {
+    "level": "C2",
+    "topic": "renowned for",
+    "q": "She is renowned ___ her generosity.",
+    "c": [
+      "for",
+      "of",
+      "about",
+      "with"
+    ],
+    "a": 0,
+    "hint": "\"renowned for\" = fixed collocation"
+  },
+  {
+    "level": "C2",
+    "topic": "it was not until...that",
+    "q": "It was not until midnight ___ the negotiations ended.",
+    "c": [
+      "when",
+      "that",
+      "which",
+      "until"
+    ],
+    "a": 1,
+    "hint": "\"it was not until...that\" emphasis cleft"
+  },
+  {
+    "level": "C2",
+    "topic": "is alleged to have",
+    "q": "The minister ___ to have been aware of the situation beforehand.",
+    "c": [
+      "is alleged",
+      "is told",
+      "was accused",
+      "is claimed to know"
+    ],
+    "a": 0,
+    "hint": "\"is alleged to have + pp\" formal passive reporting"
+  },
+  {
+    "level": "C2",
+    "topic": "majority-led",
+    "q": "A ___ decision was taken to suspend the project.",
+    "c": [
+      "majority-reached",
+      "majority-reaching",
+      "majority-taken",
+      "majority-led"
+    ],
+    "a": 3,
+    "hint": "\"majority-led\" = compound adjective modifying decision"
+  },
+  {
+    "level": "C2",
+    "topic": "irony marker",
+    "q": "She said, ___, that the meeting had been 'perfectly organized'.",
+    "c": [
+      "sarcastically",
+      "ironically",
+      "drily",
+      "all work in context"
+    ],
+    "a": 3,
+    "hint": "all three adverbs can frame ironic reporting"
+  }
+]
