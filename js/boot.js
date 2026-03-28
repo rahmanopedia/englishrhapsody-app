@@ -1402,7 +1402,7 @@ document.addEventListener('click', function(e) {
         }
         // Valid change: apply, then reseed preview words
         _cur(key, val, sync);
-        setTimeout(function(){ seedFarFuture(val); refreshProgressCard(); }, 600);
+        setTimeout(function(){ seedFarFuture(val); updateCEFRUI(); }, 600);
         return;
       }
       _cur(key, val, sync);
@@ -1430,7 +1430,7 @@ document.addEventListener('click', function(e) {
     var app = window._app;
     if (!app) return;
     var level = app.state.get('cefrLevel');
-    if (!level) { setTimeout(updateCEFRUI, 1000); return; }
+    if (!level) { setTimeout(updateCEFRUI, 500); return; }
 
     var threshold = THRESHOLDS[level];
     var mastered  = getMastered(level);
@@ -1519,15 +1519,28 @@ document.addEventListener('click', function(e) {
     };
   }
 
+  /* ── G. Watch cefrLevel state changes (Firebase sync) ── */
+  function watchCefrLevel() {
+    var app = window._app;
+    if (!app || !app.state || app.__lvprogCefrWatched) return;
+    app.__lvprogCefrWatched = true;
+    var _cur = app.state.set.bind(app.state);
+    app.state.set = function(key, val, sync) {
+      _cur(key, val, sync);
+      if (key === 'cefrLevel' && val) setTimeout(updateCEFRUI, 100);
+    };
+  }
+
   /* ── Init ── */
   function init() {
     injectCSS();
-    patchLevelLock();
+    patchLevelLock();   // wraps state.set for lock
+    watchCefrLevel();   // wraps state.set again to trigger UI update on cefrLevel change
     patchInitHome();
     var level = window._app && window._app.state.get('cefrLevel');
     if (level) seedFarFuture(level);
-    // Run immediately in case already on home
-    setTimeout(updateCEFRUI, 300);
+    // Start retry loop — picks up cefrLevel whenever Firebase delivers it
+    setTimeout(updateCEFRUI, 200);
   }
 
   function waitReady() {
