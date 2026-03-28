@@ -13,21 +13,23 @@
   function generateDistractors(en) {
     const variants = [];
 
-    function trySwap(from, to) {
+    function applySwap(str, from, to) {
       const re = new RegExp('\\b' + from + '\\b', 'i');
-      const m = en.match(re);
-      if (!m) return;
-      // Preserve original capitalisation of matched word
-      const replacement = m[0][0] === m[0][0].toUpperCase()
+      const m = str.match(re);
+      if (!m) return null;
+      const repl = m[0][0] === m[0][0].toUpperCase()
         ? to.charAt(0).toUpperCase() + to.slice(1)
         : to;
-      const v = en.replace(re, replacement);
-      if (v !== en && !variants.includes(v)) variants.push(v);
+      const v = str.replace(re, repl);
+      return v !== str ? v : null;
     }
 
-    // ── Pronoun swaps ──
-    // NOTE: He↔She are NOT swapped — in Turkish "o" means both he/she,
-    // so both would be valid translations of the same sentence.
+    function trySwap(from, to) {
+      const v = applySwap(en, from, to);
+      if (v && !variants.includes(v)) variants.push(v);
+    }
+
+    // ── Pronoun swaps (non-gender) ──
     const pronouns = [
       ['I','He'],['I','She'],['I','We'],['I','They'],
       ['He','I'],['He','We'],['He','They'],
@@ -38,8 +40,7 @@
     ];
     for (const [f,t] of pronouns) trySwap(f,t);
 
-    // ── Possessive swaps ──
-    // NOTE: his↔her are NOT swapped — "onun" in Turkish means both his/her.
+    // ── Possessive swaps (non-gender) ──
     const poss = [
       ['my','his'],['my','her'],['my','their'],['my','your'],
       ['his','my'],['his','their'],
@@ -173,6 +174,38 @@
       ['behind','in front of'],['in front of','behind'],
     ];
     for (const [f,t] of confusables) trySwap(f,t);
+
+    // ── Gender swaps: He↔She / his↔her ──
+    // "O" in Turkish means both he/she, so a pure He→She swap produces two
+    // valid answers. Fix: always combine the gender swap with one extra word
+    // change so the resulting sentence has a genuinely different meaning.
+    const secondaryPool = [
+      ...tense, ...modals, ...adverbs, ...confusables,
+      ['school','work'],['work','school'],['home','office'],['office','home'],
+      ['today','yesterday'],['yesterday','today'],
+      ['a','the'],['the','a'],
+    ];
+
+    function tryGenderDoubleSwap(gFrom, gTo, posFrom, posTo) {
+      // Apply gender swap first
+      const base = applySwap(en, gFrom, gTo);
+      if (!base) return;
+      // Then try every secondary swap until one sticks
+      for (const [f2, t2] of secondaryPool) {
+        const v = applySwap(base, f2, t2);
+        if (v && v !== en && !variants.includes(v)) {
+          variants.push(v);
+          return;
+        }
+      }
+      // Fallback: gender-only if no secondary mutation found
+      if (!variants.includes(base)) variants.push(base);
+    }
+
+    tryGenderDoubleSwap('He', 'She');
+    tryGenderDoubleSwap('She', 'He');
+    tryGenderDoubleSwap('his', 'her');
+    tryGenderDoubleSwap('her', 'his');
 
     return variants;
   }
