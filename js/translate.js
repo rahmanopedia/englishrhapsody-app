@@ -26,10 +26,12 @@
     }
 
     // ── Pronoun swaps ──
+    // NOTE: He↔She are NOT swapped — in Turkish "o" means both he/she,
+    // so both would be valid translations of the same sentence.
     const pronouns = [
       ['I','He'],['I','She'],['I','We'],['I','They'],
-      ['He','She'],['He','I'],['He','We'],['He','They'],
-      ['She','He'],['She','I'],['She','We'],['She','They'],
+      ['He','I'],['He','We'],['He','They'],
+      ['She','I'],['She','We'],['She','They'],
       ['We','I'],['We','They'],['We','He'],
       ['They','We'],['They','He'],['They','She'],
       ['You','He'],['You','She'],['You','They'],
@@ -37,10 +39,11 @@
     for (const [f,t] of pronouns) trySwap(f,t);
 
     // ── Possessive swaps ──
+    // NOTE: his↔her are NOT swapped — "onun" in Turkish means both his/her.
     const poss = [
       ['my','his'],['my','her'],['my','their'],['my','your'],
-      ['his','her'],['his','my'],['his','their'],
-      ['her','his'],['her','my'],['her','their'],
+      ['his','my'],['his','their'],
+      ['her','my'],['her','their'],
       ['our','their'],['their','our'],['your','my'],
     ];
     for (const [f,t] of poss) trySwap(f,t);
