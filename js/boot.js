@@ -1430,7 +1430,18 @@ document.addEventListener('click', function(e) {
     var app = window._app;
     if (!app) return;
     var level = app.state.get('cefrLevel');
-    if (!level) { setTimeout(updateCEFRUI, 500); return; }
+    if (!level) {
+      // Placement test atlandıysa cefrLevel boş kalır — A1 olarak başlat
+      if (app.state.get('onboarded')) {
+        app.__lvlUpAllowed = true;
+        app.state.set('cefrLevel', 'A1', true);
+        app.__lvlUpAllowed = false;
+        level = 'A1';
+      } else {
+        setTimeout(updateCEFRUI, 500);
+        return;
+      }
+    }
 
     var threshold = THRESHOLDS[level];
     var mastered  = getMastered(level);
