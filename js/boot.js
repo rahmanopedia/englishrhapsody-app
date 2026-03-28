@@ -19,7 +19,7 @@
     grammar: ['js/grammar_data.js', 'js/grammar.js'],
     learn:   ['js/ex-tr-data.js'],
     cinema:    ['js/video-data.js', 'js/cinema.js'],
-    translate: ['js/translate-data.js', 'js/translate.js'],
+    translate: ['js/translate-data.js','js/translate-data2.js','js/translate-data3.js','js/translate-data4.js','js/translate-data5.js','js/translate-data6.js','js/translate.js'],
   };
 
   var loaded = new Set();
