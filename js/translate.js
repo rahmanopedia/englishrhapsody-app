@@ -100,7 +100,7 @@
       if (addNot !== en && !variants.includes(addNot)) variants.push(addNot);
     }
 
-    // ── Adverb/intensifier swaps ──
+    // ── Adverb / intensifier swaps ──
     const adverbs = [
       ['very','really'],['really','very'],['very','so'],
       ['always','usually'],['usually','always'],['sometimes','often'],
@@ -109,44 +109,122 @@
     ];
     for (const [f,t] of adverbs) trySwap(f,t);
 
+    // ── Synonym swaps (tricky near-meaning words) ──
+    const synonyms = [
+      // adjectives
+      ['tired','sleepy'],['tired','bored'],['sleepy','tired'],
+      ['happy','glad'],['happy','cheerful'],['glad','happy'],['cheerful','happy'],
+      ['sad','unhappy'],['unhappy','sad'],['sad','upset'],['upset','sad'],
+      ['big','large'],['large','big'],['big','great'],['small','little'],['little','small'],
+      ['fast','quick'],['quick','fast'],['slow','slowly'],
+      ['smart','intelligent'],['intelligent','smart'],['clever','smart'],['smart','clever'],
+      ['beautiful','pretty'],['pretty','beautiful'],['lovely','beautiful'],['beautiful','lovely'],
+      ['old','elderly'],['young','new'],['new','fresh'],
+      ['hot','warm'],['warm','hot'],['cold','cool'],['cool','cold'],
+      ['hungry','starving'],['starving','hungry'],['thirsty','hungry'],
+      ['busy','occupied'],['free','available'],['available','free'],
+      ['sick','ill'],['ill','sick'],['healthy','well'],['well','healthy'],
+      ['angry','furious'],['furious','angry'],['angry','upset'],
+      ['afraid','scared'],['scared','afraid'],['frightened','scared'],
+      ['difficult','hard'],['hard','difficult'],['easy','simple'],['simple','easy'],
+      ['important','necessary'],['necessary','important'],
+      ['interesting','exciting'],['exciting','interesting'],['boring','dull'],
+      ['correct','right'],['right','correct'],['wrong','incorrect'],['incorrect','wrong'],
+      ['strong','powerful'],['powerful','strong'],['weak','fragile'],
+      ['rich','wealthy'],['wealthy','rich'],['poor','broke'],
+      // verbs
+      ['like','enjoy'],['enjoy','like'],['love','adore'],['adore','love'],
+      ['hate','dislike'],['dislike','hate'],
+      ['want','need'],['need','want'],
+      ['say','tell'],['tell','say'],['speak','talk'],['talk','speak'],
+      ['look','watch'],['watch','look'],['see','notice'],['notice','see'],
+      ['start','begin'],['begin','start'],['finish','complete'],['complete','finish'],
+      ['help','assist'],['assist','help'],
+      ['buy','purchase'],['purchase','buy'],['sell','trade'],
+      ['walk','go'],['run','walk'],['drive','travel'],['travel','go'],
+      ['study','learn'],['learn','study'],['teach','instruct'],
+      ['think','believe'],['believe','think'],['feel','think'],
+      ['try','attempt'],['attempt','try'],
+      ['show','demonstrate'],['find','discover'],['discover','find'],
+      ['give','offer'],['offer','give'],['take','receive'],['receive','get'],
+      ['ask','request'],['request','ask'],
+      ['wait','stay'],['stay','wait'],['leave','go'],
+      ['eat','have'],['drink','have'],
+      ['open','unlock'],['close','shut'],['shut','close'],
+      // nouns
+      ['house','home'],['home','house'],['flat','apartment'],['apartment','flat'],
+      ['car','vehicle'],['job','work'],['work','job'],
+      ['friend','companion'],['teacher','instructor'],['student','pupil'],['pupil','student'],
+      ['book','novel'],['film','movie'],['movie','film'],
+      ['shop','store'],['store','shop'],
+      ['road','street'],['street','road'],['city','town'],['town','city'],
+      ['child','kid'],['kid','child'],
+      ['dinner','supper'],['lunch','meal'],['meal','food'],['food','meal'],
+      // prepositions / small words that change meaning
+      ['in','at'],['at','in'],['on','at'],['at','on'],['in','on'],['on','in'],
+      ['before','after'],['after','before'],['until','before'],
+      ['with','without'],['without','with'],
+      ['for','to'],['to','for'],
+      ['from','of'],['of','from'],
+      ['about','of'],['about','around'],
+    ];
+    for (const [f,t] of synonyms) trySwap(f,t);
+
     return variants;
   }
 
-  /* Build 3 close-but-wrong choices. Priority:
-     1. Mutations of the correct sentence (most confusing)
-     2. Same-topic sentences from pool (fallback) */
+  /* Build choices:
+     - 2 very close distractors (mutations of the correct sentence)
+     - 1 moderately similar distractor (same topic from pool)
+     All 4 options look plausible but only one is right */
   function buildChoices(correct, pool) {
-    const mutations = generateDistractors(correct.en);
-    shuffle(mutations);
+    const mutations = shuffle(generateDistractors(correct.en));
 
-    const distractors = [];
-    // Take up to 3 mutations
+    // Pick 2 mutations — prefer ones that differ by only 1 word (most tricky)
+    const close = [];
+    // First pass: single-word diff
+    for (const m of mutations) {
+      if (close.length >= 2) break;
+      const wa = correct.en.split(/\s+/);
+      const wb = m.split(/\s+/);
+      const diffs = Math.max(wa.length, wb.length) - wa.filter((w,i) => w === wb[i]).length;
+      if (diffs <= 2) close.push(m);
+    }
+    // Second pass: any mutation if not enough
+    for (const m of mutations) {
+      if (close.length >= 2) break;
+      if (!close.includes(m)) close.push(m);
+    }
+
+    // Pick 1 pool sentence with highest word overlap (medium difficulty)
+    const others = pool
+      .filter(s => s.en !== correct.en)
+      .map(s => {
+        const wa = correct.en.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/);
+        const wb = new Set(s.en.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/));
+        return { en: s.en, score: wa.filter(w => wb.has(w)).length };
+      })
+      .sort((a, b) => b.score - a.score);
+
+    const topN = Math.max(6, Math.ceil(others.length * 0.25));
+    const poolPick = shuffle(others.slice(0, topN))[0];
+    const medium = poolPick ? poolPick.en : (others[0] ? others[0].en : null);
+
+    const distractors = [...close.slice(0,2)];
+    if (medium && !distractors.includes(medium)) distractors.push(medium);
+
+    // Fallback: fill any remaining slots from mutations
     for (const m of mutations) {
       if (distractors.length >= 3) break;
-      distractors.push(m);
+      if (!distractors.includes(m)) distractors.push(m);
+    }
+    // Last resort: random pool
+    for (const s of shuffle([...pool])) {
+      if (distractors.length >= 3) break;
+      if (s.en !== correct.en && !distractors.includes(s.en)) distractors.push(s.en);
     }
 
-    // Fill remaining slots with pool sentences that share the most words
-    if (distractors.length < 3) {
-      const others = pool
-        .filter(s => s.en !== correct.en)
-        .map(s => {
-          const wa = correct.en.toLowerCase().split(/\s+/);
-          const wb = new Set(s.en.toLowerCase().split(/\s+/));
-          const shared = wa.filter(w => wb.has(w)).length;
-          return { en: s.en, score: shared };
-        })
-        .sort((a, b) => b.score - a.score);
-
-      const topN = Math.max(8, Math.ceil(others.length * 0.3));
-      const candidates = shuffle(others.slice(0, topN));
-      for (const c of candidates) {
-        if (distractors.length >= 3) break;
-        if (!distractors.includes(c.en)) distractors.push(c.en);
-      }
-    }
-
-    return shuffle([correct.en, ...distractors.slice(0, 3)]);
+    return shuffle([correct.en, ...distractors.slice(0,3)]);
   }
 
   function _escHtml(str) {
