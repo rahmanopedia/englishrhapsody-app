@@ -270,16 +270,21 @@
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  /* ── Timer seconds per level ── */
+  const LEVEL_TIME = { A1: 30, A2: 25, B1: 20, B2: 15, C1: 12, C2: 10, ALL: 20 };
+  const TIMER_CIRC = 94.25; // 2π × r=15
+
   /* ── TranslateMode class ── */
   class TranslateMode {
     constructor(app) {
       this.app = app;
       this._el = null;
-      this._questions = [];  // { sentence, choices }
+      this._questions = [];
       this._pool = [];
       this._idx = 0;
       this._results = [];
       this._level = null;
+      this._timerInterval = null;
     }
 
     init(el) {
@@ -288,11 +293,20 @@
     }
 
     destroy() {
+      this._clearTimer();
       this._el = null;
+    }
+
+    _clearTimer() {
+      if (this._timerInterval) {
+        clearInterval(this._timerInterval);
+        this._timerInterval = null;
+      }
     }
 
     /* ── HOME ── */
     _renderHome() {
+      this._clearTimer();
       const el = this._el;
       if (!el) return;
 
@@ -354,6 +368,7 @@
 
     /* ── QUESTION ── */
     _renderQuestion() {
+      this._clearTimer();
       const el = this._el;
       if (!el) return;
 
@@ -366,6 +381,8 @@
       const num = this._idx + 1;
       const total = this._questions.length;
       const pct = Math.round((this._idx / total) * 100);
+      // Use sentence's own level for time (matters in ALL mode)
+      const secs = LEVEL_TIME[q.level] || LEVEL_TIME[this._level] || 20;
 
       el.innerHTML = `
         <div class="tr-question animate-in">
@@ -376,6 +393,14 @@
                 <div class="tr-progress-fill" style="width:${pct}%"></div>
               </div>
               <span class="tr-progress-txt">${num} / ${total}</span>
+            </div>
+            <div class="tr-timer-wrap">
+              <svg class="tr-timer-ring" viewBox="0 0 36 36">
+                <circle class="tr-ring-bg" cx="18" cy="18" r="15"/>
+                <circle class="tr-ring-fill" id="trTimerRing" cx="18" cy="18" r="15"
+                  style="stroke-dasharray:${TIMER_CIRC};stroke-dashoffset:0"/>
+              </svg>
+              <span class="tr-timer-num" id="trTimerNum">${secs}</span>
             </div>
           </div>
 
@@ -399,22 +424,47 @@
 
       el.querySelectorAll('.tr-choice-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          const chosen = btn.dataset.val;
-          this._checkAnswer(q, choices, chosen, btn);
+          this._checkAnswer(q, choices, btn.dataset.val, btn);
         });
       });
+
+      // ── Start countdown ──
+      let remaining = secs;
+      const ringEl = el.querySelector('#trTimerRing');
+      const numEl  = el.querySelector('#trTimerNum');
+
+      this._timerInterval = setInterval(() => {
+        remaining--;
+        if (!ringEl || !numEl) { this._clearTimer(); return; }
+
+        const offset = TIMER_CIRC * (1 - remaining / secs);
+        ringEl.style.strokeDashoffset = offset;
+        numEl.textContent = remaining;
+
+        const danger = remaining <= 5;
+        const warn   = !danger && remaining <= Math.ceil(secs * 0.4);
+        ringEl.className.baseVal = 'tr-ring-fill' + (danger ? ' tr-timer-danger' : warn ? ' tr-timer-warn' : '');
+        numEl.className = 'tr-timer-num' + (danger ? ' tr-timer-danger' : warn ? ' tr-timer-warn' : '');
+
+        if (remaining <= 0) {
+          this._clearTimer();
+          this._checkAnswer(q, choices, null, null); // timeout → wrong
+        }
+      }, 1000);
     }
 
     /* ── CHECK ── */
     _checkAnswer(q, choices, chosen, clickedBtn) {
+      this._clearTimer();
       const el = this._el;
       if (!el) return;
 
-      const isCorrect = chosen === q.en;
+      const timeout  = chosen === null;
+      const isCorrect = !timeout && chosen === q.en;
       const grade = isCorrect ? 'correct' : 'wrong';
       const xp = isCorrect ? 20 : 0;
 
-      this._results.push({ q, chosen, grade, xp });
+      this._results.push({ q, chosen: timeout ? '(süre doldu)' : chosen, grade, xp });
 
       // Disable all buttons, highlight correct + wrong
       el.querySelectorAll('.tr-choice-btn').forEach(btn => {
@@ -432,9 +482,9 @@
       strip.className = `tr-feedback-strip ${isCorrect ? 'tr-fb-correct' : 'tr-fb-wrong'}`;
       strip.innerHTML = `
         <div class="tr-fb-left">
-          <span class="tr-fb-icon">${isCorrect ? '🎯' : '❌'}</span>
+          <span class="tr-fb-icon">${isCorrect ? '🎯' : timeout ? '⏰' : '❌'}</span>
           <div class="tr-fb-texts">
-            <div class="tr-fb-label">${isCorrect ? 'Doğru!' : 'Yanlış!'}</div>
+            <div class="tr-fb-label">${isCorrect ? 'Doğru!' : timeout ? 'Süre doldu!' : 'Yanlış!'}</div>
             ${!isCorrect ? `<div class="tr-fb-correct-ans">${_escHtml(q.en)}</div>` : ''}
             ${q.tip ? `<div class="tr-fb-tip">💡 ${q.tip}</div>` : ''}
           </div>

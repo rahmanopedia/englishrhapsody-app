@@ -92,6 +92,45 @@
 }
 .tr-progress-txt { font-size: 0.78rem; color: #64748b; white-space: nowrap; }
 
+/* ── Timer ring ── */
+.tr-timer-wrap {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+.tr-timer-ring {
+  width: 44px;
+  height: 44px;
+  transform: rotate(-90deg);
+}
+.tr-ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.08);
+  stroke-width: 3;
+}
+.tr-ring-fill {
+  fill: none;
+  stroke: #00d4ff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear, stroke 0.4s;
+}
+.tr-ring-fill.tr-timer-warn   { stroke: #f59e0b; }
+.tr-ring-fill.tr-timer-danger { stroke: #ef4444; }
+.tr-timer-num {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: 700;
+  color: #00d4ff;
+  transition: color 0.4s;
+}
+.tr-timer-num.tr-timer-warn   { color: #f59e0b; }
+.tr-timer-num.tr-timer-danger { color: #ef4444; animation: tr-pulse 0.5s ease infinite alternate; }
+@keyframes tr-pulse { from { opacity: 1; } to { opacity: 0.5; } }
+
 /* ── Question body ── */
 .tr-question { display: flex; flex-direction: column; min-height: 100%; }
 .tr-q-body {
