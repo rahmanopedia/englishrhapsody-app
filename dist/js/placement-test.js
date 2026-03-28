@@ -242,8 +242,10 @@ class PlacementTest {
   _startStage() {
     const level = this._LEVELS[this._curIdx];
 
-    // 3 kelime sorusu
-    const vocabPool = [...(this._byLevel[level] || [])].sort(() => Math.random() - 0.5);
+    // 3 kelime sorusu — cognate'ler (music/müzik gibi) hariç
+    const vocabPool = [...(this._byLevel[level] || [])]
+      .filter(w => !this._isCognate(w.en, w.tr))
+      .sort(() => Math.random() - 0.5);
     const vocab = vocabPool.slice(0, 3).map(w => ({ type:'vocab', data:w }));
 
     // 1 boşluk doldurma sorusu
@@ -344,11 +346,12 @@ class PlacementTest {
     const level = this._LEVELS[this._curIdx];
     const color = this._COLORS[level];
 
-    const pool      = (this._byLevel[level] || []).filter(w => w.en !== word.en);
+    // Çeldirici seçeneklerde de cognate'leri hariç tut (benzer görünen Türkçe anlamlar ipucu olmasın)
+    const pool      = (this._byLevel[level] || []).filter(w => w.en !== word.en && !this._isCognate(w.en, w.tr));
     let distractors = [...pool].sort(() => Math.random() - 0.5).slice(0, 3);
     if (distractors.length < 3 && typeof WORDS !== 'undefined') {
       const used  = new Set([word.en, ...distractors.map(d => d.en)]);
-      const extra = WORDS.filter(w => w.tr && w.en && !used.has(w.en))
+      const extra = WORDS.filter(w => w.tr && w.en && !used.has(w.en) && !this._isCognate(w.en, w.tr))
                          .sort(() => Math.random() - 0.5).slice(0, 3 - distractors.length);
       distractors = [...distractors, ...extra];
     }
@@ -648,6 +651,42 @@ class PlacementTest {
 
     this._on('pt-confirm', () => { if (this._onComplete) this._onComplete(level); });
     this._on('pt-retry',   () => this._beginTest());
+  }
+
+  // ── Cognate filtresi ─────────────────────────────────────────────────────
+  // İngilizce kelime ile Türkçe anlamı görsel olarak çok benziyorsa
+  // (music/müzik, taxi/taksi gibi) kelimeyi testten çıkar — ipucu olmasın.
+  _isCognate(en, tr) {
+    const norm = s => s.toLowerCase()
+      .replace(/ü/g,'u').replace(/ö/g,'o').replace(/ı/g,'i').replace(/î/g,'i')
+      .replace(/ş/g,'s').replace(/ç/g,'c').replace(/ğ/g,'g').replace(/â/g,'a')
+      .replace(/[^a-z]/g,'');
+    const a = norm(en);
+    const b = norm(tr.split(/[,;/()]/)[0].trim()); // sadece ilk anlamı al
+    if (!a || !b || a.length < 3 || b.length < 2) return false;
+    // Biri diğerini içeriyorsa
+    if (a.includes(b) || b.includes(a)) return true;
+    // Ortak önek 4+ karakter
+    let pfx = 0;
+    for (let i = 0; i < Math.min(a.length, b.length); i++) {
+      if (a[i] === b[i]) pfx++; else break;
+    }
+    if (pfx >= 4) return true;
+    // Levenshtein benzerliği > %60 (örn. music/muzik: 2/5=0.40, taxi/taksi: 2/5=0.40)
+    return this._ldist(a, b) / Math.max(a.length, b.length) <= 0.4;
+  }
+
+  _ldist(a, b) {
+    const m = a.length, n = b.length;
+    const dp = Array.from({ length: m + 1 }, (_, i) =>
+      Array.from({ length: n + 1 }, (_, j) => i === 0 ? j : j === 0 ? i : 0)
+    );
+    for (let i = 1; i <= m; i++)
+      for (let j = 1; j <= n; j++)
+        dp[i][j] = a[i-1] === b[j-1]
+          ? dp[i-1][j-1]
+          : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    return dp[m][n];
   }
 
   // ── Yardımcılar ──────────────────────────────────────────────────────────
