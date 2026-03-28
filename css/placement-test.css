@@ -159,6 +159,56 @@
   font-weight: 700;
 }
 
+/* ── CEFR thermometer ── */
+.pt-thermometer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 18px;
+  flex-wrap: nowrap;
+}
+
+.pt-th-lvl {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 7px;
+  border-radius: 7px;
+  opacity: 0.22;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.pt-th-active {
+  opacity: 1 !important;
+  font-size: 0.78rem !important;
+  padding: 4px 10px !important;
+  animation: pt-th-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pt-th-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50%       { box-shadow: 0 0 6px 1px currentColor; }
+}
+
+.pt-th-done { opacity: 0.6 !important; }
+.pt-th-fail { opacity: 0.35 !important; }
+
+.pt-th-sep {
+  width: 8px;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  flex-shrink: 0;
+}
+
+.pt-th-lvl sup {
+  font-size: 0.6em;
+  vertical-align: super;
+  margin-left: 1px;
+}
+
 /* ── Stage tracker dots ── */
 .pt-stage-tracker {
   display: flex;
@@ -239,6 +289,51 @@
   font-size: 0.78rem;
   color: rgba(241,245,249,0.4);
 }
+
+/* ── Speak button & word row ── */
+.pt-word-en-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pt-speak-btn {
+  font-size: 1.1rem;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.15s, background 0.15s;
+  line-height: 1;
+}
+
+.pt-speak-btn:hover { opacity: 1; background: rgba(255,255,255,0.07); }
+
+/* ── Skip question button ── */
+.pt-skip-q-row {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.pt-skip-q-btn {
+  background: none;
+  border: none;
+  color: rgba(241,245,249,0.28);
+  font-size: 0.76rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.15s;
+}
+
+.pt-skip-q-btn:hover:not(:disabled) { color: rgba(241,245,249,0.55); }
+.pt-skip-q-btn:disabled { opacity: 0.3; pointer-events: none; }
+
+/* ── Correct sentence options (longer text) ── */
+.pt-options-sentence .pt-opt { font-size: 0.82rem; }
 
 /* ── Word block ── */
 .pt-word-block {
