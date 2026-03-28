@@ -9,36 +9,144 @@
     return arr;
   }
 
-  /* Word similarity score between two strings (0–1) */
-  function wordSim(a, b) {
-    const wa = a.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/);
-    const wb = b.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/);
-    const setB = new Set(wb);
-    const shared = wa.filter(w => setB.has(w)).length;
-    return shared / Math.max(wa.length, wb.length);
+  /* Generate close distractors by mutating the correct sentence */
+  function generateDistractors(en) {
+    const variants = [];
+
+    function trySwap(from, to) {
+      const re = new RegExp('\\b' + from + '\\b', 'i');
+      const m = en.match(re);
+      if (!m) return;
+      // Preserve original capitalisation of matched word
+      const replacement = m[0][0] === m[0][0].toUpperCase()
+        ? to.charAt(0).toUpperCase() + to.slice(1)
+        : to;
+      const v = en.replace(re, replacement);
+      if (v !== en && !variants.includes(v)) variants.push(v);
+    }
+
+    // ── Pronoun swaps ──
+    const pronouns = [
+      ['I','He'],['I','She'],['I','We'],['I','They'],
+      ['He','She'],['He','I'],['He','We'],['He','They'],
+      ['She','He'],['She','I'],['She','We'],['She','They'],
+      ['We','I'],['We','They'],['We','He'],
+      ['They','We'],['They','He'],['They','She'],
+      ['You','He'],['You','She'],['You','They'],
+    ];
+    for (const [f,t] of pronouns) trySwap(f,t);
+
+    // ── Possessive swaps ──
+    const poss = [
+      ['my','his'],['my','her'],['my','their'],['my','your'],
+      ['his','her'],['his','my'],['his','their'],
+      ['her','his'],['her','my'],['her','their'],
+      ['our','their'],['their','our'],['your','my'],
+    ];
+    for (const [f,t] of poss) trySwap(f,t);
+
+    // ── Tense: present ↔ past ──
+    const tense = [
+      ['am','was'],['is','was'],['are','were'],
+      ['was','is'],['were','are'],
+      ["don't","didn't"],["doesn't","didn't"],["didn't","don't"],
+      ["isn't","wasn't"],["aren't","weren't"],
+      ["wasn't","isn't"],["weren't","aren't"],
+      ['have','had'],['has','had'],['had','have'],
+      ["haven't","hadn't"],["hasn't","hadn't"],
+      ['go','went'],['goes','went'],['went','go'],
+      ['eat','ate'],['ate','eat'],
+      ['drink','drank'],['drank','drink'],
+      ['see','saw'],['saw','see'],
+      ['come','came'],['came','come'],
+      ['get','got'],['got','get'],
+      ['make','made'],['made','make'],
+      ['take','took'],['took','take'],
+      ['know','knew'],['knew','know'],
+      ['think','thought'],['thought','think'],
+      ['work','worked'],['worked','work'],
+      ['live','lived'],['lived','live'],
+    ];
+    for (const [f,t] of tense) trySwap(f,t);
+
+    // ── Modal / auxiliary swaps ──
+    const modals = [
+      ['can','could'],['could','can'],
+      ['will','would'],['would','will'],
+      ['must','should'],["mustn't","shouldn't"],
+      ['should','must'],['may','might'],['might','may'],
+      ["can't","couldn't"],["couldn't","can't"],
+      ["won't","wouldn't"],["wouldn't","won't"],
+    ];
+    for (const [f,t] of modals) trySwap(f,t);
+
+    // ── Article swaps ──
+    const articles = [
+      ['\\ba\\b','the'],['\\bthe\\b','a'],['\\ban\\b','the'],['\\bthe\\b','an'],
+    ];
+    for (const [f,t] of articles) {
+      const re = new RegExp(f, 'i');
+      const v = en.replace(re, t);
+      if (v !== en && !variants.includes(v)) variants.push(v);
+    }
+
+    // ── Negation toggle ──
+    if (en.includes(" not ") || en.includes("n't")) {
+      const v = en.replace(/\s+not\b/, '').replace(/n't\b/,'');
+      if (v !== en && !variants.includes(v)) variants.push(v);
+    } else {
+      // add "not" after first auxiliary
+      const addNot = en.replace(/\b(am|is|are|was|were|can|will|would|should|must|have|has|had|do|does|did)\b/, '$1 not');
+      if (addNot !== en && !variants.includes(addNot)) variants.push(addNot);
+    }
+
+    // ── Adverb/intensifier swaps ──
+    const adverbs = [
+      ['very','really'],['really','very'],['very','so'],
+      ['always','usually'],['usually','always'],['sometimes','often'],
+      ['often','sometimes'],['never','always'],['already','yet'],
+      ['still','already'],['just','already'],
+    ];
+    for (const [f,t] of adverbs) trySwap(f,t);
+
+    return variants;
   }
 
-  /* Build 3 smart distractors: prefer sentences that share words with correct
-     (same structure/topic feel) but differ enough to not be identical */
+  /* Build 3 close-but-wrong choices. Priority:
+     1. Mutations of the correct sentence (most confusing)
+     2. Same-topic sentences from pool (fallback) */
   function buildChoices(correct, pool) {
-    const others = pool.filter(s => s.en !== correct.en);
+    const mutations = generateDistractors(correct.en);
+    shuffle(mutations);
 
-    // Score each candidate: higher = more similar to correct answer
-    const scored = others.map(s => ({
-      en: s.en,
-      score: wordSim(correct.en, s.en),
-    }));
+    const distractors = [];
+    // Take up to 3 mutations
+    for (const m of mutations) {
+      if (distractors.length >= 3) break;
+      distractors.push(m);
+    }
 
-    // Sort by similarity descending, then add small random jitter so it's not
-    // deterministic — picks from the top ~40% of matches each time
-    scored.sort((a, b) => b.score - a.score);
+    // Fill remaining slots with pool sentences that share the most words
+    if (distractors.length < 3) {
+      const others = pool
+        .filter(s => s.en !== correct.en)
+        .map(s => {
+          const wa = correct.en.toLowerCase().split(/\s+/);
+          const wb = new Set(s.en.toLowerCase().split(/\s+/));
+          const shared = wa.filter(w => wb.has(w)).length;
+          return { en: s.en, score: shared };
+        })
+        .sort((a, b) => b.score - a.score);
 
-    // Take top half of similar ones, shuffle among them, pick 3
-    const topN = Math.max(6, Math.ceil(scored.length * 0.35));
-    const candidates = shuffle(scored.slice(0, topN));
-    const picks = candidates.slice(0, 3).map(c => c.en);
+      const topN = Math.max(8, Math.ceil(others.length * 0.3));
+      const candidates = shuffle(others.slice(0, topN));
+      for (const c of candidates) {
+        if (distractors.length >= 3) break;
+        if (!distractors.includes(c.en)) distractors.push(c.en);
+      }
+    }
 
-    return shuffle([correct.en, ...picks]);
+    return shuffle([correct.en, ...distractors.slice(0, 3)]);
   }
 
   function _escHtml(str) {
