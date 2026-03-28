@@ -168,8 +168,8 @@ class PlacementTest {
     this._stageCorrect   = 0;
     this._totalAsked     = 0;
     this._skipCount      = 0;
-    this._PER_STAGE      = 5;
-    this._PASS_THRESHOLD = 3;
+    this._PER_STAGE      = 7;   // 3 kelime + 2 gramer + 2 doğru cümle
+    this._PASS_THRESHOLD = 5;   // 5/7 = %71 — zorlu ama adil eşik
     this._usedGQ  = new Set();
     this._usedCSQ = new Set();
   }
@@ -197,7 +197,7 @@ class PlacementTest {
         <h2 class="pt-title">Seviyeni Belirleyelim</h2>
         <p class="pt-desc">
           Kelime, boşluk doldurma ve doğru cümle seçme — üç soru tipiyle tam seviyeni buluyoruz.<br>
-          <strong>~3 dakika</strong> · En fazla 3 aşama
+          <strong>~4 dakika</strong> · Her aşamada <strong>7 soru</strong> · En fazla 3 aşama
         </p>
         <div class="pt-how-row">
           <div class="pt-how-item"><span>📖</span><span>Kelime</span></div>
@@ -248,25 +248,20 @@ class PlacementTest {
       .sort(() => Math.random() - 0.5);
     const vocab = vocabPool.slice(0, 3).map(w => ({ type:'vocab', data:w }));
 
-    // 1 boşluk doldurma sorusu
-    const gqAll   = this._GQ[level] || [];
-    const gqFresh = gqAll.filter((_, i) => !this._usedGQ.has(level + i));
-    const gqPick  = ([...(gqFresh.length ? gqFresh : gqAll)].sort(() => Math.random() - 0.5))[0];
-    if (gqPick) this._usedGQ.add(level + gqAll.indexOf(gqPick));
-    const gq = gqPick ? [{ type:'grammar', data:gqPick }] : [];
+    // 2 boşluk doldurma sorusu
+    const gqAll = this._GQ[level] || [];
+    const gq = this._pickUnused(gqAll, this._usedGQ, level, 2)
+                   .map(g => ({ type:'grammar', data:g }));
 
-    // 1 doğru cümle sorusu
-    const csqAll   = this._CSQ[level] || [];
-    const csqFresh = csqAll.filter((_, i) => !this._usedCSQ.has(level + i));
-    const csqPick  = ([...(csqFresh.length ? csqFresh : csqAll)].sort(() => Math.random() - 0.5))[0];
-    if (csqPick) this._usedCSQ.add(level + csqAll.indexOf(csqPick));
-    const csq = csqPick ? [{ type:'correct-sentence', data:csqPick }] : [];
+    // 2 doğru cümle sorusu
+    const csqAll = this._CSQ[level] || [];
+    const csq = this._pickUnused(csqAll, this._usedCSQ, level, 2)
+                    .map(g => ({ type:'correct-sentence', data:g }));
 
-    // Eksik varsa diğer soru tipinden tamamla
+    // Eksik kalırsa gramerden tamamla
     let questions = [...vocab, ...gq, ...csq];
     while (questions.length < this._PER_STAGE && gqAll.length) {
-      const fill = gqAll.sort(() => Math.random() - 0.5)[0];
-      questions.push({ type:'grammar', data:fill });
+      questions.push({ type:'grammar', data:gqAll[Math.floor(Math.random() * gqAll.length)] });
     }
 
     this._stageQuestions = questions.sort(() => Math.random() - 0.5).slice(0, this._PER_STAGE);
@@ -301,7 +296,7 @@ class PlacementTest {
         ${this._thermometer(level)}
         <div class="pt-level-pill" style="color:${color};border-color:${color}40;background:${color}12">${level}</div>
         <p class="pt-transition-label">${this._LABELS[level]} seviye</p>
-        <p class="pt-transition-sub">Aşama ${stageNum} · 5 soru · kelime + gramer + doğru cümle</p>
+        <p class="pt-transition-sub">Aşama ${stageNum} · 7 soru · 5/7 geçme eşiği</p>
       </div>
     `);
     setTimeout(cb, 1050);
@@ -346,9 +341,18 @@ class PlacementTest {
     const level = this._LEVELS[this._curIdx];
     const color = this._COLORS[level];
 
-    // Çeldirici seçeneklerde de cognate'leri hariç tut (benzer görünen Türkçe anlamlar ipucu olmasın)
-    const pool      = (this._byLevel[level] || []).filter(w => w.en !== word.en && !this._isCognate(w.en, w.tr));
-    let distractors = [...pool].sort(() => Math.random() - 0.5).slice(0, 3);
+    // Semantik çeldiriciler: önce aynı kelime kategorisinden, sonra aynı seviyeden
+    // Cognate ve soru kelimesiyle aynı olanlar hariç
+    const validPool = (w) => w.en !== word.en && !this._isCognate(w.en, w.tr) && w.tr !== word.tr;
+    const levelPool = (this._byLevel[level] || []).filter(validPool);
+    const sameCat   = word.cat ? levelPool.filter(w => w.cat === word.cat) : [];
+    let distractors = [...sameCat].sort(() => Math.random() - 0.5).slice(0, 3);
+    if (distractors.length < 3) {
+      const used  = new Set([word.en, ...distractors.map(d => d.en)]);
+      const rest  = levelPool.filter(w => !used.has(w.en)).sort(() => Math.random() - 0.5);
+      distractors = [...distractors, ...rest].slice(0, 3);
+    }
+    // Son çare: tüm WORDS'den tamamla
     if (distractors.length < 3 && typeof WORDS !== 'undefined') {
       const used  = new Set([word.en, ...distractors.map(d => d.en)]);
       const extra = WORDS.filter(w => w.tr && w.en && !used.has(w.en) && !this._isCognate(w.en, w.tr))
@@ -521,25 +525,68 @@ class PlacementTest {
   }
 
   // ── Aşama değerlendirme ──────────────────────────────────────────────────
+  // 7 soru, eşik 5: 4/7 sınırda → tiebreaker; ≥5 geçti; ≤3 kaldı
   _evaluateStage() {
     this._totalAsked += this._stageQuestions.length;
-    if (this._stageCorrect === this._PASS_THRESHOLD) {
+    const borderline = this._stageCorrect === this._PASS_THRESHOLD - 1; // 4/7
+    if (borderline) {
       this._showStageSummary(null, () => this._startTiebreaker());
     } else {
-      const passed = this._stageCorrect > this._PASS_THRESHOLD;
+      const passed = this._stageCorrect >= this._PASS_THRESHOLD;
       this._showStageSummary(passed, () => this._advanceBinarySearch(passed));
     }
   }
 
   _startTiebreaker() {
-    const level  = this._LEVELS[this._curIdx];
-    const gqAll  = this._GQ[level] || [];
-    const fresh  = gqAll.filter((_, i) => !this._usedGQ.has(level + i));
-    const pool   = (fresh.length ? fresh : gqAll).sort(() => Math.random() - 0.5);
+    const level = this._LEVELS[this._curIdx];
+    // Tiebreaker: 1 CSQ (görsel karmaşıklık daha yüksek, tahmin etmek zor)
+    const csqAll = this._CSQ[level] || [];
+    const fresh  = csqAll.filter((_, i) => !this._usedCSQ.has(level + i));
+    const pool   = [...(fresh.length ? fresh : csqAll)].sort(() => Math.random() - 0.5);
     if (!pool[0]) { this._advanceBinarySearch(true); return; }
     const tq = pool[0];
-    this._usedGQ.add(level + gqAll.indexOf(tq));
-    this._renderGrammarQ(tq, true);
+    this._usedCSQ.add(level + csqAll.indexOf(tq));
+    this._renderCSQTiebreaker(tq);
+  }
+
+  _renderCSQTiebreaker(csq) {
+    const level = this._LEVELS[this._curIdx];
+    const color = this._COLORS[level];
+    const shuffled = csq.c.map((text, i) => ({ text, correct: i === csq.a }))
+                          .sort(() => Math.random() - 0.5);
+    this._html(`
+      <div class="pt-card">
+        <div class="pt-progress-bar"><div class="pt-progress-fill" style="width:97%;background:${color}"></div></div>
+        <div class="pt-q-meta">
+          <span class="pt-q-level" style="color:${color}">${level}</span>
+          <span style="font-size:0.75rem;color:rgba(241,245,249,0.4)">Belirleyici soru</span>
+          <span class="pt-q-type" style="color:#f59e0b;background:#f59e0b18;border:1px solid #f59e0b33">⚡ Belirleyici</span>
+        </div>
+        <div class="pt-grammar-block">
+          <p class="pt-grammar-q" style="font-size:1rem">${csq.q}</p>
+        </div>
+        <p class="pt-q-label">Son karar sorusu — dikkatli düşün:</p>
+        <div class="pt-options pt-options-sentence">
+          ${shuffled.map((opt, i) => `
+            <button class="pt-opt pt-opt-sentence" data-correct="${opt.correct ? '1' : '0'}">
+              <span class="pt-opt-letter">${'ABCD'[i]}</span>
+              <span class="pt-opt-text">${opt.text}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `);
+    this._container.querySelectorAll('.pt-opt').forEach(btn =>
+      btn.addEventListener('click', () => {
+        const ok = btn.dataset.correct === '1';
+        this._lockOptions(btn, ok);
+        const fb = document.createElement('div');
+        fb.className = 'pt-example';
+        fb.innerHTML = `<em>💡 ${csq.hint}</em>`;
+        this._container.querySelector('.pt-options')?.after(fb);
+        setTimeout(() => { this._totalAsked++; this._advanceBinarySearch(ok); }, 1400);
+      })
+    );
   }
 
   // ── Aşama özet ───────────────────────────────────────────────────────────
@@ -601,7 +648,18 @@ class PlacementTest {
   }
 
   _progressPct() {
-    return Math.min(Math.round((this._totalAsked + this._questionIdx) / 15 * 100), 95);
+    // 3 aşama × 7 soru = 21 toplam
+    return Math.min(Math.round((this._totalAsked + this._questionIdx) / 21 * 100), 95);
+  }
+
+  // Kullanılmamış sorulardan n tane seç, biten varsa başa dön
+  _pickUnused(pool, usedSet, level, n) {
+    const fresh = pool.filter((_, i) => !usedSet.has(level + i));
+    const src   = [...(fresh.length >= n ? fresh : pool)].sort(() => Math.random() - 0.5);
+    return src.slice(0, n).map(item => {
+      usedSet.add(level + pool.indexOf(item));
+      return item;
+    });
   }
 
   // ── Sonuç ─────────────────────────────────────────────────────────────────
