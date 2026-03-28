@@ -271,7 +271,7 @@
   }
 
   /* ── Timer seconds per level ── */
-  const LEVEL_TIME = { A1: 10, A2: 12, B1: 15, B2: 20, C1: 25, C2: 30, ALL: 20 };
+  const LEVEL_TIME = { A1: 8, A2: 10, B1: 13, B2: 16, C1: 18, C2: 20, ALL: 15 };
   const TIMER_CIRC = 94.25; // 2π × r=15
 
   /* ── TranslateMode class ── */
