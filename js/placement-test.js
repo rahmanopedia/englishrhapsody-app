@@ -12,7 +12,7 @@
  */
 class PlacementTest {
   constructor() {
-    this._LEVELS = ['A1','A2','B1','B2','C1','C2'];
+    this._LEVELS = ['A1','A2','B1','B2'];
     this._COLORS = { A1:'#10b981', A2:'#06b6d4', B1:'#3b82f6', B2:'#8b5cf6', C1:'#f59e0b', C2:'#ef4444' };
     this._LABELS = { A1:'Başlangıç', A2:'Temel', B1:'Orta Altı', B2:'Orta Üstü', C1:'İleri', C2:'Ustalaşmış' };
     this._DESCS  = {
@@ -158,8 +158,8 @@ class PlacementTest {
 
     // Binary search state
     this._lo          = 0;
-    this._hi          = 5;
-    this._curIdx      = 2;  // B1
+    this._hi          = 3;  // B2 max
+    this._curIdx      = 1;  // A2'den başla (4 seviyenin ortası)
     this._lastPassed  = -1;
     this._stageHistory   = [];
     this._stageQuestions = [];
@@ -227,8 +227,8 @@ class PlacementTest {
 
   _beginTest() {
     this._lo           = 0;
-    this._hi           = 5;
-    this._curIdx       = 2;
+    this._hi           = 3;
+    this._curIdx       = 1;
     this._lastPassed   = -1;
     this._totalAsked   = 0;
     this._skipCount    = 0;
