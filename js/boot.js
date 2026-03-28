@@ -1425,27 +1425,53 @@ document.addEventListener('click', function(e) {
     } catch(x){ return 0; }
   }
 
-  /* ── D. Progress card on home ── */
+  /* ── D. Update stats strip CEFR chip (top of home, always visible) ── */
+  function updateStatsChip(level, pct, done) {
+    var strip = document.querySelector('.home-stats-strip');
+    if (!strip) return;
+    var chip = document.getElementById('lvprog-chip');
+    if (!chip) {
+      // Build: sep + stat-item
+      var sep = document.createElement('div');
+      sep.className = 'stat-sep';
+      chip = document.createElement('div');
+      chip.id = 'lvprog-chip';
+      chip.className = 'stat-item';
+      strip.appendChild(sep);
+      strip.appendChild(chip);
+    }
+    chip.innerHTML =
+      '<label>Seviye</label>' +
+      '<span id="lvprog-chip-val" style="' +
+        'background:linear-gradient(135deg,#0ea5e9,#6366f1);' +
+        '-webkit-background-clip:text;-webkit-text-fill-color:transparent;' +
+        'font-weight:700;font-size:13px' +
+      '">' + level + (done ? ' ✅' : ' ' + pct + '%') + '</span>';
+  }
+
+  /* ── E. Progress card in home-col-main ── */
   function refreshProgressCard() {
+    var app = window._app;
+    if (!app) return;
+    var level = app.state.get('cefrLevel');
+    if (!level) { setTimeout(refreshProgressCard, 1000); return; }
+    var threshold = THRESHOLDS[level];
+
+    var mastered  = getMastered(level);
+    var nextLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(level) + 1];
+    var pct       = threshold ? Math.min(100, Math.round(mastered / threshold * 100)) : 100;
+    var remaining = threshold ? Math.max(0, threshold - mastered) : 0;
+    var done      = !threshold || mastered >= threshold;
+    var barColor  = done ? '#10b981' : pct >= 70 ? '#f59e0b' : '#0ea5e9';
+
+    // Always update stats chip
+    updateStatsChip(level, pct, done);
+
+    // Progress card
     var col = document.querySelector('.home-col-main');
     var old = document.getElementById('lvprog-card');
     if (old) old.parentNode && old.parentNode.removeChild(old);
     if (!col) return;
-
-    var app = window._app;
-    if (!app) return;
-    var level = app.state.get('cefrLevel');
-    if (!level) return;
-    var threshold = THRESHOLDS[level];
-    if (!threshold) return; // C2 = max, no card needed
-
-    var mastered  = getMastered(level);
-    var nextLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(level) + 1];
-    var pct       = Math.min(100, Math.round(mastered / threshold * 100));
-    var remaining = Math.max(0, threshold - mastered);
-    var done      = mastered >= threshold;
-
-    var barColor  = done ? '#10b981' : pct >= 70 ? '#f59e0b' : '#0ea5e9';
 
     var card = document.createElement('div');
     card.id = 'lvprog-card';
@@ -1453,27 +1479,26 @@ document.addEventListener('click', function(e) {
     card.innerHTML =
       '<div class="lvprog-head">' +
         '<span class="lvprog-badge">' + level + '</span>' +
-        '<span class="lvprog-name">' + LEVEL_NAMES[level] + '</span>' +
+        '<span class="lvprog-name">İngilizce ' + LEVEL_NAMES[level] + '</span>' +
         (done ? '<span class="lvprog-ready">✅ Hazır!</span>' : '<span class="lvprog-pct">' + pct + '%</span>') +
       '</div>' +
       '<div class="lvprog-bar-bg"><div class="lvprog-bar" style="width:' + pct + '%;background:' + barColor + '"></div></div>' +
       '<div class="lvprog-row">' +
-        '<span class="lvprog-nums">' + mastered + ' / ' + threshold + ' kelime</span>' +
-        (done
+        (threshold
+          ? '<span class="lvprog-nums">' + mastered + ' / ' + threshold + ' kelime öğrenildi</span>'
+          : '<span class="lvprog-nums">En üst seviye 🏆</span>') +
+        (done && nextLevel
           ? '<span class="lvprog-hint" style="color:#10b981">→ ' + nextLevel + '\'ye geçebilirsin</span>'
-          : '<span class="lvprog-hint">' + remaining + ' kelime daha</span>') +
+          : (!done ? '<span class="lvprog-hint">' + remaining + ' kelime daha</span>' : '')) +
       '</div>' +
-      (done
+      (done && nextLevel
         ? '<button class="lvprog-btn" id="lvprog-go">🚀 ' + nextLevel + ' Seviyesine Geç</button>'
-        : '<div class="lvprog-preview">📡 Antrenman sırasında <strong>' + nextLevel + '</strong> önizlemesi alıyorsun</div>');
+        : (nextLevel
+          ? '<div class="lvprog-preview">📡 Antrenman sırasında <strong>' + nextLevel + '</strong> önizlemesi alıyorsun</div>'
+          : ''));
 
-    // Insert after Günün Yolu card if present, else prepend
-    var dp = document.getElementById('dp-card');
-    if (dp && dp.parentNode === col) {
-      col.insertBefore(card, dp.nextSibling || dp);
-    } else {
-      col.insertBefore(card, col.firstChild);
-    }
+    // Always insert as FIRST child of home-col-main
+    col.insertBefore(card, col.firstChild);
 
     var btn = document.getElementById('lvprog-go');
     if (btn) {
@@ -1487,41 +1512,44 @@ document.addEventListener('click', function(e) {
     }
   }
 
-  /* ── E. CSS ── */
+  /* ── F. CSS ── */
   function injectCSS() {
     if (document.getElementById('lvprog-style')) return;
     var s = document.createElement('style');
     s.id = 'lvprog-style';
     s.textContent =
-      '.lvprog-card{padding:15px 18px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);margin-bottom:10px}' +
+      '.lvprog-card{padding:15px 18px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);margin-bottom:10px}' +
       '.lvprog-head{display:flex;align-items:center;gap:9px;margin-bottom:10px}' +
-      '.lvprog-badge{background:linear-gradient(135deg,#0ea5e9,#6366f1);color:#fff;font-weight:700;font-size:12px;padding:3px 9px;border-radius:7px;letter-spacing:1px;flex-shrink:0}' +
+      '.lvprog-badge{background:linear-gradient(135deg,#0ea5e9,#6366f1);color:#fff;font-weight:700;font-size:13px;padding:4px 10px;border-radius:8px;letter-spacing:1px;flex-shrink:0}' +
       '.lvprog-name{font-size:13px;font-weight:600;color:#cbd5e1;flex:1}' +
       '.lvprog-pct{font-size:12px;color:#64748b}' +
       '.lvprog-ready{font-size:12px;color:#10b981;font-weight:600}' +
-      '.lvprog-bar-bg{height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;margin-bottom:7px}' +
+      '.lvprog-bar-bg{height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;margin-bottom:8px}' +
       '.lvprog-bar{height:100%;border-radius:3px;transition:width .6s ease}' +
-      '.lvprog-row{display:flex;justify-content:space-between;margin-bottom:8px}' +
-      '.lvprog-nums{font-size:11px;color:#475569}' +
-      '.lvprog-hint{font-size:11px;color:#475569}' +
-      '.lvprog-btn{width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,#10b981,#0ea5e9);color:#fff;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.3px}' +
-      '.lvprog-btn:hover{opacity:.9}' +
-      '.lvprog-preview{font-size:11px;color:rgba(0,212,255,0.45);text-align:center;padding-top:2px}';
+      '.lvprog-row{display:flex;justify-content:space-between;margin-bottom:9px}' +
+      '.lvprog-nums{font-size:11px;color:#64748b}' +
+      '.lvprog-hint{font-size:11px;color:#64748b}' +
+      '.lvprog-btn{width:100%;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,#10b981,#0ea5e9);color:#fff;font-size:14px;font-weight:700;cursor:pointer}' +
+      '.lvprog-preview{font-size:11px;color:rgba(0,212,255,0.5);text-align:center}';
     document.head.appendChild(s);
   }
 
-  /* ── F. Watch home DOM for card injection ── */
+  /* ── G. Watch home DOM ── */
   function startObserver() {
     var mc = document.getElementById('main-content');
     if (!mc) return;
+    var _t = null;
     var obs = new MutationObserver(function() {
-      var col = document.querySelector('.home-col-main');
-      if (col && !document.getElementById('lvprog-card')) refreshProgressCard();
+      // Debounce — dp-card and other cards inject in bursts
+      clearTimeout(_t);
+      _t = setTimeout(function() {
+        if (document.querySelector('.home-col-main')) refreshProgressCard();
+      }, 400);
     });
     obs.observe(mc, { childList:true, subtree:true });
   }
 
-  /* ── G. Also patch navigate to refresh card on return to home ── */
+  /* ── H. Patch navigate ── */
   function patchNavigate() {
     var app = window._app;
     if (!app || !app.navigate || app.__lvprogNavPatched) return;
@@ -1529,7 +1557,7 @@ document.addEventListener('click', function(e) {
     var _nav = app.navigate.bind(app);
     app.navigate = function(tgt) {
       _nav(tgt);
-      if (tgt === 'home') setTimeout(refreshProgressCard, 200);
+      if (tgt === 'home') setTimeout(refreshProgressCard, 500);
     };
   }
 
@@ -1541,7 +1569,7 @@ document.addEventListener('click', function(e) {
     var level = window._app && window._app.state.get('cefrLevel');
     if (level) seedFarFuture(level);
     startObserver();
-    setTimeout(refreshProgressCard, 300);
+    setTimeout(refreshProgressCard, 800);
   }
 
   function waitReady() {
