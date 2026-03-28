@@ -9,14 +9,36 @@
     return arr;
   }
 
-  /* Build 3 distractors from the full pool (different level-group preferred) */
+  /* Word similarity score between two strings (0–1) */
+  function wordSim(a, b) {
+    const wa = a.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/);
+    const wb = b.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/);
+    const setB = new Set(wb);
+    const shared = wa.filter(w => setB.has(w)).length;
+    return shared / Math.max(wa.length, wb.length);
+  }
+
+  /* Build 3 smart distractors: prefer sentences that share words with correct
+     (same structure/topic feel) but differ enough to not be identical */
   function buildChoices(correct, pool) {
-    // Prefer distractors from same level first, then any
     const others = pool.filter(s => s.en !== correct.en);
-    shuffle(others);
-    const picks = others.slice(0, 3).map(s => s.en);
-    const choices = shuffle([correct.en, ...picks]);
-    return choices;
+
+    // Score each candidate: higher = more similar to correct answer
+    const scored = others.map(s => ({
+      en: s.en,
+      score: wordSim(correct.en, s.en),
+    }));
+
+    // Sort by similarity descending, then add small random jitter so it's not
+    // deterministic — picks from the top ~40% of matches each time
+    scored.sort((a, b) => b.score - a.score);
+
+    // Take top half of similar ones, shuffle among them, pick 3
+    const topN = Math.max(6, Math.ceil(scored.length * 0.35));
+    const candidates = shuffle(scored.slice(0, topN));
+    const picks = candidates.slice(0, 3).map(c => c.en);
+
+    return shuffle([correct.en, ...picks]);
   }
 
   function _escHtml(str) {
