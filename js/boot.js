@@ -1518,40 +1518,54 @@ document.addEventListener('click', function(e) {
     document.head.appendChild(s);
   }
 
-  /* ── F. Patch _initHome to refresh on every home render ── */
-  function patchInitHome() {
+  /* ── F. Patch _initHome + _syncUIFromState ── */
+  function patchAppMethods() {
     var app = window._app;
-    if (!app || app.__lvprogInitHomePatched) return;
-    app.__lvprogInitHomePatched = true;
-    var _orig = app._initHome.bind(app);
+    if (!app || app.__lvprogPatched) return;
+    app.__lvprogPatched = true;
+
+    // _initHome: called on every home navigate
+    var _origHome = app._initHome.bind(app);
     app._initHome = function() {
-      _orig();
-      setTimeout(updateCEFRUI, 50);
+      _origHome();
+      setTimeout(updateCEFRUI, 80);
     };
+
+    // _syncUIFromState: called after Firebase loads cloud data (bypasses state.set)
+    if (app._syncUIFromState) {
+      var _origSync = app._syncUIFromState.bind(app);
+      app._syncUIFromState = function() {
+        _origSync();
+        setTimeout(updateCEFRUI, 300); // after navigate('home') inside _syncUIFromState
+      };
+    }
   }
 
-  /* ── G. Watch cefrLevel state changes (Firebase sync) ── */
-  function watchCefrLevel() {
-    var app = window._app;
-    if (!app || !app.state || app.__lvprogCefrWatched) return;
-    app.__lvprogCefrWatched = true;
-    var _cur = app.state.set.bind(app.state);
-    app.state.set = function(key, val, sync) {
-      _cur(key, val, sync);
-      if (key === 'cefrLevel' && val) setTimeout(updateCEFRUI, 100);
-    };
+  /* ── G. Reliable update loop: runs every 2s until level confirmed ── */
+  function startUpdateLoop() {
+    var attempts = 0;
+    var iv = setInterval(function() {
+      attempts++;
+      updateCEFRUI();
+      // After 30s (15 attempts), slow down to every 10s
+      if (attempts === 15) {
+        clearInterval(iv);
+        setInterval(updateCEFRUI, 10000);
+      }
+    }, 2000);
   }
 
   /* ── Init ── */
   function init() {
     injectCSS();
-    patchLevelLock();   // wraps state.set for lock
-    watchCefrLevel();   // wraps state.set again to trigger UI update on cefrLevel change
-    patchInitHome();
+    patchLevelLock();
+    patchAppMethods();
     var level = window._app && window._app.state.get('cefrLevel');
     if (level) seedFarFuture(level);
-    // Start retry loop — picks up cefrLevel whenever Firebase delivers it
+    // First attempt
     setTimeout(updateCEFRUI, 200);
+    // Reliable loop to catch Firebase async loads
+    startUpdateLoop();
   }
 
   function waitReady() {
