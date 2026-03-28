@@ -1269,7 +1269,11 @@ document.addEventListener('click', function(e) {
 
     document.getElementById('lu-yes').addEventListener('click', function(){
       document.body.removeChild(overlay);
-      window._app && window._app.state && window._app.state.set('cefrLevel', toLevel, true);
+      if (window._app) {
+        window._app.__lvlUpAllowed = true;
+        window._app.state.set('cefrLevel', toLevel, true);
+        window._app.__lvlUpAllowed = false;
+      }
     });
     document.getElementById('lu-no').addEventListener('click', function(){
       document.body.removeChild(overlay);
@@ -1324,4 +1328,225 @@ document.addEventListener('click', function(e) {
     else { setTimeout(waitReady, 500); }
   }
   window.addEventListener('load', function(){ setTimeout(waitReady, 1200); });
+})();
+
+/* ── 21. Level Progression: Lock + Preview + Progress Card ── */
+(function(){
+  var LEVEL_ORDER = ['A1','A2','B1','B2','C1','C2'];
+  var LEVEL_NAMES = { A1:'Başlangıç', A2:'Temel', B1:'Orta Alt', B2:'Üst-Orta', C1:'İleri', C2:'Uzman' };
+  // Words with score≥3 needed to unlock next level
+  var THRESHOLDS = { A1:80, A2:70, B1:90, B2:80, C1:70 };
+  var FAR_MS = 365 * 86400 * 1000; // 1 year in ms
+
+  /* ── A. Seed far-future dates for levels 2+ above current ──
+     This ensures only the NEXT level appears in the "30% preview" mix.
+     When curLevel="A1": seeds B1,B2,C1,C2 → only A2 words are "due" from other levels.
+  */
+  function seedFarFuture(curLevel) {
+    var app = window._app;
+    if (!app || !window.WORDS) return;
+    var curIdx = LEVEL_ORDER.indexOf(curLevel);
+    if (curIdx < 0) return;
+
+    var farLevels = LEVEL_ORDER.slice(curIdx + 2);   // levels 2+ above (won't be seen)
+    var nextLevel = LEVEL_ORDER[curIdx + 1];          // preview level (will be seen)
+    var FAR = Date.now() + FAR_MS;
+    var mastery = Object.assign({}, app.state.get('mastery') || {});
+    var changed = false;
+
+    window.WORDS.forEach(function(w) {
+      var key = w.id || w.en;
+      if (farLevels.indexOf(w.level) >= 0) {
+        // Seed if no entry yet (don't overwrite progress)
+        if (!mastery[key]) {
+          mastery[key] = { score:0, interval:365, ease:2.5, nextReview:FAR };
+          changed = true;
+        }
+      } else if (nextLevel && w.level === nextLevel) {
+        // If previously seeded as far-future (score=0, review>180days), un-seed it
+        var m = mastery[key];
+        if (m && m.score === 0 && m.nextReview > Date.now() + 180 * 86400 * 1000) {
+          delete mastery[key];
+          changed = true;
+        }
+      }
+    });
+
+    if (changed) {
+      app.state.set('mastery', mastery, true);
+    }
+  }
+
+  /* ── B. Level lock: prevent skipping levels ──
+     Only adjacent forward advancement is allowed.
+     Placement test sets cefrLevel when it was empty → always allowed.
+  */
+  function patchLevelLock() {
+    var app = window._app;
+    if (!app || !app.state || app.__lvlLockPatched) return;
+    app.__lvlLockPatched = true;
+    var _cur = app.state.set.bind(app.state);
+    app.state.set = function(key, val, sync) {
+      if (key === 'cefrLevel' && val && !app.__lvlUpAllowed) {
+        var existing = app.state.get('cefrLevel');
+        if (existing) {
+          var ci = LEVEL_ORDER.indexOf(existing);
+          var ni = LEVEL_ORDER.indexOf(val);
+          if (ni > ci + 1) {
+            // Skip attempt — silently block, show toast
+            if (window.UI && window.UI.toast) {
+              UI.toast('⚠️ ' + existing + ' seviyesini tamamlamadan geçemezsin!', 3000);
+            }
+            return; // blocked
+          }
+        }
+        // Valid change: apply, then reseed preview words
+        _cur(key, val, sync);
+        setTimeout(function(){ seedFarFuture(val); refreshProgressCard(); }, 600);
+        return;
+      }
+      _cur(key, val, sync);
+    };
+  }
+
+  /* ── C. Mastered word counter ── */
+  function getMastered(level) {
+    try {
+      var m = window._app && window._app.state.get('mastery');
+      if (!m || !window.WORDS) return 0;
+      var n = 0;
+      for (var i = 0; i < window.WORDS.length; i++) {
+        var w = window.WORDS[i];
+        if (w.level !== level) continue;
+        var e = m[w.id] || m[w.en];
+        if (e && e.score >= 3) n++;
+      }
+      return n;
+    } catch(x){ return 0; }
+  }
+
+  /* ── D. Progress card on home ── */
+  function refreshProgressCard() {
+    var col = document.querySelector('.home-col-main');
+    var old = document.getElementById('lvprog-card');
+    if (old) old.parentNode && old.parentNode.removeChild(old);
+    if (!col) return;
+
+    var app = window._app;
+    if (!app) return;
+    var level = app.state.get('cefrLevel');
+    if (!level) return;
+    var threshold = THRESHOLDS[level];
+    if (!threshold) return; // C2 = max, no card needed
+
+    var mastered  = getMastered(level);
+    var nextLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(level) + 1];
+    var pct       = Math.min(100, Math.round(mastered / threshold * 100));
+    var remaining = Math.max(0, threshold - mastered);
+    var done      = mastered >= threshold;
+
+    var barColor  = done ? '#10b981' : pct >= 70 ? '#f59e0b' : '#0ea5e9';
+
+    var card = document.createElement('div');
+    card.id = 'lvprog-card';
+    card.className = 'home-card-new lvprog-card';
+    card.innerHTML =
+      '<div class="lvprog-head">' +
+        '<span class="lvprog-badge">' + level + '</span>' +
+        '<span class="lvprog-name">' + LEVEL_NAMES[level] + '</span>' +
+        (done ? '<span class="lvprog-ready">✅ Hazır!</span>' : '<span class="lvprog-pct">' + pct + '%</span>') +
+      '</div>' +
+      '<div class="lvprog-bar-bg"><div class="lvprog-bar" style="width:' + pct + '%;background:' + barColor + '"></div></div>' +
+      '<div class="lvprog-row">' +
+        '<span class="lvprog-nums">' + mastered + ' / ' + threshold + ' kelime</span>' +
+        (done
+          ? '<span class="lvprog-hint" style="color:#10b981">→ ' + nextLevel + '\'ye geçebilirsin</span>'
+          : '<span class="lvprog-hint">' + remaining + ' kelime daha</span>') +
+      '</div>' +
+      (done
+        ? '<button class="lvprog-btn" id="lvprog-go">🚀 ' + nextLevel + ' Seviyesine Geç</button>'
+        : '<div class="lvprog-preview">📡 Antrenman sırasında <strong>' + nextLevel + '</strong> önizlemesi alıyorsun</div>');
+
+    // Insert after Günün Yolu card if present, else prepend
+    var dp = document.getElementById('dp-card');
+    if (dp && dp.parentNode === col) {
+      col.insertBefore(card, dp.nextSibling || dp);
+    } else {
+      col.insertBefore(card, col.firstChild);
+    }
+
+    var btn = document.getElementById('lvprog-go');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        app.__lvlUpAllowed = true;
+        app.state.set('cefrLevel', nextLevel, true);
+        app.__lvlUpAllowed = false;
+        if (window.UI && window.UI.toast) UI.toast('🎉 ' + nextLevel + ' seviyesine hoş geldin!', 4000);
+        setTimeout(refreshProgressCard, 400);
+      });
+    }
+  }
+
+  /* ── E. CSS ── */
+  function injectCSS() {
+    if (document.getElementById('lvprog-style')) return;
+    var s = document.createElement('style');
+    s.id = 'lvprog-style';
+    s.textContent =
+      '.lvprog-card{padding:15px 18px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);margin-bottom:10px}' +
+      '.lvprog-head{display:flex;align-items:center;gap:9px;margin-bottom:10px}' +
+      '.lvprog-badge{background:linear-gradient(135deg,#0ea5e9,#6366f1);color:#fff;font-weight:700;font-size:12px;padding:3px 9px;border-radius:7px;letter-spacing:1px;flex-shrink:0}' +
+      '.lvprog-name{font-size:13px;font-weight:600;color:#cbd5e1;flex:1}' +
+      '.lvprog-pct{font-size:12px;color:#64748b}' +
+      '.lvprog-ready{font-size:12px;color:#10b981;font-weight:600}' +
+      '.lvprog-bar-bg{height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;margin-bottom:7px}' +
+      '.lvprog-bar{height:100%;border-radius:3px;transition:width .6s ease}' +
+      '.lvprog-row{display:flex;justify-content:space-between;margin-bottom:8px}' +
+      '.lvprog-nums{font-size:11px;color:#475569}' +
+      '.lvprog-hint{font-size:11px;color:#475569}' +
+      '.lvprog-btn{width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,#10b981,#0ea5e9);color:#fff;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.3px}' +
+      '.lvprog-btn:hover{opacity:.9}' +
+      '.lvprog-preview{font-size:11px;color:rgba(0,212,255,0.45);text-align:center;padding-top:2px}';
+    document.head.appendChild(s);
+  }
+
+  /* ── F. Watch home DOM for card injection ── */
+  function startObserver() {
+    var mc = document.getElementById('main-content');
+    if (!mc) return;
+    var obs = new MutationObserver(function() {
+      var col = document.querySelector('.home-col-main');
+      if (col && !document.getElementById('lvprog-card')) refreshProgressCard();
+    });
+    obs.observe(mc, { childList:true, subtree:true });
+  }
+
+  /* ── G. Also patch navigate to refresh card on return to home ── */
+  function patchNavigate() {
+    var app = window._app;
+    if (!app || !app.navigate || app.__lvprogNavPatched) return;
+    app.__lvprogNavPatched = true;
+    var _nav = app.navigate.bind(app);
+    app.navigate = function(tgt) {
+      _nav(tgt);
+      if (tgt === 'home') setTimeout(refreshProgressCard, 200);
+    };
+  }
+
+  /* ── Init ── */
+  function init() {
+    injectCSS();
+    patchLevelLock();
+    patchNavigate();
+    var level = window._app && window._app.state.get('cefrLevel');
+    if (level) seedFarFuture(level);
+    startObserver();
+    setTimeout(refreshProgressCard, 300);
+  }
+
+  function waitReady() {
+    if (window._app && window.WORDS) init();
+    else setTimeout(waitReady, 500);
+  }
+  window.addEventListener('load', function(){ setTimeout(waitReady, 1500); });
 })();
