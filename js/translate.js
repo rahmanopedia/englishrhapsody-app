@@ -109,66 +109,67 @@
     ];
     for (const [f,t] of adverbs) trySwap(f,t);
 
-    // ── Synonym swaps (tricky near-meaning words) ──
-    const synonyms = [
-      // adjectives
-      ['tired','sleepy'],['tired','bored'],['sleepy','tired'],
-      ['happy','glad'],['happy','cheerful'],['glad','happy'],['cheerful','happy'],
-      ['sad','unhappy'],['unhappy','sad'],['sad','upset'],['upset','sad'],
-      ['big','large'],['large','big'],['big','great'],['small','little'],['little','small'],
-      ['fast','quick'],['quick','fast'],['slow','slowly'],
-      ['smart','intelligent'],['intelligent','smart'],['clever','smart'],['smart','clever'],
-      ['beautiful','pretty'],['pretty','beautiful'],['lovely','beautiful'],['beautiful','lovely'],
-      ['old','elderly'],['young','new'],['new','fresh'],
-      ['hot','warm'],['warm','hot'],['cold','cool'],['cool','cold'],
-      ['hungry','starving'],['starving','hungry'],['thirsty','hungry'],
-      ['busy','occupied'],['free','available'],['available','free'],
-      ['sick','ill'],['ill','sick'],['healthy','well'],['well','healthy'],
-      ['angry','furious'],['furious','angry'],['angry','upset'],
-      ['afraid','scared'],['scared','afraid'],['frightened','scared'],
-      ['difficult','hard'],['hard','difficult'],['easy','simple'],['simple','easy'],
-      ['important','necessary'],['necessary','important'],
-      ['interesting','exciting'],['exciting','interesting'],['boring','dull'],
-      ['correct','right'],['right','correct'],['wrong','incorrect'],['incorrect','wrong'],
-      ['strong','powerful'],['powerful','strong'],['weak','fragile'],
-      ['rich','wealthy'],['wealthy','rich'],['poor','broke'],
-      // verbs
-      ['like','enjoy'],['enjoy','like'],['love','adore'],['adore','love'],
-      ['hate','dislike'],['dislike','hate'],
-      ['want','need'],['need','want'],
-      ['say','tell'],['tell','say'],['speak','talk'],['talk','speak'],
-      ['look','watch'],['watch','look'],['see','notice'],['notice','see'],
-      ['start','begin'],['begin','start'],['finish','complete'],['complete','finish'],
-      ['help','assist'],['assist','help'],
-      ['buy','purchase'],['purchase','buy'],['sell','trade'],
-      ['walk','go'],['run','walk'],['drive','travel'],['travel','go'],
-      ['study','learn'],['learn','study'],['teach','instruct'],
-      ['think','believe'],['believe','think'],['feel','think'],
-      ['try','attempt'],['attempt','try'],
-      ['show','demonstrate'],['find','discover'],['discover','find'],
-      ['give','offer'],['offer','give'],['take','receive'],['receive','get'],
-      ['ask','request'],['request','ask'],
-      ['wait','stay'],['stay','wait'],['leave','go'],
-      ['eat','have'],['drink','have'],
-      ['open','unlock'],['close','shut'],['shut','close'],
-      // nouns
-      ['house','home'],['home','house'],['flat','apartment'],['apartment','flat'],
-      ['car','vehicle'],['job','work'],['work','job'],
-      ['friend','companion'],['teacher','instructor'],['student','pupil'],['pupil','student'],
-      ['book','novel'],['film','movie'],['movie','film'],
-      ['shop','store'],['store','shop'],
-      ['road','street'],['street','road'],['city','town'],['town','city'],
-      ['child','kid'],['kid','child'],
-      ['dinner','supper'],['lunch','meal'],['meal','food'],['food','meal'],
-      // prepositions / small words that change meaning
-      ['in','at'],['at','in'],['on','at'],['at','on'],['in','on'],['on','in'],
-      ['before','after'],['after','before'],['until','before'],
+    // ── Confusable words: same field, DIFFERENT meaning ──
+    // (NOT true synonyms — these change the actual meaning of the sentence)
+    const confusables = [
+      // emotion confusables
+      ['tired','bored'],['bored','tired'],
+      ['tired','hungry'],['hungry','tired'],
+      ['happy','excited'],['excited','happy'],
+      ['sad','angry'],['angry','sad'],
+      ['afraid','angry'],['nervous','excited'],['excited','nervous'],
+      ['surprised','scared'],['scared','surprised'],
+      ['lonely','bored'],['bored','lonely'],
+      // size / degree
+      ['hot','cold'],['cold','hot'],['warm','cool'],['cool','warm'],
+      ['old','young'],['young','old'],
+      ['tall','short'],['short','tall'],['long','short'],['short','long'],
+      ['fast','slow'],['slow','fast'],
+      ['loud','quiet'],['quiet','loud'],['hard','soft'],['soft','hard'],
+      ['early','late'],['late','early'],
+      // verbs with different usage rules (common learner confusion)
+      ['say','tell'],['tell','say'],         // say sth vs tell sb sth
+      ['look','see'],['see','look'],         // intentional vs unintentional
+      ['look','watch'],['watch','look'],     // static vs moving
+      ['hear','listen'],['listen','hear'],   // passive vs active
+      ['bring','take'],['take','bring'],     // toward vs away
+      ['lend','borrow'],['borrow','lend'],   // give vs receive
+      ['teach','learn'],['learn','teach'],   // direction of knowledge
+      ['rise','raise'],['raise','rise'],     // intrans vs trans
+      ['lie','lay'],['lay','lie'],
+      ['come','go'],['go','come'],
+      ['arrive','leave'],['leave','arrive'],
+      ['remember','forget'],['forget','remember'],
+      ['find','lose'],['lose','find'],
+      ['buy','sell'],['sell','buy'],
+      ['ask','answer'],['answer','ask'],
+      ['open','close'],['close','open'],
+      ['start','stop'],['stop','start'],
+      ['love','hate'],['hate','love'],
+      ['like','dislike'],['dislike','like'],
+      ['want','need'],['need','want'],       // desire vs necessity
+      ['can','must'],['must','can'],         // ability vs obligation
+      // nouns with different meaning
+      ['brother','sister'],['sister','brother'],
+      ['son','daughter'],['daughter','son'],
+      ['mother','father'],['father','mother'],
+      ['husband','wife'],['wife','husband'],
+      ['morning','evening'],['evening','morning'],['night','morning'],['morning','night'],
+      ['yesterday','tomorrow'],['tomorrow','yesterday'],
+      ['lunch','dinner'],['dinner','lunch'],['breakfast','lunch'],['lunch','breakfast'],
+      ['school','work'],['work','school'],
+      ['summer','winter'],['winter','summer'],['spring','autumn'],['autumn','spring'],
+      ['city','village'],['village','city'],
+      ['doctor','teacher'],['teacher','doctor'],['student','teacher'],['teacher','student'],
+      // prepositions that change meaning
+      ['before','after'],['after','before'],
       ['with','without'],['without','with'],
-      ['for','to'],['to','for'],
-      ['from','of'],['of','from'],
-      ['about','of'],['about','around'],
+      ['in','out of'],['inside','outside'],['outside','inside'],
+      ['to','from'],['from','to'],
+      ['above','below'],['below','above'],['under','over'],['over','under'],
+      ['behind','in front of'],['in front of','behind'],
     ];
-    for (const [f,t] of synonyms) trySwap(f,t);
+    for (const [f,t] of confusables) trySwap(f,t);
 
     return variants;
   }
