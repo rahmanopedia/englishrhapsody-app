@@ -1173,3 +1173,155 @@ document.addEventListener('click', function(e) {
     }, 1000);
   });
 })();
+
+/* ── 20. CEFR Seviye Atlama Bildirimi ── */
+(function(){
+  var NEXT_LEVEL = { A1:'A2', A2:'B1', B1:'B2', B2:'C1', C1:'C2' };
+  var LEVEL_NAMES = { A1:'A1 Başlangıç', A2:'A2 Temel', B1:'B1 Orta', B2:'B2 Üst-Orta', C1:'C1 İleri', C2:'C2 Uzman' };
+  // Minimum mastered words (score >= 3) to trigger level-up popup
+  var THRESHOLDS = { A1: 80, A2: 70, B1: 90, B2: 80, C1: 70 };
+  var _popupShown = false;
+
+  function getMasteredCount(level) {
+    try {
+      var app = window._app;
+      if (!app || !window.WORDS) return 0;
+      var mastery = app.state.get('mastery');
+      if (!mastery) return 0;
+      var count = 0;
+      for (var i = 0; i < window.WORDS.length; i++) {
+        var w = window.WORDS[i];
+        if (w.level !== level) continue;
+        var m = mastery[w.id] || mastery[w.en];
+        if (m && m.score >= 3) count++;
+      }
+      return count;
+    } catch(e) { return 0; }
+  }
+
+  function getSeenFlag(fromLevel) {
+    return 'er_lvlup_seen_' + fromLevel;
+  }
+
+  function showLevelUpPopup(fromLevel, toLevel, masteredCount) {
+    if (_popupShown) return;
+    if (document.getElementById('cefr-levelup-overlay')) return;
+    _popupShown = true;
+    localStorage.setItem(getSeenFlag(fromLevel), '1');
+
+    var fromName = LEVEL_NAMES[fromLevel] || fromLevel;
+    var toName   = LEVEL_NAMES[toLevel]   || toLevel;
+
+    var overlay = document.createElement('div');
+    overlay.id = 'cefr-levelup-overlay';
+    overlay.style.cssText = [
+      'position:fixed','top:0','left:0','width:100%','height:100%',
+      'background:rgba(0,0,0,0.75)','z-index:99999',
+      'display:flex','align-items:center','justify-content:center',
+      'font-family:inherit','animation:luFadeIn .3s ease'
+    ].join(';');
+
+    var box = document.createElement('div');
+    box.style.cssText = [
+      'background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%)',
+      'border:1px solid rgba(0,212,255,0.3)',
+      'border-radius:20px','padding:36px 28px',
+      'max-width:380px','width:90%','text-align:center',
+      'box-shadow:0 0 60px rgba(0,212,255,0.15)',
+      'color:#e2e8f0','animation:luSlideUp .35s ease'
+    ].join(';');
+
+    box.innerHTML =
+      '<div style="font-size:56px;margin-bottom:12px">🎉</div>' +
+      '<div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,212,255,0.7);margin-bottom:8px">Tebrikler!</div>' +
+      '<div style="font-size:22px;font-weight:700;margin-bottom:6px">' + fromLevel + ' → ' + toLevel + '</div>' +
+      '<div style="font-size:14px;color:#94a3b8;margin-bottom:20px">' +
+        '<strong style="color:#67e8f9">' + masteredCount + '</strong> ' + fromName + ' kelimesini öğrendin!<br>' +
+        toName + ' seviyesine geçmeye hazırsın.' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;justify-content:center;margin-top:4px">' +
+        '<button id="lu-yes" style="' + [
+          'flex:1','padding:12px 0','border-radius:10px','border:none',
+          'background:linear-gradient(135deg,#0ea5e9,#6366f1)',
+          'color:#fff','font-size:15px','font-weight:600','cursor:pointer',
+          'box-shadow:0 4px 14px rgba(99,102,241,0.4)'
+        ].join(';') + '">Evet, geç! 🚀</button>' +
+        '<button id="lu-no" style="' + [
+          'flex:1','padding:12px 0','border-radius:10px','border:none',
+          'background:rgba(255,255,255,0.07)','color:#94a3b8',
+          'font-size:14px','cursor:pointer'
+        ].join(';') + '">Hayır, devam</button>' +
+      '</div>';
+
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    // CSS animations
+    if (!document.getElementById('lu-style')) {
+      var s = document.createElement('style');
+      s.id = 'lu-style';
+      s.textContent = [
+        '@keyframes luFadeIn{from{opacity:0}to{opacity:1}}',
+        '@keyframes luSlideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}'
+      ].join('');
+      document.head.appendChild(s);
+    }
+
+    document.getElementById('lu-yes').addEventListener('click', function(){
+      document.body.removeChild(overlay);
+      window._app && window._app.state && window._app.state.set('cefrLevel', toLevel, true);
+    });
+    document.getElementById('lu-no').addEventListener('click', function(){
+      document.body.removeChild(overlay);
+    });
+    overlay.addEventListener('click', function(e){
+      if (e.target === overlay) { document.body.removeChild(overlay); }
+    });
+  }
+
+  function checkLevelUp() {
+    try {
+      var app = window._app;
+      if (!app || !window.WORDS) return;
+      var curLevel = app.state.get('cefrLevel');
+      if (!curLevel || !NEXT_LEVEL[curLevel]) return;
+      // Don't show if already seen for this level
+      if (localStorage.getItem(getSeenFlag(curLevel))) return;
+      var threshold = THRESHOLDS[curLevel];
+      if (!threshold) return;
+      var mastered = getMasteredCount(curLevel);
+      if (mastered >= threshold) {
+        showLevelUpPopup(curLevel, NEXT_LEVEL[curLevel], mastered);
+      }
+    } catch(e) {}
+  }
+
+  function hookMasteryChanges() {
+    var app = window._app;
+    if (!app || !app.state || app.__lvlupPatched) return;
+    app.__lvlupPatched = true;
+    var _origSet = app.state.set.bind(app.state);
+    app.state.set = (function(orig){
+      return function(key, val, sync) {
+        orig(key, val, sync);
+        if (key === 'mastery') {
+          setTimeout(checkLevelUp, 500);
+        }
+      };
+    })(_origSet);
+  }
+
+  function init() {
+    // Also patch the already-patched state.set (cefrLevel patch is at line ~855)
+    // We chain on top safely
+    hookMasteryChanges();
+    // Check once on load in case user already qualifies
+    setTimeout(checkLevelUp, 3000);
+  }
+
+  function waitReady() {
+    if (window._app && window.WORDS) { init(); }
+    else { setTimeout(waitReady, 500); }
+  }
+  window.addEventListener('load', function(){ setTimeout(waitReady, 1200); });
+})();
