@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="css/revolution.css">
   <link rel="stylesheet" href="css/cinema.css">
   <link rel="stylesheet" href="css/translate.css">
+  <link rel="stylesheet" href="css/rival.css">
   <link rel="stylesheet" href="css/grammar.css">
   <link rel="stylesheet" href="css/speak-v2.css">
   <link rel="stylesheet" href="css/speak-fill.css">
@@ -203,6 +204,9 @@
       <a class="nav-item" data-target="analytics">
         <span class="nav-icon">📊</span> Analitik
       </a>
+      <a class="nav-item" data-target="rival">
+        <span class="nav-icon">⚔️</span> Rival Modu
+      </a>
       <a class="nav-item" data-target="leaderboard">
         <span class="nav-icon">🏆</span> Sıralama
       </a>
@@ -281,6 +285,10 @@
     <button class="modes-drawer-item" data-target="translate">
       <span class="mdi-icon">🔄</span>
       <span>Çeviri</span>
+    </button>
+    <button class="modes-drawer-item" data-target="rival">
+      <span class="mdi-icon">⚔️</span>
+      <span>Rival</span>
     </button>
     <button class="modes-drawer-item" data-target="grammar">
       <span class="mdi-icon">🧩</span>
@@ -985,14 +993,24 @@
     <div id="an-skill-grid" class="an-skill-grid"></div>
   </div>
 
-  <!-- ── HAFTALIK MİNİ TEST ── -->
-  <div class="an-section" id="an-mini-test-section">
+  <!-- ── KONUŞMA İSTATİSTİKLERİ ── -->
+  <div class="an-section" id="an-speaking-section">
     <div class="an-section-hd">
-      <div class="an-section-title">🧪 Haftalık Mini Test</div>
-      <div class="an-section-sub">5 soruda seviyeni kontrol et</div>
+      <div class="an-section-title">🎙️ Konuşma İstatistikleri</div>
+      <div class="an-section-sub">Telaffuz denemeleri ve gelişim trendi</div>
     </div>
-    <div id="an-mini-test-card"></div>
+    <div class="an-stat-grid" id="an-speak-grid"></div>
   </div>
+
+  <!-- ── XP & OTURUMLAR ── -->
+  <div class="an-section" id="an-xp-section">
+    <div class="an-section-hd">
+      <div class="an-section-title">⚡ Deneyim & Oturumlar</div>
+      <div class="an-section-sub">Toplam ilerleme ve aktivite metrikleri</div>
+    </div>
+    <div class="an-stat-grid" id="an-xp-grid"></div>
+  </div>
+
 
   <!-- ── ÖĞRENIM MODU ── -->
   <div class="an-section">
@@ -1213,6 +1231,11 @@
 </script>
 </template>
 
+<!-- Rival Mode -->
+<template id="tpl-rival">
+<div class="animate-in" id="rival-root" style="width:100%;min-height:100%;"></div>
+</template>
+
 <!-- External Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous" defer></script>
@@ -1226,6 +1249,8 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-remote-config-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-performance-compat.js" defer></script>
 
 <script src="js/firebase-config.js" defer></script>
 <script src="js/storage.js" defer></script>
@@ -1241,6 +1266,7 @@
 <script src="js/quick-menu.js" defer></script>
 <script src="js/nexus.js" defer></script>
 <script src="js/leaderboard.js" defer></script>
+<script src="js/rival.js" defer></script>
 <script src="js/bridge.js" defer></script>
 <script src="js/reading-engine.js" defer></script>
 <script src="js/app.js" defer></script>

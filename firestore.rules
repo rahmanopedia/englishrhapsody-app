@@ -7,8 +7,12 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == userId;
     }
 
+    // ── Yardımcı: Admin kontrolü (custom claims) ─────────────
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
     // ── Yardımcı: client _updatedAt ile rate limit ────────────
-    // minMs milisaniye geçmeden aynı dokümanı tekrar yazdırtma
     function rateLimitMs(minMs) {
       return resource == null
           || !('_updatedAt' in resource.data)
@@ -37,11 +41,8 @@ service cloud.firestore {
     match /users/{userId}/data/state {
       allow read: if isOwner(userId);
       allow write: if isOwner(userId)
-                   // Alan sayısı sınırı
                    && request.resource.data.keys().size() <= 80
-                   // Rate limit: 2 saniyede en fazla 1 yazma (bot engeli)
                    && rateLimitMs(2000)
-                   // XP: 0-9999999 arası, tek yazımda max 5000 artış
                    && (!('xp' in request.resource.data) || (
                         request.resource.data.xp is number
                         && request.resource.data.xp >= 0
@@ -50,19 +51,16 @@ service cloud.firestore {
                             || !('xp' in resource.data)
                             || request.resource.data.xp - resource.data.xp <= 5000)
                    ))
-                   // Level: 0-9999
                    && (!('level' in request.resource.data) || (
                         request.resource.data.level is number
                         && request.resource.data.level >= 0
                         && request.resource.data.level <= 9999
                    ))
-                   // Streak: 0-3650 (10 yıl)
                    && (!('streak' in request.resource.data) || (
                         request.resource.data.streak is number
                         && request.resource.data.streak >= 0
                         && request.resource.data.streak <= 3650
                    ))
-                   // Sessions: 0-999999
                    && (!('sessions' in request.resource.data) || (
                         request.resource.data.sessions is number
                         && request.resource.data.sessions >= 0
@@ -80,37 +78,72 @@ service cloud.firestore {
       allow read: if request.auth != null;
 
       allow create: if isOwner(userId)
+                    && rateLimitServer(duration.value(5, 'm'))
                     && request.resource.data.keys().size() <= 10
-                    && request.resource.data.uid   is string  && request.resource.data.uid == userId
-                    && request.resource.data.xp    is number  && request.resource.data.xp    >= 0  && request.resource.data.xp    <= 9999999
-                    && request.resource.data.level  is number  && request.resource.data.level  >= 1  && request.resource.data.level  <= 9999
-                    && request.resource.data.name   is string  && request.resource.data.name.size()  <= 100
-                    && request.resource.data.avatar is string  && request.resource.data.avatar.size() <= 5;
+                    && request.resource.data.uid    is string && request.resource.data.uid == userId
+                    && request.resource.data.xp     is number && request.resource.data.xp    >= 0 && request.resource.data.xp    <= 9999999
+                    && request.resource.data.level  is number && request.resource.data.level  >= 1 && request.resource.data.level  <= 9999
+                    && request.resource.data.name   is string && request.resource.data.name.size()   <= 100
+                    && request.resource.data.avatar is string && request.resource.data.avatar.size() <= 5
+                    && (!('cefrLevel' in request.resource.data) || (
+                         request.resource.data.cefrLevel is string
+                         && request.resource.data.cefrLevel.size() <= 5));
 
-      // Rate limit: server timestamp ile 5 dakikada bir güncelleme
       allow update: if isOwner(userId)
+                    && rateLimitServer(duration.value(5, 'm'))
                     && request.resource.data.keys().size() <= 10
-                    && request.resource.data.uid   is string  && request.resource.data.uid == userId
-                    && request.resource.data.xp    is number  && request.resource.data.xp    >= 0  && request.resource.data.xp    <= 9999999
-                    && request.resource.data.level  is number  && request.resource.data.level  >= 1  && request.resource.data.level  <= 9999
-                    && request.resource.data.name   is string  && request.resource.data.name.size()  <= 100
-                    && request.resource.data.avatar is string  && request.resource.data.avatar.size() <= 5
-                    && rateLimitServer(duration.value(5, 'm'));
+                    && request.resource.data.uid    is string && request.resource.data.uid == userId
+                    && request.resource.data.xp     is number && request.resource.data.xp    >= 0 && request.resource.data.xp    <= 9999999
+                    && request.resource.data.level  is number && request.resource.data.level  >= 1 && request.resource.data.level  <= 9999
+                    && request.resource.data.name   is string && request.resource.data.name.size()   <= 100
+                    && request.resource.data.avatar is string && request.resource.data.avatar.size() <= 5
+                    && (!('cefrLevel' in request.resource.data) || (
+                         request.resource.data.cefrLevel is string
+                         && request.resource.data.cefrLevel.size() <= 5));
 
       allow delete: if isOwner(userId);
     }
 
     // ── Güvenlik Olayları ────────────────────────────────────
     match /security_events/{eventId} {
-      // Herhangi bir oturum açmış kullanıcı olay yazabilir (kendi olayı)
       allow create: if request.auth != null
                     && request.resource.data.keys().size() <= 10
                     && request.resource.data.type is string
                     && request.resource.data.type.size() <= 50;
-      // Sadece admin okuyabilir
-      allow read: if request.auth != null
-                  && request.auth.token.email == 'rahman.eraydin@gmail.com';
+      // Custom claims ile admin kontrolü (hardcoded email yerine)
+      allow read: if isAdmin();
       allow update, delete: if false;
+    }
+
+
+    // ── Rival: Eşleşme kuyruğu ───────────────────────────────
+    match /rival_queue/{uid} {
+      allow read: if request.auth != null;
+      allow create, update: if isOwner(uid)
+                             && request.resource.data.uid == uid
+                             && request.resource.data.name is string
+                             && request.resource.data.name.size() <= 100
+                             && request.resource.data.mode is string
+                             && request.resource.data.mode.size() <= 20
+                             && request.resource.data.mode_level is string
+                             && request.resource.data.mode_level.size() <= 30;
+      allow delete: if isOwner(uid);
+    }
+
+    // ── Rival: Maç belgeleri ──────────────────────────────────
+    match /rival_matches/{matchId} {
+      allow read: if request.auth != null
+                  && (resource == null
+                      || resource.data.hostId == request.auth.uid
+                      || resource.data.guestId == request.auth.uid);
+      allow create: if request.auth != null
+                    && request.resource.data.hostId == request.auth.uid
+                    && request.resource.data.questions is list
+                    && request.resource.data.questions.size() <= 20;
+      allow update: if request.auth != null
+                    && (resource.data.hostId == request.auth.uid
+                        || resource.data.guestId == request.auth.uid);
+      allow delete: if false;
     }
 
     // ── Reddet: Yukarıdaki kurallara uymayan her şey ──────────

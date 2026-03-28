@@ -313,13 +313,16 @@
       const el = this._el;
       if (!el) return;
 
-      const levels = ['A1','A2','B1','B2'];
+      const levels = ['A1','A2','B1','B2','C1','C2'];
       const counts = {};
       levels.forEach(l => { counts[l] = TRANSLATE_DATA.filter(s => s.level === l).length; });
       const total = TRANSLATE_DATA.length;
 
       el.innerHTML = `
         <div class="tr-home animate-in">
+          <div class="tr-home-topbar">
+            <button class="tr-exit-btn" id="trExitBtn">← Ana Merkez</button>
+          </div>
           <div class="tr-home-hero">
             <div class="tr-home-icon">🔄</div>
             <h1 class="tr-home-title">Cümle Çevirisi</h1>
@@ -344,6 +347,8 @@
       el.querySelectorAll('.tr-level-btn').forEach(btn => {
         btn.addEventListener('click', () => this._startSession(btn.dataset.level));
       });
+      const exitBtn = el.querySelector('#trExitBtn');
+      if (exitBtn) exitBtn.addEventListener('click', () => this.app && this.app.navigate && this.app.navigate('home'));
     }
 
     /* ── SESSION START ── */
@@ -351,6 +356,8 @@
       this._level = level;
       this._results = [];
       this._idx = 0;
+      this._streak = 0;
+      window.analyticsManager && window.analyticsManager.lessonStart('translate');
 
       // Full pool for distractors
       this._pool = level === 'ALL'
@@ -465,9 +472,12 @@
       const timeout  = chosen === null;
       const isCorrect = !timeout && chosen === q.en;
       const grade = isCorrect ? 'correct' : 'wrong';
-      const xp = isCorrect ? (LEVEL_XP[q.level] || 15) : 0;
+      if (isCorrect) { this._streak++; } else { this._streak = 0; }
+      let xp = isCorrect ? (LEVEL_XP[q.level] || 15) : 0;
+      const _streakBonus = isCorrect && this._streak >= 3;
+      if (_streakBonus) xp = Math.round(xp * 1.25);
 
-      this._results.push({ q, chosen: timeout ? '(süre doldu)' : chosen, grade, xp });
+      this._results.push({ q, chosen: timeout ? '(süre doldu)' : chosen, grade, xp, streakBonus: _streakBonus });
 
       // Disable all buttons, highlight correct + wrong
       el.querySelectorAll('.tr-choice-btn').forEach(btn => {
@@ -487,7 +497,7 @@
         <div class="tr-fb-left">
           <span class="tr-fb-icon">${isCorrect ? '🎯' : timeout ? '⏰' : '❌'}</span>
           <div class="tr-fb-texts">
-            <div class="tr-fb-label">${isCorrect ? `Doğru! <span class="tr-fb-xp">+${xp} XP</span>` : timeout ? 'Süre doldu!' : 'Yanlış!'}</div>
+            <div class="tr-fb-label">${isCorrect ? `Doğru! <span class="tr-fb-xp">+${xp} XP</span>${_streakBonus ? ` <span class="tr-fb-streak">🔥 ${this._streak} seri +%25</span>` : ''}` : timeout ? 'Süre doldu!' : 'Yanlış!'}</div>
             ${!isCorrect ? `<div class="tr-fb-correct-ans">${_escHtml(q.en)}</div>` : ''}
             ${q.tip ? `<div class="tr-fb-tip">💡 ${q.tip}</div>` : ''}
           </div>
@@ -517,6 +527,7 @@
       this._results.forEach(r => { if (r.grade === 'correct') correct++; totalXP += r.xp; });
       const total = this._results.length;
       const pct = Math.round((correct / total) * 100);
+      window.analyticsManager && window.analyticsManager.lessonComplete('translate', pct);
       const medal = pct >= 90 ? '🏆' : pct >= 70 ? '🥈' : pct >= 50 ? '🥉' : '📝';
 
       el.innerHTML = `
