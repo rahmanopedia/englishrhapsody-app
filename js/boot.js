@@ -1425,38 +1425,14 @@ document.addEventListener('click', function(e) {
     } catch(x){ return 0; }
   }
 
-  /* ── D. Update stats strip CEFR chip (top of home, always visible) ── */
-  function updateStatsChip(level, pct, done) {
-    var strip = document.querySelector('.home-stats-strip');
-    if (!strip) return;
-    var chip = document.getElementById('lvprog-chip');
-    if (!chip) {
-      // Build: sep + stat-item
-      var sep = document.createElement('div');
-      sep.className = 'stat-sep';
-      chip = document.createElement('div');
-      chip.id = 'lvprog-chip';
-      chip.className = 'stat-item';
-      strip.appendChild(sep);
-      strip.appendChild(chip);
-    }
-    chip.innerHTML =
-      '<label>Seviye</label>' +
-      '<span id="lvprog-chip-val" style="' +
-        'background:linear-gradient(135deg,#0ea5e9,#6366f1);' +
-        '-webkit-background-clip:text;-webkit-text-fill-color:transparent;' +
-        'font-weight:700;font-size:13px' +
-      '">' + level + (done ? ' ✅' : ' ' + pct + '%') + '</span>';
-  }
-
-  /* ── E. Progress card in home-col-main ── */
-  function refreshProgressCard() {
+  /* ── D. Update card elements by ID (template has static placeholders) ── */
+  function updateCEFRUI() {
     var app = window._app;
     if (!app) return;
     var level = app.state.get('cefrLevel');
-    if (!level) { setTimeout(refreshProgressCard, 1000); return; }
-    var threshold = THRESHOLDS[level];
+    if (!level) { setTimeout(updateCEFRUI, 1000); return; }
 
+    var threshold = THRESHOLDS[level];
     var mastered  = getMastered(level);
     var nextLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(level) + 1];
     var pct       = threshold ? Math.min(100, Math.round(mastered / threshold * 100)) : 100;
@@ -1464,61 +1440,58 @@ document.addEventListener('click', function(e) {
     var done      = !threshold || mastered >= threshold;
     var barColor  = done ? '#10b981' : pct >= 70 ? '#f59e0b' : '#0ea5e9';
 
-    // Always update stats chip
-    updateStatsChip(level, pct, done);
+    // Stats strip badge
+    var badge = document.getElementById('home-cefr-badge');
+    if (badge) badge.textContent = level + (done ? ' ✅' : ' ' + pct + '%');
 
-    // Progress card
-    var col = document.querySelector('.home-col-main');
-    var old = document.getElementById('lvprog-card');
-    if (old) old.parentNode && old.parentNode.removeChild(old);
-    if (!col) return;
+    // Progress card elements
+    var elBadge  = document.getElementById('cefr-prog-badge');
+    var elName   = document.getElementById('cefr-prog-name');
+    var elStatus = document.getElementById('cefr-prog-status');
+    var elBar    = document.getElementById('cefr-prog-bar');
+    var elNums   = document.getElementById('cefr-prog-nums');
+    var elHint   = document.getElementById('cefr-prog-hint');
+    var elAction = document.getElementById('cefr-prog-action');
 
-    var card = document.createElement('div');
-    card.id = 'lvprog-card';
-    card.className = 'home-card-new lvprog-card';
-    card.innerHTML =
-      '<div class="lvprog-head">' +
-        '<span class="lvprog-badge">' + level + '</span>' +
-        '<span class="lvprog-name">İngilizce ' + LEVEL_NAMES[level] + '</span>' +
-        (done ? '<span class="lvprog-ready">✅ Hazır!</span>' : '<span class="lvprog-pct">' + pct + '%</span>') +
-      '</div>' +
-      '<div class="lvprog-bar-bg"><div class="lvprog-bar" style="width:' + pct + '%;background:' + barColor + '"></div></div>' +
-      '<div class="lvprog-row">' +
-        (threshold
-          ? '<span class="lvprog-nums">' + mastered + ' / ' + threshold + ' kelime öğrenildi</span>'
-          : '<span class="lvprog-nums">En üst seviye 🏆</span>') +
-        (done && nextLevel
-          ? '<span class="lvprog-hint" style="color:#10b981">→ ' + nextLevel + '\'ye geçebilirsin</span>'
-          : (!done ? '<span class="lvprog-hint">' + remaining + ' kelime daha</span>' : '')) +
-      '</div>' +
-      (done && nextLevel
-        ? '<button class="lvprog-btn" id="lvprog-go">🚀 ' + nextLevel + ' Seviyesine Geç</button>'
-        : (nextLevel
-          ? '<div class="lvprog-preview">📡 Antrenman sırasında <strong>' + nextLevel + '</strong> önizlemesi alıyorsun</div>'
-          : ''));
-
-    // Always insert as FIRST child of home-col-main
-    col.insertBefore(card, col.firstChild);
-
-    var btn = document.getElementById('lvprog-go');
-    if (btn) {
-      btn.addEventListener('click', function() {
-        app.__lvlUpAllowed = true;
-        app.state.set('cefrLevel', nextLevel, true);
-        app.__lvlUpAllowed = false;
-        if (window.UI && window.UI.toast) UI.toast('🎉 ' + nextLevel + ' seviyesine hoş geldin!', 4000);
-        setTimeout(refreshProgressCard, 400);
-      });
+    if (elBadge)  elBadge.textContent = level;
+    if (elName)   elName.textContent  = 'İngilizce ' + (LEVEL_NAMES[level] || level);
+    if (elStatus) {
+      elStatus.textContent  = done ? '✅ Hazır!' : pct + '%';
+      elStatus.style.color  = done ? '#10b981' : '';
+      elStatus.className    = done ? 'lvprog-ready' : 'lvprog-pct';
+    }
+    if (elBar)    { elBar.style.width = pct + '%'; elBar.style.background = barColor; }
+    if (elNums)   elNums.textContent  = threshold ? (mastered + ' / ' + threshold + ' kelime öğrenildi') : 'En üst seviye 🏆';
+    if (elHint)   {
+      elHint.textContent = done && nextLevel ? ('→ ' + nextLevel + '\'ye geçebilirsin') : (!done ? remaining + ' kelime daha' : '');
+      elHint.style.color = done && nextLevel ? '#10b981' : '';
+    }
+    if (elAction) {
+      elAction.innerHTML = '';
+      if (done && nextLevel) {
+        var btn = document.createElement('button');
+        btn.className = 'lvprog-btn';
+        btn.textContent = '🚀 ' + nextLevel + ' Seviyesine Geç';
+        btn.addEventListener('click', function() {
+          app.__lvlUpAllowed = true;
+          app.state.set('cefrLevel', nextLevel, true);
+          app.__lvlUpAllowed = false;
+          if (window.UI && window.UI.toast) UI.toast('🎉 ' + nextLevel + ' seviyesine hoş geldin!', 4000);
+          setTimeout(updateCEFRUI, 400);
+        });
+        elAction.appendChild(btn);
+      } else if (nextLevel) {
+        elAction.innerHTML = '<div class="lvprog-preview">📡 Antrenman sırasında <strong>' + nextLevel + '</strong> önizlemesi alıyorsun</div>';
+      }
     }
   }
 
-  /* ── F. CSS ── */
+  /* ── E. CSS ── */
   function injectCSS() {
     if (document.getElementById('lvprog-style')) return;
     var s = document.createElement('style');
     s.id = 'lvprog-style';
     s.textContent =
-      '.lvprog-card{padding:15px 18px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);margin-bottom:10px}' +
       '.lvprog-head{display:flex;align-items:center;gap:9px;margin-bottom:10px}' +
       '.lvprog-badge{background:linear-gradient(135deg,#0ea5e9,#6366f1);color:#fff;font-weight:700;font-size:13px;padding:4px 10px;border-radius:8px;letter-spacing:1px;flex-shrink:0}' +
       '.lvprog-name{font-size:13px;font-weight:600;color:#cbd5e1;flex:1}' +
@@ -1529,35 +1502,20 @@ document.addEventListener('click', function(e) {
       '.lvprog-row{display:flex;justify-content:space-between;margin-bottom:9px}' +
       '.lvprog-nums{font-size:11px;color:#64748b}' +
       '.lvprog-hint{font-size:11px;color:#64748b}' +
-      '.lvprog-btn{width:100%;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,#10b981,#0ea5e9);color:#fff;font-size:14px;font-weight:700;cursor:pointer}' +
+      '.lvprog-btn{width:100%;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,#10b981,#0ea5e9);color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:2px}' +
       '.lvprog-preview{font-size:11px;color:rgba(0,212,255,0.5);text-align:center}';
     document.head.appendChild(s);
   }
 
-  /* ── G. Watch home DOM ── */
-  function startObserver() {
-    var mc = document.getElementById('main-content');
-    if (!mc) return;
-    var _t = null;
-    var obs = new MutationObserver(function() {
-      // Debounce — dp-card and other cards inject in bursts
-      clearTimeout(_t);
-      _t = setTimeout(function() {
-        if (document.querySelector('.home-col-main')) refreshProgressCard();
-      }, 400);
-    });
-    obs.observe(mc, { childList:true, subtree:true });
-  }
-
-  /* ── H. Patch navigate ── */
-  function patchNavigate() {
+  /* ── F. Patch _initHome to refresh on every home render ── */
+  function patchInitHome() {
     var app = window._app;
-    if (!app || !app.navigate || app.__lvprogNavPatched) return;
-    app.__lvprogNavPatched = true;
-    var _nav = app.navigate.bind(app);
-    app.navigate = function(tgt) {
-      _nav(tgt);
-      if (tgt === 'home') setTimeout(refreshProgressCard, 500);
+    if (!app || app.__lvprogInitHomePatched) return;
+    app.__lvprogInitHomePatched = true;
+    var _orig = app._initHome.bind(app);
+    app._initHome = function() {
+      _orig();
+      setTimeout(updateCEFRUI, 50);
     };
   }
 
@@ -1565,11 +1523,11 @@ document.addEventListener('click', function(e) {
   function init() {
     injectCSS();
     patchLevelLock();
-    patchNavigate();
+    patchInitHome();
     var level = window._app && window._app.state.get('cefrLevel');
     if (level) seedFarFuture(level);
-    startObserver();
-    setTimeout(refreshProgressCard, 800);
+    // Run immediately in case already on home
+    setTimeout(updateCEFRUI, 300);
   }
 
   function waitReady() {
