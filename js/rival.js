@@ -51,22 +51,26 @@ function _buildTranslate(level, n) {
 
 function _buildCinema(n) {
   if (typeof CINEMA_DATA === 'undefined' || !CINEMA_DATA.length) return [];
-  const qs = [];
-  for (const clip of _sh([...CINEMA_DATA])) {
-    if (qs.length >= n * 2) break;
-    if (clip.options && clip.options.length >= 2) {
-      const cor = clip.options.find(o => o.isCorrect);
-      if (!cor) continue;
-      const wrongs = clip.options.filter(o => !o.isCorrect).map(o => o.text);
-      qs.push({
-        prompt: clip.transcript || '',
-        correct: cor.text,
-        choices: _sh([cor.text, ...wrongs.slice(0, 3)]),
-        meta: [clip.film, clip.year].filter(Boolean).join(' · ')
-      });
+  // Tüm sorulardan düz liste yap: {prompt, correct, wrong, meta}
+  const all = [];
+  for (const clip of CINEMA_DATA) {
+    if (!Array.isArray(clip.questions)) continue;
+    const meta = clip.film || '';
+    for (const q of clip.questions) {
+      if (q.phrase && q.correct && q.wrong)
+        all.push({ prompt: q.phrase, correct: q.correct, wrong: q.wrong, meta });
     }
   }
-  return _sh(qs).slice(0, n);
+  if (all.length < 4) return [];
+  const pool = _sh(all);
+  return pool.slice(0, n).map(q => {
+    // 3 yanlış seçenek: önce bu sorunun kendi wrong'u, sonra diğer soruların correct'leri
+    const distractors = [q.wrong,
+      ...pool.filter(x => x !== q && x.correct !== q.correct).map(x => x.correct)
+    ];
+    const choices = _sh([q.correct, ..._sh(distractors).slice(0, 3)]);
+    return { prompt: q.prompt, correct: q.correct, choices, meta: q.meta };
+  });
 }
 
 /* ── RivalMode ───────────────────────────────────── */
@@ -255,8 +259,24 @@ class RivalMode {
     }
   }
 
+  async _ensureData(mode) {
+    const srcs = mode === 'cinema'
+      ? ['js/video-data.js']
+      : ['js/translate-data.js','js/translate-data2.js','js/translate-data3.js',
+         'js/translate-data4.js','js/translate-data5.js','js/translate-data6.js'];
+    for (const src of srcs) {
+      await new Promise(resolve => {
+        if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+        const s = document.createElement('script');
+        s.src = src; s.onload = resolve; s.onerror = resolve;
+        document.head.appendChild(s);
+      });
+    }
+  }
+
   async _createMatch(mode, level, hostId, hostName, guestId, guestName, guestQueueId) {
     const db = this._db();
+    await this._ensureData(mode);
     const questions = mode === 'cinema'
       ? _buildCinema(Q_COUNT)
       : _buildTranslate(level, Q_COUNT);
