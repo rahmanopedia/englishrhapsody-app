@@ -23,6 +23,22 @@
   border: 1px solid var(--border);
 }
 
+.bridge-back-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.bridge-back-btn:hover { background: rgba(255,255,255,0.07); color: #e2e8f0; }
+
 .bridge-logo-area { display: flex; align-items: center; gap: 16px; }
 .bridge-logo-circle {
   width: 50px; height: 50px;
