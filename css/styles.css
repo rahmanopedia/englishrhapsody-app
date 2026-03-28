@@ -3007,6 +3007,19 @@ body.sidebar-closed .sidebar-tab {
   gap: 6px;
   flex-shrink: 0;
 }
+/* Story nav butonları — kitap sayfası (krem bg) üzerinde görünür yap */
+.story-nav-btns .btn,
+.story-nav-btns-bottom .btn {
+  background: rgba(60,40,20,0.10) !important;
+  border: 1px solid rgba(60,40,20,0.30) !important;
+  color: #3b2a14 !important;
+  font-weight: 700 !important;
+}
+.story-nav-btns .btn:hover,
+.story-nav-btns-bottom .btn:hover {
+  background: rgba(60,40,20,0.18) !important;
+  border-color: rgba(60,40,20,0.50) !important;
+}
 
 /* ── Story Content ── */
 .story-content-box {
@@ -9523,9 +9536,9 @@ input, textarea { -webkit-user-select: text !important; -moz-user-select: text !
   border-top-color: rgba(60,40,20,0.12) !important;
 }
 .story-nav-btns-bottom .btn {
-  background: rgba(60,40,20,0.06) !important;
+  background: rgba(60,40,20,0.10) !important;
   color: #3b2a14 !important;
-  border-color: rgba(60,40,20,0.15) !important;
+  border-color: rgba(60,40,20,0.30) !important;
 }
 
 /* Quiz cloze seçenekleri */
