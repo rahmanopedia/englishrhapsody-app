@@ -277,6 +277,17 @@
 }
 .tr-fb-correct .tr-fb-label { color: #4ade80; }
 .tr-fb-wrong   .tr-fb-label { color: #f87171; }
+.tr-fb-xp {
+  display: inline-block;
+  margin-left: 0.4rem;
+  background: rgba(250,204,21,0.15);
+  color: #fbbf24;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 99px;
+  vertical-align: middle;
+}
 .tr-fb-correct-ans {
   font-size: 0.85rem;
   color: #00d4ff;

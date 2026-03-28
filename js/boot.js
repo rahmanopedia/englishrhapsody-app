@@ -127,7 +127,7 @@
 
 /* ── 2. Mobile nav behavior ── */
 (function(){
-  var MODE_VIEWS=new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement','cinema','translate','grammar']);
+  var MODE_VIEWS=new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement','cinema','translate','grammar','flashcards']);
   var HIDE_MS=2000;
 
   function setup(){

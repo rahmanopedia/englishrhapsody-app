@@ -272,6 +272,9 @@
 
   /* ── Timer seconds per level ── */
   const LEVEL_TIME = { A1: 8, A2: 10, B1: 13, B2: 16, C1: 18, C2: 20, ALL: 15 };
+
+  /* ── XP per correct answer by level ── */
+  const LEVEL_XP = { A1: 10, A2: 12, B1: 15, B2: 18, C1: 22, C2: 25, ALL: 15 };
   const TIMER_CIRC = 94.25; // 2π × r=15
 
   /* ── TranslateMode class ── */
@@ -462,7 +465,7 @@
       const timeout  = chosen === null;
       const isCorrect = !timeout && chosen === q.en;
       const grade = isCorrect ? 'correct' : 'wrong';
-      const xp = isCorrect ? 20 : 0;
+      const xp = isCorrect ? (LEVEL_XP[q.level] || 15) : 0;
 
       this._results.push({ q, chosen: timeout ? '(süre doldu)' : chosen, grade, xp });
 
@@ -484,7 +487,7 @@
         <div class="tr-fb-left">
           <span class="tr-fb-icon">${isCorrect ? '🎯' : timeout ? '⏰' : '❌'}</span>
           <div class="tr-fb-texts">
-            <div class="tr-fb-label">${isCorrect ? 'Doğru!' : timeout ? 'Süre doldu!' : 'Yanlış!'}</div>
+            <div class="tr-fb-label">${isCorrect ? `Doğru! <span class="tr-fb-xp">+${xp} XP</span>` : timeout ? 'Süre doldu!' : 'Yanlış!'}</div>
             ${!isCorrect ? `<div class="tr-fb-correct-ans">${_escHtml(q.en)}</div>` : ''}
             ${q.tip ? `<div class="tr-fb-tip">💡 ${q.tip}</div>` : ''}
           </div>
