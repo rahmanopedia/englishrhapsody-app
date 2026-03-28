@@ -19,7 +19,8 @@
     phrases: ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js', 'js/phrases.js'],
     grammar: ['js/grammar_data.js', 'js/grammar.js'],
     learn:   ['js/ex-tr-data.js'],
-    cinema:  ['js/video-data.js', 'js/cinema.js'],
+    cinema:    ['js/video-data.js', 'js/cinema.js'],
+    translate: ['js/translate-data.js', 'js/translate.js'],
   };
 
   var loaded = new Set();
@@ -200,6 +201,49 @@
 
 /* ── 4. PWA Install Prompt — devre dışı ── */
 window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); });
+
+/* ── 4b. Translate Mode — navigate patch ── */
+(function () {
+  var _tm = null;
+
+  function patch() {
+    var app = window._app || window.app;
+    if (!app || !app.navigate || app.__translatePatched) return;
+    app.__translatePatched = true;
+
+    var _orig = app.navigate.bind(app);
+    app.navigate = function (target) {
+      _orig(target); // core handles template cloning + nav active state
+      if (target !== 'translate') return;
+
+      // Destroy previous instance
+      if (_tm && _tm.destroy) { _tm.destroy(); _tm = null; }
+
+      function startMode() {
+        var el = document.getElementById('translate-root');
+        if (!el) return;
+        _tm = new window._TranslateMode(app);
+        _tm.init(el);
+      }
+
+      if (window._TranslateMode) {
+        startMode();
+      } else {
+        app._translateModeReady = function () {
+          delete app._translateModeReady;
+          startMode();
+        };
+      }
+    };
+  }
+
+  if (window._app) { patch(); }
+  else {
+    var _t = setInterval(function () {
+      if (window._app && window._app.navigate) { clearInterval(_t); patch(); }
+    }, 50);
+  }
+})();
 
 /* ── 5. Flashcard Game ── */
 (function(){

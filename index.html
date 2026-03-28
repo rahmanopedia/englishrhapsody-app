@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="css/reading.css">
   <link rel="stylesheet" href="css/revolution.css">
   <link rel="stylesheet" href="css/cinema.css">
+  <link rel="stylesheet" href="css/translate.css">
   <link rel="stylesheet" href="css/speak-v2.css">
   <link rel="stylesheet" href="css/speak-fill.css">
   <link rel="stylesheet" href="css/placement-test.css">
@@ -198,6 +199,9 @@
       <a class="nav-item" data-target="phrases">
         <span class="nav-icon">💬</span> İfadeler
       </a>
+      <a class="nav-item" data-target="translate">
+        <span class="nav-icon">🔄</span> Çeviri
+      </a>
       <div class="nav-divider"></div>
       <a class="nav-item" data-target="analytics">
         <span class="nav-icon">📊</span> Analitik
@@ -276,6 +280,10 @@
     <button class="modes-drawer-item" data-target="cinema">
       <span class="mdi-icon">🎬</span>
       <span>Sinema</span>
+    </button>
+    <button class="modes-drawer-item" data-target="translate">
+      <span class="mdi-icon">🔄</span>
+      <span>Çeviri</span>
     </button>
     <button class="modes-drawer-item" data-target="download">
       <span class="mdi-icon">📲</span>
@@ -1140,6 +1148,11 @@
 <div class="animate-in" id="grammar-root" style="width:100%;min-height:100%;"></div>
 </template>
 
+
+<!-- Çeviri -->
+<template id="tpl-translate">
+<div class="animate-in" id="translate-root" style="width:100%;min-height:100%;"></div>
+</template>
 
 <!-- İndir -->
 <template id="tpl-download">
