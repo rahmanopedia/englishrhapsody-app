@@ -40,7 +40,6 @@
   <link rel="stylesheet" href="css/speak-v2.css">
   <link rel="stylesheet" href="css/speak-fill.css">
   <link rel="stylesheet" href="css/placement-test.css">
-  <link rel="stylesheet" href="css/phrases.css">
   <script src="js/speak-v2.js" defer></script>
   <script src="js/speak-fill.js" defer></script>
 </head>
@@ -195,9 +194,6 @@
       </a>
       <a class="nav-item" data-target="cinema">
         <span class="nav-icon">🎬</span> Sinema
-      </a>
-      <a class="nav-item" data-target="phrases">
-        <span class="nav-icon">💬</span> İfadeler
       </a>
       <a class="nav-item" data-target="translate">
         <span class="nav-icon">🔄</span> Çeviri
@@ -610,13 +606,6 @@
           <span class="at-desc">Video Lab</span>
         </div>
       </div>
-      <div class="action-tile" data-action="navigate" data-target="phrases" style="background:linear-gradient(135deg,rgba(167,139,250,0.15),rgba(236,72,153,0.1));">
-        <span class="at-icon">💬</span>
-        <div class="at-text">
-          <span class="at-title">İfadeler</span>
-          <span class="at-desc">Film Alıntıları</span>
-        </div>
-      </div>
       <div class="action-tile" data-action="navigate" data-target="quantum">
         <span class="at-icon">⚛️</span>
         <div class="at-text">
@@ -689,12 +678,6 @@
 </div>
 </template>
 
-<!-- İfadeler: Film alıntıları kart modu -->
-<template id="tpl-phrases">
-<div class="animate-in" style="height:100%;">
-  <div id="phrases-mount-point" style="height:100%;"></div>
-</div>
-</template>
 
 <!-- Learn: Sinestezi v5.0 -->
 <template id="tpl-learn">
