@@ -128,6 +128,9 @@ a { color: inherit; text-decoration: none; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(var(--a1-rgb),0.3); }
 
+/* Sidebar her platformda gizli */
+.sidebar, .sidebar-tab { display: none !important; }
+
 /* ── 6. Layout ────────────────────────────────────────────── */
 .layout {
   display: grid;
@@ -4308,6 +4311,9 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
 @media (max-width: 768px) {
   .layout { grid-template-columns: 1fr; }
   .sidebar { display: none; }
+  .mobile-nav { display: flex; }
+  body.not-home .mobile-nav { display: none; }
+  body.not-home .sidebar-tab { opacity: 0 !important; pointer-events: none !important; }
 
   /* Flex/grid çocuklarının min-width:auto ile taşmasını önle */
   .main-content > *,
@@ -4320,7 +4326,7 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
   .main-content {
     padding: 16px
              calc(18px + env(safe-area-inset-right, 0px))
-             calc(16px + env(safe-area-inset-bottom, 0px))
+             calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px) + 12px)
              calc(18px + env(safe-area-inset-left, 0px));
   }
   /* App header: sağda safe-area boşluğu */
