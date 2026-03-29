@@ -156,11 +156,13 @@ service cloud.firestore {
                     && request.resource.data.mode.size() <= 20
                     && request.resource.data.mode_level is string
                     && request.resource.data.mode_level.size() <= 30;
-      // Kendi güncellemesi VEYA host sadece matchId ekleyebilir
+      // Kendi güncellemesi VEYA herhangi auth kullanıcı sadece matchId ekleyebilir (rate limited)
       allow update: if isOwner(uid)
                     || (request.auth != null
+                        && rateLimitServer(duration.value(10, 's'))
                         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['matchId'])
-                        && request.resource.data.matchId is string);
+                        && request.resource.data.matchId is string
+                        && request.resource.data.matchId.size() <= 64);
       allow delete: if request.auth != null;
     }
 
@@ -176,7 +178,19 @@ service cloud.firestore {
                     && request.resource.data.questions.size() <= 20;
       allow update: if request.auth != null
                     && (resource.data.hostId == request.auth.uid
-                        || resource.data.guestId == request.auth.uid);
+                        || resource.data.guestId == request.auth.uid)
+                    && request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['hostScore','guestScore','hostQ','guestQ',
+                                   'hostClip','guestClip','hostDone','guestDone',
+                                   'guestId','guestName','status'])
+                    && (!('hostScore'  in request.resource.data) || (request.resource.data.hostScore  is number && request.resource.data.hostScore  >= 0 && request.resource.data.hostScore  <= 10000))
+                    && (!('guestScore' in request.resource.data) || (request.resource.data.guestScore is number && request.resource.data.guestScore >= 0 && request.resource.data.guestScore <= 10000))
+                    && (!('hostQ'      in request.resource.data) || (request.resource.data.hostQ      is number && request.resource.data.hostQ      >= 0 && request.resource.data.hostQ      <= 50))
+                    && (!('guestQ'     in request.resource.data) || (request.resource.data.guestQ     is number && request.resource.data.guestQ     >= 0 && request.resource.data.guestQ     <= 50))
+                    && (!('hostClip'   in request.resource.data) || (request.resource.data.hostClip   is number && request.resource.data.hostClip   >= 0 && request.resource.data.hostClip   <= 10))
+                    && (!('guestClip'  in request.resource.data) || (request.resource.data.guestClip  is number && request.resource.data.guestClip  >= 0 && request.resource.data.guestClip  <= 10))
+                    && (!('hostDone'   in request.resource.data) || request.resource.data.hostDone  is bool)
+                    && (!('guestDone'  in request.resource.data) || request.resource.data.guestDone is bool);
       allow delete: if false;
     }
 

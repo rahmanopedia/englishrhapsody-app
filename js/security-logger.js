@@ -3,6 +3,12 @@
 
   var ADMIN_EMAIL = 'rahman.eraydin@gmail.com';
 
+  function _se(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
   var EVENT_LABELS = {
     bot_attempt:            { icon: '🤖', label: 'Bot Girişimi',         color: '#ff4444' },
     devtools_opened:        { icon: '🔧', label: 'DevTools Açıldı',      color: '#ff9900' },
@@ -95,11 +101,11 @@
         var counts = {};
         snap.forEach(function(d){ var t = d.data().type; counts[t] = (counts[t]||0)+1; });
         summary.innerHTML = Object.keys(counts).map(function(t){
-          var m = EVENT_LABELS[t] || { icon:'⚠️', label:t, color:'#aaa' };
+          var m = EVENT_LABELS[t] || { icon:'⚠️', label:_se(t), color:'#aaa' };
           return '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 14px;text-align:center;min-width:110px">'
             + '<div style="font-size:1.4rem">' + m.icon + '</div>'
-            + '<div style="font-size:1.3rem;font-weight:800;color:' + m.color + '">' + counts[t] + '</div>'
-            + '<div style="font-size:10px;color:#888;margin-top:2px">' + m.label + '</div>'
+            + '<div style="font-size:1.3rem;font-weight:800;color:' + _se(m.color) + '">' + Number(counts[t]) + '</div>'
+            + '<div style="font-size:10px;color:#888;margin-top:2px">' + _se(m.label) + '</div>'
             + '</div>';
         }).join('');
 
@@ -107,23 +113,27 @@
         var rows = '';
         snap.forEach(function(doc){
           var d  = doc.data();
-          var m  = EVENT_LABELS[d.type] || { icon:'⚠️', label: d.type, color:'#aaa' };
+          var m  = EVENT_LABELS[d.type] || { icon:'⚠️', label: _se(d.type), color:'#aaa' };
           var ts = d.ts ? new Date(d.ts.toMillis()).toLocaleString('tr-TR') : '—';
-          rows += '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-left:3px solid ' + m.color + ';border-radius:10px;padding:11px 13px;margin-bottom:7px">'
+          rows += '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-left:3px solid ' + _se(m.color) + ';border-radius:10px;padding:11px 13px;margin-bottom:7px">'
             + '<div style="display:flex;align-items:center;gap:7px;margin-bottom:4px">'
             + '<span>' + m.icon + '</span>'
-            + '<span style="font-weight:700;color:' + m.color + ';font-size:12px">' + m.label + '</span>'
-            + '<span style="margin-left:auto;color:#555;font-size:11px">' + ts + '</span>'
+            + '<span style="font-weight:700;color:' + _se(m.color) + ';font-size:12px">' + _se(m.label) + '</span>'
+            + '<span style="margin-left:auto;color:#555;font-size:11px">' + _se(ts) + '</span>'
             + '</div>'
-            + '<div style="font-size:11px;color:#999">👤 ' + (d.email || d.uid || '?') + '</div>'
-            + (d.detail ? '<div style="font-size:10px;color:#666;margin-top:2px;word-break:break-all">' + String(d.detail).slice(0,150) + '</div>' : '')
-            + '<div style="font-size:10px;color:#444;margin-top:2px">' + String(d.ua||'').slice(0,90) + '</div>'
+            + '<div style="font-size:11px;color:#999">👤 ' + _se(d.email || d.uid || '?') + '</div>'
+            + (d.detail ? '<div style="font-size:10px;color:#666;margin-top:2px;word-break:break-all">' + _se(String(d.detail).slice(0,150)) + '</div>' : '')
+            + '<div style="font-size:10px;color:#444;margin-top:2px">' + _se(String(d.ua||'').slice(0,90)) + '</div>'
             + '</div>';
         });
         list.innerHTML = rows;
       })
       .catch(function(err){
-        list.innerHTML = '<p style="color:#ff4444;padding:20px;font-size:13px">Hata: ' + err.message + '</p>';
+        var p = document.createElement('p');
+        p.style.cssText = 'color:#ff4444;padding:20px;font-size:13px';
+        p.textContent = 'Hata: ' + (err && err.message ? err.message : String(err));
+        list.innerHTML = '';
+        list.appendChild(p);
       });
   }
 
