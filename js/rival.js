@@ -733,9 +733,10 @@ class RivalMode {
   }
 
   _showTypingVKB(show) {
+    const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
     const vkb = this.el && this.el.querySelector('#rv-vkb');
     if (!vkb) return;
-    vkb.style.display = show ? 'flex' : 'none';
+    vkb.style.display = (show && isTouchDevice) ? 'flex' : 'none';
     if (!show || vkb._rvBuilt) return;
     vkb._rvBuilt = true;
     vkb.innerHTML = ['qwertyuiop','asdfghjkl','zxcvbnm'].map(row =>
