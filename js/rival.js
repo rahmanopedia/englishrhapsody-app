@@ -443,7 +443,7 @@ class RivalMode {
       typeof UI !== 'undefined' && UI.toast('Maç bulunamadı');
       this._renderLobby(); return;
     }
-    this._maxScore = this._matchData.maxScore || Q_COUNT * 10;
+    this._maxScore = this._matchData.maxScore || Q_COUNT * 15;
     this._unsub = db.collection('rival_matches').doc(matchId).onSnapshot(snap => {
       const data = snap.data();
       if (!data) return;
@@ -1163,7 +1163,7 @@ class RivalMode {
   }
 
   _pct(score) {
-    return Math.min(100, Math.round(score / (this._maxScore || Q_COUNT * 10) * 100));
+    return Math.min(100, Math.round(score / (this._maxScore || Q_COUNT * 15) * 100));
   }
 
   /* ── Finish ───────────────────────────────────────── */
