@@ -344,3 +344,165 @@
 .rv-res-btns { display: flex; gap: .8rem; width: 100%; }
 .rv-res-btns .rv-btn-primary,
 .rv-res-btns .rv-btn-ghost { flex: 1; }
+
+/* ── Cinema Arena (fullscreen) ────────────────────── */
+.rv-cinema-arena {
+  position: fixed; inset: 0; z-index: 500;
+  background: #000; overflow: hidden;
+}
+.rv-cv {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain; background: #000;
+}
+.rv-cv-overlay {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,.55) 0%,
+    transparent 20%,
+    transparent 55%,
+    rgba(0,0,0,.65) 78%,
+    rgba(0,0,0,.88) 100%
+  );
+}
+
+/* HUD wrapper (scorebar + progress bar) */
+.rv-fs-hud { position: absolute; top: 0; left: 0; right: 0; z-index: 20; }
+.rv-scorebar-fs {
+  background: rgba(0,0,0,.45) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(255,255,255,.07) !important;
+  position: static !important;
+}
+.rv-clip-ctr {
+  font-size: .78rem; font-weight: 800; color: #00d4ff; letter-spacing: .04em;
+}
+.rv-speed-tag {
+  font-size: .58rem; color: #f59e0b; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em;
+}
+
+/* Clip info overlay */
+.rv-clip-info {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; text-align: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s ease;
+}
+.rv-clip-info.rv-ci-in { opacity: 1; pointer-events: auto; }
+
+.rv-ci-badge {
+  display: inline-block;
+  padding: .38rem 1rem;
+  background: rgba(0,212,255,.16);
+  border: 1px solid rgba(0,212,255,.4);
+  border-radius: 99px;
+  font-size: .78rem; font-weight: 800; color: #00d4ff;
+  letter-spacing: .05em; margin-bottom: .55rem;
+}
+.rv-ci-film {
+  font-size: 1rem; font-weight: 700; color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.9); margin-bottom: .35rem;
+}
+.rv-ci-cue {
+  font-size: .72rem; color: rgba(255,255,255,.45);
+  text-shadow: 0 1px 6px rgba(0,0,0,.9);
+}
+
+/* Question panel – slides up from bottom */
+.rv-cq-panel {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  max-height: 72%;
+  background: rgba(8,14,28,.93);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-top: 1px solid rgba(255,255,255,.09);
+  border-radius: 22px 22px 0 0;
+  padding: 1.1rem 1.1rem 2rem;
+  z-index: 15;
+  transform: translateY(100%);
+  transition: transform .38s cubic-bezier(.16,1,.3,1);
+  overflow-y: auto;
+}
+.rv-cq-panel.rv-cqp-in { transform: translateY(0); }
+
+.rv-cq-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: .75rem;
+}
+.rv-cq-clip-lbl {
+  font-size: .64rem; font-weight: 800; color: #00d4ff;
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.rv-cq-q-lbl { font-size: .64rem; color: #475569; font-weight: 600; }
+
+/* Speed timer bar */
+.rv-cq-speed-wrap {
+  display: flex; align-items: center; gap: .55rem; margin-bottom: .85rem;
+}
+.rv-cq-speed-bar {
+  flex: 1; height: 7px;
+  background: rgba(255,255,255,.07); border-radius: 99px; overflow: hidden;
+}
+.rv-cq-speed-fill {
+  height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, #00d4ff, #0ea5e9);
+  transition: width .85s linear, background .25s;
+}
+.rv-cq-speed-fill.rv-t-warn   { background: linear-gradient(90deg, #f59e0b, #d97706); }
+.rv-cq-speed-fill.rv-t-danger { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.rv-cq-speed-num {
+  font-size: .85rem; font-weight: 800; color: #00d4ff;
+  min-width: 16px; text-align: right; transition: color .25s;
+}
+.rv-cq-speed-num.rv-t-warn   { color: #f59e0b; }
+.rv-cq-speed-num.rv-t-danger { color: #ef4444; animation: rv-blink .45s ease infinite alternate; }
+
+.rv-cq-phrase {
+  font-size: 1.05rem; font-weight: 700; color: #e2e8f0;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px; padding: .85rem 1rem;
+  margin-bottom: .55rem; line-height: 1.45; text-align: center;
+}
+.rv-cq-cue { font-size: .72rem; color: #64748b; margin: 0 0 .55rem; text-align: center; }
+
+/* Speed bonus popup */
+.rv-speed-bonus {
+  position: absolute; top: 42%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem; font-weight: 900; color: #f59e0b;
+  text-shadow: 0 2px 10px rgba(245,158,11,.5);
+  animation: rv-bonus-pop 1s ease forwards;
+  pointer-events: none; z-index: 30;
+}
+.rv-speed-bonus.rv-sb-great { color: #00d4ff; text-shadow: 0 2px 12px rgba(0,212,255,.6); font-size: 1.9rem; }
+.rv-speed-bonus.rv-sb-good  { color: #4ade80; text-shadow: 0 2px 12px rgba(74,222,128,.5); }
+@keyframes rv-bonus-pop {
+  0%   { opacity: 0; transform: translate(-50%,-20%) scale(.5); }
+  25%  { opacity: 1; transform: translate(-50%,-65%) scale(1.2); }
+  65%  { opacity: 1; transform: translate(-50%,-85%) scale(1);   }
+  100% { opacity: 0; transform: translate(-50%,-105%) scale(.85); }
+}
+
+/* Autoplay fallback button */
+.rv-vid-play-btn {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%); z-index: 25;
+  background: rgba(0,212,255,.18); border: 2px solid #00d4ff;
+  color: #00d4ff; font-size: 1rem; font-weight: 700;
+  padding: .9rem 2rem; border-radius: 99px;
+  cursor: pointer; font-family: inherit;
+  backdrop-filter: blur(8px); transition: background .15s;
+}
+.rv-vid-play-btn:hover { background: rgba(0,212,255,.32); }
+
+/* Countdown cinema hint */
+.rv-cd-hint {
+  font-size: .74rem; color: #64748b;
+  text-align: center; max-width: 300px; line-height: 1.55;
+  padding: .6rem 1rem; border-radius: 10px;
+  background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
+}

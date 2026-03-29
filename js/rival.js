@@ -3,13 +3,15 @@
 
 (function () {
 
-const Q_COUNT        = 10;
-const TIMER_SEC      = 15;
-const QUEUE_TTL_MS   = 120_000;
-const SEARCH_MAX_MS  = 90_000;
-const CIRCUM         = 119.4; // 2π × 19
+const Q_COUNT           = 10;
+const TIMER_SEC         = 15;
+const CINEMA_CLIP_COUNT = 5;
+const CINEMA_Q_SEC      = 8;
+const QUEUE_TTL_MS      = 120_000;
+const SEARCH_MAX_MS     = 90_000;
+const CIRCUM            = 119.4;
 
-/* ── Helpers ─────────────────────────────────────── */
+/* ── Helpers ──────────────────────────────────────── */
 
 function _sh(arr) {
   const a = [...arr];
@@ -22,11 +24,11 @@ function _sh(arr) {
 
 function _esc(s) {
   return String(s || '')
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-/* ── Question builders ───────────────────────────── */
+/* ── Question builders ────────────────────────────── */
 
 function _buildTranslate(level, n) {
   if (typeof TRANSLATE_DATA === 'undefined' || !TRANSLATE_DATA.length) return [];
@@ -34,74 +36,74 @@ function _buildTranslate(level, n) {
     ? [...TRANSLATE_DATA]
     : TRANSLATE_DATA.filter(s => s.level === level));
   if (pool.length < 4) return [];
-
   return pool.slice(0, n).map(s => {
-    const wrongs = pool.filter(x => x.en !== s.en).slice(0, 8)
-      .map(x => x.en).filter(Boolean);
-    const dist = _sh(wrongs).slice(0, 3);
-    while (dist.length < 3 && wrongs.length > dist.length) dist.push(wrongs[dist.length]);
+    const wrongs = _sh(pool.filter(x => x.en !== s.en).map(x => x.en).filter(Boolean));
     return {
-      prompt: s.tr,
-      correct: s.en,
-      choices: _sh([s.en, ...dist.slice(0, 3)]),
+      prompt: s.tr, correct: s.en,
+      choices: _sh([s.en, ...wrongs.slice(0, 3)]),
       meta: s.level || ''
     };
   });
 }
 
-function _buildCinema(n) {
+function _buildCinemaClips(n) {
   if (typeof CINEMA_DATA === 'undefined' || !CINEMA_DATA.length) return [];
-  // Tüm sorulardan düz liste yap: {prompt, correct, wrong, meta}
-  const all = [];
-  for (const clip of CINEMA_DATA) {
-    if (!Array.isArray(clip.questions)) continue;
-    const meta = clip.film || '';
-    for (const q of clip.questions) {
-      if (q.phrase && q.correct && q.wrong)
-        all.push({ prompt: q.phrase, correct: q.correct, wrong: q.wrong, meta });
-    }
-  }
-  if (all.length < 4) return [];
-  const pool = _sh(all);
-  return pool.slice(0, n).map(q => {
-    // 3 yanlış seçenek: önce bu sorunun kendi wrong'u, sonra diğer soruların correct'leri
-    const distractors = [q.wrong,
-      ...pool.filter(x => x !== q && x.correct !== q.correct).map(x => x.correct)
-    ];
-    const choices = _sh([q.correct, ..._sh(distractors).slice(0, 3)]);
-    return { prompt: q.prompt, correct: q.correct, choices, meta: q.meta };
+  const ansPool = [];
+  for (const clip of CINEMA_DATA)
+    for (const q of (clip.questions || []))
+      if (q.correct) ansPool.push(q.correct);
+
+  const pool = _sh([...CINEMA_DATA]).slice(0, n);
+  return pool.map(clip => {
+    const qs = (clip.questions || [])
+      .filter(q => q.phrase && q.correct && q.wrong)
+      .map(q => {
+        const dist = _sh(ansPool.filter(a => a !== q.correct && a !== q.wrong));
+        return {
+          phrase:  q.phrase,
+          correct: q.correct,
+          choices: _sh([q.correct, q.wrong, ...dist.slice(0, 2)])
+        };
+      });
+    return {
+      url: clip.url || '', start: clip.start || 0, end: clip.end || 10,
+      film: clip.film || '', cefr: clip.cefr || '',
+      questions: qs
+    };
   });
 }
 
-/* ── RivalMode ───────────────────────────────────── */
+/* ── RivalMode ────────────────────────────────────── */
 
 class RivalMode {
   constructor(app) {
-    this.app        = app;
-    this.el         = null;
-    this._matchId   = null;
-    this._role      = null;   // 'host' | 'guest'
-    this._matchData = null;
-    this._unsub     = null;
-    this._unsubQ    = null;
-    this._qIdx      = 0;
-    this._score     = 0;
-    this._timer     = null;
-    this._timerVal  = TIMER_SEC;
-    this._answered  = false;
-    this._phase     = 'lobby';
-    this._searchTmr = null;
-    this._mode      = 'translate';
-    this._level     = 'ALL';
+    this.app         = app;
+    this.el          = null;
+    this._matchId    = null;
+    this._role       = null;
+    this._matchData  = null;
+    this._unsub      = null;
+    this._unsubQ     = null;
+    this._qIdx       = 0;
+    this._clipIdx    = 0;
+    this._cinemaQIdx = 0;
+    this._score      = 0;
+    this._maxScore   = Q_COUNT * 10;
+    this._timer      = null;
+    this._timerVal   = TIMER_SEC;
+    this._answered   = false;
+    this._phase      = 'lobby';
+    this._searchTmr  = null;
+    this._mode       = 'translate';
+    this._level      = 'ALL';
+    this._vid        = null;
   }
 
-  init(el) {
-    this.el = el;
-    this._renderLobby();
-  }
+  init(el) { this.el = el; this._renderLobby(); }
 
   destroy() {
     this._clearTimer();
+    if (this._vid) { try { this._vid.pause(); this._vid.src = ''; } catch(e){} this._vid = null; }
     if (this._unsub)     { this._unsub();     this._unsub     = null; }
     if (this._unsubQ)    { this._unsubQ();    this._unsubQ    = null; }
     if (this._searchTmr) { clearTimeout(this._searchTmr); this._searchTmr = null; }
@@ -113,17 +115,14 @@ class RivalMode {
   _uid()  { return window.authManager && window.authManager.uid; }
   _name() { return (window.authManager && window.authManager.displayName) || 'Kullanıcı'; }
 
-  /* ── Lobby ─────────────────────────────────────── */
+  /* ── Lobby ────────────────────────────────────────── */
 
   _renderLobby() {
     this._phase = 'lobby';
     const ok = !!(window.authManager && window.authManager.isLoggedIn);
-
     this.el.innerHTML = `
       <div class="rv-lobby">
-        <div class="rv-lb-topbar">
-          <button class="rv-back-btn" id="rv-back">← Geri</button>
-        </div>
+        <div class="rv-lb-topbar"><button class="rv-back-btn" id="rv-back">← Geri</button></div>
         <div class="rv-lb-hero">
           <div class="rv-lb-icon">⚔️</div>
           <h1 class="rv-lb-title">RİVAL MODU</h1>
@@ -143,7 +142,7 @@ class RivalMode {
                 <span>🔄</span><strong>Çeviri</strong><small>TR → EN cümle</small>
               </button>
               <button class="rv-mode-card" data-rv-mode="cinema">
-                <span>🎬</span><strong>Sinema</strong><small>Film diyaloğu</small>
+                <span>🎬</span><strong>Sinema</strong><small>5 video · Hız Puanı</small>
               </button>
             </div>
             <div id="rv-lv-sec">
@@ -154,7 +153,7 @@ class RivalMode {
                 ).join('')}
               </div>
             </div>
-            <div class="rv-match-info">
+            <div class="rv-match-info" id="rv-minfo">
               <span>⏱ ${TIMER_SEC} sn/soru</span>
               <span>❓ ${Q_COUNT} soru</span>
               <span>🏆 Kazanana +50 XP</span>
@@ -165,27 +164,30 @@ class RivalMode {
       </div>`;
 
     this.el.querySelector('#rv-back').addEventListener('click', () => {
-      this.destroy();
-      this.app.navigate('home');
+      this.destroy(); this.app.navigate('home');
     });
-
     if (!ok) {
       const lb = this.el.querySelector('#rv-login');
       if (lb) lb.addEventListener('click', () => window.authUI && window.authUI.open());
       return;
     }
-
     this.el.querySelectorAll('[data-rv-mode]').forEach(btn => {
       btn.addEventListener('click', () => {
         this.el.querySelectorAll('[data-rv-mode]').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         this._mode = btn.dataset.rvMode;
-        const sec = this.el.querySelector('#rv-lv-sec');
-        if (sec) sec.style.display = this._mode === 'cinema' ? 'none' : '';
-        if (this._mode === 'cinema') this._level = 'ALL';
+        const sec  = this.el.querySelector('#rv-lv-sec');
+        const info = this.el.querySelector('#rv-minfo');
+        if (this._mode === 'cinema') {
+          if (sec)  sec.style.display = 'none';
+          this._level = 'ALL';
+          if (info) info.innerHTML = `<span>⏱ ${CINEMA_Q_SEC} sn/soru</span><span>🎬 ${CINEMA_CLIP_COUNT} klip</span><span>⚡ Hız Puanı</span><span>🏆 Kazanana +50 XP</span>`;
+        } else {
+          if (sec)  sec.style.display = '';
+          if (info) info.innerHTML = `<span>⏱ ${TIMER_SEC} sn/soru</span><span>❓ ${Q_COUNT} soru</span><span>🏆 Kazanana +50 XP</span>`;
+        }
       });
     });
-
     this.el.querySelectorAll('[data-rv-lv]').forEach(btn => {
       btn.addEventListener('click', () => {
         this.el.querySelectorAll('[data-rv-lv]').forEach(b => b.classList.remove('active'));
@@ -193,37 +195,28 @@ class RivalMode {
         this._level = btn.dataset.rvLv;
       });
     });
-
     this.el.querySelector('#rv-find').addEventListener('click', () => this._startSearch());
   }
 
-  /* ── Matchmaking ───────────────────────────────── */
+  /* ── Matchmaking ──────────────────────────────────── */
 
   async _startSearch() {
     const db = this._db();
     if (!db) { typeof UI !== 'undefined' && UI.toast('Firebase bağlantısı yok'); return; }
-
     const uid   = this._uid();
     const name  = this._name();
     const mode  = this._mode;
     const level = mode === 'cinema' ? 'ALL' : this._level;
     const key   = mode + '_' + level;
-
     this._renderWaiting();
-
     try {
-      const snap = await db.collection('rival_queue')
-        .where('mode_level', '==', key)
-        .limit(20)
-        .get();
-
-      const now = Date.now();
+      const snap = await db.collection('rival_queue').where('mode_level','==',key).limit(20).get();
+      const now  = Date.now();
       const pool = snap.docs.filter(d => {
         const da = d.data();
         return d.id !== uid && !da.matchId &&
           (now - ((da.createdAt && da.createdAt.toMillis && da.createdAt.toMillis()) || 0)) < QUEUE_TTL_MS;
       });
-
       if (pool.length > 0) {
         const oppDoc  = pool[Math.floor(Math.random() * pool.length)];
         const oppData = oppDoc.data();
@@ -233,7 +226,6 @@ class RivalMode {
           uid, name, mode_level: key, mode, level, matchId: null,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
-
         this._unsubQ = db.collection('rival_queue').doc(uid).onSnapshot(snap => {
           const data = snap.data();
           if (data && data.matchId && this._phase === 'waiting') {
@@ -242,7 +234,6 @@ class RivalMode {
             this._joinMatch(data.matchId, 'guest');
           }
         });
-
         this._searchTmr = setTimeout(() => {
           if (this._phase === 'waiting') {
             this._leaveQueue();
@@ -275,36 +266,46 @@ class RivalMode {
   }
 
   async _createMatch(mode, level, hostId, hostName, guestId, guestName, guestQueueId) {
-    const db = this._db();
+    const db  = this._db();
     await this._ensureData(mode);
-    const questions = mode === 'cinema'
-      ? _buildCinema(Q_COUNT)
-      : _buildTranslate(level, Q_COUNT);
-
-    if (questions.length < Q_COUNT) {
-      typeof UI !== 'undefined' && UI.toast('Yeterli soru bulunamadı');
-      this._renderLobby();
-      return;
-    }
-
     const matchRef = db.collection('rival_matches').doc();
     const matchId  = matchRef.id;
     const batch    = db.batch();
+    const ts       = firebase.firestore.FieldValue.serverTimestamp();
 
-    batch.set(matchRef, {
-      status: 'playing', mode, level,
-      hostId, hostName, guestId, guestName,
-      questions,
-      hostScore: 0, guestScore: 0,
-      hostQ: 0, guestQ: 0,
-      hostDone: false, guestDone: false,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      expiresAt: new Date(Date.now() + 30 * 60000)
-    });
+    if (mode === 'cinema') {
+      const clips = _buildCinemaClips(CINEMA_CLIP_COUNT);
+      if (clips.length < CINEMA_CLIP_COUNT) {
+        typeof UI !== 'undefined' && UI.toast('Yeterli klip bulunamadı');
+        this._renderLobby(); return;
+      }
+      const maxScore = clips.reduce((s, c) => s + (c.questions || []).length, 0) * 10;
+      batch.set(matchRef, {
+        status:'playing', mode, level,
+        hostId, hostName, guestId, guestName,
+        cinemaClips: clips, questions: [], maxScore,
+        hostScore:0, guestScore:0, hostClip:0, guestClip:0,
+        hostDone:false, guestDone:false,
+        createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
+      });
+    } else {
+      const questions = _buildTranslate(level, Q_COUNT);
+      if (questions.length < Q_COUNT) {
+        typeof UI !== 'undefined' && UI.toast('Yeterli soru bulunamadı');
+        this._renderLobby(); return;
+      }
+      batch.set(matchRef, {
+        status:'playing', mode, level,
+        hostId, hostName, guestId, guestName,
+        questions, maxScore: Q_COUNT * 10,
+        hostScore:0, guestScore:0, hostQ:0, guestQ:0,
+        hostDone:false, guestDone:false,
+        createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
+      });
+    }
 
     batch.update(db.collection('rival_queue').doc(guestQueueId), { matchId });
     batch.delete(db.collection('rival_queue').doc(hostId));
-
     await batch.commit();
     this._role    = 'host';
     this._matchId = matchId;
@@ -316,13 +317,10 @@ class RivalMode {
     this._role    = role;
     this._qIdx    = 0;
     this._score   = 0;
-
     this._leaveQueue();
     if (this._unsubQ)    { this._unsubQ();    this._unsubQ    = null; }
     if (this._searchTmr) { clearTimeout(this._searchTmr); this._searchTmr = null; }
-
     this.el.innerHTML = '<div class="rv-connecting">🔗 Bağlanılıyor…</div>';
-
     const db = this._db();
     try {
       const snap = await db.collection('rival_matches').doc(matchId).get();
@@ -331,31 +329,28 @@ class RivalMode {
       typeof UI !== 'undefined' && UI.toast('Maç verisi alınamadı');
       this._renderLobby(); return;
     }
-
     if (!this._matchData) {
       typeof UI !== 'undefined' && UI.toast('Maç bulunamadı');
       this._renderLobby(); return;
     }
-
+    this._maxScore = this._matchData.maxScore || Q_COUNT * 10;
     this._unsub = db.collection('rival_matches').doc(matchId).onSnapshot(snap => {
       const data = snap.data();
       if (!data) return;
       this._matchData = data;
       if (this._phase === 'playing') this._onLive(data);
     });
-
     this._phase = 'countdown';
     this._renderCountdown();
   }
 
   _leaveQueue() {
-    const uid = this._uid();
-    const db  = this._db();
+    const uid = this._uid(); const db = this._db();
     if (!uid || !db) return;
     db.collection('rival_queue').doc(uid).delete().catch(() => {});
   }
 
-  /* ── Waiting ───────────────────────────────────── */
+  /* ── Waiting ──────────────────────────────────────── */
 
   _renderWaiting() {
     this._phase = 'waiting';
@@ -382,18 +377,20 @@ class RivalMode {
     });
   }
 
-  /* ── Countdown ─────────────────────────────────── */
+  /* ── Countdown ────────────────────────────────────── */
 
   _renderCountdown() {
-    const m   = this._matchData || {};
-    const myN = this._name();
-    const opN = this._role === 'host' ? (m.guestName || '…') : (m.hostName || '…');
-    const ml  = m.mode === 'cinema' ? '🎬 Sinema' : '🔄 Çeviri';
-    const lv  = m.level !== 'ALL' ? ' · ' + m.level : '';
+    const m       = this._matchData || {};
+    const myN     = this._name();
+    const opN     = this._role === 'host' ? (m.guestName || '…') : (m.hostName || '…');
+    const isCinema = m.mode === 'cinema';
+    const ml      = isCinema ? '🎬 Sinema' : '🔄 Çeviri';
+    const lv      = m.level !== 'ALL' ? ' · ' + m.level : '';
+    const cnt     = isCinema ? CINEMA_CLIP_COUNT + ' klip' : Q_COUNT + ' soru';
 
     this.el.innerHTML = `
       <div class="rv-countdown">
-        <div class="rv-cd-mode">${ml}${lv} · ${Q_COUNT} soru</div>
+        <div class="rv-cd-mode">${ml}${lv} · ${cnt}</div>
         <div class="rv-cd-players">
           <div class="rv-cd-player">
             <div class="rv-cd-avatar rv-av-you">${(myN[0]||'?').toUpperCase()}</div>
@@ -410,41 +407,42 @@ class RivalMode {
             <div class="rv-cd-badge">RAKİP</div>
           </div>
         </div>
+        ${isCinema ? '<div class="rv-cd-hint">🎬 Videoyu izle · soruyu yanıtla · hızlı cevap daha fazla puan!</div>' : ''}
       </div>`;
 
     let n = 3;
     const tick = () => {
       const el = this.el.querySelector('#rv-cd-n');
       if (!el) return;
-      if (n === 0) {
-        el.textContent = '🏁';
-        el.classList.add('rv-cd-go');
-        setTimeout(() => this._startGame(), 600);
-        return;
-      }
+      if (n === 0) { el.textContent = '🏁'; el.classList.add('rv-cd-go'); setTimeout(() => this._startGame(), 600); return; }
       el.textContent = n--;
-      el.classList.remove('rv-cd-pop');
-      void el.offsetWidth;
-      el.classList.add('rv-cd-pop');
+      el.classList.remove('rv-cd-pop'); void el.offsetWidth; el.classList.add('rv-cd-pop');
       setTimeout(tick, 1000);
     };
     setTimeout(tick, 700);
   }
 
-  /* ── Game ──────────────────────────────────────── */
+  /* ── Game fork ────────────────────────────────────── */
 
   _startGame() {
     this._phase = 'playing';
-    this._qIdx  = 0;
     this._score = 0;
-    this._renderArena();
+    const m = this._matchData || {};
+    if (m.mode === 'cinema') {
+      this._clipIdx = 0; this._cinemaQIdx = 0;
+      this._renderCinemaArena();
+    } else {
+      this._qIdx = 0;
+      this._renderArena();
+    }
   }
+
+  /* ── Translate Arena ──────────────────────────────── */
 
   _renderArena() {
     const m   = this._matchData || {};
     const myN = this._name();
     const opN = (this._role === 'host' ? m.guestName : m.hostName) || 'Rakip';
-
     this.el.innerHTML = `
       <div class="rv-arena">
         <div class="rv-scorebar">
@@ -474,105 +472,291 @@ class RivalMode {
         </div>
         <div class="rv-question-zone" id="rv-qz"></div>
       </div>`;
-
     this._showQ();
   }
 
   _showQ() {
     const q = this._matchData && this._matchData.questions && this._matchData.questions[this._qIdx];
     if (!q) { this._finishMatch(); return; }
-
-    this._answered = false;
-    this._timerVal = TIMER_SEC;
-
+    this._answered = false; this._timerVal = TIMER_SEC;
     const zone = this.el.querySelector('#rv-qz');
     const qc   = this.el.querySelector('#rv-qc');
     if (!zone) return;
     if (qc) qc.textContent = (this._qIdx + 1) + '/' + Q_COUNT;
-
     zone.innerHTML = `
       <div class="rv-q animate-in">
         ${q.meta ? `<div class="rv-q-meta">${_esc(q.meta)}</div>` : ''}
         <div class="rv-q-prompt">${_esc(q.prompt)}</div>
         <p class="rv-q-cue">Doğru çeviriyi seç</p>
         <div class="rv-q-choices">
-          ${q.choices.map((c, i) => `
+          ${q.choices.map((c,i) => `
             <button class="rv-choice" data-val="${_esc(c)}">
               <span class="rv-ch-letter">${'ABCD'[i]}</span>
               <span class="rv-ch-text">${_esc(c)}</span>
             </button>`).join('')}
         </div>
       </div>`;
-
-    zone.querySelectorAll('.rv-choice').forEach(btn => {
-      btn.addEventListener('click', () => this._pick(btn.dataset.val, q.correct));
-    });
-
+    zone.querySelectorAll('.rv-choice').forEach(btn =>
+      btn.addEventListener('click', () => this._pick(btn.dataset.val, q.correct)));
     this._startTimer(q.correct);
   }
 
   _startTimer(correct) {
-    this._clearTimer();
-    this._timerVal = TIMER_SEC;
+    this._clearTimer(); this._timerVal = TIMER_SEC;
     this._timer = setInterval(() => {
       this._timerVal--;
       const num  = this.el.querySelector('#rv-tmr');
       const ring = this.el.querySelector('#rv-ring');
       if (num) {
         num.textContent = this._timerVal;
-        num.className = 'rv-timer-num' +
-          (this._timerVal <= 3 ? ' rv-t-danger' : this._timerVal <= 6 ? ' rv-t-warn' : '');
+        num.className = 'rv-timer-num' + (this._timerVal<=3?' rv-t-danger':this._timerVal<=6?' rv-t-warn':'');
       }
       if (ring) {
-        const offset = CIRCUM * (1 - this._timerVal / TIMER_SEC);
-        ring.style.strokeDashoffset = offset;
-        ring.className = 'rv-tr-fill' +
-          (this._timerVal <= 3 ? ' rv-t-danger' : this._timerVal <= 6 ? ' rv-t-warn' : '');
+        ring.style.strokeDashoffset = CIRCUM * (1 - this._timerVal / TIMER_SEC);
+        ring.className = 'rv-tr-fill' + (this._timerVal<=3?' rv-t-danger':this._timerVal<=6?' rv-t-warn':'');
       }
-      if (this._timerVal <= 0) {
-        this._clearTimer();
-        if (!this._answered) this._pick(null, correct);
-      }
+      if (this._timerVal <= 0) { this._clearTimer(); if (!this._answered) this._pick(null, correct); }
     }, 1000);
   }
 
-  _clearTimer() {
-    if (this._timer) { clearInterval(this._timer); this._timer = null; }
-  }
+  _clearTimer() { if (this._timer) { clearInterval(this._timer); this._timer = null; } }
 
   async _pick(chosen, correct) {
     if (this._answered) return;
-    this._answered = true;
-    this._clearTimer();
-
+    this._answered = true; this._clearTimer();
     const ok = chosen !== null && chosen === correct;
     if (ok) this._score += 10;
-
     this.el.querySelectorAll('.rv-choice').forEach(btn => {
       btn.disabled = true;
-      if (btn.dataset.val === correct) btn.classList.add('rv-ch-correct');
-      else if (btn.dataset.val === chosen) btn.classList.add('rv-ch-wrong');
+      if (btn.dataset.val === correct)      btn.classList.add('rv-ch-correct');
+      else if (btn.dataset.val === chosen)  btn.classList.add('rv-ch-wrong');
     });
-
     const nextQ = this._qIdx + 1;
     const done  = nextQ >= Q_COUNT;
     const upd   = this._role === 'host'
       ? Object.assign({ hostScore: this._score, hostQ: nextQ }, done ? { hostDone: true } : {})
       : Object.assign({ guestScore: this._score, guestQ: nextQ }, done ? { guestDone: true } : {});
     const db = this._db();
-    if (db && this._matchId)
-      db.collection('rival_matches').doc(this._matchId).update(upd).catch(() => {});
-
-    const myS = this.el.querySelector('#rv-my-s');
-    const pdY = this.el.querySelector('#rv-pd-y');
+    if (db && this._matchId) db.collection('rival_matches').doc(this._matchId).update(upd).catch(()=>{});
+    const myS = this.el.querySelector('#rv-my-s'); const pdY = this.el.querySelector('#rv-pd-y');
     if (myS) myS.textContent = this._score;
     if (pdY) pdY.style.width = this._pct(this._score) + '%';
-
     await new Promise(r => setTimeout(r, ok ? 700 : 1100));
     this._qIdx++;
-    if (this._qIdx >= Q_COUNT) this._finishMatch();
-    else this._showQ();
+    if (this._qIdx >= Q_COUNT) this._finishMatch(); else this._showQ();
   }
+
+  /* ── Cinema Arena ─────────────────────────────────── */
+
+  _renderCinemaArena() {
+    const m   = this._matchData || {};
+    const myN = this._name();
+    const opN = (this._role === 'host' ? m.guestName : m.hostName) || 'Rakip';
+    this.el.innerHTML = `
+      <div class="rv-cinema-arena" id="rv-ca">
+        <video class="rv-cv" id="rv-vid" playsinline webkit-playsinline preload="auto"></video>
+        <div class="rv-cv-overlay"></div>
+        <div class="rv-fs-hud">
+          <div class="rv-scorebar rv-scorebar-fs">
+            <div class="rv-sb-you">
+              <div class="rv-sb-name">${_esc(myN)}</div>
+              <div class="rv-sb-score" id="rv-my-s">0</div>
+            </div>
+            <div class="rv-sb-center">
+              <div class="rv-clip-ctr" id="rv-clip-ctr">1/${CINEMA_CLIP_COUNT}</div>
+              <div class="rv-speed-tag">⚡ Hız Puanı</div>
+            </div>
+            <div class="rv-sb-opp">
+              <div class="rv-sb-name">${_esc(opN)}</div>
+              <div class="rv-sb-score" id="rv-op-s">0</div>
+            </div>
+          </div>
+          <div class="rv-progress-duel">
+            <div class="rv-pd-you" id="rv-pd-y" style="width:0%"></div>
+            <div class="rv-pd-opp" id="rv-pd-o" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="rv-clip-info" id="rv-clip-info">
+          <div class="rv-ci-badge">🎬 KLİP <span id="rv-ci-n">1</span>/${CINEMA_CLIP_COUNT}</div>
+          <div class="rv-ci-film" id="rv-ci-film"></div>
+          <div class="rv-ci-cue">İzle ve yanıtlamaya hazırlan!</div>
+        </div>
+        <div class="rv-cq-panel" id="rv-cqp">
+          <div class="rv-cq-header">
+            <span class="rv-cq-clip-lbl" id="rv-cq-lbl">Klip 1/${CINEMA_CLIP_COUNT}</span>
+            <span class="rv-cq-q-lbl" id="rv-cq-qlbl"></span>
+          </div>
+          <div class="rv-cq-speed-wrap">
+            <div class="rv-cq-speed-bar"><div class="rv-cq-speed-fill" id="rv-sq-fill" style="width:100%"></div></div>
+            <span class="rv-cq-speed-num" id="rv-sq-num">${CINEMA_Q_SEC}</span>
+          </div>
+          <div class="rv-cq-phrase" id="rv-cq-phrase"></div>
+          <p class="rv-cq-cue">Türkçe karşılığını seç</p>
+          <div class="rv-cq-choices" id="rv-cq-choices"></div>
+        </div>
+      </div>`;
+    this._playClip(0);
+  }
+
+  _playClip(clipIdx) {
+    const m     = this._matchData || {};
+    const clips = m.cinemaClips || [];
+    if (clipIdx >= clips.length || clipIdx >= CINEMA_CLIP_COUNT) { this._finishMatch(); return; }
+
+    const clip = clips[clipIdx];
+    this._clipIdx    = clipIdx;
+    this._cinemaQIdx = 0;
+
+    const ctr = this.el.querySelector('#rv-clip-ctr');
+    const ciN = this.el.querySelector('#rv-ci-n');
+    const ciF = this.el.querySelector('#rv-ci-film');
+    const lbl = this.el.querySelector('#rv-cq-lbl');
+    if (ctr) ctr.textContent = (clipIdx + 1) + '/' + CINEMA_CLIP_COUNT;
+    if (ciN) ciN.textContent = clipIdx + 1;
+    if (ciF) ciF.textContent = [clip.film, clip.cefr].filter(Boolean).join(' · ');
+    if (lbl) lbl.textContent = 'Klip ' + (clipIdx + 1) + '/' + CINEMA_CLIP_COUNT;
+
+    const info  = this.el.querySelector('#rv-clip-info');
+    const panel = this.el.querySelector('#rv-cqp');
+    if (info)  info.classList.add('rv-ci-in');
+    if (panel) panel.classList.remove('rv-cqp-in');
+
+    const vid = this.el.querySelector('#rv-vid');
+    if (!vid) return;
+    this._vid = vid;
+
+    const startAndWatch = () => {
+      vid.currentTime = clip.start;
+      vid.ontimeupdate = () => {
+        if (vid.currentTime >= clip.end - 0.15) {
+          vid.pause(); vid.ontimeupdate = null;
+          if (info) info.classList.remove('rv-ci-in');
+          setTimeout(() => this._showCinemaQ(clipIdx, 0), 500);
+        }
+      };
+      const p = vid.play();
+      if (p) p.catch(() => this._showVidPlayBtn(vid, startAndWatch));
+    };
+
+    vid.src = clip.url;
+    if (vid.readyState >= 1) { startAndWatch(); }
+    else { vid.onloadedmetadata = () => { vid.onloadedmetadata = null; startAndWatch(); }; vid.load(); }
+  }
+
+  _showVidPlayBtn(vid, onPlay) {
+    const arena = this.el.querySelector('#rv-ca');
+    if (!arena || arena.querySelector('.rv-vid-play-btn')) return;
+    const btn = document.createElement('button');
+    btn.className = 'rv-vid-play-btn';
+    btn.innerHTML = '▶ Videoyu Başlat';
+    btn.onclick = () => { btn.remove(); onPlay(); };
+    arena.appendChild(btn);
+  }
+
+  _showCinemaQ(clipIdx, qIdx) {
+    const m     = this._matchData || {};
+    const clips = m.cinemaClips || [];
+    const clip  = clips[clipIdx];
+    if (!clip) { this._finishMatch(); return; }
+
+    const qs = clip.questions || [];
+    if (qIdx >= qs.length) {
+      const nextClip = clipIdx + 1;
+      const panel = this.el.querySelector('#rv-cqp');
+      if (panel) panel.classList.remove('rv-cqp-in');
+      if (nextClip >= CINEMA_CLIP_COUNT || nextClip >= clips.length) this._finishMatch();
+      else setTimeout(() => this._playClip(nextClip), 700);
+      return;
+    }
+
+    const q = qs[qIdx];
+    this._cinemaQIdx = qIdx;
+
+    const panel = this.el.querySelector('#rv-cqp');
+    if (panel) { panel.classList.remove('rv-cqp-in'); void panel.offsetWidth; panel.classList.add('rv-cqp-in'); }
+
+    const qlbl     = this.el.querySelector('#rv-cq-qlbl');
+    const phraseEl = this.el.querySelector('#rv-cq-phrase');
+    const choicesEl = this.el.querySelector('#rv-cq-choices');
+    if (qlbl)     qlbl.textContent     = 'Soru ' + (qIdx + 1) + '/' + qs.length;
+    if (phraseEl) phraseEl.textContent = q.phrase;
+    if (choicesEl) {
+      choicesEl.innerHTML = q.choices.map((c, i) => `
+        <button class="rv-choice" data-val="${_esc(c)}">
+          <span class="rv-ch-letter">${'ABCD'[i]}</span>
+          <span class="rv-ch-text">${_esc(c)}</span>
+        </button>`).join('');
+      choicesEl.querySelectorAll('.rv-choice').forEach(btn =>
+        btn.addEventListener('click', () => this._pickCinema(btn.dataset.val, q.correct)));
+    }
+    this._answered = false; this._timerVal = CINEMA_Q_SEC;
+    this._startCinemaTimer(q.correct);
+  }
+
+  _startCinemaTimer(correct) {
+    this._clearTimer();
+    const fill = this.el.querySelector('#rv-sq-fill');
+    const num  = this.el.querySelector('#rv-sq-num');
+    if (fill) fill.style.width = '100%';
+    if (num)  num.textContent = CINEMA_Q_SEC;
+
+    this._timer = setInterval(() => {
+      this._timerVal--;
+      const t = Math.max(0, this._timerVal);
+      const cls = t <= 2 ? ' rv-t-danger' : t <= 4 ? ' rv-t-warn' : '';
+      if (num)  { num.textContent = t; num.className = 'rv-cq-speed-num' + cls; }
+      if (fill) { fill.style.width = (t / CINEMA_Q_SEC * 100) + '%'; fill.className = 'rv-cq-speed-fill' + cls; }
+      if (this._timerVal <= 0) { this._clearTimer(); if (!this._answered) this._pickCinema(null, correct); }
+    }, 1000);
+  }
+
+  async _pickCinema(chosen, correct) {
+    if (this._answered) return;
+    this._answered = true; this._clearTimer();
+
+    const ok  = chosen !== null && chosen === correct;
+    const pts = ok ? Math.max(1, Math.round(10 * Math.max(0, this._timerVal) / CINEMA_Q_SEC)) : 0;
+    if (ok) this._score += pts;
+
+    this.el.querySelectorAll('.rv-choice').forEach(btn => {
+      btn.disabled = true;
+      if (btn.dataset.val === correct)     btn.classList.add('rv-ch-correct');
+      else if (btn.dataset.val === chosen) btn.classList.add('rv-ch-wrong');
+    });
+
+    if (ok && pts > 0) {
+      const panel = this.el.querySelector('#rv-cqp');
+      if (panel) {
+        const bonus = document.createElement('div');
+        bonus.className = 'rv-speed-bonus' + (pts >= 8 ? ' rv-sb-great' : pts >= 5 ? ' rv-sb-good' : '');
+        bonus.textContent = '+' + pts + ' ⚡';
+        panel.appendChild(bonus);
+        setTimeout(() => bonus.remove(), 1100);
+      }
+    }
+
+    const clips   = (this._matchData && this._matchData.cinemaClips) || [];
+    const clip    = clips[this._clipIdx] || {};
+    const nextQ   = this._cinemaQIdx + 1;
+    const clipDone = nextQ >= (clip.questions || []).length;
+    const allDone  = clipDone && (this._clipIdx + 1 >= Math.min(CINEMA_CLIP_COUNT, clips.length));
+    const db = this._db();
+    if (db && this._matchId) {
+      const upd = this._role === 'host'
+        ? Object.assign({ hostScore: this._score, hostClip: this._clipIdx }, allDone ? { hostDone: true } : {})
+        : Object.assign({ guestScore: this._score, guestClip: this._clipIdx }, allDone ? { guestDone: true } : {});
+      db.collection('rival_matches').doc(this._matchId).update(upd).catch(() => {});
+    }
+
+    const myS = this.el.querySelector('#rv-my-s'); const pdY = this.el.querySelector('#rv-pd-y');
+    if (myS) myS.textContent = this._score;
+    if (pdY) pdY.style.width  = this._pct(this._score) + '%';
+
+    await new Promise(r => setTimeout(r, ok ? 600 : 1000));
+    this._showCinemaQ(this._clipIdx, nextQ);
+  }
+
+  /* ── Live sync ────────────────────────────────────── */
 
   _onLive(data) {
     const opS = this._role === 'host' ? (data.guestScore || 0) : (data.hostScore || 0);
@@ -583,32 +767,28 @@ class RivalMode {
   }
 
   _pct(score) {
-    return Math.min(100, Math.round(score / (Q_COUNT * 10) * 100));
+    return Math.min(100, Math.round(score / (this._maxScore || Q_COUNT * 10) * 100));
   }
 
-  /* ── Finish ────────────────────────────────────── */
+  /* ── Finish ───────────────────────────────────────── */
 
   async _finishMatch() {
     if (this._phase === 'result') return;
-    this._phase = 'result';
-    this._clearTimer();
+    this._phase = 'result'; this._clearTimer();
+    if (this._vid) { try { this._vid.pause(); } catch(e){} }
 
     await new Promise(r => setTimeout(r, 1800));
 
     const db = this._db();
     let fin = this._matchData;
     if (db && this._matchId) {
-      try {
-        const s = await db.collection('rival_matches').doc(this._matchId).get();
-        fin = s.data() || fin;
-      } catch (e) {}
+      try { const s = await db.collection('rival_matches').doc(this._matchId).get(); fin = s.data() || fin; } catch(e){}
     }
 
-    const myS  = this._score;
-    const opS  = this._role === 'host' ? (fin && fin.guestScore || 0) : (fin && fin.hostScore || 0);
-    const opN  = this._role === 'host' ? (fin && fin.guestName) : (fin && fin.hostName);
-    const win  = myS > opS;
-    const tie  = myS === opS;
+    const myS = this._score;
+    const opS = this._role === 'host' ? (fin && fin.guestScore || 0) : (fin && fin.hostScore || 0);
+    const opN = this._role === 'host' ? (fin && fin.guestName) : (fin && fin.hostName);
+    const win = myS > opS; const tie = myS === opS;
 
     if (win)      this.app.addXP(50, 'hard',   'rival');
     else if (tie) this.app.addXP(20, 'medium', 'rival');
@@ -618,16 +798,16 @@ class RivalMode {
       const upd = this._role === 'host' ? { hostDone: true, status: 'finished' } : { guestDone: true };
       db.collection('rival_matches').doc(this._matchId).update(upd).catch(() => {});
     }
-
     this._renderResult(myS, opS, opN, win, tie);
   }
 
   _renderResult(myS, opS, opN, win, tie) {
-    const myN = this._name();
-    const xp  = win ? 50 : tie ? 20 : 5;
+    const myN  = this._name();
+    const xp   = win ? 50 : tie ? 20 : 5;
     const icon  = win ? '🏆' : tie ? '🤝' : '💪';
     const label = win ? 'KAZANDIN!' : tie ? 'BERABERE!' : 'KAYBETTİN';
     const cls   = win ? 'rv-win' : tie ? 'rv-tie' : 'rv-lose';
+    const maxS  = this._maxScore;
 
     this.el.innerHTML = `
       <div class="rv-result ${cls}">
@@ -639,15 +819,15 @@ class RivalMode {
           <div class="rv-rd-side ${win ? 'rv-rd-winner' : ''}">
             <div class="rv-rd-av rv-av-you">${(myN[0]||'?').toUpperCase()}</div>
             <div class="rv-rd-name">${_esc(myN)}</div>
-            <div class="rv-rd-score">${myS}<small>/${Q_COUNT*10}</small></div>
+            <div class="rv-rd-score">${myS}<small>/${maxS}</small></div>
             ${win ? '<div class="rv-rd-crown">👑</div>' : ''}
           </div>
           <div class="rv-rd-vs">VS</div>
-          <div class="rv-rd-side ${!win && !tie ? 'rv-rd-winner' : ''}">
+          <div class="rv-rd-side ${!win&&!tie ? 'rv-rd-winner' : ''}">
             <div class="rv-rd-av rv-av-opp">${(opN?opN[0]:'?').toUpperCase()}</div>
             <div class="rv-rd-name">${_esc(opN || 'Rakip')}</div>
-            <div class="rv-rd-score">${opS}<small>/${Q_COUNT*10}</small></div>
-            ${!win && !tie ? '<div class="rv-rd-crown">👑</div>' : ''}
+            <div class="rv-rd-score">${opS}<small>/${maxS}</small></div>
+            ${!win&&!tie ? '<div class="rv-rd-crown">👑</div>' : ''}
           </div>
         </div>
         <div class="rv-xp-pill">+${xp} XP${win ? ' 🎉' : ''}</div>
@@ -659,8 +839,7 @@ class RivalMode {
 
     this.el.querySelector('#rv-again').addEventListener('click', () => this._renderLobby());
     this.el.querySelector('#rv-home').addEventListener('click', () => {
-      this.destroy();
-      this.app.navigate('home');
+      this.destroy(); this.app.navigate('home');
     });
   }
 }
