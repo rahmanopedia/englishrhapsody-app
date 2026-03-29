@@ -26,9 +26,9 @@ service cloud.firestore {
           || request.time > resource.data.updatedAt + dur;
     }
 
-    // ── Yardımcı: HTML/script karakteri yok ──────────────────
+    // ── Yardımcı: HTML injection karakteri yok (<, >, &) ─────
     function noHtml(s) {
-      return !s.matches('.*[<>&"\'/\\\\].*');
+      return !s.matches('.*[<>&].*');
     }
 
     // ── Yardımcı: Geçerli CEFR seviyesi ──────────────────────
@@ -168,7 +168,7 @@ service cloud.firestore {
                     && request.resource.data.mode is string
                     && request.resource.data.mode in ['translate','cinema','synesthesia','phantom']
                     && request.resource.data.mode_level is string
-                    && request.resource.data.mode_level in ['A1','A2','B1','B2','C1','C2','ALL'];
+                    && request.resource.data.mode_level.matches('^(translate|cinema|synesthesia|phantom)_(A1|A2|B1|B2|C1|C2|ALL)$');
       allow update: if isOwner(uid)
                     || (request.auth != null
                         && rateLimitServer(duration.value(10, 's'))
