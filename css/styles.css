@@ -4253,6 +4253,7 @@ body.sidebar-closed .sidebar-tab {
 body.focus-mode .sidebar,
 body.focus-mode .app-header .header-stats,
 body.focus-mode .mobile-nav { opacity: 0.1; pointer-events: none; }
+body.rival-mode .mobile-nav { display: none !important; }
 
 /* Focus mode: sidebar-tab also hidden, sidebar-closed always wins over focus-mode */
 body.focus-mode .sidebar-tab { opacity: 0 !important; pointer-events: none !important; }
@@ -4301,7 +4302,7 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
 @media (max-width: 768px) {
   .layout { grid-template-columns: 1fr; }
   .sidebar { display: none; }
-  .mobile-nav { display: none; }
+  .mobile-nav { display: flex; }
 
   /* Flex/grid çocuklarının min-width:auto ile taşmasını önle */
   .main-content > *,
