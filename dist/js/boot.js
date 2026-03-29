@@ -128,60 +128,6 @@
   });
 })();
 
-/* ── 2. Mobile nav behavior ── */
-(function(){
-  var MODE_VIEWS=new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement','cinema','translate','grammar','flashcards']);
-  var HIDE_MS=2000;
-
-  function setup(){
-    var app=window._app||window.app;
-    if(!app||!app._showMobileNav){setTimeout(setup,150);return;}
-
-    app._navLocked=false;
-
-    app._showMobileNav=function(){
-      var nav=document.getElementById('mobile-nav');
-      var tab=document.getElementById('sidebar-tab');
-      if(!nav)return;
-      var inMode=MODE_VIEWS.has(app.session&&app.session.view)||!!document.getElementById('cinema-mount-point');
-      if(inMode&&app._navLocked)return;
-      nav.classList.remove('nav-hidden');
-      if(tab)tab.classList.remove('visible');
-      clearTimeout(app._navHideTimer);
-      if(inMode){
-        app._navHideTimer=setTimeout(function(){
-          if(MODE_VIEWS.has(app.session&&app.session.view)||!!document.getElementById('cinema-mount-point')){
-            nav.classList.add('nav-hidden');
-            if(tab)tab.classList.add('visible');
-            app._navLocked=true;
-          }
-        },HIDE_MS);
-      } else {
-        app._navLocked=false;
-      }
-    };
-
-    var lastTap=0;
-    document.addEventListener('touchend',function(e){
-      if(e.target.closest('.mobile-nav,#mobile-nav,.m-nav-item'))return;
-      var now=Date.now();
-      if(now-lastTap<320){
-        var nav=document.getElementById('mobile-nav');
-        if(nav&&nav.classList.contains('nav-hidden')){
-          // Modlardayken double-tap → sadece NAVIGASYON sheet açılsın, mobile nav açılmasın
-          if(document.body.classList.contains('er-in-mode')){lastTap=0;return;}
-          app._navLocked=false;
-          app._showMobileNav();
-        }
-        lastTap=0;
-      } else {
-        lastTap=now;
-      }
-    },{passive:true});
-  }
-
-  window.addEventListener('load',setup);
-})();
 
 /* ── 3. Nexus intro scroll lock ── */
 (function(){
@@ -1252,22 +1198,3 @@ document.addEventListener('click', function(e) {
   });
 })();
 
-/* ── 20. Mobil alt menü: sadece ana merkezde göster ── */
-(function(){
-  // Alt menü bu sayfalarda da görünür (veri/bilgi sayfaları, öğrenme modu değil)
-  var DATA_VIEWS = ['analytics', 'leaderboard', 'download'];
-
-  function patch(){
-    var app = window._app;
-    if(!app || !app.navigate || app.__homeNavPatched) return;
-    app.__homeNavPatched = true;
-    var _orig = app.navigate.bind(app);
-    app.navigate = function(tgt){
-      _orig(tgt);
-      var hideNav = tgt !== 'home' && DATA_VIEWS.indexOf(tgt) === -1;
-      document.body.classList.toggle('not-home', hideNav);
-      document.body.setAttribute('data-view', tgt);
-    };
-  }
-  window.addEventListener('load', function(){ setTimeout(patch, 800); });
-})();

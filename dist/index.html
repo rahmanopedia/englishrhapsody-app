@@ -2,7 +2,7 @@
 <html lang="tr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; media-src 'self' https://files.catbox.moe; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.cloudfunctions.net wss://*.firebaseio.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com/recaptcha/ https://files.catbox.moe https://www.gstatic.com https://cdn.jsdelivr.net https://*.stt.speech.microsoft.com https://huggingface.co https://*.huggingface.co; frame-src 'self' https://www.google.com/recaptcha/ https://englishrhapsody-78866.firebaseapp.com; object-src 'none'; base-uri 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.googletagmanager.com; style-src-elem 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; media-src 'self' https://files.catbox.moe; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.cloudfunctions.net wss://*.firebaseio.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com/recaptcha/ https://files.catbox.moe https://www.gstatic.com https://cdn.jsdelivr.net https://*.stt.speech.microsoft.com https://huggingface.co https://*.huggingface.co; frame-src 'self' https://www.google.com/recaptcha/ https://englishrhapsody-78866.firebaseapp.com; object-src 'none'; base-uri 'self';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>English Rhapsody | Synesthesia Edition</title>
   <meta name="description" content="İngilizce öğrenmenin en akıllı yolu — AI destekli kelime, gramer, okuma ve konuşma antrenmanı. CEFR seviyene göre kişiselleştirilmiş pratik.">
@@ -36,10 +36,12 @@
   <link rel="stylesheet" href="css/reading.css">
   <link rel="stylesheet" href="css/revolution.css">
   <link rel="stylesheet" href="css/cinema.css">
+  <link rel="stylesheet" href="css/translate.css">
+  <link rel="stylesheet" href="css/rival.css">
+  <link rel="stylesheet" href="css/grammar.css">
   <link rel="stylesheet" href="css/speak-v2.css">
   <link rel="stylesheet" href="css/speak-fill.css">
   <link rel="stylesheet" href="css/placement-test.css">
-  <link rel="stylesheet" href="css/phrases.css">
   <script src="js/speak-v2.js" defer></script>
   <script src="js/speak-fill.js" defer></script>
 </head>
@@ -195,12 +197,15 @@
       <a class="nav-item" data-target="cinema">
         <span class="nav-icon">🎬</span> Sinema
       </a>
-      <a class="nav-item" data-target="phrases">
-        <span class="nav-icon">💬</span> İfadeler
+      <a class="nav-item" data-target="translate">
+        <span class="nav-icon">🔄</span> Çeviri
       </a>
       <div class="nav-divider"></div>
       <a class="nav-item" data-target="analytics">
         <span class="nav-icon">📊</span> Analitik
+      </a>
+      <a class="nav-item" data-target="rival">
+        <span class="nav-icon">⚔️</span> Rival Modu
       </a>
       <a class="nav-item" data-target="leaderboard">
         <span class="nav-icon">🏆</span> Sıralama
@@ -226,80 +231,6 @@
   <main class="main-content animate-in" id="main-content"></main>
 </div>
 
-<!-- Mobile bottom nav -->
-<nav class="mobile-nav" id="mobile-nav">
-  <button class="m-nav-item active" data-target="home">
-    <span class="m-icon">🏠</span>
-    <span>Merkez</span>
-  </button>
-  <button class="m-nav-item" data-target="speak">
-    <span class="m-icon">🎙️</span>
-    <span>Konuş</span>
-  </button>
-  <button class="m-nav-item" id="m-modes-btn">
-    <span class="m-icon m-modes-icon">⚡</span>
-    <span>Modlar</span>
-  </button>
-  <button class="m-nav-item" id="m-stats-btn">
-    <span class="m-icon">📊</span>
-    <span>Veriler</span>
-  </button>
-</nav>
-
-<!-- Modes Drawer -->
-<div class="modes-drawer-backdrop" id="modes-drawer-backdrop"></div>
-<div class="modes-drawer" id="modes-drawer">
-  <div class="modes-drawer-handle"></div>
-  <div class="modes-drawer-title">Modlar</div>
-  <div class="modes-drawer-grid">
-    <button class="modes-drawer-item" data-target="reading">
-      <span class="mdi-icon">📖</span>
-      <span>Okuma</span>
-    </button>
-    <button class="modes-drawer-item" data-target="bridge">
-      <span class="mdi-icon">🌉</span>
-      <span>Köprü</span>
-    </button>
-    <button class="modes-drawer-item" data-target="nexus">
-      <span class="mdi-icon">✨</span>
-      <span>Nexus</span>
-    </button>
-    <button class="modes-drawer-item" data-target="quantum">
-      <span class="mdi-icon">⚛️</span>
-      <span>Kuantum</span>
-    </button>
-    <button class="modes-drawer-item" data-target="synesthesia">
-      <span class="mdi-icon">🌀</span>
-      <span>Sinestezi</span>
-      <span class="m-srs-badge" id="srs-drawer-badge" style="display:none">0</span>
-    </button>
-    <button class="modes-drawer-item" data-target="cinema">
-      <span class="mdi-icon">🎬</span>
-      <span>Sinema</span>
-    </button>
-    <button class="modes-drawer-item" data-target="download">
-      <span class="mdi-icon">📲</span>
-      <span>İndir</span>
-    </button>
-  </div>
-</div>
-
-<!-- Stats Drawer -->
-<div class="modes-drawer-backdrop" id="stats-drawer-backdrop"></div>
-<div class="modes-drawer" id="stats-drawer">
-  <div class="modes-drawer-handle"></div>
-  <div class="modes-drawer-title">Veriler</div>
-  <div class="modes-drawer-grid">
-    <button class="modes-drawer-item" data-target="analytics">
-      <span class="mdi-icon">📊</span>
-      <span>Analitik</span>
-    </button>
-    <button class="modes-drawer-item" data-target="leaderboard">
-      <span class="mdi-icon">🏆</span>
-      <span>Sıralama</span>
-    </button>
-  </div>
-</div>
 
 
 <!-- Toast container -->
@@ -538,15 +469,22 @@
 
     <!-- Sağ: Günün İçeriği -->
     <div class="home-col-side">
-      <div class="wod-card-v2" data-action="navigate" data-target="learn">
-        <div class="wod-v2-label">GÜNÜN KELİMESİ</div>
-        <div class="wod-v2-main">
-          <span id="wod-icon" class="wod-v2-icon">📚</span>
-          <span id="wod-word" class="wod-v2-word">—</span>
-          <span id="wod-ipa" class="wod-v2-ipa"></span>
+      <div class="grammar-hub-card" data-action="navigate" data-target="grammar">
+        <div class="ghc-badge">GRAMER MODU</div>
+        <div class="ghc-main">
+          <span class="ghc-icon">🧩</span>
+          <div class="ghc-text">
+            <span class="ghc-title">Gramer Antrenmanı</span>
+            <span class="ghc-sub">Yapı ve dilbilgisi · 1.5× XP</span>
+          </div>
         </div>
-        <div id="wod-tr" class="wod-v2-tr"></div>
-        <div class="wod-v2-btn">Hemen Öğren →</div>
+        <div class="ghc-topics">
+          <span class="ghc-tag">Tenses</span>
+          <span class="ghc-tag">Articles</span>
+          <span class="ghc-tag">Conditionals</span>
+          <span class="ghc-tag">Prepositions</span>
+        </div>
+        <div class="ghc-btn">Antrenmanı Başlat →</div>
       </div>
 
       <div id="colloc-tip-card" class="colloc-card-v2"></div>
@@ -563,8 +501,8 @@
 
   </div>
 
-  <!-- 4. Mod Seçimi (Aksiyonlar) - kaldirildi -->
-  <section class="home-actions-section" style="display:none">
+  <!-- 4. Mod Seçimi (Aksiyonlar) -->
+  <section class="home-actions-section">
     <h2 class="section-label">Laboratuvar Modları</h2>
     <div class="actions-grid-new">
       <div class="action-tile" data-action="navigate" data-target="learn">
@@ -602,13 +540,6 @@
           <span class="at-desc">Video Lab</span>
         </div>
       </div>
-      <div class="action-tile" data-action="navigate" data-target="phrases" style="background:linear-gradient(135deg,rgba(167,139,250,0.15),rgba(236,72,153,0.1));">
-        <span class="at-icon">💬</span>
-        <div class="at-text">
-          <span class="at-title">İfadeler</span>
-          <span class="at-desc">Film Alıntıları</span>
-        </div>
-      </div>
       <div class="action-tile" data-action="navigate" data-target="quantum">
         <span class="at-icon">⚛️</span>
         <div class="at-text">
@@ -621,6 +552,13 @@
         <div class="at-text">
           <span class="at-title">Nexus</span>
           <span class="at-desc">Soru-Cevap</span>
+        </div>
+      </div>
+      <div class="action-tile" data-action="navigate" data-target="translate">
+        <span class="at-icon">🔄</span>
+        <div class="at-text">
+          <span class="at-title">Çeviri</span>
+          <span class="at-desc">TR → EN</span>
         </div>
       </div>
     </div>
@@ -681,12 +619,6 @@
 </div>
 </template>
 
-<!-- İfadeler: Film alıntıları kart modu -->
-<template id="tpl-phrases">
-<div class="animate-in" style="height:100%;">
-  <div id="phrases-mount-point" style="height:100%;"></div>
-</div>
-</template>
 
 <!-- Learn: Sinestezi v5.0 -->
 <template id="tpl-learn">
@@ -1151,6 +1083,11 @@
 </template>
 
 
+<!-- Çeviri -->
+<template id="tpl-translate">
+<div class="animate-in" id="translate-root" style="width:100%;min-height:100%;"></div>
+</template>
+
 <!-- İndir -->
 <template id="tpl-download">
 <div class="dl-page animate-in">
@@ -1215,6 +1152,11 @@
 </script>
 </template>
 
+<!-- Rival Mode -->
+<template id="tpl-rival">
+<div class="animate-in" id="rival-root" style="width:100%;min-height:100%;"></div>
+</template>
+
 <!-- External Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous" defer></script>
@@ -1240,24 +1182,22 @@
 <script src="js/auth.js" defer></script>
 <script src="js/conversations.js" defer></script>
 <script src="js/data.js" defer></script>
-<script src="js/ex-tr-data.js" defer></script>
+<script src="js/speak-sentences.js" defer></script>
 <script src="js/phantom.js" defer></script>
 <script src="js/quick-menu.js" defer></script>
 <script src="js/nexus.js" defer></script>
 <script src="js/leaderboard.js" defer></script>
+<script src="js/rival.js" defer></script>
 <script src="js/bridge.js" defer></script>
 <script src="js/reading-engine.js" defer></script>
-<script src="js/app.js" defer></script>
-<script src="js/video-data.js" defer></script>
-<script src="js/cinema.js" defer></script>
-<script src="js/phrases.js" defer></script>
+<script src="js/app.js" defer></script>
 
 <script src="js/sw-register.js" defer></script>
 <script src="js/security-logger.js" defer></script>
 
 <script src="js/placement-test.js" defer></script>
 <script src="js/keys.js" defer></script>
-<script src="js/boot.js?v=35" defer></script>
+<script src="js/boot.js?v=36" defer></script>
 
 <!-- ── Kullanım Şartları Modalı ── -->
 <div id="tos-modal" class="tos-modal" style="display:none">

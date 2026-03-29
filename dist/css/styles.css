@@ -4308,14 +4308,6 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
 @media (max-width: 768px) {
   .layout { grid-template-columns: 1fr; }
   .sidebar { display: none; }
-  .mobile-nav { display: flex; }
-  body.not-home .mobile-nav { display: none; }
-  body.not-home .sidebar-tab { opacity: 0 !important; pointer-events: none !important; }
-
-  /* Veri sayfalarında alt menü görünür (er-in-mode !important'ını yenmek için #id kullanılıyor) */
-  body[data-view="analytics"] #mobile-nav,
-  body[data-view="leaderboard"] #mobile-nav,
-  body[data-view="download"] #mobile-nav { display: flex !important; }
 
   /* Flex/grid çocuklarının min-width:auto ile taşmasını önle */
   .main-content > *,
@@ -4328,7 +4320,7 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
   .main-content {
     padding: 16px
              calc(18px + env(safe-area-inset-right, 0px))
-             calc(var(--mobile-nav-h) + env(safe-area-inset-bottom, 0px) + 12px)
+             calc(16px + env(safe-area-inset-bottom, 0px))
              calc(18px + env(safe-area-inset-left, 0px));
   }
   /* App header: sağda safe-area boşluğu */
