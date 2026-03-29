@@ -8041,6 +8041,54 @@ body.rank-6 { --theme-accent: #ff9d00; }
   font-weight: 600;
 }
 
+/* ── Rival tab ─────────────────────────────────────────────── */
+.lb-tab-rival { letter-spacing: 0.01em; }
+.lb-tab-rival.active {
+  background: linear-gradient(135deg, #f97316, #ef4444);
+  box-shadow: 0 4px 16px rgba(239,68,68,0.35);
+}
+
+/* ── Rival sub-tabs ────────────────────────────────────────── */
+.lb-rival-tabs {
+  display: none;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.lb-rival-tabs.lb-rival-tabs-show { display: flex; }
+.lb-rtab {
+  padding: 6px 18px;
+  border-radius: 50px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: transparent;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.lb-rtab.active {
+  background: rgba(239,68,68,0.18);
+  border-color: rgba(239,68,68,0.45);
+  color: #fca5a5;
+}
+.lb-rtab:not(.active):hover { color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.06); }
+
+/* ── Rival row ─────────────────────────────────────────────── */
+.lb-row-rival .lb-rival-record {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+.lb-row-rival .lb-rival-wr {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.38);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 
 
 /* ── Daily Missions ─────────────────────────── */

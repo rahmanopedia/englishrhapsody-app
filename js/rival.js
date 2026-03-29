@@ -1231,7 +1231,43 @@ class RivalMode {
       const upd = this._role === 'host' ? { hostDone: true, status: 'finished' } : { guestDone: true };
       db.collection('rival_matches').doc(this._matchId).update(upd).catch(() => {});
     }
+    this._updateRivalLeaderboard(win, tie);
     this._renderResult(myS, opS, opN, win, tie);
+  }
+
+  async _updateRivalLeaderboard(win, tie) {
+    const db  = this._db();
+    const uid = this._uid();
+    if (!db || !uid) return;
+    const weekDoc = `weekly_${this._rlWeekKey()}`;
+    for (const docId of [weekDoc, 'all']) {
+      try {
+        const ref  = db.collection('rival_leaderboard').doc(docId).collection('users').doc(uid);
+        const snap = await ref.get();
+        const cur  = snap.exists ? snap.data() : { wins: 0, losses: 0, ties: 0 };
+        const wins   = (cur.wins   || 0) + (win && !tie ? 1 : 0);
+        const losses = (cur.losses || 0) + (!win && !tie ? 1 : 0);
+        const ties   = (cur.ties   || 0) + (tie ? 1 : 0);
+        const total  = wins + losses + ties;
+        const winRate = total > 0 ? Math.round(wins / total * 100) : 0;
+        const name = this._name();
+        await ref.set({
+          uid, name,
+          avatar:  (name[0] || '?').toUpperCase(),
+          wins, losses, ties, winRate,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      } catch(e) { /* rate limit veya bağlantı hatası */ }
+    }
+  }
+
+  _rlWeekKey() {
+    const d = new Date();
+    const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7));
+    const y1 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+    const wk = Math.ceil(((t - y1) / 86400000 + 1) / 7);
+    return `${t.getUTCFullYear()}-W${String(wk).padStart(2, '0')}`;
   }
 
   _renderResult(myS, opS, opN, win, tie) {
