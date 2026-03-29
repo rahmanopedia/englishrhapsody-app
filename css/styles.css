@@ -4301,7 +4301,7 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
 @media (max-width: 768px) {
   .layout { grid-template-columns: 1fr; }
   .sidebar { display: none; }
-  .mobile-nav { display: flex; }
+  .mobile-nav { display: none; }
 
   /* Flex/grid çocuklarının min-width:auto ile taşmasını önle */
   .main-content > *,
