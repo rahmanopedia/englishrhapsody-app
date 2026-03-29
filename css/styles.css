@@ -4305,6 +4305,11 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
   body.not-home .mobile-nav { display: none; }
   body.not-home .sidebar-tab { opacity: 0 !important; pointer-events: none !important; }
 
+  /* Veri sayfalarında alt menü görünür (er-in-mode !important'ını yenmek için #id kullanılıyor) */
+  body[data-view="analytics"] #mobile-nav,
+  body[data-view="leaderboard"] #mobile-nav,
+  body[data-view="download"] #mobile-nav { display: flex !important; }
+
   /* Flex/grid çocuklarının min-width:auto ile taşmasını önle */
   .main-content > *,
   .home-grid > *, .home-container > *,

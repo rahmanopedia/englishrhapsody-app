@@ -1254,6 +1254,9 @@ document.addEventListener('click', function(e) {
 
 /* ── 20. Mobil alt menü: sadece ana merkezde göster ── */
 (function(){
+  // Alt menü bu sayfalarda da görünür (veri/bilgi sayfaları, öğrenme modu değil)
+  var DATA_VIEWS = ['analytics', 'leaderboard', 'download'];
+
   function patch(){
     var app = window._app;
     if(!app || !app.navigate || app.__homeNavPatched) return;
@@ -1261,7 +1264,9 @@ document.addEventListener('click', function(e) {
     var _orig = app.navigate.bind(app);
     app.navigate = function(tgt){
       _orig(tgt);
-      document.body.classList.toggle('not-home', tgt !== 'home');
+      var hideNav = tgt !== 'home' && DATA_VIEWS.indexOf(tgt) === -1;
+      document.body.classList.toggle('not-home', hideNav);
+      document.body.setAttribute('data-view', tgt);
     };
   }
   window.addEventListener('load', function(){ setTimeout(patch, 800); });
