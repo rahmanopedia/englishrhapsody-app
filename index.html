@@ -2,7 +2,7 @@
 <html lang="tr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.googletagmanager.com; style-src-elem 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; media-src 'self' https://files.catbox.moe; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.cloudfunctions.net wss://*.firebaseio.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com/recaptcha/ https://files.catbox.moe https://www.gstatic.com https://cdn.jsdelivr.net https://*.stt.speech.microsoft.com https://huggingface.co https://*.huggingface.co; frame-src 'self' https://www.google.com/recaptcha/ https://englishrhapsody-78866.firebaseapp.com; object-src 'none'; base-uri 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; media-src 'self' https://files.catbox.moe; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.cloudfunctions.net wss://*.firebaseio.com https://www.google-analytics.com https://stats.g.doubleclick.net https://www.google.com/recaptcha/ https://files.catbox.moe https://www.gstatic.com https://cdn.jsdelivr.net https://*.stt.speech.microsoft.com https://huggingface.co https://*.huggingface.co; frame-src 'self' https://www.google.com/recaptcha/ https://englishrhapsody-78866.firebaseapp.com; object-src 'none'; base-uri 'self';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>English Rhapsody | Synesthesia Edition</title>
   <meta name="description" content="İngilizce öğrenmenin en akıllı yolu — AI destekli kelime, gramer, okuma ve konuşma antrenmanı. CEFR seviyene göre kişiselleştirilmiş pratik.">
@@ -231,8 +231,6 @@
   <main class="main-content animate-in" id="main-content"></main>
 </div>
 
-
-
 <!-- Mobile bottom nav -->
 <nav class="mobile-nav" id="mobile-nav">
   <button class="m-nav-item active" data-target="home">
@@ -259,16 +257,47 @@
   <div class="modes-drawer-handle"></div>
   <div class="modes-drawer-title">Modlar</div>
   <div class="modes-drawer-grid">
-    <button class="modes-drawer-item" data-target="reading"><span class="mdi-icon">📖</span><span>Okuma</span></button>
-    <button class="modes-drawer-item" data-target="bridge"><span class="mdi-icon">🌉</span><span>Köprü</span></button>
-    <button class="modes-drawer-item" data-target="nexus"><span class="mdi-icon">✨</span><span>Nexus</span></button>
-    <button class="modes-drawer-item" data-target="quantum"><span class="mdi-icon">⚛️</span><span>Kuantum</span></button>
-    <button class="modes-drawer-item" data-target="learn"><span class="mdi-icon">🌀</span><span>Sinestezi</span><span class="m-srs-badge" id="srs-drawer-badge" style="display:none">0</span></button>
-    <button class="modes-drawer-item" data-target="cinema"><span class="mdi-icon">🎬</span><span>Sinema</span></button>
-    <button class="modes-drawer-item" data-target="translate"><span class="mdi-icon">🔄</span><span>Çeviri</span></button>
-    <button class="modes-drawer-item" data-target="rival"><span class="mdi-icon">⚔️</span><span>Rival</span></button>
-    <button class="modes-drawer-item" data-target="grammar"><span class="mdi-icon">🧩</span><span>Gramer</span></button>
-    <button class="modes-drawer-item" data-target="download"><span class="mdi-icon">📲</span><span>İndir</span></button>
+    <button class="modes-drawer-item" data-target="reading">
+      <span class="mdi-icon">📖</span>
+      <span>Okuma</span>
+    </button>
+    <button class="modes-drawer-item" data-target="bridge">
+      <span class="mdi-icon">🌉</span>
+      <span>Köprü</span>
+    </button>
+    <button class="modes-drawer-item" data-target="nexus">
+      <span class="mdi-icon">✨</span>
+      <span>Nexus</span>
+    </button>
+    <button class="modes-drawer-item" data-target="quantum">
+      <span class="mdi-icon">⚛️</span>
+      <span>Kuantum</span>
+    </button>
+    <button class="modes-drawer-item" data-target="learn">
+      <span class="mdi-icon">🌀</span>
+      <span>Sinestezi</span>
+      <span class="m-srs-badge" id="srs-drawer-badge" style="display:none">0</span>
+    </button>
+    <button class="modes-drawer-item" data-target="cinema">
+      <span class="mdi-icon">🎬</span>
+      <span>Sinema</span>
+    </button>
+    <button class="modes-drawer-item" data-target="translate">
+      <span class="mdi-icon">🔄</span>
+      <span>Çeviri</span>
+    </button>
+    <button class="modes-drawer-item" data-target="rival">
+      <span class="mdi-icon">⚔️</span>
+      <span>Rival</span>
+    </button>
+    <button class="modes-drawer-item" data-target="grammar">
+      <span class="mdi-icon">🧩</span>
+      <span>Gramer</span>
+    </button>
+    <button class="modes-drawer-item" data-target="download">
+      <span class="mdi-icon">📲</span>
+      <span>İndir</span>
+    </button>
   </div>
 </div>
 
@@ -278,10 +307,17 @@
   <div class="modes-drawer-handle"></div>
   <div class="modes-drawer-title">Veriler</div>
   <div class="modes-drawer-grid">
-    <button class="modes-drawer-item" data-target="analytics"><span class="mdi-icon">📊</span><span>Analitik</span></button>
-    <button class="modes-drawer-item" data-target="leaderboard"><span class="mdi-icon">🏆</span><span>Sıralama</span></button>
+    <button class="modes-drawer-item" data-target="analytics">
+      <span class="mdi-icon">📊</span>
+      <span>Analitik</span>
+    </button>
+    <button class="modes-drawer-item" data-target="leaderboard">
+      <span class="mdi-icon">🏆</span>
+      <span>Sıralama</span>
+    </button>
   </div>
 </div>
+
 
 <!-- Toast container -->
 <div id="toast-container"></div>
@@ -1234,6 +1270,7 @@
 <script src="js/data.js" defer></script>
 <script src="js/speak-sentences.js" defer></script>
 <script src="js/phantom.js" defer></script>
+<script src="js/quick-menu.js" defer></script>
 <script src="js/nexus.js" defer></script>
 <script src="js/leaderboard.js" defer></script>
 <script src="js/rival.js" defer></script>

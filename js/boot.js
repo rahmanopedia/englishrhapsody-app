@@ -20,7 +20,6 @@
     learn:   ['js/ex-tr-data.js'],
     cinema:    ['js/video-data.js', 'js/cinema.js'],
     translate: ['js/translate-data.js','js/translate-data2.js','js/translate-data3.js','js/translate-data4.js','js/translate-data5.js','js/translate-data6.js','js/translate.js'],
-    rival: [],
   };
 
   var loaded = new Set();
@@ -128,6 +127,60 @@
   });
 })();
 
+/* ── 2. Mobile nav behavior ── */
+(function(){
+  var MODE_VIEWS=new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement','cinema','translate','grammar','flashcards']);
+  var HIDE_MS=2000;
+
+  function setup(){
+    var app=window._app||window.app;
+    if(!app||!app._showMobileNav){setTimeout(setup,150);return;}
+
+    app._navLocked=false;
+
+    app._showMobileNav=function(){
+      var nav=document.getElementById('mobile-nav');
+      var tab=document.getElementById('sidebar-tab');
+      if(!nav)return;
+      var inMode=MODE_VIEWS.has(app.session&&app.session.view)||!!document.getElementById('cinema-mount-point');
+      if(inMode&&app._navLocked)return;
+      nav.classList.remove('nav-hidden');
+      if(tab)tab.classList.remove('visible');
+      clearTimeout(app._navHideTimer);
+      if(inMode){
+        app._navHideTimer=setTimeout(function(){
+          if(MODE_VIEWS.has(app.session&&app.session.view)||!!document.getElementById('cinema-mount-point')){
+            nav.classList.add('nav-hidden');
+            if(tab)tab.classList.add('visible');
+            app._navLocked=true;
+          }
+        },HIDE_MS);
+      } else {
+        app._navLocked=false;
+      }
+    };
+
+    var lastTap=0;
+    document.addEventListener('touchend',function(e){
+      if(e.target.closest('.mobile-nav,#mobile-nav,.m-nav-item'))return;
+      var now=Date.now();
+      if(now-lastTap<320){
+        var nav=document.getElementById('mobile-nav');
+        if(nav&&nav.classList.contains('nav-hidden')){
+          // Modlardayken double-tap → sadece NAVIGASYON sheet açılsın, mobile nav açılmasın
+          if(document.body.classList.contains('er-in-mode')){lastTap=0;return;}
+          app._navLocked=false;
+          app._showMobileNav();
+        }
+        lastTap=0;
+      } else {
+        lastTap=now;
+      }
+    },{passive:true});
+  }
+
+  window.addEventListener('load',setup);
+})();
 
 /* ── 3. Nexus intro scroll lock ── */
 (function(){
@@ -999,7 +1052,7 @@ document.addEventListener('click', function(e) {
     var chip = document.createElement('div');
     chip.className = 'srs-due-chip';
     if(n > 0){
-      chip.innerHTML = '📅 <strong>' + (n|0) + '</strong> kelime tekrara düştü — oturum başlayınca önce bunlar gelir';
+      chip.innerHTML = '📅 <strong>' + n + '</strong> kelime tekrara düştü — oturum başlayınca önce bunlar gelir';
       chip.style.background = 'rgba(0,212,255,0.07)';
       chip.style.borderColor = 'rgba(0,212,255,0.25)';
       chip.style.color = 'var(--cyan)';
@@ -1031,7 +1084,7 @@ document.addEventListener('click', function(e) {
     card.innerHTML =
       '<div class="srs-home-icon">📅</div>' +
       '<div class="srs-home-text">' +
-        '<strong>' + (n|0) + ' kelime</strong> bugün tekrara düştü' +
+        '<strong>' + n + ' kelime</strong> bugün tekrara düştü' +
       '</div>' +
       '<button class="srs-home-btn" id="srs-home-go">Başla →</button>' +
       '<button class="srs-home-x" id="srs-home-x">✕</button>';
@@ -1080,7 +1133,7 @@ document.addEventListener('click', function(e) {
   var TODAY = new Date().toISOString().split('T')[0];
   var SKEY  = 'er_path_' + TODAY;
 
-  function getVisited(){ try{ var v=JSON.parse(localStorage.getItem(SKEY)||'[]'); return Array.isArray(v)?v.filter(function(x){return typeof x==='string'&&x.length<=50;}):[];  }catch(e){ return []; } }
+  function getVisited(){ try{ return JSON.parse(localStorage.getItem(SKEY)||'[]'); }catch(e){ return []; } }
   function saveVisit(t){ var v=getVisited(); if(v.indexOf(t)<0){ v.push(t); localStorage.setItem(SKEY,JSON.stringify(v)); } }
 
   function getSteps(){
@@ -1196,20 +1249,4 @@ document.addEventListener('click', function(e) {
       renderCard();
     }, 1000);
   });
-})();
-
-
-/* ── 20. Mobil alt menü: sadece ana merkezde göster ── */
-(function(){
-  function patch(){
-    var app = window._app;
-    if(!app || !app.navigate || app.__homeNavPatched) return;
-    app.__homeNavPatched = true;
-    var _orig = app.navigate.bind(app);
-    app.navigate = function(tgt){
-      _orig(tgt);
-      document.body.classList.toggle('not-home', tgt !== 'home');
-    };
-  }
-  window.addEventListener('load', function(){ setTimeout(patch, 800); });
 })();
