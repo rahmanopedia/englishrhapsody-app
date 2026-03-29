@@ -28,6 +28,13 @@ function _esc(s) {
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+function _colorWord(str) {
+  const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#c77dff','#ff9a3c','#00c9a7','#ff6b9d','#f0a500','#56cfe1'];
+  return [...String(str||'')].map((ch, i) =>
+    ch === ' ' ? ' ' : `<span style="color:${colors[i % colors.length]}">${_esc(ch)}</span>`
+  ).join('');
+}
+
 /* ── Question builders ────────────────────────────── */
 
 function _buildTranslate(level, n) {
@@ -70,6 +77,26 @@ function _buildCinemaClips(n) {
       film: clip.film || '', cefr: clip.cefr || '',
       questions: qs
     };
+  });
+}
+
+function _buildSynesthesia(level, n) {
+  if (typeof WORDS === 'undefined' || !WORDS.length) return [];
+  const pool = _sh(WORDS.filter(w => w.en && w.tr && (level === 'ALL' || w.level === level)));
+  if (pool.length < 4) return [];
+  return pool.slice(0, n).map(w => {
+    const wrongs = _sh(pool.filter(x => x.en !== w.en).map(x => x.en)).slice(0, 3);
+    return { prompt: w.tr, correct: w.en, choices: _sh([w.en, ...wrongs]), meta: (w.icon||'') + ' ' + (w.level||'') };
+  });
+}
+
+function _buildPhantom(level, n) {
+  if (typeof WORDS === 'undefined' || !WORDS.length) return [];
+  const pool = _sh(WORDS.filter(w => w.en && w.tr && (level === 'ALL' || w.level === level)));
+  if (pool.length < 4) return [];
+  return pool.slice(0, n).map(w => {
+    const wrongs = _sh(pool.filter(x => x.tr !== w.tr).map(x => x.tr)).slice(0, 3);
+    return { prompt: w.en, correct: w.tr, choices: _sh([w.tr, ...wrongs]), meta: (w.icon||'') + ' ' + (w.level||''), phantom: true };
   });
 }
 
@@ -179,6 +206,12 @@ class RivalMode {
               <button class="rv-mode-card" data-rv-mode="cinema">
                 <span>🎬</span><strong>Sinema</strong><small>5 video · Hız Puanı</small>
               </button>
+              <button class="rv-mode-card" data-rv-mode="synesthesia">
+                <span>🎨</span><strong>Sinestezi</strong><small>TR → EN yazım</small>
+              </button>
+              <button class="rv-mode-card" data-rv-mode="phantom">
+                <span>👻</span><strong>Phantom</strong><small>Kelimeyi ezberle</small>
+              </button>
             </div>
             <div id="rv-lv-sec">
               <label class="rv-form-label">Seviye</label>
@@ -217,6 +250,12 @@ class RivalMode {
           if (sec)  sec.style.display = 'none';
           this._level = 'ALL';
           if (info) info.innerHTML = `<span>⏱ ${CINEMA_Q_SEC} sn/soru</span><span>🎬 ${CINEMA_CLIP_COUNT} klip</span><span>⚡ Hız Puanı</span><span>🏆 Kazanana +50 XP</span>`;
+        } else if (this._mode === 'synesthesia') {
+          if (sec)  sec.style.display = '';
+          if (info) info.innerHTML = `<span>⏱ ${TIMER_SEC} sn/soru</span><span>❓ ${Q_COUNT} soru</span><span>🎨 Renkli Yazım</span><span>🏆 Kazanana +50 XP</span>`;
+        } else if (this._mode === 'phantom') {
+          if (sec)  sec.style.display = '';
+          if (info) info.innerHTML = `<span>⏱ ${TIMER_SEC} sn/soru</span><span>❓ ${Q_COUNT} soru</span><span>👻 1.2 sn Flash</span><span>🏆 Kazanana +50 XP</span>`;
         } else {
           if (sec)  sec.style.display = '';
           if (info) info.innerHTML = `<span>⏱ ${TIMER_SEC} sn/soru</span><span>❓ ${Q_COUNT} soru</span><span>🏆 Kazanana +50 XP</span>`;
@@ -288,6 +327,8 @@ class RivalMode {
   async _ensureData(mode) {
     const srcs = mode === 'cinema'
       ? ['js/video-data.js']
+      : (mode === 'synesthesia' || mode === 'phantom')
+      ? [] // WORDS loaded at startup via data.js
       : ['js/translate-data.js','js/translate-data2.js','js/translate-data3.js',
          'js/translate-data4.js','js/translate-data5.js','js/translate-data6.js'];
     for (const src of srcs) {
@@ -320,6 +361,34 @@ class RivalMode {
         hostId, hostName, guestId, guestName,
         cinemaClips: clips, questions: [], maxScore,
         hostScore:0, guestScore:0, hostClip:0, guestClip:0,
+        hostDone:false, guestDone:false,
+        createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
+      });
+    } else if (mode === 'synesthesia') {
+      const questions = _buildSynesthesia(level, Q_COUNT);
+      if (questions.length < Q_COUNT) {
+        typeof UI !== 'undefined' && UI.toast('Yeterli soru bulunamadı');
+        this._renderLobby(); return;
+      }
+      batch.set(matchRef, {
+        status:'playing', mode, level,
+        hostId, hostName, guestId, guestName,
+        questions, maxScore: Q_COUNT * 10,
+        hostScore:0, guestScore:0, hostQ:0, guestQ:0,
+        hostDone:false, guestDone:false,
+        createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
+      });
+    } else if (mode === 'phantom') {
+      const questions = _buildPhantom(level, Q_COUNT);
+      if (questions.length < Q_COUNT) {
+        typeof UI !== 'undefined' && UI.toast('Yeterli soru bulunamadı');
+        this._renderLobby(); return;
+      }
+      batch.set(matchRef, {
+        status:'playing', mode, level,
+        hostId, hostName, guestId, guestName,
+        questions, maxScore: Q_COUNT * 10,
+        hostScore:0, guestScore:0, hostQ:0, guestQ:0,
         hostDone:false, guestDone:false,
         createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
       });
@@ -389,7 +458,7 @@ class RivalMode {
 
   _renderWaiting() {
     this._phase = 'waiting';
-    const mLabel = this._mode === 'translate' ? '🔄 Çeviri' : '🎬 Sinema';
+    const mLabel = this._mode === 'cinema' ? '🎬 Sinema' : this._mode === 'synesthesia' ? '🎨 Sinestezi' : this._mode === 'phantom' ? '👻 Phantom' : '🔄 Çeviri';
     const lvText = this._mode === 'cinema' ? '' : ' · ' + this._level;
     this.el.innerHTML = `
       <div class="rv-waiting">
@@ -419,7 +488,7 @@ class RivalMode {
     const myN     = this._name();
     const opN     = this._role === 'host' ? (m.guestName || '…') : (m.hostName || '…');
     const isCinema = m.mode === 'cinema';
-    const ml      = isCinema ? '🎬 Sinema' : '🔄 Çeviri';
+    const ml      = m.mode === 'cinema' ? '🎬 Sinema' : m.mode === 'synesthesia' ? '🎨 Sinestezi' : m.mode === 'phantom' ? '👻 Phantom' : '🔄 Çeviri';
     const lv      = m.level !== 'ALL' ? ' · ' + m.level : '';
     const cnt     = isCinema ? CINEMA_CLIP_COUNT + ' klip' : Q_COUNT + ' soru';
 
@@ -442,7 +511,7 @@ class RivalMode {
             <div class="rv-cd-badge">RAKİP</div>
           </div>
         </div>
-        ${isCinema ? '<div class="rv-cd-hint">🎬 Videoyu izle · soruyu yanıtla · hızlı cevap daha fazla puan!</div>' : ''}
+        ${isCinema ? '<div class="rv-cd-hint">🎬 Videoyu izle · soruyu yanıtla · hızlı cevap daha fazla puan!</div>' : m.mode === 'phantom' ? '<div class="rv-cd-hint">👻 Kelimeyi 1.2 saniye ezberle, sonra Türkçe anlamını seç!</div>' : m.mode === 'synesthesia' ? '<div class="rv-cd-hint">🎨 Türkçe kelimeyi gör, doğru İngilizce yazımı seç!</div>' : ''}
       </div>`;
 
     let n = 3;
@@ -518,11 +587,17 @@ class RivalMode {
     const qc   = this.el.querySelector('#rv-qc');
     if (!zone) return;
     if (qc) qc.textContent = (this._qIdx + 1) + '/' + Q_COUNT;
+    const mode = (this._matchData && this._matchData.mode) || 'translate';
+    if (mode === 'phantom') { this._showPhantomFlash(q, zone); return; }
+    const promptHtml = mode === 'synesthesia'
+      ? `<div class="rv-q-prompt rv-syn-prompt">${_colorWord(q.prompt)}</div>`
+      : `<div class="rv-q-prompt">${_esc(q.prompt)}</div>`;
+    const cueText = mode === 'synesthesia' ? 'Doğru İngilizce yazımı seç' : 'Doğru çeviriyi seç';
     zone.innerHTML = `
       <div class="rv-q animate-in">
         ${q.meta ? `<div class="rv-q-meta">${_esc(q.meta)}</div>` : ''}
-        <div class="rv-q-prompt">${_esc(q.prompt)}</div>
-        <p class="rv-q-cue">Doğru çeviriyi seç</p>
+        ${promptHtml}
+        <p class="rv-q-cue">${cueText}</p>
         <div class="rv-q-choices">
           ${q.choices.map((c,i) => `
             <button class="rv-choice" data-val="${_esc(c)}">
@@ -534,6 +609,40 @@ class RivalMode {
     zone.querySelectorAll('.rv-choice').forEach(btn =>
       btn.addEventListener('click', () => this._pick(btn.dataset.val, q.correct)));
     this._startTimer(q.correct);
+  }
+
+  _showPhantomFlash(q, zone) {
+    const FLASH_MS = 1200;
+    zone.innerHTML = `
+      <div class="rv-q animate-in">
+        ${q.meta ? `<div class="rv-q-meta">${_esc(q.meta)}</div>` : ''}
+        <div class="rv-phantom-flash" id="rv-ph-word">${_esc(q.prompt)}</div>
+        <div class="rv-ph-bar-wrap"><div class="rv-ph-bar" id="rv-ph-bar"></div></div>
+        <p class="rv-q-cue rv-ph-hide" id="rv-ph-cue">Türkçe anlamını seç</p>
+        <div class="rv-q-choices rv-ph-hide" id="rv-ph-choices">
+          ${q.choices.map((c,i) => `
+            <button class="rv-choice" data-val="${_esc(c)}">
+              <span class="rv-ch-letter">${'ABCD'[i]}</span>
+              <span class="rv-ch-text">${_esc(c)}</span>
+            </button>`).join('')}
+        </div>
+      </div>`;
+    const bar = zone.querySelector('#rv-ph-bar');
+    if (bar) requestAnimationFrame(() => {
+      bar.style.transition = `width ${FLASH_MS}ms linear`;
+      bar.style.width = '0%';
+    });
+    setTimeout(() => {
+      const word = zone.querySelector('#rv-ph-word');
+      const cue  = zone.querySelector('#rv-ph-cue');
+      const ch   = zone.querySelector('#rv-ph-choices');
+      if (word) word.classList.add('rv-ph-fade');
+      if (cue)  cue.classList.remove('rv-ph-hide');
+      if (ch)   ch.classList.remove('rv-ph-hide');
+      zone.querySelectorAll('.rv-choice').forEach(btn =>
+        btn.addEventListener('click', () => this._pick(btn.dataset.val, q.correct)));
+      this._startTimer(q.correct);
+    }, FLASH_MS);
   }
 
   _startTimer(correct) {
