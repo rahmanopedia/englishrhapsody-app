@@ -821,7 +821,7 @@ class RivalMode {
     const opN = (this._role === 'host' ? m.guestName : m.hostName) || 'Rakip';
     this.el.innerHTML = `
       <div class="rv-cinema-arena" id="rv-ca">
-        <video class="rv-cv" id="rv-vid" playsinline webkit-playsinline preload="auto"></video>
+        <video class="rv-cv" id="rv-vid" playsinline webkit-playsinline preload="auto" disablepictureinpicture x-webkit-airplay="deny"></video>
         <div class="rv-cv-overlay"></div>
 
         <div class="rv-cv-loader" id="rv-cv-loader">
@@ -871,6 +871,8 @@ class RivalMode {
           <div class="rv-cq-choices" id="rv-cq-choices"></div>
         </div>
       </div>`;
+    // Pre-warm clip 1 immediately while clip 0 is being set up
+    this._preloadNextClip(1);
     this._playClip(0);
   }
 
@@ -930,6 +932,8 @@ class RivalMode {
       if (bar) bar.style.width = '100%';
       if (loader) { setTimeout(() => loader.classList.remove('rv-cvl-show'), 200); }
       if (info)   { setTimeout(() => info.classList.add('rv-ci-in'), 200); }
+      // Preload next clip as soon as this one starts playing
+      this._preloadNextClip(clipIdx + 1);
       vid.currentTime = clip.start;
       vid.ontimeupdate = () => {
         if (vid.currentTime >= clip.end - 0.15) {
@@ -952,20 +956,25 @@ class RivalMode {
       doPlay();
     };
 
-    // Change src only if different (preserves browser cache on same url)
-    if (vid.src !== clip.url) { vid.src = clip.url; vid.load(); }
-    else { vid.load(); }
+    // If same URL and already buffered enough, skip reload entirely
+    if (vid.src === clip.url && vid.readyState >= 3) {
+      onReady();
+      return;
+    }
+    if (vid.src !== clip.url) { vid.src = clip.url; }
+    vid.load();
 
-    if (vid.readyState >= 4) {
+    // canplay fires as soon as the browser has enough to START — much earlier than canplaythrough
+    if (vid.readyState >= 3) {
       onReady();
     } else {
-      vid.addEventListener('canplaythrough', onReady, { once: true });
-      // Fallback: start after 12 s regardless (slow network)
+      vid.addEventListener('canplay', onReady, { once: true });
+      // Fallback: 5s on very slow connections
       this._bufTimeout = setTimeout(() => {
-        vid.removeEventListener('canplaythrough', onReady);
+        vid.removeEventListener('canplay', onReady);
         clearInterval(barTick);
         doPlay();
-      }, 12000);
+      }, 5000);
     }
   }
 
@@ -1005,6 +1014,8 @@ class RivalMode {
     pv.style.cssText = 'position:fixed;width:1px;height:1px;top:-9999px;left:-9999px;opacity:0;pointer-events:none;';
     document.body.appendChild(pv);
     pv.load();
+    // Seek to clip start so browser buffers from the right position
+    pv.addEventListener('loadedmetadata', () => { try { pv.currentTime = clip.start || 0; } catch(e){} }, { once: true });
     this._preloaderVid = pv;
   }
 
