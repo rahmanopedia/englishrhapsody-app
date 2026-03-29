@@ -102,6 +102,7 @@ class RivalMode {
   init(el) {
     this.el = el;
     el.classList.add('rv-fullscreen');
+    this._enterFullscreen();
     this._renderLobby();
   }
 
@@ -113,7 +114,32 @@ class RivalMode {
     if (this._searchTmr) { clearTimeout(this._searchTmr); this._searchTmr = null; }
     this._leaveQueue();
     if (this.el) this.el.classList.remove('rv-fullscreen');
+    this._exitFullscreen();
     window.rivalMod = null;
+  }
+
+  _enterFullscreen() {
+    try {
+      const el = document.documentElement;
+      const fn = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen;
+      if (fn) fn.call(el).catch(() => {});
+    } catch(e) {}
+    try {
+      if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+    } catch(e) {}
+  }
+
+  _exitFullscreen() {
+    try {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        const fn = document.exitFullscreen || document.webkitExitFullscreen;
+        if (fn) fn.call(document).catch(() => {});
+      }
+    } catch(e) {}
+    try {
+      if (screen.orientation && screen.orientation.lock)
+        screen.orientation.lock('portrait').catch(() => {});
+    } catch(e) {}
   }
 
   _db()   { return window.authManager && window.authManager._db; }
