@@ -94,9 +94,11 @@ class RivalMode {
     this._answered   = false;
     this._phase      = 'lobby';
     this._searchTmr  = null;
-    this._mode       = 'translate';
-    this._level      = 'ALL';
-    this._vid        = null;
+    this._mode        = 'translate';
+    this._level       = 'ALL';
+    this._vid         = null;
+    this._preloaderVid = null;
+    this._bufTimeout  = null;
   }
 
   init(el) {
@@ -109,6 +111,8 @@ class RivalMode {
   destroy() {
     this._clearTimer();
     if (this._vid) { try { this._vid.pause(); this._vid.src = ''; } catch(e){} this._vid = null; }
+    if (this._preloaderVid) { try { this._preloaderVid.src = ''; this._preloaderVid.remove(); } catch(e){} this._preloaderVid = null; }
+    if (this._bufTimeout) { clearTimeout(this._bufTimeout); this._bufTimeout = null; }
     if (this._unsub)     { this._unsub();     this._unsub     = null; }
     if (this._unsubQ)    { this._unsubQ();    this._unsubQ    = null; }
     if (this._searchTmr) { clearTimeout(this._searchTmr); this._searchTmr = null; }
@@ -587,6 +591,15 @@ class RivalMode {
       <div class="rv-cinema-arena" id="rv-ca">
         <video class="rv-cv" id="rv-vid" playsinline webkit-playsinline preload="auto"></video>
         <div class="rv-cv-overlay"></div>
+
+        <div class="rv-cv-loader" id="rv-cv-loader">
+          <div class="rv-cvl-spinner"></div>
+          <div class="rv-cvl-label">🎬 Klip <span id="rv-cvl-n">1</span>/${CINEMA_CLIP_COUNT} yükleniyor…</div>
+          <div class="rv-cvl-bar-wrap"><div class="rv-cvl-bar" id="rv-cvl-bar" style="width:0%"></div></div>
+        </div>
+        <div class="rv-cv-buf" id="rv-cv-buf">
+          <div class="rv-cvb-ring"></div>
+        </div>
         <div class="rv-fs-hud">
           <div class="rv-scorebar rv-scorebar-fs">
             <div class="rv-sb-you">
@@ -638,40 +651,95 @@ class RivalMode {
     this._clipIdx    = clipIdx;
     this._cinemaQIdx = 0;
 
+    // Update counters & labels
     const ctr = this.el.querySelector('#rv-clip-ctr');
     const ciN = this.el.querySelector('#rv-ci-n');
     const ciF = this.el.querySelector('#rv-ci-film');
     const lbl = this.el.querySelector('#rv-cq-lbl');
-    if (ctr) ctr.textContent = (clipIdx + 1) + '/' + CINEMA_CLIP_COUNT;
-    if (ciN) ciN.textContent = clipIdx + 1;
-    if (ciF) ciF.textContent = [clip.film, clip.cefr].filter(Boolean).join(' · ');
-    if (lbl) lbl.textContent = 'Klip ' + (clipIdx + 1) + '/' + CINEMA_CLIP_COUNT;
+    const cvlN = this.el.querySelector('#rv-cvl-n');
+    if (ctr)  ctr.textContent  = (clipIdx + 1) + '/' + CINEMA_CLIP_COUNT;
+    if (ciN)  ciN.textContent  = clipIdx + 1;
+    if (ciF)  ciF.textContent  = [clip.film, clip.cefr].filter(Boolean).join(' · ');
+    if (lbl)  lbl.textContent  = 'Klip ' + (clipIdx + 1) + '/' + CINEMA_CLIP_COUNT;
+    if (cvlN) cvlN.textContent = clipIdx + 1;
 
-    const info  = this.el.querySelector('#rv-clip-info');
-    const panel = this.el.querySelector('#rv-cqp');
-    if (info)  info.classList.add('rv-ci-in');
-    if (panel) panel.classList.remove('rv-cqp-in');
+    // Hide question panel + clip info, show loader
+    const info   = this.el.querySelector('#rv-clip-info');
+    const panel  = this.el.querySelector('#rv-cqp');
+    const loader = this.el.querySelector('#rv-cv-loader');
+    const bar    = this.el.querySelector('#rv-cvl-bar');
+    if (info)   info.classList.remove('rv-ci-in');
+    if (panel)  panel.classList.remove('rv-cqp-in');
+    if (loader) loader.classList.add('rv-cvl-show');
+    if (bar)    bar.style.width = '0%';
+    this._showVidBuf(false);
+
+    // Cancel any previous buffer timeout
+    if (this._bufTimeout) { clearTimeout(this._bufTimeout); this._bufTimeout = null; }
 
     const vid = this.el.querySelector('#rv-vid');
     if (!vid) return;
     this._vid = vid;
+    vid.onwaiting = () => this._showVidBuf(true);
+    vid.onplaying = () => this._showVidBuf(false);
 
-    const startAndWatch = () => {
+    // Animate loader bar using buffered ranges
+    const barTick = setInterval(() => {
+      try {
+        if (vid.buffered.length && vid.duration > 0) {
+          const pct = (vid.buffered.end(vid.buffered.length - 1) / vid.duration) * 100;
+          if (bar) bar.style.width = Math.min(96, pct) + '%';
+        }
+      } catch(e) {}
+    }, 250);
+
+    const doPlay = () => {
+      clearInterval(barTick);
+      if (bar) bar.style.width = '100%';
+      if (loader) { setTimeout(() => loader.classList.remove('rv-cvl-show'), 200); }
+      if (info)   { setTimeout(() => info.classList.add('rv-ci-in'), 200); }
       vid.currentTime = clip.start;
       vid.ontimeupdate = () => {
         if (vid.currentTime >= clip.end - 0.15) {
-          vid.pause(); vid.ontimeupdate = null;
+          vid.pause();
+          vid.ontimeupdate = null;
+          vid.onwaiting = null;
+          vid.onplaying = null;
+          this._showVidBuf(false);
           if (info) info.classList.remove('rv-ci-in');
           setTimeout(() => this._showCinemaQ(clipIdx, 0), 500);
         }
       };
       const p = vid.play();
-      if (p) p.catch(() => this._showVidPlayBtn(vid, startAndWatch));
+      if (p) p.catch(() => this._showVidPlayBtn(vid, doPlay));
     };
 
-    vid.src = clip.url;
-    if (vid.readyState >= 1) { startAndWatch(); }
-    else { vid.onloadedmetadata = () => { vid.onloadedmetadata = null; startAndWatch(); }; vid.load(); }
+    const onReady = () => {
+      clearInterval(barTick);
+      if (this._bufTimeout) { clearTimeout(this._bufTimeout); this._bufTimeout = null; }
+      doPlay();
+    };
+
+    // Change src only if different (preserves browser cache on same url)
+    if (vid.src !== clip.url) { vid.src = clip.url; vid.load(); }
+    else { vid.load(); }
+
+    if (vid.readyState >= 4) {
+      onReady();
+    } else {
+      vid.addEventListener('canplaythrough', onReady, { once: true });
+      // Fallback: start after 12 s regardless (slow network)
+      this._bufTimeout = setTimeout(() => {
+        vid.removeEventListener('canplaythrough', onReady);
+        clearInterval(barTick);
+        doPlay();
+      }, 12000);
+    }
+  }
+
+  _showVidBuf(show) {
+    const el = this.el && this.el.querySelector('#rv-cv-buf');
+    if (el) el.classList.toggle('rv-cvb-show', show);
   }
 
   _showVidPlayBtn(vid, onPlay) {
@@ -682,6 +750,30 @@ class RivalMode {
     btn.innerHTML = '▶ Videoyu Başlat';
     btn.onclick = () => { btn.remove(); onPlay(); };
     arena.appendChild(btn);
+  }
+
+  _preloadNextClip(clipIdx) {
+    const m     = this._matchData || {};
+    const clips = m.cinemaClips || [];
+    if (clipIdx >= clips.length || clipIdx >= CINEMA_CLIP_COUNT) return;
+    const clip = clips[clipIdx];
+    if (!clip || !clip.url) return;
+    // Already preloading this clip?
+    if (this._preloaderVid && this._preloaderVid._rvClipIdx === clipIdx) return;
+    // Clean up old preloader
+    if (this._preloaderVid) {
+      try { this._preloaderVid.src = ''; this._preloaderVid.remove(); } catch(e) {}
+      this._preloaderVid = null;
+    }
+    const pv = document.createElement('video');
+    pv._rvClipIdx = clipIdx;
+    pv.preload    = 'auto';
+    pv.muted      = true;
+    pv.src        = clip.url;
+    pv.style.cssText = 'position:fixed;width:1px;height:1px;top:-9999px;left:-9999px;opacity:0;pointer-events:none;';
+    document.body.appendChild(pv);
+    pv.load();
+    this._preloaderVid = pv;
   }
 
   _showCinemaQ(clipIdx, qIdx) {
@@ -702,6 +794,9 @@ class RivalMode {
 
     const q = qs[qIdx];
     this._cinemaQIdx = qIdx;
+
+    // İlk soruda bir sonraki klibi arka planda yükle
+    if (qIdx === 0) this._preloadNextClip(clipIdx + 1);
 
     const panel = this.el.querySelector('#rv-cqp');
     if (panel) { panel.classList.remove('rv-cqp-in'); void panel.offsetWidth; panel.classList.add('rv-cqp-in'); }

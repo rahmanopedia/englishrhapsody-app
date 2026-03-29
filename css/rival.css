@@ -498,6 +498,50 @@
   100% { opacity: 0; transform: translate(-50%,-105%) scale(.85); }
 }
 
+/* Video loading overlay */
+.rv-cv-loader {
+  position: absolute; inset: 0; z-index: 18;
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center; gap: .9rem;
+  background: rgba(0,0,0,.82); backdrop-filter: blur(6px);
+}
+.rv-cv-loader.rv-cvl-show { display: flex; }
+
+.rv-cvl-spinner {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 3px solid rgba(0,212,255,.2);
+  border-top-color: #00d4ff;
+  animation: rv-spin .75s linear infinite;
+}
+@keyframes rv-spin { to { transform: rotate(360deg); } }
+
+.rv-cvl-label {
+  font-size: .82rem; font-weight: 700; color: rgba(255,255,255,.75);
+  letter-spacing: .03em;
+}
+.rv-cvl-bar-wrap {
+  width: 160px; height: 4px;
+  background: rgba(255,255,255,.1); border-radius: 99px; overflow: hidden;
+}
+.rv-cvl-bar {
+  height: 100%; background: linear-gradient(90deg,#0ea5e9,#00d4ff);
+  border-radius: 99px; transition: width .25s ease;
+}
+
+/* Mid-playback buffering ring */
+.rv-cv-buf {
+  position: absolute; inset: 0; z-index: 17;
+  display: none; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.rv-cv-buf.rv-cvb-show { display: flex; }
+.rv-cvb-ring {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.15);
+  border-top-color: rgba(255,255,255,.75);
+  animation: rv-spin .65s linear infinite;
+}
+
 /* Autoplay fallback button */
 .rv-vid-play-btn {
   position: absolute; top: 50%; left: 50%;
