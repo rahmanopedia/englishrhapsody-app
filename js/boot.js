@@ -1252,3 +1252,17 @@ document.addEventListener('click', function(e) {
   });
 })();
 
+/* ── 20. Mobil alt menü: sadece ana merkezde göster ── */
+(function(){
+  function patch(){
+    var app = window._app;
+    if(!app || !app.navigate || app.__homeNavPatched) return;
+    app.__homeNavPatched = true;
+    var _orig = app.navigate.bind(app);
+    app.navigate = function(tgt){
+      _orig(tgt);
+      document.body.classList.toggle('not-home', tgt !== 'home');
+    };
+  }
+  window.addEventListener('load', function(){ setTimeout(patch, 800); });
+})();
