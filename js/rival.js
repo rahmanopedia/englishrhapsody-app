@@ -286,25 +286,21 @@ class RivalMode {
     const name  = this._name();
     const mode  = this._mode;
     const level = mode === 'cinema' ? 'ALL' : this._level;
-    const key   = mode + '_' + level;
     this._renderWaiting();
     try {
-      const snap = await db.collection('rival_queue').where('mode_level','==',key).limit(20).get();
-      const now  = Date.now();
-      const pool = snap.docs.filter(d => {
-        const da = d.data();
-        return d.id !== uid && !da.matchId &&
-          (now - ((da.createdAt && da.createdAt.toMillis && da.createdAt.toMillis()) || 0)) < QUEUE_TTL_MS;
-      });
-      if (pool.length > 0) {
-        const oppDoc  = pool[Math.floor(Math.random() * pool.length)];
-        const oppData = oppDoc.data();
-        await this._createMatch(mode, level, uid, name, oppData.uid, oppData.name, oppDoc.id);
+      // Cloud Function ile atomik eşleştirme (yarış koşulunu önler)
+      const fn     = firebase.app().functions('europe-west1').httpsCallable('rivalJoin');
+      const result = await fn({ mode, level, name });
+      const { status, matchId, role, guestUid, guestName } = result.data;
+
+      if (status === 'matched') {
+        // Evsahibi — maç verisini (soruları/klipleri) doldur ve başlat
+        this._role    = 'host';
+        this._matchId = matchId;
+        await this._populateMatch(mode, level, matchId, uid, name, guestUid, guestName);
+        await this._joinMatch(matchId, 'host');
       } else {
-        await db.collection('rival_queue').doc(uid).set({
-          uid, name, mode_level: key, mode, level, matchId: null,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
+        // Kuyrukta bekle — matchId atandığında misafir olarak katıl
         this._unsubQ = db.collection('rival_queue').doc(uid).onSnapshot(snap => {
           const data = snap.data();
           if (data && data.matchId && this._phase === 'waiting') {
@@ -346,13 +342,13 @@ class RivalMode {
     }
   }
 
-  async _createMatch(mode, level, hostId, hostName, guestId, guestName, guestQueueId) {
-    const db  = this._db();
+  // _createMatch artık kullanılmıyor — CF + _populateMatch ile değiştirildi
+
+  /* ── Evsahibi: CF'nin oluşturduğu maç kabuğunu doldur ── */
+  async _populateMatch(mode, level, matchId, hostId, hostName, guestId, guestName) {
+    const db = this._db();
     await this._ensureData(mode);
-    const matchRef = db.collection('rival_matches').doc();
-    const matchId  = matchRef.id;
-    const batch    = db.batch();
-    const ts       = firebase.firestore.FieldValue.serverTimestamp();
+    let update = {};
 
     if (mode === 'cinema') {
       const clips = _buildCinemaClips(CINEMA_CLIP_COUNT);
@@ -361,64 +357,31 @@ class RivalMode {
         this._renderLobby(); return;
       }
       const maxScore = clips.reduce((s, c) => s + (c.questions || []).length, 0) * 10;
-      batch.set(matchRef, {
-        status:'playing', mode, level,
-        hostId, hostName, guestId, guestName,
-        cinemaClips: clips, questions: [], maxScore,
-        hostScore:0, guestScore:0, hostClip:0, guestClip:0,
-        hostDone:false, guestDone:false,
-        createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
-      });
+      update = { cinemaClips: clips, maxScore, status: 'playing' };
     } else if (mode === 'synesthesia') {
       const questions = _buildSynesthesia(level, Q_COUNT);
       if (questions.length < Q_COUNT) {
         typeof UI !== 'undefined' && UI.toast('Yeterli soru bulunamadı');
         this._renderLobby(); return;
       }
-      batch.set(matchRef, {
-        status:'playing', mode, level,
-        hostId, hostName, guestId, guestName,
-        questions, maxScore: Q_COUNT * 15,
-        hostScore:0, guestScore:0, hostQ:0, guestQ:0,
-        hostDone:false, guestDone:false,
-        createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
-      });
+      update = { questions, maxScore: Q_COUNT * 15, status: 'playing' };
     } else if (mode === 'phantom') {
       const questions = _buildPhantom(level, Q_COUNT);
       if (questions.length < Q_COUNT) {
         typeof UI !== 'undefined' && UI.toast('Yeterli soru bulunamadı');
         this._renderLobby(); return;
       }
-      batch.set(matchRef, {
-        status:'playing', mode, level,
-        hostId, hostName, guestId, guestName,
-        questions, maxScore: Q_COUNT * 15,
-        hostScore:0, guestScore:0, hostQ:0, guestQ:0,
-        hostDone:false, guestDone:false,
-        createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
-      });
+      update = { questions, maxScore: Q_COUNT * 15, status: 'playing' };
     } else {
       const questions = _buildTranslate(level, Q_COUNT);
       if (questions.length < Q_COUNT) {
         typeof UI !== 'undefined' && UI.toast('Yeterli soru bulunamadı');
         this._renderLobby(); return;
       }
-      batch.set(matchRef, {
-        status:'playing', mode, level,
-        hostId, hostName, guestId, guestName,
-        questions, maxScore: Q_COUNT * 15,
-        hostScore:0, guestScore:0, hostQ:0, guestQ:0,
-        hostDone:false, guestDone:false,
-        createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
-      });
+      update = { questions, maxScore: Q_COUNT * 15, status: 'playing' };
     }
 
-    batch.update(db.collection('rival_queue').doc(guestQueueId), { matchId });
-    batch.delete(db.collection('rival_queue').doc(hostId));
-    await batch.commit();
-    this._role    = 'host';
-    this._matchId = matchId;
-    await this._joinMatch(matchId, 'host');
+    await db.collection('rival_matches').doc(matchId).update(update);
   }
 
   async _joinMatch(matchId, role) {
@@ -433,7 +396,17 @@ class RivalMode {
     this.el.innerHTML = '<div class="rv-connecting">🔗 Bağlanılıyor…</div>';
     const db = this._db();
     try {
-      const snap = await db.collection('rival_matches').doc(matchId).get();
+      // Evsahibi maç verisini dolduruyorsa (waiting_data) hazır olmasını bekle
+      let snap = await db.collection('rival_matches').doc(matchId).get();
+      if (snap.exists && snap.data().status === 'waiting_data') {
+        await new Promise((resolve, reject) => {
+          const unsub = db.collection('rival_matches').doc(matchId).onSnapshot(s => {
+            if (s.exists && s.data().status !== 'waiting_data') { unsub(); resolve(); }
+          }, reject);
+          setTimeout(() => { unsub(); reject(new Error('timeout')); }, 15000);
+        });
+        snap = await db.collection('rival_matches').doc(matchId).get();
+      }
       this._matchData = snap.data();
     } catch (e) {
       typeof UI !== 'undefined' && UI.toast('Maç verisi alınamadı');
@@ -1255,28 +1228,13 @@ class RivalMode {
   }
 
   async _updateRivalLeaderboard(win, tie) {
-    const db  = this._db();
-    const uid = this._uid();
-    if (!db || !uid) return;
-    const weekDoc = `weekly_${this._rlWeekKey()}`;
-    for (const docId of [weekDoc, 'all']) {
-      try {
-        const ref  = db.collection('rival_leaderboard').doc(docId).collection('users').doc(uid);
-        const snap = await ref.get();
-        const cur  = snap.exists ? snap.data() : { wins: 0, losses: 0, ties: 0 };
-        const wins   = (cur.wins   || 0) + (win && !tie ? 1 : 0);
-        const losses = (cur.losses || 0) + (!win && !tie ? 1 : 0);
-        const ties   = (cur.ties   || 0) + (tie ? 1 : 0);
-        const total  = wins + losses + ties;
-        const winRate = total > 0 ? Math.round(wins / total * 100) : 0;
-        const name = this._name();
-        await ref.set({
-          uid, name,
-          avatar:  (name[0] || '?').toUpperCase(),
-          wins, losses, ties, winRate,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-      } catch(e) { /* rate limit veya bağlantı hatası */ }
+    if (!this._matchId) return;
+    try {
+      // Cloud Function ile atomik liderlik tablosu güncellemesi
+      const fn = firebase.app().functions('europe-west1').httpsCallable('rivalFinishMatch');
+      await fn({ matchId: this._matchId, win: !!win, tie: !!tie });
+    } catch(e) {
+      console.warn('[Rival] Leaderboard güncelleme hatası:', e.message);
     }
   }
 

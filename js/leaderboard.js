@@ -73,30 +73,36 @@ class LeaderboardManager {
     }
   }
 
-  /* ── XP subscribe ───────────────────────────────── */
+  /* ── XP subscribe (30sn polling — onSnapshot yerine) ── */
   subscribe(period, cb) {
     this.unsubscribe(period);
     const e = window.authManager;
     if (!e?.isLoggedIn || !e._db) return;
-    const unsub = e._db.collection('leaderboards').doc(this._periodId(period)).collection('users')
-      .orderBy('xp', 'desc').limit(50)
-      .onSnapshot(snap => { const d = []; snap.forEach(s => d.push(s.data())); cb(d); },
-        err => { console.error('[Leaderboard] Dinleme hatası:', err.code, err.message); });
-    this._listeners[period] = unsub;
+    const query = e._db.collection('leaderboards').doc(this._periodId(period)).collection('users')
+      .orderBy('xp', 'desc').limit(50);
+    const fetch = () => query.get()
+      .then(snap => { const d = []; snap.forEach(s => d.push(s.data())); cb(d); })
+      .catch(err => console.error('[Leaderboard] Hata:', err.code, err.message));
+    fetch();
+    const id = setInterval(fetch, 30000);
+    this._listeners[period] = () => clearInterval(id);
   }
 
-  /* ── Rival subscribe ────────────────────────────── */
+  /* ── Rival subscribe (30sn polling) ─────────────── */
   subscribeRival(rPeriod, cb) {
     const key = 'rival_' + rPeriod;
     this.unsubscribe(key);
     const e = window.authManager;
     if (!e?.isLoggedIn || !e._db) return;
     const docId = rPeriod === 'weekly' ? `weekly_${this._weeklyKey()}` : 'all';
-    const unsub = e._db.collection('rival_leaderboard').doc(docId).collection('users')
-      .orderBy('wins', 'desc').limit(50)
-      .onSnapshot(snap => { const d = []; snap.forEach(s => d.push(s.data())); cb(d); },
-        err => console.error('[Rival LB] Dinleme hatası:', err.code));
-    this._listeners[key] = unsub;
+    const query = e._db.collection('rival_leaderboard').doc(docId).collection('users')
+      .orderBy('wins', 'desc').limit(50);
+    const fetch = () => query.get()
+      .then(snap => { const d = []; snap.forEach(s => d.push(s.data())); cb(d); })
+      .catch(err => console.error('[Rival LB] Hata:', err.code));
+    fetch();
+    const id = setInterval(fetch, 30000);
+    this._listeners[key] = () => clearInterval(id);
   }
 
   /* ── Unsubscribe ────────────────────────────────── */
@@ -111,7 +117,7 @@ class LeaderboardManager {
         <div class="lb-header">
           <div class="lb-trophy-wrap">🏆</div>
           <h1 class="lb-title">Liderlik Tablosu</h1>
-          <p class="lb-subtitle">Canlı sıralama · Anlık güncellenir</p>
+          <p class="lb-subtitle">Sıralama · 30 saniyede güncellenir</p>
         </div>
         <div class="lb-tabs">
           <button class="lb-tab active" data-period="daily">Günlük</button>
