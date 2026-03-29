@@ -41,7 +41,9 @@
   function ensureScripts(target) {
     var srcs = LAZY[target];
     if (!srcs) return Promise.resolve();
-    return Promise.all(srcs.map(function (src) { return loadScript(src); }));
+    return srcs.reduce(function (chain, src) {
+      return chain.then(function () { return loadScript(src); });
+    }, Promise.resolve());
   }
 
   function allLoaded(target) {
@@ -838,6 +840,38 @@ window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); 
   });
 })();
 
+/* ── 14. Shuffle Anti-Repeat Patch ── */
+(function(){
+  function patch(app) {
+    if (!app._buildShuffleOrder || app._shufflePatched) return;
+    app._shufflePatched = true;
+    var orig = app._buildShuffleOrder.bind(app);
+    app._buildShuffleOrder = function() {
+      var currentStoryIdx = (app._getStoryIndex ? app._getStoryIndex() : null);
+      orig();
+      if (currentStoryIdx === null) return;
+      var level = app.state.get('readingLevel');
+      var order = app.state.get('readingOrder') || {};
+      var arr = order[level];
+      if (!arr || arr.length <= 1) return;
+      if (arr[0] === currentStoryIdx) {
+        var swapPos = 1 + Math.floor(Math.random() * (arr.length - 1));
+        var tmp = arr[0]; arr[0] = arr[swapPos]; arr[swapPos] = tmp;
+        order[level] = arr;
+        app.state.set('readingOrder', order);
+      }
+    };
+  }
+  function tryPatch() {
+    var app = window._app || window.app;
+    if (app && app._buildShuffleOrder) { patch(app); return true; }
+    return false;
+  }
+  if (!tryPatch()) {
+    var _t = setInterval(function(){ if(tryPatch()) clearInterval(_t); }, 100);
+  }
+})();
+
 /* ── Event delegation for data-action attributes ── */
 document.addEventListener('click', function(e) {
   var el = e.target.closest('[data-action]');
@@ -1018,7 +1052,7 @@ document.addEventListener('click', function(e) {
     var chip = document.createElement('div');
     chip.className = 'srs-due-chip';
     if(n > 0){
-      chip.innerHTML = '📅 <strong>' + n + '</strong> kelime tekrara düştü — oturum başlayınca önce bunlar gelir';
+      chip.innerHTML = '📅 <strong>' + (n|0) + '</strong> kelime tekrara düştü — oturum başlayınca önce bunlar gelir';
       chip.style.background = 'rgba(0,212,255,0.07)';
       chip.style.borderColor = 'rgba(0,212,255,0.25)';
       chip.style.color = 'var(--cyan)';
@@ -1050,7 +1084,7 @@ document.addEventListener('click', function(e) {
     card.innerHTML =
       '<div class="srs-home-icon">📅</div>' +
       '<div class="srs-home-text">' +
-        '<strong>' + n + ' kelime</strong> bugün tekrara düştü' +
+        '<strong>' + (n|0) + ' kelime</strong> bugün tekrara düştü' +
       '</div>' +
       '<button class="srs-home-btn" id="srs-home-go">Başla →</button>' +
       '<button class="srs-home-x" id="srs-home-x">✕</button>';
@@ -1099,7 +1133,7 @@ document.addEventListener('click', function(e) {
   var TODAY = new Date().toISOString().split('T')[0];
   var SKEY  = 'er_path_' + TODAY;
 
-  function getVisited(){ try{ return JSON.parse(localStorage.getItem(SKEY)||'[]'); }catch(e){ return []; } }
+  function getVisited(){ try{ var v=JSON.parse(localStorage.getItem(SKEY)||'[]'); return Array.isArray(v)?v.filter(function(x){return typeof x==='string'&&x.length<=50;}):[];  }catch(e){ return []; } }
   function saveVisit(t){ var v=getVisited(); if(v.indexOf(t)<0){ v.push(t); localStorage.setItem(SKEY,JSON.stringify(v)); } }
 
   function getSteps(){
