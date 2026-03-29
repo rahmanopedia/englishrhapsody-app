@@ -127,6 +127,8 @@ class RivalMode {
     this._bufTimeout  = null;
     this._kbHandler   = null;
     this._typed       = [];
+    this._waitResultTimer = null;
+    this._xpAwarded   = false;
   }
 
   init(el) {
@@ -139,6 +141,7 @@ class RivalMode {
   destroy() {
     this._clearTimer();
     this._unbindTypingKeys();
+    if (this._waitResultTimer) { clearTimeout(this._waitResultTimer); this._waitResultTimer = null; }
     if (this._vid) { try { this._vid.pause(); this._vid.src = ''; } catch(e){} this._vid = null; }
     if (this._preloaderVid) { try { this._preloaderVid.src = ''; this._preloaderVid.remove(); } catch(e){} this._preloaderVid = null; }
     if (this._bufTimeout) { clearTimeout(this._bufTimeout); this._bufTimeout = null; }
@@ -423,6 +426,7 @@ class RivalMode {
     this._role    = role;
     this._qIdx    = 0;
     this._score   = 0;
+    this._xpAwarded = false;
     this._leaveQueue();
     if (this._unsubQ)    { this._unsubQ();    this._unsubQ    = null; }
     if (this._searchTmr) { clearTimeout(this._searchTmr); this._searchTmr = null; }
@@ -444,7 +448,7 @@ class RivalMode {
       const data = snap.data();
       if (!data) return;
       this._matchData = data;
-      if (this._phase === 'playing') this._onLive(data);
+      if (this._phase === 'playing' || this._phase === 'waiting_result') this._onLive(data);
     });
     this._phase = 'countdown';
     this._renderCountdown();
@@ -1118,6 +1122,14 @@ class RivalMode {
     const bar = this.el.querySelector('#rv-pd-o');
     if (el)  el.textContent  = opS;
     if (bar) bar.style.width = this._pct(opS) + '%';
+    const wrOp = this.el.querySelector('#rv-wr-op');
+    if (wrOp) wrOp.textContent = opS;
+
+    if (this._phase === 'waiting_result' && data.hostDone && data.guestDone) {
+      this._phase = 'result';
+      if (this._waitResultTimer) { clearTimeout(this._waitResultTimer); this._waitResultTimer = null; }
+      setTimeout(() => this._showFinalResult(data), 800);
+    }
   }
 
   _pct(score) {
@@ -1127,27 +1139,83 @@ class RivalMode {
   /* ── Finish ───────────────────────────────────────── */
 
   async _finishMatch() {
-    if (this._phase === 'result') return;
-    this._phase = 'result'; this._clearTimer();
+    if (this._phase === 'result' || this._phase === 'waiting_result') return;
+    this._phase = 'waiting_result';
+    this._clearTimer();
+    this._unbindTypingKeys();
+    this._showTypingVKB(false);
     if (this._vid) { try { this._vid.pause(); } catch(e){} }
 
-    await new Promise(r => setTimeout(r, 1800));
-
+    // Mark self as done
     const db = this._db();
-    let fin = this._matchData;
     if (db && this._matchId) {
-      try { const s = await db.collection('rival_matches').doc(this._matchId).get(); fin = s.data() || fin; } catch(e){}
+      const upd = this._role === 'host' ? { hostDone: true } : { guestDone: true };
+      db.collection('rival_matches').doc(this._matchId).update(upd).catch(() => {});
     }
 
+    // If opponent already finished, go straight to result
+    const data = this._matchData || {};
+    const oppDone = this._role === 'host' ? !!data.guestDone : !!data.hostDone;
+    if (oppDone) {
+      this._phase = 'result';
+      await new Promise(r => setTimeout(r, 600));
+      this._showFinalResult(this._matchData || {});
+      return;
+    }
+
+    // Show waiting screen; onSnapshot will detect when opponent finishes
+    this._renderWaitingResult();
+
+    // Safety timeout: 90s in case opponent disconnects
+    this._waitResultTimer = setTimeout(() => {
+      if (this._phase === 'waiting_result') {
+        this._phase = 'result';
+        this._showFinalResult(this._matchData || {});
+      }
+    }, 90000);
+  }
+
+  _renderWaitingResult() {
+    const m   = this._matchData || {};
+    const myN = this._name();
+    const opN = (this._role === 'host' ? m.guestName : m.hostName) || 'Rakip';
+    const opS = this._role === 'host' ? (m.guestScore || 0) : (m.hostScore || 0);
+    this.el.innerHTML = `
+      <div class="rv-waiting-result">
+        <div class="rv-wr-icon">⏳</div>
+        <h2 class="rv-wr-title">Sen bitirdin!</h2>
+        <p class="rv-wr-sub">Rakip hâlâ oynuyor…</p>
+        <div class="rv-wr-scores">
+          <div class="rv-wr-side">
+            <div class="rv-wr-av rv-av-you">${(myN[0]||'?').toUpperCase()}</div>
+            <div class="rv-wr-name">${_esc(myN)}</div>
+            <div class="rv-wr-score rv-wr-you">${this._score}</div>
+          </div>
+          <div class="rv-wr-vs">VS</div>
+          <div class="rv-wr-side">
+            <div class="rv-wr-av rv-av-opp">${(opN[0]||'?').toUpperCase()}</div>
+            <div class="rv-wr-name">${_esc(opN)}</div>
+            <div class="rv-wr-score" id="rv-wr-op">${opS}</div>
+          </div>
+        </div>
+        <div class="rv-wait-dots"><span></span><span></span><span></span></div>
+      </div>`;
+  }
+
+  _showFinalResult(data) {
+    if (this._xpAwarded) { return; }
+    this._xpAwarded = true;
+
     const myS = this._score;
-    const opS = this._role === 'host' ? (fin && fin.guestScore || 0) : (fin && fin.hostScore || 0);
-    const opN = this._role === 'host' ? (fin && fin.guestName) : (fin && fin.hostName);
+    const opS = this._role === 'host' ? (data.guestScore || 0) : (data.hostScore || 0);
+    const opN = this._role === 'host' ? (data.guestName  || '') : (data.hostName  || '');
     const win = myS > opS; const tie = myS === opS;
 
     if (win)      this.app.addXP(50, 'hard',   'rival');
     else if (tie) this.app.addXP(20, 'medium', 'rival');
     else          this.app.addXP(5,  'easy',   'rival');
 
+    const db = this._db();
     if (db && this._matchId) {
       const upd = this._role === 'host' ? { hostDone: true, status: 'finished' } : { guestDone: true };
       db.collection('rival_matches').doc(this._matchId).update(upd).catch(() => {});

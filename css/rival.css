@@ -146,6 +146,31 @@
   40%         { opacity: 1; transform: scale(1.2); }
 }
 
+/* ── Waiting for opponent result ─────────────────── */
+.rv-waiting-result {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 1rem;
+  min-height: 100%; padding: 3rem 1.5rem;
+}
+.rv-wr-icon { font-size: 3rem; animation: rv-spin 3s linear infinite; }
+.rv-wr-title { font-size: 1.5rem; font-weight: 800; color: #e2e8f0; margin: 0; }
+.rv-wr-sub   { font-size: .9rem; color: #64748b; margin: 0; }
+.rv-wr-scores {
+  display: flex; align-items: center; gap: 1.5rem;
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; padding: 1.2rem 2rem; margin: .5rem 0;
+}
+.rv-wr-side { display: flex; flex-direction: column; align-items: center; gap: .35rem; }
+.rv-wr-av {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; font-weight: 800;
+}
+.rv-wr-name  { font-size: .8rem; color: #94a3b8; }
+.rv-wr-score { font-size: 1.8rem; font-weight: 900; color: #e2e8f0; }
+.rv-wr-score.rv-wr-you { color: #00d4ff; }
+.rv-wr-vs    { font-size: 1rem; font-weight: 800; color: #475569; }
+
 /* ── Countdown ────────────────────────────────────── */
 .rv-countdown {
   display: flex; flex-direction: column; align-items: center;
