@@ -640,6 +640,17 @@
 }
 .rv-ls.rv-ls-space { width: 18px; border: none; background: transparent; }
 
+/* Listen button */
+.rv-listen-btn {
+  background: rgba(255,255,255,.07); color: #94a3b8;
+  border: 1px solid rgba(255,255,255,.12); border-radius: 20px;
+  padding: .3rem .9rem; font-size: .78rem; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+  transition: background .15s, color .15s;
+  margin: .4rem 0 .2rem;
+}
+.rv-listen-btn:hover { background: rgba(255,255,255,.13); color: #e2e8f0; }
+
 /* Typing status */
 .rv-type-status {
   min-height: 1.4rem; font-size: .85rem; font-weight: 700;

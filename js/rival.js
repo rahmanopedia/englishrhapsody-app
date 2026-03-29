@@ -636,8 +636,17 @@ class RivalMode {
         <div class="rv-letters-wrap ${isPhantom ? 'rv-ph-hide' : ''}" id="rv-letters">
           <div class="rv-ls-row">${slots}</div>
         </div>
+        <button class="rv-listen-btn" id="rv-listen-btn" title="Tekrar dinle">🔊 Dinle</button>
         <div class="rv-type-status" id="rv-type-status"></div>
       </div>`;
+
+    const listenBtn = zone.querySelector('#rv-listen-btn');
+    if (listenBtn) listenBtn.addEventListener('click', () => {
+      if (this.app && this.app.speakWord) this.app.speakWord(word);
+    });
+
+    // Auto-speak on question start
+    if (this.app && this.app.speakWord) setTimeout(() => this.app.speakWord(word), 300);
 
     if (isPhantom) {
       const bar = zone.querySelector('#rv-ph-bar');
