@@ -1252,17 +1252,3 @@ document.addEventListener('click', function(e) {
   });
 })();
 
-/* ── 20. Rival modda mobil alt menüyü gizle ── */
-(function(){
-  function patch(){
-    var app = window._app;
-    if(!app || !app.navigate || app.__rivalNavPatched) return;
-    app.__rivalNavPatched = true;
-    var _orig = app.navigate.bind(app);
-    app.navigate = function(tgt){
-      _orig(tgt);
-      document.body.classList.toggle('rival-mode', tgt === 'rival');
-    };
-  }
-  window.addEventListener('load', function(){ setTimeout(patch, 800); });
-})();
