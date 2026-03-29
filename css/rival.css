@@ -1,5 +1,16 @@
 /* css/rival.css — Online Rival Mode */
 
+/* ── Fullscreen overlay ───────────────────────────── */
+#rival-root.rv-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #0f172a;
+  -webkit-overflow-scrolling: touch;
+}
+
 .rv-back-btn {
   background: transparent;
   border: 1px solid rgba(255,255,255,.15);

@@ -99,7 +99,11 @@ class RivalMode {
     this._vid        = null;
   }
 
-  init(el) { this.el = el; this._renderLobby(); }
+  init(el) {
+    this.el = el;
+    el.classList.add('rv-fullscreen');
+    this._renderLobby();
+  }
 
   destroy() {
     this._clearTimer();
@@ -108,6 +112,7 @@ class RivalMode {
     if (this._unsubQ)    { this._unsubQ();    this._unsubQ    = null; }
     if (this._searchTmr) { clearTimeout(this._searchTmr); this._searchTmr = null; }
     this._leaveQueue();
+    if (this.el) this.el.classList.remove('rv-fullscreen');
     window.rivalMod = null;
   }
 
