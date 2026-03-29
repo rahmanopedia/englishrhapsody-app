@@ -158,6 +158,75 @@
     </div>
   </header>
 
+  <!-- Sidebar Tab (shown when sidebar is closed) -->
+  <div class="sidebar-tab" id="sidebar-tab">
+    <span class="st-dot"></span>
+    <span class="st-dot"></span>
+    <span class="st-arrow"></span>
+    <span class="st-dot"></span>
+    <span class="st-dot"></span>
+  </div>
+
+  <!-- Sidebar (desktop) -->
+  <aside class="sidebar">
+    <nav id="sidebar-nav">
+      <a class="nav-item active" data-target="home">
+        <span class="nav-icon">🏠</span> Ana Merkez
+      </a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" data-target="learn">
+        <span class="nav-icon">🌀</span> Sinestezi Lab
+        <span class="nav-badge" id="ac-due-badge" style="display:none">0</span>
+      </a>
+      <a class="nav-item" data-target="reading">
+        <span class="nav-icon">📖</span> Okuma
+      </a>
+      <a class="nav-item" data-target="speak">
+        <span class="nav-icon">🎙️</span> Konuşma Lab
+        <span class="nav-badge nav-badge-ai" id="speaking-ai-badge" style="display:none">AI</span>
+      </a>
+      <a class="nav-item" data-target="bridge">
+        <span class="nav-icon">🌉</span> Köprü
+      </a>
+      <a class="nav-item" data-target="nexus">
+        <span class="nav-icon">✨</span> Nexus Mod
+      </a>
+      <a class="nav-item" data-target="quantum">
+        <span class="nav-icon">⚛️</span> Kuantum Modu
+      </a>
+      <a class="nav-item" data-target="cinema">
+        <span class="nav-icon">🎬</span> Sinema
+      </a>
+      <a class="nav-item" data-target="translate">
+        <span class="nav-icon">🔄</span> Çeviri
+      </a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" data-target="analytics">
+        <span class="nav-icon">📊</span> Analitik
+      </a>
+      <a class="nav-item" data-target="rival">
+        <span class="nav-icon">⚔️</span> Rival Modu
+      </a>
+      <a class="nav-item" data-target="leaderboard">
+        <span class="nav-icon">🏆</span> Sıralama
+      </a>
+      <a class="nav-item" data-target="download">
+        <span class="nav-icon">📲</span> Uygulamayı İndir
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sf-user">
+        <div class="sf-icon" id="sf-rank-icon">🌱</div>
+        <div class="sf-info">
+          <div class="sf-rank" id="sf-rank-name">Çırak</div>
+          <div class="sf-level" id="sf-level-txt">Level 1</div>
+          <div class="sf-bar"><div class="sf-bar-fill" id="sf-xp-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="sf-copyright" title="Kullanım Şartları">© 2026 English Rhapsody. All rights reserved.</div>
+    </div>
+  </aside>
+
   <!-- Main content -->
   <main class="main-content animate-in" id="main-content"></main>
 </div>
