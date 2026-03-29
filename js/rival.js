@@ -378,7 +378,7 @@ class RivalMode {
       batch.set(matchRef, {
         status:'playing', mode, level,
         hostId, hostName, guestId, guestName,
-        questions, maxScore: Q_COUNT * 10,
+        questions, maxScore: Q_COUNT * 15,
         hostScore:0, guestScore:0, hostQ:0, guestQ:0,
         hostDone:false, guestDone:false,
         createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
@@ -392,7 +392,7 @@ class RivalMode {
       batch.set(matchRef, {
         status:'playing', mode, level,
         hostId, hostName, guestId, guestName,
-        questions, maxScore: Q_COUNT * 10,
+        questions, maxScore: Q_COUNT * 15,
         hostScore:0, guestScore:0, hostQ:0, guestQ:0,
         hostDone:false, guestDone:false,
         createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
@@ -406,7 +406,7 @@ class RivalMode {
       batch.set(matchRef, {
         status:'playing', mode, level,
         hostId, hostName, guestId, guestName,
-        questions, maxScore: Q_COUNT * 10,
+        questions, maxScore: Q_COUNT * 15,
         hostScore:0, guestScore:0, hostQ:0, guestQ:0,
         hostDone:false, guestDone:false,
         createdAt: ts, expiresAt: new Date(Date.now() + 30*60000)
@@ -789,8 +789,9 @@ class RivalMode {
     this._answered = true; this._clearTimer();
     this._unbindTypingKeys();
     this._showTypingVKB(false);
-    const ok = chosen !== null && chosen === correct;
-    if (ok) this._score += 10;
+    const ok  = chosen !== null && chosen === correct;
+    const pts = ok ? Math.max(3, Math.round(15 * Math.max(0, this._timerVal) / TIMER_SEC)) : 0;
+    if (ok) this._score += pts;
     this.el.querySelectorAll('.rv-choice').forEach(btn => {
       btn.disabled = true;
       if (btn.dataset.val === correct)      btn.classList.add('rv-ch-correct');
@@ -798,6 +799,14 @@ class RivalMode {
     });
     const stEl = this.el.querySelector('#rv-type-status');
     if (stEl) { stEl.textContent = ok ? '✓ Doğru!' : `✗  ${correct}`; stEl.className = 'rv-type-status ' + (ok ? 'rv-ts-ok' : 'rv-ts-wrong'); }
+    const zone = this.el.querySelector('#rv-qz');
+    if (zone && ok && pts > 0) {
+      const bonus = document.createElement('div');
+      bonus.className = 'rv-speed-bonus' + (pts >= 13 ? ' rv-sb-great' : pts >= 9 ? ' rv-sb-good' : '');
+      bonus.textContent = '+' + pts + ' ⚡';
+      zone.appendChild(bonus);
+      setTimeout(() => bonus.remove(), 1100);
+    }
     const nextQ = this._qIdx + 1;
     const done  = nextQ >= Q_COUNT;
     const upd   = this._role === 'host'
@@ -1085,7 +1094,11 @@ class RivalMode {
 
     const ok  = chosen !== null && chosen === correct;
     const pts = ok ? Math.max(1, Math.round(10 * Math.max(0, this._timerVal) / CINEMA_Q_SEC)) : 0;
-    if (ok) this._score += pts;
+    if (ok) {
+      this._score += pts;
+    } else if (chosen !== null) {
+      this._score = Math.max(0, this._score - 2);
+    }
 
     this.el.querySelectorAll('.rv-choice').forEach(btn => {
       btn.disabled = true;
@@ -1093,14 +1106,20 @@ class RivalMode {
       else if (btn.dataset.val === chosen) btn.classList.add('rv-ch-wrong');
     });
 
-    if (ok && pts > 0) {
-      const panel = this.el.querySelector('#rv-cqp');
-      if (panel) {
+    const panel = this.el.querySelector('#rv-cqp');
+    if (panel) {
+      if (ok && pts > 0) {
         const bonus = document.createElement('div');
         bonus.className = 'rv-speed-bonus' + (pts >= 8 ? ' rv-sb-great' : pts >= 5 ? ' rv-sb-good' : '');
         bonus.textContent = '+' + pts + ' ⚡';
         panel.appendChild(bonus);
         setTimeout(() => bonus.remove(), 1100);
+      } else if (!ok && chosen !== null) {
+        const penalty = document.createElement('div');
+        penalty.className = 'rv-speed-bonus rv-sb-penalty';
+        penalty.textContent = '-2 ❌';
+        panel.appendChild(penalty);
+        setTimeout(() => penalty.remove(), 1100);
       }
     }
 
