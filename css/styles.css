@@ -4303,6 +4303,7 @@ body.focus-mode.sidebar-closed .sidebar-tab { opacity: 0 !important; }
   .sidebar { display: none; }
   .mobile-nav { display: flex; }
   body.not-home .mobile-nav { display: none; }
+  body.not-home .sidebar-tab { opacity: 0 !important; pointer-events: none !important; }
 
   /* Flex/grid çocuklarının min-width:auto ile taşmasını önle */
   .main-content > *,
