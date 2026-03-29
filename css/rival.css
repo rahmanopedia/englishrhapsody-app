@@ -564,37 +564,105 @@
 
 /* ── Synesthesia mode ─────────────────────────────── */
 .rv-syn-prompt {
-  font-size: 1.55rem; font-weight: 800;
-  letter-spacing: .06em; word-break: break-word;
-  text-shadow: 0 0 24px rgba(255,255,255,.15);
+  font-size: 1.8rem; font-weight: 800; letter-spacing: .04em;
+  text-align: center; word-break: break-word;
+  text-shadow: 0 0 20px rgba(255,255,255,.12);
+  margin-bottom: .3rem;
 }
 
-/* ── Phantom mode ─────────────────────────────────── */
+/* ── Phantom flash ────────────────────────────────── */
 .rv-phantom-flash {
-  font-size: 2.4rem; font-weight: 900; letter-spacing: .04em;
+  font-size: 2.6rem; font-weight: 900; letter-spacing: .06em;
   text-align: center; color: #fff;
-  text-shadow: 0 0 32px #00d4ff, 0 0 8px #00d4ff88;
-  padding: 1rem 0 .6rem;
-  transition: opacity .35s ease, transform .35s ease;
+  text-shadow: 0 0 40px #00d4ff, 0 0 12px #00d4ff88;
+  padding: .6rem 0 .2rem;
+  transition: opacity .4s ease, transform .4s ease;
 }
-.rv-phantom-flash.rv-ph-fade {
-  opacity: 0; transform: scale(.92);
+.rv-phantom-flash.rv-ph-fade { opacity: 0; transform: scale(.9); }
+.rv-ph-sub {
+  font-size: .85rem; color: #64748b; text-align: center;
+  margin-bottom: .5rem;
+  transition: opacity .4s ease;
 }
+.rv-ph-sub.rv-ph-fade { opacity: 0; }
 .rv-ph-bar-wrap {
-  width: 100%; height: 4px; background: rgba(255,255,255,.1);
-  border-radius: 4px; overflow: hidden; margin-bottom: 1.4rem;
+  width: 100%; height: 3px; background: rgba(255,255,255,.08);
+  border-radius: 4px; overflow: hidden; margin-bottom: 1.2rem;
 }
 .rv-ph-bar {
   height: 100%; width: 100%;
   background: linear-gradient(90deg, #4d96ff, #00d4ff);
   border-radius: 4px;
 }
-.rv-ph-hide {
-  opacity: 0; pointer-events: none;
-  transition: opacity .25s ease;
+.rv-ph-hide { opacity: 0; pointer-events: none; }
+.rv-letters-wrap:not(.rv-ph-hide) { opacity: 1; pointer-events: auto; }
+
+/* ── Typing arena ─────────────────────────────────── */
+.rv-q-typing { text-align: center; }
+.rv-letters-wrap { margin: 1rem 0 .5rem; transition: opacity .3s; }
+.rv-ls-row {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 5px; padding: .4rem 0;
 }
-.rv-ph-hide.rv-ph-show,
-.rv-q-choices:not(.rv-ph-hide),
-.rv-q-cue:not(.rv-ph-hide) {
-  opacity: 1; pointer-events: auto;
+.rv-ls {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 44px; border-radius: 8px;
+  font-size: 1.1rem; font-weight: 800; color: #fff;
+  border: 2px solid var(--lc, #4d96ff);
+  background: transparent;
+  transition: background .15s, box-shadow .15s, transform .1s;
 }
+.rv-ls.rv-ls-empty { color: transparent; }
+.rv-ls.rv-ls-cursor {
+  border-color: var(--lc, #4d96ff);
+  box-shadow: 0 0 10px var(--lc, #4d96ff);
+  animation: rv-cursor-blink .7s step-end infinite;
+}
+@keyframes rv-cursor-blink {
+  50% { box-shadow: none; border-color: rgba(255,255,255,.25); }
+}
+.rv-ls.rv-ls-done {
+  background: var(--lc, #4d96ff);
+  border-color: var(--lc, #4d96ff);
+  color: #0f172a; font-weight: 900;
+  box-shadow: 0 0 12px var(--lc, #4d96ff66);
+  transform: scale(1.08);
+}
+.rv-ls.rv-ls-error {
+  background: rgba(239,68,68,.25);
+  border-color: #ef4444;
+  animation: rv-shake .25s ease;
+}
+@keyframes rv-shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+.rv-ls.rv-ls-space { width: 18px; border: none; background: transparent; }
+
+/* Typing status */
+.rv-type-status {
+  min-height: 1.4rem; font-size: .85rem; font-weight: 700;
+  text-align: center; margin-top: .3rem; letter-spacing: .05em;
+}
+.rv-type-status.rv-ts-ok { color: #4ade80; }
+.rv-type-status.rv-ts-wrong { color: #f87171; }
+
+/* ── Virtual keyboard ─────────────────────────────── */
+.rv-vkb {
+  display: none; flex-direction: column; align-items: center;
+  gap: 5px; padding: .5rem .5rem .8rem;
+  background: rgba(255,255,255,.03);
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.rv-vkb-row { display: flex; gap: 4px; }
+.rv-vkb-key {
+  width: 32px; height: 40px; border-radius: 7px;
+  background: rgba(255,255,255,.09); color: #e2e8f0;
+  border: 1px solid rgba(255,255,255,.12);
+  font-size: .8rem; font-weight: 700; font-family: inherit;
+  cursor: pointer; transition: background .1s, transform .08s;
+  -webkit-tap-highlight-color: transparent;
+}
+.rv-vkb-key:active { background: rgba(0,212,255,.25); transform: scale(.92); }
+.rv-vkb-bs { width: 50px; color: #94a3b8; }

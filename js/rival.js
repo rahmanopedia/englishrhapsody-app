@@ -84,20 +84,19 @@ function _buildSynesthesia(level, n) {
   if (typeof WORDS === 'undefined' || !WORDS.length) return [];
   const pool = _sh(WORDS.filter(w => w.en && w.tr && (level === 'ALL' || w.level === level)));
   if (pool.length < 4) return [];
-  return pool.slice(0, n).map(w => {
-    const wrongs = _sh(pool.filter(x => x.en !== w.en).map(x => x.en)).slice(0, 3);
-    return { prompt: w.tr, correct: w.en, choices: _sh([w.en, ...wrongs]), meta: (w.icon||'') + ' ' + (w.level||'') };
-  });
+  return pool.slice(0, n).map(w => ({
+    prompt: w.tr, correct: w.en, meta: (w.icon||'') + ' ' + (w.level||'')
+  }));
 }
 
 function _buildPhantom(level, n) {
   if (typeof WORDS === 'undefined' || !WORDS.length) return [];
   const pool = _sh(WORDS.filter(w => w.en && w.tr && (level === 'ALL' || w.level === level)));
   if (pool.length < 4) return [];
-  return pool.slice(0, n).map(w => {
-    const wrongs = _sh(pool.filter(x => x.tr !== w.tr).map(x => x.tr)).slice(0, 3);
-    return { prompt: w.en, correct: w.tr, choices: _sh([w.tr, ...wrongs]), meta: (w.icon||'') + ' ' + (w.level||''), phantom: true };
-  });
+  return pool.slice(0, n).map(w => ({
+    prompt: w.en, correct: w.en, tr: w.tr,
+    meta: (w.icon||'') + ' ' + (w.level||''), phantom: true
+  }));
 }
 
 /* ── RivalMode ────────────────────────────────────── */
@@ -126,6 +125,8 @@ class RivalMode {
     this._vid         = null;
     this._preloaderVid = null;
     this._bufTimeout  = null;
+    this._kbHandler   = null;
+    this._typed       = [];
   }
 
   init(el) {
@@ -137,6 +138,7 @@ class RivalMode {
 
   destroy() {
     this._clearTimer();
+    this._unbindTypingKeys();
     if (this._vid) { try { this._vid.pause(); this._vid.src = ''; } catch(e){} this._vid = null; }
     if (this._preloaderVid) { try { this._preloaderVid.src = ''; this._preloaderVid.remove(); } catch(e){} this._preloaderVid = null; }
     if (this._bufTimeout) { clearTimeout(this._bufTimeout); this._bufTimeout = null; }
@@ -575,6 +577,7 @@ class RivalMode {
           <div class="rv-pd-opp" id="rv-pd-o" style="width:0%"></div>
         </div>
         <div class="rv-question-zone" id="rv-qz"></div>
+        <div class="rv-vkb" id="rv-vkb"></div>
       </div>`;
     this._showQ();
   }
@@ -588,16 +591,12 @@ class RivalMode {
     if (!zone) return;
     if (qc) qc.textContent = (this._qIdx + 1) + '/' + Q_COUNT;
     const mode = (this._matchData && this._matchData.mode) || 'translate';
-    if (mode === 'phantom') { this._showPhantomFlash(q, zone); return; }
-    const promptHtml = mode === 'synesthesia'
-      ? `<div class="rv-q-prompt rv-syn-prompt">${_colorWord(q.prompt)}</div>`
-      : `<div class="rv-q-prompt">${_esc(q.prompt)}</div>`;
-    const cueText = mode === 'synesthesia' ? 'Doğru İngilizce yazımı seç' : 'Doğru çeviriyi seç';
+    if (mode === 'synesthesia' || mode === 'phantom') { this._showTypingQ(q, zone); return; }
     zone.innerHTML = `
       <div class="rv-q animate-in">
         ${q.meta ? `<div class="rv-q-meta">${_esc(q.meta)}</div>` : ''}
-        ${promptHtml}
-        <p class="rv-q-cue">${cueText}</p>
+        <div class="rv-q-prompt">${_esc(q.prompt)}</div>
+        <p class="rv-q-cue">Doğru çeviriyi seç</p>
         <div class="rv-q-choices">
           ${q.choices.map((c,i) => `
             <button class="rv-choice" data-val="${_esc(c)}">
@@ -611,38 +610,144 @@ class RivalMode {
     this._startTimer(q.correct);
   }
 
-  _showPhantomFlash(q, zone) {
-    const FLASH_MS = 1200;
+  _showTypingQ(q, zone) {
+    const LCOLORS = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#c77dff','#ff9a3c','#00c9a7','#ff6b9d','#f0a500','#56cfe1'];
+    this._typed = [];
+    const word = q.correct;
+    const isPhantom = !!q.phantom;
+
+    const slots = word.split('').map((ch, i) =>
+      ch === ' '
+        ? `<span class="rv-ls rv-ls-space" data-idx="${i}"></span>`
+        : `<span class="rv-ls rv-ls-empty" data-idx="${i}" style="--lc:${LCOLORS[i % LCOLORS.length]}"></span>`
+    ).join('');
+
+    const promptHtml = isPhantom
+      ? `<div class="rv-phantom-flash" id="rv-ph-word">${_esc(q.prompt)}</div>
+         <div class="rv-ph-sub" id="rv-ph-sub">${_esc(q.tr||'')}</div>
+         <div class="rv-ph-bar-wrap"><div class="rv-ph-bar" id="rv-ph-bar"></div></div>`
+      : `<div class="rv-q-prompt rv-syn-prompt">${_colorWord(q.prompt)}</div>
+         <p class="rv-q-cue">İngilizce yazımını yaz</p>`;
+
     zone.innerHTML = `
-      <div class="rv-q animate-in">
+      <div class="rv-q rv-q-typing animate-in">
         ${q.meta ? `<div class="rv-q-meta">${_esc(q.meta)}</div>` : ''}
-        <div class="rv-phantom-flash" id="rv-ph-word">${_esc(q.prompt)}</div>
-        <div class="rv-ph-bar-wrap"><div class="rv-ph-bar" id="rv-ph-bar"></div></div>
-        <p class="rv-q-cue rv-ph-hide" id="rv-ph-cue">Türkçe anlamını seç</p>
-        <div class="rv-q-choices rv-ph-hide" id="rv-ph-choices">
-          ${q.choices.map((c,i) => `
-            <button class="rv-choice" data-val="${_esc(c)}">
-              <span class="rv-ch-letter">${'ABCD'[i]}</span>
-              <span class="rv-ch-text">${_esc(c)}</span>
-            </button>`).join('')}
+        ${promptHtml}
+        <div class="rv-letters-wrap ${isPhantom ? 'rv-ph-hide' : ''}" id="rv-letters">
+          <div class="rv-ls-row">${slots}</div>
         </div>
+        <div class="rv-type-status" id="rv-type-status"></div>
       </div>`;
-    const bar = zone.querySelector('#rv-ph-bar');
-    if (bar) requestAnimationFrame(() => {
-      bar.style.transition = `width ${FLASH_MS}ms linear`;
-      bar.style.width = '0%';
+
+    if (isPhantom) {
+      const bar = zone.querySelector('#rv-ph-bar');
+      if (bar) requestAnimationFrame(() => { bar.style.transition = 'width 1200ms linear'; bar.style.width = '0%'; });
+      setTimeout(() => {
+        const we = zone.querySelector('#rv-ph-word');
+        const se = zone.querySelector('#rv-ph-sub');
+        const lw = zone.querySelector('#rv-letters');
+        if (we) we.classList.add('rv-ph-fade');
+        if (se) se.classList.add('rv-ph-fade');
+        if (lw) lw.classList.remove('rv-ph-hide');
+        this._updateTypingCursor();
+        this._startTimer(word);
+        this._bindTypingKeys();
+        this._showTypingVKB(true);
+      }, 1200);
+    } else {
+      this._updateTypingCursor();
+      this._startTimer(word);
+      this._bindTypingKeys();
+      this._showTypingVKB(true);
+    }
+  }
+
+  _updateTypingCursor() {
+    const pos = this._typed.length;
+    const q = this._matchData && this._matchData.questions && this._matchData.questions[this._qIdx];
+    const word = q ? q.correct : '';
+    this.el.querySelectorAll('.rv-ls').forEach((slot, i) => {
+      slot.classList.remove('rv-ls-cursor');
+      if (i === pos && word[i] !== ' ') slot.classList.add('rv-ls-cursor');
     });
-    setTimeout(() => {
-      const word = zone.querySelector('#rv-ph-word');
-      const cue  = zone.querySelector('#rv-ph-cue');
-      const ch   = zone.querySelector('#rv-ph-choices');
-      if (word) word.classList.add('rv-ph-fade');
-      if (cue)  cue.classList.remove('rv-ph-hide');
-      if (ch)   ch.classList.remove('rv-ph-hide');
-      zone.querySelectorAll('.rv-choice').forEach(btn =>
-        btn.addEventListener('click', () => this._pick(btn.dataset.val, q.correct)));
-      this._startTimer(q.correct);
-    }, FLASH_MS);
+  }
+
+  _typeRivalChar(ch) {
+    if (this._answered) return;
+    const q = this._matchData && this._matchData.questions && this._matchData.questions[this._qIdx];
+    if (!q) return;
+    const word = q.correct;
+    const wLow = word.toLowerCase();
+    const pos  = this._typed.length;
+    if (pos >= word.length) return;
+    const slot = this.el.querySelector(`[data-idx="${pos}"]`);
+    if (ch.toLowerCase() === wLow[pos]) {
+      this._typed.push(ch.toLowerCase());
+      if (slot) { slot.classList.remove('rv-ls-empty','rv-ls-cursor'); slot.classList.add('rv-ls-done'); slot.textContent = word[pos]; }
+      while (this._typed.length < word.length && wLow[this._typed.length] === ' ') {
+        const sp = this.el.querySelector(`[data-idx="${this._typed.length}"]`);
+        if (sp) sp.classList.add('rv-ls-done');
+        this._typed.push(' ');
+      }
+      if (this._typed.length >= word.length) {
+        this._unbindTypingKeys(); this._showTypingVKB(false);
+        this._pick(word, word);
+      } else {
+        this._updateTypingCursor();
+      }
+    } else {
+      if (slot) { slot.classList.add('rv-ls-error'); setTimeout(() => slot && slot.classList.remove('rv-ls-error'), 280); }
+    }
+  }
+
+  _backspaceRival() {
+    if (this._answered) return;
+    const q = this._matchData && this._matchData.questions && this._matchData.questions[this._qIdx];
+    if (!q || !this._typed.length) return;
+    const word = q.correct;
+    while (this._typed.length > 0 && word[this._typed.length - 1] === ' ') {
+      const sp = this.el.querySelector(`[data-idx="${this._typed.length - 1}"]`);
+      if (sp) sp.classList.remove('rv-ls-done');
+      this._typed.pop();
+    }
+    if (!this._typed.length) return;
+    const pos  = this._typed.length - 1;
+    const slot = this.el.querySelector(`[data-idx="${pos}"]`);
+    if (slot) { slot.classList.remove('rv-ls-done'); slot.textContent = ''; }
+    this._typed.pop();
+    this._updateTypingCursor();
+  }
+
+  _bindTypingKeys() {
+    this._unbindTypingKeys();
+    this._kbHandler = e => {
+      if (this._answered) return;
+      if (e.key === 'Backspace') { e.preventDefault(); this._backspaceRival(); }
+      else if (e.key.length === 1 && /[a-zA-Z'-]/.test(e.key)) { e.preventDefault(); this._typeRivalChar(e.key); }
+    };
+    document.addEventListener('keydown', this._kbHandler);
+  }
+
+  _unbindTypingKeys() {
+    if (this._kbHandler) { document.removeEventListener('keydown', this._kbHandler); this._kbHandler = null; }
+  }
+
+  _showTypingVKB(show) {
+    const vkb = this.el && this.el.querySelector('#rv-vkb');
+    if (!vkb) return;
+    vkb.style.display = show ? 'flex' : 'none';
+    if (!show || vkb._rvBuilt) return;
+    vkb._rvBuilt = true;
+    vkb.innerHTML = ['qwertyuiop','asdfghjkl','zxcvbnm'].map(row =>
+      `<div class="rv-vkb-row">${row.split('').map(c =>
+        `<button class="rv-vkb-key" data-char="${c}">${c.toUpperCase()}</button>`).join('')}</div>`
+    ).join('') + '<div class="rv-vkb-row"><button class="rv-vkb-key rv-vkb-bs" data-bs="1">⌫</button></div>';
+    vkb.addEventListener('click', e => {
+      const btn = e.target.closest('.rv-vkb-key');
+      if (!btn) return;
+      if (btn.dataset.bs) { this._backspaceRival(); return; }
+      if (btn.dataset.char) this._typeRivalChar(btn.dataset.char);
+    });
   }
 
   _startTimer(correct) {
@@ -668,6 +773,8 @@ class RivalMode {
   async _pick(chosen, correct) {
     if (this._answered) return;
     this._answered = true; this._clearTimer();
+    this._unbindTypingKeys();
+    this._showTypingVKB(false);
     const ok = chosen !== null && chosen === correct;
     if (ok) this._score += 10;
     this.el.querySelectorAll('.rv-choice').forEach(btn => {
@@ -675,6 +782,8 @@ class RivalMode {
       if (btn.dataset.val === correct)      btn.classList.add('rv-ch-correct');
       else if (btn.dataset.val === chosen)  btn.classList.add('rv-ch-wrong');
     });
+    const stEl = this.el.querySelector('#rv-type-status');
+    if (stEl) { stEl.textContent = ok ? '✓ Doğru!' : `✗  ${correct}`; stEl.className = 'rv-type-status ' + (ok ? 'rv-ts-ok' : 'rv-ts-wrong'); }
     const nextQ = this._qIdx + 1;
     const done  = nextQ >= Q_COUNT;
     const upd   = this._role === 'host'
