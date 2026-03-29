@@ -26,6 +26,16 @@ service cloud.firestore {
           || request.time > resource.data.updatedAt + dur;
     }
 
+    // ── Yardımcı: HTML/script karakteri yok ──────────────────
+    function noHtml(s) {
+      return !s.matches('.*[<>&"\'/\\\\].*');
+    }
+
+    // ── Yardımcı: Geçerli CEFR seviyesi ──────────────────────
+    function validCefr(s) {
+      return s in ['A1','A2','B1','B2','C1','C2'];
+    }
+
     // ── Kullanıcı profil meta verisi ──────────────────────────
     match /users/{userId}/meta/profile {
       allow read: if isOwner(userId);
@@ -34,7 +44,11 @@ service cloud.firestore {
                    && request.resource.data.keys().size() <= 10
                    && request.resource.data.email is string
                    && request.resource.data.email.size() <= 300
-                   && (!('name' in request.resource.data) || request.resource.data.name.size() <= 100);
+                   && request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+                   && (!('name' in request.resource.data) || (
+                        request.resource.data.name is string
+                        && request.resource.data.name.size() <= 100
+                        && noHtml(request.resource.data.name)));
     }
 
     // ── Kullanıcı öğrenim durumu (state) ──────────────────────
@@ -83,11 +97,11 @@ service cloud.firestore {
                     && request.resource.data.uid    is string && request.resource.data.uid == userId
                     && request.resource.data.xp     is number && request.resource.data.xp    >= 0 && request.resource.data.xp    <= 9999999
                     && request.resource.data.level  is number && request.resource.data.level  >= 1 && request.resource.data.level  <= 9999
-                    && request.resource.data.name   is string && request.resource.data.name.size()   <= 100
+                    && request.resource.data.name   is string && request.resource.data.name.size()   <= 100 && noHtml(request.resource.data.name)
                     && request.resource.data.avatar is string && request.resource.data.avatar.size() <= 5
                     && (!('cefrLevel' in request.resource.data) || (
                          request.resource.data.cefrLevel is string
-                         && request.resource.data.cefrLevel.size() <= 5));
+                         && validCefr(request.resource.data.cefrLevel)));
 
       allow update: if isOwner(userId)
                     && rateLimitServer(duration.value(5, 'm'))
@@ -95,11 +109,11 @@ service cloud.firestore {
                     && request.resource.data.uid    is string && request.resource.data.uid == userId
                     && request.resource.data.xp     is number && request.resource.data.xp    >= 0 && request.resource.data.xp    <= 9999999
                     && request.resource.data.level  is number && request.resource.data.level  >= 1 && request.resource.data.level  <= 9999
-                    && request.resource.data.name   is string && request.resource.data.name.size()   <= 100
+                    && request.resource.data.name   is string && request.resource.data.name.size()   <= 100 && noHtml(request.resource.data.name)
                     && request.resource.data.avatar is string && request.resource.data.avatar.size() <= 5
                     && (!('cefrLevel' in request.resource.data) || (
                          request.resource.data.cefrLevel is string
-                         && request.resource.data.cefrLevel.size() <= 5));
+                         && validCefr(request.resource.data.cefrLevel)));
 
       allow delete: if isOwner(userId);
     }
@@ -110,11 +124,9 @@ service cloud.firestore {
                     && request.resource.data.keys().size() <= 10
                     && request.resource.data.type is string
                     && request.resource.data.type.size() <= 50;
-      // Custom claims ile admin kontrolü (hardcoded email yerine)
       allow read: if isAdmin();
       allow update, delete: if false;
     }
-
 
     // ── Rival Liderlik Tablosu ───────────────────────────────
     match /rival_leaderboard/{period}/users/{userId} {
@@ -124,7 +136,7 @@ service cloud.firestore {
                     && rateLimitServer(duration.value(2, 'm'))
                     && request.resource.data.keys().size() <= 10
                     && request.resource.data.uid     is string && request.resource.data.uid == userId
-                    && request.resource.data.name    is string && request.resource.data.name.size()   <= 100
+                    && request.resource.data.name    is string && request.resource.data.name.size()   <= 100 && noHtml(request.resource.data.name)
                     && request.resource.data.avatar  is string && request.resource.data.avatar.size() <= 5
                     && request.resource.data.wins    is number && request.resource.data.wins    >= 0 && request.resource.data.wins    <= 99999
                     && request.resource.data.losses  is number && request.resource.data.losses  >= 0 && request.resource.data.losses  <= 99999
@@ -135,7 +147,7 @@ service cloud.firestore {
                     && rateLimitServer(duration.value(2, 'm'))
                     && request.resource.data.keys().size() <= 10
                     && request.resource.data.uid     is string && request.resource.data.uid == userId
-                    && request.resource.data.name    is string && request.resource.data.name.size()   <= 100
+                    && request.resource.data.name    is string && request.resource.data.name.size()   <= 100 && noHtml(request.resource.data.name)
                     && request.resource.data.avatar  is string && request.resource.data.avatar.size() <= 5
                     && request.resource.data.wins    is number && request.resource.data.wins    >= 0 && request.resource.data.wins    <= 99999
                     && request.resource.data.losses  is number && request.resource.data.losses  >= 0 && request.resource.data.losses  <= 99999
@@ -152,11 +164,11 @@ service cloud.firestore {
                     && request.resource.data.uid == uid
                     && request.resource.data.name is string
                     && request.resource.data.name.size() <= 100
+                    && noHtml(request.resource.data.name)
                     && request.resource.data.mode is string
-                    && request.resource.data.mode.size() <= 20
+                    && request.resource.data.mode in ['translate','cinema','synesthesia','phantom']
                     && request.resource.data.mode_level is string
-                    && request.resource.data.mode_level.size() <= 30;
-      // Kendi güncellemesi VEYA herhangi auth kullanıcı sadece matchId ekleyebilir (rate limited)
+                    && request.resource.data.mode_level in ['A1','A2','B1','B2','C1','C2','ALL'];
       allow update: if isOwner(uid)
                     || (request.auth != null
                         && rateLimitServer(duration.value(10, 's'))
@@ -175,7 +187,9 @@ service cloud.firestore {
       allow create: if request.auth != null
                     && request.resource.data.hostId == request.auth.uid
                     && request.resource.data.questions is list
-                    && request.resource.data.questions.size() <= 20;
+                    && request.resource.data.questions.size() <= 20
+                    && request.resource.data.mode is string
+                    && request.resource.data.mode in ['translate','cinema','synesthesia','phantom'];
       allow update: if request.auth != null
                     && (resource.data.hostId == request.auth.uid
                         || resource.data.guestId == request.auth.uid)

@@ -203,10 +203,10 @@ class LeaderboardManager {
       const medal = i < 3 ? `<span class="lb-medal">${medals[i]}</span>` : `<span class="lb-medal lb-medal-num">${i+1}</span>`;
       return `<div class="lb-row ${me ? 'lb-row-me' : ''}">
         ${medal}
-        <div class="lb-name">${this._esc(r.name)}${r.cefrLevel ? `<span class="lb-cefr-badge">${r.cefrLevel}</span>` : ''}</div>
+        <div class="lb-name">${this._esc(r.name)}${r.cefrLevel ? `<span class="lb-cefr-badge">${this._esc(r.cefrLevel)}</span>` : ''}</div>
         <div class="lb-right">
-          <div class="lb-xp">${r.xp} <span class="lb-xp-unit">XP ${label}</span></div>
-          <div class="lb-lv">Lv.${r.level||1}</div>
+          <div class="lb-xp">${+r.xp|0} <span class="lb-xp-unit">XP ${this._esc(label)}</span></div>
+          <div class="lb-lv">Lv.${+r.level||1}</div>
         </div>
       </div>`;
     }).join('');
@@ -230,8 +230,8 @@ class LeaderboardManager {
     list.innerHTML = data.map((r, i) => {
       const me = r.uid === myUid;
       const medal = i < 3 ? `<span class="lb-medal">${medals[i]}</span>` : `<span class="lb-medal lb-medal-num">${i+1}</span>`;
-      const record = `${r.wins||0}G · ${r.losses||0}M · ${r.ties||0}B`;
-      const wr = `%${r.winRate||0}`;
+      const record = `${+r.wins||0}G · ${+r.losses||0}M · ${+r.ties||0}B`;
+      const wr = `%${+r.winRate||0}`;
       return `<div class="lb-row lb-row-rival ${me ? 'lb-row-me' : ''}">
         ${medal}
         <div class="lb-name">${this._esc(r.name)}</div>
@@ -247,7 +247,7 @@ class LeaderboardManager {
     if (rk && rv) { if (idx !== -1) { rv.textContent = `#${idx+1}`; rk.style.display = 'flex'; } else { rk.style.display = 'none'; } }
   }
 
-  _esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  _esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
   async resetUserEntries() {
     const e = window.authManager;
