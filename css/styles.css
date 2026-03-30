@@ -513,6 +513,7 @@ body.sidebar-closed .sidebar-tab {
   min-height: 72px;
 }
 .modes-drawer-item .mdi-icon { font-size: 1.6rem; line-height: 1; }
+.modes-drawer-item .mdi-sub { font-size: 0.6rem; font-weight: 500; color: var(--text-3); line-height: 1.2; text-align: center; margin-top: -2px; }
 .modes-drawer-item:active { transform: scale(0.96); background: var(--bg-elevated); }
 .modes-drawer-item.active { color: var(--cyan); border-color: rgba(0,212,255,0.35); background: rgba(0,212,255,0.06); }
 
@@ -6927,6 +6928,8 @@ body.rank-6 { --theme-accent: #ff9d00; }
   border-radius: 99px;
   transition: width 0.6s cubic-bezier(.4,0,.2,1);
 }
+.an-skill-weak { border-color: rgba(251,146,60,0.4) !important; background: rgba(251,146,60,0.06) !important; }
+.an-skill-weak-tag { font-size: 0.6rem; font-weight: 700; background: rgba(251,146,60,0.18); color: #fb923c; border-radius: 99px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
 
 /* ── Convo: typing indicator ────────────────────── */
 .cb-typing {

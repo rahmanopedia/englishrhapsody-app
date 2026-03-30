@@ -268,10 +268,12 @@
     <button class="modes-drawer-item" data-target="nexus">
       <span class="mdi-icon">✨</span>
       <span>Nexus</span>
+      <span class="mdi-sub">Phrasal Verbs</span>
     </button>
     <button class="modes-drawer-item" data-target="quantum">
       <span class="mdi-icon">⚛️</span>
       <span>Kuantum</span>
+      <span class="mdi-sub">Oyunlarla Gramer</span>
     </button>
     <button class="modes-drawer-item" data-target="learn">
       <span class="mdi-icon">🌀</span>
@@ -293,6 +295,7 @@
     <button class="modes-drawer-item" data-target="grammar">
       <span class="mdi-icon">🧩</span>
       <span>Gramer</span>
+      <span class="mdi-sub">Kural & Egzersiz</span>
     </button>
     <button class="modes-drawer-item" data-target="download">
       <span class="mdi-icon">📲</span>
@@ -630,14 +633,14 @@
         <span class="at-icon">⚛️</span>
         <div class="at-text">
           <span class="at-title">Kuantum</span>
-          <span class="at-desc">Gramer</span>
+          <span class="at-desc">Oyunlarla Gramer</span>
         </div>
       </div>
       <div class="action-tile" data-action="navigate" data-target="nexus">
         <span class="at-icon">✨</span>
         <div class="at-text">
           <span class="at-title">Nexus</span>
-          <span class="at-desc">Soru-Cevap</span>
+          <span class="at-desc">Phrasal Verbs</span>
         </div>
       </div>
       <div class="action-tile" data-action="navigate" data-target="translate">
@@ -731,9 +734,9 @@
     <p class="synth-subtitle">Nöral Öğrenme Matrisi — Çok Modlu İmmersyon</p>
 
     <div class="synth-rules">
-      <div class="rule-item"><span>1</span> <strong>YAZMA</strong>: Her harf kendi renginde parlar — gerçek sinestezi deneyimi.</div>
-      <div class="rule-item"><span>2</span> <strong>BAĞLAM</strong>: Kelimeleri cümle içindeki boşluklara yerleştirerek öğren.</div>
-      <div class="rule-item"><span>3</span> Hız bonusu: Ne kadar hızlı o kadar <strong style="color:var(--amber)">+XP</strong>. Kombo: 5× = 2×, 10× = 3× XP.</div>
+      <div class="rule-item"><span>1</span> <strong>YAZMA / KARMA / HIZLI</strong>: Kelimeyi görürsün, harfleri sırayla yazarsın — aktif kodlama.</div>
+      <div class="rule-item"><span>2</span> <strong>HAYALET modu</strong>: Kelime harf harf yanıp söner, sonra tamamen <em>kaybolur</em>. Sıfır ipucu, saf hafıza.</div>
+      <div class="rule-item"><span>3</span> Kombo bonusu: 5 doğru = 2×, 10 doğru = 3× XP. HAYALET en yüksek ödülü verir.</div>
     </div>
 
     <!-- Mode Picker -->
@@ -743,22 +746,22 @@
         <button class="synth-mode-card" data-action="set-synth-mode" data-mode="spell">
           <span class="smc-icon">⌨️</span>
           <span class="smc-name">YAZMA</span>
-          <span class="smc-desc">20 XP / kelime</span>
+          <span class="smc-desc">Gör & harf harf yaz · 20 XP</span>
         </button>
         <button class="synth-mode-card active" data-action="set-synth-mode" data-mode="mix">
           <span class="smc-icon">🌀</span>
           <span class="smc-name">KARMA</span>
-          <span class="smc-desc">Rastgele mod</span>
+          <span class="smc-desc">Tüm modlar karışık · Başlangıç</span>
         </button>
         <button class="synth-mode-card" data-action="set-synth-mode" data-mode="speed">
           <span class="smc-icon">⚡</span>
           <span class="smc-name">ZAMANA KARŞI</span>
-          <span class="smc-desc">Hızlı ol, 30 XP!</span>
+          <span class="smc-desc">60 saniyelik sprint · 30 XP</span>
         </button>
         <button class="synth-mode-card" data-action="set-synth-mode" data-mode="phantom">
           <span class="smc-icon">🌫️</span>
           <span class="smc-name">HAYALET</span>
-          <span class="smc-desc">Görünmez mürekkep · 40 XP</span>
+          <span class="smc-desc">Söner, sadece hafızan kalır · 40 XP</span>
         </button>
       </div>
     </div>
@@ -1258,6 +1261,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-remote-config-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-performance-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js" defer></script>
 
 <script src="js/firebase-config.js" defer></script>
 <script src="js/storage.js" defer></script>

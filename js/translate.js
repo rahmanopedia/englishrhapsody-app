@@ -288,6 +288,7 @@
       this._results = [];
       this._level = null;
       this._timerInterval = null;
+      this._typeMode = false;
     }
 
     init(el) {
@@ -417,15 +418,25 @@
           <div class="tr-q-body">
             <div class="tr-q-topic">${q.level} · ${q.topic}</div>
             <div class="tr-q-tr">${_escHtml(q.tr)}</div>
-            <p class="tr-q-prompt">Doğru çeviriyi seç:</p>
-            <div class="tr-choices">
-              ${choices.map((c, i) => `
-                <button class="tr-choice-btn" data-choice="${i}" data-val="${_escHtml(c)}">
-                  <span class="tr-choice-letter">${['A','B','C','D'][i]}</span>
-                  <span class="tr-choice-text">${_escHtml(c)}</span>
-                </button>
-              `).join('')}
+            <div class="tr-mode-row">
+              <p class="tr-q-prompt">${this._typeMode?"İngilizceye çevir (yaz):":"Doğru çeviriyi seç:"}</p>
+              <button class="tr-type-toggle" id="trTypeToggle" title="Mod değiştir">${this._typeMode?"🔡 Yazıyor":"📝 Yaz"}</button>
             </div>
+            ${this._typeMode?
+              `<div class="tr-type-area">
+                <input type="text" class="tr-type-input" id="trTypeInput" placeholder="İngilizce çevirinizi yazın..." autocomplete="off" autocorrect="off" spellcheck="false"/>
+                <button class="tr-type-submit" id="trTypeSubmit">Gönder →</button>
+              </div>`
+              :
+              `<div class="tr-choices">
+                ${choices.map((c, i) => `
+                  <button class="tr-choice-btn" data-choice="${i}" data-val="${_escHtml(c)}">
+                    <span class="tr-choice-letter">${['A','B','C','D'][i]}</span>
+                    <span class="tr-choice-text">${_escHtml(c)}</span>
+                  </button>
+                `).join('')}
+              </div>`
+            }
           </div>
         </div>
       `;
@@ -437,6 +448,21 @@
           this._checkAnswer(q, choices, btn.dataset.val, btn);
         });
       });
+
+      // ── Type mode handlers ──
+      const toggleBtn = el.querySelector('#trTypeToggle');
+      if(toggleBtn) toggleBtn.addEventListener('click', () => {
+        this._typeMode = !this._typeMode;
+        this._renderQuestion();
+      });
+      const typeSubmit = el.querySelector('#trTypeSubmit');
+      const typeInput  = el.querySelector('#trTypeInput');
+      if(typeSubmit && typeInput){
+        const submit = () => { if(typeInput.value.trim()) this._checkTypedAnswer(q, choices, typeInput.value.trim()); };
+        typeSubmit.addEventListener('click', submit);
+        typeInput.addEventListener('keydown', e => { if(e.key==='Enter') submit(); });
+        setTimeout(() => typeInput.focus(), 100);
+      }
 
       // ── Start countdown ──
       let remaining = secs;
@@ -461,6 +487,19 @@
           this._checkAnswer(q, choices, null, null); // timeout → wrong
         }
       }, 1000);
+    }
+
+    /* ── CHECK TYPED ── */
+    _checkTypedAnswer(q, choices, typed) {
+      const norm = s => s.toLowerCase().replace(/[^a-z0-9' ]/g,'').replace(/s+/g,' ').trim();
+      const correct = norm(q.en);
+      const given   = norm(typed);
+      // Accept if ≥80% of expected words match (order-insensitive for short answers)
+      const expWords = correct.split(' ');
+      const givWords = given.split(' ');
+      const matches  = expWords.filter(w => givWords.includes(w)).length;
+      const isCorrect = given === correct || (expWords.length >= 3 && matches / expWords.length >= 0.8);
+      this._checkAnswer(q, choices, isCorrect ? q.en : given + '__typed__', null, typed);
     }
 
     /* ── CHECK ── */

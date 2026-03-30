@@ -53,6 +53,10 @@
 .btn-play-audio{display:flex;align-items:center;gap:6px;padding:8px 16px;font-size:.82rem;white-space:nowrap}
 .audio-icon{font-size:.95rem}
 
+/* ── Story done badge ─────────────────────────────────────── */
+.story-done-badge{font-size:.72rem;animation:storyDonePop .35s cubic-bezier(.175,.885,.32,1.275) both}
+@keyframes storyDonePop{0%{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+
 @media(max-width:768px){
 .ann-popup{position:fixed!important;left:50%!important;transform:translateX(-50%)!important;top:auto!important;bottom:12px!important;right:auto!important;width:calc(100vw - 28px)!important;max-width:420px;border-radius:16px;z-index:99999;max-height:52vh;overflow-y:auto}
 .ann-popup-header{padding:9px 14px}
