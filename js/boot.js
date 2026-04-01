@@ -95,10 +95,14 @@
   }, { capture: true });
 
   window.addEventListener('load', function () {
-    // Prefetch: 800ms sonra tüm lazy scriptleri tarayıcıya bildir
+    // Prefetch: 800ms sonra sadece sık kullanılan modları tarayıcıya bildir
+    // (tüm modları değil — yavaş bağlantılarda gereksiz bant genişliği tüketimini önler)
+    var PREFETCH_MODES = ['quantum', 'translate', 'grammar'];
     setTimeout(function () {
       var seen = new Set();
-      Object.values(LAZY).forEach(function (srcs) {
+      PREFETCH_MODES.forEach(function (mode) {
+        var srcs = LAZY[mode];
+        if (!srcs) return;
         srcs.forEach(function (src) {
           if (seen.has(src) || loaded.has(src)) return;
           seen.add(src);
@@ -127,9 +131,10 @@
   });
 })();
 
+
 /* ── 2. Mobile nav behavior ── */
 (function(){
-  var MODE_VIEWS=new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement','cinema','translate','grammar','flashcards']);
+  var MODE_VIEWS=new Set(['learn','reading','speak','bridge','nexus','quantum','conversations','leaderboard','placement','cinema','translate','grammar','flashcards','rival']);
   var HIDE_MS=2000;
 
   function setup(){
@@ -196,7 +201,7 @@
     shell.classList.toggle('nexus-network-lock', isNetwork);
   });
   window.addEventListener('load', function() {
-    obs.observe(document.body, { childList:true, subtree:true });
+    obs.observe(document.getElementById('main-content') || document.body, { childList:true, subtree:true });
   });
 })();
 
@@ -832,11 +837,13 @@ window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); 
   }
 
   var bodyObs = new MutationObserver(function() {
-    if(document.getElementById('story-area')) attachObserver();
+    if(document.getElementById('story-area')) { bodyObs.disconnect(); attachObserver(); }
   });
   window.addEventListener('load', function() {
     attachObserver();
-    bodyObs.observe(document.body, { childList: true, subtree: true });
+    if(!document.getElementById('story-area')) {
+      bodyObs.observe(document.body, { childList: true, subtree: true });
+    }
   });
 })();
 
@@ -918,6 +925,7 @@ document.addEventListener('click', function(e) {
       if (target === 'grammar') {
         var root = document.getElementById('grammar-root');
         if (root && typeof GrammarMode !== 'undefined') {
+          if (window.grammarMod && window.grammarMod.destroy) window.grammarMod.destroy();
           window.grammarMod = new GrammarMode(window._app);
           window.grammarMod.init(root);
         }
@@ -948,6 +956,8 @@ document.addEventListener('click', function(e) {
 // ── Placement Test: ilk girişte seviye belirle ────────────────────────────
 (function() {
   function maybeShowPlacementTest(app) {
+    if (window._isGuest) return; // misafire seviye testi gösterme
+    if (!window.authManager || !window.authManager.isLoggedIn) return; // giriş yapmamış
     if (typeof PlacementTest === 'undefined') return;
     var cefrLevel = app.state.get('cefrLevel');
     if (cefrLevel) return; // zaten belirlenmiş
@@ -958,22 +968,24 @@ document.addEventListener('click', function(e) {
 
     var test = new PlacementTest();
     test.show(container, function(level) {
-      // Sonucu kaydet
       app.state.set('cefrLevel', level);
       container.style.display = 'none';
       container.innerHTML = '';
     });
   }
 
-  // App ve WORDS yüklenince kontrol et
+  // App, WORDS ve auth hazır olana kadar bekle
   function waitAndCheck() {
     var app = window._app;
     if (!app || typeof WORDS === 'undefined') {
       setTimeout(waitAndCheck, 300);
       return;
     }
-    // Firebase auth beklenmesi için kısa gecikme
-    setTimeout(function() { maybeShowPlacementTest(app); }, 1200);
+    if (!window.authManager || !window.authManager._ready) {
+      setTimeout(waitAndCheck, 200);
+      return;
+    }
+    maybeShowPlacementTest(app);
   }
 
   waitAndCheck();
@@ -983,11 +995,20 @@ document.addEventListener('click', function(e) {
 (function(){
   var banner = document.getElementById('offline-banner');
   if(!banner) return;
+
+  var OFFLINE_HTML = [
+    '<span>📡 İnternet bağlantısı yok</span>',
+    '<span style="font-size:11px;opacity:.7;margin-left:8px">',
+    '· Çevrimdışı çalışanlar: Sinestezi, Phantom, Flashcard, Okuma, Gramer',
+    '</span>'
+  ].join('');
+
   function update(){
     if(navigator.onLine){
       banner.classList.remove('visible');
+      banner.innerHTML = '';
     } else {
-      banner.textContent = '📡 İnternet bağlantısı yok';
+      banner.innerHTML = OFFLINE_HTML;
       banner.classList.add('visible');
     }
   }
@@ -1102,10 +1123,14 @@ document.addEventListener('click', function(e) {
     updateBadges();
     setInterval(updateBadges, 60000);
 
+    var _obsTimer = null;
     var obs = new MutationObserver(function(){
-      injectSynthChip();
-      injectHomeCard();
-      updateBadges();
+      clearTimeout(_obsTimer);
+      _obsTimer = setTimeout(function(){
+        injectSynthChip();
+        injectHomeCard();
+        updateBadges();
+      }, 250);
     });
     var mc = document.getElementById('main-content');
     if(mc) obs.observe(mc, { childList: true, subtree: true });
@@ -1249,4 +1274,719 @@ document.addEventListener('click', function(e) {
       renderCard();
     }, 1000);
   });
+})();
+
+/* ── 9e. Guest Quantum Limit (3 cümle) ────────────────────────── */
+(function () {
+  var LIMIT = 3;
+  var _lastMod = null;
+
+  function _isGuest() {
+    return window._isGuest && !(window.authManager && window.authManager.isLoggedIn);
+  }
+
+  function _showPaywall() {
+    var mod = window.quantumMod || window._qmode;
+    var root = mod && mod.root;
+    if (!root || root.querySelector('#quantum-paywall')) return;
+    root.innerHTML = '<div id="quantum-paywall" style="' +
+      'display:flex;flex-direction:column;align-items:center;' +
+      'justify-content:center;text-align:center;padding:32px;gap:14px;' +
+      'min-height:100%;width:100%;box-sizing:border-box;">' +
+      '<div style="font-size:3.2rem;margin-bottom:4px;">⚛️</div>' +
+      '<div style="font-size:1.35rem;font-weight:900;color:#fff;line-height:1.3;">3 cümleyi tamamladın!</div>' +
+      '<div style="color:#94a3b8;font-size:0.875rem;line-height:1.7;max-width:280px;">Sınırsız oynamak ve ilerlemeyi kaydetmek<br>için ücretsiz hesap oluştur.</div>' +
+      '<button id="qp-register" style="background:#f59e0b;color:#1c1917;border:none;border-radius:40px;padding:14px 0;font-size:0.95rem;font-weight:900;cursor:pointer;width:100%;max-width:280px;margin-top:6px;">Ücretsiz Kayıt Ol</button>' +
+      '<button id="qp-back" style="background:rgba(255,255,255,0.05);color:#94a3b8;border:1px solid rgba(255,255,255,0.1);border-radius:40px;padding:11px 0;font-size:0.85rem;font-weight:700;cursor:pointer;width:100%;max-width:280px;">Ana Menüye Dön</button>' +
+      '</div>';
+    root.querySelector('#qp-register').onclick = function () {
+      var modal = document.getElementById('auth-modal');
+      if (modal) modal.style.display = 'flex';
+    };
+    root.querySelector('#qp-back').onclick = function () {
+      var a = window._app || window.app;
+      if (a && a.navigate) a.navigate('home');
+    };
+  }
+
+  /* quantum.js'deki _qSentenceDone hook'u — her cümle/soru tamamlanınca çağrılır */
+  window._qSentenceDone = function (qm) {
+    if (!_isGuest()) return;
+    window._guestQuantumSentences = (window._guestQuantumSentences || 0) + 1;
+    if (window._guestQuantumSentences >= LIMIT) {
+      _showPaywall();
+    }
+  };
+
+  /* startGame: limit dolmuşsa direk paywall göster */
+  function patchMod(mod) {
+    if (!mod || mod === _lastMod) return;
+    _lastMod = mod;
+    var _origStart = mod.startGame.bind(mod);
+    mod.startGame = function (type) {
+      if (_isGuest() && (window._guestQuantumSentences || 0) >= LIMIT) {
+        _showPaywall(); return;
+      }
+      _origStart(type);
+    };
+  }
+
+  var _qtTimer = setInterval(function () {
+    if (window.authManager && window.authManager.isLoggedIn && !window._isGuest) { clearInterval(_qtTimer); return; }
+    if (window.quantumMod && window.quantumMod !== _lastMod) patchMod(window.quantumMod);
+  }, 300);
+})();
+
+/* ── 9d. Guest Nexus Limit (her mod 3 hak) ───────────────────── */
+(function () {
+  var LIMIT = 3;
+  var _lastMod = null;
+
+  function _isGuest() {
+    return window._isGuest && !(window.authManager && window.authManager.isLoggedIn);
+  }
+
+  function _showPaywall(mod) {
+    var root = mod.root;
+    if (!root) return;
+    if (root.querySelector('#nexus-paywall')) return;
+
+    var div = document.createElement('div');
+    div.id = 'nexus-paywall';
+    div.style.cssText = [
+      'position:absolute;inset:0;z-index:50;',
+      'background:rgba(3,7,18,0.95);backdrop-filter:blur(4px);',
+      'display:flex;flex-direction:column;align-items:center;',
+      'justify-content:center;text-align:center;padding:32px;gap:14px;'
+    ].join('');
+    div.innerHTML = [
+      '<div style="font-size:3.2rem;margin-bottom:4px;">🧠</div>',
+      '<div style="font-size:1.35rem;font-weight:900;color:#fff;line-height:1.3;">',
+        'Hakkın doldu!',
+      '</div>',
+      '<div style="color:#94a3b8;font-size:0.875rem;line-height:1.7;max-width:280px;">',
+        'Sınırsız kullanmak ve ilerlemeyi kaydetmek<br>için ücretsiz hesap oluştur.',
+      '</div>',
+      '<button id="np-register" style="',
+        'background:#f59e0b;color:#1c1917;',
+        'border:none;border-radius:40px;',
+        'padding:14px 0;font-size:0.95rem;font-weight:900;',
+        'cursor:pointer;width:100%;max-width:280px;margin-top:6px;',
+      '">Ücretsiz Kayıt Ol</button>',
+      '<button id="np-back" style="',
+        'background:rgba(255,255,255,0.05);color:#94a3b8;',
+        'border:1px solid rgba(255,255,255,0.1);border-radius:40px;',
+        'padding:11px 0;font-size:0.85rem;font-weight:700;',
+        'cursor:pointer;width:100%;max-width:280px;',
+      '">Ana Menüye Dön</button>',
+    ].join('');
+
+    if (!['relative','absolute','fixed'].includes(root.style.position)) {
+      root.style.position = 'relative';
+    }
+    root.appendChild(div);
+
+    div.querySelector('#np-register').onclick = function () {
+      div.remove();
+      var modal = document.getElementById('auth-modal');
+      if (modal) modal.style.display = 'flex';
+    };
+    div.querySelector('#np-back').onclick = function () {
+      div.remove();
+      var app = window._app || window.app;
+      if (app && app.navigate) app.navigate('home');
+    };
+  }
+
+  function _guard(mod, key, counterKey) {
+    var _orig = mod[key].bind(mod);
+    mod[key] = function () {
+      if (!_isGuest()) { _orig(); return; }
+      if ((window._guestNexus = window._guestNexus || {})[counterKey] >= LIMIT) {
+        _showPaywall(mod); return;
+      }
+      window._guestNexus[counterKey] = (window._guestNexus[counterKey] || 0) + 1;
+      _orig();
+    };
+  }
+
+  function patchMod(mod) {
+    if (!mod || mod === _lastMod) return;
+    _lastMod = mod;
+    _guard(mod, 'startNetwork',   'network');
+    _guard(mod, 'startCipher',    'cipher');
+    _guard(mod, 'startSynthesis', 'synthesis');
+  }
+
+  var _nxTimer = setInterval(function () {
+    if (window.authManager && window.authManager.isLoggedIn && !window._isGuest) { clearInterval(_nxTimer); return; }
+    if (window.nexusMod && window.nexusMod !== _lastMod) patchMod(window.nexusMod);
+  }, 300);
+})();
+
+/* ── 9f. Guest Translate Limit (3 soru) ──────────────────────── */
+(function () {
+  var LIMIT = 3;
+
+  function _isGuest() {
+    return window._isGuest && !(window.authManager && window.authManager.isLoggedIn);
+  }
+
+  /* translate.js'deki _trQuestionDone hook'u — her soru gösterilmeden önce çağrılır.
+     true dönerse _renderQuestion abort eder (4. soru hiç render edilmez). */
+  window._trQuestionDone = function (instance) {
+    if (!_isGuest()) return false;
+    var count = (window._guestTranslateQ = (window._guestTranslateQ || 0) + 1);
+    if (count > LIMIT) {
+      var root = instance && instance._el;
+      if (root && !root.querySelector('#translate-paywall')) {
+        root.innerHTML = '<div id="translate-paywall" style="' +
+          'display:flex;flex-direction:column;align-items:center;' +
+          'justify-content:center;text-align:center;padding:32px;gap:14px;' +
+          'min-height:100%;width:100%;box-sizing:border-box;">' +
+          '<div style="font-size:3.2rem;margin-bottom:4px;">🔤</div>' +
+          '<div style="font-size:1.35rem;font-weight:900;color:#fff;line-height:1.3;">3 soruyu tamamladın!</div>' +
+          '<div style="color:#94a3b8;font-size:0.875rem;line-height:1.7;max-width:280px;">Sınırsız çeviri pratiği yapmak<br>için ücretsiz hesap oluştur.</div>' +
+          '<button id="tp-register" style="background:#f59e0b;color:#1c1917;border:none;border-radius:40px;padding:14px 0;font-size:0.95rem;font-weight:900;cursor:pointer;width:100%;max-width:280px;margin-top:6px;">Ücretsiz Kayıt Ol</button>' +
+          '<button id="tp-back" style="background:rgba(255,255,255,0.05);color:#94a3b8;border:1px solid rgba(255,255,255,0.1);border-radius:40px;padding:11px 0;font-size:0.85rem;font-weight:700;cursor:pointer;width:100%;max-width:280px;">Ana Menüye Dön</button>' +
+          '</div>';
+        root.querySelector('#tp-register').onclick = function () {
+          var modal = document.getElementById('auth-modal');
+          if (modal) modal.style.display = 'flex';
+        };
+        root.querySelector('#tp-back').onclick = function () {
+          var a = window._app || window.app;
+          if (a && a.navigate) a.navigate('home');
+        };
+      }
+      return true; // abort _renderQuestion
+    }
+    return false;
+  };
+})();
+
+/* ── 9b. Guest Cinema Limit (3 klip) ─────────────────────────── */
+(function () {
+  var LIMIT = 3;
+  var _lastMod = null;
+
+  function _isGuest() {
+    return window._isGuest && !(window.authManager && window.authManager.isLoggedIn);
+  }
+
+  function _showPaywall(mod) {
+    var root = mod.el && mod.el.querySelector('#cine-root');
+    if (!root) return;
+    var existing = root.querySelector('#cinema-paywall');
+    if (existing) return; // zaten gösteriliyor
+
+    // Video'yu durdur
+    if (mod.video) { try { mod.video.pause(); } catch(e) {} }
+    if (mod._clearSync) mod._clearSync();
+
+    var div = document.createElement('div');
+    div.id = 'cinema-paywall';
+    div.style.cssText = [
+      'position:absolute;inset:0;z-index:50;',
+      'background:rgba(3,7,18,0.95);backdrop-filter:blur(4px);',
+      'display:flex;flex-direction:column;align-items:center;',
+      'justify-content:center;text-align:center;padding:32px;gap:14px;'
+    ].join('');
+    div.innerHTML = [
+      '<div style="font-size:3.2rem;margin-bottom:4px;">🎬</div>',
+      '<div style="font-size:1.35rem;font-weight:900;color:#fff;line-height:1.3;">',
+        '3 video izledin!',
+      '</div>',
+      '<div style="color:#94a3b8;font-size:0.875rem;line-height:1.7;max-width:280px;">',
+        'Tüm videoları izlemek ve ilerlemeyi kaydetmek<br>için ücretsiz hesap oluştur.',
+      '</div>',
+      '<button id="cp-register" style="',
+        'background:#f59e0b;color:#1c1917;',
+        'border:none;border-radius:40px;',
+        'padding:14px 0;font-size:0.95rem;font-weight:900;',
+        'cursor:pointer;width:100%;max-width:280px;margin-top:6px;',
+      '">Ücretsiz Kayıt Ol</button>',
+      '<button id="cp-back" style="',
+        'background:rgba(255,255,255,0.05);color:#94a3b8;',
+        'border:1px solid rgba(255,255,255,0.1);border-radius:40px;',
+        'padding:11px 0;font-size:0.85rem;font-weight:700;',
+        'cursor:pointer;width:100%;max-width:280px;',
+      '">Ana Menüye Dön</button>',
+    ].join('');
+    root.appendChild(div);
+
+    div.querySelector('#cp-register').onclick = function () {
+      if (mod._exit) mod._exit();
+      var modal = document.getElementById('auth-modal');
+      if (modal) modal.style.display = 'flex';
+    };
+    div.querySelector('#cp-back').onclick = function () {
+      if (mod._exit) mod._exit();
+    };
+  }
+
+  function patchMod(mod) {
+    if (!mod || mod === _lastMod) return;
+    _lastMod = mod;
+
+    /* _loadClip: ilk açılışta session zaten tüketildiyse paywall göster */
+    var _origLoad = mod._loadClip.bind(mod);
+    mod._loadClip = function () {
+      if (_isGuest() && (window._guestCinemaUsed || mod.clipIndex >= LIMIT)) {
+        window._guestCinemaUsed = true;
+        _showPaywall(mod);
+        return;
+      }
+      _origLoad();
+    };
+
+    /* _nextClip: klip bitti, sıradakine geçerken kontrol et */
+    var _origNext = mod._nextClip.bind(mod);
+    mod._nextClip = function () {
+      if (_isGuest() && mod.clipIndex + 1 >= LIMIT) {
+        window._guestCinemaUsed = true;
+        mod.clipIndex++;          // sayacı ilerlet (UI tutarlılığı)
+        _showPaywall(mod);
+        return;
+      }
+      _origNext();
+    };
+  }
+
+  /* Yeni cinemaMod instance'ını yakala */
+  var _cmTimer = setInterval(function () {
+    if (window.authManager && window.authManager.isLoggedIn && !window._isGuest) { clearInterval(_cmTimer); return; }
+    if (window.cinemaMod && window.cinemaMod !== _lastMod) patchMod(window.cinemaMod);
+  }, 300);
+})();
+
+/* ── 9c. Guest Bridge Limit (3 keşfet) ───────────────────────── */
+(function () {
+  var LIMIT = 3;
+  var _lastMod = null;
+
+  function _isGuest() {
+    return window._isGuest && !(window.authManager && window.authManager.isLoggedIn);
+  }
+
+  function _showPaywall(mod) {
+    var root = mod.el;
+    if (!root) return;
+    if (root.querySelector('#bridge-paywall')) return;
+
+    var div = document.createElement('div');
+    div.id = 'bridge-paywall';
+    div.style.cssText = [
+      'position:absolute;inset:0;z-index:50;',
+      'background:rgba(3,7,18,0.95);backdrop-filter:blur(4px);',
+      'display:flex;flex-direction:column;align-items:center;',
+      'justify-content:center;text-align:center;padding:32px;gap:14px;'
+    ].join('');
+    div.innerHTML = [
+      '<div style="font-size:3.2rem;margin-bottom:4px;">🌉</div>',
+      '<div style="font-size:1.35rem;font-weight:900;color:#fff;line-height:1.3;">',
+        '3 keşif hakkın doldu!',
+      '</div>',
+      '<div style="color:#94a3b8;font-size:0.875rem;line-height:1.7;max-width:280px;">',
+        'Sınırsız keşfetmek ve ilerlemeyi kaydetmek<br>için ücretsiz hesap oluştur.',
+      '</div>',
+      '<button id="bp-register" style="',
+        'background:#f59e0b;color:#1c1917;',
+        'border:none;border-radius:40px;',
+        'padding:14px 0;font-size:0.95rem;font-weight:900;',
+        'cursor:pointer;width:100%;max-width:280px;margin-top:6px;',
+      '">Ücretsiz Kayıt Ol</button>',
+      '<button id="bp-back" style="',
+        'background:rgba(255,255,255,0.05);color:#94a3b8;',
+        'border:1px solid rgba(255,255,255,0.1);border-radius:40px;',
+        'padding:11px 0;font-size:0.85rem;font-weight:700;',
+        'cursor:pointer;width:100%;max-width:280px;',
+      '">Ana Menüye Dön</button>',
+    ].join('');
+
+    // position:relative gerekli
+    if (root.style.position !== 'relative' && root.style.position !== 'absolute') {
+      root.style.position = 'relative';
+    }
+    root.appendChild(div);
+
+    div.querySelector('#bp-register').onclick = function () {
+      div.remove();
+      var modal = document.getElementById('auth-modal');
+      if (modal) modal.style.display = 'flex';
+    };
+    div.querySelector('#bp-back').onclick = function () {
+      div.remove();
+      var app = window._app || window.app;
+      if (app && app.navigate) app.navigate('home');
+    };
+  }
+
+  function patchMod(mod) {
+    if (!mod || mod === _lastMod) return;
+    _lastMod = mod;
+    window._guestBridgeUsed = window._guestBridgeUsed || 0;
+
+    var _origDiscover = mod._smartDiscovery.bind(mod);
+    mod._smartDiscovery = function () {
+      if (!_isGuest()) { _origDiscover(); return; }
+      if (window._guestBridgeUsed >= LIMIT) {
+        _showPaywall(mod);
+        return;
+      }
+      window._guestBridgeUsed++;
+      _origDiscover();
+    };
+  }
+
+  var _brTimer = setInterval(function () {
+    if (window.authManager && window.authManager.isLoggedIn && !window._isGuest) { clearInterval(_brTimer); return; }
+    if (window.bridgeMod && window.bridgeMod !== _lastMod) patchMod(window.bridgeMod);
+  }, 300);
+})();
+
+/* ── 9. Guest Mode ────────────────────────────────────────────── */
+(function () {
+
+  /* ── Misafir girişi butonu ── */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('#auth-guest-btn');
+    if (!btn) return;
+    e.preventDefault();
+
+    window._isGuest = true;
+
+    // Auth modal'ı kapat
+    var modal = document.getElementById('auth-modal');
+    if (modal) modal.style.display = 'none';
+
+    // Guest banner'ı göster + body sınıfı ekle
+    var banner = document.getElementById('guest-banner');
+    if (banner) banner.style.display = 'flex';
+    document.body.classList.add('guest-mode');
+
+    // Misafir girişinde direkt ana ekrana git
+    var app = window._app || window.app;
+    if (app) {
+      app.navigate('home');
+    } else {
+      // App henüz hazır değil — bekle
+      var _wait = setInterval(function () {
+        var a = window._app || window.app;
+        if (!a) return;
+        clearInterval(_wait);
+        a.navigate('home');
+      }, 100);
+    }
+  });
+
+  /* ── "Kayıt Ol" butonu (banner) ── */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('#gb-register-btn');
+    if (!btn) return;
+    e.preventDefault();
+    // Auth modal'ı aç
+    var modal = document.getElementById('auth-modal');
+    if (modal) modal.style.display = 'flex';
+  });
+
+  /* ── Kullanıcı giriş yaparsa banner'ı gizle ── */
+  setInterval(function () {
+    if (!window._isGuest) return;
+    if (window.authManager && window.authManager.isLoggedIn) {
+      window._isGuest = false;
+      var banner = document.getElementById('guest-banner');
+      if (banner) banner.style.display = 'none';
+      document.body.classList.remove('guest-mode');
+    }
+  }, 2000);
+
+  /* ── XP limitleri ── */
+  var GUEST_SOFT_XP = 100;   // toast uyarısı
+  var GUEST_HARD_XP = 250;   // sert paywall
+  var LEARN_MODES = new Set(['learn','speak','reading','bridge','nexus','quantum',
+                              'translate','grammar','cinema','flashcards','conversations']);
+  var _softShown = false;
+
+  function _guestXP() {
+    var a = window._app || window.app;
+    return (a && a.state && a.state.get && a.state.get('xp')) || 0;
+  }
+
+  function _hardLimit() {
+    return window._guestXpGrace ? GUEST_HARD_XP + window._guestXpGrace : GUEST_HARD_XP;
+  }
+
+  /* Paywall overlay */
+  function _showGuestXpPaywall() {
+    if (document.getElementById('guest-xp-paywall')) {
+      document.getElementById('guest-xp-paywall').style.display = 'flex';
+      return;
+    }
+    var canDismiss = !window._guestPaywallDismissed;
+    var div = document.createElement('div');
+    div.id = 'guest-xp-paywall';
+    div.style.cssText = [
+      'position:fixed;inset:0;z-index:9200;',
+      'background:rgba(3,7,18,0.96);backdrop-filter:blur(6px);',
+      'display:flex;flex-direction:column;align-items:center;',
+      'justify-content:center;text-align:center;padding:32px;gap:14px;'
+    ].join('');
+    div.innerHTML = [
+      '<div style="font-size:3rem;margin-bottom:4px;">🏆</div>',
+      '<div style="font-size:1.4rem;font-weight:900;color:#f1f5f9;line-height:1.3;max-width:300px;">',
+        'Harika gidiyorsun!',
+      '</div>',
+      '<div style="color:#94a3b8;font-size:0.88rem;line-height:1.7;max-width:300px;">',
+        'İlerlemeyi <strong style="color:#c4b5fd;">kaydetmek</strong> ve tüm modlara<br>',
+        'sınırsız erişmek için ücretsiz hesap oluştur.',
+      '</div>',
+      '<button id="gxp-register" style="',
+        'background:linear-gradient(135deg,#6366f1,#4f46e5);',
+        'color:#fff;border:none;border-radius:40px;',
+        'padding:14px 0;font-size:0.95rem;font-weight:800;',
+        'cursor:pointer;width:100%;max-width:300px;margin-top:8px;',
+        'box-shadow:0 4px 20px rgba(99,102,241,0.4);',
+      '">Ücretsiz Kayıt Ol</button>',
+      canDismiss ? [
+        '<button id="gxp-dismiss" style="',
+          'background:transparent;color:#475569;',
+          'border:none;padding:10px;font-size:0.82rem;',
+          'cursor:pointer;text-decoration:underline;',
+        '">Şimdi değil, devam et</button>',
+      ].join('') : '',
+    ].join('');
+    document.body.appendChild(div);
+
+    div.querySelector('#gxp-register').onclick = function () {
+      div.style.display = 'none';
+      var modal = document.getElementById('auth-modal');
+      if (modal) modal.style.display = 'flex';
+    };
+
+    var dismissBtn = div.querySelector('#gxp-dismiss');
+    if (dismissBtn) {
+      dismissBtn.onclick = function () {
+        window._guestPaywallDismissed = true;
+        window._guestXpGrace = (window._guestXpGrace || 0) + 150; // 150 XP daha
+        div.style.display = 'none';
+      };
+    }
+  }
+
+  /* navigate() yamasını: rival, leaderboard + XP limiti */
+  function patchGuestNav() {
+    var app = window._app || window.app;
+    if (!app || !app.navigate || app.__guestNavPatched) return;
+    app.__guestNavPatched = true;
+
+    var _orig = app.navigate.bind(app);
+    app.navigate = function (target) {
+      var stillGuest = window._isGuest && !(window.authManager && window.authManager.isLoggedIn);
+      if (!stillGuest) { _orig(target); return; }
+
+      // Rival & leaderboard tamamen kapalı
+      if (target === 'rival' || target === 'leaderboard') {
+        if (typeof UI !== 'undefined' && UI.toast) {
+          UI.toast('Bu özellik için giriş yapman gerekiyor!');
+        }
+        var modal = document.getElementById('auth-modal');
+        if (modal) modal.style.display = 'flex';
+        return;
+      }
+
+      // XP sert limiti: öğrenme moduna geçişi engelle
+      if (LEARN_MODES.has(target) && _guestXP() >= _hardLimit()) {
+        _showGuestXpPaywall();
+        return;
+      }
+
+      _orig(target);
+    };
+  }
+
+  if (window._app) {
+    patchGuestNav();
+  } else {
+    var _t = setInterval(function () {
+      if (window._app && window._app.navigate) { clearInterval(_t); patchGuestNav(); }
+    }, 50);
+  }
+
+  /* XP yumuşak uyarı — eşik geçilince bir kez toast */
+  setInterval(function () {
+    if (_softShown) return;
+    if (!window._isGuest) return;
+    if (!(window.authManager && !window.authManager.isLoggedIn)) return;
+    if (_guestXP() >= GUEST_SOFT_XP) {
+      _softShown = true;
+      if (typeof UI !== 'undefined' && UI.toast) {
+        UI.toast('💡 İlerlemeyi kaydetmek için hesap oluştur!', 4000);
+      }
+    }
+  }, 3000);
+
+  /* ── İlk adım kartı: home'a geçince XP = 0 ise göster ── */
+  function checkFirstStepCard() {
+    var card = document.getElementById('first-step-card');
+    if (!card) return;
+    var app = window._app || window.app;
+    var xp = app && app.state && app.state.get && (app.state.get('xp') || 0);
+    card.style.display = (xp === 0) ? 'block' : 'none';
+  }
+
+  function patchHomeNav() {
+    var app = window._app || window.app;
+    if (!app || !app.navigate || app.__homeCardPatched) return;
+    app.__homeCardPatched = true;
+
+    var _orig2 = app.navigate.bind(app);
+    app.navigate = function (target) {
+      _orig2(target);
+      if (target === 'home') {
+        setTimeout(checkFirstStepCard, 200);
+      }
+    };
+  }
+
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      patchHomeNav();
+      checkFirstStepCard();
+    }, 1200);
+  });
+
+  // MutationObserver: home template klonlandığında kartı güncelle
+  var _homeObsTimer = null;
+  var _homeObs = new MutationObserver(function () {
+    clearTimeout(_homeObsTimer);
+    _homeObsTimer = setTimeout(function () {
+      if (document.getElementById('first-step-card')) checkFirstStepCard();
+    }, 250);
+  });
+  window.addEventListener('load', function () {
+    var mc = document.getElementById('main-content');
+    if (mc) _homeObs.observe(mc, { childList: true, subtree: true });
+  });
+
+  /* ── PlacementTest entegrasyonu: navigate('placement') ── */
+  function patchPlacementNav() {
+    var app = window._app || window.app;
+    if (!app || !app.navigate || app.__placementNavPatched) return;
+    app.__placementNavPatched = true;
+
+    var _origPl = app.navigate.bind(app);
+    app.navigate = function (target) {
+      _origPl(target);  // tpl-placement template'ini klonla
+      if (target !== 'placement') return;
+
+      // Yeni PlacementTest sınıfını başlat
+      var container = document.getElementById('placement-root');
+      if (!container) return;
+      if (typeof PlacementTest === 'undefined') return;
+
+      var test = new PlacementTest();
+      test.show(container, function (cefrLevel) {
+        var a = window._app || window.app;
+        if (a && a._placementFinish) {
+          a._placementFinish(cefrLevel, 'balanced');
+        } else if (a) {
+          a.state && a.state.update({ onboarded: true, cefrLevel: cefrLevel }, true);
+          a.navigate('home');
+        }
+      });
+    };
+  }
+
+  if (window._app) {
+    patchPlacementNav();
+  } else {
+    var _tpl = setInterval(function () {
+      if (window._app && window._app.navigate) { clearInterval(_tpl); patchPlacementNav(); }
+    }, 50);
+  }
+
+})();
+
+/* ── Mode Stats & sessionsToday Reset ── */
+(function() {
+  function renderModeStats() {
+    var grid = document.getElementById('an-mode-stats-grid');
+    if (!grid || !window._app) return;
+    var st = window._app.state;
+    var ms = st.get('modeStats') || {};
+    var totalXP = st.get('xp') || 0;
+
+    var modes = [
+      { key:'nexus',   xpKey:'nexusXP',   icon:'🌌', label:'Nexus (Phrasal)' },
+      { key:'cinema',  xpKey:'cinemaXP',  icon:'🎬', label:'Cinema' },
+      { key:'grammar', xpKey:'grammarXP', icon:'🧩', label:'Gramer' },
+    ];
+
+    // Phantom uses main XP (synth mode), read from state
+    var phantomSessions = st.get('sessions') || 0;
+    var speaking = st.get('speakTotal') || 0;
+    var reading = Object.keys(st.get('readDone') || {}).length;
+
+    var html = modes.map(function(m) {
+      var count = ms[m.key] || 0;
+      var xp    = ms[m.xpKey] || 0;
+      return '<div class=an-stat-card>' +
+        '<div class=an-stat-icon>' + m.icon + '</div>' +
+        '<div class=an-stat-val>' + count + '</div>' +
+        '<div class=an-stat-lbl>' + m.label + '</div>' +
+        '<div class=an-stat-sub>+' + xp + ' XP</div>' +
+      '</div>';
+    }).join('');
+
+    html += '<div class=an-stat-card>' +
+      '<div class=an-stat-icon>🎙️</div>' +
+      '<div class=an-stat-val>' + speaking + '</div>' +
+      '<div class=an-stat-lbl>Konuşma</div>' +
+      '<div class=an-stat-sub>Telaffuz denemesi</div>' +
+    '</div>';
+
+    html += '<div class=an-stat-card>' +
+      '<div class=an-stat-icon>📖</div>' +
+      '<div class=an-stat-val>' + reading + '</div>' +
+      '<div class=an-stat-lbl>Okuma</div>' +
+      '<div class=an-stat-sub>Tamamlanan hikaye</div>' +
+    '</div>';
+
+    grid.innerHTML = html;
+  }
+
+  // Patch _initAnalytics to also call renderModeStats
+  function patchAnalytics() {
+    if (!window._app || !window._app._initAnalytics) return;
+    var orig = window._app._initAnalytics.bind(window._app);
+    window._app._initAnalytics = function() {
+      orig();
+      renderModeStats();
+    };
+  }
+
+  // sessionsToday midnight reset: check on app start
+  function checkSessionsReset() {
+    if (!window._app) return;
+    var st = window._app.state;
+    var lastActive = st.get('lastActive') || '';
+    var today = new Date().toISOString().split('T')[0];
+    if (lastActive && lastActive !== today) {
+      st.update({ sessionsToday: 0 });
+    }
+  }
+
+  if (window._app) {
+    patchAnalytics();
+    checkSessionsReset();
+  } else {
+    var _waitApp = setInterval(function() {
+      if (window._app) {
+        clearInterval(_waitApp);
+        patchAnalytics();
+        checkSessionsReset();
+      }
+    }, 100);
+  }
 })();

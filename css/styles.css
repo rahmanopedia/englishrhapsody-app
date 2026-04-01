@@ -6931,6 +6931,40 @@ body.rank-6 { --theme-accent: #ff9d00; }
 .an-skill-weak { border-color: rgba(251,146,60,0.4) !important; background: rgba(251,146,60,0.06) !important; }
 .an-skill-weak-tag { font-size: 0.6rem; font-weight: 700; background: rgba(251,146,60,0.18); color: #fb923c; border-radius: 99px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
 
+/* ── Analytics Stat Cards ── */
+.an-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+.an-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: border-color 0.2s;
+}
+.an-stat-card:hover { border-color: var(--border-hover); }
+.an-stat-icon { font-size: 1.4rem; margin-bottom: 2px; }
+.an-stat-val  { font-size: 1.5rem; font-weight: 800; color: var(--cyan); line-height: 1; }
+.an-stat-lbl  { font-size: 0.72rem; color: var(--text-2); font-weight: 500; }
+.an-stat-sub  { font-size: 0.68rem; color: var(--text-3); }
+
+/* ── Heatmap Grid ── */
+.hm-grid {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 4px;
+  margin-top: 8px;
+}
+@media (max-width: 600px) { .hm-grid { grid-template-columns: repeat(9, 1fr); } }
+
+
 /* ── Convo: typing indicator ────────────────────── */
 .cb-typing {
   display: flex; align-items: center; gap: 5px;
@@ -9816,4 +9850,90 @@ input, textarea { -webkit-user-select: text !important; -moz-user-select: text !
   font-size: 0.8rem; font-weight: 700; cursor: pointer;
   white-space: nowrap;
 }
+
+/* ── Guest Mode ────────────────────────────────────────────────── */
+.auth-guest-divider {
+  display: flex; align-items: center; gap: 10px;
+  margin: 16px 0 12px; color: #475569; font-size: 0.78rem;
+}
+.auth-guest-divider::before,
+.auth-guest-divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(255,255,255,0.07);
+}
+
+.auth-guest-btn {
+  width: 100%; padding: 11px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  color: #94a3b8; font-size: 0.88rem; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center;
+  justify-content: center; gap: 8px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.auth-guest-btn:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.2);
+  color: #cbd5e1;
+}
+.agb-icon { font-size: 1rem; }
+
+.auth-guest-note {
+  text-align: center; color: #475569;
+  font-size: 0.72rem; margin: 6px 0 0;
+}
+
+/* ── Guest Banner ──────────────────────────────────────────────── */
+.guest-banner {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+  background: linear-gradient(90deg, #78350f, #92400e);
+  border-bottom: 1px solid rgba(251,191,36,0.3);
+  padding: 9px 16px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.83rem;
+}
+.gb-icon { font-size: 1rem; flex-shrink: 0; }
+.gb-text { color: #fde68a; flex: 1; font-weight: 500; }
+.gb-register-btn {
+  background: #f59e0b; border: none; border-radius: 8px;
+  padding: 6px 14px; color: #1c1917;
+  font-size: 0.8rem; font-weight: 700; cursor: pointer;
+  white-space: nowrap; flex-shrink: 0;
+  transition: background 0.15s;
+}
+.gb-register-btn:hover { background: #fbbf24; }
+
+/* Push content down when guest banner is visible */
+body.guest-mode { padding-top: 40px; }
+
+/* ── First-Step Onboarding Card ───────────────────────────────── */
+.first-step-card {
+  background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(0,212,255,0.06));
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: 16px; padding: 20px;
+  margin-bottom: 16px; animation: obFadeIn 0.4s ease;
+}
+.fsc-head {
+  font-size: 1rem; font-weight: 800; color: #f1f5f9;
+  margin-bottom: 14px;
+}
+.fsc-steps { display: flex; flex-direction: column; gap: 10px; }
+.fsc-step {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer; transition: background 0.15s, border-color 0.15s;
+  text-decoration: none;
+}
+.fsc-step:hover {
+  background: rgba(99,102,241,0.14);
+  border-color: rgba(99,102,241,0.35);
+}
+.fsc-icon { font-size: 1.4rem; flex-shrink: 0; }
+.fsc-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.fsc-title { font-size: 0.9rem; font-weight: 700; color: #f1f5f9; }
+.fsc-desc  { font-size: 0.76rem; color: #64748b; }
+.fsc-arr   { color: #6366f1; font-weight: 700; font-size: 1rem; flex-shrink: 0; }
 

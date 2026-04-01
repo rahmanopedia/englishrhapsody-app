@@ -1159,14 +1159,39 @@
       <canvas id="cefr-chart" style="margin-top:12px;"></canvas>
     </div>
   </div>
-  <!-- gizli: uygulama mantığı için gerekli elementler -->
-  <div style="display:none">
-    <div id="heatmap-grid"></div>
-    <canvas id="cat-chart"></canvas>
+  <!-- ── MOD İSTATİSTİKLERİ ── -->
+  <div class="an-section" id="an-mode-stats-section">
+    <div class="an-section-hd">
+      <div class="an-section-title">🎮 Mod İstatistikleri</div>
+      <div class="an-section-sub">Her modda tamamlanan seans ve kazanılan XP</div>
+    </div>
+    <div class="an-stat-grid" id="an-mode-stats-grid"></div>
   </div>
 
-  <!-- ── BAŞARIMLAR (arka planda çalışır, gizli) ── -->
-  <div class="an-section" style="display:none">
+  <!-- ── AKTİVİTE HARİTASI ── -->
+  <div class="an-section">
+    <div class="an-section-hd">
+      <div class="an-section-title">🗓️ Aktivite Haritası</div>
+      <div class="an-section-sub">Son 90 günlük öğrenim aktiviten</div>
+    </div>
+    <div id="heatmap-grid" class="hm-grid"></div>
+  </div>
+
+  <!-- ── KATEGORİ RADAR ── -->
+  <div class="an-section">
+    <div class="an-section-hd">
+      <div class="an-section-title">🕸️ Kategori Dağılımı</div>
+      <div class="an-section-sub">Kelime kategorilerindeki ustalık yüzdesi</div>
+    </div>
+    <div style="max-width:340px;margin:0 auto;"><canvas id="cat-chart" style="max-height:280px;"></canvas></div>
+  </div>
+
+  <!-- ── BAŞARIMLAR ── -->
+  <div class="an-section">
+    <div class="an-section-hd">
+      <div class="an-section-title">🏆 Başarımlar</div>
+      <div class="an-section-sub">Kazandığın rozetler</div>
+    </div>
     <div id="badges-grid" class="badges-grid"></div>
   </div>
 
