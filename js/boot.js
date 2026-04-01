@@ -13,13 +13,16 @@
 /* ── 1. Lazy Script Loader ── */
 (function () {
   var LAZY = {
-    quantum: ['js/quantum.js?v=6'],
-    bridge:  ['js/bridge-data.js'],
-    nexus:   ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
-    grammar: ['js/grammar_data.js', 'js/grammar.js'],
-    learn:   ['js/ex-tr-data.js'],
-    cinema:    ['js/video-data.js', 'js/cinema.js'],
-    translate: ['js/translate-data.js','js/translate-data2.js','js/translate-data3.js','js/translate-data4.js','js/translate-data5.js','js/translate-data6.js','js/translate.js'],
+    quantum:      ['js/quantum.js?v=6'],
+    bridge:       ['js/bridge-data.js'],
+    nexus:        ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
+    grammar:      ['js/grammar_data.js', 'js/grammar.js'],
+    learn:        ['js/ex-tr-data.js'],
+    cinema:       ['js/video-data.js', 'js/cinema.js'],
+    translate:    ['js/translate-data.js','js/translate-data2.js','js/translate-data3.js','js/translate-data4.js','js/translate-data5.js','js/translate-data6.js','js/translate.js'],
+    reading:      ['js/stories-data.js'],
+    speak:        ['js/stories-data.js', 'js/conversations.js', 'js/speak-sentences.js'],
+    conversations:['js/conversations.js', 'js/speak-sentences.js'],
   };
 
   var loaded = new Set();
@@ -97,7 +100,7 @@
   window.addEventListener('load', function () {
     // Prefetch: 800ms sonra sadece sık kullanılan modları tarayıcıya bildir
     // (tüm modları değil — yavaş bağlantılarda gereksiz bant genişliği tüketimini önler)
-    var PREFETCH_MODES = ['quantum', 'translate', 'grammar'];
+    var PREFETCH_MODES = ['reading', 'speak', 'quantum', 'translate', 'grammar'];
     setTimeout(function () {
       var seen = new Set();
       PREFETCH_MODES.forEach(function (mode) {
@@ -116,7 +119,7 @@
     }, 800);
 
     // Idle: tarayıcı boşta iken en çok kullanılan modları sessizce yükle
-    var idleTargets = ['quantum', 'learn', 'cinema', 'bridge'];
+    var idleTargets = ['reading', 'speak', 'quantum', 'learn', 'cinema', 'bridge'];
     var idleFn = function () {
       var target = idleTargets.shift();
       if (!target) return;
