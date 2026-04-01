@@ -42,10 +42,17 @@
   <link rel="stylesheet" href="css/speak-v2.css">
   <link rel="stylesheet" href="css/speak-fill.css">
   <link rel="stylesheet" href="css/placement-test.css">
-  <script src="js/speak-v2.js" defer></script>
+  <script src="js/speak-v2.js?v=2" defer></script>
   <script src="js/speak-fill.js" defer></script>
 </head>
 <body class="rank-1">
+
+<!-- ── Guest Banner ──────────────────────────────────────────── -->
+<div id="guest-banner" class="guest-banner" style="display:none">
+  <span class="gb-icon">👤</span>
+  <span class="gb-text">Misafir modundasın — ilerleme kaydedilmiyor</span>
+  <button class="gb-register-btn" id="gb-register-btn">Kayıt Ol</button>
+</div>
 
 <!-- ── Splash ─────────────────────────────────────────────── -->
 <div id="splash-screen">
@@ -452,6 +459,13 @@
         <button type="button" class="auth-forgot" data-action="auth-switch-tab" data-tab="login">← Giriş yap</button>
       </form>
 
+      <!-- Misafir Girişi -->
+      <div class="auth-guest-divider"><span>veya</span></div>
+      <button id="auth-guest-btn" type="button" class="auth-guest-btn">
+        <span class="agb-icon">👤</span> Misafir olarak devam et
+      </button>
+      <p class="auth-guest-note">Bazı özellikler (Rival, Liderlik) kısıtlıdır — ilerleme kaydedilmez</p>
+
       <!-- Hesap paneli (giriş yapıldığında) -->
       <div id="auth-account-panel" class="auth-account-panel" style="display:none">
         <div class="auth-account-info">
@@ -492,6 +506,37 @@
     </div>
   </header>
 
+
+  <!-- Yeni Kullanıcı: İlk Adım Kartı -->
+  <div id="first-step-card" class="first-step-card" style="display:none">
+    <div class="fsc-head">🎯 Nereden başlayalım?</div>
+    <div class="fsc-steps">
+      <div class="fsc-step" data-action="navigate" data-target="placement">
+        <span class="fsc-icon">📊</span>
+        <div class="fsc-text">
+          <span class="fsc-title">Seviye Testini Yap</span>
+          <span class="fsc-desc">CEFR seviyeni öğren — 5 dakika yeterli</span>
+        </div>
+        <span class="fsc-arr">→</span>
+      </div>
+      <div class="fsc-step" data-action="navigate" data-target="learn">
+        <span class="fsc-icon">🌀</span>
+        <div class="fsc-text">
+          <span class="fsc-title">Sinestezi ile Başla</span>
+          <span class="fsc-desc">İlk 10 kelimeni SRS ile öğren</span>
+        </div>
+        <span class="fsc-arr">→</span>
+      </div>
+      <div class="fsc-step" data-action="navigate" data-target="reading">
+        <span class="fsc-icon">📖</span>
+        <div class="fsc-text">
+          <span class="fsc-title">Okuma Modunu Dene</span>
+          <span class="fsc-desc">A1 seviyesinden bir hikaye oku</span>
+        </div>
+        <span class="fsc-arr">→</span>
+      </div>
+    </div>
+  </div>
 
   <!-- 2. Hızlı İstatistikler (Şerit) -->
   <section class="home-stats-strip">
@@ -1246,6 +1291,11 @@
 <div class="animate-in" id="rival-root" style="width:100%;min-height:100%;"></div>
 </template>
 
+<!-- Placement Test -->
+<template id="tpl-placement">
+<div class="animate-in" id="placement-root" style="width:100%;min-height:100%;"></div>
+</template>
+
 <!-- External Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous" defer></script>
@@ -1269,25 +1319,30 @@
 <script src="js/notifications.js" defer></script>
 <script src="js/notification-settings.js" defer></script>
 <script src="js/remote-config.js" defer></script>
-<script src="js/auth.js" defer></script>
+<script src="js/auth.js?v=2" defer></script>
 <script src="js/conversations.js" defer></script>
 <script src="js/data.js" defer></script>
+<script src="js/colloc-data.js" defer></script>
 <script src="js/speak-sentences.js" defer></script>
-<script src="js/phantom.js" defer></script>
+<script src="js/phantom.js?v=2" defer></script>
 <script src="js/quick-menu.js" defer></script>
 <script src="js/nexus.js" defer></script>
 <script src="js/leaderboard.js" defer></script>
 <script src="js/rival.js" defer></script>
-<script src="js/bridge.js" defer></script>
-<script src="js/reading-engine.js" defer></script>
-<script src="js/app.js" defer></script>
+<script src="js/bridge.js?v=2" defer></script>
+<script src="js/reading-engine.js?v=2" defer></script>
+<script src="js/app.js?v=2" defer></script>
 
 <script src="js/sw-register.js" defer></script>
+<script src="js/app-config.js" defer></script>
 <script src="js/security-logger.js" defer></script>
+<script src="js/admin-panel.js" defer></script>
 
 <script src="js/placement-test.js" defer></script>
 <script src="js/keys.js" defer></script>
-<script src="js/boot.js?v=36" defer></script>
+<script src="js/onboarding.js" defer></script>
+<script src="js/streak-freeze.js" defer></script>
+<script src="js/boot.js?v=51" defer></script>
 
 <!-- ── Kullanım Şartları Modalı ── -->
 <div id="tos-modal" class="tos-modal" style="display:none">
