@@ -2943,46 +2943,34 @@ body.sidebar-closed .sidebar-tab {
 /* ── Story Wrapper ── */
 .story-wrapper {
   position: relative;
-  background: linear-gradient(160deg,
-    rgba(6,20,18,0.95) 0%,
-    rgba(8,16,30,0.98) 60%,
-    rgba(15,10,30,0.95) 100%);
-  border: 1px solid rgba(var(--a4-rgb),0.15);
+  background: var(--bg-card, #0f1e38);
+  border: 1px solid rgba(var(--a4-rgb),0.18);
   border-radius: var(--radius-xl);
-  padding: 28px 32px;
+  padding: 28px 32px 32px;
   box-shadow:
-    0 16px 48px rgba(0,0,0,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.04),
-    inset 0 0 60px rgba(var(--a4-rgb),0.03);
+    0 4px 24px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.05);
   overflow: hidden;
 }
 .story-wrapper::before {
   content: '';
   position: absolute;
-  top: -60px; left: -60px;
-  width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(var(--a4-rgb),0.06) 0%, transparent 70%);
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--cyan, #00d4ff), var(--violet, #7c3aed), transparent 80%);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   pointer-events: none;
-  animation: rw-ambient 8s ease-in-out infinite;
 }
-.story-wrapper::after {
-  content: '';
-  position: absolute;
-  bottom: -40px; right: -40px;
-  width: 250px; height: 250px;
-  background: radial-gradient(circle, rgba(var(--a2-rgb),0.06) 0%, transparent 70%);
-  pointer-events: none;
-  animation: rw-ambient 10s ease-in-out infinite reverse;
-}
+.story-wrapper::after { display: none; }
 
 /* ── Story Nav ── */
 .story-nav {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(var(--a4-rgb),0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
   position: relative;
   z-index: 1;
   gap: 12px;
@@ -2991,35 +2979,47 @@ body.sidebar-closed .sidebar-tab {
   display: flex;
   gap: 6px;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
 }
 .story-title {
-  font-size: 1.35rem;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, #f1f5f9 0%, #34d399 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.25;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-1, #f1f5f9);
+  line-height: 1.3;
 }
 .story-nav-btns {
   display: flex;
   gap: 6px;
   flex-shrink: 0;
+  padding-top: 2px;
 }
-/* Story nav butonları — kitap sayfası (krem bg) üzerinde görünür yap */
+/* Alt navigasyon — hikaye okuduktan sonra yukarı kaydırmaya gerek kalmaz */
+.story-nav-btns-bottom {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
 .story-nav-btns .btn,
 .story-nav-btns-bottom .btn {
-  background: rgba(60,40,20,0.10) !important;
-  border: 1px solid rgba(60,40,20,0.30) !important;
-  color: #3b2a14 !important;
-  font-weight: 700 !important;
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: var(--text-2, #94a3b8) !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+  padding: 6px 14px !important;
+  border-radius: 10px !important;
+  transition: all 0.2s !important;
 }
 .story-nav-btns .btn:hover,
 .story-nav-btns-bottom .btn:hover {
-  background: rgba(60,40,20,0.18) !important;
-  border-color: rgba(60,40,20,0.50) !important;
+  background: rgba(var(--a1-rgb),0.12) !important;
+  border-color: rgba(var(--a1-rgb),0.3) !important;
+  color: var(--cyan, #00d4ff) !important;
 }
 
 /* ── Story Content ── */
@@ -3028,17 +3028,17 @@ body.sidebar-closed .sidebar-tab {
   z-index: 1;
 }
 .story-text {
-  font-size: 1.15rem;
-  line-height: 2.05;
-  color: rgba(226,232,240,0.88);
+  font-size: 1.1rem;
+  line-height: 1.95;
+  color: var(--text-1, #e2e8f0);
   font-family: 'Georgia', serif;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 .story-text.quiz-mode {
   font-family: inherit;
-  font-size: 1.1rem;
-  line-height: 2.0;
-  color: rgba(203,213,225,0.85);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--text-2, #94a3b8);
 }
 
 /* ── Story Word Interactions ── */
@@ -9576,15 +9576,6 @@ input, textarea { -webkit-user-select: text !important; -moz-user-select: text !
   border-bottom-color: rgba(60,40,20,0.12) !important;
 }
 
-/* Alt buton ayraç (mobil) */
-.story-nav-btns-bottom {
-  border-top-color: rgba(60,40,20,0.12) !important;
-}
-.story-nav-btns-bottom .btn {
-  background: rgba(60,40,20,0.10) !important;
-  color: #3b2a14 !important;
-  border-color: rgba(60,40,20,0.30) !important;
-}
 
 /* Quiz cloze seçenekleri */
 .cloze-opt {

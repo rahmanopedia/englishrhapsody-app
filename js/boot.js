@@ -749,28 +749,47 @@ window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); 
   }, true);
 })();
 
-/* ── 11. Mobile story nav buttons reposition ── */
+/* ── 11. Story enhancements: bottom nav + reading time ── */
 (function(){
-  if(window.innerWidth > 768) return;
-  function moveNavBtns() {
-    var wrapper = document.querySelector('.story-wrapper');
-    if(!wrapper) return;
+  function addReadingTime(wrapper) {
+    var meta = wrapper.querySelector('.story-meta');
+    if(!meta || meta.querySelector('.rw-read-time')) return;
+    var text = (wrapper.querySelector('.story-text') || {}).textContent || '';
+    var words = text.trim().split(/\s+/).filter(Boolean).length;
+    if(!words) return;
+    var mins = Math.max(1, Math.round(words / 180));
+    var chip = document.createElement('span');
+    chip.className = 'rw-read-time';
+    chip.style.cssText = 'font-size:.72rem;color:var(--text-3);font-weight:500;display:flex;align-items:center;gap:3px;';
+    chip.innerHTML = '⏱ ' + mins + ' dk';
+    meta.appendChild(chip);
+  }
+
+  function addBottomNav(wrapper) {
+    if(wrapper.querySelector('.story-nav-btns-bottom')) return;
     var btns = wrapper.querySelector('.story-nav .story-nav-btns');
     var content = wrapper.querySelector('.story-content-box');
     if(!btns || !content) return;
-    if(wrapper.querySelector('.story-nav-btns-bottom')) return;
     var bottom = document.createElement('div');
     bottom.className = 'story-nav-btns-bottom';
     bottom.innerHTML = btns.innerHTML;
     content.after(bottom);
   }
+
+  function enhance() {
+    var wrapper = document.querySelector('.story-wrapper');
+    if(!wrapper) return;
+    addReadingTime(wrapper);
+    addBottomNav(wrapper);
+  }
+
   var obs = new MutationObserver(function(muts) {
     for(var m of muts) {
-      if(m.addedNodes.length) { moveNavBtns(); break; }
+      if(m.addedNodes.length) { enhance(); break; }
     }
   });
   window.addEventListener('load', function() {
-    moveNavBtns();
+    enhance();
     var area = document.getElementById('story-area');
     if(area) obs.observe(area, { childList: true, subtree: true });
   });
