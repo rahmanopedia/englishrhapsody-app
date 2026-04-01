@@ -640,7 +640,7 @@ class PlacementTest {
       this._hi = this._curIdx - 1;
     }
     if (this._lo > this._hi) {
-      this._finish(this._lastPassed === -1 ? 'A1' : this._LEVELS[this._lastPassed]);
+      this._finish(this._lastPassed === -1 ? 'A1' : (this._LEVELS[this._lastPassed] || 'A1'));
     } else {
       this._curIdx = Math.floor((this._lo + this._hi) / 2);
       this._startStage();

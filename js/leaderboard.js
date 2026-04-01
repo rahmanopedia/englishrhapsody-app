@@ -99,7 +99,7 @@ class LeaderboardManager {
       .orderBy('wins', 'desc').limit(50);
     const fetch = () => query.get()
       .then(snap => { const d = []; snap.forEach(s => d.push(s.data())); cb(d); })
-      .catch(err => console.error('[Rival LB] Hata:', err.code));
+      .catch(err => console.error('[Rival LB] Hata:', err.code, err.message));
     fetch();
     const id = setInterval(fetch, 30000);
     this._listeners[key] = () => clearInterval(id);
@@ -140,6 +140,7 @@ class LeaderboardManager {
 
     this._mode = 'xp';
     this._currentPeriod = 'daily';
+    this._rivalPeriod = 'weekly';
     this._listen('daily');
 
     if (!window._lbDelegateAttached) {

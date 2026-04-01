@@ -261,6 +261,10 @@
       if (s.en !== correct.en && !distractors.includes(s.en)) distractors.push(s.en);
     }
 
+    // Hard fallback: if still not enough distractors, duplicate with minor variation
+    const FALLBACK_WORDS = ['The answer is clear.','It happened yesterday.','She went home early.','They finished the task.'];
+    let fi = 0;
+    while (distractors.length < 3) { distractors.push(FALLBACK_WORDS[fi++ % FALLBACK_WORDS.length]); }
     return shuffle([correct.en, ...distractors.slice(0,3)]);
   }
 
@@ -388,6 +392,8 @@
         return;
       }
 
+      if (window._trQuestionDone && window._trQuestionDone(this)) return;
+
       const { sentence: q, choices } = this._questions[this._idx];
       const num = this._idx + 1;
       const total = this._questions.length;
@@ -491,7 +497,7 @@
 
     /* ── CHECK TYPED ── */
     _checkTypedAnswer(q, choices, typed) {
-      const norm = s => s.toLowerCase().replace(/[^a-z0-9' ]/g,'').replace(/s+/g,' ').trim();
+      const norm = s => s.toLowerCase().replace(/[^a-z0-9' ]/g,'').replace(/\s+/g,' ').trim();
       const correct = norm(q.en);
       const given   = norm(typed);
       // Accept if ≥80% of expected words match (order-insensitive for short answers)

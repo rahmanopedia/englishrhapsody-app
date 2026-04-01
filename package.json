@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "cleanup": "node C:/Users/ruhme/english-rhapsody-push/scripts/cleanup_hosting.js"
+    "cleanup": "node scripts/tools/cleanup_hosting.js"
   },
   "devDependencies": {
     "@anthropic-ai/sdk": "^0.80.0",

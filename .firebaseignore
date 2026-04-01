@@ -26,3 +26,26 @@ Thumbs.db
 
 # Scripts (build-time only)
 scripts/
+
+# Dev tools folder (scripts, patches, generators)
+dev-tools/
+
+# Android signing & release artifacts
+*.keystore
+*.jks
+*.apk
+*.idsig
+*.aab
+
+# Lighthouse / audit reports
+lh-report*.json
+
+# Build output
+dist/
+
+# Misc
+package.json
+package-lock.json
+capacitor.config.json
+build.js
+AGENTS.md

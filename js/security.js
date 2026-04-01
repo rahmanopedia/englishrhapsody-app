@@ -137,13 +137,24 @@
 
   // ── DevTools tespiti: pencere boyutu yöntemi ──
   var devtoolsOpen = false;
-  setInterval(function(){
-    var wDiff = window.outerWidth  - window.innerWidth;
-    var hDiff = window.outerHeight - window.innerHeight;
-    var open  = wDiff > 160 || hDiff > 160;
-    if(open && !devtoolsOpen){ devtoolsOpen = true; secLog('devtools_opened'); showOverlay(); }
-    else if(!open && devtoolsOpen){ devtoolsOpen = false; hideOverlay(); }
-  }, 300);
+  var _dtInterval = null;
+  function _startDtCheck(){
+    if(_dtInterval) return;
+    _dtInterval = setInterval(function(){
+      var wDiff = window.outerWidth  - window.innerWidth;
+      var hDiff = window.outerHeight - window.innerHeight;
+      var open  = wDiff > 160 || hDiff > 160;
+      if(open && !devtoolsOpen){ devtoolsOpen = true; secLog('devtools_opened'); showOverlay(); }
+      else if(!open && devtoolsOpen){ devtoolsOpen = false; hideOverlay(); }
+    }, 300);
+  }
+  function _stopDtCheck(){
+    if(_dtInterval){ clearInterval(_dtInterval); _dtInterval = null; }
+  }
+  _startDtCheck();
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) _stopDtCheck(); else _startDtCheck();
+  });
 
   // ── Pencere tamamen gizlenince (sekme değiştirme, minimize) ──
   window.addEventListener('focus', function(){ hideOverlayIfSafe(); });

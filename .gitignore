@@ -27,14 +27,22 @@ Thumbs.db
 *.swp
 *.swo
 
+# Sensitive — Android signing key & release artifacts
+*.keystore
+*.jks
+*.apk
+*.idsig
+*.aab
+
+# Lighthouse / audit reports
+lh-report*.json
+
+# Dev tools folder (scripts, patches, generators)
+dev-tools/
+
 # API Keys
 js/keys.js
 
-# Project specific
-generate_diverse_data.js
-generate_high_quality_conversations.js
-analyze2.js
-audit.js
-patch.js
-scan.js
-update_db.js
+# Build output
+dist/
+android/

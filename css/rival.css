@@ -146,6 +146,11 @@
   40%         { opacity: 1; transform: scale(1.2); }
 }
 
+.rv-wait-timer {
+  margin-top: 12px; font-size: 13px; color: rgba(255,255,255,.45);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ── Waiting for opponent result ─────────────────── */
 .rv-waiting-result {
   display: flex; flex-direction: column; align-items: center;

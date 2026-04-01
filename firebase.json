@@ -15,17 +15,26 @@
       ".git/**",
       "**/node_modules/**",
       "scripts/**",
+      "dev-tools/**",
       "**/*.exe",
       "**/*.zip",
       "**/*.bin",
       "**/*.bat",
       "**/*.sh",
       "**/*.apk",
+      "**/*.keystore",
+      "**/*.jks",
+      "**/*.idsig",
+      "**/*.aab",
+      "lh-report*.json",
       "dist/**",
       "android/**",
       "temp_*/**",
-      "upload-apk.js",
-      "english-rhapsody.apk"
+      "package.json",
+      "package-lock.json",
+      "capacitor.config.json",
+      "build.js",
+      "AGENTS.md"
     ],
     "rewrites": [
       {
