@@ -20,7 +20,7 @@
     learn:        ['js/ex-tr-data.js'],
     cinema:       ['js/video-data.js', 'js/cinema.js'],
     translate:    ['js/translate-data.js','js/translate-data2.js','js/translate-data3.js','js/translate-data4.js','js/translate-data5.js','js/translate-data6.js','js/translate-data7.js','js/translate.js'],
-    reading:      ['js/stories-data.js'],
+    reading:      ['js/stories-data.js','js/reading-quiz.js'],
     speak:        ['js/stories-data.js', 'js/conversations.js', 'js/speak-sentences.js'],
     conversations:['js/conversations.js', 'js/speak-sentences.js'],
   };

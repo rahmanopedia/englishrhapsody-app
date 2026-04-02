@@ -7,7 +7,7 @@ const STORIES = [
   // â”€â”€â”€ Kolay (15) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   {id:1,title:'A New Start in the City',level:'Kolay',
    text:'Maria was very {nervous} on her first day at the new {office} in the city center. She woke up early to prepare a {healthy} {breakfast} of fruit and yogurt. She wore her best blue {dress} and took the {bus} because she wanted to save {money}. When she arrived, she saw a very tall {building} with many glass windows. Her new {boss}, Mr. Miller, was a very {friendly} man. He smiled and said"Welcome to the {team}!"Maria felt very {happy} because she worked hard to get this {job}. She met her new colleagues and they were all very {kind} to her. It was an {exciting} day for her.',
-   options:['nervous','office','healthy','breakfast','dress','bus','money','building','boss','friendly','team','happy','job','kind','exciting','sad','lazy','train','dinner']},
+   options:['nervous','office','healthy','breakfast','dress','bus','money','building','boss','friendly','team','happy','job','kind','exciting','sad','lazy','train','dinner'],questions:[{"q":"Why did Maria take the bus to work?","opts":["She did not have a car","She wanted to save money","The office was near the bus stop","She enjoyed the bus ride"],"a":1},{"q":"How did Maria feel when her boss welcomed her?","opts":["Nervous and upset","Tired and bored","Happy and relieved","Confused and worried"],"a":2},{"q":"What did Maria do to prepare for her first day?","opts":["She stayed up all night studying","She woke up early and had a healthy breakfast","She called her colleagues","She visited the office the day before"],"a":1}]},
   {id:2,title:'The Mystery of the Missing Key',level:'Kolay',
    text:'Tom could not find his {key} this morning, and he was very {worried}. He looked in every {room} of his small house. He looked under the wooden {table}, behind the heavy {door}, and even inside the {fridge} next to the {milk}."Where is it?"he asked himself. Then he remembered. He looked inside his jacket {pocket} and felt something {metal}. Finally, he found it! He was a bit {late} for his {work} at the {market}, but he was glad to have his keys. He locked the {door} and ran to his {car} as fast as he could.',
    options:['key','worried','room','table','door','fridge','milk','pocket','metal','late','work','market','car','window','bag','sleep','early']},
@@ -24,7 +24,7 @@ const STORIES = [
   // â”€â”€â”€ Orta (15) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   {id:11,title:'The Meticulous Interview',level:'Orta',
    text:'David arrived at the corporate {office} ten minutes early to ensure he made a good first {impression}. He had prepared for the {interview} {meticulous}ly by researching the company\'s history and its recent {innovative} projects. The {manager} greeted him warmly and asked several {challenging} questions about his previous experience and technical {skills}. David answered with {confidence} and demonstrated his ability to {collaborate} with a diverse {team}. He felt a strong sense of {achievement} when the manager praised his {diligent} preparation and his clear {communication}. By the end of the meeting, David was very {optimistic} about the {position} and the future {growth} of the company.',
-   options:['office','impression','interview','meticulous','innovative','manager','challenging','skills','confidence','collaborate','team','achievement','diligent','communication','optimistic','position','growth','lazy','failure']},
+   options:['office','impression','interview','meticulous','innovative','manager','challenging','skills','confidence','collaborate','team','achievement','diligent','communication','optimistic','position','growth','lazy','failure'],questions:[{"q":"How had David prepared for the interview?","opts":["By memorising standard answers","By researching the company and its projects","By speaking to a career coach","By practising with a friend"],"a":1},{"q":"What quality did the manager praise in David?","opts":["His confidence in speaking","His technical knowledge only","His diligent preparation and clear communication","His previous work experience"],"a":2},{"q":"What feeling did David have at the end of the meeting?","opts":["Disappointed and uncertain","Relieved it was over","Optimistic about the position and the company's future","Confused about the role"],"a":2}]},
   {id:12,title:'Resilience in Travel',level:'Orta',
    text:'At the airport, Sophie discovered her {flight} was {cancelled} due to {unprecedented} weather conditions and heavy {snow}. This unexpected {adversity} was a big {challenge} for her vacation plans. She had to find a new {accommodation} for the night and find a way to {mitigate} the impact on her tight schedule. The airline was {responsible} for the delay and provided her with a {voucher} for a nearby hotel and a {free} dinner. Despite the initial {frustration}, Sophie remained {resilient}. She decided to explore the {vibrant} city center during her unexpected {stay}. She visited a local {museum} and enjoyed a {delicious} meal, making the most of her {transition} period between cities.',
    options:['flight','cancelled','unprecedented','snow','adversity','challenge','accommodation','mitigate','responsible','voucher','free','frustration','resilient','vibrant','stay','museum','delicious','transition','cheap','boring']},
@@ -41,7 +41,7 @@ const STORIES = [
   // â”€â”€â”€ İleri (15) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   {id:21,title:'The Ethical Scrutiny of AI',level:'İleri',
    text:'As artificial {intelligence} continues to evolve at an {unprecedented} rate, our {society} must grapple with profound {ethical} dilemmas that were once confined to science fiction. The primary {concern} revolves around the {accountability} of autonomous systems, especially when they produce {unintended} or {detrimental} consequences in critical fields life medicine or law. Furthermore, the {pervasive} nature of {algorithmic} bias threatens to {exacerbate} existing social {inequalities} if left unchecked by human {scrutiny}. It is {imperative} that we establish robust {legislation} and {foster} a culture of transparency to ensure that technology remains a force for {good}. We must also {mitigate} the risk of certain skills becoming {obsolete} white promoting a global {consensus} on international safety standards. The {paradox} of AI is that white it offers the potential for {abundance}, it also demands {meticulous} oversight to prevent systemic {adversity}.',
-   options:['intelligence','unprecedented','society','ethical','concern','accountability','unintended','detrimental','pervasive','algorithmic','exacerbate','inequalities','scrutiny','imperative','legislation','foster','good','mitigate','obsolete','consensus','paradox','abundance','meticulous','adversity','simple','neutral']},
+   options:['intelligence','unprecedented','society','ethical','concern','accountability','unintended','detrimental','pervasive','algorithmic','exacerbate','inequalities','scrutiny','imperative','legislation','foster','good','mitigate','obsolete','consensus','paradox','abundance','meticulous','adversity','simple','neutral'],questions:[{"q":"What is the primary concern raised about autonomous AI systems?","opts":["Their high cost of development","Their accountability when they produce unintended consequences","Their inability to process large datasets","Their limited creativity"],"a":1},{"q":"What does the text say about algorithmic bias?","opts":["It can only be fixed with more data","It does not affect critical decisions","It threatens to exacerbate existing social inequalities","It is a minor technical issue"],"a":2},{"q":"What does the text propose as a solution to AI risks?","opts":["Banning AI in sensitive fields","Reducing AI research funding","Establishing legislation and a culture of transparency","Replacing all AI with human workers"],"a":2}]},
   {id:22,title:'Climate Change and Global Sustainability',level:'İleri',
    text:'Scientific {consensus} suggests that without immediate and significant {intervention}, global {temperatures} will rice to catastrophic levels, leading to {unprecedented} environmental {adversity}. Governments worldwide must {collaborate} to adopt {innovative} and {renewable} energy policies white implementing strict {regulations} on carbon {emissions} to {mitigate} the greenhouse effect. The preservation of {biodiversity} is {imperative} for the long-term health of our planet\'s {ecosystems}. We must {transition} to a sustainable economic {model} that prioritimes {sustainability} over short-term financial {profits}. This shift requires {meticulous} planning and a {resilient} approach to the {fluctuating} global climate. Only through {unilateral} and multilateral cooperation can we {alleviate} the pressure on our natural {resources}. The {implications} of failing to act are {imminent} and potentially {detrimental} to all of {humanity}.',
    options:['consensus','intervention','temperatures','unprecedented','adversity','collaborate','innovative','renewable','regulations','emissions','mitigate','biodiversity','imperative','ecosystems','transition','model','sustainability','profits','meticulous','resilient','fluctuating','unilateral','alleviate','resources','implications','imminent','detrimental','humanity','ignore','static']},
@@ -397,7 +397,7 @@ const STORIES = [
 
 {id:401,title:'Tom\'s New Puppy',level:'Kolay',
  text:'Tom got a new {puppy} last week. The puppy is small and {white} with big brown eyes. Tom named it Max. Every {morning}, Tom takes Max for a {walk} in the {park}. Max loves to {run} and play in the green grass. Tom throws a ball and Max brings it back. After the walk, Tom gives Max some {food} and fresh {water}. Max drinks the water quickly. Then Tom sits on his {bed} and reads a {book}. Max jumps up and lies next to him. Tom is very happy. He thinks Max is the best puppy in the world.',
- options:['puppy','white','morning','walk','park','run','food','water','bed','book','cat','dog','rabbit']},
+ options:['puppy','white','morning','walk','park','run','food','water','bed','book','cat','dog','rabbit'],questions:[{"q":"Why did Sophie feel nervous at the airport?","opts":["She was afraid of flying","It was her first time travelling alone","She had lost her passport","She was running late"],"a":1},{"q":"What did Sophie receive after checking in her luggage?","opts":["A meal voucher","Her passport","A boarding pass","A seat number"],"a":2},{"q":"What did Sophie do when her flight was announced for boarding?","opts":["She panicked and called her family","She ran to the gate quickly","She picked up her bag and took a deep breath","She went back to the café"],"a":2}]},
 
 {id:402,title:'At the Bakery',level:'Kolay',
  text:'Anna loves to {bake} {bread} at home. She uses {flour}, {butter}, and a little {salt}. First, she mixes everything in a big bowl. Then she puts the dough in the {oven}. The kitchen smells wonderful. After one {hour}, the bread is ready. Anna takes it out carefully. She cuts a thick slice and puts some {butter} on it. Her {brother} comes into the {kitchen} and smells the fresh bread. He smiles and asks for a piece. Anna gives him a big slice. They sit at the {table} together and enjoy their warm bread with a cup of {tea}.',
@@ -437,7 +437,7 @@ const STORIES = [
 
 {id:411,title:'A Rainy Day at Home',level:'Kolay',
  text:'It is raining today. Big drops of {rain} fall on the {window}. Emma cannot go outside. She stays at {home} and reads a {book}. The story is about a girl who finds a magic {door}. Emma drinks a warm cup of {tea} and eats an {apple}. The house is quiet. Her {cat} sleeps on the {blanket} near the heater. Emma listens to the sound of the {rain}. It is soft and {calm}. After reading, she takes a {shower} and gets dressed. She then sits at the {table} and draws pictures of the rainy {day}. She thinks rainy days are actually very cosy.',
- options:['rain','window','home','book','door','tea','apple','cat','blanket','calm','shower','table','day','cloud','cold','sleep']},
+ options:['rain','window','home','book','door','tea','apple','cat','blanket','calm','shower','table','day','cloud','cold','sleep'],questions:[{"q":"What would accepting the job offer in Berlin mean for Elena?","opts":["A lower salary but more free time","Leaving behind her friends, family and hometown","Moving closer to her mentor","Starting her own company"],"a":1},{"q":"What did Elena's mentor advise her to consider?","opts":["Only the financial benefits","The opinions of her family","Not just money, but also long-term professional development","The cost of living in Berlin"],"a":2},{"q":"What did Elena tell herself to justify taking the risk?","opts":["That she had nothing to lose","That the salary was too good to refuse","That taking risks is an essential part of growing as a person","That her mentor had always been right"],"a":2}]},
 
 {id:412,title:'The Friendly Elephant',level:'Kolay',
  text:'At the {zoo}, there is a big {elephant} called Ella. Ella is very {friendly}. Every day, the zookeeper brings her fresh {fruit} and {water}. Ella loves to eat {apple}s and bananas. Children come to visit her every weekend. They stand near the fence and watch her. Ella uses her long trunk to pick up food. She is very {slow} but very gentle. Sometimes she sprays {water} on hot days and the children laugh. The zookeeper says Ella is very {kind} and {patient}. At {night}, Ella sleeps in her big {room}. Everyone at the zoo loves Ella very much.',
@@ -477,7 +477,7 @@ const STORIES = [
 
 {id:421,title:'Learning to Swim',level:'Kolay',
  text:'This summer, Mia is learning to {swim} in the {pool}. Every Tuesday, she goes to lessons at the sports centre. Her {teacher} is a tall man named Dan. He is very {patient} and {kind}. At first, Mia was {nervous}. She held the edge of the pool and did not want to let go. Dan showed her how to kick and use her arms. After three {lesson}s, Mia could float. She was so {excited}! Her {family} came to watch her. She swam across the small pool all by herself. Mum clapped and smiled. Mia climbed out of the {water}, laughing. She was very {proud} of herself.',
- options:['pool','teacher','patient','kind','nervous','lesson','excited','family','water','proud','swim','sport','beach','sea','jump']},
+ options:['pool','teacher','patient','kind','nervous','lesson','excited','family','water','proud','swim','sport','beach','sea','jump'],questions:[{"q":"What is a credibility deficit, as described in the text?","opts":["When someone refuses to share knowledge","When a speaker receives less belief than they deserve due to prejudice","When a debate lacks sufficient evidence","When facts are misrepresented in media"],"a":1},{"q":"Why is testimonial injustice described as particularly insidious?","opts":["Because it is very difficult to prove in court","Because it operates below the level of conscious awareness","Because it only affects academic communities","Because it requires complex language to describe"],"a":1},{"q":"According to Fricker, what is needed to combat epistemic injustice?","opts":["More diverse universities","Critical awareness of systematic biases in credibility assessments","Stricter laws on discrimination","Better media regulation"],"a":1}]},
 
 {id:422,title:'The Old Village',level:'Kolay',
  text:'Gran lives in a small {village} in the hills. It is a quiet and beautiful place. There is one {store}, one {cafe}, and a small old {church}. The {road}s are narrow and the {house}s are made of old stone. In the morning, people say hello to each other on the street. There is a small {pond} in the centre with ducks on it. Children {play} in the {park} after {school}. In the evening, the smell of {food} comes from every {house}. The {sky} is very clear here, with no city lights. Gran says she loves the {village} because everyone knows each other. It feels life one big {family}.',
@@ -3995,6 +3995,305 @@ const STORIES = [
 {id:1299,title:'The Future of Liberal Democracy',level:'İleri',
  text:'The question of whether liferal {democracy} can {survive} the converging {pressures} of the twenty-first century — inequality, climate change, technological {disruption}, demographic {transformation}, and geopolitical {competition} — is among the most urgent in contemporary political science. Optimists point to democracy\'s demonstrated {capacity} for self-correction and {adaptation}: the great {challenges} of the twentieth century also seemed existential at the time. Pessimists note that the structural conditions that once sustained liferal democracy"a large and economically {secure} middle class, a shared {epistemic} {environment} created by mass media, and a {relatimely} benign geopolitical order"are eroding simultaneously, creating pressures that past democratic {institutions} were never designed to {manage}. A genuinely {critical} political science must resist both complacency and fatalism, combining {rigorous} {empirical} {analysis} of democratic vulnerabilities with normatime commitment to the {renewal} of democratic {culture} and institutions.',
  options:['democracy','capacity','disruption','transformation','epistemic','critical','empirical','analysis','renewal','pressures','challenges','manage','survive','competition','adaptation','secure','environment','relatimely','institutions','rigorous','culture']}
+
+  // ── Annotated Reading Stories (no cloze) ──
+  {id:401,title:"A First Solo Flight",level:"Kolay",cefr:"A2",
+   text:"Sophie arrived at the airport two hours before her flight. She felt nervous because it was her first time travelling alone. She checked in her luggage at the counter and received her boarding pass. Then she went through security, where the officers checked her bag carefully. She bought a coffee and a sandwich from a small café and found a seat near the gate. When the announcement came that her flight was boarding, Sophie picked up her bag, took a deep breath, and walked towards the plane. She felt excited and a little scared at the same time.",
+   annotations:[
+     {
+       "start_index": 63,
+       "end_index": 75,
+       "annotation_type": "collocation",
+       "surface_form": "felt nervous",
+       "contextual_turkish_meaning": "sinirli hissetti / endişelendi",
+       "short_explanation_tr": "\"feel nervous\" = gergin/endişeli hissetmek. Sınavdan önce, yeni bir durumda sıkça kullanılır.",
+       "individual_meanings": [
+         {
+           "word": "felt",
+           "meaning": "hissetti (feel fiilinin geçmişi)"
+         },
+         {
+           "word": "nervous",
+           "meaning": "gergin, sinirli, endişeli"
+         }
+       ],
+       "example_sentence_en": "She felt nervous before the job interview.",
+       "example_sentence_tr": "İş görüşmesinden önce gergin hissetti."
+     },
+     {
+       "start_index": 106,
+       "end_index": 122,
+       "annotation_type": "verb_phrase",
+       "surface_form": "travelling alone",
+       "contextual_turkish_meaning": "yalnız seyahat etmek",
+       "short_explanation_tr": "\"travel alone\" = yalnız yolculuk yapmak. \"alone\" = yalnız (tek başına).",
+       "example_sentence_en": "Many young people enjoy travelling alone.",
+       "example_sentence_tr": "Pek çok genç insan yalnız seyahat etmekten keyif alır."
+     },
+     {
+       "start_index": 128,
+       "end_index": 138,
+       "annotation_type": "phrasal_verb",
+       "surface_form": "checked in",
+       "contextual_turkish_meaning": "check-in yaptı / bagajını teslim etti",
+       "short_explanation_tr": "\"check in\" = havalimanında bagajı teslim edip kartı almak. Otel/uçuş için kullanılır.",
+       "individual_meanings": [
+         {
+           "word": "check",
+           "meaning": "kontrol etmek"
+         },
+         {
+           "word": "in",
+           "meaning": "içeri / içine",
+           "note": "burada fiil anlamı değiştirir"
+         }
+       ],
+       "example_sentence_en": "We need to check in at least two hours before the flight.",
+       "example_sentence_tr": "Uçuştan en az iki saat önce check-in yapmamız gerekiyor."
+     },
+     {
+       "start_index": 183,
+       "end_index": 196,
+       "annotation_type": "noun_phrase",
+       "surface_form": "boarding pass",
+       "contextual_turkish_meaning": "biniş kartı",
+       "short_explanation_tr": "\"boarding pass\" = uçağa binmek için verilen kart. Havalimanı İngilizcesinin temel kelimesi.",
+       "individual_meanings": [
+         {
+           "word": "boarding",
+           "meaning": "biniş, uçağa binme"
+         },
+         {
+           "word": "pass",
+           "meaning": "geçiş belgesi, kart"
+         }
+       ],
+       "example_sentence_en": "Please have your boarding pass ready at the gate.",
+       "example_sentence_tr": "Lütfen kapıda biniş kartınızı hazır bulundurun."
+     },
+     {
+       "start_index": 444,
+       "end_index": 462,
+       "annotation_type": "idiom",
+       "surface_form": "took a deep breath",
+       "contextual_turkish_meaning": "derin bir nefes aldı (sakinleşmek için)",
+       "short_explanation_tr": "\"take a deep breath\" = sakinleşmek için derin nefes almak. Gergin anlarda sıklıkla kullanılır.",
+       "example_sentence_en": "Before speaking in public, take a deep breath.",
+       "example_sentence_tr": "Herkese konuşmadan önce derin bir nefes al."
+     }
+   ]},
+  {id:411,title:"The Decision to Leave",level:"Orta",cefr:"B2",
+   text:"When Elena received an unexpected job offer from a company in Berlin, she was faced with a difficult decision. The position offered a significant salary increase and the opportunity to advance her career, but it would mean leaving behind her friends, family, and the city she had grown up in. She spent several days weighing the pros and cons. Her mentor advised her to consider not just the financial benefits but also her long-term professional development. After careful deliberation, Elena decided to accept the offer. She told herself that taking risks is an essential part of growing as a person, and that she could always return home if things did not work out.",
+   annotations:[
+     {
+       "start_index": 78,
+       "end_index": 109,
+       "annotation_type": "collocation",
+       "surface_form": "faced with a difficult decision",
+       "contextual_turkish_meaning": "zor bir kararla karşı karşıya kalmak",
+       "short_explanation_tr": "\"be faced with\" = bir durumla karşı karşıya kalmak, bir sorunla yüz yüze gelmek.",
+       "individual_meanings": [
+         {
+           "word": "faced with",
+           "meaning": "karşı karşıya olmak, yüzleşmek"
+         },
+         {
+           "word": "difficult decision",
+           "meaning": "zor karar"
+         }
+       ],
+       "example_sentence_en": "The manager was faced with a difficult decision about the budget.",
+       "example_sentence_tr": "Yönetici bütçe konusunda zor bir kararla karşı karşıya kaldı."
+     },
+     {
+       "start_index": 185,
+       "end_index": 203,
+       "annotation_type": "collocation",
+       "surface_form": "advance her career",
+       "contextual_turkish_meaning": "kariyerini ilerletmek / geliştirmek",
+       "short_explanation_tr": "\"advance a career\" = kariyer basamaklarını tırmanmak, profesyonel olarak ilerlemek.",
+       "example_sentence_en": "She took extra courses to advance her career.",
+       "example_sentence_tr": "Kariyerini ilerletmek için ek kurslar aldı."
+     },
+     {
+       "start_index": 280,
+       "end_index": 291,
+       "annotation_type": "phrasal_verb",
+       "surface_form": "grown up in",
+       "contextual_turkish_meaning": "büyüdüğü yer (orada büyümüş)",
+       "short_explanation_tr": "\"grow up\" = büyümek, yetişkinliğe ulaşmak. Geçmişte büyünülen yeri ifade eder.",
+       "individual_meanings": [
+         {
+           "word": "grow up",
+           "meaning": "büyümek (çocukluktan yetişkinliğe)"
+         },
+         {
+           "word": "in",
+           "meaning": "bir yerde, içinde"
+         }
+       ],
+       "example_sentence_en": "He grew up in a small village in the countryside.",
+       "example_sentence_tr": "Kırsal kesimde küçük bir köyde büyüdü."
+     },
+     {
+       "start_index": 316,
+       "end_index": 342,
+       "annotation_type": "idiom",
+       "surface_form": "weighing the pros and cons",
+       "contextual_turkish_meaning": "artı ve eksileri tartmak / değerlendirmek",
+       "short_explanation_tr": "\"weigh the pros and cons\" = bir konunun olumlu ve olumsuz yönlerini dikkatle düşünmek.",
+       "individual_meanings": [
+         {
+           "word": "pros",
+           "meaning": "artılar, avantajlar"
+         },
+         {
+           "word": "cons",
+           "meaning": "eksiler, dezavantajlar"
+         }
+       ],
+       "example_sentence_en": "Before buying a house, it is important to weigh the pros and cons.",
+       "example_sentence_tr": "Ev satın almadan önce artı ve eksileri değerlendirmek önemlidir."
+     },
+     {
+       "start_index": 424,
+       "end_index": 458,
+       "annotation_type": "noun_phrase",
+       "surface_form": "long-term professional development",
+       "contextual_turkish_meaning": "uzun vadeli profesyonel gelişim",
+       "short_explanation_tr": "\"professional development\" = mesleki gelişim, kariyer gelişimi. İş dünyasında çok kullanılan bir terim.",
+       "example_sentence_en": "The company invests in the long-term professional development of its employees.",
+       "example_sentence_tr": "Şirket çalışanlarının uzun vadeli profesyonel gelişimine yatırım yapıyor."
+     },
+     {
+       "start_index": 466,
+       "end_index": 486,
+       "annotation_type": "collocation",
+       "surface_form": "careful deliberation",
+       "contextual_turkish_meaning": "titiz/dikkatli değerlendirme",
+       "short_explanation_tr": "\"deliberation\" = dikkatli ve sistematik düşünme süreci. \"careful\" ile sıkça birlikte kullanılır.",
+       "example_sentence_en": "After careful deliberation, the committee reached a decision.",
+       "example_sentence_tr": "Dikkatli bir değerlendirmenin ardından komite bir karara vardı."
+     }
+   ]},
+  {id:421,title:"Epistemic Injustice",level:"İleri",cefr:"C2",
+   text:"The concept of epistemic injustice, developed by philosopher Miranda Fricker, describes the harm done to individuals in their capacity as knowers. In its most prominent form, testimonial injustice occurs when a speaker receives a credibility deficit due to identity prejudice on the part of the hearer. This phenomenon is particularly insidious because it operates beneath the threshold of conscious awareness, perpetuating structural inequalities without the perpetrator recognising their own complicity. Fricker argues that developing the virtue of testimonial justice requires cultivating a critical awareness of the systematic biases that distort our credibility assessments. In this sense, epistemic justice is not merely an academic concern but a moral and political imperative with far-reaching implications for how marginalised voices are heard within democratic institutions.",
+   annotations:[
+     {
+       "start_index": 15,
+       "end_index": 34,
+       "annotation_type": "noun_phrase",
+       "surface_form": "epistemic injustice",
+       "contextual_turkish_meaning": "epistemik adaletsizlik (bilgi adaletsizliği)",
+       "short_explanation_tr": "\"Epistemic\" = bilgi/bilişe ait. \"Epistemic injustice\" = birinin bilgi sahibi kapasitesinin haksız yere küçümsenmesi.",
+       "individual_meanings": [
+         {
+           "word": "epistemic",
+           "meaning": "epistemik, bilgiye/bilişe ait"
+         },
+         {
+           "word": "injustice",
+           "meaning": "adaletsizlik"
+         }
+       ],
+       "example_sentence_en": "Epistemic injustice undermines a person's ability to contribute to shared knowledge.",
+       "example_sentence_tr": "Epistemik adaletsizlik kişinin ortak bilgiye katkı sunma kapasitesini zayıflatır."
+     },
+     {
+       "start_index": 230,
+       "end_index": 249,
+       "annotation_type": "noun_phrase",
+       "surface_form": "credibility deficit",
+       "contextual_turkish_meaning": "güvenilirlik açığı / güvenilirliğinin düşük değerlenmesi",
+       "short_explanation_tr": "\"Credibility deficit\" = birinin söylediklerine gereğinden az inanılması. Önyargıdan kaynaklanır.",
+       "individual_meanings": [
+         {
+           "word": "credibility",
+           "meaning": "güvenilirlik, inanılırlık"
+         },
+         {
+           "word": "deficit",
+           "meaning": "açık, eksiklik, yetersizlik"
+         }
+       ],
+       "example_sentence_en": "Women often face a credibility deficit in professional environments.",
+       "example_sentence_tr": "Kadınlar genellikle profesyonel ortamlarda bir güvenilirlik açığıyla karşı karşıya kalır."
+     },
+     {
+       "start_index": 257,
+       "end_index": 275,
+       "annotation_type": "noun_phrase",
+       "surface_form": "identity prejudice",
+       "contextual_turkish_meaning": "kimlik önyargısı (ırk, cinsiyet, sınıf gibi kimlik özelliklerine dayalı önyargı)",
+       "short_explanation_tr": "\"Identity prejudice\" = kişinin kim olduğuna (ırkı, cinsiyeti vs.) dair önyargı. Testimoniyal adaletsizliğin temel sebebi.",
+       "example_sentence_en": "Identity prejudice can prevent us from fairly evaluating what others say.",
+       "example_sentence_tr": "Kimlik önyargısı başkalarının söylediklerini adil biçimde değerlendirmemizi engelleyebilir."
+     },
+     {
+       "start_index": 365,
+       "end_index": 409,
+       "annotation_type": "prepositional_phrase",
+       "surface_form": "beneath the threshold of conscious awareness",
+       "contextual_turkish_meaning": "bilinçli farkındalığın eşiğinin altında (farkında olmadan)",
+       "short_explanation_tr": "\"Threshold\" = eşik. Bu ifade, bir şeyin bilinçli düşüncenin \"altında\" — yani farkında olmadan gerçekleştiğini belirtir.",
+       "individual_meanings": [
+         {
+           "word": "threshold",
+           "meaning": "eşik, sınır noktası"
+         },
+         {
+           "word": "conscious awareness",
+           "meaning": "bilinçli farkındalık"
+         }
+       ],
+       "example_sentence_en": "Many biases operate beneath the threshold of conscious awareness.",
+       "example_sentence_tr": "Birçok önyargı bilinçli farkındalığın eşiğinin altında işler."
+     },
+     {
+       "start_index": 411,
+       "end_index": 447,
+       "annotation_type": "verb_phrase",
+       "surface_form": "perpetuating structural inequalities",
+       "contextual_turkish_meaning": "yapısal eşitsizlikleri sürdürmek / pekiştirmek",
+       "short_explanation_tr": "\"Perpetuate\" = sürdürmek, devam ettirmek (olumsuz bir durumu). \"Structural inequalities\" = sistemin yapısından kaynaklanan eşitsizlikler.",
+       "individual_meanings": [
+         {
+           "word": "perpetuating",
+           "meaning": "sürdürmek, devam ettirmek"
+         },
+         {
+           "word": "structural",
+           "meaning": "yapısal, sistemin bizzat yapısından gelen"
+         },
+         {
+           "word": "inequalities",
+           "meaning": "eşitsizlikler"
+         }
+       ],
+       "example_sentence_en": "Some policies risk perpetuating structural inequalities rather than solving them.",
+       "example_sentence_tr": "Bazı politikalar yapısal eşitsizlikleri çözmek yerine sürdürme riski taşır."
+     },
+     {
+       "start_index": 789,
+       "end_index": 814,
+       "annotation_type": "collocation",
+       "surface_form": "far-reaching implications",
+       "contextual_turkish_meaning": "geniş kapsamlı / uzun vadeli sonuçlar ve çıkarımlar",
+       "short_explanation_tr": "\"Far-reaching\" = geniş çaplı, derin etkili. \"Implications\" = dolaylı sonuçlar, çıkarımlar. Akademik ve politik metinlerde sık kullanılır.",
+       "individual_meanings": [
+         {
+           "word": "far-reaching",
+           "meaning": "geniş kapsamlı, büyük etki alanına sahip"
+         },
+         {
+           "word": "implications",
+           "meaning": "çıkarımlar, dolaylı sonuçlar, etkileri"
+         }
+       ],
+       "example_sentence_en": "This ruling has far-reaching implications for environmental law.",
+       "example_sentence_tr": "Bu karar çevre hukuku için geniş kapsamlı sonuçlar doğurmaktadır."
+     }
+   ]},
 ];
 
 const SPEAK_CHALLENGES = {"easy": [
