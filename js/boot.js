@@ -17,10 +17,12 @@
     bridge:       ['js/bridge-data.js'],
     nexus:        ['js/phrasal_verbs_ext.js', 'js/phrasal_verbs_ext2.js', 'js/phrasal_verbs_ext3.js'],
     grammar:      ['js/grammar_data.js', 'js/grammar.js'],
+    writing:      ['js/writing.js'],
     learn:        ['js/ex-tr-data.js'],
     cinema:       ['js/video-data.js', 'js/cinema.js'],
     translate:    ['js/translate-data.js','js/translate-data2.js','js/translate-data3.js','js/translate-data4.js','js/translate-data5.js','js/translate-data6.js','js/translate-data7.js','js/translate.js'],
     reading:      ['js/stories-data.js','js/reading-quiz.js'],
+    synapse:      ['js/synapse-data.js', 'js/synapse.js'],
     speak:        ['js/stories-data.js', 'js/conversations.js', 'js/speak-sentences.js'],
     conversations:['js/conversations.js', 'js/speak-sentences.js'],
   };
@@ -1998,6 +2000,8 @@ document.addEventListener('click', function(e) {
       st.update({ sessionsToday: 0 });
     }
   }
+
+  window.addEventListener('load', checkSessionsReset);
 
   if (window._app) {
     patchAnalytics();
